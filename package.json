@@ -1,7 +1,7 @@
 {
-  "name": "storybook-addon-snapshot-test",
+  "name": "storybook-addons-playwright",
   "version": "0.0.0",
-  "description": "Test storybook stories visually",
+  "description": "storybook-addons-playwright",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {
     "node": ">= 12.13 <13"
@@ -45,12 +45,14 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.9.11",
+    "@material-ui/icons": "^4.9.1",
     "@storybook/addons": "^5.3.18",
     "@storybook/api": "^5.3.18",
     "@storybook/components": "^5.3.18",
     "body-parser": "^1.19.0",
     "jest-image-snapshot": "^3.1.0",
     "normalize-url": "^5.0.0",
-    "react": "^16.13.1"
+    "react": "^16.13.1",
+    "tinycolor": "^0.0.1"
   }
 }

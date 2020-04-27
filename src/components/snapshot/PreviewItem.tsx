@@ -6,6 +6,9 @@ import addons from '@storybook/addons';
 import { IFRAME_RESIZED } from '../../constants';
 import { IframeSize } from '../../typings/iframe-size';
 import clsx from 'clsx';
+import { useScreenshot } from '../../hooks';
+import { BrowserTypes } from '../../typings';
+import { Loader, ErrorPanel } from '../common';
 
 const useStyles = makeStyles((theme) => {
   // const bg = tinycolor(theme.palette.divider).toString();
@@ -75,14 +78,15 @@ const useStyles = makeStyles((theme) => {
 });
 
 export interface PreviewItemProps {
-  browserName: string;
+  browserType: BrowserTypes | 'storybook';
   url?: string;
-  base64?: string;
 }
 
 const PreviewItem: SFC<PreviewItemProps> = (props) => {
-  const { browserName, base64, url } = props;
+  const { browserType, url } = props;
   const classes = useStyles();
+
+  const { loading, screenshot } = useScreenshot(browserType);
 
   const [size, setSize] = useState<IframeSize>({
     height: '100%',
@@ -103,6 +107,7 @@ const PreviewItem: SFC<PreviewItemProps> = (props) => {
 
   return (
     <Card className={clsx(classes.card, { [classes.allBorder]: isIframe })}>
+      <Loader open={loading} />
       <AppBar
         classes={{
           root: classes.appBar,
@@ -113,17 +118,21 @@ const PreviewItem: SFC<PreviewItemProps> = (props) => {
         // style={{ overflow: useSimpleBar ? 'hidden' : 'scroll' }}
       >
         <Toolbar className={classes.toolbar}>
-          <label className={classes.label}>{browserName}</label>
+          <label className={classes.label}>{browserType}</label>
         </Toolbar>
       </AppBar>
       <div className={classes.container}>
-        {base64 ? (
+        {screenshot ? (
           <ScrollArea vertical={true} horizontal={true}>
             <div className={classes.imageContainer}>
-              <img
-                className={classes.image}
-                src={`data:image/gif;base64,${base64}`}
-              />
+              {typeof screenshot === 'string' ? (
+                <img
+                  className={classes.image}
+                  src={`data:image/gif;base64,${screenshot}`}
+                />
+              ) : (
+                <ErrorPanel message={screenshot.error} />
+              )}
             </div>
           </ScrollArea>
         ) : (

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '../common/ThemeProvider';
 import HighlightOffOutlined from '@material-ui/icons/HighlightOffOutlined';
 import { AppBar, Toolbar, IconButton } from '@material-ui/core';
-import { MultiView } from './MultiView';
+import { ScreenshotList } from './ScreenshotList';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -73,7 +73,7 @@ const PreviewDialog: SFC<PreviewDialogProps> = (props) => {
             </div>
           </Toolbar>
         </AppBar>
-        <MultiView
+        <ScreenshotList
           browserTypes={['chromium', 'firefox', 'webkit']}
           showStorybook={true}
         />

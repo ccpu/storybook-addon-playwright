@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
 import { isHorizontalPanel } from './utils';
 import { useAddonState } from '../../hooks';
-import { MultiView } from '../snapshot';
+import { ScreenshotList } from '../snapshot';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
 
@@ -129,7 +129,7 @@ const Preview: SFC<PreviewProps> = (props) => {
             })}
           >
             <Separator />
-            <MultiView browserTypes={['chromium', 'firefox', 'webkit']} />
+            <ScreenshotList browserTypes={['chromium', 'firefox', 'webkit']} />
           </div>
         </SplitPane>
       </div>

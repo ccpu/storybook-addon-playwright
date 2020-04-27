@@ -1,1 +1,1 @@
-export const TAKE_SNAPSHOT = '/snapshot/get-snapshot';
+export const TAKE_SCREENSHOT = '/snapshot/screenshot';

@@ -1,11 +1,11 @@
-import { TAKE_SNAPSHOT } from '../../constants/routes';
+import { TAKE_SCREENSHOT } from '../../constants/routes';
 import bodyParser from 'body-parser';
-import { getSnapShot } from './controller';
+import { getScreenshot } from './controller';
 
 const expressMiddleWare = (router) => {
   router.use(bodyParser.urlencoded({ extended: false }));
   router.use(bodyParser.json());
 
-  router.post(TAKE_SNAPSHOT, getSnapShot);
+  router.post(TAKE_SCREENSHOT, getScreenshot);
 };
 export default expressMiddleWare;

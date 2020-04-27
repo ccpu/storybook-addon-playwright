@@ -1,1 +1,1 @@
-export * from './get-snapshot';
+export * from './get-screenshot';

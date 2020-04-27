@@ -26,7 +26,7 @@ export interface SetupSnapHelper<T extends PartialPage> {
   actions?: Action;
 }
 
-export interface SnapshotInfo {
+export interface ScreenshotInfo {
   buffer: Buffer;
   browserName: BrowserTypes;
   base64?: string;

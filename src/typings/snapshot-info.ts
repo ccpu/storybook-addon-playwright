@@ -9,7 +9,7 @@ export interface PageInfo<T extends unknown = Page> {
 
 type PartialPage = Partial<Page>;
 
-type PromisePage<T> = Promise<PageInfo<T> | PageInfo<T>[]>;
+// export type HelperReturnType<T> = Promise<PageInfo<T> | PageInfo<T>[]>;
 
 interface Action {
   name: string;
@@ -17,12 +17,12 @@ interface Action {
   execute: () => void;
 }
 
-export interface SetupSnapshot<T extends PartialPage> {
+export interface SetupSnapHelper<T extends PartialPage> {
   storybookEndpoint?: string;
   browserTypes?: BrowserTypes[];
-  getPage: (browserTypes?: BrowserTypes[]) => PromisePage<T>;
-  beforeSnapshot?: (page: T) => PromisePage<T>;
-  afterSnapshot?: (page: T) => PromisePage<T>;
+  getPages: (browserTypes?: BrowserTypes[]) => Promise<PageInfo<T>[]>;
+  beforeSnapshot?: (page: Page) => PageInfo<T>[];
+  afterSnapshot?: (page: Page) => void;
   actions?: Action;
 }
 

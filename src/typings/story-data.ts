@@ -5,5 +5,5 @@ export type StoryInput = StoriesRaw[''];
 
 export interface StoryData {
   knobs?: KnobStore;
-  data: StoryInput;
+  storyId: string;
 }

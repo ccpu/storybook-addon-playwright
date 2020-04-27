@@ -1,4 +1,4 @@
-import { StoryData, PageInfo, SnapshotInfo } from '../../../typings';
+import { StoryData, SnapshotInfo } from '../../../typings';
 import { constructUrl } from '../utils';
 import { getSnapshotHelper } from '../setup-snapshot';
 
@@ -10,18 +10,11 @@ export const getSnapshot = async (
   const helper = getSnapshotHelper();
   const url = constructUrl(
     helper.storybookEndpoint ? helper.storybookEndpoint : host,
-    data.data.id,
+    data.storyId,
     data.knobs,
   );
 
-  const newPage = await helper.getPage();
-  let pages: PageInfo[] = [];
-
-  if (Array.isArray(newPage)) {
-    pages = [...newPage];
-  } else {
-    pages = [newPage];
-  }
+  const pages = await helper.getPages();
 
   const gotos = pages.map((page) => page.page.goto(url));
 
@@ -32,11 +25,14 @@ export const getSnapshot = async (
   for (let i = 0; i < pages.length; i++) {
     const pageInfo = pages[i];
     const buffer = await pageInfo.page.screenshot();
+
     snapshots.push({
       base64: convertToBase64 && buffer.toString('base64'),
       browserName: pageInfo.browserName,
       buffer,
     });
+
+    await helper.afterSnapshot(pageInfo.page);
   }
 
   return snapshots;

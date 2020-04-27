@@ -1,17 +1,15 @@
-import { API } from '@storybook/api';
 import { KnobStore, SnapshotInfo } from '../../typings';
 import { getEndpoint } from './utils';
 import {} from '../server/services/get-snapshot';
 
 export const getSnapShots = async (
-  api: API,
+  storyId: string,
   knobs: KnobStore,
 ): Promise<SnapshotInfo[] | string> => {
   const restEndpoint = getEndpoint('TAKE_SNAPSHOT');
-  const data = api.getCurrentStoryData();
 
   const res = await fetch(restEndpoint, {
-    body: JSON.stringify({ data, knobs }),
+    body: JSON.stringify({ knobs, storyId }),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
@@ -22,8 +20,6 @@ export const getSnapShots = async (
   const snapShots = await res.json();
 
   if (snapShots.error) return snapShots.error;
-
-  console.log(snapShots);
 
   return snapShots;
 };

@@ -16,6 +16,7 @@ const ThemeProvider: SFC = memo((props) => {
         default: storyBookTheme.appBg,
         paper: storyBookTheme.appContentBg,
       },
+      divider: storyBookTheme.appBorderColor,
       primary: { main: storyBookTheme.colorPrimary },
       secondary: { main: storyBookTheme.colorSecondary },
       text: { primary: storyBookTheme.textColor },

@@ -73,7 +73,10 @@ const PreviewDialog: SFC<PreviewDialogProps> = (props) => {
             </div>
           </Toolbar>
         </AppBar>
-        <MultiView />
+        <MultiView
+          browserTypes={['chromium', 'firefox', 'webkit']}
+          showStorybook={true}
+        />
       </Dialog>
     </ThemeProvider>
   );

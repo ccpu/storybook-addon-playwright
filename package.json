@@ -54,6 +54,7 @@
     "jest-image-snapshot": "^3.1.0",
     "normalize-url": "^5.0.0",
     "react": "^16.13.1",
+    "react-fast-compare": "^3.0.1",
     "react-split-pane": "^0.1.91",
     "react-use": "^14.2.0"
   }

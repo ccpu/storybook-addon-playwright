@@ -1,15 +1,20 @@
-import { KnobStore, SnapshotInfo } from '../../typings';
+import {
+  KnobStore,
+  SnapshotInfo,
+  BrowserTypes,
+  StoryData,
+} from '../../typings';
 import { getEndpoint } from './utils';
-import {} from '../server/services/get-snapshot';
 
 export const getSnapShots = async (
   storyId: string,
   knobs: KnobStore,
+  browserTypes?: BrowserTypes[],
 ): Promise<SnapshotInfo[] | string> => {
   const restEndpoint = getEndpoint('TAKE_SNAPSHOT');
 
   const res = await fetch(restEndpoint, {
-    body: JSON.stringify({ knobs, storyId }),
+    body: JSON.stringify({ browserTypes, knobs, storyId } as StoryData),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',

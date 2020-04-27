@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
 import { isHorizontalPanel } from './utils';
-import { useAddonState } from '../../hooks/use-addon-state';
+import { useAddonState } from '../../hooks';
 import { MultiView } from '../snapshot';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
@@ -129,7 +129,7 @@ const Preview: SFC<PreviewProps> = (props) => {
             })}
           >
             <Separator />
-            <MultiView />
+            <MultiView browserTypes={['chromium', 'firefox', 'webkit']} />
           </div>
         </SplitPane>
       </div>

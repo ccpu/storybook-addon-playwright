@@ -1,4 +1,4 @@
-import { getSnapshot } from '../services/get-snapshot';
+import { getAllScreenshots } from '../services/get-screenshot';
 import { SnapshotInfo } from '../../../typings';
 
 type GetSnapShot = Pick<SnapshotInfo, 'browserName' | 'base64'>;
@@ -6,8 +6,8 @@ type GetSnapShot = Pick<SnapshotInfo, 'browserName' | 'base64'>;
 export const getSnapShot = async (req, res) => {
   const story = req.body;
   try {
-    const snapshotData = await getSnapshot(story, req.headers.host, true);
-
+    const snapshotData = await getAllScreenshots(story, req.headers.host, true);
+    console.log(story);
     const snapshotBase64 = snapshotData.map((snap) => {
       return {
         base64: snap.base64,

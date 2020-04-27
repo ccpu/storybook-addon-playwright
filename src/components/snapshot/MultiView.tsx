@@ -59,7 +59,7 @@ const MultiView = () => {
       ) : (
         <>
           {snapshots.length > 1 ? (
-            <ul>
+            <GridList>
               <GridListTile
                 classes={{
                   root: classes.gridListTile,
@@ -84,7 +84,7 @@ const MultiView = () => {
                   />
                 </GridListTile>
               ))}
-            </ul>
+            </GridList>
           ) : (
             <PreviewItem
               browserName={snapshots[0].browserName}

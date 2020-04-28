@@ -14,35 +14,27 @@ export const makeScreenshot = async (
     data.knobs,
   );
 
-  const pages = await helper.getPage(data.browserType);
+  const page = await helper.getPage(data.browserType);
 
-  if (!pages) {
-    throw new Error('Make sure to return browser page instance from getPages.');
+  if (!page) {
+    throw new Error('Make sure to return browser page instance from getPage.');
   }
 
-  const pageInfo = pages.find((x) => x.browserName === data.browserType);
-
-  if (!pageInfo) {
-    throw new Error(
-      `unable to find '${data.browserType}', Make sure to return an instance of '${data.browserType}' page from getPages.`,
-    );
-  }
-
-  await pageInfo.page.goto(url);
+  await page.goto(url);
 
   if (helper.beforeSnapshot) {
-    await helper.beforeSnapshot(pageInfo.page, data.browserType);
+    await helper.beforeSnapshot(page, data.browserType);
   }
 
-  const buffer = await pageInfo.page.screenshot();
+  const buffer = await page.screenshot();
 
   if (helper.afterSnapshot) {
-    await helper.afterSnapshot(pageInfo.page, data.browserType);
+    await helper.afterSnapshot(page, data.browserType);
   }
 
   return {
     base64: convertToBase64 && buffer.toString('base64'),
-    browserName: pageInfo.browserName,
+    browserName: data.browserType,
     buffer,
   };
 };

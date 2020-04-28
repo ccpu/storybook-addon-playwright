@@ -1,5 +1,5 @@
-import { Page } from 'playwright-core';
 import { SetupSnapHelper } from '../../typings';
+import { Page } from 'playwright-core';
 
 let snapshotHelper: SetupSnapHelper<Page>;
 
@@ -15,8 +15,6 @@ export const getSnapshotHelper = () => {
       'Please Setup Snapshot helper in storybook middleware or config.',
     );
   }
-
-  if (!snapshotHelper.browserTypes) snapshotHelper.browserTypes = ['chromium'];
 
   return snapshotHelper;
 };

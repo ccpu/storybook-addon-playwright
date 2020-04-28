@@ -8,6 +8,7 @@ import { useAddonState } from '../../hooks';
 import { ScreenshotList } from '../snapshot';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
+import {} from '../../config';
 
 const useStyles = makeStyles(
   () => {

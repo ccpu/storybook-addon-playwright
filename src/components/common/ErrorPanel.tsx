@@ -4,6 +4,9 @@ import { makeStyles, Backdrop } from '@material-ui/core';
 const useStyles = makeStyles(
   () => {
     return {
+      backdrop: {
+        position: 'absolute',
+      },
       root: {
         color: 'red',
       },
@@ -22,7 +25,7 @@ const ErrorPanel: SFC<ErrorPanelProps> = memo((props) => {
   const classes = useStyles();
 
   return (
-    <Backdrop open={true}>
+    <Backdrop open={true} className={classes.backdrop}>
       <div className={classes.root}>{message}</div>{' '}
     </Backdrop>
   );

@@ -26,6 +26,6 @@ export const getSnapShot = async (
     method: 'post',
   });
   const snapShots = await res.json();
-  console.log(snapShots);
+
   return snapShots;
 };

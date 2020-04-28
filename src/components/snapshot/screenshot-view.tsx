@@ -11,7 +11,6 @@ import Save from '@material-ui/icons/Save';
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
 
-  // const bg = tinycolor(theme.palette.divider).toString();
   return {
     appBar: {
       boxShadow: 'none',

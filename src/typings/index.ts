@@ -6,3 +6,4 @@ export * from './response-error';
 export * from './screenshot-info';
 export * from './screenshot-request-response';
 export * from './snapshot-data';
+export * from './story-action';

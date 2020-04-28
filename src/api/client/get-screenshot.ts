@@ -1,8 +1,8 @@
 import {
   KnobStore,
   BrowserTypes,
-  ScreenshotRequestData,
-  ScreenshotResponse,
+  GetScreenshotRequest,
+  GetScreenshotResponse,
 } from '../../typings';
 import { getEndpoint } from './utils';
 
@@ -10,7 +10,7 @@ export const getSnapShot = async (
   storyId: string,
   browserType: BrowserTypes,
   knobs: KnobStore,
-): Promise<ScreenshotResponse> => {
+): Promise<GetScreenshotResponse> => {
   const restEndpoint = getEndpoint('TAKE_SCREENSHOT');
 
   const res = await fetch(restEndpoint, {
@@ -18,7 +18,7 @@ export const getSnapShot = async (
       browserType,
       knobs,
       storyId,
-    } as ScreenshotRequestData),
+    } as GetScreenshotRequest),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',

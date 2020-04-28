@@ -1,12 +1,12 @@
 import { makeScreenshot } from '../services/make-screenshot';
-import { ScreenshotRequestData, ScreenshotResponse } from '../../../typings';
+import { GetScreenshotRequest, GetScreenshotResponse } from '../../../typings';
 
 export const getScreenshot = async (req, res) => {
-  const reqData = req.body as ScreenshotRequestData;
+  const reqData = req.body as GetScreenshotRequest;
   try {
     const snapshotData = await makeScreenshot(reqData, req.headers.host, true);
     res.send(
-      JSON.stringify({ base64: snapshotData.base64 } as ScreenshotResponse),
+      JSON.stringify({ base64: snapshotData.base64 } as GetScreenshotResponse),
     );
     res.end();
   } catch (error) {

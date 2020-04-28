@@ -1,33 +1,28 @@
-import React, { SFC } from 'react';
+import React, { SFC, useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { CircularProgress } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { useScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
 import { ErrorPanel } from '../common';
-import Save from '@material-ui/icons/Save';
+import { SaveScreenShot } from './SaveScreenShot';
+import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
-
   return {
-    appBar: {
-      boxShadow: 'none',
-    },
-
     card: {
       '& .simplebar-track': {
         '&:after': {
-          backgroundColor: theme.palette.divider,
+          backgroundColor: palette.divider,
           content: '""',
           display: 'block',
           height: '100%',
           width: '100%',
         },
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: palette.background.paper,
       },
-      borderLeft: '10px solid ' + theme.palette.divider,
+      borderLeft: '10px solid ' + palette.divider,
 
       overflow: 'hidden',
       position: 'relative',
@@ -43,7 +38,7 @@ const useStyles = makeStyles((theme) => {
     },
 
     fakeBorder: {
-      border: '10px solid ' + theme.palette.divider,
+      border: '10px solid ' + palette.divider,
       borderLeft: 0,
       borderTop: 0,
       bottom: 0,
@@ -55,7 +50,6 @@ const useStyles = makeStyles((theme) => {
     },
 
     iframe: {
-      // height: '100%',
       width: '100%',
     },
 
@@ -65,27 +59,6 @@ const useStyles = makeStyles((theme) => {
 
     imageContainer: {
       textAlign: 'center',
-    },
-
-    label: {
-      textTransform: 'uppercase',
-    },
-    toolbar: {
-      alignItems: 'center',
-      backgroundColor: theme.palette.divider,
-      color: palette.text.secondary,
-      display: 'flex',
-      flexWrap: 'nowrap',
-      fontSize: 14,
-      height: 30,
-      justifyContent: 'space-between',
-      minHeight: 'auto',
-      paddingRight: 10,
-      textAlign: 'right',
-    },
-    toolbarPanels: {
-      alignItems: 'center',
-      display: 'flex',
     },
   };
 });
@@ -98,23 +71,35 @@ export interface PreviewItemProps {
 
 const ScreenshotView: SFC<PreviewItemProps> = (props) => {
   const { browserType, url, height } = props;
+
+  const [openSaveScreenShot, setOpenSaveScreenShot] = useState(false);
+
   const classes = useStyles();
 
-  const { loading, screenshot } = useScreenshot(browserType);
+  const { loading, screenshot, getSnapshot } = useScreenshot(browserType);
 
   const containerHeight = height - 30;
 
+  const handleOpenSaveScreenShotDialog = useCallback(() => {
+    setOpenSaveScreenShot(true);
+  }, []);
+
+  const handleCloseSaveScreenShotDialog = useCallback(() => {
+    setOpenSaveScreenShot(false);
+  }, []);
+
+  const isValidToSave =
+    screenshot && !screenshot.error && browserType !== 'storybook';
+
   return (
     <div className={clsx(classes.card)}>
-      <div className={classes.toolbar}>
-        <div className={classes.toolbarPanels}>
-          <label className={classes.label}>{browserType}</label>
-          {loading && <CircularProgress style={{ marginLeft: 10 }} size={15} />}
-        </div>
-        <div className={classes.toolbarPanels}>
-          <Save />
-        </div>
-      </div>
+      <ScreenShotViewToolbar
+        browserType={browserType}
+        onSave={handleOpenSaveScreenShotDialog}
+        loading={loading}
+        onRefresh={getSnapshot}
+        showSaveButton={isValidToSave}
+      />
 
       <div className={classes.container} style={{ height: containerHeight }}>
         <div className={classes.fakeBorder} />
@@ -140,6 +125,14 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
           ></iframe>
         )}
       </div>
+      {isValidToSave && (
+        <SaveScreenShot
+          open={openSaveScreenShot}
+          onClose={handleCloseSaveScreenShotDialog}
+          browserType={browserType as BrowserTypes}
+          screenShot={screenshot.base64}
+        />
+      )}
     </div>
   );
 };

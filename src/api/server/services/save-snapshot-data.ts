@@ -1,4 +1,5 @@
-// import { StoryData } from '../../../typings';
-// export const saveSnapshotData = (StoryData) => {
-//   return;
-// };
+import { SaveScreenshot } from '../../../typings';
+export const saveScreenshot = (data: SaveScreenshot) => {
+  console.log(data);
+  return;
+};

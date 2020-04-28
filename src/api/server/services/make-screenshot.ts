@@ -1,9 +1,9 @@
-import { ScreenshotRequestData, ScreenshotInfo } from '../../../typings';
+import { GetScreenshotRequest, ScreenshotInfo } from '../../../typings';
 import { constructUrl } from '../utils';
 import { getSnapshotHelper } from '../setup-snapshot';
 
 export const makeScreenshot = async (
-  data: ScreenshotRequestData,
+  data: GetScreenshotRequest,
   host: string,
   convertToBase64?: boolean,
 ): Promise<ScreenshotInfo> => {

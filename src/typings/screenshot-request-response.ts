@@ -4,10 +4,19 @@ import { BrowserTypes } from '.';
 
 // export type StoryInput = StoriesRaw[''];
 
-export interface ScreenshotRequestData {
+export interface GetScreenshotRequest {
   knobs?: KnobStore;
   storyId: string;
   browserType: BrowserTypes;
 }
 
-export type ScreenshotResponse = { base64: string; error: string };
+export type GetScreenshotResponse = {
+  base64: string;
+  error: string;
+};
+
+export interface SaveScreenshot {
+  base64: string;
+  description: string;
+  browserType: BrowserTypes;
+}

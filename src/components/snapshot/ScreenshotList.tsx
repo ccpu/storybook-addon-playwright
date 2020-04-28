@@ -1,12 +1,12 @@
 import React, { SFC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ScreenshotView } from './screenshot-view';
+import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
 import { BrowserTypes, ScreenShotViewPanel } from '../../typings';
 import { Toolbar } from './Toolbar';
 import useMeasure from 'react-use/lib/useMeasure';
 import clsx from 'clsx';
-import { getSnapshotHelper } from '../../api/server/setup-snapshot';
+// import { getSnapshotHelper } from '../../api/server/setup-snapshot';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -104,8 +104,8 @@ const ScreenshotList: SFC<Props> = (props) => {
                 />
               </div>
             )}
-            {activeBrowsers.map((browser, i) => (
-              <div key={i} className={classes.listItem} style={{ flex }}>
+            {activeBrowsers.map((browser) => (
+              <div key={browser} className={classes.listItem} style={{ flex }}>
                 <ScreenshotView browserType={browser} height={itemHeight} />
               </div>
             ))}

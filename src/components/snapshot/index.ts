@@ -1,3 +1,3 @@
 export * from './PreviewDialog';
-export * from './PreviewItem';
+export * from './screenshot-view';
 export * from './ScreenshotList';

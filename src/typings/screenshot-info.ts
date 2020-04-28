@@ -19,10 +19,10 @@ interface Action {
 
 export interface SetupSnapHelper<T extends PartialPage> {
   storybookEndpoint?: string;
-  browserTypes?: BrowserTypes[];
-  getPages: (browserTypes?: BrowserTypes[]) => Promise<PageInfo<T>[]>;
-  beforeSnapshot?: (page: Page) => PageInfo<T>[];
-  afterSnapshot?: (page: Page) => void;
+  browserTypes: BrowserTypes[];
+  getPage: (browserType: BrowserTypes) => Promise<PageInfo<T>[]>;
+  beforeSnapshot?: (page: Page, browserType: BrowserTypes) => PageInfo<T>[];
+  afterSnapshot?: (page: Page, browserType: BrowserTypes) => void;
   actions?: Action;
 }
 

@@ -23,7 +23,6 @@ export const useKnobs = () => {
     });
 
     return () => {
-      console.log('off');
       chanel.off(SET, setKnobStore);
     };
   }, []);

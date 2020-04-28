@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { BrowserTypes, BrowserView } from '../typings';
+import { BrowserTypes, ScreenShotViewPanel } from '../typings';
 import { useAddonState } from './use-addon-state';
 
-export const useDisabledBrowserTypes = (browserView: BrowserView) => {
+export const useDisabledBrowserTypes = (browserView: ScreenShotViewPanel) => {
   const { addonState, setAddonState } = useAddonState();
 
   const isDisabled = useCallback(

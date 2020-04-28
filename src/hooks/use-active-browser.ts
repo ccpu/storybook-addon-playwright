@@ -1,10 +1,10 @@
 import { useCallback, useState, useEffect } from 'react';
-import { BrowserTypes, BrowserView } from '../typings';
+import { BrowserTypes, ScreenShotViewPanel } from '../typings';
 import { useAddonState } from './use-addon-state';
 
 export const useActiveBrowsers = (
   browserTypes: BrowserTypes[],
-  browserView: BrowserView,
+  browserView: ScreenShotViewPanel,
 ) => {
   const { addonState, setAddonState } = useAddonState();
   const [activeBrowsers, setActiveBrowsers] = useState<BrowserTypes[]>();

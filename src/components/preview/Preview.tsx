@@ -98,6 +98,10 @@ const Preview: SFC<PreviewProps> = (props) => {
     [addonState, setAddonState],
   );
 
+  const handleClose = useCallback(() => {
+    setAddonState({ ...addonState, previewPanelEnabled: false });
+  }, [addonState, setAddonState]);
+
   return (
     <ThemeProvider>
       <div
@@ -129,7 +133,14 @@ const Preview: SFC<PreviewProps> = (props) => {
             })}
           >
             <Separator />
-            <ScreenshotList browserTypes={['chromium', 'firefox', 'webkit']} />
+            {addonState && addonState.previewPanelEnabled && (
+              <ScreenshotList
+                browserTypes={['chromium', 'firefox', 'webkit']}
+                column={isHorizontal ? undefined : 1}
+                onClose={handleClose}
+                viewPanel="main"
+              />
+            )}
           </div>
         </SplitPane>
       </div>

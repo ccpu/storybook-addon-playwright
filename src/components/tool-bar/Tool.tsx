@@ -1,9 +1,11 @@
-import React, { SFC, useState } from 'react';
+import React, { SFC, useState, useCallback } from 'react';
 import { IconButton, Separator } from '@storybook/components';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '../common';
 import { PreviewDialog } from '../snapshot';
-import WebOutlined from '@material-ui/icons/WebOutlined';
+import WebOutlined from '@material-ui/icons/Launch';
+import ShowPanelIcon from '@material-ui/icons/Dashboard';
+import { useAddonState } from '../../hooks';
 
 import { PreviewPlacementMenu } from './PreviewPlacementMenu';
 
@@ -22,6 +24,8 @@ const useStyles = makeStyles(() => ({
 const Tool: SFC = () => {
   const [open, setOpen] = useState(false);
 
+  const { setAddonState, addonState } = useAddonState();
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -30,18 +34,33 @@ const Tool: SFC = () => {
     setOpen(false);
   };
 
+  const handleBowserClose = useCallback(() => {
+    setAddonState({
+      ...addonState,
+      previewPanelEnabled: !addonState.previewPanelEnabled,
+    });
+  }, [addonState, setAddonState]);
+
   const classes = useStyles();
   return (
     <ThemeProvider>
       <Separator />
+      <PreviewPlacementMenu />
       <IconButton
         onClick={handleOpen}
         title="Multi view"
         className={classes.button}
       >
-        <WebOutlined viewBox="1.5 0 21 21" />
+        <WebOutlined viewBox="1.5 -2 20 20" />
       </IconButton>
-      <PreviewPlacementMenu />
+      <IconButton
+        onClick={handleBowserClose}
+        title="Show panel"
+        className={classes.button}
+        active={addonState && addonState.previewPanelEnabled}
+      >
+        <ShowPanelIcon viewBox="1.5 -2 20 20" />
+      </IconButton>
       <Separator />
       <PreviewDialog open={open} onClose={handleClose} />
     </ThemeProvider>

@@ -14,7 +14,7 @@ export const makeScreenshot = async (
     data.knobs,
   );
 
-  const pages = await helper.getPages();
+  const pages = await helper.getPage(data.browserType);
 
   if (!pages) {
     throw new Error('Make sure to return browser page instance from getPages.');
@@ -30,9 +30,15 @@ export const makeScreenshot = async (
 
   await pageInfo.page.goto(url);
 
+  if (helper.beforeSnapshot) {
+    await helper.beforeSnapshot(pageInfo.page, data.browserType);
+  }
+
   const buffer = await pageInfo.page.screenshot();
 
-  await helper.afterSnapshot(pageInfo.page);
+  if (helper.afterSnapshot) {
+    await helper.afterSnapshot(pageInfo.page, data.browserType);
+  }
 
   return {
     base64: convertToBase64 && buffer.toString('base64'),

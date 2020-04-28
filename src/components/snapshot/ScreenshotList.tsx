@@ -1,9 +1,11 @@
 import React, { SFC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { PreviewItem } from './PreviewItem';
+import { ScreenshotView } from './screenshot-view';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
-import { BrowserTypes } from '../../typings';
+import { BrowserTypes, ScreenShotViewPanel } from '../../typings';
 import { Toolbar } from './Toolbar';
+import useMeasure from 'react-use/lib/useMeasure';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -15,15 +17,17 @@ const useStyles = makeStyles((theme) => ({
 
   list: {
     display: 'flex',
-    flexFlow: ' row wrap',
     height: '100%',
     position: 'relative',
     width: '100%',
   },
-
   listItem: {
-    height: '100%',
-    marginRight: 2,
+    marginBottom: 2,
+    marginLeft: 1,
+    marginRight: 1,
+  },
+  listWrap: {
+    flexFlow: ' row wrap',
   },
   preview: {
     boxShadow: theme.palette.divider + ' 0 1px 0 0 inset',
@@ -43,14 +47,18 @@ interface Props {
   browserTypes: BrowserTypes[];
   showStorybook?: boolean;
   column?: number;
+  onClose: () => void;
+  viewPanel: ScreenShotViewPanel;
 }
 
 const ScreenshotList: SFC<Props> = (props) => {
-  const { showStorybook, browserTypes, column } = props;
+  const { showStorybook, browserTypes, column, onClose, viewPanel } = props;
+
+  const [ref, rect] = useMeasure();
 
   const { activeBrowsers, toggleBrowser } = useActiveBrowsers(
     browserTypes,
-    'main',
+    viewPanel,
   );
 
   const classes = useStyles();
@@ -63,29 +71,46 @@ const ScreenshotList: SFC<Props> = (props) => {
     100 / (column ? column : activeBrowsers.length)
   }% - 2px)`;
 
+  const itemHeight =
+    column === 1
+      ? rect.height / activeBrowsers.length
+      : column === 2
+      ? rect.height / 2
+      : rect.height;
+
   return (
     <div className={classes.root}>
       <Toolbar
         browserTypes={browserTypes}
         activeBrowsers={activeBrowsers}
         toggleBrowser={toggleBrowser}
+        onCLose={onClose}
       />
       <div className={classes.preview}>
         {activeBrowsers.length > 1 ? (
-          <div className={classes.list}>
+          <div
+            ref={ref}
+            className={clsx(classes.list, {
+              [classes.listWrap]: column !== undefined,
+            })}
+          >
             {showStorybook && (
               <div className={classes.listItem} style={{ flex }}>
-                <PreviewItem browserType="storybook" url={storyUrl} />
+                <ScreenshotView
+                  browserType="storybook"
+                  url={storyUrl}
+                  height={itemHeight}
+                />
               </div>
             )}
             {activeBrowsers.map((browser, i) => (
               <div key={i} className={classes.listItem} style={{ flex }}>
-                <PreviewItem browserType={browser} />
+                <ScreenshotView browserType={browser} height={itemHeight} />
               </div>
             ))}
           </div>
         ) : (
-          <PreviewItem browserType={activeBrowsers[0]} />
+          <ScreenshotView browserType={activeBrowsers[0]} height={itemHeight} />
         )}
       </div>
     </div>

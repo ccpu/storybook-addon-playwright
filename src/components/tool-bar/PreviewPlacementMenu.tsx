@@ -34,7 +34,7 @@ const PreviewPlacementMenu: SFC = () => {
     <ClickAwayListener onClickAway={handleClose}>
       <>
         <IconButton onClick={handlePlacementClick} title="Panel placement">
-          <OpenWith viewBox="1.5 0 21 21" />
+          <OpenWith viewBox="1.5 -2 21 21" />
         </IconButton>
         <Menu
           id="simple-menu"

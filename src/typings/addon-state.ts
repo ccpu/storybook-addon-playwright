@@ -4,12 +4,15 @@ export type ActiveBrowser = {
   [key in BrowserTypes]?: boolean;
 };
 
-export type BrowserView = 'main' | 'preview';
+export type ScreenShotViewPanel = 'main' | 'dialog';
 
-export type DisabledBrowserView = { [key in BrowserView]?: ActiveBrowser };
+export type DisabledBrowserView = {
+  [key in ScreenShotViewPanel]?: ActiveBrowser;
+};
 
 export interface AddonState {
   placement: 'auto' | 'bottom' | 'right' | string;
   previewPanelSize: number;
   disabledBrowser: DisabledBrowserView;
+  previewPanelEnabled: boolean;
 }

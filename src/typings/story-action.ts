@@ -1,10 +1,15 @@
 import { Page } from 'playwright-core';
-
+import { KnobType } from '@storybook/addon-knobs/dist/components/types';
+import { Definition } from 'ts-to-json';
 export type StoryActionPosition = { x: number; y: number };
+
+export type ActionSchema = Definition;
 
 type Modifier = 'Alt' | 'Control' | 'Meta' | 'Shift';
 
-interface StoryActionOption {
+export type ControlTypes = KnobType;
+
+export interface ActionControlPredefinedOptions {
   position?: StoryActionPosition;
   delay?: number;
   modifiers?: Modifier[];
@@ -16,16 +21,31 @@ interface StoryActionOption {
   value?: string;
   waitUntil?: 'load' | 'domcontentloaded' | 'networkidle';
   noWaitAfter?: boolean;
+  selector?: string;
 }
 
+interface StoryActionCustomOptions {
+  controlType: ControlTypes;
+  label?: string;
+}
+
+export type ActionControlPredefinedOptionKeys = keyof ActionControlPredefinedOptions;
+
 export interface StoryAction<T extends unknown = Page> {
-  selector?: string;
+  id?: string;
+  schemaKey: string;
+
   labe?: string;
-  options?: (keyof StoryActionOption)[];
-  run: (
+  name?: string;
+  requiredSelector?: boolean;
+  options?: ActionControlPredefinedOptions;
+  // controlType: ControlTypes;
+  predefinedOptions?: ActionControlPredefinedOptionKeys[];
+  customOptions?: StoryActionCustomOptions;
+  run?: (
     page: T,
     selector: string,
-    options?: StoryActionOption,
+    options?: ActionControlPredefinedOptions,
   ) => Promise<void>;
 }
 

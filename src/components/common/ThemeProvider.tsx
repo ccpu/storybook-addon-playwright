@@ -19,7 +19,7 @@ const ThemeProvider: SFC = memo((props) => {
       divider: storyBookTheme.appBorderColor,
       primary: { main: storyBookTheme.colorSecondary },
       secondary: { main: storyBookTheme.colorPrimary },
-      text: { primary: storyBookTheme.textColor },
+      text: { primary: storyBookTheme.barTextColor },
       type: storyBookTheme.base === 'dark' ? 'dark' : 'light',
     },
     typography: {

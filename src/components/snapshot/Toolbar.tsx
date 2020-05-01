@@ -1,20 +1,9 @@
 import React, { SFC, Fragment } from 'react';
-import { FlexBar, IconButton } from '@storybook/components';
-import { makeStyles, Theme } from '@material-ui/core';
+import { IconButton } from '@storybook/components';
 import { BrowserTypes } from '../../typings';
 import { BrowserIcon } from './BrowserIcon';
 import CloseOutlined from '@material-ui/icons/CloseOutlined';
-
-const useStyles = makeStyles(
-  (theme: Theme) => {
-    return {
-      root: {
-        boxShadow: theme.palette.divider + ' 0 1px 0 0 inset',
-      },
-    };
-  },
-  { name: 'Toolbar' },
-);
+import { Toolbar as CommonToolbar } from '../common';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -26,30 +15,24 @@ export interface ToolbarProps {
 const Toolbar: SFC<ToolbarProps> = (props) => {
   const { browserTypes, toggleBrowser, activeBrowsers, onCLose } = props;
 
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <FlexBar>
-        <Fragment key="left">
-          {browserTypes.map((browserType) => (
-            <BrowserIcon
-              key={browserType}
-              browserType={browserType}
-              onClick={toggleBrowser}
-              active={
-                activeBrowsers.find((x) => x === browserType) !== undefined
-              }
-            />
-          ))}
-        </Fragment>
-        <Fragment key="right">
-          <IconButton onClick={onCLose}>
-            <CloseOutlined viewBox="0 -2 20 20" />
-          </IconButton>
-        </Fragment>
-      </FlexBar>
-    </div>
+    <CommonToolbar border={['top']}>
+      <Fragment key="left">
+        {browserTypes.map((browserType) => (
+          <BrowserIcon
+            key={browserType}
+            browserType={browserType}
+            onClick={toggleBrowser}
+            active={activeBrowsers.find((x) => x === browserType) !== undefined}
+          />
+        ))}
+      </Fragment>
+      <Fragment key="right">
+        <IconButton onClick={onCLose}>
+          <CloseOutlined />
+        </IconButton>
+      </Fragment>
+    </CommonToolbar>
   );
 };
 

@@ -1,7 +1,7 @@
 import { makeScreenshot } from '../services/make-screenshot';
 import { GetScreenshotRequest, GetScreenshotResponse } from '../../../typings';
 
-export const getScreenshot = async (req, res) => {
+export const getScreenshot = async (req, res): Promise<void> => {
   const reqData = req.body as GetScreenshotRequest;
   try {
     const snapshotData = await makeScreenshot(reqData, req.headers.host, true);

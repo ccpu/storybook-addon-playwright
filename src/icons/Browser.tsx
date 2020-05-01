@@ -4,7 +4,7 @@ const Browser = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
-    viewBox="2 -1 20 20"
+    viewBox="2 -1 38 38"
     enableBackground="new 0 0 129 129"
     height={22}
     style={{

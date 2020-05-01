@@ -2,7 +2,7 @@ import { StoryActions } from '../../typings';
 import { getEndpoint } from './utils';
 
 export const getActions = async (): Promise<StoryActions> => {
-  const restEndpoint = getEndpoint('GET_ACTION_DATA');
+  const restEndpoint = getEndpoint('GET_ACTIONS_DATA');
 
   const res = await fetch(restEndpoint, {
     headers: {
@@ -11,7 +11,7 @@ export const getActions = async (): Promise<StoryActions> => {
     },
     method: 'post',
   });
-  const snapShots = await res.json();
-  console.log(snapShots);
-  return snapShots;
+  const data = await res.json();
+
+  return data;
 };

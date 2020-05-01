@@ -1,1 +1,1 @@
-export * from './DemoPanel';
+export * from './ActionPanel';

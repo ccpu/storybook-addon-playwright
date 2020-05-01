@@ -2,18 +2,22 @@ import { useState, useEffect } from 'react';
 import { getActions } from '../api/client/get-actions';
 import { StoryActions } from '../typings';
 
-// let _actions:StoryActions;
-
-export const useActionData = () => {
+export const useActionData = (): {
+  actions: StoryActions;
+  loading: boolean;
+} => {
   const [actions, setActions] = useState<StoryActions>();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('act');
-    getActions().then((act) => {
-      // _actions=act;
-      setActions(act);
-    });
-  }, []);
+    if (loading || actions) return;
+    setLoading(true);
+    getActions()
+      .then((act) => {
+        setActions(act);
+      })
+      .finally(() => setLoading(false));
+  }, [actions, loading]);
 
-  return actions;
+  return { actions, loading };
 };

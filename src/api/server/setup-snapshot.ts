@@ -1,25 +1,29 @@
-import { SetupSnapHelper, StoryActions } from '../../typings';
+import { SetupSnapHelper } from '../../typings';
 import { Page } from 'playwright-core';
 
 let snapshotHelper: SetupSnapHelper<Page>;
 
-const defaultActions: StoryActions = {
-  click: {
-    options: [
-      'button',
-      'clickCount',
-      'delay',
-      'position',
-      'modifiers',
-      'force',
-      'noWaitAfter',
-      'timeout',
-    ],
-    run: async (page, selector, options) => {
-      await page.click(selector, options);
-    },
-  },
-};
+// const defaultActions: StoryActions = {
+//   click: {
+//     name: 'click',
+//     predefinedOptions: [
+//       'selector',
+//       'button',
+//       'clickCount',
+//       'delay',
+//       'position',
+//       'modifiers',
+//       'force',
+//       'noWaitAfter',
+//       'timeout',
+//     ],
+//     // controlType:''
+//     requiredSelector: true,
+//     run: async (page, selector, options) => {
+//       await page.click(selector, options);
+//     },
+//   },
+// };
 
 export const setupSnapshot = <T extends unknown = Page>(
   setup: SetupSnapHelper<T>,
@@ -28,7 +32,7 @@ export const setupSnapshot = <T extends unknown = Page>(
 
   snapshotHelper = {
     ...snapshotHelper,
-    actions: { ...defaultActions, ...snapshotHelper.actions },
+    // actions: { ...defaultActions, ...snapshotHelper.actions },
   };
 };
 

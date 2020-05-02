@@ -1,5 +1,5 @@
 import React, { SFC, memo, useCallback, useContext } from 'react';
-
+import { useStorybookState } from '@storybook/api';
 import { ActionList } from './ActionList';
 import { StoryAction } from '../../../typings';
 import { ActionDispatchContext } from '../../../store/actions';
@@ -9,27 +9,24 @@ import { nanoid } from 'nanoid';
 const ActionListMain: SFC = memo(() => {
   const dispatch = useContext(ActionDispatchContext);
 
+  const storybookState = useStorybookState();
+
   const handleAddAction = useCallback(
     (actionKey: string) => {
       const newAction: StoryAction = {
         id: nanoid(10),
         schemaKey: actionKey,
+        storyId: storybookState.storyId,
       };
       dispatch({ action: newAction, type: 'addStoryAction' });
-      // setMenuAnchorEl(null);
     },
-    [dispatch],
+    [dispatch, storybookState.storyId],
   );
-
-  // const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>): void => {
-  //   setMenuAnchorEl(event.currentTarget);
-  // };
 
   return (
     <>
       <ActionToolbar onAddAction={handleAddAction} />
-
-      <ActionList />
+      <ActionList storyId={storybookState.storyId} />
     </>
   );
 });

@@ -49,6 +49,13 @@ export interface ControlFormProps {
   display?: OptionsKnobOptionsDisplay;
 }
 
+const convertOptions = (options?: string[]): {} => {
+  return options.reduce((obj, key) => {
+    obj[key] = key;
+    return obj;
+  }, {});
+};
+
 const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
   if (defVal) return defVal;
   switch (type) {
@@ -68,15 +75,13 @@ const ControlForm: SFC<ControlFormProps> = memo((props) => {
   const { label, type, onChange, value, options, display } = props;
 
   const [knob, setKnob] = useState<Partial<KnobStoreKnob>>({
+    defaultValue: value,
     name: label,
     options:
       type === 'select'
         ? options
         : options
-        ? options.reduce((obj, key) => {
-            obj[key] = key;
-            return obj;
-          }, {})
+        ? convertOptions(options)
         : undefined,
     optionsObj: { display },
     type,

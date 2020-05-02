@@ -17,10 +17,10 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
   ({ name, schema, parents = [], actionName, actionId }) => {
     const dispatch = useContext(ActionDispatchContext);
     const state = useContext(ActionContext);
+    const path = [...parents, name].join('.');
 
     const handleChange = useCallback(
       (val) => {
-        const path = [...parents, name].join('.');
         const fullPath = `${actionName}.${path}`;
         dispatch({
           actionId,
@@ -28,19 +28,14 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           type: 'setActionOptions',
           val,
         });
-        // setActionOptions(actionId, fullPath, val);
       },
-      [actionId, actionName, dispatch, name, parents],
+      [actionId, actionName, dispatch, path],
     );
-
-    const path = [...parents, name].join('.');
 
     const action = state.storyActions.find((x) => x.id === actionId);
     let value = undefined;
     if (action && action.actions && action.actions[actionName])
       value = immutableObject.get(action.actions[actionName], path);
-
-    // console.log(`${actionName}.${path}`, value);
 
     return useMemo(() => {
       if (schema.enum) {
@@ -88,6 +83,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           if (!schema.items) return null;
           const items = (schema.items as Definition).enum;
           if (!items) return null;
+          console.log(value);
           return (
             <ControlForm
               label={name}

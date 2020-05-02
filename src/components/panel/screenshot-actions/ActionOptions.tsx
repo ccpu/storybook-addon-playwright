@@ -18,7 +18,7 @@ const useStyles = makeStyles(
         display: 'block',
       },
       heading: {
-        fontSize: theme.typography.pxToRem(15),
+        fontSize: theme.typography.pxToRem(18),
         fontWeight: theme.typography.fontWeightRegular,
       },
       root: {

@@ -34,7 +34,7 @@ export type ActionControlPredefinedOptionKeys = keyof ActionControlPredefinedOpt
 export interface StoryAction<T extends unknown = Page> {
   id?: string;
   schemaKey: string;
-
+  storyId: string;
   labe?: string;
   name?: string;
   requiredSelector?: boolean;

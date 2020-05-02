@@ -1,14 +1,27 @@
-import React, { SFC, useContext, useMemo } from 'react';
+import React, { SFC, useContext, useMemo, useState, useEffect } from 'react';
 import { ActionContext } from '../../../store/actions';
 import { ActionOptions } from './ActionOptions';
+import { StoryAction } from '../../../typings';
 
-const ActionList: SFC = () => {
+interface ActionListProp {
+  storyId: string;
+}
+
+const ActionList: SFC<ActionListProp> = ({ storyId }) => {
   const state = useContext(ActionContext);
 
+  const [storyActions, setStoryAction] = useState<StoryAction[]>();
+
+  useEffect(() => {
+    const actions = state.storyActions.filter((x) => x.storyId === storyId);
+    setStoryAction(actions);
+  }, [state.storyActions, storyId]);
+
   return useMemo(() => {
+    if (!storyActions) return null;
     return (
       <>
-        {state.storyActions.map((action) => (
+        {storyActions.map((action) => (
           <ActionOptions
             key={action.id}
             actionName={action.schemaKey}
@@ -17,7 +30,7 @@ const ActionList: SFC = () => {
         ))}
       </>
     );
-  }, [state.storyActions]);
+  }, [storyActions]);
 };
 
 ActionList.displayName = 'ActionList';

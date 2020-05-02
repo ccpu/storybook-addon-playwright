@@ -22,7 +22,6 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
       (val) => {
         const path = [...parents, name].join('.');
         const fullPath = `${actionName}.${path}`;
-        console.log(fullPath);
         setActionOptions(actionId, fullPath, val);
       },
       [actionId, actionName, name, parents, setActionOptions],
@@ -33,7 +32,6 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
     // console.log(`${actionName}.${path}`, value);
 
     return useMemo(() => {
-      console.log('ActionSchemaProp');
       if (schema.enum) {
         return (
           <ControlForm

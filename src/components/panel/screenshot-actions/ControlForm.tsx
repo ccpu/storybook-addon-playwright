@@ -67,8 +67,6 @@ const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
 const ControlForm: SFC<ControlFormProps> = memo((props) => {
   const { label, type, onChange, value, options, display } = props;
 
-  // console.log('ControlForm', label);
-
   const [knob, setKnob] = useState<Partial<KnobStoreKnob>>({
     name: label,
     options:
@@ -97,8 +95,6 @@ const ControlForm: SFC<ControlFormProps> = memo((props) => {
 
   const classes = useStyles();
   return useMemo(() => {
-    console.log('ControlForm');
-    // The rest of your rendering logic
     return (
       <div className={classes.root}>
         <div className={classes.labelWrap}>

@@ -6,7 +6,7 @@ export const getActionsData = async (_req, res): Promise<void> => {
     res.send(actions);
     res.end();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send({ error: error.message });
   }
 };

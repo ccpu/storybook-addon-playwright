@@ -1,5 +1,5 @@
 import { SaveScreenshot } from '../../../typings';
 export const saveScreenshot = (data: SaveScreenshot) => {
-  console.log(data);
+  console.error(data);
   return;
 };

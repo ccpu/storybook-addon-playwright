@@ -10,7 +10,7 @@ export const getScreenshot = async (req, res): Promise<void> => {
     );
     res.end();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send({ error: error.message });
   }
 };

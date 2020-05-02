@@ -2,7 +2,8 @@ import React, { SFC, useCallback, memo, useContext, useMemo } from 'react';
 import { Definition } from 'ts-to-json';
 import { ControlForm } from './ControlForm';
 import { ActionSchemaProps } from './ActionSchemaProps';
-import { ActionContext } from '../../../store';
+import { ActionContext, ActionDispatchContext } from '../../../store';
+import * as immutableObject from 'object-path-immutable';
 
 export interface ActionSchemaPropProps {
   name: string;
@@ -14,21 +15,31 @@ export interface ActionSchemaPropProps {
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
   ({ name, schema, parents = [], actionName, actionId }) => {
-    const { getActionOptionValue, setActionOptions } = useContext(
-      ActionContext,
-    );
+    const dispatch = useContext(ActionDispatchContext);
+    const state = useContext(ActionContext);
 
     const handleChange = useCallback(
       (val) => {
         const path = [...parents, name].join('.');
         const fullPath = `${actionName}.${path}`;
-        setActionOptions(actionId, fullPath, val);
+        dispatch({
+          actionId,
+          objPath: fullPath,
+          type: 'setActionOptions',
+          val,
+        });
+        // setActionOptions(actionId, fullPath, val);
       },
-      [actionId, actionName, name, parents, setActionOptions],
+      [actionId, actionName, dispatch, name, parents],
     );
 
     const path = [...parents, name].join('.');
-    const value = getActionOptionValue(actionId, actionName, path);
+
+    const action = state.storyActions.find((x) => x.id === actionId);
+    let value = undefined;
+    if (action && action.actions && action.actions[actionName])
+      value = immutableObject.get(action.actions[actionName], path);
+
     // console.log(`${actionName}.${path}`, value);
 
     return useMemo(() => {

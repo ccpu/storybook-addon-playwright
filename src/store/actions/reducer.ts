@@ -6,7 +6,7 @@ export interface ReducerState {
   storyActions: StoryAction[];
 }
 
-type Action =
+export type Action =
   | { type: 'setActionSchema'; actions: ActionSchema }
   | { type: 'setStoryActions'; actions: StoryAction[] }
   | {

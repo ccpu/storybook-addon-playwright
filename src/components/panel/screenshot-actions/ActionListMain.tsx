@@ -1,19 +1,24 @@
 import React, { SFC, memo, useCallback, useContext } from 'react';
 
 import { ActionList } from './ActionList';
-
-import { ActionContext } from '../../../store/actions';
+import { StoryAction } from '../../../typings';
+import { ActionDispatchContext } from '../../../store/actions';
 import { ActionToolbar } from './ActionToolbar';
+import { nanoid } from 'nanoid';
 
 const ActionListMain: SFC = memo(() => {
-  const { addStoryAction } = useContext(ActionContext);
+  const dispatch = useContext(ActionDispatchContext);
 
   const handleAddAction = useCallback(
     (actionKey: string) => {
-      addStoryAction(actionKey);
+      const newAction: StoryAction = {
+        id: nanoid(10),
+        schemaKey: actionKey,
+      };
+      dispatch({ action: newAction, type: 'addStoryAction' });
       // setMenuAnchorEl(null);
     },
-    [addStoryAction],
+    [dispatch],
   );
 
   // const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>): void => {

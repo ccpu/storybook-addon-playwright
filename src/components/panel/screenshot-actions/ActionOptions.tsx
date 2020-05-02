@@ -38,7 +38,7 @@ export interface ActionOptionsProps {
 const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
   const { actionId, actionName } = props;
 
-  const { state } = useContext(ActionContext);
+  const state = useContext(ActionContext);
 
   const schema = getActionSchema(state.actionSchema, actionName);
 

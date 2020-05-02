@@ -3,7 +3,7 @@ import { ActionContext } from '../../../store/actions';
 import { ActionOptions } from './ActionOptions';
 
 const ActionList: SFC = () => {
-  const { state } = useContext(ActionContext);
+  const state = useContext(ActionContext);
 
   return useMemo(() => {
     return (

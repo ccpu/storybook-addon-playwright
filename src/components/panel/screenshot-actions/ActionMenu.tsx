@@ -35,7 +35,7 @@ export interface ActionMenuProps {
 const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
   const { onChange, onClose, anchorEl } = props;
 
-  const { state } = useContext(ActionContext);
+  const state = useContext(ActionContext);
 
   const [actionItems, setActionItems] = useState<ActionMenuItemBase[]>([]);
 

@@ -1,5 +1,4 @@
 import React, { memo, SFC, useCallback, useContext } from 'react';
-import { StoryAction } from '../../../typings';
 import {
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -32,24 +31,24 @@ const useStyles = makeStyles(
 );
 
 export interface ActionOptionsProps {
-  action: StoryAction;
-  onChange: (action: StoryAction) => void;
+  actionId: string;
+  actionName: string;
 }
 
 const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
-  const { action } = props;
+  const { actionId, actionName } = props;
 
   const { actionSchema, setActionOptions } = useContext(ActionContext);
 
-  const schema = getActionSchema(actionSchema, action.schemaKey);
+  const schema = getActionSchema(actionSchema, actionName);
 
   const classes = useStyles();
 
   const handleChange = useCallback(
     (objPath: string, val: unknown) => {
-      setActionOptions(action.id, objPath, val);
+      setActionOptions(actionId, objPath, val);
     },
-    [action.id, setActionOptions],
+    [actionId, setActionOptions],
   );
 
   return (
@@ -61,17 +60,15 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           id="panel1a-header"
         >
           <Typography className={classes.heading} variant="h1">
-            {capitalize(
-              schema && schema.title ? schema.title : action.schemaKey,
-            )}
+            {capitalize(schema && schema.title ? schema.title : actionName)}
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.detailPanel}>
           <ActionSchemaRenderer
-            storyAction={action}
             schema={schema}
-            path={action.schemaKey}
+            path={actionName}
             onChange={handleChange}
+            actionId={actionId}
           />
         </ExpansionPanelDetails>
       </ExpansionPanel>

@@ -11,10 +11,12 @@ import { useActionData } from '../../hooks';
 import { initialState, reducer, ReducerState } from './reducer';
 import { nanoid } from 'nanoid';
 import { useReducer } from 'reinspect';
+import * as immutableObject from 'object-path-immutable';
 
 export interface ActionContextProps extends ReducerState {
   addStoryAction: (action: string) => void;
   setActionOptions: (actionId: string, objPath: string, val: unknown) => void;
+  getActionOptionValue: (actionId: string, actionName, objPath: string) => void;
 }
 
 export const ActionContext = createContext<ActionContextProps>(
@@ -55,11 +57,23 @@ const ActionProvider: SFC = (props) => {
     [],
   );
 
+  const getActionOptionValue = useCallback(
+    (actionId: string, actionName: string, objectPath: string) => {
+      const action = state.storyActions.find((x) => x.id === actionId);
+      if (!action || !action.actions || !action.actions[actionName])
+        return undefined;
+      const val = immutableObject.get(action.actions[actionName], objectPath);
+      return val;
+    },
+    [state.storyActions],
+  );
+
   return (
     <ActionContextProvider
       value={{
         actionSchema: state.actionSchema,
         addStoryAction,
+        getActionOptionValue,
         setActionOptions,
         storyActions: state.storyActions,
       }}

@@ -1,4 +1,4 @@
-import React, { SFC, useState } from 'react';
+import React, { SFC, useState, memo } from 'react';
 import { ControlTypes } from '../../../typings';
 import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
 import { getKnobControl } from '@storybook/addon-knobs/dist/components/types';
@@ -64,8 +64,10 @@ const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
   }
 };
 
-const ControlForm: SFC<ControlFormProps> = (props) => {
+const ControlForm: SFC<ControlFormProps> = memo((props) => {
   const { label, type, onChange, value, options, display } = props;
+
+  // console.log('ControlForm', label);
 
   const [knob, setKnob] = useState<Partial<KnobStoreKnob>>({
     name: label,
@@ -102,7 +104,7 @@ const ControlForm: SFC<ControlFormProps> = (props) => {
       </div>
     </div>
   );
-};
+});
 
 ControlForm.displayName = 'ControlForm';
 

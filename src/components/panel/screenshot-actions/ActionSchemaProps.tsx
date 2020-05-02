@@ -6,12 +6,16 @@ export interface ActionSchemaPropsProps {
   props: Definition;
   onChange: (path: string, value: unknown, parents?: string[]) => void;
   parents?: string[];
+  actionName: string;
+  actionId: string;
 }
 
 const ActionSchemaProps: SFC<ActionSchemaPropsProps> = ({
   props,
   onChange,
   parents = [],
+  actionName,
+  actionId,
 }) => {
   const handleChange = useCallback(
     (key: string, val: unknown, rootParents = []) => {
@@ -32,6 +36,8 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = ({
             schema={param}
             onChange={handleChange}
             parents={parents}
+            actionName={actionName}
+            actionId={actionId}
           />
         );
       })}

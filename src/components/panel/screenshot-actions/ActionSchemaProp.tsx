@@ -1,18 +1,20 @@
-import React, { SFC, useCallback, memo } from 'react';
+import React, { SFC, useCallback, memo, useContext } from 'react';
 import { Definition } from 'ts-to-json';
 import { ControlForm } from './ControlForm';
 import { ActionSchemaProps } from './ActionSchemaProps';
+import { ActionContext } from '../../../store';
 
 export interface ActionSchemaPropProps {
   name: string;
   parents?: string[];
   schema: Definition;
-  value?: unknown;
   onChange: (key: string, val: unknown, parent) => void;
+  actionName: string;
+  actionId: string;
 }
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
-  ({ name, schema, value, onChange, parents = [] }) => {
+  ({ name, schema, onChange, parents = [], actionName, actionId }) => {
     const handleChange = useCallback(
       (val) => {
         onChange(name, val, parents);
@@ -20,7 +22,11 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
       [name, onChange, parents],
     );
 
-    // console.log(parents, name);
+    const { getActionOptionValue } = useContext(ActionContext);
+    const path = [...parents, name].join('.');
+    const value = getActionOptionValue(actionId, actionName, path);
+
+    console.log(`${actionName}.${path}`, value);
 
     if (schema.enum) {
       return (
@@ -29,7 +35,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           type="select"
           onChange={handleChange}
           options={schema.enum as string[]}
-          // value={value}
+          value={value}
         />
       );
     }
@@ -84,6 +90,8 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             props={schema.properties}
             onChange={onChange}
             parents={[...parents, name]}
+            actionName={actionName}
+            actionId={actionId}
           />
         );
       default:

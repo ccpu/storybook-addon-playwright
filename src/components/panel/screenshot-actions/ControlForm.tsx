@@ -1,4 +1,4 @@
-import React, { SFC, useState, memo } from 'react';
+import React, { SFC, useState, memo, useMemo, useCallback } from 'react';
 import { ControlTypes } from '../../../typings';
 import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
 import { getKnobControl } from '@storybook/addon-knobs/dist/components/types';
@@ -87,23 +87,36 @@ const ControlForm: SFC<ControlFormProps> = memo((props) => {
 
   const Control = getKnobControl(type);
 
-  const makeChangeHandler = (value): void => {
-    setKnob({ ...knob, value });
-    onChange(value);
-  };
+  const makeChangeHandler = useCallback(
+    (value): void => {
+      setKnob({ ...knob, value });
+      onChange(value);
+    },
+    [knob, onChange],
+  );
 
   const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <div className={classes.labelWrap}>
-        <span>{capitalize(label)}</span>
+  return useMemo(() => {
+    console.log('ControlForm');
+    // The rest of your rendering logic
+    return (
+      <div className={classes.root}>
+        <div className={classes.labelWrap}>
+          <span>{capitalize(label)}</span>
+        </div>
+        <div className={classes.controlWrap}>
+          <Control onChange={makeChangeHandler} knob={knob} required />
+        </div>
       </div>
-      <div className={classes.controlWrap}>
-        <Control onChange={makeChangeHandler} knob={knob} required />
-      </div>
-    </div>
-  );
+    );
+  }, [
+    classes.controlWrap,
+    classes.labelWrap,
+    classes.root,
+    knob,
+    label,
+    makeChangeHandler,
+  ]);
 });
 
 ControlForm.displayName = 'ControlForm';

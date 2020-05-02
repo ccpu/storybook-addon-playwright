@@ -1,21 +1,23 @@
-import React, { SFC, useContext } from 'react';
+import React, { SFC, useContext, useMemo } from 'react';
 import { ActionContext } from '../../../store/actions';
 import { ActionOptions } from './ActionOptions';
 
 const ActionList: SFC = () => {
   const { state } = useContext(ActionContext);
-  console.log('ActionList');
-  return (
-    <>
-      {state.storyActions.map((action) => (
-        <ActionOptions
-          key={action.id}
-          actionName={action.schemaKey}
-          actionId={action.id}
-        />
-      ))}
-    </>
-  );
+
+  return useMemo(() => {
+    return (
+      <>
+        {state.storyActions.map((action) => (
+          <ActionOptions
+            key={action.id}
+            actionName={action.schemaKey}
+            actionId={action.id}
+          />
+        ))}
+      </>
+    );
+  }, [state.storyActions]);
 };
 
 ActionList.displayName = 'ActionList';

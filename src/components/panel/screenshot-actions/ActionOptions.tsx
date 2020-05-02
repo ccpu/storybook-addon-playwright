@@ -1,4 +1,4 @@
-import React, { memo, SFC, useCallback, useContext } from 'react';
+import React, { memo, SFC, useContext, useMemo } from 'react';
 import {
   ExpansionPanel,
   ExpansionPanelSummary,
@@ -38,42 +38,43 @@ export interface ActionOptionsProps {
 const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
   const { actionId, actionName } = props;
 
-  const { state, setActionOptions } = useContext(ActionContext);
+  const { state } = useContext(ActionContext);
 
   const schema = getActionSchema(state.actionSchema, actionName);
 
   const classes = useStyles();
 
-  const handleChange = useCallback(
-    (objPath: string, val: unknown) => {
-      setActionOptions(actionId, objPath, val);
-    },
-    [actionId, setActionOptions],
-  );
-
-  return (
-    <div className={classes.root}>
-      <ExpansionPanel expanded={true}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading} variant="h1">
-            {capitalize(schema && schema.title ? schema.title : actionName)}
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails className={classes.detailPanel}>
-          <ActionSchemaRenderer
-            schema={schema}
-            path={actionName}
-            onChange={handleChange}
-            actionId={actionId}
-          />
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </div>
-  );
+  return useMemo(() => {
+    return (
+      <div className={classes.root}>
+        <ExpansionPanel expanded={true}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.heading} variant="h1">
+              {capitalize(schema && schema.title ? schema.title : actionName)}
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails className={classes.detailPanel}>
+            <ActionSchemaRenderer
+              schema={schema}
+              path={actionName}
+              actionId={actionId}
+            />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </div>
+    );
+  }, [
+    actionId,
+    actionName,
+    classes.detailPanel,
+    classes.heading,
+    classes.root,
+    schema,
+  ]);
 });
 
 ActionOptions.displayName = 'ActionOptions';

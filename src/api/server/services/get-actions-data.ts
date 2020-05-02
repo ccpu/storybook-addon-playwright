@@ -4,10 +4,10 @@ import {
   createParser,
   createFormatter,
   Config,
+  Definition,
 } from 'ts-to-json';
 import { Page, Mouse } from 'playwright-core';
 import { join } from 'path';
-import { JSONSchema7 } from 'json-schema';
 
 const path = join(__dirname, '/typings/playwright-page.d.ts');
 
@@ -22,7 +22,6 @@ const selectedPageKeys: PageKeys[] = [
   'focus',
   'hover',
   'hover',
-  'title',
   'press',
   'waitForSelector',
   'waitForTimeout',
@@ -67,10 +66,10 @@ export const getActionsData = (): string => {
 
   const result = generator.createSchema(type);
   const json = JSON.stringify(
-    (result.definitions[type] as JSONSchema7).properties,
+    (result.definitions[type] as Definition).properties,
     null,
     2,
   );
-  // console.log(json);
+
   return json;
 };

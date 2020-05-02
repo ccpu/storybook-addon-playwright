@@ -9,6 +9,7 @@ import React, {
 import { Menu, makeStyles } from '@material-ui/core';
 import { ActionMenuItem, ActionMenuItemBase } from './ActionMenuItem';
 import { ActionContext } from '../../../store/actions';
+import { getMenu } from './utils';
 
 const useStyles = makeStyles(
   () => {
@@ -42,22 +43,7 @@ const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
 
   useEffect(() => {
     if (!actionSchema) return undefined;
-    const actionArr = Object.keys(actionSchema);
-    const actionList = actionArr.map(
-      (actionKey): ActionMenuItemBase => {
-        const action = actionSchema[actionKey];
-        if (action.labe) {
-          return {
-            label: action.labe,
-            name: actionKey,
-          };
-        }
-        return {
-          label: actionKey,
-          name: actionKey,
-        };
-      },
-    );
+    const actionList = getMenu(actionSchema);
     setActionItems(actionList);
   }, [actionSchema]);
 

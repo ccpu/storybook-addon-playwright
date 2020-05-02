@@ -1,4 +1,4 @@
-import React, { memo, SFC } from 'react';
+import React, { memo, SFC, useCallback, useContext } from 'react';
 import { StoryAction } from '../../../typings';
 import {
   ExpansionPanel,
@@ -8,9 +8,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { useActionSchema } from '../../../hooks';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
-import { capitalize } from '../../../utils';
+import { capitalize, getActionSchema } from '../../../utils';
+import { ActionContext } from '../../../store';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -39,17 +39,18 @@ export interface ActionOptionsProps {
 const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
   const { action } = props;
 
-  const schema = useActionSchema(action.schemaKey);
+  const { actionSchema, setActionOptions } = useContext(ActionContext);
+
+  const schema = getActionSchema(actionSchema, action.schemaKey);
 
   const classes = useStyles();
 
-  // const onPredefinedOptions = useCallback(
-  //   (options: ActionControlPredefinedOptions) => {
-  //     action.options = { ...action, ...options };
-  //     onChange(action);
-  //   },
-  //   [action, onChange],
-  // );
+  const handleChange = useCallback(
+    (objPath: string, val: unknown) => {
+      setActionOptions(action.id, objPath, val);
+    },
+    [action.id, setActionOptions],
+  );
 
   return (
     <div className={classes.root}>
@@ -66,7 +67,12 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.detailPanel}>
-          <ActionSchemaRenderer storyAction={action} schema={schema} />
+          <ActionSchemaRenderer
+            storyAction={action}
+            schema={schema}
+            path={action.schemaKey}
+            onChange={handleChange}
+          />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

@@ -38,7 +38,7 @@ export interface StoryAction<T extends unknown = Page> {
   labe?: string;
   name?: string;
   requiredSelector?: boolean;
-  options?: ActionControlPredefinedOptions;
+  actions?: unknown;
   // controlType: ControlTypes;
   predefinedOptions?: ActionControlPredefinedOptionKeys[];
   customOptions?: StoryActionCustomOptions;

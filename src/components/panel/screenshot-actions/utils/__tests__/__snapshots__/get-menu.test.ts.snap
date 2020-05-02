@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getMenu should return valid 1`] = `
+Array [
+  Object {
+    "label": "click",
+    "name": "click",
+  },
+  Object {
+    "label": "mouse.click",
+    "name": "mouse.click",
+  },
+  Object {
+    "label": "mouse.dblclick",
+    "name": "mouse.dblclick",
+  },
+]
+`;

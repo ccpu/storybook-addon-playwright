@@ -1,14 +1,25 @@
-import React, { SFC } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { ActionSchemaProp } from './ActionSchemaProp';
 import { Definition } from 'ts-to-json';
 
 export interface ActionSchemaPropsProps {
   props: Definition;
-  onChange: (key: string, value: unknown) => void;
+  onChange: (path: string, value: unknown, parents?: string[]) => void;
+  parents?: string[];
 }
 
-const ActionSchemaProps: SFC<ActionSchemaPropsProps> = (properties) => {
-  const { props, onChange } = properties;
+const ActionSchemaProps: SFC<ActionSchemaPropsProps> = ({
+  props,
+  onChange,
+  parents = [],
+}) => {
+  const handleChange = useCallback(
+    (key: string, val: unknown, rootParents = []) => {
+      const objPath = [...rootParents, key].join('.');
+      onChange(objPath, val);
+    },
+    [onChange],
+  );
 
   return (
     <>
@@ -19,7 +30,8 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = (properties) => {
             key={name}
             name={name}
             schema={param}
-            onChange={onChange}
+            onChange={handleChange}
+            parents={parents}
           />
         );
       })}

@@ -30,9 +30,10 @@ const useStyles = makeStyles(
           border: 'none !important',
           margin: '0 !important',
         },
+        alignItems: 'center',
         display: 'flex',
         justifyContent: 'space-between',
-        marginBottom: 2,
+        marginBottom: 4,
       },
     };
   },

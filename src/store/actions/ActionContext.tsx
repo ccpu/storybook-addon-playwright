@@ -1,7 +1,7 @@
 import React, {
   createContext,
   SFC,
-  useReducer,
+  // useReducer,
   useEffect,
   useCallback,
 } from 'react';
@@ -10,9 +10,11 @@ import { StoryAction } from '../../typings';
 import { useActionData } from '../../hooks';
 import { initialState, reducer, ReducerState } from './reducer';
 import { nanoid } from 'nanoid';
+import { useReducer } from 'reinspect';
 
 export interface ActionContextProps extends ReducerState {
   addStoryAction: (action: string) => void;
+  setActionOptions: (actionId: string, objPath: string, val: unknown) => void;
 }
 
 export const ActionContext = createContext<ActionContextProps>(
@@ -27,7 +29,12 @@ const ActionProvider: SFC = (props) => {
 
   const { actions, loading } = useActionData();
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(
+    reducer,
+    initialState,
+    () => initialState,
+    'ActionProvider',
+  );
 
   useEffect(() => {
     dispatch({ actions, type: 'setActionSchema' });
@@ -41,11 +48,19 @@ const ActionProvider: SFC = (props) => {
     dispatch({ action: newAction, type: 'addStoryAction' });
   }, []);
 
+  const setActionOptions = useCallback(
+    (actionId: string, objPath: string, val: unknown) => {
+      dispatch({ actionId, objPath, type: 'setActionOptions', val });
+    },
+    [],
+  );
+
   return (
     <ActionContextProvider
       value={{
         actionSchema: state.actionSchema,
         addStoryAction,
+        setActionOptions,
         storyActions: state.storyActions,
       }}
     >

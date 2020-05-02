@@ -3,6 +3,7 @@ import { API } from '@storybook/api';
 import { ThemeProvider } from '../common';
 import { ActionProvider } from '../../store';
 import { ActionSets } from './action-set';
+import { StateInspector } from 'reinspect';
 
 interface ActionPanelProps {
   api: API;
@@ -10,11 +11,13 @@ interface ActionPanelProps {
 
 const ActionPanel: SFC<ActionPanelProps> = memo(() => {
   return (
-    <ActionProvider>
-      <ThemeProvider>
-        <ActionSets />
-      </ThemeProvider>
-    </ActionProvider>
+    <StateInspector>
+      <ActionProvider>
+        <ThemeProvider>
+          <ActionSets />
+        </ThemeProvider>
+      </ActionProvider>
+    </StateInspector>
   );
 });
 

@@ -3,11 +3,11 @@ import { ActionContext } from '../../../store/actions';
 import { ActionOptions } from './ActionOptions';
 
 const ActionList: SFC = () => {
-  const { storyActions } = useContext(ActionContext);
-
+  const { state } = useContext(ActionContext);
+  console.log('ActionList');
   return (
     <>
-      {storyActions.map((action) => (
+      {state.storyActions.map((action) => (
         <ActionOptions
           key={action.id}
           actionName={action.schemaKey}

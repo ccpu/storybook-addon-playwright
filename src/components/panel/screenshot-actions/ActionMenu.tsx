@@ -35,17 +35,17 @@ export interface ActionMenuProps {
 const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
   const { onChange, onClose, anchorEl } = props;
 
-  const { actionSchema } = useContext(ActionContext);
+  const { state } = useContext(ActionContext);
 
   const [actionItems, setActionItems] = useState<ActionMenuItemBase[]>([]);
 
   const classes = useStyles();
 
   useEffect(() => {
-    if (!actionSchema) return undefined;
-    const actionList = getMenu(actionSchema);
+    if (!state.actionSchema) return undefined;
+    const actionList = getMenu(state.actionSchema);
     setActionItems(actionList);
-  }, [actionSchema]);
+  }, [state.actionSchema]);
 
   const handleChange = useCallback(
     (key: string) => {

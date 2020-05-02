@@ -26,7 +26,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
     const path = [...parents, name].join('.');
     const value = getActionOptionValue(actionId, actionName, path);
 
-    console.log(`${actionName}.${path}`, value);
+    // console.log(`${actionName}.${path}`, value);
 
     if (schema.enum) {
       return (

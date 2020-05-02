@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  SFC,
-  // useReducer,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { createContext, SFC, useEffect, useCallback } from 'react';
 import { Loader } from '../../components/common';
 import { StoryAction } from '../../typings';
 import { useActionData } from '../../hooks';
@@ -13,7 +7,8 @@ import { nanoid } from 'nanoid';
 import { useReducer } from 'reinspect';
 import * as immutableObject from 'object-path-immutable';
 
-export interface ActionContextProps extends ReducerState {
+export interface ActionContextProps {
+  state: ReducerState;
   addStoryAction: (action: string) => void;
   setActionOptions: (actionId: string, objPath: string, val: unknown) => void;
   getActionOptionValue: (actionId: string, actionName, objPath: string) => void;
@@ -71,11 +66,10 @@ const ActionProvider: SFC = (props) => {
   return (
     <ActionContextProvider
       value={{
-        actionSchema: state.actionSchema,
         addStoryAction,
         getActionOptionValue,
         setActionOptions,
-        storyActions: state.storyActions,
+        state,
       }}
     >
       <Loader open={loading} />

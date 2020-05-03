@@ -1,4 +1,4 @@
-import React, { SFC, memo, useCallback, useContext } from 'react';
+import React, { SFC, memo, useCallback, useContext, useEffect } from 'react';
 import { useStorybookState } from '@storybook/api';
 import { ActionList } from './ActionList';
 import { StoryAction } from '../../../typings';
@@ -13,15 +13,21 @@ const ActionListMain: SFC = memo(() => {
 
   const handleAddAction = useCallback(
     (actionKey: string) => {
+      const actionId = nanoid(10);
       const newAction: StoryAction = {
-        id: nanoid(10),
+        id: actionId,
         schemaKey: actionKey,
         storyId: storybookState.storyId,
       };
       dispatch({ action: newAction, type: 'addStoryAction' });
+      dispatch({ actionId, type: 'toggleActionExpansion' });
     },
     [dispatch, storybookState.storyId],
   );
+
+  useEffect(() => {
+    dispatch({ type: 'clearActionExpansion' });
+  }, [dispatch, storybookState.storyId]);
 
   return (
     <>

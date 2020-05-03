@@ -8,7 +8,7 @@ import { useAddonState } from '../../hooks';
 import { ScreenshotList } from '../snapshot';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
-import {} from '../../config';
+import { SelectorOverlay } from './SelectorOverlay';
 
 const useStyles = makeStyles(
   () => {
@@ -41,9 +41,9 @@ const useStyles = makeStyles(
           zIndex: 10,
         },
         height: '100%',
+        position: 'relative',
         width: '100%',
       },
-
       snapshotPanel: {
         height: '100%',
         width: '100%',
@@ -103,6 +103,8 @@ const Preview: SFC<PreviewProps> = (props) => {
     setAddonState({ ...addonState, previewPanelEnabled: false });
   }, [addonState, setAddonState]);
 
+  if (!addonState) return null;
+
   return (
     <ThemeProvider>
       <div
@@ -125,7 +127,7 @@ const Preview: SFC<PreviewProps> = (props) => {
               [classes.notInteractive]: isDragging,
             })}
           >
-            {children}
+            <SelectorOverlay>{children}</SelectorOverlay>
           </div>
           <div
             className={clsx(classes.snapshotPanel, {

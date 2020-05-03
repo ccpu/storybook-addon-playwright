@@ -4,6 +4,7 @@ import {
   ThemeProvider as MuThemeProvider,
 } from '@material-ui/core/styles';
 import { useStorybookState } from '@storybook/api';
+// import global from 'jss-plugin-global';
 
 const ThemeProvider: SFC = memo((props) => {
   const { children } = props;

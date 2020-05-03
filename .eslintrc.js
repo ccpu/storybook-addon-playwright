@@ -31,7 +31,7 @@ module.exports = {
     'sort-keys-fix/sort-keys-fix': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    '@typescript-eslint/explicit-function-return-type': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'off',
   },

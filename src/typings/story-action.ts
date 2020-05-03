@@ -39,6 +39,8 @@ export interface StoryAction<T extends unknown = Page> {
   name?: string;
   requiredSelector?: boolean;
   actions?: unknown;
+  subtitleItems?: string[];
+
   // controlType: ControlTypes;
   predefinedOptions?: ActionControlPredefinedOptionKeys[];
   customOptions?: StoryActionCustomOptions;

@@ -1,94 +1,94 @@
-// import React, { SFC, useState, useEffect } from 'react';
-// import { Form } from '@storybook/components';
-// import { capitalize } from '../../../utils';
-// import { makeStyles } from '@material-ui/core';
-// import { formStyle } from './styles';
-// import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
-// import { StoryActionPosition } from '../../../typings';
-// import { getKnobControl } from '@storybook/addon-knobs/dist/components/types';
+import React, { SFC, memo, useCallback, useEffect, useState } from 'react';
+import { makeStyles, IconButton } from '@material-ui/core';
+import { ControlProps } from '../../../typings';
+import { useControl, useSelectorState } from '../../../hooks';
+import { FormControl } from './FormControl';
+import TargetIcon from '@material-ui/icons/FilterTiltShift';
+import { findSelector } from '../../../utils';
+import clsx from 'clsx';
 
-// const useStyles = makeStyles(
-//   () => {
-//     return {
-//       box: {
-//         alignItems: 'center',
-//         display: 'flex',
-//         flex: '1 1 80px',
-//         minWidth: '100px',
-//       },
-//       form: formStyle,
-//       label: {
-//         fontSize: 14,
-//         marginRight: 5,
-//       },
-//       root: {
-//         display: 'flex',
-//       },
-//       wrapper: {
-//         display: 'flex',
-//         flexDirection: 'row',
-//         flexWrap: 'wrap',
-//         justifyContent: 'center',
-//         width: '100%',
-//       },
-//     };
-//   },
-//   { name: 'PositionControl' },
-// );
+const useStyles = makeStyles(
+  () => {
+    return {
+      error: {
+        '& textarea': {
+          border: '1px solid red',
+        },
+      },
+      errorMessage: {
+        color: 'red',
+      },
+      root: {
+        alignItems: 'center',
+        display: 'flex',
+      },
+    };
+  },
+  { name: 'PositionControl' },
+);
 
-// export interface PositionControlProps {
-//   label: string;
-//   onChange: (val: StoryActionPosition) => void;
-//   value?: StoryActionPosition;
-// }
+const PositionControl: SFC<ControlProps> = memo((props) => {
+  const {
+    label,
+    appendValueToTitle,
+    onAppendValueToTitle,
+    description,
+  } = props;
 
-// const PositionControl: SFC<PositionControlProps> = (props) => {
-//   const { label, value, onChange } = props;
-//   const [knobX, setKnobX] = useState<Partial<KnobStoreKnob>>({
-//     name: label,
-//     type: 'number',
-//     value: (value && value.x) || 0,
-//   });
-//   const [knobY, setKnobY] = useState<Partial<KnobStoreKnob>>({
-//     name: label,
-//     type: 'number',
-//     value: (value && value.x) || 0,
-//   });
-//   const classes = useStyles();
+  const classes = useStyles();
 
-//   const ControlX = getKnobControl('number');
-//   const ControlY = getKnobControl('number');
+  const [invalidSelector, setInvalidSelector] = useState(false);
 
-//   const makeChangeXHandler = (val): void => {
-//     setKnobX({ ...knobX, value: val });
-//   };
+  const { selectorState, setSelectorState } = useSelectorState();
 
-//   const makeChangeYHandler = (val): void => {
-//     setKnobY({ ...knobY, value: val });
-//   };
+  const { Control, knob, handleChange } = useControl(props);
 
-//   useEffect(() => {
-//     onChange({ x: knobX.value, y: knobY.value });
-//   }, [knobX.value, knobY.value, onChange]);
+  const handleSelectorClick = useCallback(() => {
+    setSelectorState({ ...selectorState, start: true, type: 'selector' });
+  }, [selectorState, setSelectorState]);
 
-//   return (
-//     <Form className={classes.form}>
-//       <Form.Field key={label} label={capitalize(label)}>
-//         <div className={classes.wrapper}>
-//           <div className={classes.box}>
-//             <span className={classes.label}> X:</span>
-//             <ControlX knob={knobX} onChange={makeChangeXHandler} />
-//           </div>
-//           <div className={classes.box}>
-//             <span className={classes.label}> Y:</span>
-//             <ControlY knob={knobY} onChange={makeChangeYHandler} />
-//           </div>
-//         </div>
-//       </Form.Field>
-//     </Form>
-//   );
-// };
+  useEffect(() => {
+    if (!selectorState || !selectorState.path) return;
+    handleChange(selectorState.path);
+    setSelectorState({ ...selectorState, path: undefined, start: false });
+  }, [handleChange, selectorState, setSelectorState]);
 
-// PositionControl.displayName = 'PositionControl';
+  const validateSelector = useCallback((selector: string) => {
+    if (!selector || findSelector(selector) === null) {
+      setInvalidSelector(true);
+    } else {
+      setInvalidSelector(false);
+    }
+  }, []);
 
-// export { PositionControl };
+  const handleControlChange = useCallback(
+    (value: string) => {
+      validateSelector(value);
+      handleChange(value);
+    },
+    [handleChange, validateSelector],
+  );
+
+  return (
+    <FormControl
+      label={label}
+      appendValueToTitle={appendValueToTitle}
+      onAppendValueToTitle={onAppendValueToTitle}
+      description={description}
+    >
+      <div className={clsx(classes.root, { [classes.error]: invalidSelector })}>
+        <Control onChange={handleControlChange} knob={knob} required />
+        <IconButton size="small" onClick={handleSelectorClick}>
+          <TargetIcon />
+        </IconButton>
+      </div>
+      {invalidSelector && (
+        <div className={classes.errorMessage}>Invalid Selector!</div>
+      )}
+    </FormControl>
+  );
+});
+
+PositionControl.displayName = 'PositionControl';
+
+export { PositionControl };

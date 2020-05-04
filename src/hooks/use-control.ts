@@ -31,7 +31,7 @@ export const useControl = (
   props: ControlProps,
 ): {
   Control: KnobControlType;
-  makeChangeHandler: (value: unknown) => void;
+  handleChange: (value: unknown) => void;
   knob: Partial<KnobStoreKnob>;
 } => {
   const { label, type, onChange, value, options, display } = props;
@@ -51,7 +51,7 @@ export const useControl = (
 
   const Control = getKnobControl(type);
 
-  const makeChangeHandler = useCallback(
+  const handleChange = useCallback(
     (value): void => {
       setKnob({ ...knob, value });
       onChange(value);
@@ -59,5 +59,5 @@ export const useControl = (
     [knob, onChange],
   );
 
-  return { Control, knob, makeChangeHandler };
+  return { Control, handleChange, knob };
 };

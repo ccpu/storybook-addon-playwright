@@ -8,7 +8,7 @@ import { useAddonState } from '../../hooks';
 import { ScreenshotList } from '../snapshot';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
-import { SelectorOverlay } from './SelectorOverlay';
+import { Selector } from './Selector';
 
 const useStyles = makeStyles(
   () => {
@@ -108,6 +108,7 @@ const Preview: SFC<PreviewProps> = (props) => {
   return (
     <ThemeProvider>
       <div
+        id="preview-container"
         className={clsx(classes.root, {
           [classes.vertical]: !isHorizontal,
           [classes.horizontal]: isHorizontal,
@@ -127,7 +128,7 @@ const Preview: SFC<PreviewProps> = (props) => {
               [classes.notInteractive]: isDragging,
             })}
           >
-            <SelectorOverlay>{children}</SelectorOverlay>
+            <Selector>{children}</Selector>
           </div>
           <div
             className={clsx(classes.snapshotPanel, {

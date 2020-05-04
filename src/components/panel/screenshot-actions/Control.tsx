@@ -1,9 +1,9 @@
-import React, { SFC, memo } from 'react';
+import React, { SFC, memo, ComponentType } from 'react';
 import { ControlProps } from '../../../typings';
 import { FormControl } from './FormControl';
 import { useControl } from '../../../hooks';
 
-const Control: SFC<ControlProps> = memo((props) => {
+const Control: SFC<ControlProps & Partial<ComponentType>> = memo((props) => {
   const {
     label,
     description,
@@ -11,7 +11,7 @@ const Control: SFC<ControlProps> = memo((props) => {
     onAppendValueToTitle,
   } = props;
 
-  const { Control, makeChangeHandler, knob } = useControl(props);
+  const { Control: StorybookControl, handleChange, knob } = useControl(props);
 
   return (
     <FormControl
@@ -20,7 +20,7 @@ const Control: SFC<ControlProps> = memo((props) => {
       onAppendValueToTitle={onAppendValueToTitle}
       description={description}
     >
-      <Control onChange={makeChangeHandler} knob={knob} required />
+      <StorybookControl onChange={handleChange} knob={knob} required />
     </FormControl>
   );
 });

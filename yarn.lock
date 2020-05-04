@@ -287,6 +287,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dom-utils/selector-path@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@dom-utils/selector-path/-/selector-path-1.0.1.tgz#7a32f1c0d162e4bca43cf998e1c7d5e0be53bd4b"
+  integrity sha512-xsxegxknqw6ojFWDrABggg4iHJmV6Dk/2LS6xoBwHbJHJgRJ3ZR/KWYxX4vc2TtAnQ9Hk79aqHQd3XIj+Hr/wQ==
+  dependencies:
+    trim "^0.0.1"
+
 "@emotion/cache@^10.0.27", "@emotion/cache@^10.0.9":
   version "10.0.29"
   resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.29.tgz#87e7e64f412c060102d589fe7c6dc042e6f9d1e0"
@@ -1540,6 +1547,13 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
+cartesian@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/cartesian/-/cartesian-1.0.1.tgz#ae3fc8a63e2ba7e2c4989ce696207457bcae65af"
+  integrity sha1-rj/Ipj4rp+LEmJzmliB0V7yuZa8=
+  dependencies:
+    xtend "^4.0.1"
+
 caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
@@ -1815,6 +1829,21 @@ css-in-js-utils@^2.0.0:
     hyphenate-style-name "^1.0.2"
     isobject "^3.0.1"
 
+css-path@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/css-path/-/css-path-1.0.3.tgz#e7aa1c78365028f067d5ac48b57a18fed592a664"
+  integrity sha1-56oceDZQKPBn1axItXoY/tWSpmQ=
+  dependencies:
+    trim "0.0.1"
+
+css-selector-generator@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/css-selector-generator/-/css-selector-generator-2.0.1.tgz#b2fa916c0deb95d148969b75683e1e67062e87bb"
+  integrity sha512-slJ15JymrnWLh+KuN/Ci1Yxbe0Wb7R4auCellIl7uXUcIbBC2Wtmvz2KBhiN5YTe2D7GE5xDPbph250pn3Njvw==
+  dependencies:
+    cartesian "^1.0.1"
+    iselement "^1.1.4"
+
 css-tree@^1.0.0-alpha.28:
   version "1.0.0-alpha.39"
   resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-1.0.0-alpha.39.tgz#2bff3ffe1bb3f776cf7eefd91ee5cba77a149eeb"
@@ -2019,6 +2048,11 @@ dom-helpers@^5.0.1:
   dependencies:
     "@babel/runtime" "^7.8.7"
     csstype "^2.6.7"
+
+dom-path-utils@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/dom-path-utils/-/dom-path-utils-0.2.0.tgz#51629b89b7174e267cb8b25b5cc21f9e0fc06f49"
+  integrity sha512-VOC5mjzOmEDbIarnSth2JyJeMU9iYXHlrjwIwmZBDQNPZ1YAUY2kkxT3mRfdq2inzsTO31WWUgrR6j8MFkkvsQ==
 
 dom-walk@^0.1.0:
   version "0.1.2"
@@ -3302,6 +3336,11 @@ isarray@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
   integrity sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
+
+iselement@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/iselement/-/iselement-1.1.4.tgz#7e55b52a8ebca50a7e2e80e5b8d2840f32353146"
+  integrity sha1-flW1Ko68pQp+LoDluNKEDzI1MUY=
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -6017,6 +6056,11 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
+trim@0.0.1, trim@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/trim/-/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
+  integrity sha1-WFhUf2spB1fulczMZm+1AITEYN0=
+
 ts-dedent@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ts-dedent/-/ts-dedent-1.1.1.tgz#68fad040d7dbd53a90f545b450702340e17d18f3"
@@ -6381,7 +6425,7 @@ xregexp@^4.3.0:
   dependencies:
     "@babel/runtime-corejs3" "^7.8.3"
 
-xtend@^4.0.0:
+xtend@^4.0.0, xtend@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==

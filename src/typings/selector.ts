@@ -1,3 +1,7 @@
-export interface SelectorOverlay {
-  showSelectorOverlay: boolean;
+export interface SelectorState {
+  path?: string;
+  start?: boolean;
+  type: 'selector' | 'position';
+  x?: number;
+  y?: number;
 }

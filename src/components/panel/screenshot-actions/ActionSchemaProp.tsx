@@ -5,6 +5,7 @@ import { ActionSchemaProps } from './ActionSchemaProps';
 import { ActionContext, ActionDispatchContext } from '../../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
+import { PositionControl } from './PositionControl';
 
 export interface ActionSchemaPropProps {
   name: string;
@@ -19,18 +20,18 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
     const dispatch = useContext(ActionDispatchContext);
     const state = useContext(ActionContext);
     const optionObjectPath = [...parents, name].join('.');
+    const fullObjectPath = `${actionName}.${optionObjectPath}`;
 
     const handleChange = useCallback(
       (val) => {
-        const fullPath = `${actionName}.${optionObjectPath}`;
         dispatch({
           actionId,
-          objPath: fullPath,
+          objPath: fullObjectPath,
           type: 'setActionOptions',
           val,
         });
       },
-      [actionId, actionName, dispatch, optionObjectPath],
+      [actionId, dispatch, fullObjectPath],
     );
 
     const handleAppendToTile = useCallback(() => {
@@ -52,6 +53,20 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           <SelectorControl
             label={name}
             type="text"
+            onChange={handleChange}
+            value={value}
+            description={schema.description}
+            onAppendValueToTitle={handleAppendToTile}
+            appendValueToTitle={appendToTile}
+          />
+        );
+      }
+
+      if (name === 'x' || name === 'y') {
+        return (
+          <PositionControl
+            label={name}
+            type="number"
             onChange={handleChange}
             value={value}
             description={schema.description}
@@ -133,6 +148,9 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           );
         }
         case 'object':
+          // if (schema.properties.x && schema.properties.y)
+          console.log(schema.properties, actionName);
+
           return (
             <ActionSchemaProps
               props={schema.properties}

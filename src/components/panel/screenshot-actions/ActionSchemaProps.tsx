@@ -13,7 +13,7 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
   ({ props, parents = [], actionName, actionId }) => {
     return (
       <>
-        {Object.keys(props).map((name) => {
+        {Object.keys(props).map((name, i, array) => {
           const param = props[name];
           return (
             <ActionSchemaProp
@@ -23,6 +23,7 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
               parents={parents}
               actionName={actionName}
               actionId={actionId}
+              nextPropName={array[i + 1]}
             />
           );
         })}

@@ -4,16 +4,16 @@ import { SelectorOverlay } from './SelectorOverlay';
 
 const Selector: SFC = memo((props) => {
   const { children } = props;
-  const { selectorState, setSelectorState } = useSelectorState();
+  const { selectorManager } = useSelectorState();
 
   const rootRef = useRef<HTMLDivElement>(null);
   const [iframe, setIframe] = useState<HTMLIFrameElement>();
 
   useEffect(() => {
     setIframe(rootRef.current.querySelector('iframe'));
-  }, [selectorState, setSelectorState]);
+  }, []);
 
-  const isActive = selectorState && selectorState.start;
+  const isActive = selectorManager && selectorManager.start;
 
   return (
     <div ref={rootRef}>

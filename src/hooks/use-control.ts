@@ -1,10 +1,7 @@
 import { useState, useCallback } from 'react';
 import { ControlTypes, ControlProps } from '../typings';
 import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
-import {
-  getKnobControl,
-  KnobControlType,
-} from '@storybook/addon-knobs/dist/components/types';
+import { getKnobControl } from '@storybook/addon-knobs/dist/components/types';
 
 const convertOptions = (options?: string[]): {} => {
   return options.reduce((obj, key) => {
@@ -27,13 +24,7 @@ const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
   }
 };
 
-export const useControl = (
-  props: ControlProps,
-): {
-  Control: KnobControlType;
-  handleChange: (value: unknown) => void;
-  knob: Partial<KnobStoreKnob>;
-} => {
+export const useControl = (props: ControlProps) => {
   const { label, type, onChange, value, options, display } = props;
   const [knob, setKnob] = useState<Partial<KnobStoreKnob>>({
     defaultValue: value,
@@ -59,5 +50,5 @@ export const useControl = (
     [knob, onChange],
   );
 
-  return { Control, handleChange, knob };
+  return { Control, handleChange, knob, setKnob };
 };

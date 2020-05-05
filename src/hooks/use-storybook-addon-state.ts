@@ -9,7 +9,7 @@ function orDefault<S>(fromStore: S, defaultState: S): S {
   }
   return fromStore;
 }
-type StateMerger<S> = (input: S) => S;
+export type StateMerger<S> = (input: S) => S;
 
 export interface Options {
   persistence: 'none' | 'session' | string;

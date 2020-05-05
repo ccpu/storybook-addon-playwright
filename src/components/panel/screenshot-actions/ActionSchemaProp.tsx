@@ -1,11 +1,10 @@
-import React, { SFC, useCallback, memo, useContext, useMemo } from 'react';
+import React, { SFC, useCallback, memo, useContext } from 'react';
 import { Definition } from 'ts-to-json';
 import { Control } from './Control';
 import { ActionSchemaProps } from './ActionSchemaProps';
 import { ActionContext, ActionDispatchContext } from '../../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
-import { PositionControl } from './PositionControl';
 
 export interface ActionSchemaPropProps {
   name: string;
@@ -13,10 +12,11 @@ export interface ActionSchemaPropProps {
   schema: Definition;
   actionName: string;
   actionId: string;
+  nextPropName: string;
 }
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
-  ({ name, schema, parents = [], actionName, actionId }) => {
+  ({ name, schema, parents = [], actionName, actionId, nextPropName }) => {
     const dispatch = useContext(ActionDispatchContext);
     const state = useContext(ActionContext);
     const optionObjectPath = [...parents, name].join('.');
@@ -47,10 +47,45 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
     const appendToTile =
       action.subtitleItems && action.subtitleItems.includes(optionObjectPath);
 
-    return useMemo(() => {
-      if (name === 'selector') {
+    if (name === 'selector' || name === 'x' || name === 'y') {
+      return (
+        <SelectorControl
+          label={name}
+          type={name === 'selector' ? 'text' : 'number'}
+          onChange={handleChange}
+          selectorType={name === 'selector' ? 'selector' : 'position'}
+          value={value}
+          description={schema.description}
+          onAppendValueToTitle={handleAppendToTile}
+          appendValueToTitle={appendToTile}
+          isFollowedByPositionProp={
+            nextPropName === 'x' || nextPropName === 'y'
+          }
+          fullObjectPath={fullObjectPath}
+          actionId={actionId}
+        />
+      );
+    }
+
+    if (schema.enum) {
+      return (
+        <Control
+          label={name}
+          type="select"
+          onChange={handleChange}
+          options={schema.enum as string[]}
+          value={value}
+          description={schema.description}
+          onAppendValueToTitle={handleAppendToTile}
+          appendValueToTitle={appendToTile}
+        />
+      );
+    }
+
+    switch (schema.type) {
+      case 'string':
         return (
-          <SelectorControl
+          <Control
             label={name}
             type="text"
             onChange={handleChange}
@@ -60,11 +95,10 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             appendValueToTitle={appendToTile}
           />
         );
-      }
-
-      if (name === 'x' || name === 'y') {
+      case 'number':
+      case 'integer':
         return (
-          <PositionControl
+          <Control
             label={name}
             type="number"
             onChange={handleChange}
@@ -74,15 +108,29 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             appendValueToTitle={appendToTile}
           />
         );
-      }
-
-      if (schema.enum) {
+      case 'boolean':
         return (
           <Control
             label={name}
-            type="select"
+            type="boolean"
             onChange={handleChange}
-            options={schema.enum as string[]}
+            value={value}
+            description={schema.description}
+            onAppendValueToTitle={handleAppendToTile}
+            appendValueToTitle={appendToTile}
+          />
+        );
+      case 'array': {
+        if (!schema.items) return null;
+        const items = (schema.items as Definition).enum;
+        if (!items) return null;
+        return (
+          <Control
+            label={name}
+            type="options"
+            onChange={handleChange}
+            display="inline-check"
+            options={items as string[]}
             value={value}
             description={schema.description}
             onAppendValueToTitle={handleAppendToTile}
@@ -90,93 +138,18 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           />
         );
       }
-
-      switch (schema.type) {
-        case 'string':
-          return (
-            <Control
-              label={name}
-              type="text"
-              onChange={handleChange}
-              value={value}
-              description={schema.description}
-              onAppendValueToTitle={handleAppendToTile}
-              appendValueToTitle={appendToTile}
-            />
-          );
-        case 'number':
-        case 'integer':
-          return (
-            <Control
-              label={name}
-              type="number"
-              onChange={handleChange}
-              value={value}
-              description={schema.description}
-              onAppendValueToTitle={handleAppendToTile}
-              appendValueToTitle={appendToTile}
-            />
-          );
-        case 'boolean':
-          return (
-            <Control
-              label={name}
-              type="boolean"
-              onChange={handleChange}
-              value={value}
-              description={schema.description}
-              onAppendValueToTitle={handleAppendToTile}
-              appendValueToTitle={appendToTile}
-            />
-          );
-        case 'array': {
-          if (!schema.items) return null;
-          const items = (schema.items as Definition).enum;
-          if (!items) return null;
-          return (
-            <Control
-              label={name}
-              type="options"
-              onChange={handleChange}
-              display="inline-check"
-              options={items as string[]}
-              value={value}
-              description={schema.description}
-              onAppendValueToTitle={handleAppendToTile}
-              appendValueToTitle={appendToTile}
-            />
-          );
-        }
-        case 'object':
-          // if (schema.properties.x && schema.properties.y)
-          console.log(schema.properties, actionName);
-
-          return (
-            <ActionSchemaProps
-              props={schema.properties}
-              parents={[...parents, name]}
-              actionName={actionName}
-              actionId={actionId}
-            />
-          );
-        default:
-          return null;
-      }
-    }, [
-      actionId,
-      actionName,
-      appendToTile,
-      handleAppendToTile,
-      handleChange,
-      name,
-      parents,
-      schema.description,
-      schema.enum,
-      schema.items,
-      schema.properties,
-      schema.type,
-      value,
-    ]);
+      case 'object':
+        return (
+          <ActionSchemaProps
+            props={schema.properties}
+            parents={[...parents, name]}
+            actionName={actionName}
+            actionId={actionId}
+          />
+        );
+      default:
+        return null;
+    }
   },
 );
 

@@ -46,7 +46,11 @@ interface Props {
 
 const SelectorOverlay: SFC<Props> = memo((props) => {
   const { iframe } = props;
-  const { selectorState, setSelectorState } = useSelectorState();
+  const {
+    stopSelector,
+    selectorManager,
+    setSelectorData: handleSelectorData,
+  } = useSelectorState();
 
   const [mouseupRef, setMouseupRef] = useState<HTMLElement>();
 
@@ -67,10 +71,10 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
   useKey(
     'Escape',
     () => {
-      setSelectorState({ ...selectorState, start: false });
+      stopSelector();
     },
     undefined,
-    [setSelectorInfo, selectorState],
+    [setSelectorInfo, stopSelector],
   );
 
   useThrottleFn(
@@ -107,10 +111,9 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
     if (mouseupRef) {
       const isInBoundary = selectorRef.current.contains(mouseupRef);
 
-      setSelectorState({
-        ...selectorState,
+      stopSelector();
+      handleSelectorData({
         path: isInBoundary ? selectorInfo.selector : undefined,
-        start: false,
         x: elX,
         y: elY,
       });
@@ -118,10 +121,10 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
   }, [
     elX,
     elY,
+    handleSelectorData,
     mouseupRef,
     selectorInfo.selector,
-    selectorState,
-    setSelectorState,
+    stopSelector,
   ]);
 
   useEffect(() => {
@@ -141,7 +144,6 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
     body.addEventListener('mouseup', mouseup);
 
     return (): void => {
-      console.log('unmount');
       body.style.cursor = 'inherit';
       body.removeEventListener('mouseup', mouseup);
       document.head.removeChild(style);
@@ -150,7 +152,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
 
   return (
     <div ref={selectorRef} className={clsx(classes.overlay)}>
-      {selectorInfo && selectorInfo.rect && (
+      {selectorManager && selectorInfo && selectorInfo.rect && (
         <>
           <div
             className={classes.preview}
@@ -161,7 +163,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
               width: selectorInfo.rect.width,
             }}
           />
-          {selectorState.type === 'selector' ? (
+          {selectorManager.type === 'selector' ? (
             <div className={classes.path}>{selectorInfo.selector}</div>
           ) : (
             <div className={classes.path}>{`X: ${elX}  Y: ${elY}`}</div>

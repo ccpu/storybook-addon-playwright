@@ -1,8 +1,8 @@
-import React, { SFC, useCallback, memo, useContext } from 'react';
+import React, { SFC, useCallback, memo } from 'react';
 import { Definition } from 'ts-to-json';
 import { Control } from './Control';
 import { ActionSchemaProps } from './ActionSchemaProps';
-import { ActionContext, ActionDispatchContext } from '../../../store';
+import { useActionContext, useActionDispatchContext } from '../../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
 
@@ -17,8 +17,8 @@ export interface ActionSchemaPropProps {
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
   ({ name, schema, parents = [], actionName, actionId, nextPropName }) => {
-    const dispatch = useContext(ActionDispatchContext);
-    const state = useContext(ActionContext);
+    const dispatch = useActionDispatchContext();
+    const state = useActionContext();
     const optionObjectPath = [...parents, name].join('.');
     const fullObjectPath = `${actionName}.${optionObjectPath}`;
 

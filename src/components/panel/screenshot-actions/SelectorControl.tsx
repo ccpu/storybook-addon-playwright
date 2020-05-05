@@ -1,20 +1,13 @@
-import React, {
-  SFC,
-  memo,
-  useCallback,
-  useState,
-  useEffect,
-  useContext,
-} from 'react';
+import React, { SFC, memo, useCallback, useState, useEffect } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { ControlProps } from '../../../typings';
-import { useControl, useSelectorState, SelectorType } from '../../../hooks';
+import { useControl, useSelectorManager, SelectorType } from '../../../hooks';
 import { FormControl } from './FormControl';
 import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
 import { isValidSelector } from '../../../utils';
 import clsx from 'clsx';
 import PointerIcon from '@material-ui/icons/FilterTiltShift';
-import { ActionDispatchContext } from '../../../store';
+import { useActionDispatchContext } from '../../../store';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -38,23 +31,16 @@ const useStyles = makeStyles(
       errorMessage: {
         color: 'red',
       },
-      hidden: {
-        pointerEvents: 'none',
-        visibility: 'hidden',
-      },
       root: {
         alignItems: 'center',
         display: 'flex',
-      },
-      xyButtonPosition: {
-        marginBottom: -38,
       },
     };
   },
   { name: 'SelectorControl' },
 );
 
-interface SelectorControlProps extends ControlProps {
+export interface SelectorControlProps extends ControlProps {
   selectorType: SelectorType;
   isFollowedByPositionProp: boolean;
   fullObjectPath: string;
@@ -74,37 +60,23 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     actionId,
   } = props;
 
+  const [validate, setValidate] = useState(false);
+
   const classes = useStyles();
 
   const [invalidSelector, setInvalidSelector] = useState(false);
 
-  const dispatch = useContext(ActionDispatchContext);
+  const dispatch = useActionDispatchContext();
 
-  const { startSelector } = useSelectorState();
+  const { startSelector } = useSelectorManager();
 
-  const { Control, knob, handleChange, setKnob } = useControl({
-    ...props,
-    value: undefined,
-  });
-
-  const validateSelector = useCallback(
-    (selector: string) => {
-      if (selectorType !== 'selector') return;
-      if (isValidSelector(selector)) {
-        setInvalidSelector(false);
-      } else {
-        setInvalidSelector(true);
-      }
-    },
-    [selectorType],
-  );
+  const { Control, knob, handleChange, setKnob } = useControl(props);
 
   const handleSelectorClick = useCallback(() => {
+    setValidate(false);
     startSelector({
       onData: (data) => {
-        setInvalidSelector(false);
         if (selectorType === 'selector') {
-          validateSelector(data.path);
           dispatch({
             actionId,
             objPath: fullObjectPath,
@@ -129,9 +101,6 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
           handleChange(data[label]);
         }
       },
-      onStop: () => {
-        setInvalidSelector(false);
-      },
       type: selectorType,
     });
   }, [
@@ -143,9 +112,17 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     label,
     selectorType,
     startSelector,
-    validateSelector,
   ]);
-  console.log(value);
+
+  useEffect(() => {
+    if (validate && selectorType !== 'selector') {
+      setInvalidSelector(false);
+      return;
+    }
+
+    setInvalidSelector(!isValidSelector(value as string));
+  }, [selectorType, validate, value]);
+
   useEffect(() => {
     if (knob.defaultValue !== value) {
       handleChange(value);
@@ -155,10 +132,16 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
 
   const handleControlChange = useCallback(
     (value: string) => {
-      validateSelector(value);
+      setValidate(true);
       handleChange(value);
     },
-    [handleChange, validateSelector],
+    [handleChange],
+  );
+
+  const handleClick = useCallback(
+    (e: React.FocusEvent<HTMLDivElement>) =>
+      setValidate(e.target.tagName === 'TEXTAREA'),
+    [],
   );
 
   return (
@@ -168,7 +151,12 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
       onAppendValueToTitle={onAppendValueToTitle}
       description={description}
     >
-      <div className={clsx(classes.root, { [classes.error]: invalidSelector })}>
+      <div
+        className={clsx('selector-root', classes.root, {
+          [classes.error]: invalidSelector && validate,
+        })}
+        onBlur={handleClick}
+      >
         <Control onChange={handleControlChange} knob={knob} required />
         <div
           className={clsx({ [classes.buttonWrap]: isFollowedByPositionProp })}
@@ -176,19 +164,16 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
           <IconButton
             size="small"
             onClick={handleSelectorClick}
-            className={clsx(classes.button, {
-              // [classes.hidden]:
-              //   selectorType === 'position' && !isFollowedByPositionProp,
-              // [classes.xyButtonPosition]:
-              //   selectorType === 'position' && isFollowedByPositionProp,
-            })}
+            className={classes.button}
           >
             {selectorType === 'selector' ? <TargetIcon /> : <PointerIcon />}
           </IconButton>
         </div>
       </div>
-      {invalidSelector && (
-        <div className={classes.errorMessage}>Invalid Selector!</div>
+      {invalidSelector && validate && (
+        <div className={clsx('selector-error', classes.errorMessage)}>
+          Invalid Selector!
+        </div>
       )}
     </FormControl>
   );

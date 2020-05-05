@@ -1,7 +1,6 @@
 import React, {
   memo,
   SFC,
-  useContext,
   useMemo,
   useCallback,
   useState,
@@ -18,7 +17,7 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../../utils';
-import { ActionContext, ActionDispatchContext } from '../../../store';
+import { useActionContext, useActionDispatchContext } from '../../../store';
 import { useAction } from '../../../hooks';
 import { getActionOptionValue } from './utils';
 
@@ -68,8 +67,8 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
 
   const action = useAction(actionId);
 
-  const state = useContext(ActionContext);
-  const dispatch = useContext(ActionDispatchContext);
+  const state = useActionContext();
+  const dispatch = useActionDispatchContext();
 
   const schema = getActionSchema(state.actionSchema, actionName);
 

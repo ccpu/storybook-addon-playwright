@@ -1,13 +1,13 @@
-import React, { SFC, memo, useCallback, useContext, useEffect } from 'react';
+import React, { SFC, memo, useCallback, useEffect } from 'react';
 import { useStorybookState } from '@storybook/api';
 import { ActionList } from './ActionList';
 import { StoryAction } from '../../../typings';
-import { ActionDispatchContext } from '../../../store/actions';
+import { useActionDispatchContext } from '../../../store/actions';
 import { ActionToolbar } from './ActionToolbar';
 import { nanoid } from 'nanoid';
 
 const ActionListMain: SFC = memo(() => {
-  const dispatch = useContext(ActionDispatchContext);
+  const dispatch = useActionDispatchContext();
 
   const storybookState = useStorybookState();
 

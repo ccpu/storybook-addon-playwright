@@ -16,7 +16,7 @@ export interface SelectorManger extends SelectorManageSharedProps {
   start: boolean;
 }
 
-export const useSelectorState = () => {
+export const useSelectorManager = () => {
   const [selectorManager, setSelectorManager] = useStoryBookAddonState<
     SelectorManger
   >(EVENTS.SELECTOR);

@@ -1,6 +1,6 @@
 import React, { SFC, memo, useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useSelectorState } from '../../hooks';
+import { useSelectorManager } from '../../hooks';
 import useMouseHovered from 'react-use/lib/useMouseHovered';
 import clsx from 'clsx';
 import useThrottleFn from 'react-use/lib/useThrottleFn';
@@ -50,7 +50,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
     stopSelector,
     selectorManager,
     setSelectorData: handleSelectorData,
-  } = useSelectorState();
+  } = useSelectorManager();
 
   const [mouseupRef, setMouseupRef] = useState<HTMLElement>();
 

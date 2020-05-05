@@ -1,10 +1,10 @@
 import React, { SFC, memo, useEffect, useRef, useState } from 'react';
-import { useSelectorState } from '../../hooks';
+import { useSelectorManager } from '../../hooks';
 import { SelectorOverlay } from './SelectorOverlay';
 
 const Selector: SFC = memo((props) => {
   const { children } = props;
-  const { selectorManager } = useSelectorState();
+  const { selectorManager } = useSelectorManager();
 
   const rootRef = useRef<HTMLDivElement>(null);
   const [iframe, setIframe] = useState<HTMLIFrameElement>();

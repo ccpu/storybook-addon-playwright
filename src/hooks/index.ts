@@ -6,6 +6,6 @@ export * from './use-control';
 export * from './use-disabled-browser';
 export * from './use-knobs';
 export * from './use-screenshot';
-export * from './use-selector-State';
+export * from './use-selector-manager';
 export * from './use-story-url';
 export * from './use-storybook-addon-state';

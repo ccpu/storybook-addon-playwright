@@ -1,6 +1,5 @@
 export * from './addon-state';
 export * from './control';
-export * from './global.d';
 export * from './iframe-size';
 export * from './knobs';
 export * from './props';

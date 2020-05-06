@@ -9,3 +9,4 @@ export * from './screenshot-request-response';
 export * from './selector';
 export * from './snapshot-data';
 export * from './story-action';
+export * from './action-schema';

@@ -38,19 +38,19 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
   return (
     <>
       <Toolbar border={['bottom']}>
-        <Fragment key="left">
+        <div className="left">
           <IconButton onClick={handleMenuOpen} title="Add Actions">
             <AddIcon />
           </IconButton>
-        </Fragment>
-        <Fragment key="Right">
+        </div>
+        <div className="right">
           <IconButton title="Save Actions" onClick={onSave}>
             <SaveIcon />
           </IconButton>
           <IconButton title="Close" onClick={onClose}>
             <CloseIcon />
           </IconButton>
-        </Fragment>
+        </div>
       </Toolbar>
 
       <ActionMenu

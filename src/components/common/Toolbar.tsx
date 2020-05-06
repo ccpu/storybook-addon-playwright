@@ -1,10 +1,11 @@
 import React, { SFC } from 'react';
-import { FlexBar } from '@storybook/components';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles(
   (theme) => {
+    const { divider, text } = theme.palette;
+
     return {
       root: {
         '& svg': {
@@ -12,17 +13,35 @@ const useStyles = makeStyles(
           width: 20,
         },
         '&.border-bottom': {
-          borderBottom: '1px solid ' + theme.palette.divider,
+          borderBottom: '1px solid ' + divider,
         },
         '&.border-left': {
-          borderLeft: '1px solid ' + theme.palette.divider,
+          borderLeft: '1px solid ' + divider,
         },
         '&.border-right': {
-          borderRight: '1px solid ' + theme.palette.divider,
+          borderRight: '1px solid ' + divider,
         },
         '&.border-top': {
-          borderTop: '1px solid ' + theme.palette.divider,
+          borderTop: '1px solid ' + divider,
         },
+      },
+      toolbar: {
+        '& > .left': {
+          '& > *': {
+            marginLeft: 15,
+          },
+          display: 'flex',
+        },
+        '& > .right': {
+          '& > *': {
+            marginRight: 15,
+          },
+          display: 'flex',
+        },
+        alignItems: 'center',
+        color: text.primary,
+        display: 'flex',
+        justifyContent: 'space-between',
       },
     };
   },
@@ -47,7 +66,7 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
         (border && border.map((x) => ` border-${x}`).join(' '))
       }
     >
-      <FlexBar>{children}</FlexBar>
+      <div className={classes.toolbar}>{children}</div>
     </div>
   );
 };

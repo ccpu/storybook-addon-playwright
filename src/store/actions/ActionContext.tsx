@@ -1,6 +1,6 @@
 import React, { createContext, SFC, useEffect, useContext } from 'react';
 import { Loader } from '../../components/common';
-import { useActionData } from '../../hooks';
+import { useActionSchema } from '../../hooks';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
 
@@ -18,7 +18,7 @@ export const ActionConsumer = ActionContext.Consumer;
 const ActionProvider: SFC = (props) => {
   const { children } = props;
 
-  const { actions, loading } = useActionData();
+  const { actionSchema, loading } = useActionSchema();
 
   const [state, dispatch] = useReducer(
     reducer,
@@ -28,8 +28,8 @@ const ActionProvider: SFC = (props) => {
   );
 
   useEffect(() => {
-    dispatch({ actions, type: 'setActionSchema' });
-  }, [actions]);
+    dispatch({ actionSchema: actionSchema, type: 'setActionSchema' });
+  }, [actionSchema]);
 
   return (
     <ActionContextProvider value={state}>

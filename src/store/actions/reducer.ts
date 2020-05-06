@@ -1,14 +1,16 @@
-import { ActionSchema, StoryAction } from '../../typings';
+import { ActionSchema, StoryAction, ActionSet } from '../../typings';
 import * as immutableObject from 'object-path-immutable';
 
 export interface ReducerState {
   actionSchema: ActionSchema;
   storyActions: StoryAction[];
   expandedActions: { [k: string]: boolean };
+  actionSets: ActionSet[];
 }
 
 export type Action =
-  | { type: 'setActionSchema'; actions: ActionSchema }
+  | { type: 'addActionSet'; actionSetId: string; description: string }
+  | { type: 'setActionSchema'; actionSchema: ActionSchema }
   | { type: 'setStoryActions'; actions: StoryAction[] }
   | { type: 'toggleActionExpansion'; actionId: string }
   | { type: 'toggleSubtitleItem'; actionId: string; actionOptionPath: string }
@@ -28,12 +30,22 @@ export type Action =
 
 export const initialState: ReducerState = {
   actionSchema: {},
+  actionSets: [],
   expandedActions: {},
   storyActions: [],
 };
 
 export function reducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
+    case 'addActionSet': {
+      return {
+        ...state,
+        actionSets: [
+          ...state.actionSets,
+          { description: action.description, id: action.actionSetId },
+        ],
+      };
+    }
     case 'toggleSubtitleItem': {
       return {
         ...state,
@@ -90,7 +102,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       };
     }
     case 'setActionSchema':
-      return { ...state, actionSchema: action.actions };
+      return { ...state, actionSchema: action.actionSchema };
     case 'addStoryAction':
       return { ...state, storyActions: [...state.storyActions, action.action] };
     case 'setActionOptions': {

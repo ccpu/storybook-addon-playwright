@@ -1,7 +1,7 @@
 import { StoryActions } from '../../typings';
 import { getEndpoint } from './utils';
 
-export const getActions = async (): Promise<StoryActions> => {
+export const getActionSchema = async (): Promise<StoryActions> => {
   const restEndpoint = getEndpoint('GET_ACTIONS_DATA');
 
   const res = await fetch(restEndpoint, {

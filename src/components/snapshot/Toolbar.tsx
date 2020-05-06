@@ -17,7 +17,7 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
 
   return (
     <CommonToolbar border={['top']}>
-      <Fragment key="left">
+      <div className="left">
         {browserTypes.map((browserType) => (
           <BrowserIcon
             key={browserType}
@@ -26,12 +26,12 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
             active={activeBrowsers.find((x) => x === browserType) !== undefined}
           />
         ))}
-      </Fragment>
-      <Fragment key="right">
+      </div>
+      <div className="right">
         <IconButton onClick={onCLose}>
           <CloseOutlined />
         </IconButton>
-      </Fragment>
+      </div>
     </CommonToolbar>
   );
 };

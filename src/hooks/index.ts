@@ -1,5 +1,5 @@
 export * from './use-action';
-export * from './use-actions-data';
+export * from './use-action-schema';
 export * from './use-active-browser';
 export * from './use-addon-state';
 export * from './use-control';

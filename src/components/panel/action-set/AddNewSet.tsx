@@ -5,6 +5,7 @@ import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../common';
 import { useActionDispatchContext } from '../../../store';
 import { nanoid } from 'nanoid';
+import { useStorybookState } from '@storybook/api';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -26,10 +27,18 @@ const useStyles = makeStyles(
   { name: 'AddNewSet' },
 );
 
+// interface ActionSetEditorProps {
+//   actionSetId: string;
+// }
+
 const AddNewSet: SFC = memo(() => {
   const [showActionList, setShowActionList] = useState(false);
 
   const [showDescDialog, setShowDescDialog] = useState(false);
+
+  const [actionSetId, setActionSetId] = useState<string>();
+
+  const { storyId } = useStorybookState();
 
   const dispatch = useActionDispatchContext();
 
@@ -45,31 +54,41 @@ const AddNewSet: SFC = memo(() => {
 
   const createNewActionSet = useCallback(
     (desc) => {
+      const id = nanoid();
       dispatch({
-        actionSetId: nanoid(),
+        actionSetId: id,
         description: desc,
+        storyId,
         type: 'addActionSet',
       });
       toggleDescriptionDialog();
       toggleActionListSet();
+      setActionSetId(id);
     },
-    [dispatch, toggleActionListSet, toggleDescriptionDialog],
+    [dispatch, storyId, toggleActionListSet, toggleDescriptionDialog],
   );
 
   return (
     <>
       <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
-      <div
-        className={classes.actionListWrapper}
-        style={{ display: showActionList ? 'block' : 'none' }}
-      >
-        <ActionListSet onClose={toggleActionListSet} />
-      </div>
+      {actionSetId && (
+        <div
+          className={classes.actionListWrapper}
+          style={{ display: showActionList ? 'block' : 'none' }}
+        >
+          <ActionListSet
+            onClose={toggleActionListSet}
+            actionSetId={actionSetId}
+          />
+        </div>
+      )}
+
       <InputDialog
         onClose={toggleDescriptionDialog}
         title="Action set title"
         open={showDescDialog}
         onSave={createNewActionSet}
+        required
       />
     </>
   );

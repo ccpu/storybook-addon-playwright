@@ -9,7 +9,12 @@ export interface ReducerState {
 }
 
 export type Action =
-  | { type: 'addActionSet'; actionSetId: string; description: string }
+  | {
+      type: 'addActionSet';
+      actionSetId: string;
+      description: string;
+      storyId: string;
+    }
   | { type: 'setActionSchema'; actionSchema: ActionSchema }
   | { type: 'setStoryActions'; actions: StoryAction[] }
   | { type: 'toggleActionExpansion'; actionId: string }
@@ -42,7 +47,11 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         ...state,
         actionSets: [
           ...state.actionSets,
-          { description: action.description, id: action.actionSetId },
+          {
+            description: action.description,
+            id: action.actionSetId,
+            storyId: action.storyId,
+          },
         ],
       };
     }

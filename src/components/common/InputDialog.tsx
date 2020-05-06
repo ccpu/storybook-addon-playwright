@@ -1,6 +1,7 @@
-import { TextField, makeStyles } from '@material-ui/core';
+import { TextField, makeStyles, Snackbar } from '@material-ui/core';
 import React, { SFC, memo, useCallback, useState } from 'react';
 import { ActionDialog, ActionDialogDialogProps } from './ActionDialog';
+import Alert from '@material-ui/lab/Alert';
 
 interface StyleProps {
   width?: number | string;
@@ -28,11 +29,23 @@ export interface InputDialogProps
   onCancel?: () => void;
   onClose: () => void;
   value?: string;
+  required?: boolean;
+  requiredMessage?: string;
 }
 
 const InputDialog: SFC<InputDialogProps> = memo(
-  ({ value = '', onSave, onCancel, onClose, width = '30%', ...rest }) => {
+  ({
+    value = '',
+    onSave,
+    requiredMessage = 'Field is required',
+    required,
+    onCancel,
+    onClose,
+    width = '30%',
+    ...rest
+  }) => {
     const [inputValue, setValue] = useState(value);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const classes = useStyles({ width: width });
 
@@ -51,8 +64,16 @@ const InputDialog: SFC<InputDialogProps> = memo(
     }, [onCancel, onClose]);
 
     const handleSave = useCallback(() => {
+      if (required && !inputValue) {
+        setOpenSnackbar(true);
+        return;
+      }
       onSave(inputValue);
-    }, [inputValue, onSave]);
+    }, [inputValue, onSave, required]);
+
+    const handleSnackbarClose = useCallback(() => {
+      setOpenSnackbar(false);
+    }, []);
 
     return (
       <ActionDialog
@@ -69,6 +90,14 @@ const InputDialog: SFC<InputDialogProps> = memo(
           onChange={handleChange}
           variant="outlined"
         ></TextField>
+        <Snackbar
+          autoHideDuration={6000}
+          open={openSnackbar}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        >
+          <Alert severity="error">{requiredMessage}</Alert>
+        </Snackbar>
       </ActionDialog>
     );
   },

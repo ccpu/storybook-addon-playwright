@@ -8,11 +8,12 @@ import { nanoid } from 'nanoid';
 
 interface Props {
   onClose: () => void;
+  actionSetId: string;
 }
 
-const ActionListSet: SFC<Props> = memo(({ onClose }) => {
+const ActionListSet: SFC<Props> = memo(({ onClose, actionSetId }) => {
   const dispatch = useActionDispatchContext();
-
+  console.log(actionSetId);
   const storybookState = useStorybookState();
 
   const handleAddAction = useCallback(

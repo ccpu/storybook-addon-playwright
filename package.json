@@ -60,6 +60,7 @@
     "@dom-utils/selector-path": "^1.0.1",
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.52",
     "@storybook/addons": "^5.3.18",
     "@storybook/api": "^5.3.18",
     "@storybook/components": "^5.3.18",

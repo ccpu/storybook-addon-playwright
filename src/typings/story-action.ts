@@ -18,4 +18,5 @@ export interface ActionSet {
   id: string;
   description: string;
   actions?: StoryAction[];
+  storyId: string;
 }

@@ -13,13 +13,14 @@ import {
   makeStyles,
   Typography,
   Chip,
+  IconButton,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../../utils';
 import { useActionContext, useActionDispatchContext } from '../../../store';
 import { useAction } from '../../../hooks';
 import { getActionOptionValue } from './utils';
+import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -31,6 +32,9 @@ const useStyles = makeStyles(
       },
       detailPanel: {
         display: 'block',
+      },
+      expanded: {
+        transform: 'rotate(0deg) !important',
       },
       expansionPanel: {
         boxShadow: '0px 0.5px 4px -2px rgba(0,0,0,0.75)',
@@ -49,6 +53,10 @@ const useStyles = makeStyles(
       },
       summary: {
         alignItems: 'center',
+        justifyContent: 'space-between',
+      },
+      summaryInner: {
+        display: 'flex',
       },
     };
   },
@@ -92,6 +100,15 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     setSubtitle(titles);
   }, [action, actionName]);
 
+  const handleDeleteAction = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch({ actionId, type: 'deleteActionSetAction' });
+    },
+    [actionId, dispatch],
+  );
+
   return useMemo(() => {
     return (
       <div className={classes.root}>
@@ -99,31 +116,50 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           expanded={state.expandedActions[actionId] === true}
           onChange={handleExpand}
           className={classes.expansionPanel}
+          square
+          TransitionProps={{
+            timeout: 100,
+          }}
         >
           <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            className={classes.summary}
+            classes={{
+              content: classes.summary,
+              expanded: classes.expanded,
+            }}
           >
-            <div className={classes.heading}>
-              <Typography>
-                {capitalize(schema && schema.title ? schema.title : actionName)}
-              </Typography>
-            </div>
+            <div className={classes.summaryInner}>
+              <div className={classes.heading}>
+                <Typography>
+                  {capitalize(
+                    schema && schema.title ? schema.title : actionName,
+                  )}
+                </Typography>
+              </div>
 
-            <div className={classes.subtitleWrap}>
-              {subtitle &&
-                subtitle.map((sub) => (
-                  <Chip
-                    className={classes.chip}
-                    key={sub}
-                    size="small"
-                    label={sub}
-                    variant="outlined"
-                    title={sub}
-                  />
-                ))}
+              <div className={classes.subtitleWrap}>
+                {subtitle &&
+                  subtitle.map((sub) => (
+                    <Chip
+                      className={classes.chip}
+                      key={sub}
+                      size="small"
+                      label={sub}
+                      variant="outlined"
+                      title={sub}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div>
+              <IconButton
+                size="small"
+                color="inherit"
+                onClick={handleDeleteAction}
+              >
+                <DeleteIcon />
+              </IconButton>
             </div>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.detailPanel}>
@@ -143,11 +179,14 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     actionName,
     classes.chip,
     classes.detailPanel,
+    classes.expanded,
     classes.expansionPanel,
     classes.heading,
     classes.root,
     classes.subtitleWrap,
     classes.summary,
+    classes.summaryInner,
+    handleDeleteAction,
     handleExpand,
     schema,
     state.expandedActions,

@@ -1,13 +1,7 @@
-import {
-  Dialog,
-  DialogTitle,
-  Button,
-  DialogContent,
-  DialogActions,
-  makeStyles,
-  DialogProps,
-} from '@material-ui/core';
+import { Dialog, makeStyles, DialogProps } from '@material-ui/core';
 import React, { SFC, memo, useCallback } from 'react';
+
+import { ActionPanel, ActionPanelProps } from './ActionPanel';
 
 interface StyleProps {
   width?: number | string;
@@ -27,28 +21,28 @@ const useStyles = makeStyles(
   { name: 'ActionDialog' },
 );
 
-export interface ActionDialogDialogProps extends StyleProps, DialogProps {
-  title: string;
-  onPositiveAction: () => void;
-  onNegativeAction?: () => void;
+export interface ActionDialogDialogProps
+  extends StyleProps,
+    DialogProps,
+    ActionPanelProps {
   open: boolean;
   onClose: () => void;
   value?: string;
-  positiveActionName?: string;
-  negativeActionName?: string;
+  onCancel?: () => void;
 }
 
 const ActionDialog: SFC<ActionDialogDialogProps> = memo(
   ({
-    onPositiveAction: onSave,
+    onPositiveAction,
     title,
-    onNegativeAction: onCancel,
+    onNegativeAction,
     open,
     onClose,
     width = '30%',
     children,
-    positiveActionName = 'Save',
-    negativeActionName = 'Cancel',
+    positiveActionName,
+    negativeActionName,
+    onCancel,
     ...rest
   }) => {
     const classes = useStyles({ width: width });
@@ -69,12 +63,15 @@ const ActionDialog: SFC<ActionDialogDialogProps> = memo(
         }}
         {...rest}
       >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>{children}</DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>{negativeActionName}</Button>
-          <Button onClick={onSave}>{positiveActionName}</Button>
-        </DialogActions>
+        <ActionPanel
+          onPositiveAction={onPositiveAction}
+          negativeActionName={negativeActionName}
+          title={title}
+          onNegativeAction={onNegativeAction}
+          positiveActionName={positiveActionName}
+        >
+          {children}
+        </ActionPanel>
       </Dialog>
     );
   },

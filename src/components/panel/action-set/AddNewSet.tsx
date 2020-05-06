@@ -6,6 +6,7 @@ import { InputDialog } from '../../common';
 import { useActionDispatchContext } from '../../../store';
 import { nanoid } from 'nanoid';
 import { useStorybookState } from '@storybook/api';
+import { useTimeoutFn } from 'react-use';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -26,10 +27,6 @@ const useStyles = makeStyles(
   },
   { name: 'AddNewSet' },
 );
-
-// interface ActionSetEditorProps {
-//   actionSetId: string;
-// }
 
 const AddNewSet: SFC = memo(() => {
   const [showActionList, setShowActionList] = useState(false);
@@ -61,12 +58,16 @@ const AddNewSet: SFC = memo(() => {
         storyId,
         type: 'addActionSet',
       });
-      toggleDescriptionDialog();
+      // toggleDescriptionDialog();
       toggleActionListSet();
       setActionSetId(id);
     },
-    [dispatch, storyId, toggleActionListSet, toggleDescriptionDialog],
+    [dispatch, storyId, toggleActionListSet],
   );
+
+  useTimeoutFn(() => {
+    createNewActionSet('new action');
+  }, 1000);
 
   return (
     <>
@@ -78,7 +79,7 @@ const AddNewSet: SFC = memo(() => {
         >
           <ActionListSet
             onClose={toggleActionListSet}
-            actionSetId={actionSetId}
+            // actionSetId={actionSetId}
           />
         </div>
       )}

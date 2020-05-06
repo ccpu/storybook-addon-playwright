@@ -78,6 +78,7 @@
     "react-split-pane": "^0.1.91",
     "react-use": "^14.2.0",
     "reinspect": "^1.1.0",
-    "ts-to-json": "^0.65.1"
+    "ts-to-json": "^0.65.1",
+    "use-context-selector": "^1.1.1"
   }
 }

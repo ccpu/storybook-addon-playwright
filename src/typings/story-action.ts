@@ -6,8 +6,7 @@ export type ControlTypes = KnobType;
 
 export interface StoryAction<T extends unknown = Page> {
   id?: string;
-  actionKey: string;
-  storyId: string;
+  name: string;
   labe?: string;
   action?: unknown;
   subtitleItems?: string[];
@@ -17,6 +16,6 @@ export interface StoryAction<T extends unknown = Page> {
 export interface ActionSet {
   id: string;
   description: string;
-  actions?: StoryAction[];
+  actions: StoryAction[];
   storyId: string;
 }

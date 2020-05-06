@@ -4,7 +4,7 @@ import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 import CloseIcon from '@material-ui/icons/CloseSharp';
 import SaveIcon from '@material-ui/icons/SaveSharp';
-import { Toolbar } from '../../common';
+import { Toolbar, ActionPopover } from '../../common';
 
 export interface ActionToolbarProps {
   onAddAction: (actionName: string) => void;
@@ -18,6 +18,14 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
     null,
   );
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null,
+  );
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleMEnuChange = useCallback(
     (action: string) => {
@@ -47,7 +55,7 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
           <IconButton title="Save Actions" onClick={onSave}>
             <SaveIcon />
           </IconButton>
-          <IconButton title="Close" onClick={onClose}>
+          <IconButton title="Close" onClick={handleClick}>
             <CloseIcon />
           </IconButton>
         </div>
@@ -58,6 +66,11 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
         anchorEl={menuAnchorEl}
         onChange={handleMEnuChange}
       />
+      {anchorEl && (
+        <ActionPopover open={anchorEl !== undefined} anchorEl={anchorEl}>
+          Are you sure?
+        </ActionPopover>
+      )}
     </>
   );
 };

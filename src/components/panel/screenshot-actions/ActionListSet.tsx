@@ -8,26 +8,24 @@ import { nanoid } from 'nanoid';
 
 interface Props {
   onClose: () => void;
-  actionSetId: string;
 }
 
-const ActionListSet: SFC<Props> = memo(({ onClose, actionSetId }) => {
+const ActionListSet: SFC<Props> = memo(({ onClose }) => {
   const dispatch = useActionDispatchContext();
-  console.log(actionSetId);
+
   const storybookState = useStorybookState();
 
   const handleAddAction = useCallback(
-    (actionKey: string) => {
+    (actionName: string) => {
       const actionId = nanoid(10);
       const newAction: StoryAction = {
-        actionKey: actionKey,
         id: actionId,
-        storyId: storybookState.storyId,
+        name: actionName,
       };
       dispatch({ action: newAction, type: 'addStoryAction' });
       dispatch({ actionId, type: 'toggleActionExpansion' });
     },
-    [dispatch, storybookState.storyId],
+    [dispatch],
   );
 
   useEffect(() => {
@@ -45,7 +43,7 @@ const ActionListSet: SFC<Props> = memo(({ onClose, actionSetId }) => {
         onClose={onClose}
         onSave={handleSave}
       />
-      <ActionList storyId={storybookState.storyId} />
+      <ActionList />
     </>
   );
 });

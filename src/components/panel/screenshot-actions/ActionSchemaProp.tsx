@@ -2,9 +2,10 @@ import React, { SFC, useCallback, memo } from 'react';
 import { Definition } from 'ts-to-json';
 import { Control } from './Control';
 import { ActionSchemaProps } from './ActionSchemaProps';
-import { useActionContext, useActionDispatchContext } from '../../../store';
+import { useActionDispatchContext } from '../../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
+import { useAction } from '../../../hooks';
 
 export interface ActionSchemaPropProps {
   name: string;
@@ -18,7 +19,6 @@ export interface ActionSchemaPropProps {
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
   ({ name, schema, parents = [], actionName, actionId, nextPropName }) => {
     const dispatch = useActionDispatchContext();
-    const state = useActionContext();
     const optionObjectPath = [...parents, name].join('.');
     const fullObjectPath = `${actionName}.${optionObjectPath}`;
 
@@ -42,7 +42,10 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
       });
     }, [actionId, dispatch, optionObjectPath]);
 
-    const action = state.storyActions.find((x) => x.id === actionId);
+    const action = useAction(actionId);
+
+    if (!action) return null;
+
     const value = getActionOptionValue(action, actionName, optionObjectPath);
     const appendToTile =
       action.subtitleItems && action.subtitleItems.includes(optionObjectPath);

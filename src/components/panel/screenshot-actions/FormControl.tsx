@@ -38,9 +38,9 @@ const useStyles = makeStyles(
             margin: 0,
             marginRight: 10,
           },
-          justifyContent: 'space-between',
         },
         '& input[type="number"], select,textarea': {
+          transition: 'none',
           width: '100%',
         },
         '& label': {

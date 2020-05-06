@@ -7,8 +7,16 @@ export const useAction = (actionId: string): StoryAction | undefined => {
   const state = useContext(ActionContext);
 
   useEffect(() => {
-    const result = state.storyActions.find((x) => x.id === actionId);
+    const actionSet = state.actionSets.find(
+      (x) => x.id === state.currentActionSetId,
+    );
+    if (!actionSet) {
+      setAction(undefined);
+      return;
+    }
+    const result = actionSet.actions.find((x) => x.id === actionId);
     setAction(result);
-  }, [actionId, state.storyActions]);
+  }, [actionId, state.actionSets, state.currentActionSetId]);
+
   return action;
 };

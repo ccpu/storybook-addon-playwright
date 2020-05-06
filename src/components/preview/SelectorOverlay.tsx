@@ -27,7 +27,7 @@ const useStyles = makeStyles(
       path: {
         bottom: 0,
         color: theme.palette.primary.main,
-        fontSize: 12,
+        fontSize: 14,
         left: 2,
         position: 'absolute',
       },
@@ -174,7 +174,10 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
           {isSelector ? (
             <div className={classes.path}>{selectorInfo.selector}</div>
           ) : (
-            <div className={classes.path}>{`X: ${elX}  Y: ${elY}`}</div>
+            <div className={classes.path}>
+              <div>{`X: ${elX}`}</div>
+              <div>{`Y: ${elY}`}</div>
+            </div>
           )}
         </>
       )}

@@ -1,4 +1,4 @@
-import React, { SFC, Fragment } from 'react';
+import React, { SFC } from 'react';
 import { IconButton } from '@storybook/components';
 import { BrowserTypes } from '../../typings';
 import { BrowserIcon } from './BrowserIcon';

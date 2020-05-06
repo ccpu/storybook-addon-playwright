@@ -1,4 +1,4 @@
-import React, { SFC, Fragment } from 'react';
+import React, { SFC } from 'react';
 import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 

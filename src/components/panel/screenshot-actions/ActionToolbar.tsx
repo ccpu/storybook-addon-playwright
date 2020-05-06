@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, Fragment } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { ActionMenu } from './ActionMenu';
 import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';

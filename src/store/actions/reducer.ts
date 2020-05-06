@@ -112,8 +112,8 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
           if (act.id === action.actionId) {
             return {
               ...act,
-              actions: immutableObject.set(
-                act.actions,
+              action: immutableObject.set(
+                act.action,
                 action.objPath,
                 action.val,
               ),

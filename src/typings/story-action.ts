@@ -9,7 +9,7 @@ export interface StoryAction<T extends unknown = Page> {
   actionKey: string;
   storyId: string;
   labe?: string;
-  actions?: unknown;
+  action?: unknown;
   subtitleItems?: string[];
   run?: (page: T, selector: string) => Promise<void>;
 }

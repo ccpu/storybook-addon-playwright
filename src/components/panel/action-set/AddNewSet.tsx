@@ -2,6 +2,9 @@ import React, { SFC, memo, useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ActionListSet } from '../screenshot-actions/ActionListSet';
 import { ActionToolbar } from './ActionSetToolbar';
+import { InputDialog } from '../../common';
+import { useActionDispatchContext } from '../../../store';
+import { nanoid } from 'nanoid';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -26,21 +29,48 @@ const useStyles = makeStyles(
 const AddNewSet: SFC = memo(() => {
   const [showActionList, setShowActionList] = useState(false);
 
+  const [showDescDialog, setShowDescDialog] = useState(false);
+
+  const dispatch = useActionDispatchContext();
+
   const classes = useStyles();
 
   const toggleActionListSet = useCallback(() => {
     setShowActionList(!showActionList);
   }, [showActionList]);
 
+  const toggleDescriptionDialog = useCallback(() => {
+    setShowDescDialog(!showDescDialog);
+  }, [showDescDialog]);
+
+  const createNewActionSet = useCallback(
+    (desc) => {
+      dispatch({
+        actionSetId: nanoid(),
+        description: desc,
+        type: 'addActionSet',
+      });
+      toggleDescriptionDialog();
+      toggleActionListSet();
+    },
+    [dispatch, toggleActionListSet, toggleDescriptionDialog],
+  );
+
   return (
     <>
-      <ActionToolbar onAddActionSet={toggleActionListSet} />
+      <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
       <div
         className={classes.actionListWrapper}
         style={{ display: showActionList ? 'block' : 'none' }}
       >
         <ActionListSet onClose={toggleActionListSet} />
       </div>
+      <InputDialog
+        onClose={toggleDescriptionDialog}
+        title="Action set title"
+        open={showDescDialog}
+        onSave={createNewActionSet}
+      />
     </>
   );
 });

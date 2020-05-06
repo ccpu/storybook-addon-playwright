@@ -6,8 +6,8 @@ export const getActionOptionValue = (
   actionName: string,
   optionPath: string,
 ): undefined | unknown => {
-  if (action && action.actions) {
-    const data = immutableObject.get(action.actions, actionName);
+  if (action && action.action) {
+    const data = immutableObject.get(action.action, actionName);
     if (data) {
       return immutableObject.get(data, optionPath);
     }

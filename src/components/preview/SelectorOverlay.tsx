@@ -44,12 +44,19 @@ interface Props {
   iframe?: HTMLIFrameElement;
 }
 
+const defaultRect = {
+  height: ('100%' as unknown) as number,
+  left: 0,
+  right: 0,
+  width: ('100%' as unknown) as number,
+} as ClientRect;
+
 const SelectorOverlay: SFC<Props> = memo((props) => {
   const { iframe } = props;
   const {
     stopSelector,
     selectorManager,
-    setSelectorData: handleSelectorData,
+    setSelectorData,
   } = useSelectorManager();
 
   const [mouseupRef, setMouseupRef] = useState<HTMLElement>();
@@ -58,10 +65,12 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
 
   const selectorRef = useRef<HTMLDivElement>(null);
 
+  const isSelector = selectorManager.type === 'selector';
+
   const [selectorInfo, setSelectorInfo] = useState<{
     rect?: ClientRect;
     selector?: string;
-  }>({});
+  }>({ rect: defaultRect });
 
   const { elX, elY } = useMouseHovered(selectorRef, {
     bound: true,
@@ -84,12 +93,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
         if (node) {
           if (node.tagName === 'HTML') {
             setSelectorInfo({
-              rect: {
-                height: ('100%' as unknown) as number,
-                left: 0,
-                right: 0,
-                width: ('100%' as unknown) as number,
-              } as ClientRect,
+              rect: defaultRect,
               selector: getSelectorPath(node),
             });
           } else {
@@ -112,7 +116,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
       const isInBoundary = selectorRef.current.contains(mouseupRef);
 
       stopSelector();
-      handleSelectorData({
+      setSelectorData({
         path: isInBoundary ? selectorInfo.selector : undefined,
         x: elX,
         y: elY,
@@ -121,7 +125,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
   }, [
     elX,
     elY,
-    handleSelectorData,
+    setSelectorData,
     mouseupRef,
     selectorInfo.selector,
     stopSelector,
@@ -156,14 +160,18 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
         <>
           <div
             className={classes.preview}
-            style={{
-              height: selectorInfo.rect.height,
-              left: selectorInfo.rect.left,
-              top: selectorInfo.rect.top,
-              width: selectorInfo.rect.width,
-            }}
+            style={
+              isSelector
+                ? {
+                    height: selectorInfo.rect.height,
+                    left: selectorInfo.rect.left,
+                    top: selectorInfo.rect.top,
+                    width: selectorInfo.rect.width,
+                  }
+                : defaultRect
+            }
           />
-          {selectorManager.type === 'selector' ? (
+          {isSelector ? (
             <div className={classes.path}>{selectorInfo.selector}</div>
           ) : (
             <div className={classes.path}>{`X: ${elX}  Y: ${elY}`}</div>

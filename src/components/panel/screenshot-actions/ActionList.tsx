@@ -9,7 +9,6 @@ interface ActionListProp {
 
 const ActionList: SFC<ActionListProp> = ({ storyId }) => {
   const state = useContext(ActionContext);
-  // const [expendedItems, setExpendedItems] = useState();
 
   const [storyActions, setStoryAction] = useState<StoryAction[]>();
 
@@ -18,13 +17,6 @@ const ActionList: SFC<ActionListProp> = ({ storyId }) => {
     setStoryAction(actions);
   }, [state.storyActions, storyId]);
 
-  // useEffect(() => {
-
-  //   return () => {
-
-  //   }
-  // }, []);
-
   return useMemo(() => {
     if (!storyActions) return null;
     return (
@@ -32,7 +24,7 @@ const ActionList: SFC<ActionListProp> = ({ storyId }) => {
         {storyActions.map((action) => (
           <ActionOptions
             key={action.id}
-            actionName={action.schemaKey}
+            actionName={action.actionKey}
             actionId={action.id}
           />
         ))}

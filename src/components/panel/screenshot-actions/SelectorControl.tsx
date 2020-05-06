@@ -138,7 +138,7 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     [handleChange],
   );
 
-  const handleClick = useCallback(
+  const handleBlur = useCallback(
     (e: React.FocusEvent<HTMLDivElement>) =>
       setValidate(e.target.tagName === 'TEXTAREA'),
     [],
@@ -155,7 +155,7 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
         className={clsx('selector-root', classes.root, {
           [classes.error]: invalidSelector && validate,
         })}
-        onBlur={handleClick}
+        onBlur={handleBlur}
       >
         <Control onChange={handleControlChange} knob={knob} required />
         <div

@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 import { SelectorState } from '../typings/selector';
 import { EVENTS } from '../constants';
 import { useStoryBookAddonState } from './use-storybook-addon-state';
-// import { useChannel } from '@storybook/addons';
 
 export type SelectorType = 'selector' | 'position';
 

@@ -1,25 +1,12 @@
 // import React from 'react';
 import * as React from 'react';
-import { SelectorControl } from '../SelectorControl';
+import { SelectorControl, SelectorControlProps } from '../SelectorControl';
 import { mount } from 'enzyme';
 import { ThemeProvider, themes, convert } from '@storybook/theming';
 import { ActionProvider } from '../../../../store/actions/ActionContext';
 import { SelectorManageSharedProps } from '../../../../hooks/use-selector-manager';
 import { act } from 'react-dom/test-utils';
 import * as reducer from '../../../../store/actions/reducer';
-// import fetchMock from 'jest-fetch-mock';
-// import * as actionContext from '../../../../store/actions/ActionContext';
-
-// import { SelectorManageSharedProps } from '../../../../hooks/use-actions-data';
-
-// const onMock = jest.fn();
-
-// const useReducerSpy = jest.spyOn(React, 'useReducer');
-
-// useReducerSpy.mockImplementation((init: any) => {
-//   console.log(init);
-//   return init;
-// });
 
 jest.mock('../../../../hooks/use-selector-manager', () => ({
   useSelectorManager() {
@@ -72,97 +59,8 @@ describe('SelectorControl', () => {
     onAppendValueToTitleMock.mockRestore();
   });
 
-  it('should mount numeric input', () => {
-    const wrapper = mount(
-      <ThemeProvider theme={convert(themes.light)}>
-        <SelectorControl
-          label="x"
-          onChange={onChangeMock}
-          type="number"
-          selectorType="position"
-          fullObjectPath="options.prop.x"
-          actionId="actionId"
-          isFollowedByPositionProp={false}
-          appendValueToTitle={false}
-          onAppendValueToTitle={onAppendValueToTitleMock}
-          value={1}
-        />
-      </ThemeProvider>,
-    );
-    expect(wrapper.text()).toMatch('X');
-    const input = wrapper.find('input');
-    expect(input.props().value).toBe(1);
-  });
-
-  it('should mount textarea', () => {
-    const wrapper = mount(
-      <ThemeProvider theme={convert(themes.light)}>
-        <SelectorControl
-          label="selector"
-          onChange={onChangeMock}
-          type="text"
-          selectorType="position"
-          fullObjectPath="options.prop.x"
-          actionId="actionId"
-          isFollowedByPositionProp={false}
-          appendValueToTitle={false}
-          onAppendValueToTitle={onAppendValueToTitleMock}
-          value={'value'}
-        />
-      </ThemeProvider>,
-    );
-    const input = wrapper.find('textarea');
-    expect(input.props().value).toBe('value');
-  });
-
-  it('should validate selector', () => {
-    const wrapper = mount(
-      <ThemeProvider theme={convert(themes.light)}>
-        <SelectorControl
-          label="selector"
-          onChange={onChangeMock}
-          type="text"
-          selectorType="position"
-          fullObjectPath="options.prop.x"
-          actionId="actionId"
-          isFollowedByPositionProp={false}
-          appendValueToTitle={false}
-          onAppendValueToTitle={onAppendValueToTitleMock}
-          value={'value'}
-        />
-      </ThemeProvider>,
-    );
-    const input = wrapper.find('textarea');
-    input.simulate('change', { target: { value: 'div' } });
-    expect(wrapper).toMatchSnapshot();
-    expect(input.props().value).toBe('value');
-  });
-
-  it('should icon wrapper have class to be able to set height and margin, so it can hide bellow icon', () => {
-    const wrapper = mount(
-      <ThemeProvider theme={convert(themes.light)}>
-        <SelectorControl
-          label="x"
-          onChange={onChangeMock}
-          type="number"
-          selectorType="position"
-          fullObjectPath="options.prop.x"
-          actionId="actionId"
-          isFollowedByPositionProp={true}
-          appendValueToTitle={false}
-          onAppendValueToTitle={onAppendValueToTitleMock}
-          value={1}
-        />
-      </ThemeProvider>,
-    );
-
-    expect(wrapper.find('.selector-root > div')).toHaveClassName(
-      'SelectorControl-buttonWrap-2',
-    );
-  });
-
-  it('should start selector and return selector path', () => {
-    const wrapper = mount(
+  const Component = (props: Partial<SelectorControlProps>) => {
+    return (
       <ActionProvider>
         <ThemeProvider theme={convert(themes.light)}>
           <SelectorControl
@@ -176,10 +74,104 @@ describe('SelectorControl', () => {
             appendValueToTitle={false}
             onAppendValueToTitle={onAppendValueToTitleMock}
             value={'value'}
+            {...props}
           />
         </ThemeProvider>
-      </ActionProvider>,
+      </ActionProvider>
     );
+  };
+
+  it('should mount numeric input', () => {
+    const wrapper = mount(
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        value={1}
+      />,
+    );
+    expect(wrapper.text()).toMatch('X');
+    const input = wrapper.find('input');
+    expect(input.props().value).toBe(1);
+  });
+
+  it('should mount textarea', () => {
+    const wrapper = mount(<Component />);
+    const input = wrapper.find('textarea');
+    expect(input.props().value).toBe('value');
+  });
+
+  it('should validate selector', () => {
+    const wrapper = mount(<Component />);
+    const input = wrapper.find('textarea');
+    input.simulate('change', { target: { value: 'div' } });
+    expect(wrapper.find('.selector-error')).toExist();
+  });
+
+  it('should validate on blur', () => {
+    const wrapper = mount(<Component />);
+    const input = wrapper.find('textarea');
+    input.simulate('blur');
+    expect(wrapper.find('.selector-error')).toExist();
+  });
+
+  it('should not validate positions', () => {
+    const wrapper = mount(
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        value={1}
+      />,
+    );
+    const input = wrapper.find('input');
+    input.simulate('change', { target: { value: 10 } });
+    expect(wrapper.find('.selector-error')).not.toExist();
+  });
+
+  it('should handle incoming value', () => {
+    const wrapper = mount(
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        isFollowedByPositionProp={true}
+        value={1}
+      />,
+    );
+    wrapper.setProps({ value: 20 });
+
+    wrapper.update();
+
+    const input = wrapper.find('input');
+    expect(input.props().value).toBe(20);
+  });
+
+  it('should icon wrapper have class to be able to set height and margin, so it can hide bellow icon', () => {
+    const wrapper = mount(
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        isFollowedByPositionProp={true}
+        value={1}
+      />,
+    );
+
+    expect(
+      wrapper
+        .find('.selector-root > div')
+        .prop('className')
+        .startsWith('SelectorControl-buttonWrap'),
+    ).toBe(true);
+  });
+
+  it('should start selector and return selector path', () => {
+    const wrapper = mount(<Component />);
 
     const button = wrapper.find('button');
 
@@ -196,25 +188,15 @@ describe('SelectorControl', () => {
   });
 
   it('should set x position', () => {
-    // const spyOnDispatch = jest.spyOn(reducer, 'reducer');
-
     const wrapper = mount(
-      <ActionProvider>
-        <ThemeProvider theme={convert(themes.light)}>
-          <SelectorControl
-            label="x"
-            onChange={onChangeMock}
-            type="number"
-            selectorType="position"
-            fullObjectPath="options.prop.x"
-            actionId="actionId"
-            isFollowedByPositionProp={false}
-            appendValueToTitle={false}
-            onAppendValueToTitle={onAppendValueToTitleMock}
-            value={1}
-          />
-        </ThemeProvider>
-      </ActionProvider>,
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        appendValueToTitle={false}
+        value={1}
+      />,
     );
 
     const button = wrapper.find('button');
@@ -230,22 +212,14 @@ describe('SelectorControl', () => {
     const spyOnDispatch = jest.spyOn(reducer, 'reducer');
 
     const wrapper = mount(
-      <ActionProvider>
-        <ThemeProvider theme={convert(themes.light)}>
-          <SelectorControl
-            label="x"
-            onChange={onChangeMock}
-            type="number"
-            selectorType="position"
-            fullObjectPath="options.prop.x"
-            actionId="actionId"
-            isFollowedByPositionProp={true}
-            appendValueToTitle={false}
-            onAppendValueToTitle={onAppendValueToTitleMock}
-            value={1}
-          />
-        </ThemeProvider>
-      </ActionProvider>,
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        isFollowedByPositionProp={true}
+        value={1}
+      />,
     );
 
     const button = wrapper.find('button');

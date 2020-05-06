@@ -21,14 +21,14 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
       setLoading(false);
       setScreenshotInfo(snapShotsInfo);
     });
-  }, [browserType, knobs, state.storyId]);
+  }, [browserType, knobs, state.storyId, setScreenshotInfo, setLoading]);
 
   useEffect(() => {
-    if (prevKnobs === sum(knobs)) {
+    if (loading || prevKnobs === sum(knobs)) {
       return;
     }
     getSnapshot();
-  }, [knobs, prevKnobs, getSnapshot]);
+  }, [knobs, prevKnobs, getSnapshot, loading]);
 
   return { getSnapshot, loading, screenshot };
 };

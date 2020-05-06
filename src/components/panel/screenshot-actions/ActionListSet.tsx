@@ -6,7 +6,11 @@ import { useActionDispatchContext } from '../../../store/actions';
 import { ActionToolbar } from './ActionToolbar';
 import { nanoid } from 'nanoid';
 
-const ActionListMain: SFC = memo(() => {
+interface Props {
+  onClose: () => void;
+}
+
+const ActionListSet: SFC<Props> = memo(({ onClose }) => {
   const dispatch = useActionDispatchContext();
 
   const storybookState = useStorybookState();
@@ -15,8 +19,8 @@ const ActionListMain: SFC = memo(() => {
     (actionKey: string) => {
       const actionId = nanoid(10);
       const newAction: StoryAction = {
+        actionKey: actionKey,
         id: actionId,
-        schemaKey: actionKey,
         storyId: storybookState.storyId,
       };
       dispatch({ action: newAction, type: 'addStoryAction' });
@@ -29,14 +33,22 @@ const ActionListMain: SFC = memo(() => {
     dispatch({ type: 'clearActionExpansion' });
   }, [dispatch, storybookState.storyId]);
 
+  const handleSave = useCallback(() => {
+    console.log('save');
+  }, []);
+
   return (
     <>
-      <ActionToolbar onAddAction={handleAddAction} />
+      <ActionToolbar
+        onAddAction={handleAddAction}
+        onClose={onClose}
+        onSave={handleSave}
+      />
       <ActionList storyId={storybookState.storyId} />
     </>
   );
 });
 
-ActionListMain.displayName = 'ActionListMain';
+ActionListSet.displayName = 'ActionListSet';
 
-export { ActionListMain };
+export { ActionListSet };

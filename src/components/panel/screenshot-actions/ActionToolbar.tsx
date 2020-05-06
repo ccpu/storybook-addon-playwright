@@ -8,10 +8,12 @@ import { Toolbar } from '../../common';
 
 export interface ActionToolbarProps {
   onAddAction: (actionName: string) => void;
+  onClose: () => void;
+  onSave: () => void;
 }
 
 const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
-  const { onAddAction } = props;
+  const { onAddAction, onClose, onSave } = props;
 
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
     null,
@@ -42,10 +44,10 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
           </IconButton>
         </Fragment>
         <Fragment key="Right">
-          <IconButton title="Save Actions">
+          <IconButton title="Save Actions" onClick={onSave}>
             <SaveIcon />
           </IconButton>
-          <IconButton title="Close">
+          <IconButton title="Close" onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Fragment>

@@ -1,7 +1,7 @@
 import React, { SFC, memo, useState, useCallback } from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import { ActionListMain } from '../screenshot-actions/ActionListMain';
+import { ActionListSet } from '../screenshot-actions/ActionListSet';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -28,14 +28,14 @@ const AddNewSet: SFC = memo(() => {
 
   const classes = useStyles();
 
-  const handleShowActionList = useCallback(() => {
+  const toggleActionListSet = useCallback(() => {
     setShowActionList(!showActionList);
   }, [showActionList]);
 
   return (
     <>
       <Button
-        onClick={handleShowActionList}
+        onClick={toggleActionListSet}
         className={classes.button}
         fullWidth
       >
@@ -44,8 +44,9 @@ const AddNewSet: SFC = memo(() => {
       <div
         className={classes.actionListWrapper}
         style={{ display: showActionList ? 'block' : 'none' }}
-      ></div>
-      <ActionListMain />
+      >
+        <ActionListSet onClose={toggleActionListSet} />
+      </div>
     </>
   );
 });

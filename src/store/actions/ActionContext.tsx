@@ -1,8 +1,9 @@
-import React, { createContext, SFC, useEffect, useContext } from 'react';
+import React, { SFC, useEffect, useContext } from 'react';
 import { Loader } from '../../components/common';
 import { useActionSchema } from '../../hooks';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
+import { createContext } from 'use-context-selector';
 
 export const ActionDispatchContext = React.createContext<
   React.Dispatch<Action>

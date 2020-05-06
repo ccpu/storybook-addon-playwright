@@ -6,6 +6,7 @@ export interface ReducerState {
   storyActions: StoryAction[];
   expandedActions: { [k: string]: boolean };
   actionSets: ActionSet[];
+  currentActionSetId?: string;
 }
 
 export type Action =
@@ -48,11 +49,13 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         actionSets: [
           ...state.actionSets,
           {
+            actions: [],
             description: action.description,
             id: action.actionSetId,
             storyId: action.storyId,
           },
         ],
+        currentActionSetId: action.actionSetId,
       };
     }
     case 'toggleSubtitleItem': {

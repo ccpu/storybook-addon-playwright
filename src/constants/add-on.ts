@@ -5,5 +5,6 @@ export const PREVIEW_ID = `${ADDON_ID}/preview-panel`;
 export const ADDON_STORAGE_KEY = `${ADDON_ID}/storage-key`;
 
 export const EVENTS = {
+  CURRENT_ACTIONS: `${ADDON_ID}/currentActions`,
   SELECTOR: `${ADDON_ID}/selector`,
 };

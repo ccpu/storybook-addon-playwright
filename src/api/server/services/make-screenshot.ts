@@ -14,6 +14,8 @@ export const makeScreenshot = async (
     data.knobs,
   );
 
+  // console.log(data.actions);
+
   const page = await helper.getPage(data.browserType);
 
   if (!page) {

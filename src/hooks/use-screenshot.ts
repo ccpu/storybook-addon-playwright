@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useKnobs } from './use-knobs';
 import { useStorybookState } from '@storybook/api';
 import { getSnapShot } from '../api/client';
-import { BrowserTypes, GetScreenshotResponse } from '../typings';
+import { BrowserTypes, GetScreenshotResponse, StoryAction } from '../typings';
 import sum from 'hash-sum';
 import usePrevious from 'react-use/lib/usePrevious';
 
@@ -14,14 +14,19 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
 
   const state = useStorybookState();
 
-  const getSnapshot = useCallback(() => {
-    if (browserType === 'storybook') return;
-    setLoading(true);
-    getSnapShot(state.storyId, browserType, knobs).then((snapShotsInfo) => {
-      setLoading(false);
-      setScreenshotInfo(snapShotsInfo);
-    });
-  }, [browserType, knobs, state.storyId, setScreenshotInfo, setLoading]);
+  const getSnapshot = useCallback(
+    (actions?: StoryAction[]) => {
+      if (browserType === 'storybook') return;
+      setLoading(true);
+      getSnapShot({ actions, browserType, knobs, storyId: state.storyId }).then(
+        (snapShotsInfo) => {
+          setLoading(false);
+          setScreenshotInfo(snapShotsInfo);
+        },
+      );
+    },
+    [browserType, knobs, state.storyId, setScreenshotInfo, setLoading],
+  );
 
   useEffect(() => {
     if (loading || prevKnobs === sum(knobs)) {

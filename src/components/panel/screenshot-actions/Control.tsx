@@ -12,7 +12,7 @@ const Control: SFC<ControlProps & Partial<ComponentType>> = memo((props) => {
   } = props;
 
   const { Control: StorybookControl, handleChange, knob } = useControl(props);
-  console.log(label);
+
   return (
     <FormControl
       label={label}

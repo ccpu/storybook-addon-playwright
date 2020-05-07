@@ -1,11 +1,12 @@
 import { KnobStore } from './knobs';
-// import { StoriesRaw } from '@storybook/api/dist/modules/stories';
+import { StoryAction } from './story-action';
 import { BrowserTypes } from '.';
 
 // export type StoryInput = StoriesRaw[''];
 
 export interface GetScreenshotRequest {
   knobs?: KnobStore;
+  actions?: StoryAction[];
   storyId: string;
   browserType: BrowserTypes;
 }

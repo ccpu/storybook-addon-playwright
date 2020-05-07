@@ -10,7 +10,7 @@ interface Props {
   onClose: () => void;
 }
 
-const ActionListSet: SFC<Props> = memo(({ onClose }) => {
+const ActionSet: SFC<Props> = memo(({ onClose }) => {
   const dispatch = useActionDispatchContext();
 
   const storybookState = useStorybookState();
@@ -22,6 +22,7 @@ const ActionListSet: SFC<Props> = memo(({ onClose }) => {
         id: actionId,
         name: actionName,
       };
+
       dispatch({ action: newAction, type: 'addStoryAction' });
       dispatch({ actionId, type: 'toggleActionExpansion' });
     },
@@ -48,6 +49,6 @@ const ActionListSet: SFC<Props> = memo(({ onClose }) => {
   );
 });
 
-ActionListSet.displayName = 'ActionListSet';
+ActionSet.displayName = 'ActionSet';
 
-export { ActionListSet };
+export { ActionSet };

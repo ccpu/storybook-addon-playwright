@@ -2,7 +2,11 @@ import React, { SFC, memo } from 'react';
 import { Popover, PopoverProps } from '@material-ui/core';
 import { ActionPanelProps, ActionPanel } from './ActionPanel';
 
-export interface ActionPopoverProps extends ActionPanelProps, PopoverProps {}
+export interface ActionPopoverProps
+  extends ActionPanelProps,
+    Omit<PopoverProps, 'open' | 'onClose'> {
+  onClose: (event?: never) => void;
+}
 
 const ActionPopover: SFC<ActionPopoverProps> = memo(
   ({

@@ -1,6 +1,6 @@
 import React, { SFC, memo, useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { ActionListSet } from '../screenshot-actions/ActionListSet';
+import { ActionSet } from '../screenshot-actions/ActionSet';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../common';
 import { useActionDispatchContext } from '../../../store';
@@ -65,6 +65,14 @@ const AddNewSet: SFC = memo(() => {
     [dispatch, storyId, toggleActionListSet],
   );
 
+  const handleCancel = useCallback(() => {
+    dispatch({
+      actionSetId: actionSetId,
+      type: 'removeActionSet',
+    });
+    toggleActionListSet();
+  }, [actionSetId, dispatch, toggleActionListSet]);
+
   useTimeoutFn(() => {
     createNewActionSet('new action');
   }, 1000);
@@ -77,10 +85,7 @@ const AddNewSet: SFC = memo(() => {
           className={classes.actionListWrapper}
           style={{ display: showActionList ? 'block' : 'none' }}
         >
-          <ActionListSet
-            onClose={toggleActionListSet}
-            // actionSetId={actionSetId}
-          />
+          <ActionSet onClose={handleCancel} />
         </div>
       )}
 

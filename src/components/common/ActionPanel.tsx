@@ -8,7 +8,7 @@ import {
 
 export interface ActionPanelProps {
   title?: string;
-  onPositiveAction: () => void;
+  onPositiveAction?: () => void;
   onNegativeAction?: () => void;
   positiveActionName?: string;
   negativeActionName?: string;

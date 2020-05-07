@@ -17,6 +17,10 @@ export type Action =
       storyId: string;
     }
   | {
+      type: 'removeActionSet';
+      actionSetId: string;
+    }
+  | {
       type: 'deleteActionSetAction';
       actionId: string;
     }
@@ -42,7 +46,6 @@ export const initialState: ReducerState = {
   actionSchema: {},
   actionSets: [],
   expandedActions: {},
-  // storyActions: [],
 };
 
 export function reducer(state: ReducerState, action: Action): ReducerState {
@@ -60,6 +63,13 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
           },
         ],
         currentActionSetId: action.actionSetId,
+      };
+    }
+    case 'removeActionSet': {
+      return {
+        ...state,
+        actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
+        currentActionSetId: undefined,
       };
     }
     case 'toggleSubtitleItem': {

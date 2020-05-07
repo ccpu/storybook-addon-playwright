@@ -4,7 +4,7 @@ import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 import CloseIcon from '@material-ui/icons/CloseSharp';
 import SaveIcon from '@material-ui/icons/SaveSharp';
-import { Toolbar, ActionPopover } from '../../common';
+import { Toolbar, ConfirmationPopover } from '../../common';
 
 export interface ActionToolbarProps {
   onAddAction: (actionName: string) => void;
@@ -19,13 +19,22 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
     null,
   );
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
+  const [
+    confirmAnchorEl,
+    setConfirmAnchorEl,
+  ] = React.useState<HTMLButtonElement | null>(null);
+
+  const toggleConfirmAnchorEl = useCallback(
+    (event?: React.MouseEvent<HTMLButtonElement>) => {
+      setConfirmAnchorEl(!event ? null : event.currentTarget);
+    },
+    [],
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleCancelConfirmed = useCallback(() => {
+    onClose();
+    toggleConfirmAnchorEl();
+  }, [onClose, toggleConfirmAnchorEl]);
 
   const handleMEnuChange = useCallback(
     (action: string) => {
@@ -55,7 +64,7 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
           <IconButton title="Save Actions" onClick={onSave}>
             <SaveIcon />
           </IconButton>
-          <IconButton title="Close" onClick={handleClick}>
+          <IconButton title="Close" onClick={toggleConfirmAnchorEl}>
             <CloseIcon />
           </IconButton>
         </div>
@@ -66,10 +75,12 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
         anchorEl={menuAnchorEl}
         onChange={handleMEnuChange}
       />
-      {anchorEl && (
-        <ActionPopover open={anchorEl !== undefined} anchorEl={anchorEl}>
-          Are you sure?
-        </ActionPopover>
+      {confirmAnchorEl && (
+        <ConfirmationPopover
+          anchorEl={confirmAnchorEl}
+          onConfirm={handleCancelConfirmed}
+          onClose={toggleConfirmAnchorEl}
+        />
       )}
     </>
   );

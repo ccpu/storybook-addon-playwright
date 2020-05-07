@@ -8,7 +8,7 @@ export interface StoryAction<T extends unknown = Page> {
   id?: string;
   name: string;
   labe?: string;
-  action?: unknown;
+  data?: unknown;
   subtitleItems?: string[];
   run?: (page: T, selector: string) => Promise<void>;
 }

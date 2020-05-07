@@ -11,27 +11,26 @@ export interface ActionSchemaPropProps {
   name: string;
   parents?: string[];
   schema: Definition;
-  actionName: string;
   actionId: string;
   nextPropName: string;
 }
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
-  ({ name, schema, parents = [], actionName, actionId, nextPropName }) => {
+  ({ name, schema, parents = [], actionId, nextPropName }) => {
     const dispatch = useActionDispatchContext();
     const optionObjectPath = [...parents, name].join('.');
-    const fullObjectPath = `${actionName}.${optionObjectPath}`;
 
     const handleChange = useCallback(
       (val) => {
+        console.log('handleChange');
         dispatch({
           actionId,
-          objPath: fullObjectPath,
+          objPath: optionObjectPath,
           type: 'setActionOptions',
           val,
         });
       },
-      [actionId, dispatch, fullObjectPath],
+      [actionId, dispatch, optionObjectPath],
     );
 
     const handleAppendToTile = useCallback(() => {
@@ -46,7 +45,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
 
     if (!action) return null;
 
-    const value = getActionOptionValue(action, actionName, optionObjectPath);
+    const value = getActionOptionValue(action, optionObjectPath);
     const appendToTile =
       action.subtitleItems && action.subtitleItems.includes(optionObjectPath);
 
@@ -64,7 +63,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           isFollowedByPositionProp={
             nextPropName === 'x' || nextPropName === 'y'
           }
-          fullObjectPath={fullObjectPath}
+          fullObjectPath={optionObjectPath}
           actionId={actionId}
         />
       );
@@ -146,7 +145,6 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           <ActionSchemaProps
             props={schema.properties}
             parents={[...parents, name]}
-            actionName={actionName}
             actionId={actionId}
           />
         );

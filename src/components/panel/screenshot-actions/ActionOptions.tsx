@@ -90,7 +90,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     if (!action || !action.subtitleItems) return;
     const titles = action.subtitleItems.reduce((arr, path) => {
       const label = path.split('.').pop();
-      const value = getActionOptionValue(action, actionName, path);
+      const value = getActionOptionValue(action, path);
       if (value) {
         arr.push(`${label}: ${value}`);
       }
@@ -164,11 +164,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.detailPanel}>
             {state.expandedActions[actionId] && (
-              <ActionSchemaRenderer
-                schema={schema}
-                path={actionName}
-                actionId={actionId}
-              />
+              <ActionSchemaRenderer schema={schema} actionId={actionId} />
             )}
           </ExpansionPanelDetails>
         </ExpansionPanel>

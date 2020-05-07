@@ -5,12 +5,11 @@ import { Definition } from 'ts-to-json';
 export interface ActionSchemaPropsProps {
   props: Definition;
   parents?: string[];
-  actionName: string;
   actionId: string;
 }
 
 const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
-  ({ props, parents = [], actionName, actionId }) => {
+  ({ props, parents = [], actionId }) => {
     return (
       <>
         {Object.keys(props).map((name, i, array) => {
@@ -21,7 +20,6 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
               name={name}
               schema={param}
               parents={parents}
-              actionName={actionName}
               actionId={actionId}
               nextPropName={array[i + 1]}
             />

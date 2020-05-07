@@ -84,16 +84,20 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
             val: data.path,
           });
         } else if (isFollowedByPositionProp) {
-          const objPath = fullObjectPath.slice(0, -2);
+          const objPath =
+            fullObjectPath.length === 1
+              ? ''
+              : fullObjectPath.slice(0, -2) + '.';
+          console.log(fullObjectPath);
           dispatch({
             actionId,
-            objPath: `${objPath}.x`,
+            objPath: objPath + `x`,
             type: 'setActionOptions',
             val: data.x,
           });
           dispatch({
             actionId,
-            objPath: `${objPath}.y`,
+            objPath: objPath + `y`,
             type: 'setActionOptions',
             val: data.y,
           });

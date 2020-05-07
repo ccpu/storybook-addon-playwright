@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useStorybookState } from '@storybook/api';
-import { constructUrl } from '../api/server/utils';
+import { constructUrl } from '../utils';
 
 export const useStoryUrl = () => {
   const state = useStorybookState();

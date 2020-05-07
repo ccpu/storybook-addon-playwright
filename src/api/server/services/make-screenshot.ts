@@ -1,6 +1,7 @@
 import { GetScreenshotRequest, ScreenshotInfo } from '../../../typings';
-import { constructUrl } from '../utils';
+import { constructUrl } from '../../../utils';
 import { getSnapshotHelper } from '../setup-snapshot';
+import { executeAction } from '../utils';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,
@@ -8,13 +9,12 @@ export const makeScreenshot = async (
   convertToBase64?: boolean,
 ): Promise<ScreenshotInfo> => {
   const helper = getSnapshotHelper();
+
   const url = constructUrl(
     helper.storybookEndpoint ? helper.storybookEndpoint : host,
     data.storyId,
     data.knobs,
   );
-
-  // console.log(data.actions);
 
   const page = await helper.getPage(data.browserType);
 
@@ -23,6 +23,13 @@ export const makeScreenshot = async (
   }
 
   await page.goto(url);
+
+  if (data.actions) {
+    for (let i = 0; i < data.actions.length; i++) {
+      const action = data.actions[i];
+      await executeAction(page, action);
+    }
+  }
 
   if (helper.beforeSnapshot) {
     await helper.beforeSnapshot(page, data.browserType);
@@ -40,30 +47,3 @@ export const makeScreenshot = async (
     buffer,
   };
 };
-
-// export const getAllScreenshots = async (
-//   data: ScreenshotRequestData,
-//   host: string,
-//   convertToBase64?: boolean,
-// ) => {
-//   const helper = getSnapshotHelper();
-
-//   const pages = await helper.getPages();
-
-//   const snapshots: SnapshotInfo[] = [];
-
-//   for (let i = 0; i < pages.length; i++) {
-//     const pageInfo = pages[i];
-
-//     const screenshot = await makeScreenshot(
-//       pageInfo.browserName,
-//       data,
-//       host,
-//       convertToBase64,
-//     );
-
-//     snapshots.push(screenshot);
-//   }
-
-//   return snapshots;
-// };

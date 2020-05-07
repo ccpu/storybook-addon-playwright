@@ -1,4 +1,4 @@
-import React, { SFC, memo, useState, useCallback } from 'react';
+import React, { SFC, memo, useState, useCallback, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../screenshot-actions/ActionSet';
 import { ActionToolbar } from './ActionSetToolbar';
@@ -37,6 +37,8 @@ const AddNewSet: SFC = memo(() => {
 
   const { storyId } = useStorybookState();
 
+  const [actionSetStoryId, setActionSetStoryId] = useState<string>(storyId);
+
   const dispatch = useActionDispatchContext();
 
   const classes = useStyles();
@@ -65,7 +67,7 @@ const AddNewSet: SFC = memo(() => {
     [dispatch, storyId, toggleActionListSet],
   );
 
-  const handleCancel = useCallback(() => {
+  const removeActionSet = useCallback(() => {
     dispatch({
       actionSetId: actionSetId,
       type: 'removeActionSet',
@@ -77,6 +79,12 @@ const AddNewSet: SFC = memo(() => {
     createNewActionSet('new action');
   }, 1000);
 
+  useEffect(() => {
+    if (storyId === actionSetStoryId) return;
+    removeActionSet();
+    setActionSetStoryId(storyId);
+  }, [actionSetStoryId, removeActionSet, storyId]);
+
   return (
     <>
       <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
@@ -85,7 +93,7 @@ const AddNewSet: SFC = memo(() => {
           className={classes.actionListWrapper}
           style={{ display: showActionList ? 'block' : 'none' }}
         >
-          <ActionSet onClose={handleCancel} />
+          <ActionSet onClose={removeActionSet} />
         </div>
       )}
 

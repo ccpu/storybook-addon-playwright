@@ -34,6 +34,7 @@
     "jest": "^25.4.0",
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
+    "jest-mock-console": "^1.0.0",
     "nzyme": "^0.6.1",
     "object-hash": "^2.0.3",
     "playwright-core": "^0.16.0",
@@ -78,7 +79,7 @@
     "react-split-pane": "^0.1.91",
     "react-use": "^14.2.0",
     "reinspect": "^1.1.0",
-    "ts-to-json": "^0.65.1",
+    "ts-to-json": "^0.65.3",
     "use-context-selector": "^1.1.1"
   }
 }

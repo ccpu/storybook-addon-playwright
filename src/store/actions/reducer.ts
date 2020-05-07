@@ -180,7 +180,6 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         }),
       };
     case 'setActionOptions': {
-      console.log(JSON.stringify(action, null, 2));
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
@@ -191,8 +190,8 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
                 if (act.id === action.actionId) {
                   return {
                     ...act,
-                    data: immutableObject.set(
-                      act.data,
+                    args: immutableObject.set(
+                      act.args,
                       action.objPath,
                       action.val,
                     ),

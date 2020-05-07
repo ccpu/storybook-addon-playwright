@@ -1,4 +1,4 @@
-import { KnobStore } from '../../../typings';
+import { KnobStore } from '../typings';
 import normalize from 'normalize-url';
 
 export const constructUrl = (

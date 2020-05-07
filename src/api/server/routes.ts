@@ -4,7 +4,7 @@ import {
   GET_ACTIONS_DATA,
 } from '../../constants/routes';
 import bodyParser from 'body-parser';
-import { getScreenshot, getActionsData, saveScreenshot } from './controller';
+import { getScreenshot, getActionsSchema, saveScreenshot } from './controller';
 
 const expressMiddleWare = (router) => {
   router.use(bodyParser.urlencoded({ extended: false }));
@@ -12,6 +12,6 @@ const expressMiddleWare = (router) => {
 
   router.post(TAKE_SCREENSHOT, getScreenshot);
   router.post(SAVE_SCREENSHOT, saveScreenshot);
-  router.post(GET_ACTIONS_DATA, getActionsData);
+  router.post(GET_ACTIONS_DATA, getActionsSchema);
 };
 export default expressMiddleWare;

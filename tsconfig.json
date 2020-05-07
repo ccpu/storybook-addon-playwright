@@ -25,6 +25,12 @@
     "strictNullChecks": false
     // "typeRoots": ["typings/*"]
   },
-  "include": ["src/**/*", "**/__tests__/**/*", "typings/**/*", "setupTests.ts"],
+  "include": [
+    "src/**/*",
+    "**/__tests__/**/*",
+    "typings/**/*",
+    "setupTests.ts",
+    "test-data/*"
+  ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

@@ -1,5 +1,5 @@
 import { constructUrl } from '../url';
-import { KnobStore, KnobStoreKnob } from '../../../../typings';
+import { KnobStore, KnobStoreKnob } from '../../typings';
 
 describe('constructUrl', () => {
   it('should to have valid url', () => {

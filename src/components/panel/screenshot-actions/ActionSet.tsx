@@ -34,8 +34,8 @@ const ActionSet: SFC<Props> = memo(({ onClose }) => {
   }, [dispatch, storybookState.storyId]);
 
   const handleSave = useCallback(() => {
-    console.log('save');
-  }, []);
+    console.log(storybookState);
+  }, [storybookState]);
 
   return (
     <>

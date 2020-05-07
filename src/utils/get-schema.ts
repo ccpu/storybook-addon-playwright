@@ -1,11 +1,11 @@
 import { ActionSchema } from '../typings';
 import { get } from 'object-path-immutable';
-import { Definition } from 'ts-to-json';
 
 export const getActionSchema = (
-  def: Definition,
+  def: ActionSchema,
   key: string,
 ): ActionSchema | undefined => {
+  if (!key) return undefined;
   const extendedKey = key.split('.').join('.properties.');
   const schema = get(def, extendedKey);
   return schema;

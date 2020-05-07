@@ -4214,6 +4214,11 @@ jest-message-util@^25.4.0:
     slash "^3.0.0"
     stack-utils "^1.0.1"
 
+jest-mock-console@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jest-mock-console/-/jest-mock-console-1.0.0.tgz#0ca2cbea3aa0af4893c8c5f3c2de45c3d4d15629"
+  integrity sha512-bN9UjH+Jd/5Gs+p9Xt9Mai4SoUQRFd3f+ZOSCjlcbuVRUhNvl1y9jvys6L7BUx+1Uz+3jOoaq1O+C6j3sSu7SQ==
+
 jest-mock@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-24.9.0.tgz#c22835541ee379b908673ad51087a2185c13f1c6"
@@ -7087,10 +7092,10 @@ ts-jest@^25.4.0:
     semver "6.x"
     yargs-parser "18.x"
 
-ts-to-json@^0.65.1:
-  version "0.65.1"
-  resolved "https://registry.yarnpkg.com/ts-to-json/-/ts-to-json-0.65.1.tgz#5953d91cdc2bb589b1b9abae1e76a2510c144ebf"
-  integrity sha512-++o9p/fQj+oWPq0T+tK2aBkrHV+LSUXGWJf+dIPPVAwWRJufJ+vk9CL2O46gCF6Q09VmnXPLFAfyRlA9NeHuWw==
+ts-to-json@^0.65.3:
+  version "0.65.3"
+  resolved "https://registry.yarnpkg.com/ts-to-json/-/ts-to-json-0.65.3.tgz#0abdd2e16ca8bb94101c41126e850c0fa437846f"
+  integrity sha512-4zpxkL5ZGrQyXZv5EQ9gG8CG/BYX1cJluOw56AFO7QnUDItQl1HqFlaXEtPt+j8Ad2je2Yk+VrdFHt9jVp5l8A==
   dependencies:
     "@types/json-schema" "^7.0.4"
     commander "~5.1.0"

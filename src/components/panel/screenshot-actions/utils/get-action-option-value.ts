@@ -5,8 +5,8 @@ export const getActionOptionValue = (
   action: StoryAction,
   optionPath: string,
 ): undefined | unknown => {
-  if (action && action.data) {
-    return immutableObject.get(action.data, optionPath);
+  if (action && action.args) {
+    return immutableObject.get(action.args, optionPath);
   }
   return;
 };

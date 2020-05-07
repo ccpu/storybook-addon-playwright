@@ -8,6 +8,7 @@ import {
 } from 'ts-to-json';
 import { Page, Mouse } from 'playwright-core';
 import { join } from 'path';
+import { ActionSchemaList } from '../../../typings';
 
 const path = join(__dirname, '/typings/playwright-page.d.ts');
 
@@ -40,7 +41,9 @@ const selectedKeys = [
   ...selectedMouseKeys.map((x) => 'mouse.' + x),
 ] as string[];
 
-export const getActionsData = (): string => {
+let _schema: ActionSchemaList = {};
+
+export const generateSchema = () => {
   const type = 'PlaywrightPage';
   const config: Config = {
     encodeRefs: false,
@@ -65,11 +68,12 @@ export const getActionsData = (): string => {
   );
 
   const result = generator.createSchema(type);
-  const json = JSON.stringify(
-    (result.definitions[type] as Definition).properties,
-    null,
-    2,
-  );
 
-  return json;
+  return (result.definitions[type] as Definition)
+    .properties as ActionSchemaList;
+};
+
+export const getActionsSchema = () => {
+  if (_schema) _schema = generateSchema();
+  return _schema;
 };

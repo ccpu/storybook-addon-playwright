@@ -28,15 +28,8 @@ export function useActionSetActions() {
   useEffect(() => {
     const chanel = addons.getChannel();
 
-    // const sort = actionSetActions.map((action) => {
-    //   const schema = state.actionSchema[action.name];
-    //   return schema.parameters;
-    // });
-
-    // console.log(JSON.stringify({ actionSetActions }, null, 2));
-
     chanel.emit(EVENTS.CURRENT_ACTIONS, actionSetActions);
-  }, [actionSetActions]);
+  }, [actionSetActions, state.actionSchema]);
 
   return { actionSetActions, state, storybookState };
 }

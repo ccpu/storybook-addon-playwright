@@ -1,19 +1,26 @@
 import React, { SFC, memo, useCallback, useEffect } from 'react';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookApi } from '@storybook/api';
 import { ActionList } from '../screenshot-actions/ActionList';
-import { StoryAction } from '../../../typings';
-import { useActionDispatchContext } from '../../../store/actions';
+import { StoryAction, StoryInput } from '../../../typings';
+import {
+  useActionDispatchContext,
+  useActionContext,
+} from '../../../store/actions';
 import { ActionToolbar } from '../screenshot-actions/ActionToolbar';
 import { nanoid } from 'nanoid';
+import { saveActionSet } from '../../../api/client/save-action-set';
 
 interface Props {
   onClose: () => void;
+  actionSetId: string;
 }
 
-const ActionSet: SFC<Props> = memo(({ onClose }) => {
+const ActionSetEditor: SFC<Props> = memo(({ onClose, actionSetId }) => {
   const dispatch = useActionDispatchContext();
 
-  const storybookState = useStorybookState();
+  const state = useActionContext();
+
+  const api = useStorybookApi();
 
   const handleAddAction = useCallback(
     (actionName: string) => {
@@ -31,11 +38,18 @@ const ActionSet: SFC<Props> = memo(({ onClose }) => {
 
   useEffect(() => {
     dispatch({ type: 'clearActionExpansion' });
-  }, [dispatch, storybookState.storyId]);
+  }, [dispatch]);
 
-  const handleSave = useCallback(() => {
-    console.log(storybookState);
-  }, [storybookState]);
+  const handleSave = useCallback(async () => {
+    const data = api.getCurrentStoryData() as StoryInput;
+    const actionSet = state.actionSets.find((x) => x.id === actionSetId);
+
+    await saveActionSet({
+      actionSet,
+      fileName: data.parameters.fileName,
+      storyId: data.id,
+    });
+  }, [actionSetId, api, state.actionSets]);
 
   return (
     <>
@@ -49,6 +63,6 @@ const ActionSet: SFC<Props> = memo(({ onClose }) => {
   );
 });
 
-ActionSet.displayName = 'ActionSet';
+ActionSetEditor.displayName = 'ActionSetEditor';
 
-export { ActionSet };
+export { ActionSetEditor };

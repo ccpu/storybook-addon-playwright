@@ -1,10 +1,10 @@
-import { SaveScreenshot } from '../typings';
+import { SaveActionSetRequest } from '..//typings';
 import { getEndpoint } from './utils';
 
-export const saveScreenshot = async (
-  data: SaveScreenshot,
+export const saveActionSet = async (
+  data: SaveActionSetRequest,
 ): Promise<boolean> => {
-  const restEndpoint = getEndpoint('SAVE_SCREENSHOT');
+  const restEndpoint = getEndpoint('SAVE_ACTION_SET');
 
   const res = await fetch(restEndpoint, {
     body: JSON.stringify(data),

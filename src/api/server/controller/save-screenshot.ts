@@ -1,5 +1,5 @@
 import { saveScreenshot as saveScreenshotService } from '../services/save-snapshot-data';
-import { SaveScreenshot } from '../../../typings';
+import { SaveScreenshot } from '../../typings';
 
 export const saveScreenshot = async (req, res): Promise<void> => {
   const reqData = req.body as SaveScreenshot;

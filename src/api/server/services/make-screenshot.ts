@@ -1,7 +1,8 @@
-import { GetScreenshotRequest, ScreenshotInfo } from '../../../typings';
+import { GetScreenshotRequest } from '../../typings';
 import { constructUrl } from '../../../utils';
 import { getSnapshotHelper } from '../setup-snapshot';
 import { executeAction } from '../utils';
+import { ScreenshotInfo } from '../../../typings';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,

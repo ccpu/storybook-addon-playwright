@@ -1,8 +1,6 @@
-import { KnobStore } from './knobs';
-import { StoryAction } from './story-action';
-import { BrowserTypes } from '.';
-
-// export type StoryInput = StoriesRaw[''];
+import { KnobStore } from '../../typings/knobs';
+import { StoryAction } from '../../typings/story-action';
+import { BrowserTypes } from '../../typings';
 
 export interface GetScreenshotRequest {
   knobs?: KnobStore;

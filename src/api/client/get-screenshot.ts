@@ -1,4 +1,4 @@
-import { GetScreenshotRequest, GetScreenshotResponse } from '../../typings';
+import { GetScreenshotRequest, GetScreenshotResponse } from '../typings';
 import { getEndpoint } from './utils';
 
 export const getSnapShot = async (

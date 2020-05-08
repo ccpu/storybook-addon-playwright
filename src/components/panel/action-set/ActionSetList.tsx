@@ -1,6 +1,6 @@
 import React, { SFC, memo, useState, useCallback, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { ActionSet } from './ActionSet';
+import { ActionSetEditor } from './ActionSetEditor';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../common';
 import { useActionDispatchContext } from '../../../store';
@@ -25,10 +25,10 @@ const useStyles = makeStyles(
       root: {},
     };
   },
-  { name: 'AddNewSet' },
+  { name: 'ActionSetList' },
 );
 
-const AddNewSet: SFC = memo(() => {
+const ActionSetList: SFC = memo(() => {
   const [showActionList, setShowActionList] = useState(false);
 
   const [showDescDialog, setShowDescDialog] = useState(false);
@@ -93,7 +93,10 @@ const AddNewSet: SFC = memo(() => {
           className={classes.actionListWrapper}
           style={{ display: showActionList ? 'block' : 'none' }}
         >
-          <ActionSet onClose={removeActionSet} />
+          <ActionSetEditor
+            onClose={removeActionSet}
+            actionSetId={actionSetId}
+          />
         </div>
       )}
 
@@ -108,6 +111,6 @@ const AddNewSet: SFC = memo(() => {
   );
 });
 
-AddNewSet.displayName = 'AddNewSet';
+ActionSetList.displayName = 'ActionSetList';
 
-export { AddNewSet };
+export { ActionSetList };

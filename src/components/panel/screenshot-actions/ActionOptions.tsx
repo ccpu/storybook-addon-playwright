@@ -1,11 +1,4 @@
-import React, {
-  memo,
-  SFC,
-  useMemo,
-  useCallback,
-  useState,
-  useEffect,
-} from 'react';
+import React, { memo, SFC, useCallback, useState, useEffect } from 'react';
 import {
   ExpansionPanel,
   ExpansionPanelSummary,

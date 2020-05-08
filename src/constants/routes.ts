@@ -1,3 +1,6 @@
-export const TAKE_SCREENSHOT = '/screenshot/get';
-export const SAVE_SCREENSHOT = '/screenshot/save';
-export const GET_ACTIONS_DATA = '/screenshot/actions-data';
+export const ROUTE = {
+  GET_ACTIONS_DATA: '/screenshot/actions-data',
+  SAVE_ACTION_SET: '/actionSet/save',
+  SAVE_SCREENSHOT: '/screenshot/save',
+  TAKE_SCREENSHOT: '/screenshot/get',
+};

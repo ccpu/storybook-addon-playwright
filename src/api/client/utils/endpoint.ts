@@ -1,7 +1,7 @@
-import * as routes from '../../../constants/routes';
+import { ROUTE } from '../../../constants/routes';
 
-export const getEndpoint = (route?: keyof typeof routes) => {
+export const getEndpoint = (route?: keyof typeof ROUTE) => {
   const url = `${window.location.protocol}//${window.location.host}`;
   if (!route) url;
-  return url + routes[route];
+  return url + ROUTE[route];
 };

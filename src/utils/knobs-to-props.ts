@@ -1,4 +1,6 @@
-import { KnobStoreKnob, Props } from '../typings';
+import { KnobStoreKnob } from '../typings';
+
+type Props = { [key: string]: unknown };
 
 export const knobsToProps = (knobs: KnobStoreKnob): Props[] => {
   const props = Object.keys(knobs).reduce((arr, key) => {

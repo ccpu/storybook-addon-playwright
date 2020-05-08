@@ -1,70 +1,61 @@
-import React, { SFC, useMemo } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { ActionOptions } from './ActionOptions';
 import { useActionSetActions } from '../../../hooks';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+  SortEnd,
+} from 'react-sortable-hoc';
 import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
+import { useActionDispatchContext } from '../../../store';
 
-const _dragEl = document.getElementById('draggable');
+const DragHandle = SortableHandle(() => (
+  <DragIndicatorSharp style={{ marginLeft: -10, marginRight: 5 }} />
+));
+const SortableItem = SortableElement(({ action }) => (
+  <div>
+    <ActionOptions
+      key={action.id}
+      actionName={action.name}
+      actionId={action.id}
+      DragHandle={() => <DragHandle />}
+    />
+  </div>
+));
 
-const getListStyle = (isDraggingOver) => ({
-  // position: 'static',
-});
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-
-  // change background colour if dragging
-  userSelect: 'none',
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
+const SortableList = SortableContainer(({ items }) => {
+  return (
+    <div>
+      {items.map((action, index) => (
+        <SortableItem key={`item-${action.id}`} action={action} index={index} />
+      ))}
+    </div>
+  );
 });
 
 const ActionList: SFC = () => {
   const { actionSetActions } = useActionSetActions();
+  const dispatch = useActionDispatchContext();
 
-  // return useMemo(() => {
-  if (!actionSetActions.length) return null;
-  return (
-    <DragDropContext onDragEnd={this.onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(droppableProvided, droppableSnapshot) => (
-          <div
-            ref={droppableProvided.innerRef}
-            style={getListStyle(droppableSnapshot.isDraggingOver)}
-          >
-            {actionSetActions.map((action, index) => (
-              <Draggable key={action.id} draggableId={action.id} index={index}>
-                {(draggableProvided, draggableSnapshot) => (
-                  <div
-                    ref={draggableProvided.innerRef}
-                    {...draggableProvided.draggableProps}
-                    style={getItemStyle(
-                      draggableSnapshot.isDragging,
-                      draggableProvided.draggableProps.style,
-                    )}
-                  >
-                    <ActionOptions
-                      key={action.id}
-                      actionName={action.name}
-                      actionId={action.id}
-                      DragHandle={() => (
-                        <div {...draggableProvided.dragHandleProps}>
-                          <DragIndicatorSharp />
-                        </div>
-                      )}
-                    />
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {droppableProvided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+  const handleSortEnd = useCallback(
+    (e: SortEnd) => {
+      dispatch({
+        newIndex: e.newIndex,
+        oldIndex: e.oldIndex,
+        type: 'moveActionSetAction',
+      });
+    },
+    [dispatch],
   );
-  // }, [actionSetActions]);
+
+  return (
+    <SortableList
+      useDragHandle
+      items={actionSetActions}
+      onSortEnd={handleSortEnd}
+    />
+  );
 };
 
 ActionList.displayName = 'ActionList';

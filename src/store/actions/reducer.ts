@@ -1,5 +1,6 @@
 import { ActionSchema, StoryAction, ActionSet } from '../../typings';
 import * as immutableObject from 'object-path-immutable';
+import arrayMove from 'array-move';
 
 export interface ReducerState {
   actionSchema: ActionSchema;
@@ -23,6 +24,11 @@ export type Action =
   | {
       type: 'deleteActionSetAction';
       actionId: string;
+    }
+  | {
+      type: 'moveActionSetAction';
+      oldIndex: number;
+      newIndex: number;
     }
   | { type: 'setActionSchema'; actionSchema: ActionSchema }
   | { type: 'setStoryActions'; actions: StoryAction[] }
@@ -127,6 +133,22 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
                 }
                 return act;
               }),
+            };
+          }
+          return set;
+        }),
+      };
+    }
+    case 'moveActionSetAction': {
+      return {
+        ...state,
+        actionSets: state.actionSets.map((set) => {
+          if (set.id === state.currentActionSetId) {
+            return {
+              ...set,
+              actions: [
+                ...arrayMove(set.actions, action.oldIndex, action.newIndex),
+              ],
             };
           }
           return set;

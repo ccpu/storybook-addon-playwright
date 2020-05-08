@@ -66,10 +66,11 @@ const useStyles = makeStyles(
 export interface ActionOptionsProps {
   actionId: string;
   actionName: string;
+  DragHandle: React.ComponentType;
 }
 
 const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
-  const { actionId, actionName } = props;
+  const { actionId, actionName, DragHandle } = props;
 
   const [subtitle, setSubtitle] = useState<string[]>();
 
@@ -109,85 +110,65 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     [actionId, dispatch],
   );
 
-  return useMemo(() => {
-    return (
-      <div className={classes.root}>
-        <ExpansionPanel
-          expanded={state.expandedActions[actionId] === true}
-          onChange={handleExpand}
-          className={classes.expansionPanel}
-          square
-          TransitionProps={{
-            timeout: 100,
+  return (
+    <div className={classes.root}>
+      <ExpansionPanel
+        expanded={state.expandedActions[actionId] === true}
+        onChange={handleExpand}
+        className={classes.expansionPanel}
+        square
+        TransitionProps={{
+          timeout: 100,
+        }}
+      >
+        <ExpansionPanelSummary
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          classes={{
+            content: classes.summary,
+            expanded: classes.expanded,
           }}
         >
-          <ExpansionPanelSummary
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            classes={{
-              content: classes.summary,
-              expanded: classes.expanded,
-            }}
-          >
-            <div className={classes.summaryInner}>
-              <div className={classes.heading}>
-                <Typography>
-                  {capitalize(
-                    schema && schema.title ? schema.title : actionName,
-                  )}
-                </Typography>
-              </div>
+          <div className={classes.summaryInner}>
+            <DragHandle />
+            <div className={classes.heading}>
+              <Typography>
+                {capitalize(schema && schema.title ? schema.title : actionName)}
+              </Typography>
+            </div>
 
-              <div className={classes.subtitleWrap}>
-                {subtitle &&
-                  subtitle.map((sub) => (
-                    <Chip
-                      className={classes.chip}
-                      key={sub}
-                      size="small"
-                      label={sub}
-                      variant="outlined"
-                      title={sub}
-                    />
-                  ))}
-              </div>
+            <div className={classes.subtitleWrap}>
+              {subtitle &&
+                subtitle.map((sub) => (
+                  <Chip
+                    className={classes.chip}
+                    key={sub}
+                    size="small"
+                    label={sub}
+                    variant="outlined"
+                    title={sub}
+                  />
+                ))}
             </div>
-            <div>
-              <IconButton
-                size="small"
-                color="inherit"
-                onClick={handleDeleteAction}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </div>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.detailPanel}>
-            {state.expandedActions[actionId] && (
-              <ActionSchemaRenderer schema={schema} actionId={actionId} />
-            )}
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </div>
-    );
-  }, [
-    actionId,
-    actionName,
-    classes.chip,
-    classes.detailPanel,
-    classes.expanded,
-    classes.expansionPanel,
-    classes.heading,
-    classes.root,
-    classes.subtitleWrap,
-    classes.summary,
-    classes.summaryInner,
-    handleDeleteAction,
-    handleExpand,
-    schema,
-    state.expandedActions,
-    subtitle,
-  ]);
+          </div>
+          <div>
+            <IconButton
+              size="small"
+              color="inherit"
+              onClick={handleDeleteAction}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={classes.detailPanel}>
+          {state.expandedActions[actionId] && (
+            <ActionSchemaRenderer schema={schema} actionId={actionId} />
+          )}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </div>
+  );
 });
 
 ActionOptions.displayName = 'ActionOptions';

@@ -20,7 +20,7 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
   const state = useStorybookState();
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
-    console.log('loading');
+
     setLoading(true);
     getSnapShot({
       actions: currentActions,

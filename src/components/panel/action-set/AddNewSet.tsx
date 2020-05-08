@@ -86,7 +86,7 @@ const AddNewSet: SFC = memo(() => {
   }, [actionSetStoryId, removeActionSet, storyId]);
 
   return (
-    <>
+    <div style={{ transform: 'none' }}>
       <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
       {actionSetId && (
         <div
@@ -104,7 +104,7 @@ const AddNewSet: SFC = memo(() => {
         onSave={createNewActionSet}
         required
       />
-    </>
+    </div>
   );
 });
 

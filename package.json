@@ -65,6 +65,7 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/api": "^5.3.18",
     "@storybook/components": "^5.3.18",
+    "array-move": "^2.2.1",
     "body-parser": "^1.19.0",
     "css-path": "^1.0.3",
     "css-selector-generator": "^2.0.1",

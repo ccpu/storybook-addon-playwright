@@ -1,14 +1,7 @@
+import '../../../../../test-data/mocks/get-actions-schema';
 import { executeAction } from '../execute-action';
 import { Page } from 'playwright-core';
 import { StoryAction } from '../../../../typings';
-import { actionSchema } from '../../../../../test-data';
-// import '../../../../../test-data/mocks/is-valid-action';
-
-jest.mock('../../services/get-actions-schema', () => ({
-  getActionsSchema: () => {
-    return actionSchema;
-  },
-}));
 
 const page = {
   click: async (...args) => {
@@ -48,7 +41,7 @@ describe('executeAction', () => {
 
     const val = await executeAction((page as unknown) as Page, action);
 
-    expect(val).toStrictEqual([undefined]);
+    expect(val).toStrictEqual(undefined);
   });
 
   it('should execute nested', async () => {

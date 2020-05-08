@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 import { getActionArgs } from '../get-action-args';
-import { actionSchema } from '../../../test-data/action-schema';
+import { getActionSchemaData } from '../../../test-data/action-schema';
 import { StoryAction } from '../../typings';
 
 describe('getActionArgs', () => {
@@ -15,7 +15,7 @@ describe('getActionArgs', () => {
         selector: 'div>div',
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual(['div>div', { x: 1 }]);
   });
 
@@ -24,7 +24,7 @@ describe('getActionArgs', () => {
       id: 'someId',
       name: 'click',
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual([undefined]);
   });
 
@@ -37,7 +37,7 @@ describe('getActionArgs', () => {
         selector: 'div>div',
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual(['div>div']);
   });
 
@@ -50,7 +50,7 @@ describe('getActionArgs', () => {
         selector: 'div>div',
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual(['div>div']);
   });
 
@@ -63,7 +63,7 @@ describe('getActionArgs', () => {
         selector: 'div>div',
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual(['div>div']);
   });
 
@@ -75,7 +75,7 @@ describe('getActionArgs', () => {
         selector: undefined,
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual([undefined]);
   });
 
@@ -89,7 +89,7 @@ describe('getActionArgs', () => {
         delay: 0,
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual(['div>div', null, 0]);
   });
 
@@ -102,7 +102,7 @@ describe('getActionArgs', () => {
         y: 2,
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual([1, 2]);
   });
 
@@ -116,7 +116,7 @@ describe('getActionArgs', () => {
         },
       },
     };
-    const sortedAction = getActionArgs(action, actionSchema);
+    const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual([undefined, { x: 1 }]);
   });
 
@@ -131,7 +131,7 @@ describe('getActionArgs', () => {
     };
 
     expect(() => {
-      getActionArgs(action, actionSchema);
+      getActionArgs(action, getActionSchemaData());
     }).toThrowError(
       `Unable to find 'mouse.deprecated', possibly this action has deprecated/removed from playwright and or from custom definitions.`,
     );

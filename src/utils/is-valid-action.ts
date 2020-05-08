@@ -15,10 +15,10 @@ export const isValidAction = (
 
   if (!argKeys.length) return false;
 
-  for (let i = 0; i < argKeys.length; i++) {
-    const argName = argKeys[i];
-    const val = action.args[argName];
-    if (actionSchema.required.includes(argName) && !val) {
+  for (let i = 0; i < actionSchema.required.length; i++) {
+    const requiredParam = actionSchema.required[i];
+    const val = action.args[requiredParam];
+    if (!val) {
       return false;
     }
   }

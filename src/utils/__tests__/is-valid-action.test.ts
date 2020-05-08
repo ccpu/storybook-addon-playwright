@@ -1,5 +1,5 @@
 import { isValidAction } from '../is-valid-action';
-import { actionSchema } from '../../../test-data';
+import { getActionSchemaData } from '../../../test-data';
 import { StoryAction } from '../../typings';
 
 describe('isValidAction', () => {
@@ -15,7 +15,7 @@ describe('isValidAction', () => {
       name: 'click',
     };
 
-    expect(isValidAction(actionSchema, action)).toBeTruthy();
+    expect(isValidAction(getActionSchemaData(), action)).toBeTruthy();
   });
 
   it('should not be valid if selector is not provided', () => {
@@ -25,7 +25,7 @@ describe('isValidAction', () => {
       name: 'click',
     };
 
-    expect(isValidAction(actionSchema, action)).toBeFalsy();
+    expect(isValidAction(getActionSchemaData(), action)).toBeFalsy();
   });
 
   it('should not be valid if arg not provided', () => {
@@ -34,7 +34,7 @@ describe('isValidAction', () => {
       name: 'click',
     };
 
-    expect(isValidAction(actionSchema, action)).toBeFalsy();
+    expect(isValidAction(getActionSchemaData(), action)).toBeFalsy();
   });
 
   it('should not be valid is selector is undefined', () => {
@@ -46,7 +46,7 @@ describe('isValidAction', () => {
       name: 'click',
     };
 
-    expect(isValidAction(actionSchema, action)).toBeFalsy();
+    expect(isValidAction(getActionSchemaData(), action)).toBeFalsy();
   });
 
   it('should validate if schema required no property', () => {
@@ -56,6 +56,6 @@ describe('isValidAction', () => {
       name: 'noneRequiredProp',
     };
 
-    expect(isValidAction(actionSchema, action)).toBeTruthy();
+    expect(isValidAction(getActionSchemaData(), action)).toBeTruthy();
   });
 });

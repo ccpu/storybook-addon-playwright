@@ -11,6 +11,7 @@ export const useCurrentActions = () => {
 
     const handleEvent = (actions: StoryAction[]) => {
       setActions(actions);
+      window.__storyActions = actions;
     };
 
     chanel.on(EVENTS.CURRENT_ACTIONS, handleEvent);
@@ -18,5 +19,12 @@ export const useCurrentActions = () => {
       chanel.off(EVENTS.CURRENT_ACTIONS, handleEvent);
     };
   }, [setActions]);
+
+  useEffect(() => {
+    if (window.__storyActions) {
+      setActions(window.__storyActions);
+    }
+  }, [setActions]);
+
   return { currentActions };
 };

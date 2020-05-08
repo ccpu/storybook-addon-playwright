@@ -2,7 +2,7 @@
 
 import { ActionSchemaList } from '../src/typings';
 
-export const actionSchema: ActionSchemaList = {
+export const getActionSchemaData = (): ActionSchemaList => ({
   click: {
     kind: 'function',
     type: 'Promise' as never,
@@ -105,4 +105,4 @@ export const actionSchema: ActionSchemaList = {
       },
     },
   },
-};
+});

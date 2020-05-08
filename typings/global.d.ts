@@ -1,2 +1,0 @@
-import 'jest-enzyme';
-export {};

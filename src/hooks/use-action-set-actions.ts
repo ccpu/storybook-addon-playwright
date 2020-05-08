@@ -27,7 +27,7 @@ export function useActionSetActions() {
 
   useEffect(() => {
     const chanel = addons.getChannel();
-    // console.log(actionSetActions);
+
     chanel.emit(EVENTS.CURRENT_ACTIONS, actionSetActions);
   }, [actionSetActions, state.actionSchema]);
 

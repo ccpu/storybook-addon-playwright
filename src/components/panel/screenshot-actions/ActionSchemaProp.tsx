@@ -24,7 +24,6 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
 
     const handleChange = useCallback(
       (val) => {
-        console.log('handleChange');
         dispatch({
           actionId,
           objPath: optionObjectPath,

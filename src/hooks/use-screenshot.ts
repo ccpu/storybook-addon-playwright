@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { useKnobs } from './use-knobs';
 import { useStorybookState } from '@storybook/api';
 import { getSnapShot } from '../api/client';
 import { BrowserTypes, GetScreenshotResponse } from '../typings';
 import sum from 'hash-sum';
-import usePrevious from 'react-use/lib/usePrevious';
+import useDebounce from 'react-use/lib/useDebounce';
 import { useCurrentActions } from './use-current-actions';
 
 export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
@@ -14,12 +14,13 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
 
   const { currentActions } = useCurrentActions();
 
-  const prevKnobs = usePrevious(sum(knobs));
-  const prevActions = usePrevious(sum(currentActions));
+  const prevKnobs = useRef();
+  const prevActions = useRef();
 
   const state = useStorybookState();
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
+    console.log('loading');
     setLoading(true);
     getSnapShot({
       actions: currentActions,
@@ -32,15 +33,28 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
     });
   }, [browserType, currentActions, knobs, state.storyId]);
 
-  useEffect(() => {
-    if (
-      loading ||
-      (prevKnobs === sum(knobs) && prevActions === sum(currentActions))
-    ) {
-      return;
-    }
-    getSnapshot();
-  }, [knobs, prevKnobs, getSnapshot, loading, prevActions, currentActions]);
+  const [,] = useDebounce(
+    () => {
+      if (loading) return;
+
+      const currentActionHash = sum(currentActions);
+      const currentKnobHash = sum(knobs);
+
+      if (
+        prevKnobs.current === currentActionHash &&
+        prevActions.current === currentKnobHash
+      ) {
+        return;
+      }
+
+      prevKnobs.current = currentKnobHash;
+      prevActions.current = currentActionHash;
+
+      getSnapshot();
+    },
+    50,
+    [knobs, prevKnobs, getSnapshot, prevActions, currentActions, browserType],
+  );
 
   return { getSnapshot, loading, screenshot };
 };

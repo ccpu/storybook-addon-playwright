@@ -1,6 +1,6 @@
 import React, { SFC, memo, useState, useCallback, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { ActionSet } from '../screenshot-actions/ActionSet';
+import { ActionSet } from './ActionSet';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../common';
 import { useActionDispatchContext } from '../../../store';

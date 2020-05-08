@@ -1,9 +1,9 @@
 import React, { SFC, memo, useCallback, useEffect } from 'react';
 import { useStorybookState } from '@storybook/api';
-import { ActionList } from './ActionList';
+import { ActionList } from '../screenshot-actions/ActionList';
 import { StoryAction } from '../../../typings';
 import { useActionDispatchContext } from '../../../store/actions';
-import { ActionToolbar } from './ActionToolbar';
+import { ActionToolbar } from '../screenshot-actions/ActionToolbar';
 import { nanoid } from 'nanoid';
 
 interface Props {

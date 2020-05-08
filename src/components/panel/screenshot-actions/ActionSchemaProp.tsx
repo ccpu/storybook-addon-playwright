@@ -1,22 +1,24 @@
 import React, { SFC, useCallback, memo } from 'react';
-import { Definition } from 'ts-to-json';
+
 import { Control } from './Control';
 import { ActionSchemaProps } from './ActionSchemaProps';
 import { useActionDispatchContext } from '../../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
 import { useAction } from '../../../hooks';
+import { ActionSchema } from '../../../typings';
 
 export interface ActionSchemaPropProps {
   name: string;
   parents?: string[];
-  schema: Definition;
+  schema: ActionSchema;
   actionId: string;
   nextPropName: string;
+  isRequired?: boolean;
 }
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
-  ({ name, schema, parents = [], actionId, nextPropName }) => {
+  ({ name, schema, parents = [], actionId, nextPropName, isRequired }) => {
     const dispatch = useActionDispatchContext();
     const optionObjectPath = [...parents, name].join('.');
 
@@ -65,6 +67,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           }
           fullObjectPath={optionObjectPath}
           actionId={actionId}
+          isRequired={isRequired}
         />
       );
     }
@@ -80,6 +83,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           description={schema.description}
           onAppendValueToTitle={handleAppendToTile}
           appendValueToTitle={appendToTile}
+          isRequired={isRequired}
         />
       );
     }
@@ -95,6 +99,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             description={schema.description}
             onAppendValueToTitle={handleAppendToTile}
             appendValueToTitle={appendToTile}
+            isRequired={isRequired}
           />
         );
       case 'number':
@@ -108,6 +113,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             description={schema.description}
             onAppendValueToTitle={handleAppendToTile}
             appendValueToTitle={appendToTile}
+            isRequired={isRequired}
           />
         );
       case 'boolean':
@@ -120,11 +126,12 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             description={schema.description}
             onAppendValueToTitle={handleAppendToTile}
             appendValueToTitle={appendToTile}
+            isRequired={isRequired}
           />
         );
       case 'array': {
         if (!schema.items) return null;
-        const items = (schema.items as Definition).enum;
+        const items = (schema.items as ActionSchema).enum;
         if (!items) return null;
         return (
           <Control
@@ -137,15 +144,17 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
             description={schema.description}
             onAppendValueToTitle={handleAppendToTile}
             appendValueToTitle={appendToTile}
+            isRequired={isRequired}
           />
         );
       }
       case 'object':
         return (
           <ActionSchemaProps
-            props={schema.properties}
+            schemaProps={schema.properties}
             parents={[...parents, name]}
             actionId={actionId}
+            required={schema.required}
           />
         );
       default:

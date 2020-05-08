@@ -14,8 +14,9 @@ const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
   return (
     <div>
       <ActionSchemaProps
-        props={schema.parameters as Definition}
+        schemaProps={schema.parameters as Definition}
         actionId={actionId}
+        required={schema.required}
       />
     </div>
   );

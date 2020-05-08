@@ -2,22 +2,28 @@
 import { StoryAction } from '../../../typings';
 import { Page } from 'playwright-core';
 import { getActionsSchema } from '../services/get-actions-schema';
-import { getActionArgs } from '../../../utils';
+import { getActionArgs, isValidAction } from '../../../utils';
 
 export const executeAction = async (page: Page, action: StoryAction) => {
-  const args = getActionArgs(action, getActionsSchema());
+  const schema = getActionsSchema();
+
+  if (!isValidAction(schema, action)) {
+    return;
+  }
+
+  const args = getActionArgs(action, schema);
 
   const actionNames = action.name.split('.');
   let pageObj: unknown = page;
 
-  const location: unknown[] = [pageObj];
+  const pageObjects: unknown[] = [pageObj];
 
   for (let i = 0; i < actionNames.length; i++) {
     const name = actionNames[i];
     pageObj = pageObj[name];
-    location.push(pageObj);
+    pageObjects.push(pageObj);
   }
 
   // @ts-ignore
-  return await pageObj.call(location[location.length - 2], ...args);
+  return await pageObj.call(pageObjects[pageObjects.length - 2], ...args);
 };

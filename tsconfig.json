@@ -30,7 +30,7 @@
     "**/__tests__/**/*",
     "typings/**/*",
     "setupTests.ts",
-    "test-data/*"
+    "test-data/**/*"
   ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

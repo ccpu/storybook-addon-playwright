@@ -1,5 +1,4 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
-
 import { getActionArgs } from '../get-action-args';
 import { actionSchema } from '../../../test-data/action-schema';
 import { StoryAction } from '../../typings';

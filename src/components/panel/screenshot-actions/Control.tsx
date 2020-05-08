@@ -9,6 +9,7 @@ const Control: SFC<ControlProps & Partial<ComponentType>> = memo((props) => {
     description,
     appendValueToTitle,
     onAppendValueToTitle,
+    isRequired,
   } = props;
 
   const { Control: StorybookControl, handleChange, knob } = useControl(props);
@@ -19,6 +20,7 @@ const Control: SFC<ControlProps & Partial<ComponentType>> = memo((props) => {
       appendValueToTitle={appendValueToTitle}
       onAppendValueToTitle={onAppendValueToTitle}
       description={description}
+      isRequired={isRequired}
     >
       <StorybookControl onChange={handleChange} knob={knob} required />
     </FormControl>

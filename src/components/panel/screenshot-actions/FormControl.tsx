@@ -62,6 +62,7 @@ export interface ControlFormProps {
   description?: string;
   appendValueToTitle: boolean;
   onAppendValueToTitle: () => void;
+  isRequired: boolean;
 }
 
 const FormControl: SFC<ControlFormProps> = memo((props) => {
@@ -71,6 +72,7 @@ const FormControl: SFC<ControlFormProps> = memo((props) => {
     appendValueToTitle,
     onAppendValueToTitle,
     children,
+    isRequired,
   } = props;
 
   const classes = useStyles();
@@ -78,7 +80,10 @@ const FormControl: SFC<ControlFormProps> = memo((props) => {
   return (
     <div className={classes.root}>
       <div className={classes.labelWrap}>
-        <span>{capitalize(label)}</span>
+        <span>
+          {capitalize(label)}
+          {isRequired && <span style={{ marginLeft: 2 }}>*</span>}
+        </span>
       </div>
       <div className={classes.controlWrap}>{children}</div>
       <div className={classes.iconWrapper}>

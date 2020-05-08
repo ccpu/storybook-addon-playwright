@@ -1,5 +1,5 @@
 import { getActionSchema } from '../get-schema';
-import { actionSchema } from './data/schema';
+import { actionSchema } from '../../../test-data';
 
 describe('getActionSchema', () => {
   it('should return nothing', () => {

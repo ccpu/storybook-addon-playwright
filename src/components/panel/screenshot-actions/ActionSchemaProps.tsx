@@ -1,19 +1,20 @@
 import React, { SFC, memo } from 'react';
 import { ActionSchemaProp } from './ActionSchemaProp';
-import { Definition } from 'ts-to-json';
+import { ActionSchema } from '../../../typings';
 
 export interface ActionSchemaPropsProps {
-  props: Definition;
+  schemaProps: ActionSchema;
   parents?: string[];
   actionId: string;
+  required?: string[];
 }
 
 const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
-  ({ props, parents = [], actionId }) => {
+  ({ schemaProps, required, parents = [], actionId }) => {
     return (
       <>
-        {Object.keys(props).map((name, i, array) => {
-          const param = props[name];
+        {Object.keys(schemaProps).map((name, i, array) => {
+          const param = schemaProps[name];
           return (
             <ActionSchemaProp
               key={name}
@@ -22,6 +23,7 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
               parents={parents}
               actionId={actionId}
               nextPropName={array[i + 1]}
+              isRequired={required && required.indexOf(name) !== -1}
             />
           );
         })}

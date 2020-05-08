@@ -2,6 +2,7 @@ import { executeAction } from '../execute-action';
 import { Page } from 'playwright-core';
 import { StoryAction } from '../../../../typings';
 import { actionSchema } from '../../../../../test-data';
+// import '../../../../../test-data/mocks/is-valid-action';
 
 jest.mock('../../services/get-actions-schema', () => ({
   getActionsSchema: () => {
@@ -33,7 +34,21 @@ describe('executeAction', () => {
 
     const val = await executeAction((page as unknown) as Page, action);
 
-    expect(val).toStrictEqual(['div>div', {}]);
+    expect(val).toStrictEqual(['div>div']);
+  });
+
+  it('should not execute if required param not provided e.g selector', async () => {
+    const action: StoryAction = {
+      args: {
+        options: {},
+      },
+      id: 'someId',
+      name: 'click',
+    };
+
+    const val = await executeAction((page as unknown) as Page, action);
+
+    expect(val).toStrictEqual([undefined]);
   });
 
   it('should execute nested', async () => {
@@ -48,6 +63,6 @@ describe('executeAction', () => {
 
     const val = await executeAction((page as unknown) as Page, action);
 
-    expect(val).toStrictEqual([1, 1, [undefined]]);
+    expect(val).toStrictEqual([1, 1]);
   });
 });

@@ -57,6 +57,15 @@ export const actionSchema: ActionSchemaList = {
     },
     required: ['selector'],
   },
+  noneRequiredProp: {
+    kind: 'function',
+    type: 'Promise' as never,
+    parameters: {
+      selector: {
+        type: 'string',
+      },
+    },
+  },
   mouse: {
     type: 'object',
     properties: {

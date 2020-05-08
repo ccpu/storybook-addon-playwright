@@ -58,6 +58,7 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     isFollowedByPositionProp,
     fullObjectPath,
     actionId,
+    isRequired,
   } = props;
 
   const [validate, setValidate] = useState(false);
@@ -154,6 +155,7 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
       appendValueToTitle={appendValueToTitle}
       onAppendValueToTitle={onAppendValueToTitle}
       description={description}
+      isRequired={isRequired}
     >
       <div
         className={clsx('selector-root', classes.root, {

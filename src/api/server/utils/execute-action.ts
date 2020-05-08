@@ -10,13 +10,14 @@ export const executeAction = async (page: Page, action: StoryAction) => {
   const actionNames = action.name.split('.');
   let pageObj: unknown = page;
 
+  const location: unknown[] = [pageObj];
+
   for (let i = 0; i < actionNames.length; i++) {
     const name = actionNames[i];
     pageObj = pageObj[name];
+    location.push(pageObj);
   }
 
   // @ts-ignore
-  pageObj = await pageObj(...args);
-
-  return await Promise.all([pageObj]);
+  return await pageObj.call(location[location.length - 2], ...args);
 };

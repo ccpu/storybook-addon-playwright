@@ -51,6 +51,9 @@ export const actionSchema: ActionSchemaList = {
         },
         additionalProperties: false,
       },
+      delay: {
+        type: 'number',
+      },
     },
     required: ['selector'],
   },

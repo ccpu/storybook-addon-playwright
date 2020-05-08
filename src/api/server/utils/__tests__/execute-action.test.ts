@@ -10,15 +10,18 @@ jest.mock('../../services/get-actions-schema', () => ({
 }));
 
 const page = {
-  click: async () => {
-    await new Promise((resolve) => resolve('pass'));
+  click: async (...args) => {
+    return await new Promise((resolve) => resolve(args));
+  },
+  mouse: {
+    click: async (...args) => {
+      return await new Promise((resolve) => resolve(args));
+    },
   },
 };
 
 describe('executeAction', () => {
   it('should execute', async () => {
-    // const spyOnPage = jest.spyOn(page, 'click');
-
     const action: StoryAction = {
       args: {
         options: {},
@@ -30,6 +33,21 @@ describe('executeAction', () => {
 
     const val = await executeAction((page as unknown) as Page, action);
 
-    expect(val).toBe('pass');
+    expect(val).toStrictEqual(['div>div', {}]);
+  });
+
+  it('should execute nested', async () => {
+    const action: StoryAction = {
+      args: {
+        x: 1,
+        y: 1,
+      },
+      id: 'someId',
+      name: 'mouse.click',
+    };
+
+    const val = await executeAction((page as unknown) as Page, action);
+
+    expect(val).toStrictEqual([1, 1, [undefined]]);
   });
 });

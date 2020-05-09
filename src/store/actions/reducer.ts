@@ -1,10 +1,9 @@
-import { ActionSchema, StoryAction, ActionSet } from '../../typings';
+import { StoryAction, ActionSet, ActionSchemaList } from '../../typings';
 import * as immutableObject from 'object-path-immutable';
 import arrayMove from 'array-move';
 
 export interface ReducerState {
-  actionSchema: ActionSchema;
-  // storyActions: StoryAction[];
+  actionSchema: ActionSchemaList;
   expandedActions: { [k: string]: boolean };
   actionSets: ActionSet[];
   currentActionSetId?: string;
@@ -30,7 +29,15 @@ export type Action =
       oldIndex: number;
       newIndex: number;
     }
-  | { type: 'setActionSchema'; actionSchema: ActionSchema }
+  | {
+      type: 'addActionSetList';
+      actionSets: ActionSet[];
+    }
+  | {
+      type: 'deleteActionSet';
+      actionSetId: string;
+    }
+  | { type: 'setActionSchema'; actionSchema: ActionSchemaList }
   | { type: 'setStoryActions'; actions: StoryAction[] }
   | { type: 'toggleActionExpansion'; actionId: string }
   | { type: 'toggleSubtitleItem'; actionId: string; actionOptionPath: string }
@@ -72,6 +79,20 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       };
     }
     case 'removeActionSet': {
+      return {
+        ...state,
+        actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
+        currentActionSetId: undefined,
+      };
+    }
+    case 'addActionSetList': {
+      return {
+        ...state,
+        actionSets: [...state.actionSets, ...action.actionSets],
+        currentActionSetId: undefined,
+      };
+    }
+    case 'deleteActionSet': {
       return {
         ...state,
         actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),

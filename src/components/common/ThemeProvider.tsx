@@ -13,6 +13,7 @@ const ThemeProvider: SFC = memo((props) => {
 
   const theme = createMuiTheme({
     palette: {
+      action: { active: storyBookTheme.barTextColor },
       background: {
         default: storyBookTheme.appBg,
         paper: storyBookTheme.appContentBg,

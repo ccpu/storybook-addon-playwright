@@ -7,3 +7,5 @@ export * from './snapshot-data';
 export * from './story-action';
 export * from './action-schema';
 export * from './storybook';
+export * from './story-data';
+export * from './story-info';

@@ -6,4 +6,4 @@ export * from './is-valid-selector';
 export * from './knobs-to-props';
 export * from './url';
 export * from './get-action-args';
-export * from './is-valid-action';
+export * from './valid-action';

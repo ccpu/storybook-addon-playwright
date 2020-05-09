@@ -4,9 +4,8 @@ import { SaveActionSetRequest } from '../../typings';
 export const saveActionSet = async (req, res): Promise<void> => {
   const reqData = req.body as SaveActionSetRequest;
   try {
-    saveActionSetService(reqData);
-    // const snapshotData = await makeScreenshot(reqData, req.headers.host, true);
-    res.status(200).send();
+    await saveActionSetService(reqData);
+    res.send({ success: true });
     res.end();
   } catch (error) {
     console.error(error);

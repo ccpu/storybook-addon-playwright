@@ -5,6 +5,8 @@ import {
   getActionsSchema,
   saveScreenshot,
   saveActionSet,
+  getActionSet,
+  deleteActionSet,
 } from './controller';
 
 const expressMiddleWare = (router) => {
@@ -15,5 +17,7 @@ const expressMiddleWare = (router) => {
   router.post(ROUTE.SAVE_SCREENSHOT, saveScreenshot);
   router.post(ROUTE.GET_ACTIONS_DATA, getActionsSchema);
   router.post(ROUTE.SAVE_ACTION_SET, saveActionSet);
+  router.post(ROUTE.GET_ACTION_SET, getActionSet);
+  router.post(ROUTE.DELETE_ACTION_SET, deleteActionSet);
 };
 export default expressMiddleWare;

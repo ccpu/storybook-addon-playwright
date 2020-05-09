@@ -1,112 +1,89 @@
-import React, { SFC, memo, useState, useCallback, useEffect } from 'react';
+import React, { SFC, memo, useCallback, useState } from 'react';
+import { useStoryFileActionSets } from '../../../hooks/use-story-file-action-sets';
+import { useCurrentStoryData, useCurrentStoryActionSets } from '../../../hooks';
 import { makeStyles } from '@material-ui/core';
-import { ActionSetEditor } from './ActionSetEditor';
-import { ActionToolbar } from './ActionSetToolbar';
-import { InputDialog } from '../../common';
+import { ActionSetListItem } from './ActionSetListItem';
+import { Loader, Snackbar } from '../../common';
 import { useActionDispatchContext } from '../../../store';
-import { nanoid } from 'nanoid';
-import { useStorybookState } from '@storybook/api';
-import { useTimeoutFn } from 'react-use';
+import { deleteActionSet } from '../../../api/client';
 
 const useStyles = makeStyles(
   (theme) => {
     return {
-      actionListWrapper: {
-        backgroundColor: theme.palette.background.default,
-        bottom: 0,
-        left: 0,
-        position: 'absolute',
-        right: 0,
-        top: 0,
+      root: {
+        color: theme.palette.text.primary,
+        padding: 4,
+        width: '100%',
       },
-      button: {
-        marginTop: 20,
-      },
-      root: {},
     };
   },
   { name: 'ActionSetList' },
 );
 
-const ActionSetList: SFC = memo(() => {
-  const [showActionList, setShowActionList] = useState(false);
+export interface ActionSetListProps {
+  onEdit?: (id: string) => void;
+}
 
-  const [showDescDialog, setShowDescDialog] = useState(false);
+const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
+  const classes = useStyles();
 
-  const [actionSetId, setActionSetId] = useState<string>();
+  const { storyData } = useCurrentStoryData();
 
-  const { storyId } = useStorybookState();
+  const [error, setError] = useState();
 
-  const [actionSetStoryId, setActionSetStoryId] = useState<string>(storyId);
+  const actionSets = useCurrentStoryActionSets();
+
+  const { loading } = useStoryFileActionSets(
+    storyData && storyData.parameters.fileName,
+  );
 
   const dispatch = useActionDispatchContext();
 
-  const classes = useStyles();
-
-  const toggleActionListSet = useCallback(() => {
-    setShowActionList(!showActionList);
-  }, [showActionList]);
-
-  const toggleDescriptionDialog = useCallback(() => {
-    setShowDescDialog(!showDescDialog);
-  }, [showDescDialog]);
-
-  const createNewActionSet = useCallback(
-    (desc) => {
-      const id = nanoid();
-      dispatch({
-        actionSetId: id,
-        description: desc,
-        storyId,
-        type: 'addActionSet',
-      });
-      // toggleDescriptionDialog();
-      toggleActionListSet();
-      setActionSetId(id);
+  const handleDelete = useCallback(
+    async (actionSetId: string) => {
+      try {
+        await deleteActionSet({
+          actionSetId,
+          fileName: storyData.parameters.fileName,
+        });
+        dispatch({ actionSetId, type: 'deleteActionSet' });
+      } catch (error) {
+        setError(error.message);
+      }
     },
-    [dispatch, storyId, toggleActionListSet],
+    [dispatch, storyData],
   );
 
-  const removeActionSet = useCallback(() => {
-    dispatch({
-      actionSetId: actionSetId,
-      type: 'removeActionSet',
-    });
-    toggleActionListSet();
-  }, [actionSetId, dispatch, toggleActionListSet]);
+  const handleEdit = useCallback(
+    (actionSetId: string) => {
+      onEdit(actionSetId);
+    },
+    [onEdit],
+  );
 
-  useTimeoutFn(() => {
-    createNewActionSet('new action');
-  }, 1000);
-
-  useEffect(() => {
-    if (storyId === actionSetStoryId) return;
-    removeActionSet();
-    setActionSetStoryId(storyId);
-  }, [actionSetStoryId, removeActionSet, storyId]);
+  const handleErrorClose = useCallback(() => {
+    setError(undefined);
+  }, []);
 
   return (
-    <div style={{ transform: 'none' }}>
-      <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
-      {actionSetId && (
-        <div
-          className={classes.actionListWrapper}
-          style={{ display: showActionList ? 'block' : 'none' }}
-        >
-          <ActionSetEditor
-            onClose={removeActionSet}
-            actionSetId={actionSetId}
-          />
-        </div>
+    <div className={classes.root}>
+      {actionSets.map((set) => (
+        <ActionSetListItem
+          key={set.id}
+          actionSet={set}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+        />
+      ))}
+      <Loader open={loading} />
+      {error && (
+        <Snackbar
+          type="error"
+          open={true}
+          message={error}
+          onClose={handleErrorClose}
+        />
       )}
-
-      <InputDialog
-        onClose={toggleDescriptionDialog}
-        title="Action set title"
-        open={showDescDialog}
-        onSave={createNewActionSet}
-        required
-      />
     </div>
   );
 });

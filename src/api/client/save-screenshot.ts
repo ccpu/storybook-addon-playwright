@@ -14,6 +14,7 @@ export const saveScreenshot = async (
     },
     method: 'post',
   });
+
   const snapShots = await res.json();
 
   return snapShots;

@@ -11,7 +11,9 @@ import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 import { useActionDispatchContext } from '../../../store';
 
 const DragHandle = SortableHandle(() => (
-  <DragIndicatorSharp style={{ marginLeft: -10, marginRight: 5 }} />
+  <DragIndicatorSharp
+    style={{ cursor: 'move', marginLeft: -10, marginRight: 5 }}
+  />
 ));
 const SortableItem = SortableElement(({ action }) => (
   <div>

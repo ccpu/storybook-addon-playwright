@@ -1,11 +1,13 @@
-import { SaveActionSetRequest } from '..//typings';
 import { getEndpoint } from './utils';
+import { DeleteActionSetRequest } from '../typings';
 
-export const saveActionSet = async (data: SaveActionSetRequest) => {
-  const restEndpoint = getEndpoint('SAVE_ACTION_SET');
+export const deleteActionSet = async (
+  info: DeleteActionSetRequest,
+): Promise<void> => {
+  const restEndpoint = getEndpoint('DELETE_ACTION_SET');
 
   const res = await fetch(restEndpoint, {
-    body: JSON.stringify(data),
+    body: JSON.stringify(info),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import { getActionsSchema as getActionsSchemaService } from '../services/get-act
 export const getActionsSchema = async (_req, res): Promise<void> => {
   try {
     const actions = getActionsSchemaService();
-    const json = JSON.stringify(actions, null, 2);
+    const json = JSON.stringify(actions);
     res.send(json);
     res.end();
   } catch (error) {

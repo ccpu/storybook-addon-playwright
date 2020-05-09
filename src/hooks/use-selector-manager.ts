@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { SelectorState } from '../typings/selector';
 import { EVENTS } from '../constants';
-import { useStoryBookAddonState } from './use-storybook-addon-state';
+import { useGlobalState } from './use-global-state';
 
 export type SelectorType = 'selector' | 'position';
 
@@ -16,9 +16,9 @@ export interface SelectorManger extends SelectorManageSharedProps {
 }
 
 export const useSelectorManager = () => {
-  const [selectorManager, setSelectorManager] = useStoryBookAddonState<
-    SelectorManger
-  >(EVENTS.SELECTOR);
+  const [selectorManager, setSelectorManager] = useGlobalState<SelectorManger>(
+    EVENTS.SELECTOR,
+  );
 
   const startSelector = useCallback(
     (options: SelectorManageSharedProps) => {

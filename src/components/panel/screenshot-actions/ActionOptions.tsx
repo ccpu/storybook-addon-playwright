@@ -37,6 +37,9 @@ const useStyles = makeStyles(
         fontWeight: theme.typography.fontWeightRegular,
         marginRight: 10,
       },
+      icon: {
+        fontSize: 20,
+      },
       root: {
         padding: 4,
         width: '100%',
@@ -150,7 +153,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
               color="inherit"
               onClick={handleDeleteAction}
             >
-              <DeleteIcon />
+              <DeleteIcon className={classes.icon} />
             </IconButton>
           </div>
         </ExpansionPanelSummary>

@@ -1,7 +1,5 @@
-import { ActionSet } from '../../typings';
+import { ActionSet, StoryInfo } from '../../typings';
 
-export interface SaveActionSetRequest {
-  fileName: string;
-  storyId: string;
+export interface SaveActionSetRequest extends StoryInfo {
   actionSet: ActionSet;
 }

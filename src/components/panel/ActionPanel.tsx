@@ -2,7 +2,7 @@ import React, { SFC, memo } from 'react';
 import { API } from '@storybook/api';
 import { ThemeProvider } from '../common';
 import { ActionProvider } from '../../store';
-import { ActionSetList } from './action-set';
+import { ActionSetMain } from './action-set';
 import { StateInspector } from 'reinspect';
 
 interface ActionPanelProps {
@@ -14,7 +14,7 @@ const ActionPanel: SFC<ActionPanelProps> = memo(() => {
     <StateInspector>
       <ActionProvider>
         <ThemeProvider>
-          <ActionSetList />
+          <ActionSetMain />
         </ThemeProvider>
       </ActionProvider>
     </StateInspector>

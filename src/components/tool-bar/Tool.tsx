@@ -26,6 +26,9 @@ const Tool: SFC = () => {
 
   const { setAddonState, addonState } = useAddonState();
 
+  const isEnablePreviewPanelEnabled =
+    addonState && addonState.previewPanelEnabled;
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -37,9 +40,9 @@ const Tool: SFC = () => {
   const handleBowserClose = useCallback(() => {
     setAddonState({
       ...addonState,
-      previewPanelEnabled: !addonState.previewPanelEnabled,
+      previewPanelEnabled: !isEnablePreviewPanelEnabled,
     });
-  }, [addonState, setAddonState]);
+  }, [addonState, isEnablePreviewPanelEnabled, setAddonState]);
 
   const classes = useStyles();
   return (
@@ -57,7 +60,7 @@ const Tool: SFC = () => {
         onClick={handleBowserClose}
         title="Show panel"
         className={classes.button}
-        active={addonState && addonState.previewPanelEnabled}
+        active={isEnablePreviewPanelEnabled}
       >
         <ShowPanelIcon viewBox="1.5 -2 20 20" />
       </IconButton>

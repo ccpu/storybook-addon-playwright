@@ -6,11 +6,8 @@ import { useActionDispatchContext } from '../../../store';
 import { nanoid } from 'nanoid';
 import { useStorybookState } from '@storybook/api';
 import { ActionSetList } from './ActionSetList';
-// import { useTimeoutFn } from 'react-use';
 
 const ActionSetMain: SFC = memo(() => {
-  const [showActionList, setShowActionList] = useState(false);
-
   const [showDescDialog, setShowDescDialog] = useState(false);
 
   const [editActionSetId, setEditActionSetId] = useState<string>();
@@ -19,11 +16,9 @@ const ActionSetMain: SFC = memo(() => {
 
   const [actionSetStoryId, setActionSetStoryId] = useState<string>(storyId);
 
-  const dispatch = useActionDispatchContext();
+  const [isNewAction, setIsNewAction] = useState(false);
 
-  const toggleActionListSet = useCallback(() => {
-    setShowActionList(!showActionList);
-  }, [showActionList]);
+  const dispatch = useActionDispatchContext();
 
   const toggleDescriptionDialog = useCallback(() => {
     setShowDescDialog(!showDescDialog);
@@ -39,43 +34,59 @@ const ActionSetMain: SFC = memo(() => {
         type: 'addActionSet',
       });
       toggleDescriptionDialog();
-      toggleActionListSet();
+
       setEditActionSetId(id);
     },
-    [dispatch, storyId, toggleActionListSet, toggleDescriptionDialog],
+    [dispatch, storyId, toggleDescriptionDialog],
   );
 
-  const removeActionSet = useCallback(() => {
-    dispatch({
-      actionSetId: editActionSetId,
-      type: 'removeActionSet',
-    });
-    toggleActionListSet();
-  }, [editActionSetId, dispatch, toggleActionListSet]);
-
-  // useTimeoutFn(() => {
-  //   createNewActionSet('new action');
-  // }, 1000);
+  const cancelEditActionSet = useCallback(() => {
+    if (isNewAction) {
+      dispatch({
+        actionSetId: editActionSetId,
+        type: 'removeActionSet',
+      });
+    }
+    setEditActionSetId(undefined);
+  }, [isNewAction, dispatch, editActionSetId]);
 
   useEffect(() => {
+    if (!actionSetStoryId) {
+      dispatch({ type: 'clearEditorActionSetId' });
+      setIsNewAction(false);
+    }
+
     if (storyId === actionSetStoryId) return;
-    removeActionSet();
+    cancelEditActionSet();
     setActionSetStoryId(storyId);
-  }, [actionSetStoryId, removeActionSet, storyId]);
+  }, [actionSetStoryId, dispatch, cancelEditActionSet, storyId]);
+
+  const handleComplete = useCallback(() => {
+    setEditActionSetId(undefined);
+  }, []);
+
+  const handleEditActionSet = useCallback(
+    (id: string) => {
+      dispatch({ actionSetId: id, type: 'setEditorActionSetId' });
+      setEditActionSetId(id);
+    },
+    [dispatch],
+  );
 
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       {editActionSetId ? (
         <>
           <ActionSetEditor
-            onClose={removeActionSet}
+            onClose={cancelEditActionSet}
             actionSetId={editActionSetId}
+            onComplete={handleComplete}
           />
         </>
       ) : (
         <>
           <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
-          <ActionSetList />
+          <ActionSetList onEdit={handleEditActionSet} />
         </>
       )}
       <InputDialog

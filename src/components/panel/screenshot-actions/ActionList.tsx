@@ -9,6 +9,24 @@ import {
 } from 'react-sortable-hoc';
 import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 import { useActionDispatchContext } from '../../../store';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(
+  (theme) => {
+    const {
+      palette: { text },
+    } = theme;
+
+    return {
+      noActionMessage: {
+        color: text.primary,
+        marginTop: 20,
+        textAlign: 'center',
+      },
+    };
+  },
+  { name: 'ActionSetList' },
+);
 
 const DragHandle = SortableHandle(() => (
   <DragIndicatorSharp
@@ -40,6 +58,8 @@ const ActionList: SFC = () => {
   const { actionSetActions } = useActionSetActions();
   const dispatch = useActionDispatchContext();
 
+  const classes = useStyles();
+
   const handleSortEnd = useCallback(
     (e: SortEnd) => {
       dispatch({
@@ -50,6 +70,15 @@ const ActionList: SFC = () => {
     },
     [dispatch],
   );
+
+  if (!actionSetActions.length) {
+    return (
+      <div className={classes.noActionMessage}>
+        <div>No action to display!</div>
+        <div>Creat action by click on the {"'+'"} button.</div>
+      </div>
+    );
+  }
 
   return (
     <SortableList

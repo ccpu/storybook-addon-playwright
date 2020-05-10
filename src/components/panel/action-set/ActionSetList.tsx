@@ -10,6 +10,10 @@ import { deleteActionSet } from '../../../api/client';
 const useStyles = makeStyles(
   (theme) => {
     return {
+      message: {
+        marginTop: 20,
+        textAlign: 'center',
+      },
       root: {
         color: theme.palette.text.primary,
         padding: 4,
@@ -21,7 +25,7 @@ const useStyles = makeStyles(
 );
 
 export interface ActionSetListProps {
-  onEdit?: (id: string) => void;
+  onEdit: (id: string) => void;
 }
 
 const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
@@ -67,14 +71,22 @@ const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
 
   return (
     <div className={classes.root}>
-      {actionSets.map((set) => (
-        <ActionSetListItem
-          key={set.id}
-          actionSet={set}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-        />
-      ))}
+      {actionSets.length > 0 ? (
+        actionSets.map((set) => (
+          <ActionSetListItem
+            key={set.id}
+            actionSet={set}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+          />
+        ))
+      ) : (
+        <div className={classes.message}>
+          <div>No action set to display!</div>
+          <div>Creat action set by click on the {"'+'"} button.</div>
+        </div>
+      )}
+
       <Loader open={loading} />
       {error && (
         <Snackbar

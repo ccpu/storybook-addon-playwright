@@ -13,17 +13,17 @@ export function useActionSetActions() {
   const state = useActionContext();
 
   useEffect(() => {
-    if (!state.currentActionSetId) return;
+    if (!state.editorActionSetId) return;
 
     const actionSet = state.actionSets.find(
       (x) =>
-        x.id === state.currentActionSetId &&
+        x.id === state.editorActionSetId &&
         x.storyId === storybookState.storyId,
     );
 
     const actions = actionSet ? actionSet.actions : [];
     setActionSetActions(actions);
-  }, [state.actionSets, state.currentActionSetId, storybookState.storyId]);
+  }, [state.actionSets, state.editorActionSetId, storybookState.storyId]);
 
   useEffect(() => {
     const chanel = addons.getChannel();

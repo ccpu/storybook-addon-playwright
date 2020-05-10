@@ -6,7 +6,8 @@ export interface ReducerState {
   actionSchema: ActionSchemaList;
   expandedActions: { [k: string]: boolean };
   actionSets: ActionSet[];
-  currentActionSetId?: string;
+  editorActionSetId?: string;
+  editorActionSet?: ActionSet;
 }
 
 export type Action =
@@ -35,6 +36,13 @@ export type Action =
     }
   | {
       type: 'deleteActionSet';
+      actionSetId: string;
+    }
+  | {
+      type: 'clearEditorActionSetId';
+    }
+  | {
+      type: 'setEditorActionSetId';
       actionSetId: string;
     }
   | { type: 'setActionSchema'; actionSchema: ActionSchemaList }
@@ -75,35 +83,47 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
             storyId: action.storyId,
           },
         ],
-        currentActionSetId: action.actionSetId,
+        editorActionSetId: action.actionSetId,
       };
     }
     case 'removeActionSet': {
       return {
         ...state,
         actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
-        currentActionSetId: undefined,
+        editorActionSetId: undefined,
+      };
+    }
+    case 'clearEditorActionSetId': {
+      return {
+        ...state,
+        editorActionSetId: undefined,
+      };
+    }
+    case 'setEditorActionSetId': {
+      return {
+        ...state,
+        editorActionSetId: action.actionSetId,
       };
     }
     case 'addActionSetList': {
       return {
         ...state,
         actionSets: [...state.actionSets, ...action.actionSets],
-        currentActionSetId: undefined,
+        editorActionSetId: undefined,
       };
     }
     case 'deleteActionSet': {
       return {
         ...state,
         actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
-        currentActionSetId: undefined,
+        editorActionSetId: undefined,
       };
     }
     case 'toggleSubtitleItem': {
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
-          if (set.id === state.currentActionSetId) {
+          if (set.id === state.editorActionSetId) {
             return {
               ...set,
               actions: set.actions.map((act) => {
@@ -138,7 +158,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
-          if (set.id === state.currentActionSetId) {
+          if (set.id === state.editorActionSetId) {
             return {
               ...set,
               actions: set.actions.map((act) => {
@@ -164,7 +184,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
-          if (set.id === state.currentActionSetId) {
+          if (set.id === state.editorActionSetId) {
             return {
               ...set,
               actions: [
@@ -180,7 +200,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
-          if (set.id === state.currentActionSetId) {
+          if (set.id === state.editorActionSetId) {
             return {
               ...set,
               actions: set.actions.filter((x) => x.id !== action.actionId),
@@ -213,7 +233,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
-          if (set.id === state.currentActionSetId) {
+          if (set.id === state.editorActionSetId) {
             return {
               ...set,
               actions: [...set.actions, action.action],
@@ -226,7 +246,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         actionSets: state.actionSets.map((set) => {
-          if (set.id === state.currentActionSetId) {
+          if (set.id === state.editorActionSetId) {
             return {
               ...set,
               actions: set.actions.map((act) => {

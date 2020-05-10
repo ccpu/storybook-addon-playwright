@@ -20,14 +20,12 @@ const useStyles = makeStyles(
       button: {
         marginTop: 20,
       },
+      noActionMessage: {
+        textAlign: 'center',
+      },
       root: {
         backgroundColor: theme.palette.background.default,
         height: '100%',
-        // bottom: 0,
-        // left: 0,
-        // position: 'absolute',
-        // right: 0,
-        // top: 0,
       },
       wrapper: {
         height: '100%',
@@ -40,136 +38,140 @@ const useStyles = makeStyles(
 interface Props {
   onClose: () => void;
   actionSetId: string;
+  onComplete: () => void;
 }
 
-const ActionSetEditor: SFC<Props> = memo(({ onClose, actionSetId }) => {
-  const dispatch = useActionDispatchContext();
+const ActionSetEditor: SFC<Props> = memo(
+  ({ onClose, actionSetId, onComplete }) => {
+    const dispatch = useActionDispatchContext();
 
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-  const classes = useStyles();
+    const classes = useStyles();
 
-  const [error, setError] = useState();
+    const [error, setError] = useState();
 
-  const state = useActionContext();
+    const state = useActionContext();
 
-  const api = useStorybookApi();
+    const api = useStorybookApi();
 
-  const [validationResult, setValidationResult] = useState<
-    ActionListValidationResult[]
-  >();
+    const [validationResult, setValidationResult] = useState<
+      ActionListValidationResult[]
+    >();
 
-  const handleAddAction = useCallback(
-    (actionName: string) => {
-      const actionId = nanoid(10);
-      const newAction: StoryAction = {
-        id: actionId,
-        name: actionName,
-      };
+    const handleAddAction = useCallback(
+      (actionName: string) => {
+        const actionId = nanoid(10);
+        const newAction: StoryAction = {
+          id: actionId,
+          name: actionName,
+        };
 
-      dispatch({ action: newAction, type: 'addStoryAction' });
-      dispatch({ actionId, type: 'toggleActionExpansion' });
-    },
-    [dispatch],
-  );
-
-  useEffect(() => {
-    dispatch({ type: 'clearActionExpansion' });
-  }, [dispatch]);
-
-  const handleSave = useCallback(async () => {
-    const data = (api.getCurrentStoryData() as unknown) as StoryInput;
-    const actionSet = state.actionSets.find((x) => x.id === actionSetId);
-
-    const validateResult = validateActionList(
-      state.actionSchema,
-      actionSet.actions,
+        dispatch({ action: newAction, type: 'addStoryAction' });
+        dispatch({ actionId, type: 'toggleActionExpansion' });
+      },
+      [dispatch],
     );
 
-    if (!actionSet.actions.length) {
-      return;
-    }
+    useEffect(() => {
+      dispatch({ type: 'clearActionExpansion' });
+    }, [dispatch]);
 
-    if (validateResult) {
-      setValidationResult(validateResult);
-    } else {
-      setLoading(true);
+    const handleSave = useCallback(async () => {
+      const data = (api.getCurrentStoryData() as unknown) as StoryInput;
+      const actionSet = state.actionSets.find((x) => x.id === actionSetId);
 
-      try {
-        await saveActionSet({
-          actionSet,
-          fileName: data.parameters.fileName as string,
-          storyId: data.id,
-        });
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
+      const validateResult = validateActionList(
+        state.actionSchema,
+        actionSet.actions,
+      );
+
+      if (!actionSet.actions.length) {
+        return;
       }
 
-      setLoading(false);
-    }
-  }, [actionSetId, api, state.actionSchema, state.actionSets]);
+      if (validateResult) {
+        setValidationResult(validateResult);
+      } else {
+        setLoading(true);
 
-  const handleValidationSnackbarClose = useCallback(() => {
-    setValidationResult(undefined);
-  }, []);
+        try {
+          await saveActionSet({
+            actionSet,
+            fileName: data.parameters.fileName as string,
+            storyId: data.id,
+          });
+          setLoading(false);
+          onComplete();
+        } catch (error) {
+          setError(error.message);
+        }
 
-  const handleErrorSnackbarClose = useCallback(() => {
-    setError(undefined);
-  }, []);
+        setLoading(false);
+      }
+    }, [actionSetId, api, onComplete, state.actionSchema, state.actionSets]);
 
-  return (
-    <div className={classes.root}>
-      <ActionToolbar
-        onAddAction={handleAddAction}
-        onClose={onClose}
-        onSave={handleSave}
-      />
-      <div className={classes.wrapper}>
-        <ScrollArea vertical>
-          <ActionList />
-        </ScrollArea>
-      </div>
-      {validationResult && (
-        <Snackbar
-          open={true}
-          title="Validation failed."
-          onClose={handleValidationSnackbarClose}
-          type="error"
-          anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-          autoHideDuration={60000}
-          closeIcon={true}
-        >
-          <div style={{ width: 300 }}>
-            {validationResult.map((result) => {
-              return (
-                <div key={result.id}>
-                  {result.required && (
-                    <div key={result.id}>
-                      <div>Action name: {result.name}</div>
-                      <div style={{ fontSize: 12, marginLeft: 5 }}>
-                        Required: {result.required.join(',')}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </Snackbar>
-      )}
-      <Loader open={loading} />
-      {error && (
-        <Snackbar
-          open={true}
-          message={error}
-          onClose={handleErrorSnackbarClose}
-          type="error"
+    const handleValidationSnackbarClose = useCallback(() => {
+      setValidationResult(undefined);
+    }, []);
+
+    const handleErrorSnackbarClose = useCallback(() => {
+      setError(undefined);
+    }, []);
+
+    return (
+      <div className={classes.root}>
+        <ActionToolbar
+          onAddAction={handleAddAction}
+          onClose={onClose}
+          onSave={handleSave}
         />
-      )}
-    </div>
-  );
-});
+        <div className={classes.wrapper}>
+          <ScrollArea vertical>
+            <ActionList />
+          </ScrollArea>
+        </div>
+        {validationResult && (
+          <Snackbar
+            open={true}
+            title="Validation failed."
+            onClose={handleValidationSnackbarClose}
+            type="error"
+            anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+            autoHideDuration={60000}
+            closeIcon={true}
+          >
+            <div style={{ width: 300 }}>
+              {validationResult.map((result) => {
+                return (
+                  <div key={result.id}>
+                    {result.required && (
+                      <div key={result.id}>
+                        <div>Action name: {result.name}</div>
+                        <div style={{ fontSize: 12, marginLeft: 5 }}>
+                          Required: {result.required.join(',')}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </Snackbar>
+        )}
+        <Loader open={loading} />
+        {error && (
+          <Snackbar
+            open={true}
+            message={error}
+            onClose={handleErrorSnackbarClose}
+            type="error"
+          />
+        )}
+      </div>
+    );
+  },
+);
 
 ActionSetEditor.displayName = 'ActionSetEditor';
 

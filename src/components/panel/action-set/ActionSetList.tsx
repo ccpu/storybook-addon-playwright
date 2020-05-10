@@ -36,7 +36,7 @@ const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
 
   const [error, setError] = useState();
 
-  const actionSets = useCurrentStoryActionSets();
+  const { storyActionSets, currentAction } = useCurrentStoryActionSets();
 
   const { loading } = useStoryFileActionSets(
     storyData && storyData.parameters.fileName,
@@ -70,15 +70,24 @@ const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
     setError(undefined);
   }, []);
 
+  const handleCheckBox = useCallback(
+    (actionSet: ActionSet) => {
+      dispatch({ actionSetId: actionSet.id, type: 'toggleCurrentActionSet' });
+    },
+    [dispatch],
+  );
+
   return (
     <div className={classes.root}>
-      {actionSets.length > 0 ? (
-        actionSets.map((set) => (
+      {storyActionSets.length > 0 ? (
+        storyActionSets.map((set) => (
           <ActionSetListItem
             key={set.id}
             actionSet={set}
             onDelete={handleDelete}
             onEdit={handleEdit}
+            onCheckBoxClick={handleCheckBox}
+            checked={currentAction.includes(set.id)}
           />
         ))
       ) : (

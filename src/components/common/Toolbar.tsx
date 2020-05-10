@@ -9,8 +9,7 @@ const useStyles = makeStyles(
     return {
       root: {
         '& svg': {
-          height: 35,
-          width: 20,
+          width: 18,
         },
         '&.border-bottom': {
           borderBottom: '1px solid ' + divider,
@@ -30,13 +29,18 @@ const useStyles = makeStyles(
           '& > *': {
             marginLeft: 15,
           },
+          flexBasis: '60%',
+          // width: 'calc(100% - 65px)',
+        },
+        '& > .left,& > .right': {
+          alignItems: 'center',
           display: 'flex',
+          minWidth: 0,
         },
         '& > .right': {
           '& > *': {
             marginRight: 15,
           },
-          display: 'flex',
         },
         alignItems: 'center',
         color: text.primary,

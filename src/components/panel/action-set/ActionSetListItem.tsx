@@ -3,12 +3,17 @@ import { makeStyles, IconButton } from '@material-ui/core';
 import { ActionSet } from '../../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 import EditIcon from '@material-ui/icons/EditSharp';
+import CheckBox from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxChecked from '@material-ui/icons/CheckBox';
 
 const useStyles = makeStyles(
   () => {
     return {
+      column: {
+        display: 'flex',
+      },
       icon: {
-        fontSize: 20,
+        fontSize: 18,
       },
       item: {
         alignItems: 'center',
@@ -27,11 +32,13 @@ const useStyles = makeStyles(
 export interface ActionSetListItemProps {
   onEdit: (actionSet: ActionSet) => void;
   onDelete: (setId: string) => void;
+  onCheckBoxClick: (actionSet: ActionSet) => void;
   actionSet: ActionSet;
+  checked?: boolean;
 }
 
 const ActionSetListItem: SFC<ActionSetListItemProps> = memo(
-  ({ onEdit, onDelete, actionSet }) => {
+  ({ onEdit, onDelete, actionSet, onCheckBoxClick, checked }) => {
     const classes = useStyles();
 
     const handleDelete = useCallback(async () => {
@@ -42,12 +49,23 @@ const ActionSetListItem: SFC<ActionSetListItemProps> = memo(
       onEdit(actionSet);
     }, [actionSet, onEdit]);
 
+    const handleCheckStateChanged = useCallback(() => {
+      onCheckBoxClick(actionSet);
+    }, [actionSet, onCheckBoxClick]);
+
     return (
       <div className={classes.item} key={actionSet.id}>
-        <div>{actionSet.description}</div>
-        <div>
+        <div className={classes.column}>{actionSet.description}</div>
+        <div className={classes.column}>
           <IconButton onClick={handleEdit} size="small">
             <EditIcon className={classes.icon} />
+          </IconButton>
+          <IconButton onClick={handleCheckStateChanged} size="small">
+            {checked ? (
+              <CheckBoxChecked className={classes.icon} />
+            ) : (
+              <CheckBox className={classes.icon} />
+            )}
           </IconButton>
           <IconButton onClick={handleDelete} size="small">
             <DeleteIcon className={classes.icon} />

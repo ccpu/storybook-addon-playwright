@@ -4,59 +4,69 @@ import {
   useCallback,
   Dispatch,
   SetStateAction,
-  useRef,
 } from 'react';
 import addons from '@storybook/addons';
-import { Channel } from '@storybook/channels';
+import useMount from 'react-use/lib/useMount';
 
 export const makeGlobalStateId = (id: string) => {
   return `__playwright_${id}`;
 };
 
-const getData = (id: string, persistence: boolean) => {
+const getData = (id: string, persistence: boolean, defaultState?: unknown) => {
   if (persistence) {
-    const data = window.localStorage.getItem(makeGlobalStateId(id));
-    if (!data) return;
-    const parsedData = JSON.parse(data);
-    return parsedData.value;
+    const localStorage = window.localStorage.getItem(makeGlobalStateId(id));
+    if (!localStorage) return defaultState;
+    const data = JSON.parse(localStorage);
+    return data.value;
   } else {
-    return window[makeGlobalStateId(id)];
+    const windowData = window[makeGlobalStateId(id)];
+    if (!windowData) return defaultState;
+    return windowData.value;
   }
 };
 
 const setData = <T>(state: T, id: string, persistence: boolean) => {
+  const data = state === undefined ? {} : { value: state };
   if (persistence) {
-    window.localStorage.setItem(
-      makeGlobalStateId(id),
-      JSON.stringify({ value: state }),
-    );
+    window.localStorage.setItem(makeGlobalStateId(id), JSON.stringify(data));
   } else {
-    window[makeGlobalStateId(id)] = state;
+    window[makeGlobalStateId(id)] = data;
   }
 };
 
 export const useGlobalState = <T>(
   id: string,
   persistence?: boolean,
+  defaultState?: unknown,
 ): [T, Dispatch<SetStateAction<T>>] => {
   const [globalState, setState] = useState<T>({} as never);
 
-  const chanel = useRef<Channel>(addons.getChannel());
-
   const setGlobalState = useCallback(
     (state: T) => {
+      const chanel = addons.getChannel();
       setData(state, id, persistence);
-      chanel.current.emit(makeGlobalStateId(id));
+      chanel.emit(makeGlobalStateId(id));
     },
     [id, persistence],
   );
 
+  useMount(() => {
+    const storedData = getData(id, persistence, defaultState);
+    setState(storedData);
+  });
+
   useEffect(() => {
-    const storedData = getData(id, persistence);
-    setState(storedData ? storedData : {});
-    chanel.current.on(makeGlobalStateId(id), () => {
+    const chanel = addons.getChannel();
+
+    const handleUpdateState = () => {
       setState(getData(id, persistence));
-    });
+    };
+
+    chanel.on(makeGlobalStateId(id), handleUpdateState);
+
+    return () => {
+      chanel.off(makeGlobalStateId(id), handleUpdateState);
+    };
   }, [id, persistence]);
 
   return [globalState, setGlobalState as Dispatch<SetStateAction<T>>];

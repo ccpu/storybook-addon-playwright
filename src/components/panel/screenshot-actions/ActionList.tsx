@@ -74,7 +74,7 @@ const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
     [dispatch],
   );
 
-  if (!actionSet.actions.length) {
+  if (!actionSet || !actionSet.actions.length) {
     return (
       <div className={classes.noActionMessage}>
         <div>No action to display!</div>

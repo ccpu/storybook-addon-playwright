@@ -9,8 +9,9 @@ export const useAddonState = (): {
   setAddonState: (addonState: AddonState) => void;
 } => {
   const [addonState, setAddonState] = useGlobalState<AddonState>(
-    ADDON_STORAGE_KEY + 5,
+    ADDON_STORAGE_KEY + 10,
     true,
+    {},
   );
 
   return { addonState, setAddonState };

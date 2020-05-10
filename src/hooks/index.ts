@@ -10,5 +10,5 @@ export * from './use-selector-manager';
 export * from './use-story-url';
 export * from './use-storybook-addon-state';
 export * from './use-current-story-data';
-export * from './use-current-story-action-sets';
+export * from './use-story-action-sets';
 export * from './use-current-actions';

@@ -17,5 +17,5 @@ export const useCurrentStoryActionSets = () => {
     setStoryActionSets(actionSets);
   }, [state.actionSets, storybookState.storyId]);
 
-  return storyActionSets;
+  return { currentAction: state.currentActionSets, storyActionSets };
 };

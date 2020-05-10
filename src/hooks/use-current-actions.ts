@@ -11,16 +11,27 @@ export const useCurrentActions = () => {
   const state = useActionContext();
 
   useEffect(() => {
-    const actionSet = state.editorActionSet;
+    // state is not available in preview
+    if (!state.initialised) return;
 
-    if (!state.editorActionSet) {
-      setActions(undefined);
-      return;
-    }
+    const actionSetArr = state.editorActionSet
+      ? [state.editorActionSet]
+      : state.actionSets.filter((x) => state.currentActionSets.includes(x.id));
 
-    const actions = actionSet ? actionSet.actions : [];
+    const allActions = actionSetArr.reduce((arr, set) => {
+      arr = [...arr, ...set.actions];
+      return arr;
+    }, [] as StoryAction[]);
+
+    const actions = allActions ? allActions : [];
     setActions(actions);
-  }, [setActions, state.editorActionSet]);
+  }, [
+    setActions,
+    state.actionSets,
+    state.currentActionSets,
+    state.editorActionSet,
+    state.initialised,
+  ]);
 
   return { currentActions, setActions };
 };

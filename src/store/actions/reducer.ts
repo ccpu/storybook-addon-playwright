@@ -7,13 +7,11 @@ export interface ReducerState {
   expandedActions: { [k: string]: boolean };
   actionSets: ActionSet[];
   editorActionSet?: ActionSet;
+  initialised: boolean;
+  currentActionSets: string[];
 }
 
 export type Action =
-  | {
-      type: 'removeActionSet';
-      actionSetId: string;
-    }
   | {
       type: 'deleteActionSetAction';
       actionId: string;
@@ -42,6 +40,11 @@ export type Action =
       type: 'saveEditorActionSet';
       actionSet: ActionSet;
     }
+  | {
+      type: 'toggleCurrentActionSet';
+      actionSetId: string;
+    }
+  | { type: 'setEditorActionDescription'; description: string }
   | { type: 'setActionSchema'; actionSchema: ActionSchemaList }
   | { type: 'setStoryActions'; actions: StoryAction[] }
   | { type: 'toggleActionExpansion'; actionId: string }
@@ -63,38 +66,16 @@ export type Action =
 export const initialState: ReducerState = {
   actionSchema: {},
   actionSets: [],
+  currentActionSets: [],
   expandedActions: {},
+  initialised: true,
 };
 
-export function reducer(state: ReducerState, action: Action): ReducerState {
+export const combineReducers = (...reducers) => (prevState, value) =>
+  reducers.reduce((newState, reducer) => reducer(newState, value), prevState);
+
+export function mainReducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
-    case 'removeActionSet': {
-      return {
-        ...state,
-        actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
-      };
-    }
-    case 'clearEditorActionSet': {
-      return {
-        ...state,
-        editorActionSet: undefined,
-      };
-    }
-    case 'saveEditorActionSet': {
-      return {
-        ...state,
-        actionSets: [
-          ...state.actionSets.filter((x) => x.id !== action.actionSet.id),
-          action.actionSet,
-        ],
-      };
-    }
-    case 'setEditorActionSet': {
-      return {
-        ...state,
-        editorActionSet: { ...action.actionSet },
-      };
-    }
     case 'addActionSetList': {
       return {
         ...state,
@@ -107,6 +88,83 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
       };
     }
+
+    case 'toggleCurrentActionSet': {
+      const isCurrent = state.currentActionSets.find(
+        (x) => x === action.actionSetId,
+      );
+      return {
+        ...state,
+        currentActionSets: isCurrent
+          ? state.currentActionSets.filter((x) => x !== action.actionSetId)
+          : [...state.currentActionSets, action.actionSetId],
+      };
+    }
+
+    case 'toggleActionExpansion': {
+      const expand = state.expandedActions[action.actionId] === true;
+
+      return {
+        ...state,
+        expandedActions: {
+          ...state.expandedActions,
+          [action.actionId]: !expand,
+        },
+      };
+    }
+    case 'clearActionExpansion': {
+      return {
+        ...state,
+        expandedActions: {},
+      };
+    }
+    case 'setActionSchema':
+      return { ...state, actionSchema: action.actionSchema };
+
+    default:
+      return state;
+  }
+}
+
+export function actionReducer(
+  state: ReducerState,
+  action: Action,
+): ReducerState {
+  switch (action.type) {
+    case 'clearEditorActionSet': {
+      return {
+        ...state,
+        editorActionSet: undefined,
+      };
+    }
+
+    case 'setEditorActionSet': {
+      return {
+        ...state,
+        editorActionSet: action.actionSet,
+      };
+    }
+
+    case 'setEditorActionDescription': {
+      return {
+        ...state,
+        editorActionSet: {
+          ...state.editorActionSet,
+          description: action.description,
+        },
+      };
+    }
+
+    case 'saveEditorActionSet': {
+      return {
+        ...state,
+        actionSets: [
+          ...state.actionSets.filter((x) => x.id !== action.actionSet.id),
+          action.actionSet,
+        ],
+      };
+    }
+
     case 'toggleSubtitleItem': {
       return {
         ...state,
@@ -180,25 +238,6 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       };
     }
 
-    case 'toggleActionExpansion': {
-      const expand = state.expandedActions[action.actionId] === true;
-
-      return {
-        ...state,
-        expandedActions: {
-          ...state.expandedActions,
-          [action.actionId]: !expand,
-        },
-      };
-    }
-    case 'clearActionExpansion': {
-      return {
-        ...state,
-        expandedActions: {},
-      };
-    }
-    case 'setActionSchema':
-      return { ...state, actionSchema: action.actionSchema };
     case 'addActionSetAction':
       return {
         ...state,
@@ -225,6 +264,8 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       };
     }
     default:
-      throw new Error();
+      return state;
   }
 }
+
+export const reducer = combineReducers(mainReducer, actionReducer);

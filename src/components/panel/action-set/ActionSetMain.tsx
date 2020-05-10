@@ -52,16 +52,16 @@ const ActionSetMain: SFC = memo(() => {
     [dispatch, storyId, toggleDescriptionDialog],
   );
 
-  const cancelEditActionSet = useCallback(() => {
+  const clearEditActionSet = useCallback(() => {
     dispatch({ type: 'clearEditorActionSet' });
     setEditActionSetId(undefined);
   }, [dispatch]);
 
   useEffect(() => {
     if (storyId === actionSetStoryId) return;
-    cancelEditActionSet();
+    clearEditActionSet();
     setActionSetStoryId(storyId);
-  }, [actionSetStoryId, dispatch, cancelEditActionSet, storyId]);
+  }, [actionSetStoryId, dispatch, clearEditActionSet, storyId]);
 
   const handleSaved = useCallback(
     async (editingActionSet: ActionSet) => {
@@ -73,14 +73,14 @@ const ActionSetMain: SFC = memo(() => {
           storyId: storyData.id,
         });
         dispatch({ actionSet: editingActionSet, type: 'saveEditorActionSet' });
-        setEditActionSetId(undefined);
+        clearEditActionSet();
       } catch (error) {
         setError(error.message);
       }
 
       setLoading(false);
     },
-    [storyData, dispatch],
+    [clearEditActionSet, dispatch, storyData],
   );
 
   const handleEditActionSet = useCallback(
@@ -98,12 +98,7 @@ const ActionSetMain: SFC = memo(() => {
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       {editActionSetId ? (
-        <>
-          <ActionSetEditor
-            onClose={cancelEditActionSet}
-            onSaved={handleSaved}
-          />
-        </>
+        <ActionSetEditor onClose={clearEditActionSet} onSaved={handleSaved} />
       ) : (
         <>
           <ActionToolbar onAddActionSet={toggleDescriptionDialog} />

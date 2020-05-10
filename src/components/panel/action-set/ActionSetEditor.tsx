@@ -73,10 +73,6 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
       state.editorActionSet.actions,
     );
 
-    if (!state.editorActionSet.actions.length) {
-      return;
-    }
-
     if (validateResult) {
       setValidationResult(validateResult);
     } else {
@@ -88,12 +84,21 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
     setValidationResult(undefined);
   }, []);
 
+  const handleDescriptionChange = useCallback(
+    (description: string) => {
+      dispatch({ description, type: 'setEditorActionDescription' });
+    },
+    [dispatch],
+  );
+
   return (
     <div className={classes.root}>
       <ActionToolbar
         onAddAction={handleAddAction}
         onClose={onClose}
         onSave={handleSave}
+        description={state.editorActionSet && state.editorActionSet.description}
+        onDescriptionChange={handleDescriptionChange}
       />
       <div className={classes.wrapper}>
         <ScrollArea vertical>

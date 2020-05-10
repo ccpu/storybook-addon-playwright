@@ -1,5 +1,16 @@
 import React, { memo, SFC } from 'react';
-import { Backdrop, CircularProgress } from '@material-ui/core';
+import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(
+  () => {
+    return {
+      root: {
+        zIndex: 10000,
+      },
+    };
+  },
+  { name: 'Loader' },
+);
 
 export interface LoaderProps {
   open: boolean;
@@ -8,8 +19,10 @@ export interface LoaderProps {
 const Loader: SFC<LoaderProps> = memo((props) => {
   const { open } = props;
 
+  const classes = useStyles();
+
   return (
-    <Backdrop open={open}>
+    <Backdrop className={classes.root} open={open}>
       <CircularProgress />
     </Backdrop>
   );

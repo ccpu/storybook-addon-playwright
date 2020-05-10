@@ -6,6 +6,7 @@ import { ActionSetListItem } from './ActionSetListItem';
 import { Loader, Snackbar } from '../../common';
 import { useActionDispatchContext } from '../../../store';
 import { deleteActionSet } from '../../../api/client';
+import { ActionSet } from '../../../typings';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(
 );
 
 export interface ActionSetListProps {
-  onEdit: (id: string) => void;
+  onEdit: (actionSet: ActionSet) => void;
 }
 
 const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
@@ -59,8 +60,8 @@ const ActionSetList: SFC<ActionSetListProps> = memo(({ onEdit }) => {
   );
 
   const handleEdit = useCallback(
-    (actionSetId: string) => {
-      onEdit(actionSetId);
+    (actionSet: ActionSet) => {
+      onEdit(actionSet);
     },
     [onEdit],
   );

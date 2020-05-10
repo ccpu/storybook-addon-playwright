@@ -6,17 +6,10 @@ export interface ReducerState {
   actionSchema: ActionSchemaList;
   expandedActions: { [k: string]: boolean };
   actionSets: ActionSet[];
-  editorActionSetId?: string;
   editorActionSet?: ActionSet;
 }
 
 export type Action =
-  | {
-      type: 'addActionSet';
-      actionSetId: string;
-      description: string;
-      storyId: string;
-    }
   | {
       type: 'removeActionSet';
       actionSetId: string;
@@ -39,11 +32,15 @@ export type Action =
       actionSetId: string;
     }
   | {
-      type: 'clearEditorActionSetId';
+      type: 'clearEditorActionSet';
     }
   | {
-      type: 'setEditorActionSetId';
-      actionSetId: string;
+      type: 'setEditorActionSet';
+      actionSet: ActionSet;
+    }
+  | {
+      type: 'saveEditorActionSet';
+      actionSet: ActionSet;
     }
   | { type: 'setActionSchema'; actionSchema: ActionSchemaList }
   | { type: 'setStoryActions'; actions: StoryAction[] }
@@ -61,7 +58,7 @@ export type Action =
       objPath: string;
       val: unknown;
     }
-  | { type: 'addStoryAction'; action: StoryAction };
+  | { type: 'addActionSetAction'; action: StoryAction };
 
 export const initialState: ReducerState = {
   actionSchema: {},
@@ -71,145 +68,118 @@ export const initialState: ReducerState = {
 
 export function reducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
-    case 'addActionSet': {
-      return {
-        ...state,
-        actionSets: [
-          ...state.actionSets,
-          {
-            actions: [],
-            description: action.description,
-            id: action.actionSetId,
-            storyId: action.storyId,
-          },
-        ],
-        editorActionSetId: action.actionSetId,
-      };
-    }
     case 'removeActionSet': {
       return {
         ...state,
         actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
-        editorActionSetId: undefined,
       };
     }
-    case 'clearEditorActionSetId': {
+    case 'clearEditorActionSet': {
       return {
         ...state,
-        editorActionSetId: undefined,
+        editorActionSet: undefined,
       };
     }
-    case 'setEditorActionSetId': {
+    case 'saveEditorActionSet': {
       return {
         ...state,
-        editorActionSetId: action.actionSetId,
+        actionSets: [
+          ...state.actionSets.filter((x) => x.id !== action.actionSet.id),
+          action.actionSet,
+        ],
+      };
+    }
+    case 'setEditorActionSet': {
+      return {
+        ...state,
+        editorActionSet: { ...action.actionSet },
       };
     }
     case 'addActionSetList': {
       return {
         ...state,
         actionSets: [...state.actionSets, ...action.actionSets],
-        editorActionSetId: undefined,
       };
     }
     case 'deleteActionSet': {
       return {
         ...state,
         actionSets: state.actionSets.filter((x) => x.id !== action.actionSetId),
-        editorActionSetId: undefined,
       };
     }
     case 'toggleSubtitleItem': {
       return {
         ...state,
-        actionSets: state.actionSets.map((set) => {
-          if (set.id === state.editorActionSetId) {
-            return {
-              ...set,
-              actions: set.actions.map((act) => {
-                if (act.id === action.actionId) {
-                  const hasItem =
-                    act.subtitleItems &&
-                    act.subtitleItems.find(
-                      (x) => x === action.actionOptionPath,
-                    );
-                  return {
-                    ...act,
-                    subtitleItems:
-                      hasItem && act.subtitleItems
-                        ? act.subtitleItems.filter(
-                            (x) => x !== action.actionOptionPath,
-                          )
-                        : [
-                            ...(act.subtitleItems || []),
-                            action.actionOptionPath,
-                          ],
-                  };
-                }
-                return act;
-              }),
-            };
-          }
-          return set;
-        }),
+        editorActionSet: {
+          ...state.editorActionSet,
+          actions: state.editorActionSet.actions.map((act) => {
+            if (act.id === action.actionId) {
+              const hasItem =
+                act.subtitleItems &&
+                act.subtitleItems.find((x) => x === action.actionOptionPath);
+              return {
+                ...act,
+                subtitleItems:
+                  hasItem && act.subtitleItems
+                    ? act.subtitleItems.filter(
+                        (x) => x !== action.actionOptionPath,
+                      )
+                    : [...(act.subtitleItems || []), action.actionOptionPath],
+              };
+            }
+            return act;
+          }),
+        },
       };
     }
     case 'removeFromActionTitle': {
       return {
         ...state,
-        actionSets: state.actionSets.map((set) => {
-          if (set.id === state.editorActionSetId) {
-            return {
-              ...set,
-              actions: set.actions.map((act) => {
-                if (act.id === action.actionId) {
-                  return {
-                    ...act,
-                    subtitleItems:
-                      act.subtitleItems &&
-                      act.subtitleItems.filter(
-                        (x) => x !== action.actionOptionPath,
-                      ),
-                  };
-                }
-                return act;
-              }),
-            };
-          }
-          return set;
-        }),
+        editorActionSet: {
+          ...state.editorActionSet,
+          actions: state.editorActionSet.actions.map((act) => {
+            if (act.id === action.actionId) {
+              return {
+                ...act,
+                subtitleItems:
+                  act.subtitleItems &&
+                  act.subtitleItems.filter(
+                    (x) => x !== action.actionOptionPath,
+                  ),
+              };
+            }
+            return act;
+          }),
+        },
       };
     }
     case 'moveActionSetAction': {
       return {
         ...state,
-        actionSets: state.actionSets.map((set) => {
-          if (set.id === state.editorActionSetId) {
-            return {
-              ...set,
-              actions: [
-                ...arrayMove(set.actions, action.oldIndex, action.newIndex),
-              ],
-            };
-          }
-          return set;
-        }),
+        editorActionSet: {
+          ...state.editorActionSet,
+          actions: [
+            ...arrayMove(
+              state.editorActionSet.actions,
+              action.oldIndex,
+              action.newIndex,
+            ),
+          ],
+        },
       };
     }
     case 'deleteActionSetAction': {
       return {
         ...state,
-        actionSets: state.actionSets.map((set) => {
-          if (set.id === state.editorActionSetId) {
-            return {
-              ...set,
-              actions: set.actions.filter((x) => x.id !== action.actionId),
-            };
-          }
-          return set;
-        }),
+        editorActionSet: {
+          ...state.editorActionSet,
+          actions: state.editorActionSet.actions.filter(
+            (x) => x.id !== action.actionId,
+          ),
+        },
       };
     }
+
     case 'toggleActionExpansion': {
       const expand = state.expandedActions[action.actionId] === true;
 
@@ -229,43 +199,29 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
     }
     case 'setActionSchema':
       return { ...state, actionSchema: action.actionSchema };
-    case 'addStoryAction':
+    case 'addActionSetAction':
       return {
         ...state,
-        actionSets: state.actionSets.map((set) => {
-          if (set.id === state.editorActionSetId) {
-            return {
-              ...set,
-              actions: [...set.actions, action.action],
-            };
-          }
-          return set;
-        }),
+        editorActionSet: {
+          ...state.editorActionSet,
+          actions: [...state.editorActionSet.actions, action.action],
+        },
       };
     case 'setActionOptions': {
       return {
         ...state,
-        actionSets: state.actionSets.map((set) => {
-          if (set.id === state.editorActionSetId) {
-            return {
-              ...set,
-              actions: set.actions.map((act) => {
-                if (act.id === action.actionId) {
-                  return {
-                    ...act,
-                    args: immutableObject.set(
-                      act.args,
-                      action.objPath,
-                      action.val,
-                    ),
-                  };
-                }
-                return act;
-              }),
-            };
-          }
-          return set;
-        }),
+        editorActionSet: {
+          ...state.editorActionSet,
+          actions: state.editorActionSet.actions.map((act) => {
+            if (act.id === action.actionId) {
+              return {
+                ...act,
+                args: immutableObject.set(act.args, action.objPath, action.val),
+              };
+            }
+            return act;
+          }),
+        },
       };
     }
     default:

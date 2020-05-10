@@ -1,5 +1,4 @@
 export * from './use-action-schema';
-export * from './use-action-set-actions';
 export * from './use-action';
 export * from './use-active-browser';
 export * from './use-addon-state';
@@ -12,3 +11,4 @@ export * from './use-story-url';
 export * from './use-storybook-addon-state';
 export * from './use-current-story-data';
 export * from './use-current-story-action-sets';
+export * from './use-current-actions';

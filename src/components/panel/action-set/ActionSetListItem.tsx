@@ -25,7 +25,7 @@ const useStyles = makeStyles(
 );
 
 export interface ActionSetListItemProps {
-  onEdit: (setId: string) => void;
+  onEdit: (actionSet: ActionSet) => void;
   onDelete: (setId: string) => void;
   actionSet: ActionSet;
 }
@@ -39,8 +39,8 @@ const ActionSetListItem: SFC<ActionSetListItemProps> = memo(
     }, [actionSet.id, onDelete]);
 
     const handleEdit = useCallback(() => {
-      onEdit(actionSet.id);
-    }, [actionSet.id, onEdit]);
+      onEdit(actionSet);
+    }, [actionSet, onEdit]);
 
     return (
       <div className={classes.item} key={actionSet.id}>

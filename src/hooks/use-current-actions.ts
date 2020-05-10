@@ -1,30 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { StoryAction } from '../typings';
-import addons from '@storybook/addons';
-import { EVENTS } from '../constants';
+import { useGlobalState } from './use-global-state';
+import { useActionContext } from '../store';
 
 export const useCurrentActions = () => {
-  const [currentActions, setActions] = useState<StoryAction[]>([]);
+  const [currentActions, setActions] = useGlobalState<StoryAction[]>(
+    'current-actions',
+  );
+
+  const state = useActionContext();
 
   useEffect(() => {
-    const chanel = addons.getChannel();
+    const actionSet = state.editorActionSet;
 
-    const handleEvent = (actions: StoryAction[]) => {
-      setActions(actions);
-      window.__storyActions = actions;
-    };
-
-    chanel.on(EVENTS.CURRENT_ACTIONS, handleEvent);
-    return () => {
-      chanel.off(EVENTS.CURRENT_ACTIONS, handleEvent);
-    };
-  }, [setActions]);
-
-  useEffect(() => {
-    if (window.__storyActions) {
-      setActions(window.__storyActions);
+    if (!state.editorActionSet) {
+      setActions(undefined);
+      return;
     }
-  }, [setActions]);
 
-  return { currentActions };
+    const actions = actionSet ? actionSet.actions : [];
+    setActions(actions);
+  }, [setActions, state.editorActionSet]);
+
+  return { currentActions, setActions };
 };

@@ -4,21 +4,30 @@ import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../common';
 import { useActionDispatchContext } from '../../../store';
 import { nanoid } from 'nanoid';
-import { useStorybookState } from '@storybook/api';
 import { ActionSetList } from './ActionSetList';
+import { ActionSet } from '../../../typings';
+import { saveActionSet } from '../../../api/client';
+import { Snackbar, Loader } from '../../common';
+import { useCurrentStoryData, useCurrentActions } from '../../../hooks';
 
 const ActionSetMain: SFC = memo(() => {
   const [showDescDialog, setShowDescDialog] = useState(false);
 
   const [editActionSetId, setEditActionSetId] = useState<string>();
 
-  const { storyId } = useStorybookState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+
+  const {
+    storyData,
+    state: { storyId },
+  } = useCurrentStoryData();
 
   const [actionSetStoryId, setActionSetStoryId] = useState<string>(storyId);
 
-  const [isNewAction, setIsNewAction] = useState(false);
-
   const dispatch = useActionDispatchContext();
+
+  useCurrentActions();
 
   const toggleDescriptionDialog = useCallback(() => {
     setShowDescDialog(!showDescDialog);
@@ -27,12 +36,15 @@ const ActionSetMain: SFC = memo(() => {
   const createNewActionSet = useCallback(
     (desc) => {
       const id = nanoid(12);
-      dispatch({
-        actionSetId: id,
+      const newActionSet: ActionSet = {
+        actions: [],
         description: desc,
+        id,
         storyId,
-        type: 'addActionSet',
-      });
+      };
+
+      dispatch({ actionSet: newActionSet, type: 'setEditorActionSet' });
+
       toggleDescriptionDialog();
 
       setEditActionSetId(id);
@@ -41,37 +53,47 @@ const ActionSetMain: SFC = memo(() => {
   );
 
   const cancelEditActionSet = useCallback(() => {
-    if (isNewAction) {
-      dispatch({
-        actionSetId: editActionSetId,
-        type: 'removeActionSet',
-      });
-    }
+    dispatch({ type: 'clearEditorActionSet' });
     setEditActionSetId(undefined);
-  }, [isNewAction, dispatch, editActionSetId]);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!actionSetStoryId) {
-      dispatch({ type: 'clearEditorActionSetId' });
-      setIsNewAction(false);
-    }
-
     if (storyId === actionSetStoryId) return;
     cancelEditActionSet();
     setActionSetStoryId(storyId);
   }, [actionSetStoryId, dispatch, cancelEditActionSet, storyId]);
 
-  const handleComplete = useCallback(() => {
-    setEditActionSetId(undefined);
-  }, []);
+  const handleSaved = useCallback(
+    async (editingActionSet: ActionSet) => {
+      setLoading(true);
+      try {
+        await saveActionSet({
+          actionSet: editingActionSet,
+          fileName: storyData.parameters.fileName as string,
+          storyId: storyData.id,
+        });
+        dispatch({ actionSet: editingActionSet, type: 'saveEditorActionSet' });
+        setEditActionSetId(undefined);
+      } catch (error) {
+        setError(error.message);
+      }
+
+      setLoading(false);
+    },
+    [storyData, dispatch],
+  );
 
   const handleEditActionSet = useCallback(
-    (id: string) => {
-      dispatch({ actionSetId: id, type: 'setEditorActionSetId' });
-      setEditActionSetId(id);
+    (actionSet: ActionSet) => {
+      dispatch({ actionSet, type: 'setEditorActionSet' });
+      setEditActionSetId(actionSet.id);
     },
     [dispatch],
   );
+
+  const handleErrorSnackbarClose = useCallback(() => {
+    setError(undefined);
+  }, []);
 
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
@@ -79,8 +101,7 @@ const ActionSetMain: SFC = memo(() => {
         <>
           <ActionSetEditor
             onClose={cancelEditActionSet}
-            actionSetId={editActionSetId}
-            onComplete={handleComplete}
+            onSaved={handleSaved}
           />
         </>
       ) : (
@@ -96,6 +117,15 @@ const ActionSetMain: SFC = memo(() => {
         onSave={createNewActionSet}
         required
       />
+      <Loader open={loading} />
+      {error && (
+        <Snackbar
+          open={true}
+          message={error}
+          onClose={handleErrorSnackbarClose}
+          type="error"
+        />
+      )}
     </div>
   );
 });

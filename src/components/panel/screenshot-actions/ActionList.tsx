@@ -1,6 +1,5 @@
 import React, { SFC, useCallback } from 'react';
 import { ActionOptions } from './ActionOptions';
-import { useActionSetActions } from '../../../hooks';
 import {
   SortableContainer,
   SortableElement,
@@ -10,6 +9,7 @@ import {
 import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 import { useActionDispatchContext } from '../../../store';
 import { makeStyles } from '@material-ui/core';
+import { ActionSet } from '../../../typings';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -54,8 +54,11 @@ const SortableList = SortableContainer(({ items }) => {
   );
 });
 
-const ActionList: SFC = () => {
-  const { actionSetActions } = useActionSetActions();
+interface ActionListProps {
+  actionSet: ActionSet;
+}
+
+const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
   const dispatch = useActionDispatchContext();
 
   const classes = useStyles();
@@ -71,7 +74,7 @@ const ActionList: SFC = () => {
     [dispatch],
   );
 
-  if (!actionSetActions.length) {
+  if (!actionSet.actions.length) {
     return (
       <div className={classes.noActionMessage}>
         <div>No action to display!</div>
@@ -83,7 +86,7 @@ const ActionList: SFC = () => {
   return (
     <SortableList
       useDragHandle
-      items={actionSetActions}
+      items={actionSet.actions}
       onSortEnd={handleSortEnd}
     />
   );

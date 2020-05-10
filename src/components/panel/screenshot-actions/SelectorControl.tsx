@@ -89,7 +89,7 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
             fullObjectPath.length === 1
               ? ''
               : fullObjectPath.slice(0, -2) + '.';
-          console.log(fullObjectPath);
+
           dispatch({
             actionId,
             objPath: objPath + `x`,

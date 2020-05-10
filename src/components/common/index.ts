@@ -8,3 +8,4 @@ export * from './ThemeProvider';
 export * from './Toolbar';
 export * from './ConfirmationPopover';
 export * from './Snackbar';
+export * from './DragHandle';

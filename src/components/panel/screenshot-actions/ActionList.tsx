@@ -3,13 +3,12 @@ import { ActionOptions } from './ActionOptions';
 import {
   SortableContainer,
   SortableElement,
-  SortableHandle,
   SortEnd,
 } from 'react-sortable-hoc';
-import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 import { useActionDispatchContext } from '../../../store';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../../typings';
+import { DragHandle } from '../../common';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -28,11 +27,6 @@ const useStyles = makeStyles(
   { name: 'ActionSetList' },
 );
 
-const DragHandle = SortableHandle(() => (
-  <DragIndicatorSharp
-    style={{ cursor: 'move', marginLeft: -10, marginRight: 5 }}
-  />
-));
 const SortableItem = SortableElement(({ action }) => (
   <div>
     <ActionOptions

@@ -35,10 +35,11 @@ export interface ActionSetListItemProps {
   onCheckBoxClick: (actionSet: ActionSet) => void;
   actionSet: ActionSet;
   checked?: boolean;
+  DragHandle: React.ComponentType;
 }
 
 const ActionSetListItem: SFC<ActionSetListItemProps> = memo(
-  ({ onEdit, onDelete, actionSet, onCheckBoxClick, checked }) => {
+  ({ onEdit, onDelete, actionSet, onCheckBoxClick, checked, DragHandle }) => {
     const classes = useStyles();
 
     const handleDelete = useCallback(async () => {
@@ -55,7 +56,10 @@ const ActionSetListItem: SFC<ActionSetListItemProps> = memo(
 
     return (
       <div className={classes.item} key={actionSet.id}>
-        <div className={classes.column}>{actionSet.description}</div>
+        <div className={classes.column}>
+          <DragHandle />
+          {actionSet.description}
+        </div>
         <div className={classes.column}>
           <IconButton onClick={handleEdit} size="small">
             <EditIcon className={classes.icon} />

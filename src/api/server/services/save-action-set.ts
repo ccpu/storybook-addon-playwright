@@ -13,7 +13,7 @@ export const saveActionSet = async (
   }
 
   storyData.actionSets = storyData.actionSets.filter(
-    (x) => x.storyId !== data.storyId,
+    (x) => x.id !== data.actionSet.id,
   );
 
   storyData.actionSets.push(data.actionSet);

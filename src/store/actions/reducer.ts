@@ -22,6 +22,11 @@ export type Action =
       newIndex: number;
     }
   | {
+      type: 'sortActionSets';
+      oldIndex: number;
+      newIndex: number;
+    }
+  | {
       type: 'addActionSetList';
       actionSets: ActionSet[];
     }
@@ -89,6 +94,14 @@ export function mainReducer(state: ReducerState, action: Action): ReducerState {
       };
     }
 
+    case 'sortActionSets': {
+      return {
+        ...state,
+        actionSets: [
+          ...arrayMove(state.actionSets, action.oldIndex, action.newIndex),
+        ],
+      };
+    }
     case 'toggleCurrentActionSet': {
       const isCurrent = state.currentActionSets.find(
         (x) => x === action.actionSetId,

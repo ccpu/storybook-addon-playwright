@@ -56,7 +56,7 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
         id: actionId,
         name: actionName,
       };
-
+      dispatch({ type: 'clearActionExpansion' });
       dispatch({ action: newAction, type: 'addActionSetAction' });
       dispatch({ actionId, type: 'toggleActionExpansion' });
     },

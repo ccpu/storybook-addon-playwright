@@ -73,7 +73,6 @@ const ActionSetListSortable = SortableContainer(
 
     const handleCheckBox = useCallback(
       (actionSet: ActionSet) => {
-        console.log(actionSet);
         dispatch({ actionSetId: actionSet.id, type: 'toggleCurrentActionSet' });
       },
       [dispatch],

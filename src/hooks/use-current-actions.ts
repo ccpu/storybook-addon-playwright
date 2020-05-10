@@ -23,8 +23,6 @@ export const useCurrentActions = () => {
       return arr;
     }, [] as StoryAction[]);
 
-    console.log(allActions.map((x) => x.id));
-
     const actions = allActions ? allActions : [];
     setActions(actions);
   }, [

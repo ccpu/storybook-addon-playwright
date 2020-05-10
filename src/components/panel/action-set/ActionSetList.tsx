@@ -2,16 +2,11 @@ import React, { SFC, memo, useCallback, useState } from 'react';
 import { useStoryFileActionSets } from '../../../hooks/use-story-file-action-sets';
 import { useCurrentStoryData, useCurrentStoryActionSets } from '../../../hooks';
 import { makeStyles } from '@material-ui/core';
-import { ActionSetListItem } from './ActionSetListItem';
-import { Loader, Snackbar, DragHandle } from '../../common';
+import { Loader, Snackbar, ListItem } from '../../common';
 import { useActionDispatchContext } from '../../../store';
 import { deleteActionSet } from '../../../api/client';
 import { ActionSet } from '../../../typings';
-import {
-  SortableContainer,
-  SortableElement,
-  SortEnd,
-} from 'react-sortable-hoc';
+import { SortableContainer, SortEnd } from 'react-sortable-hoc';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -28,20 +23,6 @@ const useStyles = makeStyles(
     };
   },
   { name: 'ActionSetList' },
-);
-
-const SortableItem = SortableElement(
-  ({ actionSet, onDelete, onEdit, onCheckBoxClick, checked }) => (
-    <ActionSetListItem
-      key={actionSet.id}
-      actionSet={actionSet}
-      onDelete={onDelete}
-      onEdit={onEdit}
-      onCheckBoxClick={onCheckBoxClick}
-      checked={checked}
-      DragHandle={() => <DragHandle />}
-    />
-  ),
 );
 
 export interface ActionSetListProps {
@@ -65,13 +46,13 @@ const ActionSetListSortable = SortableContainer(
     const dispatch = useActionDispatchContext();
 
     const handleDelete = useCallback(
-      async (actionSetId: string) => {
+      async (actionSet: ActionSet) => {
         try {
           await deleteActionSet({
-            actionSetId,
+            actionSetId: actionSet.id,
             fileName: storyData.parameters.fileName,
           });
-          dispatch({ actionSetId, type: 'deleteActionSet' });
+          dispatch({ actionSetId: actionSet.id, type: 'deleteActionSet' });
         } catch (error) {
           setError(error.message);
         }
@@ -92,6 +73,7 @@ const ActionSetListSortable = SortableContainer(
 
     const handleCheckBox = useCallback(
       (actionSet: ActionSet) => {
+        console.log(actionSet);
         dispatch({ actionSetId: actionSet.id, type: 'toggleCurrentActionSet' });
       },
       [dispatch],
@@ -100,15 +82,16 @@ const ActionSetListSortable = SortableContainer(
     return (
       <div className={classes.root}>
         {storyActionSets.length > 0 ? (
-          storyActionSets.map((set, i) => (
-            <SortableItem
+          storyActionSets.map((actionSet, i) => (
+            <ListItem<ActionSet>
               index={i}
-              key={set.id}
-              actionSet={set}
+              key={actionSet.id}
+              item={actionSet}
               onDelete={handleDelete}
               onEdit={handleEdit}
               onCheckBoxClick={handleCheckBox}
-              checked={currentAction.includes(set.id)}
+              checked={currentAction.includes(actionSet.id)}
+              description={actionSet.description}
             />
           ))
         ) : (

@@ -6,7 +6,6 @@ import { BrowserTypes, ScreenShotViewPanel } from '../../typings';
 import { Toolbar } from './Toolbar';
 import useMeasure from 'react-use/lib/useMeasure';
 import clsx from 'clsx';
-// import { getSnapshotHelper } from '../../api/server/setup-snapshot';
 
 const useStyles = makeStyles((theme) => ({
   error: {

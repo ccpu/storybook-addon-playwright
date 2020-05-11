@@ -51,9 +51,10 @@ export const useActiveBrowsers = (
   );
 
   useEffect(() => {
+    if (!addonState || !Object.keys(addonState).length) return;
     const activeBrs = browserTypes.filter((b) => !isDisabled(b));
     setActiveBrowsers(activeBrs);
-  }, [browserTypes, isDisabled]);
+  }, [addonState, browserTypes, isDisabled]);
 
   return { activeBrowsers, isDisabled, toggleBrowser };
 };

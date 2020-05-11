@@ -22,7 +22,7 @@ const useStyles = makeStyles(
         textAlign: 'center',
       },
       root: {
-        backgroundColor: theme.palette.background.default,
+        // backgroundColor: theme.palette.background.default,
         height: '100%',
       },
       wrapper: {

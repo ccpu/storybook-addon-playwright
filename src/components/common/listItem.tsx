@@ -29,7 +29,7 @@ const useStyles = makeStyles(
         display: 'flex',
         fontSize: 13,
         justifyContent: 'space-between',
-        marginBottom: 2,
+        marginBottom: 4,
         minHeight: '48px',
         padding: '5px 8px',
         paddingLeft: 16,

@@ -17,6 +17,7 @@ import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 
 const useStyles = makeStyles(
   (theme) => {
+    const { divider } = theme.palette;
     return {
       chip: {
         color: theme.palette.text.primary,
@@ -30,7 +31,8 @@ const useStyles = makeStyles(
         transform: 'rotate(0deg) !important',
       },
       expansionPanel: {
-        boxShadow: '0px 0.5px 4px -2px rgba(0,0,0,0.75)',
+        border: '1px solid ' + divider,
+        boxShadow: 'none',
       },
       heading: {
         fontSize: theme.typography.pxToRem(15),

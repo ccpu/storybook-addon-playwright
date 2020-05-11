@@ -5,5 +5,5 @@ export const getActionSet = async (data: StoryInfo): Promise<ActionSet[]> => {
   const fileInfo = getStoryFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo);
 
-  return storyData.actionSets;
+  return storyData[data.storyId] ? storyData[data.storyId].actionSets : [];
 };

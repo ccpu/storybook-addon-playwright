@@ -8,15 +8,19 @@ export const saveActionSet = async (
   const fileInfo = getStoryFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo);
 
-  if (!storyData.actionSets) {
-    storyData.actionSets = [];
+  if (!storyData[data.storyId]) {
+    storyData[data.storyId] = {};
   }
 
-  storyData.actionSets = storyData.actionSets.filter(
-    (x) => x.id !== data.actionSet.id,
-  );
+  if (!storyData[data.storyId].actionSets) {
+    storyData[data.storyId].actionSets = [];
+  }
 
-  storyData.actionSets.push(data.actionSet);
+  storyData[data.storyId].actionSets = storyData[
+    data.storyId
+  ].actionSets.filter((x) => x.id !== data.actionSet.id);
+
+  storyData[data.storyId].actionSets.push(data.actionSet);
 
   await saveStoryFile(fileInfo, storyData);
 };

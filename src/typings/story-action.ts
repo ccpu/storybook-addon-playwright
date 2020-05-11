@@ -13,9 +13,12 @@ export interface StoryAction<T extends unknown = Page> {
   run?: (page: T, selector: string) => Promise<void>;
 }
 
+export interface Stories {
+  [storyId: string]: { actionSets: ActionSet[] };
+}
+
 export interface ActionSet {
   id: string;
   description: string;
   actions: StoryAction[];
-  storyId: string;
 }

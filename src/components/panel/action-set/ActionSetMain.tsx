@@ -9,6 +9,7 @@ import { ActionSet } from '../../../typings';
 import { saveActionSet } from '../../../api/client';
 import { Snackbar, Loader } from '../../common';
 import { useCurrentStoryData, useCurrentActions } from '../../../hooks';
+import { SortEnd } from 'react-sortable-hoc';
 
 const ActionSetMain: SFC = memo(() => {
   const [showDescDialog, setShowDescDialog] = useState(false);
@@ -27,7 +28,7 @@ const ActionSetMain: SFC = memo(() => {
 
   const dispatch = useActionDispatchContext();
 
-  useCurrentActions();
+  useCurrentActions(storyId);
 
   const toggleDescriptionDialog = useCallback(() => {
     setShowDescDialog(!showDescDialog);
@@ -40,7 +41,6 @@ const ActionSetMain: SFC = memo(() => {
         actions: [],
         description: desc,
         id,
-        storyId,
       };
 
       dispatch({ actionSet: newActionSet, type: 'setEditorActionSet' });
@@ -49,7 +49,7 @@ const ActionSetMain: SFC = memo(() => {
 
       setEditActionSetId(id);
     },
-    [dispatch, storyId, toggleDescriptionDialog],
+    [dispatch, toggleDescriptionDialog],
   );
 
   const clearEditActionSet = useCallback(() => {
@@ -72,10 +72,15 @@ const ActionSetMain: SFC = memo(() => {
           fileName: storyData.parameters.fileName as string,
           storyId: storyData.id,
         });
-        dispatch({ actionSet: editingActionSet, type: 'saveEditorActionSet' });
+        dispatch({
+          actionSet: editingActionSet,
+          storyId: storyData.id,
+          type: 'saveEditorActionSet',
+        });
         clearEditActionSet();
       } catch (error) {
         setError(error.message);
+        console.log(error);
       }
 
       setLoading(false);
@@ -95,6 +100,18 @@ const ActionSetMain: SFC = memo(() => {
     setError(undefined);
   }, []);
 
+  const handleSortEnd = useCallback(
+    (e: SortEnd) => {
+      dispatch({
+        newIndex: e.newIndex,
+        oldIndex: e.oldIndex,
+        storyId,
+        type: 'sortActionSets',
+      });
+    },
+    [dispatch, storyId],
+  );
+
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       {editActionSetId ? (
@@ -102,7 +119,11 @@ const ActionSetMain: SFC = memo(() => {
       ) : (
         <>
           <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
-          <ActionSetList onEdit={handleEditActionSet} />
+          <ActionSetList
+            onEdit={handleEditActionSet}
+            onSortEnd={handleSortEnd}
+            useDragHandle
+          />
         </>
       )}
       <InputDialog

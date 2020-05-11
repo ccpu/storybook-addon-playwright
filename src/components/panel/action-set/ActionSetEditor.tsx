@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 
 const useStyles = makeStyles(
-  (theme) => {
+  () => {
     return {
       button: {
         marginTop: 20,
@@ -22,7 +22,6 @@ const useStyles = makeStyles(
         textAlign: 'center',
       },
       root: {
-        // backgroundColor: theme.palette.background.default,
         height: '100%',
       },
       wrapper: {

@@ -3,7 +3,7 @@ import { StoryAction } from '../typings';
 import { useGlobalState } from './use-global-state';
 import { useActionContext } from '../store';
 
-export const useCurrentActions = () => {
+export const useCurrentActions = (storyId: string) => {
   const [currentActions, setActions] = useGlobalState<StoryAction[]>(
     'current-actions',
   );
@@ -16,7 +16,11 @@ export const useCurrentActions = () => {
 
     const actionSetArr = state.editorActionSet
       ? [state.editorActionSet]
-      : state.actionSets.filter((x) => state.currentActionSets.includes(x.id));
+      : state.stories[storyId]
+      ? state.stories[storyId].actionSets.filter((x) =>
+          state.currentActionSets.includes(x.id),
+        )
+      : [];
 
     const allActions = actionSetArr.reduce((arr, set) => {
       arr = [...arr, ...set.actions];
@@ -27,10 +31,11 @@ export const useCurrentActions = () => {
     setActions(actions);
   }, [
     setActions,
-    state.actionSets,
     state.currentActionSets,
     state.editorActionSet,
     state.initialised,
+    state.stories,
+    storyId,
   ]);
 
   return { currentActions, setActions };

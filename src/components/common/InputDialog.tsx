@@ -44,7 +44,7 @@ const InputDialog: SFC<InputDialogProps> = memo(
     width = '30%',
     ...rest
   }) => {
-    const [inputValue, setValue] = useState(value);
+    const [inputValue, setValue] = useState(value || '');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const classes = useStyles({ width: width });
@@ -61,6 +61,7 @@ const InputDialog: SFC<InputDialogProps> = memo(
       if (onCancel) {
         onCancel();
       }
+      setValue('');
     }, [onCancel, onClose]);
 
     const handleSave = useCallback(() => {
@@ -69,6 +70,7 @@ const InputDialog: SFC<InputDialogProps> = memo(
         return;
       }
       onSave(inputValue);
+      setValue('');
     }, [inputValue, onSave, required]);
 
     const handleSnackbarClose = useCallback(() => {

@@ -11,11 +11,10 @@ export const useCurrentStoryActionSets = () => {
   const [storyActionSets, setStoryActionSets] = useState<ActionSet[]>([]);
 
   useEffect(() => {
-    const actionSets = state.actionSets.filter(
-      (x) => x.storyId === storybookState.storyId,
-    );
+    if (!state.stories[storybookState.storyId]) return;
+    const actionSets = state.stories[storybookState.storyId].actionSets;
     setStoryActionSets(actionSets);
-  }, [state.actionSets, storybookState.storyId]);
+  }, [state.stories, storybookState.storyId]);
 
   return { currentAction: state.currentActionSets, storyActionSets };
 };

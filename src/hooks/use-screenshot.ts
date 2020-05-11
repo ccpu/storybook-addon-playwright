@@ -12,12 +12,13 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
   const [loading, setLoading] = useState(false);
   const knobs = useKnobs();
 
-  const { currentActions } = useCurrentActions();
+  const state = useStorybookState();
+
+  const { currentActions } = useCurrentActions(state.storyId);
 
   const prevKnobs = useRef();
   const prevActions = useRef();
 
-  const state = useStorybookState();
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
     setLoading(true);

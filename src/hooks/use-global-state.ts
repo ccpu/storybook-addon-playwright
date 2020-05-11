@@ -36,10 +36,10 @@ const setData = <T>(state: T, id: string, persistence: boolean) => {
 
 export const useGlobalState = <T>(
   id: string,
+  defaultState?: T,
   persistence?: boolean,
-  defaultState?: unknown,
 ): [T, Dispatch<SetStateAction<T>>] => {
-  const [globalState, setState] = useState<T>({} as never);
+  const [globalState, setState] = useState<T>(defaultState);
 
   const setGlobalState = useCallback(
     (state: T) => {

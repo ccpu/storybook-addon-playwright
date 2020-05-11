@@ -1,9 +1,6 @@
-import React, { SFC, useEffect, createContext, useContext } from 'react';
-import { Loader } from '../../components/common';
-import { useActionSchema } from '../../hooks';
+import React, { SFC, createContext, useContext } from 'react';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
-// import { createContext, useContext } from 'use-context-selector';
 
 export const ActionDispatchContext = React.createContext<
   React.Dispatch<Action>
@@ -19,8 +16,6 @@ export const ActionConsumer = ActionContext.Consumer;
 const ActionProvider: SFC = (props) => {
   const { children } = props;
 
-  const { actionSchema, loading } = useActionSchema();
-
   const [state, dispatch] = useReducer(
     reducer,
     initialState,
@@ -28,14 +23,9 @@ const ActionProvider: SFC = (props) => {
     'ActionProvider',
   );
 
-  useEffect(() => {
-    dispatch({ actionSchema: actionSchema, type: 'setActionSchema' });
-  }, [actionSchema]);
-
   return (
     <ActionContextProvider value={state}>
       <ActionDispatchContext.Provider value={dispatch}>
-        <Loader open={loading} />
         {children}
       </ActionDispatchContext.Provider>
     </ActionContextProvider>

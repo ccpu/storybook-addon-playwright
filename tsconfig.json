@@ -28,6 +28,7 @@
   "include": [
     "src/**/*",
     "**/__tests__/**/*",
+    "__mocks__/**/*",
     "typings/**/*",
     "setupTests.ts",
     "test-data/**/*"

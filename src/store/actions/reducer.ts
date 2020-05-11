@@ -93,10 +93,11 @@ const updateStoryActionSet = (
   storyId: string,
   actionSets: ActionSet[],
 ) => {
-  if (!state.stories[storyId]) state.stories[storyId] = { actionSets: [] };
+  // if (!state.stories[storyId]) state.stories[storyId] = { actionSets: [] };
   return {
     ...state,
     stories: {
+      ...state.stories,
       [storyId]: {
         ...state.stories[storyId],
         actionSets: actionSets,
@@ -108,7 +109,6 @@ const updateStoryActionSet = (
 export function mainReducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
     case 'addActionSetList': {
-      console.log(action);
       return updateStoryActionSet(state, action.storyId, action.actionSets);
     }
 

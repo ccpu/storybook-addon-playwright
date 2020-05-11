@@ -10,10 +10,10 @@ export const useStoryUrl = () => {
     let newUrl = constructUrl(state.location.host, state.storyId);
 
     const queryKeys = Object.keys(state.customQueryParams);
-
     if (queryKeys.length > 0) {
       const query = queryKeys.map((key) => {
         const val = state.customQueryParams[key];
+        console.log(val);
         return `${key}=${val}`;
       });
       newUrl += '&' + query.join('&');

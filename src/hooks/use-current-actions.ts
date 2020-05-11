@@ -27,8 +27,7 @@ export const useCurrentActions = (storyId: string) => {
       return arr;
     }, [] as StoryAction[]);
 
-    const actions = allActions ? allActions : [];
-    setActions(actions);
+    setActions(allActions);
   }, [
     setActions,
     state.currentActionSets,

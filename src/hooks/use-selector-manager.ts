@@ -18,6 +18,7 @@ export interface SelectorManger extends SelectorManageSharedProps {
 export const useSelectorManager = () => {
   const [selectorManager, setSelectorManager] = useGlobalState<SelectorManger>(
     EVENTS.SELECTOR,
+    {} as SelectorManger,
   );
 
   const startSelector = useCallback(

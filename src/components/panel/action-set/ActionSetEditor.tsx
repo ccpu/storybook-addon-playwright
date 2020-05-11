@@ -8,9 +8,10 @@ import {
 import { ActionToolbar } from '../screenshot-actions/ActionToolbar';
 import { nanoid } from 'nanoid';
 import { validateActionList, ActionListValidationResult } from '../../../utils';
-import { Snackbar } from '../../common';
+import { Snackbar, Loader } from '../../common';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
+import { useActionSchemaLoader } from '../../../hooks';
 
 const useStyles = makeStyles(
   () => {
@@ -41,6 +42,8 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
   const dispatch = useActionDispatchContext();
 
   const classes = useStyles();
+
+  const { loading } = useActionSchemaLoader();
 
   const state = useActionContext();
 
@@ -132,6 +135,7 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
           </div>
         </Snackbar>
       )}
+      <Loader open={loading} />
     </div>
   );
 });

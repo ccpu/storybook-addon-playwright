@@ -1,18 +1,5 @@
 import { useGlobalState, makeGlobalStateId } from '../use-global-state';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { EventEmitter } from 'events';
-
-const ee = new EventEmitter();
-
-jest.mock('@storybook/addons', () => {
-  return {
-    getChannel: () => ({
-      emit: ee.emit.bind(ee),
-      off: ee.off.bind(ee),
-      on: ee.on.bind(ee),
-    }),
-  };
-});
 
 describe('useGlobalState', () => {
   let cnt = 0;
@@ -43,7 +30,9 @@ describe('useGlobalState', () => {
 
   it('should store be persistance (window.localStorage)', async () => {
     const ids = getIds();
-    const { result } = renderHook(() => useGlobalState(ids.id, true));
+    const { result } = renderHook(() =>
+      useGlobalState(ids.id, undefined, true),
+    );
 
     expect(result.current[0]).toBe(undefined);
 
@@ -64,7 +53,7 @@ describe('useGlobalState', () => {
 
       const isLocalStorage = storageLocation === 'localStorage';
       const { result } = renderHook(() =>
-        useGlobalState(ids.id, isLocalStorage, 'def-val'),
+        useGlobalState(ids.id, 'def-val', isLocalStorage),
       );
 
       expect(result.current[0]).toBe('def-val');
@@ -98,13 +87,13 @@ describe('useGlobalState', () => {
 
   it('other hook should receive same state (window)', () => {
     const ids = getIds();
-    const mainHook = renderHook(() => useGlobalState(ids.id, true));
+    const mainHook = renderHook(() => useGlobalState(ids.id, undefined, true));
 
     act(() => {
       mainHook.result.current[1]('new-value');
     });
 
-    const mainHook2 = renderHook(() => useGlobalState(ids.id, true));
+    const mainHook2 = renderHook(() => useGlobalState(ids.id, undefined, true));
 
     expect(mainHook2.result.current[0]).toBe('new-value');
   });

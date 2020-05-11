@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { SET } from '@storybook/addon-knobs';
+import { SET } from '@storybook/addon-knobs/dist/shared';
 import { KnobStore } from '../typings';
 import { STORY_CHANGED } from '@storybook/core-events';
 import addons from '@storybook/addons';
-// import isEqual  from 'react-fast-compare';
 
 export const useKnobs = () => {
   const [knobs, setKnobs] = useState<KnobStore>();
@@ -16,14 +15,17 @@ export const useKnobs = () => {
       setKnobs(knobStore.knobs);
     };
 
+    const storyChange = () => {
+      setKnobs(undefined);
+    };
+
     chanel.on(SET, setKnobStore);
 
-    chanel.on(STORY_CHANGED, () => {
-      setKnobs(undefined);
-    });
+    chanel.on(STORY_CHANGED, storyChange);
 
     return () => {
       chanel.off(SET, setKnobStore);
+      chanel.off(STORY_CHANGED, storyChange);
     };
   }, []);
 

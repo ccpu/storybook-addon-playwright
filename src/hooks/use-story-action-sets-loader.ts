@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getActionSet } from '../api/client/get-action-set';
 import { useActionDispatchContext } from '../store';
 
@@ -10,7 +10,7 @@ interface LoadedStory {
 
 const __loadedFiles: LoadedStory = {};
 
-export const useStoryFileActionSets = (fileName: string, storyId: string) => {
+export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState();
@@ -19,6 +19,7 @@ export const useStoryFileActionSets = (fileName: string, storyId: string) => {
 
   useEffect(() => {
     if (
+      error ||
       !fileName ||
       !storyId ||
       loading ||
@@ -33,7 +34,9 @@ export const useStoryFileActionSets = (fileName: string, storyId: string) => {
         if (!__loadedFiles[fileName]) {
           __loadedFiles[fileName] = {};
         }
+
         __loadedFiles[fileName][storyId] = true;
+
         if (actionSets) {
           dispatch({
             actionSets,
@@ -42,9 +45,17 @@ export const useStoryFileActionSets = (fileName: string, storyId: string) => {
           });
         }
       })
-      .catch((error) => setError(error))
-      .finally(() => setLoading(false));
-  }, [dispatch, fileName, loading, storyId]);
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [dispatch, error, fileName, loading, storyId]);
 
-  return { error, loading };
+  const retry = useCallback(() => {
+    setError(undefined);
+  }, []);
+
+  return { error, loading, retry };
 };

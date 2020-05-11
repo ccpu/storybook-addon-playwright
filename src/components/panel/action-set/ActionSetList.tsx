@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import { useStoryFileActionSets } from '../../../hooks/use-story-file-action-sets';
-import { useCurrentStoryData, useCurrentStoryActionSets } from '../../../hooks';
-import { makeStyles } from '@material-ui/core';
+import { useStoryActionSetsLoader } from '../../../hooks';
+import { useCurrentStoryData, useCurrentActionSets } from '../../../hooks';
+import { makeStyles, Button } from '@material-ui/core';
 import { Loader, Snackbar, ListItem } from '../../common';
 import { useActionDispatchContext } from '../../../store';
 import { deleteActionSet } from '../../../api/client';
@@ -36,9 +36,13 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
   const [error, setError] = useState();
 
-  const { storyActionSets, currentAction } = useCurrentStoryActionSets();
+  const { storyActionSets, currentAction } = useCurrentActionSets();
 
-  const { loading } = useStoryFileActionSets(
+  const {
+    loading,
+    error: actionSetLoaderError,
+    retry,
+  } = useStoryActionSetsLoader(
     storyData && storyData.parameters.fileName,
     storyData && storyData.id,
   );
@@ -106,13 +110,17 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
       )}
 
       <Loader open={loading} />
-      {error && (
-        <Snackbar
-          type="error"
-          open={true}
-          message={error}
-          onClose={handleErrorClose}
-        />
+      {(error || actionSetLoaderError) && (
+        <Snackbar type="error" open={true} onClose={handleErrorClose}>
+          <>
+            {error || actionSetLoaderError}
+            {actionSetLoaderError && (
+              <Button color="inherit" size="small" onClick={retry}>
+                Retry
+              </Button>
+            )}
+          </>
+        </Snackbar>
       )}
     </div>
   );

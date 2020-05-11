@@ -3,7 +3,7 @@ import { useStorybookState } from '@storybook/api';
 import { ActionSet } from '../typings';
 import { useActionContext } from '../store';
 
-export const useCurrentStoryActionSets = () => {
+export const useCurrentActionSets = () => {
   const storybookState = useStorybookState();
 
   const state = useActionContext();

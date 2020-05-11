@@ -2,7 +2,7 @@ import './mocks/use-knobs';
 import { useScreenshot } from '../use-screenshot';
 import { renderHook } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
-import { GetScreenshotResponse } from '../../typings';
+import { GetScreenshotResponse } from '../../api/typings';
 
 describe('useScreenshot', () => {
   beforeEach(() => {

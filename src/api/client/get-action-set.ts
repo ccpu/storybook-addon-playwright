@@ -1,4 +1,4 @@
-import { getEndpoint } from './utils';
+import { getEndpoint, responseHandler } from './utils';
 import { StoryInfo, ActionSet } from '../../typings';
 
 export const getActionSet = async (
@@ -6,18 +6,14 @@ export const getActionSet = async (
 ): Promise<ActionSet[] | undefined> => {
   const restEndpoint = getEndpoint('GET_ACTION_SET');
 
-  const res = await fetch(restEndpoint, {
+  const resp = await fetch(restEndpoint, {
     body: JSON.stringify(info),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     },
     method: 'post',
-  });
-
-  const resp = await res.json();
-
-  if (resp.error) throw new Error(resp.error);
+  }).then(responseHandler);
 
   return resp;
 };

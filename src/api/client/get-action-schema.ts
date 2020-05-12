@@ -1,17 +1,16 @@
 import { ActionSchemaList } from '../../typings';
-import { getEndpoint } from './utils';
+import { getEndpoint, responseHandler } from './utils';
 
 export const getActionSchema = async (): Promise<ActionSchemaList> => {
   const restEndpoint = getEndpoint('GET_ACTIONS_DATA');
 
-  const res = await fetch(restEndpoint, {
+  const data = await fetch(restEndpoint, {
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     },
     method: 'post',
-  });
-  const data = await res.json();
+  }).then(responseHandler);
 
   return data;
 };

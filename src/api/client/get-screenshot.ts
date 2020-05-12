@@ -1,20 +1,19 @@
 import { GetScreenshotRequest, GetScreenshotResponse } from '../typings';
-import { getEndpoint } from './utils';
+import { getEndpoint, responseHandler } from './utils';
 
 export const getSnapShot = async (
   options: GetScreenshotRequest,
 ): Promise<GetScreenshotResponse> => {
   const restEndpoint = getEndpoint('TAKE_SCREENSHOT');
 
-  const res = await fetch(restEndpoint, {
+  const data = await fetch(restEndpoint, {
     body: JSON.stringify(options),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     },
     method: 'post',
-  });
-  const snapShots = await res.json();
+  }).then(responseHandler);
 
-  return snapShots;
+  return data;
 };

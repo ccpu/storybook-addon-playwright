@@ -6,6 +6,7 @@ import { useActionContext } from '../store';
 export const useCurrentActions = (storyId: string) => {
   const [currentActions, setActions] = useGlobalState<StoryAction[]>(
     'current-actions',
+    [],
   );
 
   const state = useActionContext();
@@ -16,7 +17,7 @@ export const useCurrentActions = (storyId: string) => {
 
     const actionSetArr = state.editorActionSet
       ? [state.editorActionSet]
-      : state.stories[storyId]
+      : state.stories[storyId] && state.stories[storyId].actionSets
       ? state.stories[storyId].actionSets.filter((x) =>
           state.currentActionSets.includes(x.id),
         )

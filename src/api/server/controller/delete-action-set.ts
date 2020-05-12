@@ -1,14 +1,13 @@
 import { deleteActionSet as deleteActionSetService } from '../services/delete-action-set';
 import { DeleteActionSetRequest } from '../../typings';
+import { Response, Request } from 'express';
 
-export const deleteActionSet = async (req, res): Promise<void> => {
+export const deleteActionSet = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const reqData = req.body as DeleteActionSetRequest;
-  try {
-    await deleteActionSetService(reqData);
-    res.send({ success: true });
-    res.end();
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: error.message });
-  }
+  await deleteActionSetService(reqData);
+  res.status(200);
+  res.end();
 };

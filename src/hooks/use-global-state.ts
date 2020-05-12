@@ -26,7 +26,7 @@ const getData = (id: string, persistence: boolean, defaultState?: unknown) => {
 };
 
 const setData = <T>(state: T, id: string, persistence: boolean) => {
-  const data = state === undefined ? {} : { value: state };
+  const data = state === undefined ? { value: undefined } : { value: state };
   if (persistence) {
     window.localStorage.setItem(makeGlobalStateId(id), JSON.stringify(data));
   } else {

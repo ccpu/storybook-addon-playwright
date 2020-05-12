@@ -5,10 +5,10 @@ import {
   SortableElement,
   SortEnd,
 } from 'react-sortable-hoc';
-import { useActionDispatchContext } from '../../../store';
+import { useActionDispatchContext } from '../../store';
 import { makeStyles } from '@material-ui/core';
-import { ActionSet } from '../../../typings';
-import { DragHandle } from '../../common';
+import { ActionSet } from '../../typings';
+import { DragHandle } from '../common';
 
 const useStyles = makeStyles(
   (theme) => {

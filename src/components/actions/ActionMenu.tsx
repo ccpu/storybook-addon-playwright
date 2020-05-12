@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { Menu, makeStyles } from '@material-ui/core';
 import { ActionMenuItem, ActionMenuItemBase } from './ActionMenuItem';
-import { ActionContext } from '../../../store/actions';
+import { ActionContext } from '../../store/actions';
 import { getMenu } from './utils';
 
 const useStyles = makeStyles(

@@ -1,5 +1,5 @@
 import React, { SFC } from 'react';
-import { ActionSchema } from '../../../typings';
+import { ActionSchema } from '../../typings';
 import { Definition } from 'ts-to-json';
 import { ActionSchemaProps } from './ActionSchemaProps';
 

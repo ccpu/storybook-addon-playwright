@@ -1,4 +1,4 @@
-import { StoryAction } from '../../../../typings';
+import { StoryAction } from '../../../typings';
 import * as immutableObject from 'object-path-immutable';
 
 export const getActionOptionValue = (

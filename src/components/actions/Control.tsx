@@ -1,7 +1,7 @@
 import React, { SFC, memo, ComponentType } from 'react';
-import { ControlProps } from '../../../typings';
+import { ControlProps } from '../../typings';
 import { FormControl } from './FormControl';
-import { useControl } from '../../../hooks';
+import { useControl } from '../../hooks';
 
 const Control: SFC<ControlProps & Partial<ComponentType>> = memo((props) => {
   const {

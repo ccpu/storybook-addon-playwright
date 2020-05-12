@@ -1,13 +1,13 @@
 import React, { SFC, memo, useCallback, useState, useEffect } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
-import { ControlProps } from '../../../typings';
-import { useControl, useSelectorManager, SelectorType } from '../../../hooks';
+import { ControlProps } from '../../typings';
+import { useControl, useSelectorManager, SelectorType } from '../../hooks';
 import { FormControl } from './FormControl';
 import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
-import { isValidSelector } from '../../../utils';
+import { isValidSelector } from '../../utils';
 import clsx from 'clsx';
 import PointerIcon from '@material-ui/icons/FilterTiltShift';
-import { useActionDispatchContext } from '../../../store';
+import { useActionDispatchContext } from '../../store';
 
 const useStyles = makeStyles(
   (theme) => {

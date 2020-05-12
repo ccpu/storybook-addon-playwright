@@ -9,9 +9,9 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
-import { capitalize, getActionSchema } from '../../../utils';
-import { useActionContext, useActionDispatchContext } from '../../../store';
-import { useEditorAction } from '../../../hooks';
+import { capitalize, getActionSchema } from '../../utils';
+import { useActionContext, useActionDispatchContext } from '../../store';
+import { useEditorAction } from '../../hooks';
 import { getActionOptionValue } from './utils';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 

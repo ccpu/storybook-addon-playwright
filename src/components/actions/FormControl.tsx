@@ -1,6 +1,6 @@
 import React, { SFC, memo } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { capitalize } from '../../../utils';
+import { capitalize } from '../../utils';
 import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
 import { Tooltip } from '@material-ui/core';
 import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';

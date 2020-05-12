@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 
-import { Toolbar } from '../../common';
+import { Toolbar } from '../common';
 
 export interface ActionToolbarProps {
   onAddActionSet: () => void;

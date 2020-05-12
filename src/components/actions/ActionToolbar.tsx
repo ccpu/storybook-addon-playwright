@@ -4,7 +4,7 @@ import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 import CloseIcon from '@material-ui/icons/CloseSharp';
 import SaveIcon from '@material-ui/icons/SaveSharp';
-import { Toolbar, ConfirmationPopover, InputDialog } from '../../common';
+import { Toolbar, ConfirmationPopover, InputDialog } from '../common';
 import { makeStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/EditSharp';
 

@@ -1,6 +1,6 @@
 import React, { SFC, memo } from 'react';
 import { ActionSchemaProp } from './ActionSchemaProp';
-import { ActionSchema } from '../../../typings';
+import { ActionSchema } from '../../typings';
 
 export interface ActionSchemaPropsProps {
   schemaProps: ActionSchema;

@@ -2,11 +2,11 @@ import React, { SFC, useCallback, memo } from 'react';
 
 import { Control } from './Control';
 import { ActionSchemaProps } from './ActionSchemaProps';
-import { useActionDispatchContext } from '../../../store';
+import { useActionDispatchContext } from '../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
-import { useEditorAction } from '../../../hooks';
-import { ActionSchema } from '../../../typings';
+import { useEditorAction } from '../../hooks';
+import { ActionSchema } from '../../typings';
 
 export interface ActionSchemaPropProps {
   name: string;

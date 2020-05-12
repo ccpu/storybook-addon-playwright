@@ -1,17 +1,17 @@
 import React, { SFC, memo, useCallback, useEffect, useState } from 'react';
-import { ActionList } from '../screenshot-actions/ActionList';
-import { StoryAction, ActionSet } from '../../../typings';
+import { ActionList } from '../actions/ActionList';
+import { StoryAction, ActionSet } from '../../typings';
 import {
   useActionDispatchContext,
   useActionContext,
-} from '../../../store/actions';
-import { ActionToolbar } from '../screenshot-actions/ActionToolbar';
+} from '../../store/actions';
+import { ActionToolbar } from '../actions/ActionToolbar';
 import { nanoid } from 'nanoid';
-import { validateActionList, ActionListValidationResult } from '../../../utils';
-import { Snackbar, Loader } from '../../common';
+import { validateActionList, ActionListValidationResult } from '../../utils';
+import { Snackbar, Loader } from '../common';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
-import { useActionSchemaLoader } from '../../../hooks';
+import { useActionSchemaLoader } from '../../hooks';
 
 const useStyles = makeStyles(
   () => {

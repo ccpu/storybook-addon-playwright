@@ -1,14 +1,14 @@
 import React, { SFC, memo, useState, useCallback, useEffect } from 'react';
 import { ActionSetEditor } from './ActionSetEditor';
 import { ActionToolbar } from './ActionSetToolbar';
-import { InputDialog } from '../../common';
-import { useActionDispatchContext } from '../../../store';
+import { InputDialog } from '../common';
+import { useActionDispatchContext } from '../../store';
 import { nanoid } from 'nanoid';
 import { ActionSetList } from './ActionSetList';
-import { ActionSet } from '../../../typings';
-import { saveActionSet } from '../../../api/client';
-import { Snackbar, Loader } from '../../common';
-import { useCurrentStoryData, useCurrentActions } from '../../../hooks';
+import { ActionSet } from '../../typings';
+import { saveActionSet } from '../../api/client';
+import { Snackbar, Loader } from '../common';
+import { useCurrentStoryData, useCurrentActions } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 
 const ActionSetMain: SFC = memo(() => {

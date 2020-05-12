@@ -13,7 +13,7 @@ export const useStoryUrl = () => {
     if (queryKeys.length > 0) {
       const query = queryKeys.map((key) => {
         const val = state.customQueryParams[key];
-        console.log(val);
+
         return `${key}=${val}`;
       });
       newUrl += '&' + query.join('&');

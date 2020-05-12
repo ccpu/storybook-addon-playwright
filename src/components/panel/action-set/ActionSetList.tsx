@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useStoryActionSetsLoader } from '../../../hooks';
-import { useCurrentStoryData, useCurrentActionSets } from '../../../hooks';
+import { useCurrentStoryData, useCurrentStoryActionSets } from '../../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
 import { Loader, Snackbar, ListItem } from '../../common';
 import { useActionDispatchContext } from '../../../store';
@@ -36,7 +36,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
   const [error, setError] = useState();
 
-  const { storyActionSets, currentAction } = useCurrentActionSets();
+  const { storyActionSets, currentAction } = useCurrentStoryActionSets();
 
   const {
     loading,

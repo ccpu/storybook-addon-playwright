@@ -5,8 +5,7 @@ describe('useStoryUrl', () => {
   it('should ', () => {
     const { result } = renderHook(() => useStoryUrl());
     expect(result).toStrictEqual({
-      current:
-        'http://192.168.1.1/iframe.html?id=undefined&knob-text=some text',
+      current: 'http://192.168.1.1/iframe.html?id=story-id&knob-text=some text',
       error: undefined,
     });
   });

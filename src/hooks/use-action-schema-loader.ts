@@ -21,5 +21,5 @@ export const useActionSchemaLoader = () => {
       .finally(() => setLoading(false));
   }, [dispatch, loaded, loading, setLoaded, setLoading]);
 
-  return { loading };
+  return { loaded, loading };
 };

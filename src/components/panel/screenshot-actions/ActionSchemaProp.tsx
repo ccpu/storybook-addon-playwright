@@ -5,7 +5,7 @@ import { ActionSchemaProps } from './ActionSchemaProps';
 import { useActionDispatchContext } from '../../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
-import { useAction } from '../../../hooks';
+import { useEditorAction } from '../../../hooks';
 import { ActionSchema } from '../../../typings';
 
 export interface ActionSchemaPropProps {
@@ -42,7 +42,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
       });
     }, [actionId, dispatch, optionObjectPath]);
 
-    const action = useAction(actionId);
+    const action = useEditorAction(actionId);
 
     if (!action) return null;
 

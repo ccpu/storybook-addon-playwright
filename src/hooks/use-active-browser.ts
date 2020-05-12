@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { BrowserTypes, ScreenShotViewPanel } from '../typings';
 import { useAddonState } from './use-addon-state';
+// import sum from 'hash-sum';
 
 export const useActiveBrowsers = (
   browserTypes: BrowserTypes[],

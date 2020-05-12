@@ -11,7 +11,7 @@ import {
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../../utils';
 import { useActionContext, useActionDispatchContext } from '../../../store';
-import { useAction } from '../../../hooks';
+import { useEditorAction } from '../../../hooks';
 import { getActionOptionValue } from './utils';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 
@@ -72,7 +72,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
 
   const [subtitle, setSubtitle] = useState<string[]>();
 
-  const action = useAction(actionId);
+  const action = useEditorAction(actionId);
 
   const state = useActionContext();
   const dispatch = useActionDispatchContext();

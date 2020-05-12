@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ccpu/storybook-addons-playwright.git"
   },
   "devDependencies": {
     "@storybook/addon-knobs": "^5.3.18",

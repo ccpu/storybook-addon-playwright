@@ -3,7 +3,7 @@ import { useStorybookState } from '@storybook/api';
 import { ActionSet } from '../typings';
 import { useActionContext } from '../store';
 
-export const useCurrentActionSets = () => {
+export const useCurrentStoryActionSets = () => {
   const storybookState = useStorybookState();
 
   const state = useActionContext();
@@ -11,7 +11,7 @@ export const useCurrentActionSets = () => {
   const [storyActionSets, setStoryActionSets] = useState<ActionSet[]>([]);
 
   useEffect(() => {
-    if (!state.stories[storybookState.storyId]) return;
+    if (!state.stories || !state.stories[storybookState.storyId]) return;
     const actionSets = state.stories[storybookState.storyId].actionSets;
     setStoryActionSets(actionSets);
   }, [state.stories, storybookState.storyId]);

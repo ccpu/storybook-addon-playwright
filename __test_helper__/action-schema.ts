@@ -64,6 +64,14 @@ export const getActionSchemaData = (): ActionSchemaList => ({
       },
     },
   },
+  customAction: {
+    type: 'null',
+    parameters: {
+      selector: {
+        type: 'string',
+      },
+    },
+  },
   mouse: {
     type: 'object',
     properties: {

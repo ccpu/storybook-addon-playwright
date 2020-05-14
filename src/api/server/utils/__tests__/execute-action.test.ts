@@ -1,7 +1,13 @@
-import '../../../../../test-data/mocks/get-actions-schema';
 import { executeAction } from '../execute-action';
 import { Page } from 'playwright-core';
 import { StoryAction } from '../../../../typings';
+import { getActionSchemaData } from '../../../../../__test_helper__';
+
+jest.mock('../../services/get-actions-schema', () => ({
+  getActionsSchema: () => {
+    return getActionSchemaData();
+  },
+}));
 
 const page = {
   click: async (...args) => {
@@ -57,5 +63,19 @@ describe('executeAction', () => {
     const val = await executeAction((page as unknown) as Page, action);
 
     expect(val).toStrictEqual([1, 1]);
+  });
+
+  it('should not execute if action is not implemented', async () => {
+    const action: StoryAction = {
+      args: {
+        selector: 'html',
+      },
+      id: 'someId',
+      name: 'customAction',
+    };
+
+    const val = await executeAction((page as unknown) as Page, action);
+
+    expect(val).toStrictEqual(undefined);
   });
 });

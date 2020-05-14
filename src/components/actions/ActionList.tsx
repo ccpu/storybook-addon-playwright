@@ -27,7 +27,7 @@ const useStyles = makeStyles(
   { name: 'ActionSetList' },
 );
 
-const SortableItem = SortableElement(({ action }) => (
+export const SortableItem = SortableElement(({ action }) => (
   <div>
     <ActionOptions
       key={action.id}
@@ -38,7 +38,7 @@ const SortableItem = SortableElement(({ action }) => (
   </div>
 ));
 
-const SortableList = SortableContainer(({ items }) => {
+export const SortableList = SortableContainer(({ items }) => {
   return (
     <div>
       {items.map((action, index) => (

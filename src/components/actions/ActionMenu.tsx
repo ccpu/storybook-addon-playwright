@@ -1,14 +1,7 @@
-import React, {
-  memo,
-  SFC,
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-} from 'react';
+import React, { memo, SFC, useState, useCallback } from 'react';
 import { Menu, makeStyles } from '@material-ui/core';
 import { ActionMenuItem, ActionMenuItemBase } from './ActionMenuItem';
-import { ActionContext } from '../../store/actions';
+import { useActionContext } from '../../store/actions';
 import { getMenu } from './utils';
 
 const useStyles = makeStyles(
@@ -35,13 +28,13 @@ export interface ActionMenuProps {
 const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
   const { onChange, onClose, anchorEl } = props;
 
-  const state = useContext(ActionContext);
+  const state = useActionContext();
 
   const [actionItems, setActionItems] = useState<ActionMenuItemBase[]>([]);
-
+  console.log(actionItems);
   const classes = useStyles();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!state.actionSchema) return undefined;
     const actionList = getMenu(state.actionSchema);
     setActionItems(actionList);

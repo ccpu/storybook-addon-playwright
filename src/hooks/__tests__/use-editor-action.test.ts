@@ -6,7 +6,7 @@ import { useActionContext } from '../../store/actions/ActionContext';
 const editorActionSetData: ActionSet = {
   actions: [{ id: 'action-id', name: 'action-name' }],
   description: 'action-set-desc',
-  id: 'action-id',
+  id: 'action-set-id',
 };
 
 jest.mock('../../store/actions/ActionContext', () => ({

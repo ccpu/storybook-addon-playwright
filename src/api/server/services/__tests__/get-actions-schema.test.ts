@@ -1,9 +1,12 @@
 import { getActionsSchema } from '../get-actions-schema';
 import * as schemaGenerator from '../get-actions-schema';
-import { setConfigs } from './utils';
+import { spyOnGetConfig } from './mocks';
 
 describe('getActionsSchema', () => {
-  setConfigs();
+  beforeEach(() => {
+    spyOnGetConfig.mockClear();
+  });
+
   it('should return action schema', async () => {
     const schema = getActionsSchema();
     expect(schema).toBeDefined();

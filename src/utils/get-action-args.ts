@@ -14,7 +14,7 @@ export const getActionArgs = (
   }
 
   const args = Object.keys(schema.parameters).reduce((arr, actionName) => {
-    const isRequired = schema.required.includes(actionName);
+    const isRequired = schema.required && schema.required.includes(actionName);
 
     if (action && action.args && action.args[actionName] !== undefined) {
       const val = action.args[actionName];

@@ -23,15 +23,14 @@
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
-    // "typeRoots": ["typings/*"]
   },
   "include": [
     "src/**/*",
-    "**/__tests__/**/*",
     "__mocks__/**/*",
     "typings/**/*",
     "setupTests.ts",
-    "test-data/**/*"
+    "test-data/**/*",
+    "__test_helper__/**/*"
   ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

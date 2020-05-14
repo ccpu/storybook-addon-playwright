@@ -14,7 +14,9 @@ export const loadStoryData = async (
       return;
     }
     readFile(jsonFileName, (err, data) => {
-      if (err) reject(err);
+      if (err) {
+        reject(err);
+      }
       resolve(data);
     });
   });

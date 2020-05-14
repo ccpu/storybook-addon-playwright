@@ -1,10 +1,10 @@
-import { setConfig } from '../../../configs';
+import * as config from '../../../configs';
 import fs from 'fs';
 import path from 'path';
 import { Config } from '../../../../../typings';
 
-export const setConfigs = (config?: Partial<Config>) => {
-  setConfig({
+export const defaultConfigs = (config?: Partial<Config>): Config => {
+  return {
     customActionSchema: {
       clickSelector: {
         properties: {
@@ -34,5 +34,11 @@ export const setConfigs = (config?: Partial<Config>) => {
     },
     storybookEndpoint: 'localhost:5000',
     ...(config as Config),
-  });
+  };
 };
+
+export const spyOnGetConfig = jest
+  .spyOn(config, 'getConfigs')
+  .mockImplementation(() => {
+    return defaultConfigs();
+  });

@@ -1,21 +1,23 @@
 import { makeScreenshot } from '../make-screenshot';
-import { setConfigs } from './utils';
-import { spyOnExecuteAction } from './mocks';
+import { spyOnExecuteAction, spyOnGetConfig, defaultConfigs } from './mocks';
 
 describe('makeScreenshot', () => {
   beforeEach(() => {
-    setConfigs();
+    spyOnGetConfig.mockClear();
     spyOnExecuteAction.mockClear();
   });
 
   it('should throw if no page returned', async () => {
-    setConfigs({
-      getPage: async () => {
-        return new Promise((resolve) => {
-          resolve();
-        });
-      },
+    spyOnGetConfig.mockImplementationOnce(() => {
+      return defaultConfigs({
+        getPage: async () => {
+          return new Promise((resolve) => {
+            resolve();
+          });
+        },
+      });
     });
+
     await expect(
       makeScreenshot(
         { browserType: 'chromium', storyId: 'story-id' },
@@ -46,11 +48,6 @@ describe('makeScreenshot', () => {
   });
 
   it('should execute actions', async () => {
-    const beforeSnapshotMock = jest.fn();
-    setConfigs({
-      beforeSnapshot: beforeSnapshotMock,
-    });
-
     await makeScreenshot(
       {
         actions: [
@@ -69,8 +66,11 @@ describe('makeScreenshot', () => {
 
   it('should call beforeSnapshotMock', async () => {
     const beforeSnapshotMock = jest.fn();
-    setConfigs({
-      beforeSnapshot: beforeSnapshotMock,
+
+    spyOnGetConfig.mockImplementationOnce(() => {
+      return defaultConfigs({
+        beforeSnapshot: beforeSnapshotMock,
+      });
     });
 
     await makeScreenshot(
@@ -86,8 +86,10 @@ describe('makeScreenshot', () => {
 
   it('should call afterSnapshot', async () => {
     const afterSnapshotMock = jest.fn();
-    setConfigs({
-      afterSnapshot: afterSnapshotMock,
+    spyOnGetConfig.mockImplementationOnce(() => {
+      return defaultConfigs({
+        afterSnapshot: afterSnapshotMock,
+      });
     });
 
     await makeScreenshot(

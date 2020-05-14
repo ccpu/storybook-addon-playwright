@@ -11,7 +11,7 @@ import { join } from 'path';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
 
-const path = join(__dirname, '/typings/playwright-page.ts');
+const path = join(__dirname, '/typings/playwright-page.d.ts');
 
 type MouseKeys = keyof Mouse;
 

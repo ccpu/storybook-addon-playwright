@@ -1,2 +1,2 @@
-import { setupSnapshot } from './api/server/setup-snapshot';
-export { setupSnapshot };
+import { setConfig } from './api/server/configs';
+export { setConfig as setupSnapshot };

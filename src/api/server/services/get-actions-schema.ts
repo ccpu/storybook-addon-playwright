@@ -9,8 +9,9 @@ import {
 import { Page, Mouse } from 'playwright-core';
 import { join } from 'path';
 import { ActionSchemaList } from '../../../typings';
+import { getConfigs } from '../configs';
 
-const path = join(__dirname, '/typings/playwright-page.d.ts');
+const path = join(__dirname, '/typings/playwright-page.ts');
 
 type MouseKeys = keyof Mouse;
 
@@ -41,7 +42,7 @@ const selectedKeys = [
   ...selectedMouseKeys.map((x) => 'mouse.' + x),
 ] as string[];
 
-let _schema: ActionSchemaList = {};
+let _schema: ActionSchemaList;
 
 export const generateSchema = () => {
   const type = 'PlaywrightPage';
@@ -74,6 +75,10 @@ export const generateSchema = () => {
 };
 
 export const getActionsSchema = () => {
-  if (_schema) _schema = generateSchema();
+  if (!_schema) _schema = generateSchema();
+  const customSchema = getConfigs().customActionSchema;
+  if (customSchema) {
+    _schema = { ..._schema, ...customSchema };
+  }
   return _schema;
 };

@@ -7,13 +7,6 @@ export interface PageInfo<T extends unknown = Page> {
   browserName: BrowserTypes;
 }
 
-export interface SetupSnapHelper<T extends unknown = Page> {
-  storybookEndpoint?: string;
-  getPage: (browserType: BrowserTypes) => Promise<T>;
-  beforeSnapshot?: (page: T, browserType: BrowserTypes) => void;
-  afterSnapshot?: (page: T, browserType: BrowserTypes) => void;
-}
-
 export interface ScreenshotInfo {
   buffer: Buffer;
   browserName: BrowserTypes;

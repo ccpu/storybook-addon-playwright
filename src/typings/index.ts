@@ -9,3 +9,4 @@ export * from './action-schema';
 export * from './storybook';
 export * from './story-data';
 export * from './story-info';
+export * from './config';

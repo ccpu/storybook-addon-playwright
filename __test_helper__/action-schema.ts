@@ -4,7 +4,6 @@ import { ActionSchemaList } from '../src/typings';
 
 export const getActionSchemaData = (): ActionSchemaList => ({
   click: {
-    kind: 'function',
     type: 'Promise' as never,
     parameters: {
       selector: {
@@ -58,7 +57,6 @@ export const getActionSchemaData = (): ActionSchemaList => ({
     required: ['selector'],
   },
   noneRequiredProp: {
-    kind: 'function',
     type: 'Promise' as never,
     parameters: {
       selector: {

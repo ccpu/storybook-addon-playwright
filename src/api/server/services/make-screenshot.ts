@@ -1,6 +1,6 @@
 import { GetScreenshotRequest } from '../../typings';
 import { constructUrl } from '../../../utils';
-import { getSnapshotHelper } from '../setup-snapshot';
+import { getConfigs } from '../configs';
 import { executeAction } from '../utils';
 import { ScreenshotInfo } from '../../../typings';
 
@@ -9,7 +9,7 @@ export const makeScreenshot = async (
   host: string,
   convertToBase64?: boolean,
 ): Promise<ScreenshotInfo> => {
-  const helper = getSnapshotHelper();
+  const helper = getConfigs();
 
   const url = constructUrl(
     helper.storybookEndpoint ? helper.storybookEndpoint : host,
@@ -20,7 +20,7 @@ export const makeScreenshot = async (
   const page = await helper.getPage(data.browserType);
 
   if (!page) {
-    throw new Error('Make sure to return browser page instance from getPage.');
+    throw new Error('Make sure to return an instance of a page from getPage.');
   }
 
   await page.goto(url);

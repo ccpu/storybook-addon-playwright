@@ -1,4 +1,4 @@
 import expressMiddleWare from './api/server/routes';
-import { setupSnapshot } from './api/server/setup-snapshot';
+import { setConfig } from './api/server/configs';
 export default expressMiddleWare;
-export { setupSnapshot };
+export { setConfig as setupSnapshot };

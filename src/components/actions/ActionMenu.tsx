@@ -31,7 +31,7 @@ const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
   const state = useActionContext();
 
   const [actionItems, setActionItems] = useState<ActionMenuItemBase[]>([]);
-  console.log(actionItems);
+
   const classes = useStyles();
 
   React.useEffect(() => {

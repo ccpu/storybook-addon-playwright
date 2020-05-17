@@ -100,16 +100,32 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
           </div>
         </div>
         <div className="right">
-          <IconButton onClick={toggleEditDescription} title="Edit description">
+          <IconButton
+            className="edit-desc"
+            onClick={toggleEditDescription}
+            title="Edit description"
+          >
             <EditIcon />
           </IconButton>
-          <IconButton onClick={handleMenuOpen} title="Add Actions">
+          <IconButton
+            className="add-action"
+            onClick={handleMenuOpen}
+            title="Add Actions"
+          >
             <AddIcon />
           </IconButton>
-          <IconButton title="Save Actions" onClick={onSave}>
+          <IconButton
+            className="save-action"
+            title="Save Actions"
+            onClick={onSave}
+          >
             <SaveIcon />
           </IconButton>
-          <IconButton title="Close" onClick={toggleConfirmAnchorEl}>
+          <IconButton
+            className="close"
+            title="Close"
+            onClick={toggleConfirmAnchorEl}
+          >
             <CloseIcon />
           </IconButton>
         </div>

@@ -8,10 +8,10 @@ export type StoryInput = {
   parameters: {
     fileName: string;
     options: {
-      hierarchyRootSeparator: RegExp;
-      hierarchySeparator: RegExp;
+      // hierarchyRootSeparator: RegExp;
+      // hierarchySeparator: RegExp;
       showRoots?: boolean;
-      [key: string]: unknown;
+      [key: string]: unknown | undefined;
     };
     [parameterName: string]: unknown;
   };

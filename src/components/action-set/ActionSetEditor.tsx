@@ -1,4 +1,4 @@
-import React, { SFC, memo, useCallback, useEffect, useState } from 'react';
+import React, { SFC, useCallback, useEffect, useState } from 'react';
 import { ActionList } from '../actions/ActionList';
 import { StoryAction, ActionSet } from '../../typings';
 import {
@@ -38,7 +38,7 @@ interface Props {
   onSaved: (actionSet: ActionSet) => void;
 }
 
-const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
+const ActionSetEditor: SFC<Props> = ({ onClose, onSaved }) => {
   const dispatch = useActionDispatchContext();
 
   const classes = useStyles();
@@ -69,7 +69,7 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
     dispatch({ type: 'clearActionExpansion' });
   }, [dispatch]);
 
-  const handleSave = useCallback(async () => {
+  const handleSave = useCallback(() => {
     const validateResult = validateActionList(
       state.actionSchema,
       state.editorActionSet.actions,
@@ -78,9 +78,9 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
     if (validateResult) {
       setValidationResult(validateResult);
     } else {
-      onComplete(state.editorActionSet);
+      onSaved(state.editorActionSet);
     }
-  }, [onComplete, state.actionSchema, state.editorActionSet]);
+  }, [onSaved, state.actionSchema, state.editorActionSet]);
 
   const handleValidationSnackbarClose = useCallback(() => {
     setValidationResult(undefined);
@@ -138,7 +138,7 @@ const ActionSetEditor: SFC<Props> = memo(({ onClose, onSaved: onComplete }) => {
       <Loader open={loading} />
     </div>
   );
-});
+};
 
 ActionSetEditor.displayName = 'ActionSetEditor';
 

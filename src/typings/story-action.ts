@@ -5,10 +5,10 @@ export type StoryActionPosition = { x: number; y: number };
 export type ControlTypes = KnobType;
 
 export interface StoryAction<T extends unknown = Page> {
-  id?: string;
+  id: string;
   name: string;
   labe?: string;
-  args?: unknown;
+  args?: { [key: string]: unknown };
   subtitleItems?: string[];
   run?: (page: T, selector: string) => Promise<void>;
 }

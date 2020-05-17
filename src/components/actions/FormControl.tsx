@@ -80,7 +80,7 @@ const FormControl: SFC<ControlFormProps> = memo((props) => {
   return (
     <div className={classes.root}>
       <div className={classes.labelWrap}>
-        <span>
+        <span className="form-label">
           {capitalize(label)}
           {isRequired && <span style={{ marginLeft: 2 }}>*</span>}
         </span>

@@ -1,4 +1,4 @@
-import React, { SFC, memo, useState, useCallback, useEffect } from 'react';
+import React, { SFC, useState, useCallback, useEffect } from 'react';
 import { ActionSetEditor } from './ActionSetEditor';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../common';
@@ -11,7 +11,7 @@ import { Snackbar, Loader } from '../common';
 import { useCurrentStoryData, useCurrentActions } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 
-const ActionSetMain: SFC = memo(() => {
+const ActionSetMain: SFC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
 
   const [editActionSetId, setEditActionSetId] = useState<string>();
@@ -80,7 +80,6 @@ const ActionSetMain: SFC = memo(() => {
         clearEditActionSet();
       } catch (error) {
         setError(error.message);
-        console.log(error);
       }
 
       setLoading(false);
@@ -144,7 +143,7 @@ const ActionSetMain: SFC = memo(() => {
       )}
     </div>
   );
-});
+};
 
 ActionSetMain.displayName = 'ActionSetMain';
 

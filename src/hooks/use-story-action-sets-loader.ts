@@ -13,7 +13,7 @@ const __loadedFiles: LoadedStory = {};
 export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
   const [loading, setLoading] = useState(false);
 
-  const [error, setError] = useState();
+  const [error, setError] = useState<string>();
 
   const dispatch = useActionDispatchContext();
 

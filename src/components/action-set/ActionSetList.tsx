@@ -36,7 +36,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
   const [error, setError] = useState();
 
-  const { storyActionSets, currentAction } = useCurrentStoryActionSets();
+  const { storyActionSets, currentActionSets } = useCurrentStoryActionSets();
 
   const {
     loading,
@@ -98,7 +98,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
             onDelete={handleDelete}
             onEdit={handleEdit}
             onCheckBoxClick={handleCheckBox}
-            checked={currentAction.includes(actionSet.id)}
+            checked={currentActionSets.includes(actionSet.id)}
             description={actionSet.description}
           />
         ))

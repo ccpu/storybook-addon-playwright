@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../../__test_helper__/manual-mocks/store/action/dispatch';
+import { dispatchMock } from '../../../../__test_helper__/manual-mocks/store/action/context';
 import React from 'react';
 import { ActionList, SortableList, SortableItem } from '../ActionList';
 import { shallow } from 'enzyme';

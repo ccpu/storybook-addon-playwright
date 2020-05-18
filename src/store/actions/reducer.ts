@@ -46,6 +46,9 @@ export type Action =
       type: 'clearEditorActionSet';
     }
   | {
+      type: 'clearCurrentActionSets';
+    }
+  | {
       type: 'setEditorActionSet';
       actionSet: ActionSet;
     }
@@ -112,14 +115,28 @@ export function mainReducer(state: ReducerState, action: Action): ReducerState {
       return updateStoryActionSet(state, action.storyId, action.actionSets);
     }
 
+    case 'clearCurrentActionSets': {
+      return {
+        ...state,
+        currentActionSets: [],
+      };
+    }
+
     case 'deleteActionSet': {
-      return updateStoryActionSet(
+      const newState = updateStoryActionSet(
         state,
         action.storyId,
         state.stories[action.storyId].actionSets.filter(
           (x) => x.id !== action.actionSetId,
         ),
       );
+      return {
+        ...state,
+        ...newState,
+        currentActionSets: state.currentActionSets.filter(
+          (x) => x !== action.actionSetId,
+        ),
+      };
     }
 
     case 'sortActionSets': {

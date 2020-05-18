@@ -10,6 +10,7 @@ import { saveActionSet } from '../../api/client';
 import { Snackbar, Loader } from '../common';
 import { useCurrentStoryData, useCurrentActions } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
+import { useStorybookState } from '@storybook/api';
 
 const ActionSetMain: SFC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
@@ -19,12 +20,9 @@ const ActionSetMain: SFC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
 
-  const {
-    storyData,
-    state: { storyId },
-  } = useCurrentStoryData();
+  const { storyId } = useStorybookState();
 
-  const [actionSetStoryId, setActionSetStoryId] = useState<string>(storyId);
+  const { storyData } = useCurrentStoryData();
 
   const dispatch = useActionDispatchContext();
 
@@ -58,10 +56,8 @@ const ActionSetMain: SFC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (storyId === actionSetStoryId) return;
-    clearEditActionSet();
-    setActionSetStoryId(storyId);
-  }, [actionSetStoryId, dispatch, clearEditActionSet, storyId]);
+    dispatch({ type: 'clearCurrentActionSets' });
+  }, [dispatch, storyId]);
 
   const handleSaved = useCallback(
     async (editingActionSet: ActionSet) => {

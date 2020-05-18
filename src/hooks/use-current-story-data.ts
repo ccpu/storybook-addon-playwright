@@ -14,5 +14,5 @@ export const useCurrentStoryData = () => {
     setData(data);
   }, [api, state]);
 
-  return { api, state, storyData };
+  return { storyData };
 };

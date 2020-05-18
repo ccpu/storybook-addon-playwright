@@ -36,7 +36,20 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
   const [error, setError] = useState();
 
+  const storyId = storyData ? storyData.id : undefined;
+
   const { storyActionSets, currentActionSets } = useCurrentStoryActionSets();
+
+  // useEffect(() => {
+  //   if (!storyId) return;
+  //   console.log(storyId);
+  //   // console.log('test');
+  // }, [storyId]);
+
+  // useMount(() => {
+  //   // dispatch({type})
+  //   console.log('test');
+  // });
 
   const {
     loading,
@@ -44,7 +57,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
     retry,
   } = useStoryActionSetsLoader(
     storyData && storyData.parameters.fileName,
-    storyData && storyData.id,
+    storyData && storyId,
   );
 
   const dispatch = useActionDispatchContext();

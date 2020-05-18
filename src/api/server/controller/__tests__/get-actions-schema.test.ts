@@ -1,6 +1,6 @@
 import { getActionsSchema } from '../get-actions-schema';
 import { Request, Response } from 'express';
-import { getActionSchemaData } from '../../../../../__test_helper__';
+import { getActionSchemaData } from '../../../../../__test_data__';
 
 jest.mock('../../services/get-actions-schema', () => ({
   getActionsSchema: () => getActionSchemaData(),

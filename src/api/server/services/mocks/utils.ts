@@ -1,5 +1,5 @@
-import { storyFileInfo } from '../utils';
-import * as utils from '../../../utils';
+import * as utils from '../../utils';
+import { storyFileInfo } from './story-file-info';
 
 export const spyOnSaveStoryFile = jest
   .spyOn(utils, 'saveStoryFile')

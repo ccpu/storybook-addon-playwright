@@ -1,4 +1,4 @@
-jest.mock('../../../src/hooks/use-current-story-data', () => ({
+jest.mock('../../src/hooks/use-current-story-data', () => ({
   useCurrentStoryData: () => {
     return {
       storyData: {

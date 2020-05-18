@@ -14,6 +14,7 @@ describe('useCurrentActions', () => {
         {
           actions: [
             {
+              id: 'action-id',
               name: 'action-name',
             },
           ],
@@ -28,7 +29,7 @@ describe('useCurrentActions', () => {
     (useActionContext as jest.Mock).mockReturnValueOnce({});
 
     const { result } = renderHook(() => useCurrentActions('story-id'));
-    expect(result.current.currentActions).toBe(undefined);
+    expect(result.current.currentActions).toStrictEqual([]);
   });
 
   it('should use editorActionSet action if available', () => {
@@ -60,7 +61,7 @@ describe('useCurrentActions', () => {
     const { result } = renderHook(() => useCurrentActions('story-id'));
 
     expect(result.current.currentActions).toStrictEqual([
-      { name: 'action-name' },
+      { id: 'action-id', name: 'action-name' },
     ]);
   });
 

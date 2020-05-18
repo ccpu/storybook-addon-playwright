@@ -21,6 +21,7 @@ describe('useStoryFileActionSets', () => {
     {
       actions: [
         {
+          id: 'action-id',
           name: 'click',
         },
       ],

@@ -78,7 +78,10 @@ describe('useGlobalState', () => {
 
       expect(result.current[0]).toBe(undefined);
 
-      expect(getStorageData()).toStrictEqual({});
+      const data = getStorageData();
+      expect(data).toStrictEqual(
+        storageLocation === 'localStorage' ? {} : { value: undefined },
+      );
     });
   };
 

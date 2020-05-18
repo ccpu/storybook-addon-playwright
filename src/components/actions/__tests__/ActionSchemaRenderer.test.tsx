@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActionSchemaRenderer } from '../ActionSchemaRenderer';
 import { shallow } from 'enzyme';
-import { getActionSchemaData } from '../../../../__test_helper__/action-schema';
+import { getActionSchemaData } from '../../../../__test_data__/action-schema';
 
 describe('ActionSchemaRenderer', () => {
   const schema = getActionSchemaData();

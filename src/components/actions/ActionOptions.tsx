@@ -111,7 +111,9 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
   return (
     <div className={classes.root}>
       <ExpansionPanel
-        expanded={state.expandedActions[actionId] === true}
+        expanded={
+          state.expandedActions && state.expandedActions[actionId] === true
+        }
         onChange={handleExpand}
         className={classes.expansionPanel}
         square
@@ -160,7 +162,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.detailPanel}>
-          {state.expandedActions[actionId] && (
+          {state.expandedActions && state.expandedActions[actionId] && (
             <ActionSchemaRenderer schema={schema} actionId={actionId} />
           )}
         </ExpansionPanelDetails>

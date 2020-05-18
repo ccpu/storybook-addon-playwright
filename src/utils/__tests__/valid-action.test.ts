@@ -3,7 +3,7 @@ import {
   validAction,
   validateActionList,
 } from '../valid-action';
-import { getActionSchemaData } from '../../../test-data';
+import { getActionSchemaData } from '../../../__test_data__';
 import { StoryAction } from '../../typings';
 
 describe('Name of the group', () => {

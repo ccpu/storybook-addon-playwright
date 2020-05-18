@@ -1,6 +1,6 @@
 import { getActionSchema } from '../get-action-schema';
 import fetch from 'jest-fetch-mock';
-import { getActionSchemaData } from '../../../../__test_helper__/action-schema';
+import { getActionSchemaData } from '../../../../__test_data__/action-schema';
 
 describe('getActionSchema', () => {
   beforeEach(() => {

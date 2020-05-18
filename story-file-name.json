@@ -1,0 +1,44 @@
+{
+  "stroy-id-2": {
+    "actionSets": [
+      {
+        "actions": [
+          {
+            "id": "action-id",
+            "name": "action-name"
+          }
+        ],
+        "description": "action-set-desc",
+        "id": "action-set-id"
+      }
+    ]
+  },
+  "stroy-id": {
+    "actionSets": [
+      {
+        "actions": [
+          {
+            "id": "action-id",
+            "name": "click"
+          }
+        ],
+        "description": "action-set-desc",
+        "id": "action-set-id"
+      }
+    ]
+  },
+  "story-id": {
+    "actionSets": [
+      {
+        "actions": [
+          {
+            "id": "action-id",
+            "name": "click"
+          }
+        ],
+        "description": "action-set-desc",
+        "id": "action-set-id-3"
+      }
+    ]
+  }
+}

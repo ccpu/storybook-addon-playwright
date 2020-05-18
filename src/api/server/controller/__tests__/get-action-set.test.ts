@@ -8,6 +8,7 @@ jest.mock('../../services/get-action-set', () => ({
       {
         actions: [
           {
+            id: 'action-id',
             name: 'name',
           },
         ],
@@ -26,6 +27,7 @@ describe('getActionSet', () => {
       {
         actions: [
           {
+            id: 'action-id',
             name: 'name',
           },
         ],

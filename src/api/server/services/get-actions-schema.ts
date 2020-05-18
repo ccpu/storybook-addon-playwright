@@ -11,8 +11,6 @@ import { join } from 'path';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
 
-const path = join(__dirname, '/typings/playwright-page.d.ts');
-
 type MouseKeys = keyof Mouse;
 
 type PageKeys = keyof Page;
@@ -44,7 +42,7 @@ const selectedKeys = [
 
 let _schema: ActionSchemaList;
 
-export const generateSchema = () => {
+export const generateSchema = (path: string) => {
   const type = 'PlaywrightPage';
   const config: Config = {
     encodeRefs: false,
@@ -74,9 +72,13 @@ export const generateSchema = () => {
     .properties as ActionSchemaList;
 };
 
-export const getActionsSchema = () => {
-  if (!_schema) _schema = generateSchema();
+export const getActionsSchema = (path: string) => {
+  if (!path) join(__dirname, '/typings/playwright-page.d.ts');
+
+  if (!_schema) _schema = generateSchema(path);
+
   const customSchema = getConfigs().customActionSchema;
+
   if (customSchema) {
     _schema = { ..._schema, ...customSchema };
   }

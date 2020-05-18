@@ -1,5 +1,5 @@
 import { getActionSet } from '../get-action-set';
-import { spyOnLoadStoryData, spyOnSaveStoryFile } from './mocks';
+import { spyOnLoadStoryData, spyOnSaveStoryFile } from '../mocks';
 
 describe('getActionSet', () => {
   beforeEach(() => {

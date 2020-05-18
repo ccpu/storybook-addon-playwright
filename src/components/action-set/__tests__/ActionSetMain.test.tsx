@@ -1,6 +1,6 @@
-import { dispatchMock } from '../../../../__test_helper__/manual-mocks/store/action/context';
-import '../../../../__test_helper__/manual-mocks/nanoid';
-import '../../../../__test_helper__/manual-mocks/hooks/use-current-story-data';
+import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
+import '../../../../__manual_mocks__/nanoid';
+import '../../../../__manual_mocks__/hooks/use-current-story-data';
 import { ActionSetMain } from '../ActionSetMain';
 import { shallow } from 'enzyme';
 import React from 'react';

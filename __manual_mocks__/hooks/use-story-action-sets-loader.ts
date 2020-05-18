@@ -1,6 +1,6 @@
 export const useStoryActionSetsLoaderMock = jest.fn();
 
-jest.mock('../../../src/hooks/use-story-action-sets-loader', () => ({
+jest.mock('../../src/hooks/use-story-action-sets-loader', () => ({
   useStoryActionSetsLoader: useStoryActionSetsLoaderMock,
 }));
 

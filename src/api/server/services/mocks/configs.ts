@@ -1,7 +1,7 @@
-import * as config from '../../../configs';
+import * as config from '../../configs';
 import fs from 'fs';
 import path from 'path';
-import { Config } from '../../../../../typings';
+import { Config } from '../../../../typings';
 
 export const defaultConfigs = (config?: Partial<Config>): Config => {
   return {
@@ -25,7 +25,7 @@ export const defaultConfigs = (config?: Partial<Config>): Config => {
         screenshot: async () => {
           const imagePath = path.join(
             __dirname,
-            '../../../../../../__test_helper__/assets/test-image-snap.png',
+            '../../../../../__test_data__/assets/test-image-snap.png',
           );
           const buffer = fs.readFileSync(imagePath);
           return buffer;

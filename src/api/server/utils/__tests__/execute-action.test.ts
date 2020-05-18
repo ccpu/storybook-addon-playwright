@@ -1,7 +1,7 @@
 import { executeAction } from '../execute-action';
 import { Page } from 'playwright-core';
 import { StoryAction } from '../../../../typings';
-import { getActionSchemaData } from '../../../../../__test_helper__';
+import { getActionSchemaData } from '../../../../../__test_data__';
 
 jest.mock('../../services/get-actions-schema', () => ({
   getActionsSchema: () => {

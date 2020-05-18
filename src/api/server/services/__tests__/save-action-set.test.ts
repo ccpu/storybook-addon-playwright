@@ -1,4 +1,4 @@
-import { spyOnSaveStoryFile } from './mocks';
+import { spyOnSaveStoryFile } from '../mocks';
 import { saveActionSet } from '../save-action-set';
 
 describe('saveActionSet', () => {

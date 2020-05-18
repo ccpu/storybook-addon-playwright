@@ -1,5 +1,5 @@
-import { getActionSchemaData } from '../../../action-schema';
-import { ReducerState } from '../../../../src/store/actions/reducer';
+import { getActionSchemaData } from '../../../__test_data__/action-schema';
+import { ReducerState } from '../../../src/store/actions/reducer';
 
 export const dispatchMock = jest.fn();
 
@@ -10,7 +10,7 @@ const mockData: Partial<ReducerState> = {
 export const useActionContext = jest.fn() as jest.Mock<Partial<ReducerState>>;
 useActionContext.mockImplementation(() => mockData);
 
-jest.mock('../../../../src/store/actions/ActionContext', () => ({
+jest.mock('../../../src/store/actions/ActionContext', () => ({
   useActionContext,
   useActionDispatchContext: () => {
     return (...arg) => {

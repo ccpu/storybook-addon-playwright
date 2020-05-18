@@ -1,8 +1,8 @@
-import { ActionSet } from '../../../src/typings';
+import { ActionSet } from '../../src/typings';
 
 export const useCurrentStoryActionSetsMock = jest.fn();
 
-jest.mock('../../../src/hooks/use-current-story-action-sets', () => ({
+jest.mock('../../src/hooks/use-current-story-action-sets', () => ({
   useCurrentStoryActionSets: useCurrentStoryActionSetsMock,
 }));
 

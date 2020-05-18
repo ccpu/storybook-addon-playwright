@@ -1,4 +1,4 @@
-import '../../../../__test_helper__/manual-mocks/store/action/context';
+import '../../../../__manual_mocks__/store/action/context';
 import React from 'react';
 import { ActionMenu } from '../ActionMenu';
 import { shallow } from 'enzyme';

@@ -1,8 +1,8 @@
-import { dispatchMock } from '../../../../__test_helper__/manual-mocks/store/action/context';
+import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import { ActionSchemaProp } from '../ActionSchemaProp';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { getActionSchemaData } from '../../../../__test_helper__/action-schema';
+import { getActionSchemaData } from '../../../../__test_data__/action-schema';
 import { useEditorAction } from '../../../hooks/use-editor-action';
 import { SelectorControl } from '../SelectorControl';
 import { Control } from '../Control';

@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
 import { getActionArgs } from '../get-action-args';
-import { getActionSchemaData } from '../../../test-data/action-schema';
+import { getActionSchemaData } from '../../../__test_data__/action-schema';
 import { StoryAction } from '../../typings';
 
 describe('getActionArgs', () => {

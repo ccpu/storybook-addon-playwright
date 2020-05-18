@@ -1,5 +1,5 @@
 import { makeScreenshot } from '../make-screenshot';
-import { spyOnExecuteAction, spyOnGetConfig, defaultConfigs } from './mocks';
+import { spyOnExecuteAction, spyOnGetConfig, defaultConfigs } from '../mocks';
 
 describe('makeScreenshot', () => {
   beforeEach(() => {
@@ -52,6 +52,7 @@ describe('makeScreenshot', () => {
       {
         actions: [
           {
+            id: 'action-id',
             name: 'action-name',
           },
         ],

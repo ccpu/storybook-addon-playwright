@@ -1,12 +1,12 @@
 import {
   dispatchMock,
   useActionContext,
-} from '../../../../__test_helper__/manual-mocks/store/action/context';
+} from '../../../../__manual_mocks__/store/action/context';
 import { ActionSetEditor } from '../ActionSetEditor';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionToolbar } from '../../actions/ActionToolbar';
-import { getActionSchemaData } from '../../../../__test_helper__';
+import { getActionSchemaData } from '../../../../__test_data__';
 import { Snackbar } from '../../common';
 import { StoryAction } from '../../../typings';
 

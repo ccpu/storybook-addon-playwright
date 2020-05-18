@@ -1,9 +1,6 @@
-import {
-  spyOnSaveStoryFile,
-  spyOnLoadStoryData,
-} from '../__tests__/mocks/utils';
+import { spyOnSaveStoryFile, spyOnLoadStoryData } from '../mocks/utils';
 import { deleteActionSet } from '../delete-action-set';
-import { storyFileInfo } from './utils';
+import { storyFileInfo } from '../mocks';
 
 describe('deleteActionSet', () => {
   beforeEach(() => {

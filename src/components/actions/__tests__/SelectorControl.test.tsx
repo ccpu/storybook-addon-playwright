@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../../__test_helper__/manual-mocks/store/action/context';
+import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import * as React from 'react';
 import { SelectorControl, SelectorControlProps } from '../SelectorControl';
 import { mount } from 'enzyme';

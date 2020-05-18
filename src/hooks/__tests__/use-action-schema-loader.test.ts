@@ -1,7 +1,7 @@
 import { useActionSchemaLoader } from '../use-action-schema-loader';
 import { renderHook } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
-import { getActionSchemaData } from '../../../__test_helper__';
+import { getActionSchemaData } from '../../../__test_data__';
 import * as context from '../../store/actions/ActionContext';
 
 describe('useActionSchemaLoader', () => {

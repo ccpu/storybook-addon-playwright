@@ -1,10 +1,10 @@
-import '../../../../__test_helper__/manual-mocks/hooks/use-current-story-data';
-import { dispatchMock } from '../../../../__test_helper__/manual-mocks/store/action/context';
-import { useCurrentStoryActionSetsMock } from '../../../../__test_helper__/manual-mocks/hooks/use-current-story-action-sets';
+import '../../../../__manual_mocks__/hooks/use-current-story-data';
+import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
+import { useCurrentStoryActionSetsMock } from '../../../../__manual_mocks__/hooks/use-current-story-action-sets';
 import {
   useStoryActionSetsLoaderMock,
   useStoryActionSetsLoaderRetryMock,
-} from '../../../../__test_helper__/manual-mocks/hooks/use-story-action-sets-loader';
+} from '../../../../__manual_mocks__/hooks/use-story-action-sets-loader';
 import { ActionSetList } from '../ActionSetList';
 import { shallow } from 'enzyme';
 import React from 'react';

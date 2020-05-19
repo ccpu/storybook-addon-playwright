@@ -8,6 +8,10 @@ const useStyles = makeStyles(
 
     return {
       root: {
+        '& button': {
+          alignItems: 'center',
+          display: 'flex',
+        },
         '& svg': {
           width: 18,
         },
@@ -30,7 +34,6 @@ const useStyles = makeStyles(
             marginLeft: 15,
           },
           flexBasis: '60%',
-          // width: 'calc(100% - 65px)',
         },
         '& > .left,& > .right': {
           alignItems: 'center',

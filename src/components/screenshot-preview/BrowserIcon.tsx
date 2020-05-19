@@ -9,33 +9,34 @@ export interface BrowserIconProps {
   active: boolean;
 }
 
-const BrowserIcon: SFC<BrowserIconProps> = (props) => {
+const BrowserIcon: SFC<{ browserType?: string }> = (props) => {
+  switch (props.browserType) {
+    case 'chromium':
+      return <Chrome />;
+    case 'firefox':
+      return <Firefox />;
+    case 'webkit':
+      return <Webkit />;
+    default:
+      return <Browser />;
+  }
+};
+BrowserIcon.displayName = 'BrowserIcon';
+
+const BrowserIconButton: SFC<BrowserIconProps> = (props) => {
   const { browserType, onClick, active } = props;
 
   const handleClick = useCallback(() => {
     onClick(browserType);
   }, [browserType, onClick]);
 
-  const Icon = () => {
-    switch (browserType) {
-      case 'chromium':
-        return <Chrome />;
-      case 'firefox':
-        return <Firefox />;
-      case 'webkit':
-        return <Webkit />;
-      default:
-        return <Browser />;
-    }
-  };
-
   return (
     <IconButton onClick={handleClick} active={active}>
-      <Icon />
+      <BrowserIcon browserType={browserType} />
     </IconButton>
   );
 };
 
-BrowserIcon.displayName = 'BrowserIcon';
+BrowserIconButton.displayName = 'BrowserIconButton';
 
-export { BrowserIcon };
+export { BrowserIconButton, BrowserIcon };

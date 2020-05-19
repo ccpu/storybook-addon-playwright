@@ -1,23 +1,17 @@
 import React, { SFC, memo } from 'react';
-import { API } from '@storybook/api';
-import { ThemeProvider } from '../common';
-import { ActionProvider } from '../../store';
 import { ActionSetMain } from '../action-set';
-import { StateInspector } from 'reinspect';
+import { ProviderWrapper } from './ProviderWrapper';
 
 interface ActionPanelProps {
-  api: API;
+  active: boolean;
 }
 
-const ActionPanel: SFC<ActionPanelProps> = memo(() => {
+const ActionPanel: SFC<ActionPanelProps> = memo(({ active }) => {
+  if (!active) return null;
   return (
-    <StateInspector>
-      <ActionProvider>
-        <ThemeProvider>
-          <ActionSetMain />
-        </ThemeProvider>
-      </ActionProvider>
-    </StateInspector>
+    <ProviderWrapper>
+      <ActionSetMain />
+    </ProviderWrapper>
   );
 });
 

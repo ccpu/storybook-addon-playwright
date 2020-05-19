@@ -14,7 +14,7 @@ export const setConfig = <T extends unknown = Page>(setup: Config<T>) => {
 export const getConfigs = () => {
   if (!configs) {
     throw new Error(
-      'Please Setup Snapshot helper in storybook middleware or config.',
+      'Configuration has not been set, make sure to set configurations in storybook middleware or config.',
     );
   }
 

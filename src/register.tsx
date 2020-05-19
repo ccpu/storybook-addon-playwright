@@ -1,25 +1,41 @@
 import React from 'react';
 import addons, { types } from '@storybook/addons';
-import { ADDON_ID, PANEL_ID, TOOL_ID, PREVIEW_ID } from './constants';
+import {
+  ADDON_ID,
+  ACTIONS_PANEL_ID,
+  TOOL_ID,
+  PREVIEW_ID,
+  SCREENSHOT_PANEL_ID,
+} from './constants';
 import { Tool } from './components/tool-bar';
-import { ActionPanel } from './components/panel';
+import { ActionPanel, ScreenshotPanel } from './components/panel';
 import { AddonPanel } from '@storybook/components';
 import { Preview } from './components/preview';
 
-addons.register(ADDON_ID, (api) => {
+addons.register(ADDON_ID, () => {
   addons.add(TOOL_ID, {
     render: () => <Tool />,
     title: 'snapshot',
     type: types.TOOL,
   });
 
-  addons.add(PANEL_ID, {
+  addons.add(ACTIONS_PANEL_ID, {
     render: ({ active, key }) => (
       <AddonPanel active={active} key={key}>
-        <ActionPanel api={api} />
+        <ActionPanel active={active} />
       </AddonPanel>
     ),
-    title: 'Addon panel',
+    title: 'Screenshot Actions',
+    type: types.PANEL,
+  });
+
+  addons.add(SCREENSHOT_PANEL_ID, {
+    render: ({ active, key }) => (
+      <AddonPanel active={active} key={key}>
+        <ScreenshotPanel active={active} />
+      </AddonPanel>
+    ),
+    title: 'Screenshots',
     type: types.PANEL,
   });
 

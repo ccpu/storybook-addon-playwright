@@ -10,8 +10,12 @@ import {
 } from './controller';
 import { Router, Response, Request } from 'express';
 
-const asyncCatch = function (func) {
-  return async function (req: Request, res: Response, next) {
+export const asyncCatch = function (func) {
+  return async function (
+    req: Request,
+    res: Response,
+    next: (err: unknown) => void,
+  ) {
     try {
       return await func(req, res);
     } catch (err) {
@@ -20,7 +24,7 @@ const asyncCatch = function (func) {
   };
 };
 
-const expressMiddleWare = (router: Router) => {
+const expressMiddleWare = (router: Partial<Router>) => {
   router.use(bodyParser.urlencoded({ extended: false }));
   router.use(bodyParser.json());
 

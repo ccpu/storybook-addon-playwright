@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React, { SFC, useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
@@ -61,11 +61,19 @@ const ScreenshotList: SFC<Props> = (props) => {
     viewPanel,
   );
 
+  const [refresh, setRefresh] = useState(false);
+
   const classes = useStyles();
 
   const storyUrl = useStoryUrl();
 
-  if (!activeBrowsers) return null;
+  const handleRefresh = useCallback(() => {
+    setRefresh(true);
+  }, []);
+
+  const handleRefreshEnd = useCallback(() => {
+    setRefresh(false);
+  }, []);
 
   const flex = `0 1 calc(${
     100 / (column ? column : activeBrowsers.length)
@@ -85,9 +93,10 @@ const ScreenshotList: SFC<Props> = (props) => {
         activeBrowsers={activeBrowsers}
         toggleBrowser={toggleBrowser}
         onCLose={onClose}
+        onRefresh={handleRefresh}
       />
       <div className={classes.preview}>
-        {activeBrowsers.length > 1 ? (
+        {activeBrowsers && activeBrowsers.length > 0 && (
           <div
             ref={ref}
             className={clsx(classes.list, {
@@ -105,12 +114,15 @@ const ScreenshotList: SFC<Props> = (props) => {
             )}
             {activeBrowsers.map((browser) => (
               <div key={browser} className={classes.listItem} style={{ flex }}>
-                <ScreenshotView browserType={browser} height={itemHeight} />
+                <ScreenshotView
+                  browserType={browser}
+                  height={itemHeight}
+                  refresh={refresh}
+                  onRefreshEnd={handleRefreshEnd}
+                />
               </div>
             ))}
           </div>
-        ) : (
-          <ScreenshotView browserType={activeBrowsers[0]} height={itemHeight} />
         )}
       </div>
     </div>

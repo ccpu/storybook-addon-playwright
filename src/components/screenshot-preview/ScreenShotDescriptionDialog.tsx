@@ -17,12 +17,12 @@ export interface SaveScreenShotProps {
   browserType: BrowserTypes;
 }
 
-const SaveScreenShot: SFC<SaveScreenShotProps> = (props) => {
+const ScreenShotDescriptionDialog: SFC<SaveScreenShotProps> = (props) => {
   const { open, onClose, screenShot, browserType } = props;
   const [description, setDescription] = useState('');
 
-  const handleSave = useCallback(() => {
-    saveScreenshot({
+  const handleSave = useCallback(async () => {
+    await saveScreenshot({
       base64: screenShot,
       browserType,
       description: description,
@@ -66,6 +66,6 @@ const SaveScreenShot: SFC<SaveScreenShotProps> = (props) => {
   );
 };
 
-SaveScreenShot.displayName = 'SaveScreenShot';
+ScreenShotDescriptionDialog.displayName = 'ScreenShotDescriptionDialog';
 
-export { SaveScreenShot };
+export { ScreenShotDescriptionDialog };

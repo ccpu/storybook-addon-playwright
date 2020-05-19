@@ -1,11 +1,11 @@
-import React, { SFC, useState, useCallback } from 'react';
+import React, { SFC, useState, useCallback, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { useScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
 import { ErrorPanel } from '../common';
-import { SaveScreenShot } from './SaveScreenShot';
+import { ScreenShotDescriptionDialog } from './ScreenShotDescriptionDialog';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 
 const useStyles = makeStyles((theme) => {
@@ -67,10 +67,12 @@ export interface PreviewItemProps {
   browserType: BrowserTypes | 'storybook';
   url?: string;
   height: number;
+  refresh?: boolean;
+  onRefreshEnd?: () => void;
 }
 
 const ScreenshotView: SFC<PreviewItemProps> = (props) => {
-  const { browserType, url, height } = props;
+  const { browserType, url, height, refresh, onRefreshEnd } = props;
 
   const [openSaveScreenShot, setOpenSaveScreenShot] = useState(false);
 
@@ -78,15 +80,17 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const { loading, screenshot, getSnapshot } = useScreenshot(browserType);
 
+  useEffect(() => {
+    if (!refresh || loading) return;
+    getSnapshot();
+    onRefreshEnd();
+  }, [getSnapshot, loading, onRefreshEnd, refresh]);
+
   const containerHeight = height - 30;
 
-  const handleOpenSaveScreenShotDialog = useCallback(() => {
-    setOpenSaveScreenShot(true);
-  }, []);
-
-  const handleCloseSaveScreenShotDialog = useCallback(() => {
-    setOpenSaveScreenShot(false);
-  }, []);
+  const toggleScreenshotDescriptionDialog = useCallback(() => {
+    setOpenSaveScreenShot(!openSaveScreenShot);
+  }, [openSaveScreenShot]);
 
   const isValidToSave =
     screenshot && !screenshot.error && browserType !== 'storybook';
@@ -95,7 +99,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     <div className={clsx(classes.card)}>
       <ScreenShotViewToolbar
         browserType={browserType}
-        onSave={handleOpenSaveScreenShotDialog}
+        onSave={toggleScreenshotDescriptionDialog}
         loading={loading}
         onRefresh={getSnapshot}
         showSaveButton={isValidToSave}
@@ -126,9 +130,9 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         )}
       </div>
       {isValidToSave && (
-        <SaveScreenShot
+        <ScreenShotDescriptionDialog
           open={openSaveScreenShot}
-          onClose={handleCloseSaveScreenShotDialog}
+          onClose={toggleScreenshotDescriptionDialog}
           browserType={browserType as BrowserTypes}
           screenShot={screenshot.base64}
         />

@@ -2,7 +2,7 @@ import React, { SFC, useState, useCallback } from 'react';
 import { IconButton, Separator } from '@storybook/components';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '../common';
-import { PreviewDialog } from '../snapshot';
+import { PreviewDialog } from '../screenshot-preview';
 import WebOutlined from '@material-ui/icons/Launch';
 import ShowPanelIcon from '@material-ui/icons/Dashboard';
 import { useAddonState } from '../../hooks';

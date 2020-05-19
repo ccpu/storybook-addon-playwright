@@ -72,8 +72,8 @@ export const generateSchema = (path: string) => {
     .properties as ActionSchemaList;
 };
 
-export const getActionsSchema = (path: string) => {
-  if (!path) join(__dirname, '/typings/playwright-page.d.ts');
+export const getActionsSchema = (path?: string) => {
+  if (!path) path = join(__dirname, '/typings/playwright-page.d.ts');
 
   if (!_schema) _schema = generateSchema(path);
 

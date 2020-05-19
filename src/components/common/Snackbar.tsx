@@ -72,7 +72,10 @@ const Snackbar: SFC<SnackbarProps> = memo(
       document.body.appendChild(div.current);
 
       return () => {
-        document.body.removeChild(div.current);
+        if (div.current) {
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          document.body.removeChild(div.current);
+        }
       };
     }, []);
 

@@ -51,7 +51,7 @@ interface Props {
   viewPanel: ScreenShotViewPanel;
 }
 
-const ScreenshotList: SFC<Props> = (props) => {
+const ScreenshotListView: SFC<Props> = (props) => {
   const { showStorybook, browserTypes, column, onClose, viewPanel } = props;
 
   const [ref, rect] = useMeasure();
@@ -129,6 +129,6 @@ const ScreenshotList: SFC<Props> = (props) => {
   );
 };
 
-ScreenshotList.displayName = 'ScreenshotList';
+ScreenshotListView.displayName = 'ScreenshotListView';
 
-export { ScreenshotList };
+export { ScreenshotListView };

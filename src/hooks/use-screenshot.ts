@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useKnobs } from './use-knobs';
 import { useStorybookState } from '@storybook/api';
-import { getSnapShot } from '../api/client';
+import { getScreenshot } from '../api/client';
 import { BrowserTypes } from '../typings';
 import { GetScreenshotResponse } from '../api/typings';
 import sum from 'hash-sum';
@@ -23,7 +23,7 @@ export const useScreenshot = (browserType: BrowserTypes | 'storybook') => {
     if (browserType === 'storybook') return;
     setLoading(true);
 
-    getSnapShot({
+    getScreenshot({
       actions: currentActions,
       browserType,
       knobs,

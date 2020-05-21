@@ -22,17 +22,17 @@ addons.register(ADDON_ID, () => {
   addons.add(ACTIONS_PANEL_ID, {
     render: ({ active, key }) => (
       <AddonPanel active={active} key={key}>
-        <ActionPanel active={active} />
+        <ActionPanel />
       </AddonPanel>
     ),
-    title: 'Screenshot Actions',
+    title: 'Actions',
     type: types.PANEL,
   });
 
   addons.add(SCREENSHOT_PANEL_ID, {
     render: ({ active, key }) => (
       <AddonPanel active={active} key={key}>
-        <ScreenshotPanel active={active} />
+        <ScreenshotPanel />
       </AddonPanel>
     ),
     title: 'Screenshots',

@@ -6,3 +6,5 @@ export * from './is-valid-selector';
 export * from './url';
 export * from './get-action-args';
 export * from './valid-action';
+export * from './get-snapshot-hash';
+export * from './combine-reducer';

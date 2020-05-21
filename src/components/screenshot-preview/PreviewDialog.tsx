@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '../common/ThemeProvider';
-import { ScreenshotList } from './ScreenshotList';
+import { ScreenshotListView } from './ScreenshotListView';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -62,7 +62,7 @@ const PreviewDialog: SFC<PreviewDialogProps> = (props) => {
         }}
       >
         <div className={classes.container}>
-          <ScreenshotList
+          <ScreenshotListView
             browserTypes={['chromium', 'firefox', 'webkit']}
             showStorybook={true}
             column={2}

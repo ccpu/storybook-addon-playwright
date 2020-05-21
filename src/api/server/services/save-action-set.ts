@@ -8,10 +8,6 @@ export const saveActionSet = async (
   const fileInfo = getStoryFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo);
 
-  if (!storyData[data.storyId]) {
-    storyData[data.storyId] = {};
-  }
-
   if (!storyData[data.storyId].actionSets) {
     storyData[data.storyId].actionSets = [];
   }

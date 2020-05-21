@@ -22,7 +22,7 @@ const ActionSetMain: SFC = () => {
 
   const { storyId } = useStorybookState();
 
-  const { storyData } = useCurrentStoryData();
+  const storyData = useCurrentStoryData();
 
   const dispatch = useActionDispatchContext();
 

@@ -9,7 +9,7 @@ import { ActionSetList } from '../ActionSetList';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionSet } from '../../../typings';
-import { Snackbar, ListItem } from '../../common';
+import { Snackbar, SortableListItem } from '../../common';
 import { Button } from '@material-ui/core';
 import fetch from 'jest-fetch-mock';
 
@@ -57,9 +57,9 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(ListItem);
+    const list = wrapper.find(SortableListItem);
 
-    expect(list.type()).toBe(ListItem);
+    expect(list.type()).toBe(SortableListItem);
   });
 
   it('should delete action set ', async () => {
@@ -71,7 +71,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(ListItem);
+    const list = wrapper.find(SortableListItem);
     list.props().onDelete({ id: 'action-set-id' } as ActionSet);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -94,7 +94,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(ListItem);
+    const list = wrapper.find(SortableListItem);
     list.props().onDelete({ id: 'action-set-id' } as ActionSet);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -115,7 +115,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(ListItem);
+    const list = wrapper.find(SortableListItem);
     list.props().onEdit({ id: 'action-set-id' } as ActionSet);
 
     expect(onEditMock).toHaveBeenCalledTimes(1);
@@ -128,7 +128,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(ListItem);
+    const list = wrapper.find(SortableListItem);
 
     list.props().onCheckBoxClick({ id: 'action-set-id' } as ActionSet);
 

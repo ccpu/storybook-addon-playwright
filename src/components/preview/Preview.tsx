@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
 import { isHorizontalPanel } from './utils';
 import { useAddonState } from '../../hooks';
-import { ScreenshotList } from '../screenshot-preview';
+import { ScreenshotListView } from '../screenshot-preview';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
 import { Selector } from './Selector';
@@ -138,7 +138,7 @@ const Preview: SFC<PreviewProps> = (props) => {
           >
             <Separator />
             {addonState && addonState.previewPanelEnabled && (
-              <ScreenshotList
+              <ScreenshotListView
                 browserTypes={['chromium', 'firefox', 'webkit']}
                 column={isHorizontal ? undefined : 1}
                 onClose={handleClose}

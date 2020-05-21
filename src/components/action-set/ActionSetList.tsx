@@ -2,23 +2,18 @@ import React, { useCallback, useState } from 'react';
 import { useStoryActionSetsLoader } from '../../hooks';
 import { useCurrentStoryData, useCurrentStoryActionSets } from '../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
-import { Loader, Snackbar, ListItem } from '../common';
+import { Loader, Snackbar, ListItem, ListWrapper } from '../common';
 import { useActionDispatchContext } from '../../store';
 import { deleteActionSet } from '../../api/client';
 import { ActionSet } from '../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
 
 const useStyles = makeStyles(
-  (theme) => {
+  () => {
     return {
       message: {
         marginTop: 20,
         textAlign: 'center',
-      },
-      root: {
-        color: theme.palette.text.primary,
-        padding: 4,
-        width: '100%',
       },
     };
   },
@@ -32,24 +27,13 @@ export interface ActionSetListProps {
 const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
   const classes = useStyles();
 
-  const { storyData } = useCurrentStoryData();
+  const storyData = useCurrentStoryData();
 
   const [error, setError] = useState();
 
   const storyId = storyData ? storyData.id : undefined;
 
   const { storyActionSets, currentActionSets } = useCurrentStoryActionSets();
-
-  // useEffect(() => {
-  //   if (!storyId) return;
-  //   console.log(storyId);
-  //   // console.log('test');
-  // }, [storyId]);
-
-  // useMount(() => {
-  //   // dispatch({type})
-  //   console.log('test');
-  // });
 
   const {
     loading,
@@ -101,7 +85,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
   );
 
   return (
-    <div className={classes.root}>
+    <ListWrapper>
       {storyActionSets.length > 0 ? (
         storyActionSets.map((actionSet, i) => (
           <ListItem<ActionSet>
@@ -135,7 +119,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
           </>
         </Snackbar>
       )}
-    </div>
+    </ListWrapper>
   );
 });
 

@@ -1,6 +1,6 @@
 import { Page } from 'playwright-core';
 import { ActionSchemaList } from './action-schema';
-import { BrowserTypes } from './screenshot-info';
+import { BrowserTypes } from './screenshot';
 
 export interface Config<T extends unknown = Page> {
   storybookEndpoint?: string;

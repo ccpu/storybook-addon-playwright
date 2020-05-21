@@ -1,4 +1,4 @@
-import { getSnapShot } from '../get-screenshot';
+import { getScreenshot } from '../get-screenshot';
 import fetch from 'jest-fetch-mock';
 import { GetScreenshotRequest, GetScreenshotResponse } from '../../typings';
 
@@ -20,7 +20,7 @@ describe('getSnapShot', () => {
   it('should ', async () => {
     fetch.mockResponseOnce(JSON.stringify(respData));
 
-    const data = await getSnapShot(reqData);
+    const data = await getScreenshot(reqData);
 
     expect(data).toStrictEqual(respData);
   });

@@ -1,7 +1,7 @@
 import { GetScreenshotRequest, GetScreenshotResponse } from '../typings';
 import { getEndpoint, responseHandler } from './utils';
 
-export const getSnapShot = async (
+export const getScreenshot = async (
   options: GetScreenshotRequest,
 ): Promise<GetScreenshotResponse> => {
   const restEndpoint = getEndpoint('TAKE_SCREENSHOT');

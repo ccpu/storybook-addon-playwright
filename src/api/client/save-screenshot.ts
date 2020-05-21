@@ -1,8 +1,8 @@
-import { SaveScreenshot } from '../typings';
+import { SaveScreenshotRequest } from '../typings';
 import { getEndpoint, responseHandler } from './utils';
 
 export const saveScreenshot = async (
-  data: SaveScreenshot,
+  data: SaveScreenshotRequest,
 ): Promise<boolean> => {
   const restEndpoint = getEndpoint('SAVE_SCREENSHOT');
 

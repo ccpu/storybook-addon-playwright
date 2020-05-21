@@ -48,7 +48,7 @@ export interface ActionSetListItemProps<T> extends SortableElementProps {
   description: string;
 }
 
-function ListItem<T>({
+export function ListItem<T>({
   onEdit,
   onDelete,
   item,
@@ -99,6 +99,8 @@ function ListItem<T>({
 
 ListItem.displayName = 'ListItem';
 
-const item = (SortableElement(ListItem) as unknown) as typeof ListItem;
+const SortableListItem = (SortableElement(
+  ListItem,
+) as unknown) as typeof ListItem;
 
-export { item as ListItem };
+export { SortableListItem };

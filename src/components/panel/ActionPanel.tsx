@@ -1,16 +1,14 @@
 import React, { SFC, memo } from 'react';
 import { ActionSetMain } from '../action-set';
 import { ProviderWrapper } from './ProviderWrapper';
+import { useStorybookState } from '@storybook/api';
+import { ACTIONS_PANEL_ID } from '../../constants';
 
-interface ActionPanelProps {
-  active: boolean;
-}
-
-const ActionPanel: SFC<ActionPanelProps> = memo(({ active }) => {
-  if (!active) return null;
+const ActionPanel: SFC = memo(() => {
+  const state = useStorybookState();
   return (
     <ProviderWrapper>
-      <ActionSetMain />
+      {state.selectedPanel === ACTIONS_PANEL_ID && <ActionSetMain />}
     </ProviderWrapper>
   );
 });

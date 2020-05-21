@@ -1,6 +1,6 @@
 import { KnobStore } from '../../typings/knobs';
 import { StoryAction } from '../../typings/story-action';
-import { BrowserTypes } from '../../typings';
+import { BrowserTypes, ScreenshotData } from '../../typings';
 
 export interface GetScreenshotRequest {
   knobs?: KnobStore;
@@ -14,8 +14,14 @@ export type GetScreenshotResponse = {
   error: string;
 };
 
-export interface SaveScreenshot {
+export interface StoryScreenshotInfo {
+  storyId: string;
+  fileName: string;
+}
+
+export interface SaveScreenshotRequest
+  extends ScreenshotData,
+    StoryScreenshotInfo {
   base64: string;
-  description: string;
-  browserType: BrowserTypes;
+  hash: string;
 }

@@ -1,5 +1,5 @@
 import { useActiveBrowserMock } from '../../../../__manual_mocks__/hooks/use-active-browser';
-import { ScreenshotList } from '../ScreenshotList';
+import { ScreenshotListView } from '../ScreenshotListView';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ScreenshotView } from '../ScreenshotView';
@@ -14,7 +14,7 @@ describe('ScreenshotList', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <ScreenshotList
+      <ScreenshotListView
         browserTypes={['chromium', 'firefox', 'webkit']}
         onClose={onCloseMock}
         viewPanel="dialog"
@@ -31,7 +31,7 @@ describe('ScreenshotList', () => {
     }));
 
     const wrapper = shallow(
-      <ScreenshotList
+      <ScreenshotListView
         browserTypes={['chromium', 'firefox', 'webkit']}
         onClose={onCloseMock}
         viewPanel="dialog"
@@ -44,7 +44,7 @@ describe('ScreenshotList', () => {
 
   it('should have screenshot view list', () => {
     const wrapper = shallow(
-      <ScreenshotList
+      <ScreenshotListView
         browserTypes={['chromium', 'firefox', 'webkit']}
         onClose={onCloseMock}
         viewPanel="dialog"
@@ -56,7 +56,7 @@ describe('ScreenshotList', () => {
 
   it('should show storybook story in screen shot view', () => {
     const wrapper = shallow(
-      <ScreenshotList
+      <ScreenshotListView
         browserTypes={['chromium']}
         onClose={onCloseMock}
         viewPanel="dialog"
@@ -69,7 +69,7 @@ describe('ScreenshotList', () => {
 
   it('should handle refresh', () => {
     const wrapper = shallow(
-      <ScreenshotList
+      <ScreenshotListView
         browserTypes={['chromium']}
         onClose={onCloseMock}
         viewPanel="dialog"

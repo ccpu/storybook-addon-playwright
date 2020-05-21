@@ -10,10 +10,6 @@ const useStyles = makeStyles(
       menu: {
         minWidth: 100,
       },
-      root: {
-        marginTop: 10,
-        textAlign: 'center',
-      },
     };
   },
   { name: 'ActionMenu' },
@@ -48,27 +44,25 @@ const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
   );
 
   return (
-    <div className={classes.root}>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={onClose}
-        className={classes.menu}
-      >
-        {actionItems.map((action) => (
-          <ActionMenuItem
-            key={action.name}
-            name={action.name}
-            label={action.label}
-            onChange={handleChange}
-          >
-            Profile
-          </ActionMenuItem>
-        ))}
-      </Menu>
-    </div>
+    <Menu
+      id="simple-menu"
+      anchorEl={anchorEl}
+      keepMounted
+      open={Boolean(anchorEl)}
+      onClose={onClose}
+      className={classes.menu}
+    >
+      {actionItems.map((action) => (
+        <ActionMenuItem
+          key={action.name}
+          name={action.name}
+          label={action.label}
+          onChange={handleChange}
+        >
+          Profile
+        </ActionMenuItem>
+      ))}
+    </Menu>
   );
 });
 

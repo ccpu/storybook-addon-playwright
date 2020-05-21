@@ -8,7 +8,7 @@ import {
 import { useActionDispatchContext } from '../../store';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../typings';
-import { DragHandle } from '../common';
+import { DragHandle, ListWrapper } from '../common';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -78,11 +78,13 @@ const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
   }
 
   return (
-    <SortableList
-      useDragHandle
-      items={actionSet.actions}
-      onSortEnd={handleSortEnd}
-    />
+    <ListWrapper>
+      <SortableList
+        useDragHandle
+        items={actionSet.actions}
+        onSortEnd={handleSortEnd}
+      />
+    </ListWrapper>
   );
 };
 

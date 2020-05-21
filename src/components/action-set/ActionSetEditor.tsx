@@ -10,7 +10,6 @@ import { nanoid } from 'nanoid';
 import { validateActionList, ActionListValidationResult } from '../../utils';
 import { Snackbar, Loader } from '../common';
 import { makeStyles } from '@material-ui/core';
-import { ScrollArea } from '@storybook/components';
 import { useActionSchemaLoader } from '../../hooks';
 
 const useStyles = makeStyles(
@@ -23,9 +22,6 @@ const useStyles = makeStyles(
         textAlign: 'center',
       },
       root: {
-        height: '100%',
-      },
-      wrapper: {
         height: '100%',
       },
     };
@@ -102,11 +98,9 @@ const ActionSetEditor: SFC<Props> = ({ onClose, onSaved }) => {
         description={state.editorActionSet && state.editorActionSet.description}
         onDescriptionChange={handleDescriptionChange}
       />
-      <div className={classes.wrapper}>
-        <ScrollArea vertical>
-          <ActionList actionSet={state.editorActionSet} />
-        </ScrollArea>
-      </div>
+
+      <ActionList actionSet={state.editorActionSet} />
+
       {validationResult && (
         <Snackbar
           open={true}

@@ -4,9 +4,9 @@ import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { useScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
-import { ErrorPanel } from '../common';
-import { ScreenShotDescriptionDialog } from './ScreenShotDescriptionDialog';
+import { ErrorPanel, InputDialog } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
+import { useSaveScreenshot } from '../../hooks';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -80,6 +80,20 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const { loading, screenshot, getSnapshot } = useScreenshot(browserType);
 
+  const { saveScreenShot } = useSaveScreenshot();
+
+  const handleSave = useCallback(
+    async (description) => {
+      setOpenSaveScreenShot(false);
+      await saveScreenShot(
+        browserType as BrowserTypes,
+        description,
+        screenshot.base64,
+      );
+    },
+    [browserType, saveScreenShot, screenshot],
+  );
+
   useEffect(() => {
     if (!refresh || loading) return;
     getSnapshot();
@@ -130,11 +144,11 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         )}
       </div>
       {isValidToSave && (
-        <ScreenShotDescriptionDialog
+        <InputDialog
           open={openSaveScreenShot}
           onClose={toggleScreenshotDescriptionDialog}
-          browserType={browserType as BrowserTypes}
-          screenShot={screenshot.base64}
+          onSave={handleSave}
+          title="Description"
         />
       )}
     </div>

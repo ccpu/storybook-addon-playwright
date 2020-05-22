@@ -87,6 +87,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     clearResult,
     error,
     clearError,
+    saving,
   } = useSaveScreenshot();
 
   const handleSave = useCallback(
@@ -109,7 +110,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const containerHeight = height - 30;
 
-  const toggleScreenshotDescriptionDialog = useCallback(() => {
+  const toggleScreenshotTitleDialog = useCallback(() => {
     setOpenSaveScreenShot(!openSaveScreenShot);
   }, [openSaveScreenShot]);
 
@@ -120,8 +121,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     <div className={clsx(classes.card)}>
       <ScreenShotViewToolbar
         browserType={browserType}
-        onSave={toggleScreenshotDescriptionDialog}
-        loading={loading}
+        onSave={toggleScreenshotTitleDialog}
+        loading={loading || saving}
         onRefresh={getSnapshot}
         showSaveButton={isValidToSave}
       />
@@ -154,9 +155,9 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
       {isValidToSave && (
         <InputDialog
           open={openSaveScreenShot}
-          onClose={toggleScreenshotDescriptionDialog}
+          onClose={toggleScreenshotTitleDialog}
           onSave={handleSave}
-          title="Description"
+          title="Title"
         />
       )}
 
@@ -166,6 +167,28 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
           open={error !== undefined}
           onClose={clearError}
           type="error"
+        />
+      )}
+
+      {result && result.pass && (
+        <Snackbar
+          title="Identical Screenshot"
+          message={
+            'Screenshot with the same setting found, no change has been detected.'
+          }
+          open={true}
+          onClose={clearResult}
+          type="success"
+        />
+      )}
+
+      {result && result.added && (
+        <Snackbar
+          message={'Screenshot added successfully.'}
+          open={true}
+          onClose={clearResult}
+          type="success"
+          autoHideDuration={2000}
         />
       )}
 

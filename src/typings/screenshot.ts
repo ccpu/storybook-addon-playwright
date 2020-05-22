@@ -24,7 +24,7 @@ export interface ScreenshotData {
   knobs?: KnobStore;
   actions?: StoryAction[];
   browserType: BrowserTypes;
-  description: string;
+  title: string;
   hash: string;
   clip?: {
     width: number;

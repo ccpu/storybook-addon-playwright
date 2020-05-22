@@ -22,21 +22,31 @@ export const saveScreenshot = async (
 
   if (!storyData[data.storyId].screenshots) {
     storyData[data.storyId].screenshots = [];
-  } else {
-    storyData[data.storyId].screenshots = storyData[
-      data.storyId
-    ].screenshots.filter((x) => x.hash !== data.hash);
+  }
+
+  const oldScreenshotData = storyData[data.storyId].screenshots.find(
+    (x) => x.hash === data.hash,
+  );
+
+  const sameDesc = storyData[data.storyId].screenshots.find(
+    (x) => x.title === data.title,
+  );
+
+  if (sameDesc && !oldScreenshotData) {
+    throw new Error('Found screenshot with same title, title must be unique.');
+  } else if (oldScreenshotData && oldScreenshotData.title !== data.title) {
+    throw new Error('Found screenshot with same setting, but different title.');
   }
 
   storyData[data.storyId].screenshots.push({
     actions: data.actions && data.actions.length > 0 ? data.actions : undefined,
     browserType: data.browserType,
-    description: data.description,
     hash: data.hash,
     knobs: data.knobs,
+    title: data.title,
   });
 
-  const paths = getScreenshotPaths(data, 'chromium', data.description);
+  const paths = getScreenshotPaths(data, 'chromium', data.title);
 
   const result = diffImageToSnapshot({
     blur: 0,
@@ -53,7 +63,12 @@ export const saveScreenshot = async (
     fs.rmdirSync(paths.diffDir, { recursive: true });
   }
 
-  await saveStoryFile(fileInfo, storyData);
+  if (!oldScreenshotData) {
+    // storyData[data.storyId].screenshots = storyData[
+    //   data.storyId
+    // ].screenshots.filter((x) => x.hash !== data.hash);
+    await saveStoryFile(fileInfo, storyData);
+  }
 
   return result;
 };

@@ -31,7 +31,7 @@
     "setupTests.ts",
     "test-data/**/*",
     "__test_data__/**/*",
-    "__manual-mocks__/**/*"
+    "__manual_mocks__/**/*"
   ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

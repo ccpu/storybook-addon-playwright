@@ -96,7 +96,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
             onEdit={handleEdit}
             onCheckBoxClick={handleCheckBox}
             checked={currentActionSets.includes(actionSet.id)}
-            description={actionSet.description}
+            title={actionSet.description}
           />
         ))
       ) : (

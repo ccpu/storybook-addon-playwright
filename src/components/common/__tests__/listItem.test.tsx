@@ -27,7 +27,7 @@ describe('ListItem', () => {
         onEdit={onEditMock}
         index={0}
         item={item}
-        description="item-desc"
+        title="item-desc"
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -39,7 +39,7 @@ describe('ListItem', () => {
         onEdit={onEditMock}
         index={0}
         item={item}
-        description="item-desc"
+        title="item-desc"
       />,
     );
 
@@ -57,7 +57,7 @@ describe('ListItem', () => {
         onEdit={onEditMock}
         index={0}
         item={item}
-        description="item-desc"
+        title="item-desc"
         useDeleteConfirmation={true}
       />,
     );
@@ -86,7 +86,7 @@ describe('ListItem', () => {
         onEdit={onEditMock}
         index={0}
         item={item}
-        description="item-desc"
+        title="item-desc"
       />,
     );
 
@@ -111,7 +111,7 @@ describe('ListItem', () => {
         onEdit={onEditMock}
         index={0}
         item={item}
-        description="item-desc"
+        title="item-desc"
         onCheckBoxClick={checkMock}
       />,
     );
@@ -134,7 +134,7 @@ describe('ListItem', () => {
         onEdit={onEditMock}
         index={0}
         item={item}
-        description="item-desc"
+        title="item-desc"
         onCheckBoxClick={checkMock}
         checked={true}
       />,

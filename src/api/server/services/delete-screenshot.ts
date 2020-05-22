@@ -14,7 +14,7 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
   const paths = getScreenshotPaths(
     data,
     screenshotInfo.browserType,
-    screenshotInfo.description,
+    screenshotInfo.title,
   );
 
   if (fs.existsSync(paths.fileName)) {

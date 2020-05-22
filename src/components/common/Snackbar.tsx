@@ -62,6 +62,7 @@ const Snackbar: SFC<SnackbarProps> = memo(
     children,
     closeIcon,
     onClose,
+    // autoHideDuration = 120000,
     ...rest
   }) => {
     const div = useRef<HTMLDivElement>(document.createElement('div'));
@@ -88,8 +89,8 @@ const Snackbar: SFC<SnackbarProps> = memo(
         {ReactDOM.createPortal(
           <MUSnackbar
             onClose={handleClose}
-            autoHideDuration={6000}
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+            // autoHideDuration={autoHideDuration}
             {...rest}
           >
             <>

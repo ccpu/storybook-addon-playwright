@@ -36,7 +36,7 @@ const ScreenshotList: SFC = () => {
             index={i}
             key={screenshot.hash}
             item={screenshot}
-            description={screenshot.description}
+            title={screenshot.title}
             onEdit={handleEdit}
             onDelete={handleDelete}
             useDeleteConfirmation={true}

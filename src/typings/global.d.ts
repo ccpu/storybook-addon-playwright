@@ -7,4 +7,10 @@ declare global {
   }
 }
 
+declare namespace NodeJS {
+  interface Global {
+    UNSTABLE_SKIP_REPORTING: boolean;
+  }
+}
+
 export {};

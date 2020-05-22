@@ -7,7 +7,7 @@ const useStyles = makeStyles(
     return {
       root: {
         color: theme.palette.text.primary,
-        height: '100%',
+        minHeight: 200,
         padding: 4,
         width: '100%',
       },

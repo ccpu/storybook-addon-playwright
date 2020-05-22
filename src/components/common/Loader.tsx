@@ -1,10 +1,15 @@
 import React, { memo, SFC } from 'react';
 import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+import tinycolor from 'tinycolor2';
 
 const useStyles = makeStyles(
-  () => {
+  (theme) => {
+    const { background } = theme.palette;
+    const color = tinycolor(background.paper);
+    color.setAlpha(0.5);
     return {
       root: {
+        backgroundColor: color.toString(),
         zIndex: 10000,
       },
     };

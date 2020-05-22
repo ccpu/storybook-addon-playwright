@@ -46,7 +46,7 @@ export interface ActionSetListItemProps<T> extends SortableElementProps {
   onCheckBoxClick?: (item: T) => void;
   item: T;
   checked?: boolean;
-  description: string;
+  title: string;
   useDeleteConfirmation?: boolean;
   draggable?: boolean;
 }
@@ -57,7 +57,7 @@ export function ListItem<T>({
   item,
   onCheckBoxClick,
   checked,
-  description,
+  title,
   useDeleteConfirmation,
   draggable,
 }: ActionSetListItemProps<T>) {
@@ -100,7 +100,7 @@ export function ListItem<T>({
     <div className={classes.item}>
       <div className={classes.column}>
         {draggable && <DragHandle />}
-        {description}
+        {title}
       </div>
       <div className={classes.column}>
         <IconButton className="edit-button" onClick={handleEdit} size="small">

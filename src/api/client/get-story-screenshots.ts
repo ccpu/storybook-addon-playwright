@@ -1,7 +1,7 @@
-import { StoryScreenshotInfo } from '..//typings';
 import { getEndpoint, responseHandler } from './utils';
+import { StoryInfo } from '../../typings';
 
-export const getStoryScreenshots = async (data: StoryScreenshotInfo) => {
+export const getStoryScreenshots = async (data: StoryInfo) => {
   const restEndpoint = getEndpoint('GET_STORY_SCREENSHOTS');
 
   const result = await fetch(restEndpoint, {

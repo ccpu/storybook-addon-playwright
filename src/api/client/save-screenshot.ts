@@ -1,9 +1,9 @@
-import { SaveScreenshotRequest } from '../typings';
+import { SaveScreenshotRequest, ImageDiff } from '../typings';
 import { getEndpoint, responseHandler } from './utils';
 
 export const saveScreenshot = async (
   data: SaveScreenshotRequest,
-): Promise<boolean> => {
+): Promise<ImageDiff> => {
   const restEndpoint = getEndpoint('SAVE_SCREENSHOT');
 
   const resData = await fetch(restEndpoint, {

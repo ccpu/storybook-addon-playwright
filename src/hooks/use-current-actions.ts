@@ -38,5 +38,5 @@ export const useCurrentActions = (storyId: string) => {
     storyId,
   ]);
 
-  return { currentActions, setActions };
+  return { currentActions };
 };

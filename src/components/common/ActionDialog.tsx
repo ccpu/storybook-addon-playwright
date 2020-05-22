@@ -1,25 +1,10 @@
-import { Dialog, makeStyles, DialogProps } from '@material-ui/core';
 import React, { SFC, memo, useCallback } from 'react';
-
+import { Dialog, DialogProps } from './Dialog';
 import { ActionPanel, ActionPanelProps } from './ActionPanel';
 
 interface StyleProps {
   width?: number | string;
 }
-
-const useStyles = makeStyles(
-  () => {
-    return {
-      input: {
-        width: '100%',
-      },
-      paper: {
-        width: (p: StyleProps) => p.width,
-      },
-    };
-  },
-  { name: 'ActionDialog' },
-);
 
 export interface ActionDialogDialogProps
   extends StyleProps,
@@ -45,8 +30,6 @@ const ActionDialog: SFC<ActionDialogDialogProps> = memo(
     onCancel,
     ...rest
   }) => {
-    const classes = useStyles({ width: width });
-
     const handleClose = useCallback(() => {
       onClose();
       if (onCancel) {
@@ -55,14 +38,7 @@ const ActionDialog: SFC<ActionDialogDialogProps> = memo(
     }, [onCancel, onClose]);
 
     return (
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        classes={{
-          paper: classes.paper,
-        }}
-        {...rest}
-      >
+      <Dialog open={open} onClose={handleClose} width={width} {...rest}>
         <ActionPanel
           onPositiveAction={onPositiveAction}
           negativeActionName={negativeActionName}

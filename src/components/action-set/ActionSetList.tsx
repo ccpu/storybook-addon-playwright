@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useStoryActionSetsLoader } from '../../hooks';
 import { useCurrentStoryData, useCurrentStoryActionSets } from '../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
-import { Loader, Snackbar, ListItem, ListWrapper } from '../common';
+import { Loader, Snackbar, SortableListItem, ListWrapper } from '../common';
 import { useActionDispatchContext } from '../../store';
 import { deleteActionSet } from '../../api/client';
 import { ActionSet } from '../../typings';
@@ -88,7 +88,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
     <ListWrapper>
       {storyActionSets.length > 0 ? (
         storyActionSets.map((actionSet, i) => (
-          <ListItem<ActionSet>
+          <SortableListItem<ActionSet>
             index={i}
             key={actionSet.id}
             item={actionSet}

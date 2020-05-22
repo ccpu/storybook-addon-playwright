@@ -1,6 +1,7 @@
 import { Page } from 'playwright-core';
 import { KnobStore } from './knobs';
 import { StoryAction } from './story-action';
+import { StoryInfo } from './story-info';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
@@ -9,10 +10,14 @@ export interface PageInfo<T extends unknown = Page> {
   browserName: BrowserTypes;
 }
 
-export interface ScreenshotInfo {
+export interface ScreenshotImageData {
   buffer: Buffer;
   browserName: BrowserTypes;
   base64?: string;
+}
+
+export interface ScreenshotInfo extends StoryInfo {
+  hash: string;
 }
 
 export interface ScreenshotData {

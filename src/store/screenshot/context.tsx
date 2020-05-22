@@ -1,6 +1,7 @@
-import React, { SFC, createContext, useContext } from 'react';
+import React, { SFC, createContext, useContext, useEffect } from 'react';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
+import { useGlobalScreenshotDispatch } from '../../hooks';
 
 export const ScreenshotDispatchContext = React.createContext<
   React.Dispatch<Action>
@@ -24,8 +25,15 @@ const ScreenshotProvider: SFC = (props) => {
     reducer,
     initialState,
     () => initialState,
-    'ScreenshotProvider',
+    'Screenshot',
   );
+
+  const { action } = useGlobalScreenshotDispatch();
+
+  useEffect(() => {
+    if (!action) return;
+    dispatch(action);
+  }, [action]);
 
   return (
     <ScreenshotContextProvider value={state}>

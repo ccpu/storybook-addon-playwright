@@ -20,7 +20,7 @@ const ActionProvider: SFC = (props) => {
     reducer,
     initialState,
     () => initialState,
-    'ActionProvider',
+    'Actions',
   );
 
   return (

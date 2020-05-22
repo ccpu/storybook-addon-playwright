@@ -1,5 +1,6 @@
 export const ROUTE = {
   DELETE_ACTION_SET: '/actionSet/delete',
+  DELETE_SCREENSHOT: '/screenshot/delete',
   GET_ACTIONS_DATA: '/screenshot/actions-data',
   GET_ACTION_SET: '/actionSet/get',
   GET_STORY_SCREENSHOTS: '/screenshot/all',

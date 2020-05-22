@@ -1,16 +1,18 @@
-import { SaveScreenshotRequest } from '../../typings';
-import path from 'path';
+import { SaveScreenshotRequest, ImageDiff } from '../../typings';
 import { loadStoryData, getStoryFileInfo } from '../utils';
-import kebabCase from 'lodash/kebabCase';
 import { diffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot/index';
 import { saveStoryFile } from '../utils';
+import { getScreenshotPaths } from './utils';
+import * as fs from 'fs';
 
 interface SnapshotOptions extends MatchImageSnapshotOptions {
   receivedImageBuffer: Buffer;
 }
 
-export const saveScreenshot = async (data: SaveScreenshotRequest) => {
+export const saveScreenshot = async (
+  data: SaveScreenshotRequest,
+): Promise<ImageDiff> => {
   const fileInfo = getStoryFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo);
 
@@ -34,23 +36,22 @@ export const saveScreenshot = async (data: SaveScreenshotRequest) => {
     knobs: data.knobs,
   });
 
-  const snapshotsDir = path.join(fileInfo.dir, '__screenshots__');
-  const snapshotIdentifier = kebabCase(
-    `${path.basename(data.fileName)}-${data.description}-${data.browserType}`,
-  );
-
-  const diffDir = path.join(snapshotsDir, '__diff_output__');
+  const paths = getScreenshotPaths(data, 'chromium', data.description);
 
   const result = diffImageToSnapshot({
     blur: 0,
-    diffDir,
+    diffDir: paths.diffDir,
     failureThreshold: 0,
     failureThresholdType: 'pixel',
     receivedImageBuffer: Buffer.from(data.base64, 'base64'),
-    snapshotIdentifier,
-    snapshotsDir,
+    snapshotIdentifier: paths.snapshotIdentifier,
+    snapshotsDir: paths.snapshotsDir,
     updatePassedSnapshot: false,
   } as SnapshotOptions);
+
+  if (!result.pass) {
+    fs.rmdirSync(paths.diffDir, { recursive: true });
+  }
 
   await saveStoryFile(fileInfo, storyData);
 

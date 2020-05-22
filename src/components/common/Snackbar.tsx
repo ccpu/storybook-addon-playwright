@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import CloseSharp from '@material-ui/icons/CloseSharp';
 
 interface StyleProps {
-  type: Color;
+  type?: Color;
 }
 
 const getColor = (type: Color, alt?: boolean) => {
@@ -56,7 +56,7 @@ export interface SnackbarProps
 
 const Snackbar: SFC<SnackbarProps> = memo(
   ({
-    type = 'info',
+    type = 'error',
     title,
     message,
     children,

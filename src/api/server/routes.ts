@@ -8,6 +8,7 @@ import {
   getActionSet,
   deleteActionSet,
   getStoryScreenshots,
+  deleteScreenshot,
 } from './controller';
 import { Router, Response, Request } from 'express';
 
@@ -37,6 +38,7 @@ const expressMiddleWare = (router: Partial<Router>) => {
   router.post(ROUTE.DELETE_ACTION_SET, asyncCatch(deleteActionSet));
   router.post(ROUTE.DELETE_ACTION_SET, asyncCatch(deleteActionSet));
   router.post(ROUTE.GET_STORY_SCREENSHOTS, asyncCatch(getStoryScreenshots));
+  router.post(ROUTE.DELETE_SCREENSHOT, asyncCatch(deleteScreenshot));
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   router.use((error, _req, res, next) => {

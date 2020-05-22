@@ -2,13 +2,13 @@ import { GetScreenshotRequest } from '../../typings';
 import { constructUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction } from '../utils';
-import { ScreenshotInfo } from '../../../typings';
+import { ScreenshotImageData } from '../../../typings';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,
   host: string,
   convertToBase64?: boolean,
-): Promise<ScreenshotInfo> => {
+): Promise<ScreenshotImageData> => {
   const helper = getConfigs();
 
   const url = constructUrl(

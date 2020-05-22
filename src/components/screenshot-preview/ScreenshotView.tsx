@@ -4,9 +4,10 @@ import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { useScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
-import { ErrorPanel, InputDialog } from '../common';
+import { ErrorPanel, InputDialog, Snackbar } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useSaveScreenshot } from '../../hooks';
+import { ImageDiffDialog } from './ImageDiffDialog';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -80,7 +81,13 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const { loading, screenshot, getSnapshot } = useScreenshot(browserType);
 
-  const { saveScreenShot } = useSaveScreenshot();
+  const {
+    saveScreenShot,
+    result,
+    clearResult,
+    error,
+    clearError,
+  } = useSaveScreenshot();
 
   const handleSave = useCallback(
     async (description) => {
@@ -143,6 +150,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
           ></iframe>
         )}
       </div>
+
       {isValidToSave && (
         <InputDialog
           open={openSaveScreenShot}
@@ -151,6 +159,17 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
           title="Description"
         />
       )}
+
+      {error && (
+        <Snackbar
+          message={error}
+          open={error !== undefined}
+          onClose={clearError}
+          type="error"
+        />
+      )}
+
+      <ImageDiffDialog result={result} onClose={clearResult} />
     </div>
   );
 };

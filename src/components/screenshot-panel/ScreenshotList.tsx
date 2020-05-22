@@ -1,43 +1,56 @@
 import React, { SFC, useCallback } from 'react';
-import { useStoryScreenshotLoader } from '../../hooks';
+import { useStoryScreenshotLoader, useDeleteScreenshot } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
-import { Loader, Snackbar, ListWrapper, ListItem } from '../common';
+import { Loader, SnackbarWithRetry, ListWrapper, ListItem } from '../common';
 import { ScreenshotData } from '../../typings';
 
 const ScreenshotList: SFC = () => {
-  const { loading, error, clearError } = useStoryScreenshotLoader();
+  const { loading, error, clearError, doRetry } = useStoryScreenshotLoader();
 
   const state = useScreenshotContext();
+
+  const {
+    deleteScreenshot,
+    error: deleteError,
+    loading: deleteLoading,
+    clearError: deleteClearError,
+  } = useDeleteScreenshot();
 
   const handleEdit = useCallback((screenshot: ScreenshotData) => {
     console.log(screenshot);
   }, []);
 
-  const handleDelete = useCallback((screenshot: ScreenshotData) => {
-    console.log(screenshot);
-  }, []);
+  const handleDelete = useCallback(
+    (screenshot: ScreenshotData) => {
+      deleteScreenshot(screenshot.hash);
+    },
+    [deleteScreenshot],
+  );
 
   return (
     <ListWrapper>
       {state &&
-        state.screenshots.map((screenshot, index) => (
+        state.screenshots &&
+        state.screenshots.map((screenshot, i) => (
           <ListItem<ScreenshotData>
+            index={i}
             key={screenshot.hash}
-            index={index}
             item={screenshot}
             description={screenshot.description}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            useDeleteConfirmation={true}
           />
         ))}
 
-      <Loader open={loading} />
-      {error && (
-        <Snackbar
+      <Loader open={loading || deleteLoading} />
+      {(error || deleteError) && (
+        <SnackbarWithRetry
           type="error"
           open={true}
-          onClose={clearError}
-          message={error}
+          onClose={deleteError ? deleteClearError : clearError}
+          message={error || deleteError}
+          onRetry={deleteError ? undefined : doRetry}
         />
       )}
     </ListWrapper>

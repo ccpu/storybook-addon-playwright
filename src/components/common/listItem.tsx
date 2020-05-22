@@ -7,6 +7,7 @@ import CheckBox from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxChecked from '@material-ui/icons/CheckBox';
 import { DragHandle } from './DragHandle';
 import { SortableElement, SortableElementProps } from 'react-sortable-hoc';
+import { ConfirmationPopover } from './ConfirmationPopover';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -46,6 +47,8 @@ export interface ActionSetListItemProps<T> extends SortableElementProps {
   item: T;
   checked?: boolean;
   description: string;
+  useDeleteConfirmation?: boolean;
+  draggable?: boolean;
 }
 
 export function ListItem<T>({
@@ -55,33 +58,60 @@ export function ListItem<T>({
   onCheckBoxClick,
   checked,
   description,
+  useDeleteConfirmation,
+  draggable,
 }: ActionSetListItemProps<T>) {
   const classes = useStyles();
 
-  const handleDelete = useCallback(async () => {
-    onDelete(item);
-  }, [item, onDelete]);
+  const [
+    confirmAnchorEl,
+    setConfirmAnchorEl,
+  ] = React.useState<HTMLButtonElement | null>(null);
+
+  const handleDelete = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (useDeleteConfirmation) {
+        setConfirmAnchorEl(e.currentTarget);
+      } else {
+        onDelete(item);
+      }
+    },
+    [item, onDelete, useDeleteConfirmation],
+  );
 
   const handleEdit = useCallback(() => {
     onEdit(item);
   }, [item, onEdit]);
 
+  const closeDeleteConfirmation = useCallback(() => {
+    setConfirmAnchorEl(undefined);
+  }, []);
+
   const handleCheckStateChanged = useCallback(() => {
     onCheckBoxClick(item);
   }, [item, onCheckBoxClick]);
 
+  const handleDeleteConfirmation = useCallback(() => {
+    closeDeleteConfirmation();
+    onDelete(item);
+  }, [closeDeleteConfirmation, item, onDelete]);
+
   return (
     <div className={classes.item}>
       <div className={classes.column}>
-        <DragHandle />
+        {draggable && <DragHandle />}
         {description}
       </div>
       <div className={classes.column}>
-        <IconButton onClick={handleEdit} size="small">
+        <IconButton className="edit-button" onClick={handleEdit} size="small">
           <EditIcon className={classes.icon} />
         </IconButton>
         {onCheckBoxClick && (
-          <IconButton onClick={handleCheckStateChanged} size="small">
+          <IconButton
+            className="check-box"
+            onClick={handleCheckStateChanged}
+            size="small"
+          >
             {checked ? (
               <CheckBoxChecked className={classes.icon} />
             ) : (
@@ -89,18 +119,25 @@ export function ListItem<T>({
             )}
           </IconButton>
         )}
-        <IconButton onClick={handleDelete} size="small">
+        <IconButton className="del-button" onClick={handleDelete} size="small">
           <DeleteIcon className={classes.icon} />
         </IconButton>
       </div>
+      {useDeleteConfirmation && confirmAnchorEl && (
+        <ConfirmationPopover
+          onClose={closeDeleteConfirmation}
+          onConfirm={handleDeleteConfirmation}
+          anchorEl={confirmAnchorEl}
+        />
+      )}
     </div>
   );
 }
 
 ListItem.displayName = 'ListItem';
 
-const SortableListItem = (SortableElement(
-  ListItem,
-) as unknown) as typeof ListItem;
+const SortableListItem = (SortableElement((props) => (
+  <ListItem {...props} draggable={true} />
+)) as unknown) as typeof ListItem;
 
 export { SortableListItem };

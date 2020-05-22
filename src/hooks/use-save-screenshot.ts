@@ -5,13 +5,18 @@ import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
 import { BrowserTypes } from '../typings';
 import { getSnapshotHash } from '../utils';
+import { ImageDiff, SaveScreenshotRequest } from '../api/typings';
+import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 
 export const useSaveScreenshot = () => {
   const knobs = useKnobs();
   const storyData = useCurrentStoryData();
 
+  const { dispatch } = useGlobalScreenshotDispatch();
+
   const { currentActions } = useCurrentActions(storyData && storyData.id);
   const [error, setError] = useState();
+  const [result, setResult] = useState<ImageDiff>();
 
   const saveScreenShot = useCallback(
     async (
@@ -20,7 +25,7 @@ export const useSaveScreenshot = () => {
       base64String?: string,
     ) => {
       try {
-        await saveScreenshotClient({
+        const data: SaveScreenshotRequest = {
           actions: currentActions,
           base64: base64String,
           browserType,
@@ -34,17 +39,29 @@ export const useSaveScreenshot = () => {
           ),
           knobs,
           storyId: storyData.id,
-        });
+        };
+        const result = await saveScreenshotClient(data);
+        if (result.added) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { base64, ...rest } = data;
+          dispatch({ screenshot: rest, type: 'addScreenshot' });
+        }
+        console.log(result);
+        setResult(result);
       } catch (error) {
         setError(error.message);
       }
     },
-    [currentActions, knobs, storyData],
+    [currentActions, knobs, storyData, dispatch],
   );
 
   const clearError = useCallback(() => {
     setError(undefined);
   }, []);
 
-  return { clearError, error, saveScreenShot };
+  const clearResult = useCallback(() => {
+    setResult(undefined);
+  }, []);
+
+  return { clearError, clearResult, error, result, saveScreenShot };
 };

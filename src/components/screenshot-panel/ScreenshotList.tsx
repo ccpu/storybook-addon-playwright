@@ -1,8 +1,9 @@
 import React, { SFC, useCallback } from 'react';
 import { useStoryScreenshotLoader, useDeleteScreenshot } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
-import { Loader, SnackbarWithRetry, ListWrapper, ListItem } from '../common';
+import { Loader, SnackbarWithRetry, ListWrapper } from '../common';
 import { ScreenshotData } from '../../typings';
+import { ScreenshotListItem } from './ScreenshotListItem';
 
 const ScreenshotList: SFC = () => {
   const { loading, error, clearError, doRetry } = useStoryScreenshotLoader();
@@ -31,15 +32,13 @@ const ScreenshotList: SFC = () => {
     <ListWrapper>
       {state &&
         state.screenshots &&
-        state.screenshots.map((screenshot, i) => (
-          <ListItem<ScreenshotData>
-            index={i}
+        state.screenshots.map((screenshot) => (
+          <ScreenshotListItem
             key={screenshot.hash}
             item={screenshot}
             title={screenshot.title}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            useDeleteConfirmation={true}
           />
         ))}
 

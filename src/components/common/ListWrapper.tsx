@@ -6,6 +6,7 @@ const useStyles = makeStyles(
   (theme) => {
     return {
       root: {
+        '& *:focus': { outline: 'none' },
         color: theme.palette.text.primary,
         minHeight: 200,
         padding: 4,

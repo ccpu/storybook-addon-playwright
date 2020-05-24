@@ -4,6 +4,6 @@ import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 
 export const DragHandle = SortableHandle(() => (
   <DragIndicatorSharp
-    style={{ cursor: 'move', marginLeft: -10, marginRight: 5 }}
+    style={{ cursor: 'move', fontSize: 25, marginLeft: -12, marginRight: 2 }}
   />
 ));

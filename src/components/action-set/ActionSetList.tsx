@@ -2,11 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { useStoryActionSetsLoader } from '../../hooks';
 import { useCurrentStoryData, useCurrentStoryActionSets } from '../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
-import { Loader, Snackbar, SortableListItem, ListWrapper } from '../common';
+import { Loader, Snackbar, ListWrapper } from '../common';
 import { useActionDispatchContext } from '../../store';
 import { deleteActionSet } from '../../api/client';
 import { ActionSet } from '../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
+import { SortableActionSetListItem } from './ActionSetListItem';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(
   () => {
@@ -88,7 +90,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
     <ListWrapper>
       {storyActionSets.length > 0 ? (
         storyActionSets.map((actionSet, i) => (
-          <SortableListItem<ActionSet>
+          <SortableActionSetListItem
             index={i}
             key={actionSet.id}
             item={actionSet}
@@ -100,9 +102,9 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
           />
         ))
       ) : (
-        <div className={classes.message}>
+        <div className={clsx(classes.message, 'no-data')}>
           <div>No action set to display!</div>
-          <div>Creat action set by click on the {"'+'"} button.</div>
+          <div>Creat action set by clicking on the {"'+'"} button.</div>
         </div>
       )}
 

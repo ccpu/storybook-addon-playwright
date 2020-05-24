@@ -9,9 +9,10 @@ import { ActionSetList } from '../ActionSetList';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionSet } from '../../../typings';
-import { Snackbar, SortableListItem } from '../../common';
+import { Snackbar } from '../../common';
 import { Button } from '@material-ui/core';
 import fetch from 'jest-fetch-mock';
+import { SortableActionSetListItem } from '../ActionSetListItem';
 
 describe('ActionSetList', () => {
   const onEditMock = jest.fn();
@@ -45,8 +46,8 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    expect(wrapper.text()).toBe(
-      `No action set to display!Creat action set by click on the '+' button.`,
+    expect(wrapper.find('.no-data').text()).toBe(
+      `No action set to display!Creat action set by clicking on the '+' button.`,
     );
   });
 
@@ -57,9 +58,9 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(SortableListItem);
+    const list = wrapper.find(SortableActionSetListItem);
 
-    expect(list.type()).toBe(SortableListItem);
+    expect(list.type()).toBe(SortableActionSetListItem);
   });
 
   it('should delete action set ', async () => {
@@ -71,7 +72,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(SortableListItem);
+    const list = wrapper.find(SortableActionSetListItem);
     list.props().onDelete({ id: 'action-set-id' } as ActionSet);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -94,7 +95,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(SortableListItem);
+    const list = wrapper.find(SortableActionSetListItem);
     list.props().onDelete({ id: 'action-set-id' } as ActionSet);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -115,7 +116,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(SortableListItem);
+    const list = wrapper.find(SortableActionSetListItem);
     list.props().onEdit({ id: 'action-set-id' } as ActionSet);
 
     expect(onEditMock).toHaveBeenCalledTimes(1);
@@ -128,7 +129,7 @@ describe('ActionSetList', () => {
       .first()
       .shallow();
 
-    const list = wrapper.find(SortableListItem);
+    const list = wrapper.find(SortableActionSetListItem);
 
     list.props().onCheckBoxClick({ id: 'action-set-id' } as ActionSet);
 

@@ -16,23 +16,20 @@ export const useDeleteScreenshot = () => {
   }, []);
 
   const deleteScreenshot = useCallback(
-    (hash: string) => {
+    async (hash: string) => {
       clearError();
       setLoading(true);
-      deleteScreenshotService({
-        fileName: storyData.parameters.fileName,
-        hash: hash,
-        storyId: storyData.id,
-      })
-        .then(() => {
-          dispatch({ screenshotHash: hash, type: 'deleteScreenshot' });
-        })
-        .catch((e) => {
-          setError(e.message);
-        })
-        .finally(() => {
-          setLoading(false);
+      try {
+        await deleteScreenshotService({
+          fileName: storyData.parameters.fileName,
+          hash: hash,
+          storyId: storyData.id,
         });
+        dispatch({ screenshotHash: hash, type: 'deleteScreenshot' });
+      } catch (e) {
+        setError(e.message);
+      }
+      setLoading(false);
     },
     [dispatch, storyData, clearError],
   );

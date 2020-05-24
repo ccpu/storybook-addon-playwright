@@ -4,6 +4,6 @@ describe('useCurrentStoryData', () => {
   it('should return story data ', () => {
     const { result } = renderHook(() => useCurrentStoryData());
 
-    expect(result.current.storyData.id).toBe('story-id');
+    expect(result.current.id).toBe('story-id');
   });
 });

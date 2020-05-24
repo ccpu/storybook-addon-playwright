@@ -17,7 +17,7 @@ export const useStoryScreenshotLoader = () => {
   const storyData = useCurrentStoryData();
 
   useEffect(() => {
-    if (loading || !storyData) return;
+    if (loading || !storyData || (error && !retry)) return;
     if (
       !retry &&
       loadedStoryId.current &&
@@ -43,7 +43,7 @@ export const useStoryScreenshotLoader = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [dispatch, loading, retry, retryEnd, storyData]);
+  }, [dispatch, error, loading, retry, retryEnd, storyData]);
 
   const clearError = useCallback(() => {
     setError(undefined);

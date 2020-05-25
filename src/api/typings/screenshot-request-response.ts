@@ -1,4 +1,4 @@
-import { KnobStore } from '../../typings/knobs';
+import { KnobStoreKnob } from '../../typings/knobs';
 import { StoryAction } from '../../typings/story-action';
 import {
   BrowserTypes,
@@ -8,7 +8,7 @@ import {
 } from '../../typings';
 
 export interface GetScreenshotRequest {
-  knobs?: KnobStore;
+  knobs?: KnobStoreKnob[];
   actions?: StoryAction[];
   storyId: string;
   browserType: BrowserTypes;

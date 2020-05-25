@@ -11,4 +11,5 @@ export interface ImageDiff {
   };
   diffRatio?: number;
   diffPixelCount?: number;
+  oldScreenShotTitle?: string;
 }

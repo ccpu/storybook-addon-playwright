@@ -51,7 +51,7 @@ export const saveScreenshot = async (
     device:
       data.device && Object.keys(data.device).length ? data.device : undefined,
     hash: data.hash,
-    knobs: data.knobs,
+    knobs: data.knobs && data.knobs.length > 0 ? data.knobs : undefined,
     title: data.title,
   });
 
@@ -77,6 +77,8 @@ export const saveScreenshot = async (
     //   data.storyId
     // ].screenshots.filter((x) => x.hash !== data.hash);
     await saveStoryFile(fileInfo, storyData);
+  } else {
+    result.oldScreenShotTitle = oldScreenshotData.title;
   }
 
   return result;

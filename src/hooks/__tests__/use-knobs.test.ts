@@ -3,20 +3,24 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { SET } from '@storybook/addon-knobs/dist/shared';
 import addons from '@storybook/addons';
 import { STORY_CHANGED } from '@storybook/core-events';
+import { KnobStoreKnob } from '../../typings';
 
 describe('useKnobs', () => {
-  const knobs = {
-    knobs: {
-      text: {
-        defaultValue: 'test message',
-        groupId: undefined,
-        label: 'text',
-        name: 'text',
-        type: 'text',
-        used: true,
-        value: 'test message',
+  const getKnobs = (knob?: Partial<KnobStoreKnob>) => {
+    return {
+      knobs: {
+        text: {
+          defaultValue: 'knob-value',
+          groupId: undefined,
+          label: 'text',
+          name: 'text',
+          type: 'text',
+          used: true,
+          value: 'knob-value 1',
+          ...knob,
+        },
       },
-    },
+    };
   };
 
   it('should not have knobs', () => {
@@ -29,24 +33,35 @@ describe('useKnobs', () => {
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (addons as any).__setEvent(SET, knobs);
+      (addons as any).__setEvent(SET, getKnobs());
     });
 
-    expect(result.current).toStrictEqual({
-      text: {
-        defaultValue: 'test message',
+    expect(result.current).toStrictEqual([
+      {
+        defaultValue: 'knob-value',
         groupId: undefined,
         label: 'text',
         name: 'text',
         type: 'text',
         used: true,
-        value: 'test message',
+        value: 'knob-value 1',
       },
-    });
+    ]);
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (addons as any).__setEvent(STORY_CHANGED);
+    });
+
+    expect(result.current).toStrictEqual(undefined);
+  });
+
+  it('should note set knobs if value and defaultValue same', () => {
+    const { result } = renderHook(() => useKnobs());
+
+    act(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (addons as any).__setEvent(SET, getKnobs({ value: 'knob-value' }));
     });
 
     expect(result.current).toStrictEqual(undefined);

@@ -42,7 +42,7 @@ export const useSaveScreenshot = () => {
           device: deviceDescriptor,
           fileName: storyData.parameters.fileName,
           hash,
-          knobs,
+          knobs: knobs,
           storyId: storyData.id,
           title,
         };

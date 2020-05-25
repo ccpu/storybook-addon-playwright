@@ -30,6 +30,7 @@ describe('ScreenshotSaveDialog', () => {
     mockedCounterHook.useSaveScreenshot.mockImplementationOnce(() => {
       return {
         result: {
+          oldScreenShotTitle: 'foo',
           pass: true,
         },
       } as never;
@@ -43,8 +44,8 @@ describe('ScreenshotSaveDialog', () => {
         onClose={jest.fn()}
       />,
     );
-    expect(wrapper.find(Snackbar).props().message).toBe(
-      'Screenshot with the same setting found, no change has been detected.',
+    expect(wrapper.find(Snackbar).text()).toBe(
+      'Title: fooScreenshot with the same setting found, no change has been detected.',
     );
   });
 

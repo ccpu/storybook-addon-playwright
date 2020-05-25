@@ -59,13 +59,16 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
       {result && result.pass && (
         <Snackbar
           title="Identical Screenshot"
-          message={
-            'Screenshot with the same setting found, no change has been detected.'
-          }
           open={true}
           onClose={clearResult}
           type="success"
-        />
+        >
+          <div>
+            Title: {result.oldScreenShotTitle}
+            <br />
+            Screenshot with the same setting found, no change has been detected.
+          </div>
+        </Snackbar>
       )}
 
       {result && result.added && (

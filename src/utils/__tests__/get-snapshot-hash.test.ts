@@ -6,15 +6,15 @@ describe('getSnapshotHash', () => {
     const hash = getSnapshotHash(
       'story-id',
       [{ id: 'action-id', name: 'action-name' }],
-      {
-        'knob-test': {
+      [
+        {
           name: 'knob-name',
           value: 'knob-value',
         } as KnobStoreKnob,
-      },
+      ],
       'chromium',
       { name: 'device-name' },
     );
-    expect(hash).toBe('46632ec4');
+    expect(hash).toBe('3b22c118');
   });
 });

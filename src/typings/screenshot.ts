@@ -1,5 +1,5 @@
 import { Page } from 'playwright-core';
-import { KnobStore } from './knobs';
+import { KnobStoreKnob } from './knobs';
 import { StoryAction } from './story-action';
 import { StoryInfo } from './story-info';
 
@@ -33,7 +33,7 @@ export interface ScreenshotInfo extends StoryInfo {
 }
 
 export interface ScreenshotData {
-  knobs?: KnobStore;
+  knobs?: KnobStoreKnob[];
   actions?: StoryAction[];
   browserType: BrowserTypes;
   title: string;

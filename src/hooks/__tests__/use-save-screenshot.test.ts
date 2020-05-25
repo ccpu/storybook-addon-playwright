@@ -34,7 +34,7 @@ describe('useSaveScreenshot', () => {
         browserType: 'chromium',
         device: undefined,
         fileName: './src/stories/story.stories.tsx',
-        hash: '605a78e5',
+        hash: 'f455fee8',
         knobs: undefined,
         storyId: 'story-id',
         title: 'title',

@@ -1,17 +1,16 @@
-import { KnobStore } from '../typings';
+import { KnobStoreKnob } from '../typings';
 import normalize from 'normalize-url';
 
 export const constructUrl = (
   endpoint: string,
   id: string,
-  knobs?: KnobStore,
+  knobs?: KnobStoreKnob[],
 ) => {
   let storyUrl = `${endpoint}/iframe.html?id=${id}`;
 
   if (knobs) {
-    const knobQuery = Object.keys(knobs).map((k) => {
-      const knob = knobs[k];
-      return `knob-${k}=${knob.value}`;
+    const knobQuery = knobs.map((knob) => {
+      return `knob-${knob.name}=${knob.value}`;
     });
     storyUrl = `${storyUrl}&${knobQuery.join('&')}`;
   }

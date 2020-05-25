@@ -41,7 +41,7 @@ describe('saveScreenshot', () => {
     };
   };
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
@@ -116,6 +116,32 @@ describe('saveScreenshot', () => {
     await saveScreenshot(getData());
 
     expect(spyOnRmdirSyncMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should pass and return old screenshot title', async () => {
+    loadStoryDataMock.mockImplementationOnce(() => {
+      return new Promise((resolve) => {
+        resolve({
+          ['story-id']: {
+            screenshots: [getData()],
+          },
+        });
+      });
+    });
+
+    diffImageToSnapshotMock.mockImplementationOnce(() => {
+      return {
+        pass: true,
+      };
+    });
+
+    const result = await saveScreenshot(getData());
+
+    expect(spyOnRmdirSyncMock).toHaveBeenCalledTimes(0);
+    expect(result).toStrictEqual({
+      oldScreenShotTitle: 'screenshot-title',
+      pass: true,
+    });
   });
 
   it('should set empty array to undefined (actions)', async () => {

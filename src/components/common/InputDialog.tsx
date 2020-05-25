@@ -1,5 +1,5 @@
 import { TextField, makeStyles, Snackbar } from '@material-ui/core';
-import React, { SFC, memo, useCallback, useState } from 'react';
+import React, { SFC, useCallback, useState } from 'react';
 import { ActionDialog, ActionDialogDialogProps } from './ActionDialog';
 import Alert from '@material-ui/lab/Alert';
 
@@ -33,77 +33,75 @@ export interface InputDialogProps
   requiredMessage?: string;
 }
 
-const InputDialog: SFC<InputDialogProps> = memo(
-  ({
-    value = '',
-    onSave,
-    requiredMessage = 'Field is required',
-    required,
-    onCancel,
-    onClose,
-    width = '30%',
-    ...rest
-  }) => {
-    const [inputValue, setValue] = useState(value || '');
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+const InputDialog: SFC<InputDialogProps> = ({
+  value = '',
+  onSave,
+  requiredMessage = 'Field is required',
+  required,
+  onCancel,
+  onClose,
+  width = '30%',
+  ...rest
+}) => {
+  const [inputValue, setValue] = useState(value || '');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const classes = useStyles({ width: width });
+  const classes = useStyles({ width: width });
 
-    const handleChange = useCallback(
-      (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(e.target.value);
-      },
-      [],
-    );
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setValue(e.target.value);
+    },
+    [],
+  );
 
-    const handleClose = useCallback(() => {
-      onClose();
-      if (onCancel) {
-        onCancel();
-      }
-      setValue('');
-    }, [onCancel, onClose]);
+  const handleClose = useCallback(() => {
+    onClose();
+    if (onCancel) {
+      onCancel();
+    }
+    setValue('');
+  }, [onCancel, onClose]);
 
-    const handleSave = useCallback(() => {
-      if (required && !inputValue) {
-        setOpenSnackbar(true);
-        return;
-      }
-      onSave(inputValue);
-      setValue('');
-    }, [inputValue, onSave, required]);
+  const handleSave = useCallback(() => {
+    if (required && !inputValue) {
+      setOpenSnackbar(true);
+      return;
+    }
+    onSave(inputValue);
+    setValue('');
+  }, [inputValue, onSave, required]);
 
-    const handleSnackbarClose = useCallback(() => {
-      setOpenSnackbar(false);
-    }, []);
+  const handleSnackbarClose = useCallback(() => {
+    setOpenSnackbar(false);
+  }, []);
 
-    return (
-      <ActionDialog
-        onPositiveAction={handleSave}
-        onNegativeAction={handleClose}
-        onClose={handleClose}
-        {...rest}
+  return (
+    <ActionDialog
+      onPositiveAction={handleSave}
+      onNegativeAction={handleClose}
+      onClose={handleClose}
+      {...rest}
+    >
+      <TextField
+        className={classes.input}
+        multiline
+        rows={5}
+        value={inputValue}
+        onChange={handleChange}
+        variant="outlined"
+      ></TextField>
+      <Snackbar
+        autoHideDuration={6000}
+        open={openSnackbar}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
       >
-        <TextField
-          className={classes.input}
-          multiline
-          rows={5}
-          value={inputValue}
-          onChange={handleChange}
-          variant="outlined"
-        ></TextField>
-        <Snackbar
-          autoHideDuration={6000}
-          open={openSnackbar}
-          onClose={handleSnackbarClose}
-          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        >
-          <Alert severity="error">{requiredMessage}</Alert>
-        </Snackbar>
-      </ActionDialog>
-    );
-  },
-);
+        <Alert severity="error">{requiredMessage}</Alert>
+      </Snackbar>
+    </ActionDialog>
+  );
+};
 
 InputDialog.displayName = 'InputDialog';
 

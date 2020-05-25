@@ -3,6 +3,7 @@ import { constructUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction } from '../utils';
 import { ScreenshotImageData } from '../../../typings';
+import { DeviceDescriptors } from 'playwright-core/lib/deviceDescriptors';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,
@@ -17,7 +18,10 @@ export const makeScreenshot = async (
     data.knobs,
   );
 
-  const page = await helper.getPage(data.browserType);
+  const page = await helper.getPage(
+    data.browserType,
+    data.device ? DeviceDescriptors[data.device.name] : undefined,
+  );
 
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');

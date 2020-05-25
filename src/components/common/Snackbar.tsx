@@ -12,7 +12,7 @@ interface StyleProps {
   type?: Color;
 }
 
-const getColor = (type: Color, alt?: boolean) => {
+export const getColor = (type: Color, alt?: boolean) => {
   switch (type) {
     case 'error':
       return alt ? '#DD3C31' : '#FAB3AE';
@@ -36,10 +36,10 @@ const useStyles = makeStyles(
         },
         color: (p: StyleProps) => getColor(p.type),
         cursor: 'pointer',
-        fontSize: 18,
+        fontSize: 16,
         position: 'absolute',
-        right: 6,
-        top: 6,
+        right: 4,
+        top: 4,
       },
     };
   },
@@ -60,9 +60,8 @@ const Snackbar: SFC<SnackbarProps> = memo(
     title,
     message,
     children,
-    closeIcon,
+    closeIcon = true,
     onClose,
-    // autoHideDuration = 120000,
     ...rest
   }) => {
     const div = useRef<HTMLDivElement>(document.createElement('div'));
@@ -70,6 +69,7 @@ const Snackbar: SFC<SnackbarProps> = memo(
     const classes = useStyles({ type });
 
     useEffect(() => {
+      div.current.className = 'snackbar-portal';
       document.body.appendChild(div.current);
 
       return () => {
@@ -90,7 +90,6 @@ const Snackbar: SFC<SnackbarProps> = memo(
           <MUSnackbar
             onClose={handleClose}
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-            // autoHideDuration={autoHideDuration}
             {...rest}
           >
             <>

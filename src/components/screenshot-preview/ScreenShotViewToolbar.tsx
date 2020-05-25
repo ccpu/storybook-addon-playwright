@@ -3,26 +3,26 @@ import { makeStyles } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 import { BrowserTypes } from '../../typings';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import { DeviceList } from '../common';
 import RefreshIcon from '@material-ui/icons/RefreshOutlined';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
 
   return {
-    icons: {
-      '&:hover': {
-        color: theme.palette.primary.main,
-      },
-      cursor: 'pointer',
-      marginLeft: 5,
-      padding: 3,
-    },
-
     label: {
       textTransform: 'uppercase',
     },
 
-    toolbar: {
+    root: {
+      '& svg:not(.browser-loader)': {
+        '&:hover': {
+          color: theme.palette.primary.main,
+        },
+        cursor: 'pointer',
+        marginLeft: 5,
+        padding: 3,
+      },
       alignItems: 'center',
       backgroundColor: theme.palette.divider,
       color: palette.text.secondary,
@@ -49,24 +49,46 @@ export interface PreviewItemProps {
   loading: boolean;
   showSaveButton: boolean;
   onRefresh: () => void;
+  onDeviceSelect: (deviceName: string) => void;
+  selectedDevice: string;
 }
 
 const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
-  const { browserType, onSave, showSaveButton, loading, onRefresh } = props;
+  const {
+    browserType,
+    onSave,
+    showSaveButton,
+    loading,
+    onRefresh,
+    onDeviceSelect,
+    selectedDevice,
+  } = props;
 
   const classes = useStyles();
 
   return (
-    <div className={classes.toolbar}>
+    <div className={classes.root}>
       <div className={classes.toolbarPanels}>
         <label className={classes.label}>{browserType}</label>
-        {loading && <CircularProgress style={{ marginLeft: 10 }} size={15} />}
+        {loading && (
+          <CircularProgress
+            classes={{
+              svg: 'browser-loader',
+            }}
+            style={{ marginLeft: 10 }}
+            size={15}
+          />
+        )}
       </div>
       <div className={classes.toolbarPanels}>
-        <RefreshIcon className={classes.icons} onClick={onRefresh} />
-        {showSaveButton && (
-          <SaveIcon className={classes.icons} onClick={onSave} />
+        <RefreshIcon onClick={onRefresh} />
+        {browserType !== 'storybook' && (
+          <DeviceList
+            onDeviceSelect={onDeviceSelect}
+            selectedDevice={selectedDevice}
+          />
         )}
+        {showSaveButton && <SaveIcon onClick={onSave} />}
       </div>
     </div>
   );

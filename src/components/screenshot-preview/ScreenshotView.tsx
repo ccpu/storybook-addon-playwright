@@ -1,13 +1,13 @@
-import React, { SFC, useState, useCallback, useEffect } from 'react';
+import React, { SFC, useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { useScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
-import { ErrorPanel, InputDialog, Snackbar } from '../common';
+import { ErrorPanel } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
-import { useSaveScreenshot } from '../../hooks';
-import { ImageDiffDialog } from './ImageDiffDialog';
+import { useBrowserDevice } from '../../hooks';
+import { ScreenshotSaveDialog } from './ScreenshotSaveDialog';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -79,30 +79,14 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const classes = useStyles();
 
-  const { loading, screenshot, getSnapshot } = useScreenshot(browserType);
+  const { browserDevice, setBrowserDevice } = useBrowserDevice();
 
-  const {
-    saveScreenShot,
-    result,
-    clearResult,
-    error,
-    clearError,
-    saving,
-  } = useSaveScreenshot();
-
-  const handleSave = useCallback(
-    async (description) => {
-      setOpenSaveScreenShot(false);
-      await saveScreenShot(
-        browserType as BrowserTypes,
-        description,
-        screenshot.base64,
-      );
-    },
-    [browserType, saveScreenShot, screenshot],
+  const { loading, screenshot, getSnapshot } = useScreenshot(
+    browserType,
+    browserDevice[browserType],
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!refresh || loading) return;
     getSnapshot();
     onRefreshEnd();
@@ -117,14 +101,27 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
   const isValidToSave =
     screenshot && !screenshot.error && browserType !== 'storybook';
 
+  const handleSelectedBrowserDevice = useCallback(
+    (name: string) => {
+      setBrowserDevice(browserType as BrowserTypes, name);
+    },
+    [browserType, setBrowserDevice],
+  );
+
   return (
     <div className={clsx(classes.card)}>
       <ScreenShotViewToolbar
         browserType={browserType}
         onSave={toggleScreenshotTitleDialog}
-        loading={loading || saving}
+        loading={loading}
         onRefresh={getSnapshot}
+        onDeviceSelect={handleSelectedBrowserDevice}
         showSaveButton={isValidToSave}
+        selectedDevice={
+          browserDevice &&
+          browserDevice[browserType] &&
+          browserDevice[browserType].name
+        }
       />
 
       <div className={classes.container} style={{ height: containerHeight }}>
@@ -153,46 +150,13 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
       </div>
 
       {isValidToSave && (
-        <InputDialog
+        <ScreenshotSaveDialog
           open={openSaveScreenShot}
           onClose={toggleScreenshotTitleDialog}
-          onSave={handleSave}
-          title="Title"
+          base64={screenshot.base64}
+          browserType={browserType as BrowserTypes}
         />
       )}
-
-      {error && (
-        <Snackbar
-          message={error}
-          open={error !== undefined}
-          onClose={clearError}
-          type="error"
-        />
-      )}
-
-      {result && result.pass && (
-        <Snackbar
-          title="Identical Screenshot"
-          message={
-            'Screenshot with the same setting found, no change has been detected.'
-          }
-          open={true}
-          onClose={clearResult}
-          type="success"
-        />
-      )}
-
-      {result && result.added && (
-        <Snackbar
-          message={'Screenshot added successfully.'}
-          open={true}
-          onClose={clearResult}
-          type="success"
-          autoHideDuration={2000}
-        />
-      )}
-
-      <ImageDiffDialog result={result} onClose={clearResult} />
     </div>
   );
 };

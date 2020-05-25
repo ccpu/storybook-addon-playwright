@@ -3,7 +3,7 @@ import { useKnobs } from './use-knobs';
 import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
-import { BrowserTypes } from '../typings';
+import { BrowserTypes, DeviceDescriptor } from '../typings';
 import { getSnapshotHash } from '../utils';
 import { ImageDiff, SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
@@ -15,19 +15,33 @@ export const useSaveScreenshot = () => {
   const { dispatch } = useGlobalScreenshotDispatch();
 
   const { currentActions } = useCurrentActions(storyData && storyData.id);
-  const [error, setError] = useState();
+  const [error, setError] = useState<string>();
   const [result, setResult] = useState<ImageDiff>();
   const [saving, setWorking] = useState(false);
 
   const saveScreenShot = useCallback(
-    async (browserType: BrowserTypes, title: string, base64String?: string) => {
+    async (
+      browserType: BrowserTypes,
+      title: string,
+      base64String?: string,
+      deviceDescriptor?: DeviceDescriptor,
+    ) => {
+      const hash = getSnapshotHash(
+        storyData.id,
+        currentActions,
+        knobs,
+        browserType,
+        deviceDescriptor,
+      );
+
       try {
         const data: SaveScreenshotRequest = {
           actions: currentActions,
           base64: base64String,
           browserType,
+          device: deviceDescriptor,
           fileName: storyData.parameters.fileName,
-          hash: getSnapshotHash(storyData.id, currentActions, knobs),
+          hash,
           knobs,
           storyId: storyData.id,
           title,

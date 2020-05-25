@@ -5,6 +5,18 @@ import { StoryInfo } from './story-info';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
+export interface DeviceDescriptor {
+  name: string;
+  viewport?: {
+    width: number;
+    height: number;
+  };
+  userAgent?: string;
+  deviceScaleFactor?: number;
+  isMobile?: boolean;
+  hasTouch?: boolean;
+}
+
 export interface PageInfo<T extends unknown = Page> {
   page: T;
   browserName: BrowserTypes;
@@ -26,6 +38,7 @@ export interface ScreenshotData {
   browserType: BrowserTypes;
   title: string;
   hash: string;
+  device?: DeviceDescriptor;
   clip?: {
     width: number;
     height: number;

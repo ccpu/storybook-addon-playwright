@@ -28,25 +28,34 @@ export const saveScreenshot = async (
     (x) => x.hash === data.hash,
   );
 
-  const sameDesc = storyData[data.storyId].screenshots.find(
-    (x) => x.title === data.title,
-  );
-
-  if (sameDesc && !oldScreenshotData) {
-    throw new Error('Found screenshot with same title, title must be unique.');
+  if (!oldScreenshotData) {
+    const sameDesc = storyData[data.storyId].screenshots.find(
+      (x) => x.title === data.title,
+    );
+    if (sameDesc) {
+      throw new Error(
+        'Found screenshot with the same title (' +
+          sameDesc.title +
+          '), title must be unique.',
+      );
+    }
   } else if (oldScreenshotData && oldScreenshotData.title !== data.title) {
-    throw new Error('Found screenshot with same setting, but different title.');
+    throw new Error(
+      'Found screenshot with same setting (' + oldScreenshotData.title + ').',
+    );
   }
 
   storyData[data.storyId].screenshots.push({
     actions: data.actions && data.actions.length > 0 ? data.actions : undefined,
     browserType: data.browserType,
+    device:
+      data.device && Object.keys(data.device).length ? data.device : undefined,
     hash: data.hash,
     knobs: data.knobs,
     title: data.title,
   });
 
-  const paths = getScreenshotPaths(data, 'chromium', data.title);
+  const paths = getScreenshotPaths(data, data.browserType, data.title);
 
   const result = diffImageToSnapshot({
     blur: 0,

@@ -32,8 +32,9 @@ describe('useSaveScreenshot', () => {
       screenshot: {
         actions: [],
         browserType: 'chromium',
+        device: undefined,
         fileName: './src/stories/story.stories.tsx',
-        hash: 'd06ccdf0',
+        hash: '605a78e5',
         knobs: undefined,
         storyId: 'story-id',
         title: 'title',

@@ -20,6 +20,8 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
+        onDeviceSelect={jest.fn()}
+        selectedDevice=""
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -33,6 +35,8 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
+        onDeviceSelect={jest.fn()}
+        selectedDevice=""
       />,
     );
     expect(wrapper.find(CircularProgress).exists()).toBeTruthy();
@@ -46,6 +50,8 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
+        onDeviceSelect={jest.fn()}
+        selectedDevice=""
       />,
     );
     expect(wrapper.find(SaveIcon).exists()).toBeFalsy();

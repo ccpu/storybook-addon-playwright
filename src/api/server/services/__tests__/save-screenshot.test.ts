@@ -80,7 +80,7 @@ describe('saveScreenshot', () => {
     await expect(
       saveScreenshot(getData({ title: 'foo' })),
     ).rejects.toThrowError(
-      'Found screenshot with same title, title must be unique.',
+      'Found screenshot with the same title (foo), title must be unique.',
     );
   });
 
@@ -103,9 +103,7 @@ describe('saveScreenshot', () => {
 
     await expect(
       saveScreenshot(getData({ hash: 'hash-1', title: 'foo' })),
-    ).rejects.toThrowError(
-      'Found screenshot with same setting, but different title',
-    );
+    ).rejects.toThrowError('Found screenshot with same setting (bar).');
   });
 
   it('should remove diff file', async () => {

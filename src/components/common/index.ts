@@ -15,3 +15,4 @@ export * from './SnackbarWithRetry';
 export * from './Dialog';
 export * from './DeleteConfirmationButton';
 export * from './CheckBox';
+export * from './DeviceList';

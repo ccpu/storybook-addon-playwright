@@ -9,6 +9,7 @@ import {
   deleteActionSet,
   getStoryScreenshots,
   deleteScreenshot,
+  testScreenshot,
 } from './controller';
 import { Router, Response, Request } from 'express';
 
@@ -27,8 +28,8 @@ export const asyncCatch = function (func) {
 };
 
 const expressMiddleWare = (router: Partial<Router>) => {
-  router.use(bodyParser.urlencoded({ extended: false }));
-  router.use(bodyParser.json());
+  router.use(bodyParser.json({ limit: '50mb' }));
+  router.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
   router.post(ROUTE.TAKE_SCREENSHOT, asyncCatch(getScreenshot));
   router.post(ROUTE.SAVE_SCREENSHOT, asyncCatch(saveScreenshot));
@@ -39,6 +40,7 @@ const expressMiddleWare = (router: Partial<Router>) => {
   router.post(ROUTE.DELETE_ACTION_SET, asyncCatch(deleteActionSet));
   router.post(ROUTE.GET_STORY_SCREENSHOTS, asyncCatch(getStoryScreenshots));
   router.post(ROUTE.DELETE_SCREENSHOT, asyncCatch(deleteScreenshot));
+  router.post(ROUTE.TEST_SCREENSHOT, asyncCatch(testScreenshot));
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   router.use((error, _req, res, next) => {

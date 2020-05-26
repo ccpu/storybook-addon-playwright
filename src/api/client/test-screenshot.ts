@@ -1,12 +1,12 @@
-import { SaveScreenshotRequest, ImageDiff } from '../typings';
 import { getEndpoint, responseHandler } from './utils';
+import { ScreenshotInfo } from '../../typings';
+import { ImageDiff } from '../typings';
 
-export const saveScreenshot = async (
-  data: SaveScreenshotRequest,
+export const testScreenshot = async (
+  data: ScreenshotInfo,
 ): Promise<ImageDiff> => {
-  const restEndpoint = getEndpoint('SAVE_SCREENSHOT');
-  console.log(data);
-  const resData = await fetch(restEndpoint, {
+  const restEndpoint = getEndpoint('TEST_SCREENSHOT');
+  const resp = await fetch(restEndpoint, {
     body: JSON.stringify(data),
     headers: {
       Accept: 'application/json, text/plain, */*',
@@ -15,5 +15,5 @@ export const saveScreenshot = async (
     method: 'post',
   }).then(responseHandler);
 
-  return resData;
+  return resp;
 };

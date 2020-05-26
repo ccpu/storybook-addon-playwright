@@ -9,7 +9,7 @@ describe('deleteActionSet', () => {
   };
 
   beforeEach(() => {
-    fetch.doMock();
+    fetch.resetMocks();
   });
 
   it('should have data in body', async () => {

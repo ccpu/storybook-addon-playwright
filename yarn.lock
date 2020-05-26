@@ -5945,6 +5945,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-map-interaction@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-map-interaction/-/react-map-interaction-1.3.3.tgz#e3202f9979d182a4501baeaf032942dbf87aec50"
+  integrity sha512-GeOIcjZvVjnzUmZEggbm8SaWBQZkkVUqDXfad162xrwbkuuAlw0gwu95Jqr0tJQqw3X5v+uBJ80yiwvkqX+PdQ==
+
 react-popper-tooltip@^2.8.3:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/react-popper-tooltip/-/react-popper-tooltip-2.11.1.tgz#3c4bdfd8bc10d1c2b9a162e859bab8958f5b2644"

@@ -11,4 +11,5 @@ export interface Config<T extends unknown = Page> {
   ) => Promise<T>;
   beforeSnapshot?: (page: T, browserType: BrowserTypes) => void;
   afterSnapshot?: (page: T, browserType: BrowserTypes) => void;
+  diffDirection?: 'horizontal' | 'vertical';
 }

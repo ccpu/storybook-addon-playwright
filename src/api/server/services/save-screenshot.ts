@@ -1,14 +1,7 @@
 import { SaveScreenshotRequest, ImageDiff } from '../../typings';
 import { loadStoryData, getStoryFileInfo } from '../utils';
-import { diffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot';
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot/index';
 import { saveStoryFile } from '../utils';
-import { getScreenshotPaths } from './utils';
-import * as fs from 'fs';
-
-interface SnapshotOptions extends MatchImageSnapshotOptions {
-  receivedImageBuffer: Buffer;
-}
+import { diffImageToScreenshot } from './diff-image-to-screenshot';
 
 export const saveScreenshot = async (
   data: SaveScreenshotRequest,
@@ -55,27 +48,12 @@ export const saveScreenshot = async (
     title: data.title,
   });
 
-  const paths = getScreenshotPaths(data, data.browserType, data.title);
-
-  const result = diffImageToSnapshot({
-    blur: 0,
-    diffDir: paths.diffDir,
-    failureThreshold: 0,
-    failureThresholdType: 'pixel',
-    receivedImageBuffer: Buffer.from(data.base64, 'base64'),
-    snapshotIdentifier: paths.snapshotIdentifier,
-    snapshotsDir: paths.snapshotsDir,
-    updatePassedSnapshot: false,
-  } as SnapshotOptions);
-
-  if (!result.pass) {
-    fs.rmdirSync(paths.diffDir, { recursive: true });
-  }
+  const result = diffImageToScreenshot(
+    data,
+    Buffer.from(data.base64, 'base64'),
+  );
 
   if (!oldScreenshotData) {
-    // storyData[data.storyId].screenshots = storyData[
-    //   data.storyId
-    // ].screenshots.filter((x) => x.hash !== data.hash);
     await saveStoryFile(fileInfo, storyData);
   } else {
     result.oldScreenShotTitle = oldScreenshotData.title;

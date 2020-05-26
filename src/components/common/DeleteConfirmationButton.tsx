@@ -35,7 +35,7 @@ const DeleteConfirmationButton: SFC<DeleteConfirmationButtonProps> = (
 
   return (
     <>
-      <IconButton onClick={handleDelete} size="small">
+      <IconButton onClick={handleDelete} title="Delete Item" size="small">
         <DeleteIcon />
       </IconButton>
 

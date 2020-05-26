@@ -1,10 +1,10 @@
 import React, { SFC, useState, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, capitalize } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { useScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
-import { ErrorPanel } from '../common';
+import { ErrorPanel, Dialog } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserDevice } from '../../hooks';
 import { ScreenshotSaveDialog } from './ScreenshotSaveDialog';
@@ -77,6 +77,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const [openSaveScreenShot, setOpenSaveScreenShot] = useState(false);
 
+  const [openFullScreen, setOpenFullScreen] = useState(false);
+
   const classes = useStyles();
 
   const { browserDevice, setBrowserDevice } = useBrowserDevice();
@@ -108,6 +110,10 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     [browserType, setBrowserDevice],
   );
 
+  const toggleFullScreen = useCallback(() => {
+    setOpenFullScreen(!openFullScreen);
+  }, [openFullScreen]);
+
   return (
     <div className={clsx(classes.card)}>
       <ScreenShotViewToolbar
@@ -117,6 +123,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         onRefresh={getSnapshot}
         onDeviceSelect={handleSelectedBrowserDevice}
         showSaveButton={isValidToSave}
+        onFullScreen={toggleFullScreen}
         selectedDevice={
           browserDevice &&
           browserDevice[browserType] &&
@@ -157,6 +164,21 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
           browserType={browserType as BrowserTypes}
         />
       )}
+
+      <Dialog
+        open={openFullScreen}
+        width="100%"
+        height="100%"
+        onClose={toggleFullScreen}
+        title={`${capitalize(browserType)} screenshot`}
+      >
+        {screenshot && openFullScreen && (
+          <img
+            style={{ margin: 10 }}
+            src={`data:image/gif;base64,${screenshot.base64}`}
+          />
+        )}
+      </Dialog>
     </div>
   );
 };

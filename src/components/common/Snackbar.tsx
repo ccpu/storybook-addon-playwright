@@ -50,7 +50,7 @@ export interface SnackbarProps
   extends Omit<MUSnackbarProps, 'onClose'>,
     StyleProps {
   title?: string;
-  onClose: () => void;
+  onClose?: () => void;
   closeIcon?: boolean;
 }
 
@@ -81,7 +81,7 @@ const Snackbar: SFC<SnackbarProps> = memo(
     }, []);
 
     const handleClose = useCallback(() => {
-      onClose();
+      if (onClose) onClose();
     }, [onClose]);
 
     return (

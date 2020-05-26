@@ -3,18 +3,6 @@ import { useDeleteScreenshot } from '../use-delete-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
 
-// const deleteScreenshotMock = jest.fn();
-
-// jest.mock('../api/client', () => ({
-//   deleteScreenshot: deleteScreenshotMock,
-// }));
-
-// deleteScreenshotMock.mockImplementationOnce(() => {
-//   return new Promise((resolve) => {
-//     resolve();
-//   });
-// });
-
 describe('useDeleteScreenshot', () => {
   afterEach(() => {
     jest.clearAllMocks();
@@ -22,7 +10,7 @@ describe('useDeleteScreenshot', () => {
 
   it('should not have value for error and loading', () => {
     const { result } = renderHook(() => useDeleteScreenshot());
-    expect(result.current.loading).toBe(false);
+    expect(result.current.inProgress).toBe(false);
     expect(result.current.error).toBe(undefined);
   });
 

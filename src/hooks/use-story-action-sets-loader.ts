@@ -28,7 +28,6 @@ export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
       return;
 
     setLoading(true);
-
     getActionSet({ fileName, storyId })
       .then((actionSets) => {
         if (!__loadedFiles[fileName]) {

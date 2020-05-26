@@ -11,7 +11,10 @@ export const useCurrentStoryActionSets = () => {
   const [storyActionSets, setStoryActionSets] = useState<ActionSet[]>([]);
 
   useEffect(() => {
-    if (!state.stories || !state.stories[storybookState.storyId]) return;
+    if (!state.stories || !state.stories[storybookState.storyId]) {
+      setStoryActionSets([]);
+      return;
+    }
     const actionSets = state.stories[storybookState.storyId].actionSets;
     setStoryActionSets(actionSets);
   }, [state.stories, storybookState.storyId]);

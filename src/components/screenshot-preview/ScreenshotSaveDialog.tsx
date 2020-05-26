@@ -1,8 +1,7 @@
 import React, { SFC, useCallback } from 'react';
-import { InputDialog, Snackbar, Loader } from '../common';
+import { InputDialog, Snackbar, Loader, ImageDiffMessage } from '../common';
 import { useSaveScreenshot, useBrowserDevice } from '../../hooks';
 import { BrowserTypes } from '../../typings';
-import { ImageDiffDialog } from './ImageDiffDialog';
 
 export interface ScreenshotSaveDialogProps {
   open: boolean;
@@ -81,7 +80,7 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
         />
       )}
       <Loader open={saving} />
-      <ImageDiffDialog result={result} onClose={clearResult} />
+      <ImageDiffMessage result={result} onClose={clearResult} />
     </>
   );
 };

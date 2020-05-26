@@ -17,3 +17,5 @@ export * from './use-retry';
 export * from './use-delete-screenshot';
 export * from './use-global-screenshot-dispatch';
 export * from './use-browser-device';
+export * from './use-async-api-call';
+export * from './use-key-press';

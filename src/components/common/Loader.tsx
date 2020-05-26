@@ -19,16 +19,22 @@ const useStyles = makeStyles(
 
 export interface LoaderProps {
   open: boolean;
+  progressSize?: number;
+  position?: 'relative' | 'absolute';
 }
 
 const Loader: SFC<LoaderProps> = memo((props) => {
-  const { open } = props;
+  const { open, progressSize, position } = props;
 
   const classes = useStyles();
 
   return (
-    <Backdrop className={classes.root} open={open}>
-      <CircularProgress />
+    <Backdrop
+      className={classes.root}
+      style={{ position: position }}
+      open={open}
+    >
+      <CircularProgress size={progressSize} />
     </Backdrop>
   );
 });

@@ -3,7 +3,7 @@ import { constructUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction } from '../utils';
 import { ScreenshotImageData } from '../../../typings';
-import { DeviceDescriptors } from 'playwright-core/lib/deviceDescriptors';
+import { getDeviceInfo } from './utils';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,
@@ -20,7 +20,7 @@ export const makeScreenshot = async (
 
   const page = await helper.getPage(
     data.browserType,
-    data.device ? DeviceDescriptors[data.device.name] : undefined,
+    getDeviceInfo(data.device),
   );
 
   if (!page) {

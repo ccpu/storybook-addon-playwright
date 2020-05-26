@@ -19,6 +19,9 @@ const useStyles = makeStyles(
       },
       root: {
         '& svg': {
+          '&:hover': {
+            color: theme.palette.primary.main,
+          },
           fontSize: 18,
         },
         alignItems: 'center',
@@ -31,6 +34,7 @@ const useStyles = makeStyles(
         minHeight: '48px',
         padding: '5px 8px',
         paddingLeft: 16,
+        position: 'relative',
       },
     };
   },

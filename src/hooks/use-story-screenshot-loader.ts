@@ -49,5 +49,5 @@ export const useStoryScreenshotLoader = () => {
     setError(undefined);
   }, []);
 
-  return { clearError, doRetry, error, loading };
+  return { clearError, doRetry, error, loading, storyData };
 };

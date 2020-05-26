@@ -1,9 +1,8 @@
 import React, { SFC, useCallback, useState } from 'react';
 import { IconButton } from '@storybook/components';
-import OpenWith from '@material-ui/icons/OpenWith';
 import { Menu, MenuItem, ClickAwayListener } from '@material-ui/core';
-
 import { useAddonState } from '../../hooks/use-addon-state';
+import { LayoutBottomRight } from '../../icons';
 
 const PreviewPlacementMenu: SFC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -34,7 +33,7 @@ const PreviewPlacementMenu: SFC = () => {
     <ClickAwayListener onClickAway={handleClose}>
       <>
         <IconButton onClick={handlePlacementClick} title="Panel placement">
-          <OpenWith viewBox="1.5 -2 21 21" />
+          <LayoutBottomRight />
         </IconButton>
         <Menu
           id="simple-menu"

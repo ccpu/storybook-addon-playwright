@@ -1,38 +1,32 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
 import { deleteScreenshot as deleteScreenshotService } from '../api/client';
 import { useScreenshotDispatch } from '../store/screenshot';
+import { useAsyncApiCall } from './use-async-api-call';
 
 export const useDeleteScreenshot = () => {
-  const [error, setError] = useState<string>();
-  const [loading, setLoading] = useState(false);
-
   const storyData = useCurrentStoryData();
 
   const dispatch = useScreenshotDispatch();
 
-  const clearError = useCallback(() => {
-    setError(undefined);
-  }, []);
+  const { clearError, error, inProgress, makeCall } = useAsyncApiCall(
+    deleteScreenshotService,
+    false,
+  );
 
   const deleteScreenshot = useCallback(
     async (hash: string) => {
-      clearError();
-      setLoading(true);
-      try {
-        await deleteScreenshotService({
-          fileName: storyData.parameters.fileName,
-          hash: hash,
-          storyId: storyData.id,
-        });
+      const result = await makeCall({
+        fileName: storyData.parameters.fileName,
+        hash: hash,
+        storyId: storyData.id,
+      });
+
+      if (!(result instanceof Error))
         dispatch({ screenshotHash: hash, type: 'deleteScreenshot' });
-      } catch (e) {
-        setError(e.message);
-      }
-      setLoading(false);
     },
-    [dispatch, storyData, clearError],
+    [dispatch, makeCall, storyData],
   );
 
-  return { clearError, deleteScreenshot, error, loading };
+  return { clearError, deleteScreenshot, error, inProgress };
 };

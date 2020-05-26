@@ -4,7 +4,9 @@ import {
   Dialog as MuDialog,
   DialogProps as MuDialogProps,
   DialogTitle,
+  IconButton,
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 interface StyleProps {
   width?: string | number;
@@ -14,6 +16,11 @@ interface StyleProps {
 const useStyles = makeStyles(
   () => {
     return {
+      closIcon: {
+        position: 'absolute',
+        right: 4,
+        top: 4,
+      },
       input: {
         width: '100%',
       },
@@ -29,6 +36,7 @@ const useStyles = makeStyles(
 
 export interface DialogProps extends MuDialogProps, StyleProps {
   title?: string;
+  onClose: () => void;
 }
 
 const Dialog: SFC<DialogProps> = ({
@@ -36,6 +44,7 @@ const Dialog: SFC<DialogProps> = ({
   width = '80%',
   height = 'auto',
   title,
+  onClose,
   ...rest
 }) => {
   const classes = useStyles({ height, width });
@@ -46,8 +55,12 @@ const Dialog: SFC<DialogProps> = ({
       classes={{
         paper: classes.paper,
       }}
+      onClose={onClose}
       {...rest}
     >
+      <IconButton className={classes.closIcon} onClick={onClose}>
+        <CloseIcon />
+      </IconButton>
       {title && <DialogTitle>{title}</DialogTitle>}
       {children}
     </MuDialog>

@@ -19,12 +19,11 @@ export const useScreenshot = (
 
   const { currentActions } = useCurrentActions(state.storyId);
 
-  const prevKnobs = useRef();
-  const prevActions = useRef();
-  const prevDeviceName = useRef<DeviceDescriptor>();
+  const prevHash = useRef<string>();
 
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
+
     setLoading(true);
 
     getScreenshot({
@@ -44,24 +43,22 @@ export const useScreenshot = (
 
   useEffect(() => {
     if (loading) return;
-    const currentActionHash = sum(currentActions);
-    const currentKnobHash = sum(knobs);
-    const currentDeviceNameHash = sum(deviceInfo);
 
-    if (
-      prevKnobs.current === currentKnobHash &&
-      prevActions.current === currentActionHash &&
-      prevDeviceName.current === currentDeviceNameHash
-    ) {
+    const currentHash = sum({
+      currentActions,
+      deviceInfo,
+      id: state.storyId,
+      knobs,
+    });
+
+    if (prevHash.current === currentHash) {
       return;
     }
 
-    prevKnobs.current = currentKnobHash;
-    prevActions.current = currentActionHash;
-    prevDeviceName.current = currentDeviceNameHash;
+    prevHash.current = currentHash;
 
     getSnapshot();
-  }, [currentActions, getSnapshot, knobs, loading, deviceInfo]);
+  }, [currentActions, getSnapshot, knobs, loading, deviceInfo, state.storyId]);
 
   return { getSnapshot, loading, screenshot };
 };

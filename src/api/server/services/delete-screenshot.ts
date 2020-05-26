@@ -11,11 +11,12 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
     (x) => x.hash === data.hash,
   );
 
-  const paths = getScreenshotPaths(
-    data,
-    screenshotInfo.browserType,
-    screenshotInfo.title,
-  );
+  const paths = getScreenshotPaths({
+    browserType: screenshotInfo.browserType,
+    fileName: data.fileName,
+    storyId: data.storyId,
+    title: screenshotInfo.title,
+  });
 
   if (fs.existsSync(paths.fileName)) {
     fs.unlinkSync(paths.fileName);

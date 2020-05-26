@@ -8,3 +8,4 @@ export * from './get-action-args';
 export * from './valid-action';
 export * from './get-snapshot-hash';
 export * from './combine-reducer';
+export * from './get-image-diff-messages';

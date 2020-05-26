@@ -1,37 +1,80 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from 'react';
 import { IconButton } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/EditSharp';
-import { ListItemWrapper, DeleteConfirmationButton } from '../common';
-import { ScreenshotData } from '../../typings';
+import Compare from '@material-ui/icons/Compare';
+import {
+  ListItemWrapper,
+  DeleteConfirmationButton,
+  Snackbar,
+  Loader,
+  ImageDiffMessage,
+} from '../common';
+import { ScreenshotData, StoryInput } from '../../typings';
+import { testScreenshot as testScreenshotClient } from '../../api/client';
+import { useAsyncApiCall } from '../../hooks';
 
 export interface ScreenshotListItemProps {
-  onEdit: (item: ScreenshotData) => void;
   onDelete: (item: ScreenshotData) => void;
-  item: ScreenshotData;
+  screenshot: ScreenshotData;
   title: string;
+  storyInput: StoryInput;
 }
 
 function ScreenshotListItem({
-  onEdit,
   onDelete,
-  item,
+  screenshot,
   title,
+  storyInput,
 }: ScreenshotListItemProps) {
-  const handleEdit = useCallback(() => {
-    onEdit(item);
-  }, [item, onEdit]);
+  const {
+    makeCall: testScreenshot,
+    error: testScreenshotError,
+    result,
+    inProgress,
+    clearResult,
+  } = useAsyncApiCall(testScreenshotClient);
 
   const handleDeleteConfirmation = useCallback(() => {
-    onDelete(item);
-  }, [item, onDelete]);
+    onDelete(screenshot);
+  }, [screenshot, onDelete]);
+
+  const handleTestScreenshot = useCallback(() => {
+    testScreenshot({
+      fileName: storyInput.parameters.fileName,
+      hash: screenshot.hash,
+      storyId: storyInput.id,
+    });
+  }, [screenshot.hash, storyInput, testScreenshot]);
 
   return (
     <ListItemWrapper title={title} draggable={false}>
-      <IconButton className="edit-button" onClick={handleEdit} size="small">
-        <EditIcon />
+      <IconButton
+        onClick={handleTestScreenshot}
+        size="small"
+        title="Run diff test"
+      >
+        <Compare style={{ fontSize: 16 }} />
       </IconButton>
       <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
+
+      {testScreenshotError && (
+        <Snackbar open={true} type="error" message={testScreenshotError} />
+      )}
+
+      {result && result.pass && (
+        <Snackbar
+          open={true}
+          title={'Success'}
+          message="No change has been detected."
+          autoHideDuration={3000}
+          onClose={clearResult}
+          type="success"
+        />
+      )}
+
+      <ImageDiffMessage result={result} onClose={clearResult} />
+
+      <Loader progressSize={20} position="absolute" open={inProgress} />
     </ListItemWrapper>
   );
 }

@@ -1,11 +1,15 @@
-import { loadStoryData, getStoryFileInfo, saveStoryFile } from '../utils';
+import {
+  loadStoryData,
+  getStoryPlaywrightFileInfo,
+  saveStoryFile,
+} from '../utils';
 import { DeleteActionSetRequest } from '../../typings';
 
 export const deleteActionSet = async (
   data: DeleteActionSetRequest,
 ): Promise<void> => {
-  const fileInfo = getStoryFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo);
+  const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
+  const storyData = await loadStoryData(fileInfo.path);
 
   if (!data.actionSetId) {
     throw new Error('Action set id has not been provided!');

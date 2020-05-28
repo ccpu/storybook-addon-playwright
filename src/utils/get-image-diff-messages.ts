@@ -1,6 +1,6 @@
-import { ImageDiff } from '../api/typings';
+import { ImageDiffResult } from '../api/typings';
 
-export const getImageDiffMessages = (result: ImageDiff) => {
+export const getImageDiffMessages = (result: ImageDiffResult) => {
   if (result.diffSize) {
     return `Expected image to be the same size as the snapshot (${result.imageDimensions.baselineWidth}x${result.imageDimensions.baselineHeight}), but was different (${result.imageDimensions.receivedWidth}x${result.imageDimensions.receivedHeight}).\n`;
   }

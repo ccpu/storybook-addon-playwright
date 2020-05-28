@@ -1,8 +1,9 @@
 import { ScreenshotData } from '../../typings';
-// import { combineReducers } from '../../utils';
+import { ImageDiffResult } from '../../api/typings';
 
 export interface ReducerState {
   screenshots: ScreenshotData[];
+  imageDiffResults: ImageDiffResult[];
 }
 
 export type Action =
@@ -11,12 +12,25 @@ export type Action =
       screenshots: ScreenshotData[];
     }
   | {
+      type: 'setImageDiffResults';
+      imageDiffResults: ImageDiffResult[];
+    }
+  | {
+      type: 'addImageDiffResult';
+      imageDiffResult: ImageDiffResult;
+    }
+  | {
+      type: 'removeImageDiffResult';
+      imageDiffResult: ImageDiffResult;
+    }
+  | {
       type: 'addScreenshot';
       screenshot: ScreenshotData;
     }
   | { type: 'deleteScreenshot'; screenshotHash: string };
 
 export const initialState: ReducerState = {
+  imageDiffResults: [],
   screenshots: [],
 };
 
@@ -36,6 +50,26 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         screenshots: action.screenshots,
       };
     }
+    case 'setImageDiffResults': {
+      return {
+        ...state,
+        imageDiffResults: action.imageDiffResults,
+      };
+    }
+    case 'addImageDiffResult': {
+      return {
+        ...state,
+        imageDiffResults: [...state.imageDiffResults, action.imageDiffResult],
+      };
+    }
+    case 'removeImageDiffResult': {
+      return {
+        ...state,
+        imageDiffResults: state.imageDiffResults.filter(
+          (x) => x !== action.imageDiffResult,
+        ),
+      };
+    }
     case 'deleteScreenshot': {
       return {
         ...state,
@@ -48,5 +82,3 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return state;
   }
 }
-
-// export const reducer = combineReducers(mainReducer);

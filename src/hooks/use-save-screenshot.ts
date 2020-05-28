@@ -5,7 +5,7 @@ import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
 import { BrowserTypes, DeviceDescriptor } from '../typings';
 import { getSnapshotHash } from '../utils';
-import { ImageDiff, SaveScreenshotRequest } from '../api/typings';
+import { ImageDiffResult, SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 
 export const useSaveScreenshot = () => {
@@ -16,7 +16,7 @@ export const useSaveScreenshot = () => {
 
   const { currentActions } = useCurrentActions(storyData && storyData.id);
   const [error, setError] = useState<string>();
-  const [result, setResult] = useState<ImageDiff>();
+  const [result, setResult] = useState<ImageDiffResult>();
   const [saving, setWorking] = useState(false);
 
   const saveScreenShot = useCallback(

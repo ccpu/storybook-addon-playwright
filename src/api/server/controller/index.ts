@@ -7,3 +7,5 @@ export * from './delete-action-set';
 export * from './get-story-screenshots';
 export * from './delete-screenshot';
 export * from './test-screenshot';
+export * from './test-story-screenshots';
+export * from './test-app-screenshots';

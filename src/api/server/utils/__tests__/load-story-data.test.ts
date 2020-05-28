@@ -1,5 +1,5 @@
 import { loadStoryData } from '../load-story-data';
-import { getStoryFileInfo } from '../get-story-file-info';
+import { getStoryPlaywrightFileInfo } from '../get-story-playwright-file-info';
 
 jest.mock('fs', () => ({
   existsSync: (file: string) => {
@@ -23,19 +23,21 @@ jest.mock('jsonfile', () => ({
 describe('loadStoryData', () => {
   it('should return empty object if file not exist', async () => {
     const data = await loadStoryData(
-      getStoryFileInfo('./stories/story-notExist.ts'),
+      getStoryPlaywrightFileInfo('./stories/story-notExist.ts'),
     );
     expect(data).toStrictEqual({});
   });
 
   it('should return story data object', async () => {
-    const data = await loadStoryData(getStoryFileInfo('./stories/story.ts'));
+    const data = await loadStoryData(
+      getStoryPlaywrightFileInfo('./stories/story.ts'),
+    );
     expect(data).toStrictEqual({ 'story-id': {} });
   });
 
   it('should return error', async () => {
     await expect(
-      loadStoryData(getStoryFileInfo('./stories/story-error.ts')),
+      loadStoryData(getStoryPlaywrightFileInfo('./stories/story-error.ts')),
     ).rejects.toEqual('some-error');
   });
 });

@@ -2,7 +2,7 @@ import { getScreenshotPaths } from './utils';
 import { DiffImageToScreenShot } from '../../typings';
 import { runDiffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import { ImageDiff } from '../../typings';
+import { ImageDiffResult } from '../../typings';
 import * as fs from 'fs';
 import { getConfigs } from '../configs';
 
@@ -14,7 +14,7 @@ export const diffImageToScreenshot = (
   data: DiffImageToScreenShot,
   imageBuffer: Buffer,
   options?: SnapshotOptions,
-): ImageDiff => {
+): ImageDiffResult => {
   const paths = getScreenshotPaths(data);
   const config = getConfigs();
   const result = runDiffImageToSnapshot({
@@ -28,7 +28,7 @@ export const diffImageToScreenshot = (
     snapshotsDir: paths.snapshotsDir,
     updatePassedSnapshot: false,
     ...options,
-  } as SnapshotOptions) as ImageDiff;
+  } as SnapshotOptions) as ImageDiffResult;
 
   if (!result.pass) {
     fs.rmdirSync(paths.diffDir, { recursive: true });

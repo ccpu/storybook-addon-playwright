@@ -1,6 +1,6 @@
 import { StoryInfo, BrowserTypes } from '../../typings';
 
-export interface ImageDiff {
+export interface ImageDiffResult {
   added?: boolean;
   pass?: boolean;
   imgSrcString?: string;
@@ -15,6 +15,7 @@ export interface ImageDiff {
   diffPixelCount?: number;
   oldScreenShotTitle?: string;
   screenshotHash?: string;
+  storyId?: string;
 }
 
 export interface DiffImageToScreenShot extends StoryInfo {

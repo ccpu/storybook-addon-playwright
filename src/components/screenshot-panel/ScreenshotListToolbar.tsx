@@ -9,7 +9,7 @@ export interface ScreenshotListToolbarProps {
 }
 
 const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
-  const { title } = props;
+  const { title, onTestClick } = props;
 
   return (
     <Toolbar border={['bottom']}>
@@ -17,7 +17,10 @@ const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
         <div title={title}>Story Screenshots</div>
       </div>
       <div className="right">
-        <IconButton title="Run diff test for story screenshots">
+        <IconButton
+          onClick={onTestClick}
+          title="Run diff test for story screenshots"
+        >
           <Compare viewBox="0 0 28 28" />
         </IconButton>
       </div>

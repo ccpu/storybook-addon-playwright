@@ -1,13 +1,10 @@
 import { getEndpoint, responseHandler } from './utils';
-import { ScreenshotInfo } from '../../typings';
 import { ImageDiffResult } from '../typings';
 
-export const testScreenshot = async (
-  data: ScreenshotInfo,
-): Promise<ImageDiffResult> => {
-  const restEndpoint = getEndpoint('TEST_SCREENSHOT');
+export const testAppScreenshots = async (): Promise<ImageDiffResult[]> => {
+  const restEndpoint = getEndpoint('TEST_APP_SCREENSHOT');
+
   const resp = await fetch(restEndpoint, {
-    body: JSON.stringify(data),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',

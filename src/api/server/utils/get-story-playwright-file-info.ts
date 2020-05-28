@@ -1,15 +1,15 @@
 import * as path from 'path';
 
-export interface StoryFileInfo {
+export interface StoryPlaywrightFileInfo {
   name: string;
   path: string;
   dir: string;
 }
 
-export const getStoryFileInfo = (relativeFilePath: string) => {
-  const absolutePath = path.resolve(relativeFilePath);
+export const getStoryPlaywrightFileInfo = (storyRelativeFilePath: string) => {
+  const absolutePath = path.resolve(storyRelativeFilePath);
   const parsedFileName = path.parse(absolutePath);
-  const name = `${parsedFileName.name}.json`;
+  const name = `${parsedFileName.name}.playwright.json`;
   return {
     dir: parsedFileName.dir,
     name: name,

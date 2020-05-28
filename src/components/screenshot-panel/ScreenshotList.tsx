@@ -1,6 +1,14 @@
 import React, { SFC, useCallback } from 'react';
-import { useStoryScreenshotLoader, useDeleteScreenshot } from '../../hooks';
-import { useScreenshotContext } from '../../store/screenshot';
+import {
+  useStoryScreenshotLoader,
+  useDeleteScreenshot,
+  // useAsyncApiCall,
+  useStoryScreenshotImageDiff,
+} from '../../hooks';
+import {
+  useScreenshotContext,
+  // useScreenshotDispatch,
+} from '../../store/screenshot';
 import { Loader, SnackbarWithRetry, ListWrapper } from '../common';
 import { ScreenshotData } from '../../typings';
 import { ScreenshotListItem } from './ScreenshotListItem';
@@ -24,10 +32,6 @@ const ScreenshotList: SFC = () => {
     clearError: deleteClearError,
   } = useDeleteScreenshot();
 
-  // const handleEdit = useCallback((screenshot: ScreenshotData) => {
-  //   console.log(screenshot);
-  // }, []);
-
   const handleDelete = useCallback(
     (screenshot: ScreenshotData) => {
       deleteScreenshot(screenshot.hash);
@@ -35,16 +39,18 @@ const ScreenshotList: SFC = () => {
     [deleteScreenshot],
   );
 
-  const handleTestStoryScreenShots = useCallback(() => {
-    // testScreenshot({
-    // })
-  }, []);
+  const {
+    testStoryScreenShots,
+    clearImageDiffError,
+    imageDiffTestInProgress,
+    storyImageDiffError,
+  } = useStoryScreenshotImageDiff(storyData);
 
   return (
     <>
       <ScreenshotListToolbar
         title="Story Screenshots"
-        onTestClick={handleTestStoryScreenShots}
+        onTestClick={testStoryScreenShots}
       />
       <ListWrapper>
         {state &&
@@ -53,13 +59,17 @@ const ScreenshotList: SFC = () => {
             <ScreenshotListItem
               key={screenshot.hash}
               screenshot={screenshot}
-              title={screenshot.title}
               onDelete={handleDelete}
               storyInput={storyData}
+              imageDiffResult={state.imageDiffResults.find(
+                (x) =>
+                  x.storyId === storyData.id &&
+                  x.screenshotHash === screenshot.hash,
+              )}
             />
           ))}
 
-        <Loader open={loading || deleteLoading} />
+        <Loader open={loading || deleteLoading || imageDiffTestInProgress} />
         {(error || deleteError) && (
           <SnackbarWithRetry
             type="error"
@@ -67,6 +77,15 @@ const ScreenshotList: SFC = () => {
             onClose={deleteError ? deleteClearError : clearError}
             message={error || deleteError}
             onRetry={deleteError ? undefined : doRetry}
+          />
+        )}
+        {storyImageDiffError && (
+          <SnackbarWithRetry
+            open={true}
+            onRetry={testStoryScreenShots}
+            type="error"
+            message={storyImageDiffError}
+            onClose={clearImageDiffError}
           />
         )}
       </ListWrapper>

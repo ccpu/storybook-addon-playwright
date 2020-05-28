@@ -1,11 +1,11 @@
 import { getEndpoint, responseHandler } from './utils';
-import { ScreenshotInfo } from '../../typings';
+import { StoryInfo } from '../../typings';
 import { ImageDiffResult } from '../typings';
 
-export const testScreenshot = async (
-  data: ScreenshotInfo,
-): Promise<ImageDiffResult> => {
-  const restEndpoint = getEndpoint('TEST_SCREENSHOT');
+export const testStoryScreenshots = async (
+  data: StoryInfo,
+): Promise<ImageDiffResult[]> => {
+  const restEndpoint = getEndpoint('TEST_STORY_SCREENSHOT');
   const resp = await fetch(restEndpoint, {
     body: JSON.stringify(data),
     headers: {

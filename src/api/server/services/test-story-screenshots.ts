@@ -1,52 +1,37 @@
-// import { ImageDiff } from '../../typings';
-// import { StoryInfo } from '../../../typings';
-// import { getScreenshotData } from './utils';
-// import { diffImageToScreenshot } from './diff-image-to-screenshot';
-// import { makeScreenshot } from './make-screenshot';
-// import { getStoryFileInfo, loadStoryData } from '../utils';
+import { ImageDiffResult } from '../../typings';
+import { StoryInfo } from '../../../typings';
+import { getStoryPlaywrightFileInfo, loadStoryData } from '../utils';
+import { testScreenshot } from './test-screenShot';
 
-// export const testStoryScreenshot = async (
-//   data: StoryInfo,
-//   host: string,
-// ): Promise<ImageDiff> => {
-//   const fileInfo = getStoryFileInfo(data.fileName);
-//   const storyData = await loadStoryData(fileInfo);
+export const testStoryScreenshot = async (
+  data: StoryInfo,
+  host: string,
+): Promise<ImageDiffResult[]> => {
+  const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
+  const storyData = await loadStoryData(fileInfo.path);
 
-//   if (
-//     !storyData ||
-//     !storyData[data.storyId] ||
-//     !storyData[data.storyId].screenshots
-//   ) {
-//     throw new Error('Unable to find story screenshots');
-//   }
+  if (
+    !storyData ||
+    !storyData[data.storyId] ||
+    !storyData[data.storyId].screenshots
+  ) {
+    throw new Error('Unable to find story screenshots');
+  }
 
-//   const screenshotData = await getScreenshotData({});
+  const diffs: ImageDiffResult[] = [];
 
-//   if (!screenshotData) {
-//     throw new Error('Unable to find screenshot data.');
-//   }
+  for (let i = 0; i < storyData[data.storyId].screenshots.length; i++) {
+    const screenshot = storyData[data.storyId].screenshots[i];
+    const result = await testScreenshot(
+      {
+        fileName: data.fileName,
+        hash: screenshot.hash,
+        storyId: data.storyId,
+      },
+      host,
+    );
+    diffs.push(result);
+  }
 
-//   const snapshotData = await makeScreenshot(
-//     {
-//       actions: screenshotData.actions,
-//       browserType: screenshotData.browserType,
-//       device: screenshotData.device,
-//       knobs: screenshotData.knobs,
-//       storyId: data.storyId,
-//     },
-//     host,
-//     false,
-//   );
-
-//   const result = diffImageToScreenshot(
-//     {
-//       browserType: screenshotData.browserType,
-//       fileName: data.fileName,
-//       storyId: data.storyId,
-//       title: screenshotData.title,
-//     },
-//     snapshotData.buffer,
-//   );
-
-//   return result;
-// };
+  return diffs;
+};

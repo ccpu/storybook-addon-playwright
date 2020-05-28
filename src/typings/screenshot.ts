@@ -2,6 +2,7 @@ import { Page } from 'playwright-core';
 import { KnobStoreKnob } from './knobs';
 import { StoryAction } from './story-action';
 import { StoryInfo } from './story-info';
+import { ImageDiffResult } from '../api/typings';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
@@ -39,6 +40,7 @@ export interface ScreenshotData {
   title: string;
   hash: string;
   device?: DeviceDescriptor;
+  imageDiffResult?: ImageDiffResult;
   clip?: {
     width: number;
     height: number;

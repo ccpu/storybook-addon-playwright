@@ -4,18 +4,23 @@ type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+type AsyncApiCallReturnType<T extends Function> = ThenArg<ReturnType<T>>;
+
 export const useAsyncApiCall = <T extends Function>(
   func: T,
   setResponseResult = true,
 ) => {
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState<string>();
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const [result, setResult] = useState<ThenArg<ReturnType<T>>>();
+
+  const [result, setResult] = useState<AsyncApiCallReturnType<T>>();
 
   const makeCall = useCallback(
-    async (...args: ArgsType<T>) => {
+    async (
+      ...args: ArgsType<T>
+    ): Promise<AsyncApiCallReturnType<T> | Error> => {
       setError(undefined);
       setResult(undefined);
       setInProgress(true);

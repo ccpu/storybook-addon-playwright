@@ -19,3 +19,7 @@ export * from './use-global-screenshot-dispatch';
 export * from './use-browser-device';
 export * from './use-async-api-call';
 export * from './use-key-press';
+export * from './use-story-screenshot-imageDiff';
+export * from './use-screenshot-imageDiff';
+export * from './use-app-screenshot-imageDiff';
+export * from './use-global-imageDiff-results';

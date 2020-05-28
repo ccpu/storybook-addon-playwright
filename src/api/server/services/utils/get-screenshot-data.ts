@@ -1,9 +1,9 @@
 import { ScreenshotInfo } from '../../../../typings';
-import { getStoryFileInfo, loadStoryData } from '../../utils';
+import { getStoryPlaywrightFileInfo, loadStoryData } from '../../utils';
 
 export const getScreenshotData = async (info: ScreenshotInfo) => {
-  const fileInfo = getStoryFileInfo(info.fileName);
-  const storyData = await loadStoryData(fileInfo);
+  const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
+  const storyData = await loadStoryData(fileInfo.path);
 
   if (
     !storyData ||

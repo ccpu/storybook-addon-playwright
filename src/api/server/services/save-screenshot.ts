@@ -1,13 +1,13 @@
-import { SaveScreenshotRequest, ImageDiff } from '../../typings';
-import { loadStoryData, getStoryFileInfo } from '../utils';
+import { SaveScreenshotRequest, ImageDiffResult } from '../../typings';
+import { loadStoryData, getStoryPlaywrightFileInfo } from '../utils';
 import { saveStoryFile } from '../utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
 
 export const saveScreenshot = async (
   data: SaveScreenshotRequest,
-): Promise<ImageDiff> => {
-  const fileInfo = getStoryFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo);
+): Promise<ImageDiffResult> => {
+  const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
+  const storyData = await loadStoryData(fileInfo.path);
 
   if (!storyData[data.storyId]) {
     storyData[data.storyId] = {};
@@ -38,22 +38,25 @@ export const saveScreenshot = async (
     );
   }
 
-  storyData[data.storyId].screenshots.push({
-    actions: data.actions && data.actions.length > 0 ? data.actions : undefined,
-    browserType: data.browserType,
-    device:
-      data.device && Object.keys(data.device).length ? data.device : undefined,
-    hash: data.hash,
-    knobs: data.knobs && data.knobs.length > 0 ? data.knobs : undefined,
-    title: data.title,
-  });
-
   const result = diffImageToScreenshot(
     data,
     Buffer.from(data.base64, 'base64'),
   );
 
   if (!oldScreenshotData) {
+    storyData[data.storyId].screenshots.push({
+      actions:
+        data.actions && data.actions.length > 0 ? data.actions : undefined,
+      browserType: data.browserType,
+      device:
+        data.device && Object.keys(data.device).length
+          ? data.device
+          : undefined,
+      hash: data.hash,
+      knobs: data.knobs && data.knobs.length > 0 ? data.knobs : undefined,
+      title: data.title,
+    });
+
     await saveStoryFile(fileInfo, storyData);
   } else {
     result.oldScreenShotTitle = oldScreenshotData.title;

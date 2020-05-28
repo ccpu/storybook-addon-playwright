@@ -1,4 +1,4 @@
-import { ImageDiff } from '../../typings';
+import { ImageDiffResult } from '../../typings';
 import { ScreenshotInfo } from '../../../typings';
 import { getScreenshotData } from './utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
@@ -7,7 +7,7 @@ import { makeScreenshot } from './make-screenshot';
 export const testScreenshot = async (
   data: ScreenshotInfo,
   host: string,
-): Promise<ImageDiff> => {
+): Promise<ImageDiffResult> => {
   const screenshotData = await getScreenshotData(data);
 
   if (!screenshotData) {
@@ -35,6 +35,9 @@ export const testScreenshot = async (
     },
     snapshotData.buffer,
   );
+
+  result.screenshotHash = data.hash;
+  result.storyId = data.storyId;
 
   return result;
 };

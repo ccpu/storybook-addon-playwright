@@ -1,24 +1,20 @@
-const diffImageToSnapshotMock = jest.fn() as jest.Mock<ImageDiff>;
+import { spyOnSaveStoryFile } from '../../../../../__manual_mocks__/utils/save-story-file';
+import { loadStoryDataMock } from '../../../../../__manual_mocks__/utils/load-story-data';
+import { saveScreenshot } from '../save-screenshot';
+import { SaveScreenshotRequest } from '../../../typings';
+import { setConfig } from '../../configs';
+import { Page } from 'playwright-core';
+import * as diffImageToScreenshot from '../diff-image-to-screenshot';
 
-jest.mock('jest-image-snapshot/src/diff-snapshot', () => ({
-  diffImageToSnapshot: diffImageToSnapshotMock,
-}));
-
-const spyOnRmdirSyncMock = jest.fn();
-jest.mock('fs', () => ({
-  rmdirSync: spyOnRmdirSyncMock,
-}));
-
-diffImageToSnapshotMock.mockImplementation(() => {
+jest.mock('../diff-image-to-screenshot');
+const mockDiffImageToScreenshot = diffImageToScreenshot as jest.Mocked<
+  typeof diffImageToScreenshot
+>;
+mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementation(() => {
   return {
     added: true,
   };
 });
-
-import { spyOnSaveStoryFile } from '../../../../../__manual_mocks__/utils/save-story-file';
-import { loadStoryDataMock } from '../../../../../__manual_mocks__/utils/load-story-data';
-import { saveScreenshot } from '../save-screenshot';
-import { SaveScreenshotRequest, ImageDiff } from '../../../typings';
 
 describe('saveScreenshot', () => {
   const getData = (
@@ -40,6 +36,12 @@ describe('saveScreenshot', () => {
       ...data,
     };
   };
+
+  setConfig({
+    getPage: async () => {
+      return {} as Page;
+    },
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -84,7 +86,7 @@ describe('saveScreenshot', () => {
     );
   });
 
-  it('should not screenshot with the same setting (using hash for comparison)', async () => {
+  it('should not have screenshot with the same setting (using hash for comparison)', async () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         resolve({
@@ -106,19 +108,7 @@ describe('saveScreenshot', () => {
     ).rejects.toThrowError('Found screenshot with same setting (bar).');
   });
 
-  it('should remove diff file', async () => {
-    diffImageToSnapshotMock.mockImplementationOnce(() => {
-      return {
-        pass: false,
-      };
-    });
-
-    await saveScreenshot(getData());
-
-    expect(spyOnRmdirSyncMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should pass and return old screenshot title', async () => {
+  it('should not save if dealing with existing screen shot', async () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         resolve({
@@ -129,15 +119,18 @@ describe('saveScreenshot', () => {
       });
     });
 
-    diffImageToSnapshotMock.mockImplementationOnce(() => {
-      return {
-        pass: true,
-      };
-    });
+    mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementationOnce(
+      () => {
+        return {
+          pass: true,
+        };
+      },
+    );
 
     const result = await saveScreenshot(getData());
 
-    expect(spyOnRmdirSyncMock).toHaveBeenCalledTimes(0);
+    expect(spyOnSaveStoryFile).toHaveBeenCalledTimes(0);
+
     expect(result).toStrictEqual({
       oldScreenShotTitle: 'screenshot-title',
       pass: true,

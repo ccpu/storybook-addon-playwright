@@ -10,4 +10,5 @@ export const ROUTE = {
   TEST_APP_SCREENSHOT: '/screenshot/testAll',
   TEST_SCREENSHOT: '/screenshot/test',
   TEST_STORY_SCREENSHOT: '/screenshot/testStory',
+  UPDATE_SCREENSHOT: '/screenshot/update',
 };

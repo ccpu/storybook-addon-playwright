@@ -1,10 +1,8 @@
 import React, { SFC } from 'react';
-import { Dialog, Snackbar } from '../common';
+import { Snackbar } from '../common';
 import { ImageDiffResult } from '../../api/typings';
-import { Divider } from '@material-ui/core';
 import { getImageDiffMessages } from '../../utils';
-import { MapInteractionCSS } from 'react-map-interaction';
-import { useKeyPress } from '../../hooks';
+import { ScreenShotDialog } from './ScreenShotDialog';
 
 export interface ImageDiffMessageProps {
   result: ImageDiffResult;
@@ -13,7 +11,6 @@ export interface ImageDiffMessageProps {
 
 const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
   const { result, onClose } = props;
-  const isPressed = useKeyPress('Control');
 
   if (!result || result.added) return null;
 
@@ -42,13 +39,12 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
   }
 
   return (
-    <Dialog width="100%" open={true} onClose={onClose}>
-      <p style={{ paddingLeft: 20 }}>{getImageDiffMessages(result)}</p>
-      <Divider />
-      <MapInteractionCSS defaultScale={1} disableZoom={!isPressed}>
-        <img src={result.imgSrcString} />
-      </MapInteractionCSS>
-    </Dialog>
+    <ScreenShotDialog
+      title={getImageDiffMessages(result)}
+      imgSrcString={result.imgSrcString}
+      onClose={onClose}
+      open={true}
+    />
   );
 };
 

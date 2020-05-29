@@ -8,12 +8,13 @@ import { getConfigs } from '../configs';
 
 interface SnapshotOptions extends MatchImageSnapshotOptions {
   receivedImageBuffer: Buffer;
+  updateSnapshot?: boolean;
 }
 
 export const diffImageToScreenshot = (
   data: DiffImageToScreenShot,
   imageBuffer: Buffer,
-  options?: SnapshotOptions,
+  options?: Partial<SnapshotOptions>,
 ): ImageDiffResult => {
   const paths = getScreenshotPaths(data);
   const config = getConfigs();
@@ -27,6 +28,7 @@ export const diffImageToScreenshot = (
     snapshotIdentifier: paths.snapshotIdentifier,
     snapshotsDir: paths.snapshotsDir,
     updatePassedSnapshot: false,
+    updateSnapshot: false,
     ...options,
   } as SnapshotOptions) as ImageDiffResult;
 

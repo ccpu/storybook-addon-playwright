@@ -15,6 +15,7 @@ import { ImageDiffResult } from '../../api/typings';
 import { useScreenshotDispatch } from '../../store/screenshot';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
+import { ScreenshotUpdate } from './ScreenshotUpdate';
 
 export interface ScreenshotListItemProps {
   onDelete: (item: ScreenshotData) => void;
@@ -87,6 +88,7 @@ function ScreenshotListItem({
           <Error />
         </IconButton>
       )}
+      <ScreenshotUpdate screenshot={screenshot} storyInput={storyInput} />
       <IconButton
         onClick={handleTestScreenshot}
         size="small"
@@ -106,8 +108,9 @@ function ScreenshotListItem({
           onClose={handleRemoveScreenShotResult}
         />
       )}
-
-      <Loader progressSize={20} position="absolute" open={inProgress} />
+      {inProgress && (
+        <Loader progressSize={20} position="absolute" open={inProgress} />
+      )}
     </ListItemWrapper>
   );
 }

@@ -5,6 +5,7 @@ import {
   ScreenshotData,
   StoryInfo,
   DeviceDescriptor,
+  ScreenshotInfo,
 } from '../../typings';
 
 export interface GetScreenshotRequest {
@@ -21,7 +22,12 @@ export type GetScreenshotResponse = {
 };
 
 export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
-  base64: string;
+  base64?: string;
   hash: string;
   device?: DeviceDescriptor;
+  update?: boolean;
+}
+
+export interface UpdateScreenshot extends ScreenshotInfo {
+  base64?: string;
 }

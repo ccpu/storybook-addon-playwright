@@ -8,3 +8,4 @@ export * from './delete-screenshot';
 export * from './test-screenshot';
 export * from './test-story-screenshots';
 export * from './test-app-screenshots';
+export * from './update-screenshot';

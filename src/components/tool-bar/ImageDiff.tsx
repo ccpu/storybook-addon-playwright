@@ -63,7 +63,6 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
   );
 
   const handleClose = useCallback(() => {
-    console.log('close');
     setAnchorEl(null);
   }, []);
 

@@ -2,13 +2,9 @@ import React, { SFC, useCallback } from 'react';
 import {
   useStoryScreenshotLoader,
   useDeleteScreenshot,
-  // useAsyncApiCall,
   useStoryScreenshotImageDiff,
 } from '../../hooks';
-import {
-  useScreenshotContext,
-  // useScreenshotDispatch,
-} from '../../store/screenshot';
+import { useScreenshotContext } from '../../store/screenshot';
 import { Loader, SnackbarWithRetry, ListWrapper } from '../common';
 import { ScreenshotData } from '../../typings';
 import { ScreenshotListItem } from './ScreenshotListItem';

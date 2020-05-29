@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { SFC, useCallback, useState } from 'react';
 import {
   useStoryScreenshotLoader,
   useDeleteScreenshot,
@@ -9,8 +9,13 @@ import { Loader, SnackbarWithRetry, ListWrapper } from '../common';
 import { ScreenshotData } from '../../typings';
 import { ScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
+import { ScreenshotListView } from './ScreenshotListView';
 
 const ScreenshotList: SFC = () => {
+  const [showPreview, setShowPreview] = useState(false);
+
+  const [selectedItem, setSelectedItem] = useState<string>();
+
   const {
     loading,
     error,
@@ -42,28 +47,51 @@ const ScreenshotList: SFC = () => {
     storyImageDiffError,
   } = useStoryScreenshotImageDiff(storyData);
 
+  const toggleShowPreview = useCallback(() => {
+    setShowPreview(!showPreview);
+    setSelectedItem(undefined);
+  }, [showPreview]);
+
+  const handleItemClick = useCallback((data: ScreenshotData) => {
+    setShowPreview(true);
+    setSelectedItem(data.hash);
+  }, []);
+
   return (
     <>
       <ScreenshotListToolbar
         title="Story Screenshots"
         onTestClick={testStoryScreenShots}
+        onPreviewClick={toggleShowPreview}
       />
       <ListWrapper>
-        {state &&
-          state.screenshots &&
-          state.screenshots.map((screenshot) => (
-            <ScreenshotListItem
-              key={screenshot.hash}
-              screenshot={screenshot}
-              onDelete={handleDelete}
-              storyInput={storyData}
-              imageDiffResult={state.imageDiffResults.find(
-                (x) =>
-                  x.storyId === storyData.id &&
-                  x.screenshotHash === screenshot.hash,
-              )}
-            />
-          ))}
+        {state && state.screenshots && (
+          <>
+            {state.screenshots.map((screenshot) => (
+              <ScreenshotListItem
+                key={screenshot.hash}
+                screenshot={screenshot}
+                onDelete={handleDelete}
+                storyInput={storyData}
+                onClick={handleItemClick}
+                imageDiffResult={state.imageDiffResults.find(
+                  (x) =>
+                    x.storyId === storyData.id &&
+                    x.screenshotHash === screenshot.hash,
+                )}
+              />
+            ))}
+            {showPreview && (
+              <ScreenshotListView
+                screenshots={state.screenshots}
+                onClose={toggleShowPreview}
+                open={true}
+                storyData={storyData}
+                selectedItem={selectedItem}
+              />
+            )}
+          </>
+        )}
 
         <Loader open={loading || deleteLoading || imageDiffTestInProgress} />
         {(error || deleteError) && (

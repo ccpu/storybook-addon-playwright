@@ -33,6 +33,10 @@ export interface ScreenshotInfo extends StoryInfo {
   hash: string;
 }
 
+export interface ScreenShotPreview extends ScreenshotData {
+  base64?: string;
+}
+
 export interface ScreenshotData {
   knobs?: KnobStoreKnob[];
   actions?: StoryAction[];

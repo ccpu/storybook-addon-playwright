@@ -18,9 +18,9 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   const [successSnackbar, setSuccessSnackbar] = useState(false);
 
   const {
-    makeCall,
-    inProgress,
-    clearResult,
+    makeCall: getScreenshotClient,
+    inProgress: getScreenshotInProgress,
+    clearResult: getScreenshotClearResult,
     result: getScreenshotResult,
   } = useAsyncApiCall(getScreenshot);
 
@@ -33,11 +33,11 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   } = useAsyncApiCall(updateScreenshot, false);
 
   const handleUpdate = useCallback(async () => {
-    await makeCall({
+    await getScreenshotClient({
       storyId: storyInput.id,
       ...screenshot,
     });
-  }, [makeCall, screenshot, storyInput]);
+  }, [getScreenshotClient, screenshot, storyInput]);
 
   const handleSaveScreenshot = useCallback(async () => {
     const res = await updateScreenshotClient({
@@ -47,11 +47,11 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
       storyId: storyInput.id,
     });
     if (!(res instanceof Error)) {
-      clearResult();
+      getScreenshotClearResult();
       setSuccessSnackbar(true);
     }
   }, [
-    clearResult,
+    getScreenshotClearResult,
     getScreenshotResult,
     screenshot,
     storyInput,
@@ -61,25 +61,25 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   const handleCloseSuccess = useCallback(() => {
     updateScreenshotClearResult();
     setSuccessSnackbar(false);
-  }, []);
+  }, [updateScreenshotClearResult]);
 
   return (
     <>
       <IconButton onClick={handleUpdate} size="small" title="Update screenshot">
         <Update />
       </IconButton>
-      {(inProgress || updateScreenshotInProgress) && (
+      {(getScreenshotInProgress || updateScreenshotInProgress) && (
         <Loader progressSize={20} position="absolute" open={true} />
       )}
       {getScreenshotResult && (
         <ScreenShotDialog
           title="Following screenshot will be saved, would you like to continue?"
           imgSrcString={'data:image/gif;base64,' + getScreenshotResult.base64}
-          onClose={clearResult}
+          onClose={getScreenshotClearResult}
           open={true}
           actions={() => (
             <>
-              <Button onClick={clearResult} color="primary">
+              <Button onClick={getScreenshotClearResult} color="primary">
                 No
               </Button>
               <Button onClick={handleSaveScreenshot} color="primary" autoFocus>

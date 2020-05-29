@@ -1,6 +1,7 @@
 import React, { SFC, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -19,8 +20,8 @@ const useStyles = makeStyles(
 
 export { useStyles as useListWrapperStyles };
 
-const ListWrapper: SFC = (props) => {
-  const { children } = props;
+const ListWrapper: SFC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
+  const { children, ...rest } = props;
 
   const classes = useStyles();
   const ref = useRef<HTMLDivElement>(null);
@@ -31,7 +32,7 @@ const ListWrapper: SFC = (props) => {
   }, []);
 
   return (
-    <div ref={ref} className={classes.root}>
+    <div ref={ref} {...rest} className={clsx(classes.root, props.className)}>
       <ScrollArea vertical>{children}</ScrollArea>
     </div>
   );

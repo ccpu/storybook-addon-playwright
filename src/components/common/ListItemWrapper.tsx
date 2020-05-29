@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { SFC } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { DragHandle } from './DragHandle';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(
   (theme) => {
     const {
-      palette: { divider, text },
+      palette: { divider, text, primary },
     } = theme;
 
     return {
@@ -24,6 +25,7 @@ const useStyles = makeStyles(
           },
           fontSize: 18,
         },
+
         alignItems: 'center',
         border: '1px solid ' + divider,
         color: text.primary,
@@ -36,6 +38,9 @@ const useStyles = makeStyles(
         paddingLeft: 16,
         position: 'relative',
       },
+      selected: {
+        border: '1px solid ' + primary.main,
+      },
     };
   },
   { name: 'ListItemWrapper' },
@@ -44,16 +49,45 @@ const useStyles = makeStyles(
 export interface ListItemWrapperProps {
   title: string;
   draggable?: boolean;
+  selected?: boolean;
 }
 
-const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
-  const { title, draggable, children } = props;
+const ListItemWrapper: SFC<
+  ListItemWrapperProps & React.HTMLAttributes<HTMLDivElement>
+> = (props) => {
+  const {
+    title,
+    draggable,
+    children,
+    selected,
+    className,
+    onClick,
+    ...rest
+  } = props;
 
   const classes = useStyles();
 
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if ((e.target as HTMLDivElement).classList.contains('clickable')) {
+        onClick(e);
+      }
+    },
+    [onClick],
+  );
+
   return (
-    <div className={classes.root}>
-      <div className={classes.column}>
+    <div
+      className={clsx(
+        classes.root,
+        { [classes.selected]: selected },
+        className,
+        'clickable',
+      )}
+      {...rest}
+      onClick={handleClick}
+    >
+      <div className={clsx(classes.column, 'clickable')}>
         {draggable && <DragHandle />}
         {title}
       </div>

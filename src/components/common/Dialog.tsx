@@ -6,6 +6,7 @@ import {
   DialogTitle,
   IconButton,
   DialogActions,
+  Divider,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -27,6 +28,8 @@ const useStyles = makeStyles(
       },
       paper: {
         height: (p: StyleProps) => p.height,
+        margin: 10,
+        maxHeight: 'calc(100% - 20px)',
         maxWidth: (p: StyleProps) => p.width,
         width: (p: StyleProps) => p.width,
       },
@@ -66,7 +69,12 @@ const Dialog: SFC<DialogProps> = ({
       <IconButton className={classes.closIcon} onClick={onClose}>
         <CloseIcon />
       </IconButton>
-      {title && <DialogTitle>{title}</DialogTitle>}
+      {title && (
+        <>
+          <DialogTitle>{title}</DialogTitle>
+          <Divider />
+        </>
+      )}
       {children}
       {actions && (
         <DialogActions>

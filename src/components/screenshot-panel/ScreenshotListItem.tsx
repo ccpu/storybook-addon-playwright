@@ -16,12 +16,14 @@ import { useScreenshotDispatch } from '../../store/screenshot';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
 import { ScreenshotUpdate } from './ScreenshotUpdate';
+import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotListItemProps {
   onDelete: (item: ScreenshotData) => void;
   screenshot: ScreenshotData;
   storyInput: StoryInput;
   imageDiffResult?: ImageDiffResult;
+  onClick: (item: ScreenshotData) => void;
 }
 
 function ScreenshotListItem({
@@ -29,6 +31,7 @@ function ScreenshotListItem({
   screenshot,
   storyInput,
   imageDiffResult,
+  onClick,
 }: ScreenshotListItemProps) {
   const dispatch = useScreenshotDispatch();
 
@@ -68,8 +71,19 @@ function ScreenshotListItem({
     dispatch({ imageDiffResult, type: 'removeImageDiffResult' });
   }, [dispatch, imageDiffResult, clearResult]);
 
+  const handleItemClick = useCallback(() => {
+    onClick(screenshot);
+  }, [onClick, screenshot]);
+
   return (
-    <ListItemWrapper title={screenshot.title} draggable={false}>
+    <ListItemWrapper
+      onClick={handleItemClick}
+      title={screenshot.title}
+      draggable={false}
+      style={{
+        cursor: 'pointer',
+      }}
+    >
       {imageDiffResult && imageDiffResult.pass && (
         <IconButton
           size="small"
@@ -97,7 +111,7 @@ function ScreenshotListItem({
         <Compare style={{ fontSize: 16 }} />
       </IconButton>
       <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
-
+      <ScreenshotInfo screenshotData={screenshot} />
       {testScreenshotError && (
         <Snackbar open={true} type="error" message={testScreenshotError} />
       )}

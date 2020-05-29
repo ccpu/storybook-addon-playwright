@@ -19,6 +19,7 @@ const DeleteConfirmationButton: SFC<DeleteConfirmationButtonProps> = (
 
   const handleDelete = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.stopPropagation();
       setConfirmAnchorEl(e.currentTarget);
     },
     [],

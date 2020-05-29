@@ -23,7 +23,7 @@ export const testScreenshot = async (
       storyId: data.storyId,
     },
     host,
-    false,
+    true,
   );
 
   const result = diffImageToScreenshot(
@@ -38,6 +38,9 @@ export const testScreenshot = async (
 
   result.screenshotHash = data.hash;
   result.storyId = data.storyId;
+  if (result.pass) {
+    result.imgSrcString = snapshotData.base64;
+  }
 
   return result;
 };

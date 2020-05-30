@@ -9,10 +9,13 @@ export const useDeleteScreenshot = () => {
 
   const dispatch = useScreenshotDispatch();
 
-  const { clearError, error, inProgress, makeCall } = useAsyncApiCall(
-    deleteScreenshotService,
-    false,
-  );
+  const {
+    clearError,
+    error,
+    inProgress,
+    makeCall,
+    ErrorSnackbar,
+  } = useAsyncApiCall(deleteScreenshotService, false);
 
   const deleteScreenshot = useCallback(
     async (hash: string) => {
@@ -21,12 +24,12 @@ export const useDeleteScreenshot = () => {
         hash: hash,
         storyId: storyData.id,
       });
-
+      console.log(result);
       if (!(result instanceof Error))
         dispatch({ screenshotHash: hash, type: 'deleteScreenshot' });
     },
     [dispatch, makeCall, storyData],
   );
 
-  return { clearError, deleteScreenshot, error, inProgress };
+  return { ErrorSnackbar, clearError, deleteScreenshot, error, inProgress };
 };

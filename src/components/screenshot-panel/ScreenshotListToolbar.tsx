@@ -3,15 +3,17 @@ import { Toolbar } from '../common';
 import Compare from '@material-ui/icons/Compare';
 import { IconButton } from '@storybook/components';
 import Visibility from '@material-ui/icons/Visibility';
+import Update from '@material-ui/icons/Update';
 
 export interface ScreenshotListToolbarProps {
   onTestClick: () => void;
   title: string;
   onPreviewClick: () => void;
+  onUpdateClick: () => void;
 }
 
 const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
-  const { title, onTestClick, onPreviewClick } = props;
+  const { title, onTestClick, onPreviewClick, onUpdateClick } = props;
 
   return (
     <Toolbar border={['bottom']}>
@@ -27,6 +29,9 @@ const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
         </IconButton>
         <IconButton onClick={onPreviewClick}>
           <Visibility />
+        </IconButton>
+        <IconButton onClick={onUpdateClick} title="Update story screenshots">
+          <Update />
         </IconButton>
       </div>
     </Toolbar>

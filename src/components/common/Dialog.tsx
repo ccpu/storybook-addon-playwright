@@ -33,6 +33,9 @@ const useStyles = makeStyles(
         maxWidth: (p: StyleProps) => p.width,
         width: (p: StyleProps) => p.width,
       },
+      title: {
+        padding: '12px 24px',
+      },
     };
   },
   { name: 'Dialog' },
@@ -71,7 +74,7 @@ const Dialog: SFC<DialogProps> = ({
       </IconButton>
       {title && (
         <>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle className={classes.title}>{title}</DialogTitle>
           <Divider />
         </>
       )}

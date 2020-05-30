@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, SFC } from 'react';
+import { SnackbarWithRetry } from '../components';
+import React from 'react';
 
 type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
 
@@ -14,6 +16,7 @@ export const useAsyncApiCall = <T extends Function>(
 ) => {
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState<string>();
+  const funcArgs = useRef<ArgsType<T>>(null);
 
   const [result, setResult] = useState<AsyncApiCallReturnType<T>>();
 
@@ -24,6 +27,7 @@ export const useAsyncApiCall = <T extends Function>(
       setError(undefined);
       setResult(undefined);
       setInProgress(true);
+      funcArgs.current = args;
       let data;
       try {
         data = await func(...args);
@@ -47,5 +51,26 @@ export const useAsyncApiCall = <T extends Function>(
     setError(undefined);
   }, []);
 
-  return { clearError, clearResult, error, inProgress, makeCall, result };
+  const ErrorSnackbar: SFC<{ onRetry?: () => void }> = ({ onRetry }) => {
+    if (!error) return null;
+    return (
+      <SnackbarWithRetry
+        type="error"
+        open={true}
+        onClose={clearError}
+        message={error}
+        onRetry={onRetry}
+      />
+    );
+  };
+
+  return {
+    ErrorSnackbar,
+    clearError,
+    clearResult,
+    error,
+    inProgress,
+    makeCall,
+    result,
+  };
 };

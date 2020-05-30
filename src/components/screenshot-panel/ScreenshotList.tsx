@@ -1,7 +1,6 @@
 import React, { SFC, useCallback, useState } from 'react';
 import {
   useStoryScreenshotLoader,
-  useDeleteScreenshot,
   useStoryScreenshotImageDiff,
 } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
@@ -9,12 +8,14 @@ import { Loader, SnackbarWithRetry, ListWrapper } from '../common';
 import { ScreenshotData } from '../../typings';
 import { ScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
-import { ScreenshotListView } from './ScreenshotListView';
+import { StoryScreenshotPreview } from './StoryScreenshotPreview';
+import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 
 const ScreenshotList: SFC = () => {
   const [showPreview, setShowPreview] = useState(false);
 
-  const [selectedItem, setSelectedItem] = useState<string>();
+  const [selectedItem, setSelectedItem] = useState<ScreenshotData>();
+  const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
 
   const {
     loading,
@@ -27,20 +28,6 @@ const ScreenshotList: SFC = () => {
   const state = useScreenshotContext();
 
   const {
-    deleteScreenshot,
-    error: deleteError,
-    inProgress: deleteLoading,
-    clearError: deleteClearError,
-  } = useDeleteScreenshot();
-
-  const handleDelete = useCallback(
-    (screenshot: ScreenshotData) => {
-      deleteScreenshot(screenshot.hash);
-    },
-    [deleteScreenshot],
-  );
-
-  const {
     testStoryScreenShots,
     clearImageDiffError,
     imageDiffTestInProgress,
@@ -49,17 +36,20 @@ const ScreenshotList: SFC = () => {
 
   const toggleShowPreview = useCallback(() => {
     setShowPreview(!showPreview);
-    setSelectedItem(undefined);
   }, [showPreview]);
 
-  const handleItemClick = useCallback((data: ScreenshotData) => {
-    setShowPreview(true);
-    setSelectedItem(data.hash);
+  const toggleSelectedItem = useCallback((data?: ScreenshotData) => {
+    setSelectedItem(data);
   }, []);
+
+  const toggleStoryUpdateClick = useCallback(() => {
+    setUpdateStoryScreenshots(!updateStoryScreenshots);
+  }, [updateStoryScreenshots]);
 
   return (
     <>
       <ScreenshotListToolbar
+        onUpdateClick={toggleStoryUpdateClick}
         title="Story Screenshots"
         onTestClick={testStoryScreenShots}
         onPreviewClick={toggleShowPreview}
@@ -71,9 +61,15 @@ const ScreenshotList: SFC = () => {
               <ScreenshotListItem
                 key={screenshot.hash}
                 screenshot={screenshot}
-                onDelete={handleDelete}
                 storyInput={storyData}
-                onClick={handleItemClick}
+                onClick={toggleSelectedItem}
+                deletePassedImageDiffResult={
+                  !updateStoryScreenshots && !showPreview
+                }
+                showSuccessImageDiff={true}
+                enableImageDiff={true}
+                enableUpdate={true}
+                showImageDiffResultDialog={true}
                 imageDiffResult={state.imageDiffResults.find(
                   (x) =>
                     x.storyId === storyData.id &&
@@ -81,38 +77,47 @@ const ScreenshotList: SFC = () => {
                 )}
               />
             ))}
-            {showPreview && (
-              <ScreenshotListView
-                screenshots={state.screenshots}
-                onClose={toggleShowPreview}
-                open={true}
-                storyData={storyData}
-                selectedItem={selectedItem}
-              />
-            )}
           </>
         )}
-
-        <Loader open={loading || deleteLoading || imageDiffTestInProgress} />
-        {(error || deleteError) && (
-          <SnackbarWithRetry
-            type="error"
-            open={true}
-            onClose={deleteError ? deleteClearError : clearError}
-            message={error || deleteError}
-            onRetry={deleteError ? undefined : doRetry}
-          />
-        )}
-        {storyImageDiffError && (
-          <SnackbarWithRetry
-            open={true}
-            onRetry={testStoryScreenShots}
-            type="error"
-            message={storyImageDiffError}
-            onClose={clearImageDiffError}
-          />
-        )}
+        <Loader open={loading || imageDiffTestInProgress} />
       </ListWrapper>
+
+      {error && (
+        <SnackbarWithRetry
+          type="error"
+          open={true}
+          onClose={clearError}
+          message={error}
+          onRetry={doRetry}
+        />
+      )}
+      {storyImageDiffError && (
+        <SnackbarWithRetry
+          open={true}
+          onRetry={testStoryScreenShots}
+          type="error"
+          message={storyImageDiffError}
+          onClose={clearImageDiffError}
+        />
+      )}
+      {(updateStoryScreenshots || showPreview) && (
+        <StoryScreenshotPreview
+          storyData={storyData}
+          screenshotsData={state.screenshots}
+          onFinish={showPreview ? toggleShowPreview : toggleStoryUpdateClick}
+          updating={updateStoryScreenshots}
+        />
+      )}
+      {selectedItem && (
+        <ScreenshotPreviewDialog
+          screenShotData={selectedItem}
+          storyData={storyData}
+          onClose={toggleSelectedItem}
+          open={true}
+          width="100%"
+          height="100%"
+        />
+      )}
     </>
   );
 };

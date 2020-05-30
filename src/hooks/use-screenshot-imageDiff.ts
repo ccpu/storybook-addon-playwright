@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { useScreenshotDispatch } from '../store/screenshot';
 import { useAsyncApiCall } from './use-async-api-call';
 import { testScreenshot as testScreenshotClient } from '../api/client';
-import { StoryInput } from '../typings';
+import { StoryData } from '../typings';
 
-export const useScreenshotImageDiff = (storyData: StoryInput) => {
+export const useScreenshotImageDiff = (storyData: StoryData) => {
   const dispatch = useScreenshotDispatch();
 
   const {
@@ -12,6 +12,7 @@ export const useScreenshotImageDiff = (storyData: StoryInput) => {
     error: testScreenshotError,
     inProgress,
     clearResult,
+    ErrorSnackbar,
   } = useAsyncApiCall(testScreenshotClient, false);
 
   const testScreenshot = useCallback(
@@ -32,6 +33,7 @@ export const useScreenshotImageDiff = (storyData: StoryInput) => {
   );
 
   return {
+    TestScreenshotErrorSnackbar: ErrorSnackbar,
     clearResult,
     inProgress,
     testScreenshot,

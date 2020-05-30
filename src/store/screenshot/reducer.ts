@@ -59,7 +59,12 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
     case 'addImageDiffResult': {
       return {
         ...state,
-        imageDiffResults: [...state.imageDiffResults, action.imageDiffResult],
+        imageDiffResults: [
+          ...state.imageDiffResults.filter(
+            (x) => x.screenshotHash !== action.imageDiffResult.screenshotHash,
+          ),
+          action.imageDiffResult,
+        ],
       };
     }
     case 'removeImageDiffResult': {
@@ -73,6 +78,9 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
     case 'deleteScreenshot': {
       return {
         ...state,
+        imageDiffResults: state.imageDiffResults.filter(
+          (x) => x !== action.screenshotHash,
+        ),
         screenshots: state.screenshots.filter(
           (x) => x.hash !== action.screenshotHash,
         ),

@@ -13,7 +13,7 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const getInfo = useCallback(() => {
-    const data = screenshotData;
+    const data = { ...screenshotData };
     if (data.knobs) {
       (data as {
         props?: { [k: string]: unknown };
@@ -22,6 +22,13 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = (props) => {
         return obj;
       }, {});
       delete data.knobs;
+    }
+    if (data.actions) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (data as any).actions = data.actions.reduce((obj, action) => {
+        obj[action.name] = action.args;
+        return obj;
+      }, {});
     }
     delete data.hash;
 

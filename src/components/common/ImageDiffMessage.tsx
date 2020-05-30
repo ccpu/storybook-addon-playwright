@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import { Snackbar } from '../common';
 import { ImageDiffResult } from '../../api/typings';
 import { getImageDiffMessages } from '../../utils';
-import { ScreenShotDialog } from './ScreenShotDialog';
+import { ImageDiffPreviewDialog } from './ImageDiffPreviewDialog';
 
 export interface ImageDiffMessageProps {
   result: ImageDiffResult;
@@ -39,9 +39,8 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
   }
 
   return (
-    <ScreenShotDialog
-      title={getImageDiffMessages(result)}
-      imgSrcString={result.imgSrcString}
+    <ImageDiffPreviewDialog
+      imageDiffResult={result}
       onClose={onClose}
       open={true}
     />

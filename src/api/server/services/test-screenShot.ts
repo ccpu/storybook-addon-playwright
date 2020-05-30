@@ -38,9 +38,8 @@ export const testScreenshot = async (
 
   result.screenshotHash = data.hash;
   result.storyId = data.storyId;
-  if (result.pass) {
-    result.imgSrcString = snapshotData.base64;
-  }
+
+  result.newScreenshot = snapshotData.base64;
 
   return result;
 };

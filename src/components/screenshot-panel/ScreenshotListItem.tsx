@@ -2,14 +2,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { IconButton } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
-import {
-  ListItemWrapper,
-  DeleteConfirmationButton,
-  Snackbar,
-  Loader,
-  ImageDiffMessage,
-} from '../common';
-import { ScreenshotData, StoryInput } from '../../typings';
+import { ListItemWrapper, Loader, ImageDiffMessage } from '../common';
+import { ScreenshotData, StoryData } from '../../typings';
 import { useScreenshotImageDiff } from '../../hooks';
 import { ImageDiffResult } from '../../api/typings';
 import { useScreenshotDispatch } from '../../store/screenshot';
@@ -17,44 +11,55 @@ import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
 import { ScreenshotUpdate } from './ScreenshotUpdate';
 import { ScreenshotInfo } from './ScreenshotInfo';
+import { ScreenshotDelete } from './ScreenshotDelete';
 
 export interface ScreenshotListItemProps {
-  onDelete: (item: ScreenshotData) => void;
   screenshot: ScreenshotData;
-  storyInput: StoryInput;
+  storyInput: StoryData;
   imageDiffResult?: ImageDiffResult;
   onClick: (item: ScreenshotData) => void;
+  deletePassedImageDiffResult?: boolean;
+  showSuccessImageDiff?: boolean;
+  enableImageDiff?: boolean;
+  enableUpdate?: boolean;
+  showImageDiffResultDialog?: boolean;
+  selected?: boolean;
 }
 
 function ScreenshotListItem({
-  onDelete,
   screenshot,
   storyInput,
   imageDiffResult,
   onClick,
+  deletePassedImageDiffResult,
+  showSuccessImageDiff,
+  enableImageDiff,
+  enableUpdate,
+  showImageDiffResultDialog,
+  selected,
 }: ScreenshotListItemProps) {
   const dispatch = useScreenshotDispatch();
 
   const [showImageDiffResult, setShowImageDiffResult] = useState(false);
 
   useEffect(() => {
-    if (imageDiffResult && imageDiffResult.pass) {
+    if (
+      deletePassedImageDiffResult &&
+      imageDiffResult &&
+      imageDiffResult.pass
+    ) {
       setTimeout(() => {
         dispatch({ imageDiffResult, type: 'removeImageDiffResult' });
       }, 10000);
     }
-  }, [dispatch, imageDiffResult]);
+  }, [deletePassedImageDiffResult, dispatch, imageDiffResult]);
 
   const {
     clearResult,
     inProgress,
     testScreenshot,
-    testScreenshotError,
+    TestScreenshotErrorSnackbar,
   } = useScreenshotImageDiff(storyInput);
-
-  const handleDeleteConfirmation = useCallback(() => {
-    onDelete(screenshot);
-  }, [screenshot, onDelete]);
 
   const handleTestScreenshot = useCallback(async () => {
     await testScreenshot(screenshot.hash);
@@ -68,8 +73,10 @@ function ScreenshotListItem({
   const handleRemoveScreenShotResult = useCallback(() => {
     clearResult();
     setShowImageDiffResult(false);
-    dispatch({ imageDiffResult, type: 'removeImageDiffResult' });
-  }, [dispatch, imageDiffResult, clearResult]);
+    if (deletePassedImageDiffResult) {
+      dispatch({ imageDiffResult, type: 'removeImageDiffResult' });
+    }
+  }, [clearResult, deletePassedImageDiffResult, dispatch, imageDiffResult]);
 
   const handleItemClick = useCallback(() => {
     onClick(screenshot);
@@ -80,11 +87,12 @@ function ScreenshotListItem({
       onClick={handleItemClick}
       title={screenshot.title}
       draggable={false}
+      selected={selected}
       style={{
         cursor: 'pointer',
       }}
     >
-      {imageDiffResult && imageDiffResult.pass && (
+      {showSuccessImageDiff && imageDiffResult && imageDiffResult.pass && (
         <IconButton
           size="small"
           color="primary"
@@ -102,26 +110,32 @@ function ScreenshotListItem({
           <Error />
         </IconButton>
       )}
-      <ScreenshotUpdate screenshot={screenshot} storyInput={storyInput} />
-      <IconButton
-        onClick={handleTestScreenshot}
-        size="small"
-        title="Run diff test"
-      >
-        <Compare style={{ fontSize: 16 }} />
-      </IconButton>
-      <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
-      <ScreenshotInfo screenshotData={screenshot} />
-      {testScreenshotError && (
-        <Snackbar open={true} type="error" message={testScreenshotError} />
+      {enableUpdate && (
+        <ScreenshotUpdate screenshot={screenshot} storyData={storyInput} />
       )}
 
-      {showImageDiffResult && (
+      {enableImageDiff && (
+        <IconButton
+          onClick={handleTestScreenshot}
+          size="small"
+          title="Run diff test"
+        >
+          <Compare style={{ fontSize: 16 }} />
+        </IconButton>
+      )}
+
+      <ScreenshotDelete screenshot={screenshot} />
+      <ScreenshotInfo screenshotData={screenshot} />
+
+      <TestScreenshotErrorSnackbar />
+
+      {showImageDiffResult && showImageDiffResultDialog && (
         <ImageDiffMessage
           result={imageDiffResult}
           onClose={handleRemoveScreenShotResult}
         />
       )}
+
       {inProgress && (
         <Loader progressSize={20} position="absolute" open={inProgress} />
       )}

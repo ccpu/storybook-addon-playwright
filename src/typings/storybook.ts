@@ -1,6 +1,6 @@
 // import { StoriesRaw } from '@storybook/api/dist/modules/stories';
 
-export type StoryInput = {
+export type StoryData = {
   id: string;
   name: string;
   kind: string;

@@ -16,6 +16,7 @@ export interface ImageDiffResult {
   oldScreenShotTitle?: string;
   screenshotHash?: string;
   storyId?: string;
+  newScreenshot?: string;
 }
 
 export interface DiffImageToScreenShot extends StoryInfo {

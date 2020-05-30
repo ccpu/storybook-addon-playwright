@@ -17,4 +17,6 @@ export * from './DeleteConfirmationButton';
 export * from './CheckBox';
 export * from './DeviceList';
 export * from './ImageDiffMessage';
-export * from './ScreenshotPreview';
+export * from './ImagePreview';
+export * from './ImageDiffPreview';
+export * from './ImageDiffPreviewDialog';

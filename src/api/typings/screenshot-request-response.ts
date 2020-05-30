@@ -19,6 +19,7 @@ export interface GetScreenshotRequest {
 export type GetScreenshotResponse = {
   base64: string;
   error: string;
+  hash: string;
 };
 
 export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {

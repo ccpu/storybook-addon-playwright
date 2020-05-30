@@ -1,28 +1,30 @@
 import React, { SFC, useCallback, useState } from 'react';
-import { ScreenshotData, StoryInput } from '../../typings';
+import { ScreenshotData, StoryData } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
 import { useAsyncApiCall } from '../../hooks';
-import { getScreenshot, updateScreenshot } from '../../api/client';
-import { Loader, Snackbar } from '../common';
-import { ScreenShotDialog } from '../common/ScreenShotDialog';
+import {
+  updateScreenshot,
+  testScreenshot as testScreenshotClient,
+} from '../../api/client';
+import { Loader, Snackbar, ImageDiffPreviewDialog } from '../common';
 
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;
-  storyInput: StoryInput;
+  storyData: StoryData;
 }
 
 const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
-  const { storyInput, screenshot } = props;
+  const { storyData, screenshot } = props;
 
   const [successSnackbar, setSuccessSnackbar] = useState(false);
 
   const {
-    makeCall: getScreenshotClient,
+    makeCall: testScreenshot,
     inProgress: getScreenshotInProgress,
     clearResult: getScreenshotClearResult,
     result: getScreenshotResult,
-  } = useAsyncApiCall(getScreenshot);
+  } = useAsyncApiCall(testScreenshotClient);
 
   const {
     makeCall: updateScreenshotClient,
@@ -33,18 +35,19 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   } = useAsyncApiCall(updateScreenshot, false);
 
   const handleUpdate = useCallback(async () => {
-    await getScreenshotClient({
-      storyId: storyInput.id,
-      ...screenshot,
+    await testScreenshot({
+      fileName: storyData.parameters.fileName,
+      hash: screenshot.hash,
+      storyId: storyData.id,
     });
-  }, [getScreenshotClient, screenshot, storyInput]);
+  }, [screenshot.hash, storyData, testScreenshot]);
 
   const handleSaveScreenshot = useCallback(async () => {
     const res = await updateScreenshotClient({
-      base64: getScreenshotResult.base64,
-      fileName: storyInput.parameters.fileName,
+      base64: getScreenshotResult.newScreenshot,
+      fileName: storyData.parameters.fileName,
       hash: screenshot.hash,
-      storyId: storyInput.id,
+      storyId: storyData.id,
     });
     if (!(res instanceof Error)) {
       getScreenshotClearResult();
@@ -54,7 +57,7 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     getScreenshotClearResult,
     getScreenshotResult,
     screenshot,
-    storyInput,
+    storyData,
     updateScreenshotClient,
   ]);
 
@@ -72,9 +75,9 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
         <Loader progressSize={20} position="absolute" open={true} />
       )}
       {getScreenshotResult && (
-        <ScreenShotDialog
+        <ImageDiffPreviewDialog
           title="Following screenshot will be saved, would you like to continue?"
-          imgSrcString={'data:image/gif;base64,' + getScreenshotResult.base64}
+          imageDiffResult={getScreenshotResult}
           onClose={getScreenshotClearResult}
           open={true}
           actions={() => (

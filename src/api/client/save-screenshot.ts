@@ -6,8 +6,6 @@ export const saveScreenshot = async (
 ): Promise<ImageDiffResult> => {
   const restEndpoint = getEndpoint('SAVE_SCREENSHOT');
 
-  delete data.imageDiffResult;
-
   const resData = await fetch(restEndpoint, {
     body: JSON.stringify(data),
     headers: {

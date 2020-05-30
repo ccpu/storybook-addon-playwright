@@ -1,10 +1,10 @@
-import { StoryData } from '../../../typings';
+import { StoryPlaywrightData } from '../../../typings';
 import { readFile } from 'jsonfile';
 import fs from 'fs';
 
 export const loadStoryData = async (
   storyDataPath: string,
-): Promise<StoryData> => {
+): Promise<StoryPlaywrightData> => {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(storyDataPath)) {
       resolve({});

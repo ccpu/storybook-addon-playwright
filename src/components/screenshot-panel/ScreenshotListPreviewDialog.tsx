@@ -24,24 +24,32 @@ const useStyles = makeStyles(
         display: 'flex',
         flexDirection: 'row',
         height: 'calc(100% - 70px) !important',
+        position: 'relative',
         width: '100%',
       },
     };
   },
-  { name: 'ScreenshotPreviewList' },
+  { name: 'ScreenshotListPreviewDialog' },
 );
 
-export interface ScreenshotPreviewListProps {
+export interface ScreenshotListPreviewDialogProps {
   screenshots: ScreenshotData[];
   storyData: StoryData;
   selectedItem?: string;
   title?: string;
 }
 
-const ScreenshotPreviewList: SFC<ScreenshotPreviewListProps & DialogProps> = (
-  props,
-) => {
-  const { screenshots, storyData, selectedItem, title, ...rest } = props;
+const ScreenshotListPreviewDialog: SFC<
+  ScreenshotListPreviewDialogProps & DialogProps
+> = (props) => {
+  const {
+    screenshots,
+    storyData,
+    selectedItem,
+    title,
+    children,
+    ...rest
+  } = props;
 
   const [currentItem, setCurrentItem] = useState<{
     imageDiff: ImageDiffResult;
@@ -97,6 +105,7 @@ const ScreenshotPreviewList: SFC<ScreenshotPreviewListProps & DialogProps> = (
           ? capitalize(currentItem.data.title)
           : 'Loading ...'
       }
+      subtitle={title && currentItem && currentItem.data.title}
       height="100%"
       {...rest}
     >
@@ -122,11 +131,12 @@ const ScreenshotPreviewList: SFC<ScreenshotPreviewListProps & DialogProps> = (
         {currentItem && currentItem.imageDiff && (
           <ImageDiffPreview imageDiffResult={currentItem.imageDiff} />
         )}
+        {children}
       </div>
     </Dialog>
   );
 };
 
-ScreenshotPreviewList.displayName = 'ScreenshotPreviewList';
+ScreenshotListPreviewDialog.displayName = 'ScreenshotListPreviewDialog';
 
-export { ScreenshotPreviewList };
+export { ScreenshotListPreviewDialog };

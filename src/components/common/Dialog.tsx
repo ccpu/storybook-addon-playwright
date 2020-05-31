@@ -22,9 +22,6 @@ const useStyles = makeStyles(
 
     return {
       closIcon: {
-        position: 'absolute',
-        right: 4,
-        top: 4,
         zIndex: 100,
       },
       input: {
@@ -42,7 +39,14 @@ const useStyles = makeStyles(
           fontSize: 17,
         },
         color: primary.main,
+        display: 'flex',
+        justifyContent: 'space-between',
         padding: '12px 24px',
+      },
+      titleActions: {
+        marginBottom: '-10px',
+        marginRight: '-18px',
+        marginTop: '-8px',
       },
     };
   },
@@ -53,7 +57,8 @@ export interface DialogProps extends MuDialogProps, StyleProps {
   title?: string;
   subtitle?: string;
   onClose: () => void;
-  actions?: React.ComponentType;
+  footerActions?: React.ComponentType;
+  titleActions?: React.ComponentType;
 }
 
 const Dialog: SFC<DialogProps> = ({
@@ -62,13 +67,16 @@ const Dialog: SFC<DialogProps> = ({
   height = 'auto',
   title,
   onClose,
-  actions,
+  footerActions,
   subtitle,
+  titleActions,
   ...rest
 }) => {
   const classes = useStyles({ height, width });
 
-  const ActionsComponent = actions;
+  const ActionsComponent = footerActions;
+
+  const TitleActions = titleActions;
 
   return (
     <MuDialog
@@ -79,24 +87,27 @@ const Dialog: SFC<DialogProps> = ({
       onClose={onClose}
       {...rest}
     >
-      <IconButton
-        color="primary"
-        className={classes.closIcon}
-        onClick={onClose}
-      >
-        <CloseIcon />
-      </IconButton>
-      {title && (
-        <>
-          <DialogTitle disableTypography={true} className={classes.title}>
-            <Typography variant="h6">{title}</Typography>
-            {subtitle && <Typography variant="body1">{subtitle}</Typography>}
-          </DialogTitle>
-          <Divider />
-        </>
-      )}
+      <DialogTitle disableTypography={true} className={classes.title}>
+        <div>
+          {title && <Typography variant="h6">{title}</Typography>}
+          {subtitle && <Typography variant="body1">{subtitle}</Typography>}
+        </div>
+        <div className={classes.titleActions}>
+          {TitleActions && <TitleActions />}
+          <IconButton
+            color="primary"
+            className={classes.closIcon}
+            onClick={onClose}
+            // size="small"
+          >
+            <CloseIcon />
+          </IconButton>
+        </div>
+      </DialogTitle>
+      <Divider />
+
       {children}
-      {actions && (
+      {footerActions && (
         <DialogActions>
           <ActionsComponent />
         </DialogActions>

@@ -46,6 +46,8 @@ const ScreenshotList: SFC = () => {
     setUpdateStoryScreenshots(!updateStoryScreenshots);
   }, [updateStoryScreenshots]);
 
+  const hasScreenshot = state.screenshots && state.screenshots.length > 0;
+
   return (
     <>
       <ScreenshotListToolbar
@@ -53,9 +55,10 @@ const ScreenshotList: SFC = () => {
         title="Story Screenshots"
         onTestClick={testStoryScreenShots}
         onPreviewClick={toggleShowPreview}
+        hasScreenShot={hasScreenshot}
       />
       <ListWrapper>
-        {state && state.screenshots && (
+        {state && state.screenshots ? (
           <>
             {state.screenshots.map((screenshot) => (
               <ScreenshotListItem
@@ -78,6 +81,10 @@ const ScreenshotList: SFC = () => {
               />
             ))}
           </>
+        ) : (
+          <div style={{ marginTop: 30, textAlign: 'center' }}>
+            <div> No screenshot has been found!</div>
+          </div>
         )}
         <Loader open={loading || imageDiffTestInProgress} />
       </ListWrapper>

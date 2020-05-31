@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, SFC } from 'react';
-import { SnackbarWithRetry } from '../components';
+import { SnackbarWithRetry, Snackbar } from '../components';
 import React from 'react';
 
 type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
@@ -17,6 +17,7 @@ export const useAsyncApiCall = <T extends Function>(
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState<string>();
   const funcArgs = useRef<ArgsType<T>>(null);
+  const [success, setSuccess] = useState(false);
 
   const [result, setResult] = useState<AsyncApiCallReturnType<T>>();
 
@@ -33,6 +34,7 @@ export const useAsyncApiCall = <T extends Function>(
         data = await func(...args);
         if (setResponseResult) setResult(data);
         setInProgress(false);
+        setSuccess(true);
       } catch (error) {
         setInProgress(false);
         setError(error.message);
@@ -51,7 +53,9 @@ export const useAsyncApiCall = <T extends Function>(
     setError(undefined);
   }, []);
 
-  const ErrorSnackbar: SFC<{ onRetry?: () => void }> = ({ onRetry }) => {
+  const ErrorSnackbar: SFC<{
+    onRetry?: () => void;
+  }> = ({ onRetry }) => {
     if (!error) return null;
     return (
       <SnackbarWithRetry
@@ -64,8 +68,32 @@ export const useAsyncApiCall = <T extends Function>(
     );
   };
 
+  const SuccessSnackbar: SFC<{
+    message: string;
+    clearResultOnClose?: boolean;
+  }> = ({ message, clearResultOnClose }) => {
+    if (!success) return null;
+    const handleClose = () => {
+      setSuccess(false);
+      if (clearResultOnClose) {
+        clearResult();
+      }
+    };
+    return (
+      <Snackbar
+        type="success"
+        title="Success"
+        open={true}
+        onClose={handleClose}
+        message={message}
+        autoHideDuration={4000}
+      />
+    );
+  };
+
   return {
     ErrorSnackbar,
+    SuccessSnackbar,
     clearError,
     clearResult,
     error,

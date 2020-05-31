@@ -49,7 +49,10 @@ function ScreenshotListItem({
       imageDiffResult.pass
     ) {
       setTimeout(() => {
-        dispatch({ imageDiffResult, type: 'removeImageDiffResult' });
+        dispatch({
+          screenshotHash: imageDiffResult.screenshotHash,
+          type: 'removeImageDiffResult',
+        });
       }, 10000);
     }
   }, [deletePassedImageDiffResult, dispatch, imageDiffResult]);
@@ -74,7 +77,10 @@ function ScreenshotListItem({
     clearResult();
     setShowImageDiffResult(false);
     if (deletePassedImageDiffResult) {
-      dispatch({ imageDiffResult, type: 'removeImageDiffResult' });
+      dispatch({
+        screenshotHash: imageDiffResult.screenshotHash,
+        type: 'removeImageDiffResult',
+      });
     }
   }, [clearResult, deletePassedImageDiffResult, dispatch, imageDiffResult]);
 
@@ -133,6 +139,14 @@ function ScreenshotListItem({
         <ImageDiffMessage
           result={imageDiffResult}
           onClose={handleRemoveScreenShotResult}
+          title={screenshot.title}
+          titleActions={() => (
+            <ScreenshotInfo
+              color="primary"
+              size="medium"
+              screenshotData={screenshot}
+            />
+          )}
         />
       )}
 

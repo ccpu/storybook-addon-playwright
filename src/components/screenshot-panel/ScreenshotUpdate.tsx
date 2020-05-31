@@ -1,13 +1,11 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { ScreenshotData, StoryData } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
-import { useAsyncApiCall } from '../../hooks';
-import {
-  updateScreenshot,
-  testScreenshot as testScreenshotClient,
-} from '../../api/client';
-import { Loader, Snackbar, ImageDiffPreviewDialog } from '../common';
+import { useAsyncApiCall, useScreenshotUpdate } from '../../hooks';
+import { testScreenshot as testScreenshotClient } from '../../api/client';
+import { Loader, ImageDiffPreviewDialog } from '../common';
+import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;
@@ -17,7 +15,12 @@ export interface ScreenshotUpdateProps {
 const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   const { storyData, screenshot } = props;
 
-  const [successSnackbar, setSuccessSnackbar] = useState(false);
+  const {
+    UpdateScreenshotErrorSnackbar,
+    updateScreenshot,
+    updateScreenshotInProgress,
+    UpdateScreenshotSuccessSnackbar,
+  } = useScreenshotUpdate();
 
   const {
     makeCall: testScreenshot,
@@ -25,14 +28,6 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     clearResult: getScreenshotClearResult,
     result: getScreenshotResult,
   } = useAsyncApiCall(testScreenshotClient);
-
-  const {
-    makeCall: updateScreenshotClient,
-    inProgress: updateScreenshotInProgress,
-    clearResult: updateScreenshotClearResult,
-    error: updateScreenshotError,
-    clearError: updateScreenshotClearError,
-  } = useAsyncApiCall(updateScreenshot, false);
 
   const handleUpdate = useCallback(async () => {
     await testScreenshot({
@@ -42,29 +37,15 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     });
   }, [screenshot.hash, storyData, testScreenshot]);
 
-  const handleSaveScreenshot = useCallback(async () => {
-    const res = await updateScreenshotClient({
-      base64: getScreenshotResult.newScreenshot,
-      fileName: storyData.parameters.fileName,
-      hash: screenshot.hash,
-      storyId: storyData.id,
-    });
-    if (!(res instanceof Error)) {
-      getScreenshotClearResult();
-      setSuccessSnackbar(true);
-    }
+  const handleSaveScreenshotClick = useCallback(async () => {
+    await updateScreenshot(screenshot.hash, getScreenshotResult.newScreenshot);
+    getScreenshotClearResult();
   }, [
     getScreenshotClearResult,
     getScreenshotResult,
     screenshot,
-    storyData,
-    updateScreenshotClient,
+    updateScreenshot,
   ]);
-
-  const handleCloseSuccess = useCallback(() => {
-    updateScreenshotClearResult();
-    setSuccessSnackbar(false);
-  }, [updateScreenshotClearResult]);
 
   return (
     <>
@@ -81,37 +62,32 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
           imageDiffResult={getScreenshotResult}
           onClose={getScreenshotClearResult}
           open={true}
-          actions={() => (
+          titleActions={() => (
+            <ScreenshotInfo
+              color="primary"
+              size="medium"
+              screenshotData={screenshot}
+            />
+          )}
+          footerActions={() => (
             <>
               <Button onClick={getScreenshotClearResult} color="primary">
                 No
               </Button>
-              <Button onClick={handleSaveScreenshot} color="primary" autoFocus>
+              <Button
+                onClick={handleSaveScreenshotClick}
+                color="primary"
+                autoFocus
+              >
                 Yes
               </Button>
             </>
           )}
         />
       )}
-      {successSnackbar && (
-        <Snackbar
-          type="success"
-          title="Success"
-          message="Screenshot updated successfully."
-          open={true}
-          onClose={handleCloseSuccess}
-          autoHideDuration={4000}
-        />
-      )}
-      {updateScreenshotError && (
-        <Snackbar
-          type="error"
-          title="Error"
-          message={updateScreenshotError}
-          open={true}
-          onClose={updateScreenshotClearError}
-        />
-      )}
+      <Loader open={updateScreenshotInProgress} />
+      <UpdateScreenshotErrorSnackbar />
+      <UpdateScreenshotSuccessSnackbar message="Screenshot saved Successfully." />
     </>
   );
 };

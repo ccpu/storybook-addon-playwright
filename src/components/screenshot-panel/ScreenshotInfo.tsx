@@ -1,15 +1,20 @@
 import React, { SFC, useCallback } from 'react';
-import InfoOutlined from '@material-ui/icons/InfoOutlined';
+import Settings from '@material-ui/icons/Settings';
 import { IconButton, Popover } from '@material-ui/core';
 import { ScreenshotData } from '../../typings';
 import ReactJson from 'react-json-view';
 
 export interface ScreenshotInfoProps {
   screenshotData: ScreenshotData;
+  size?: 'small' | 'medium';
+  color?: 'inherit' | 'primary' | 'secondary' | 'default';
 }
 
-const ScreenshotInfo: SFC<ScreenshotInfoProps> = (props) => {
-  const { screenshotData } = props;
+const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
+  screenshotData,
+  size = 'small',
+  color,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const getInfo = useCallback(() => {
@@ -44,8 +49,8 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = (props) => {
 
   return (
     <>
-      <IconButton onClick={togglePopover} size="small">
-        <InfoOutlined />
+      <IconButton color={color} onClick={togglePopover} size={size}>
+        <Settings />
       </IconButton>
       <Popover
         anchorEl={anchorEl}

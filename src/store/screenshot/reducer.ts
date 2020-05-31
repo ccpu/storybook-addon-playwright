@@ -21,7 +21,7 @@ export type Action =
     }
   | {
       type: 'removeImageDiffResult';
-      imageDiffResult: ImageDiffResult;
+      screenshotHash: string;
     }
   | {
       type: 'addScreenshot';
@@ -71,7 +71,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         imageDiffResults: state.imageDiffResults.filter(
-          (x) => x !== action.imageDiffResult,
+          (x) => x.screenshotHash !== action.screenshotHash,
         ),
       };
     }

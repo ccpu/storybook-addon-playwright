@@ -3,6 +3,7 @@ import { ScreenshotData, StoryData } from '../../typings';
 import { useAsyncApiCall } from '../../hooks';
 import { ImageDiffPreviewDialog, Loader, DialogProps } from '../common';
 import { testScreenshot } from '../../api/client';
+import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotPreviewDialogProps extends DialogProps {
   screenShotData: ScreenshotData;
@@ -41,6 +42,13 @@ const ScreenshotPreviewDialog: SFC<ScreenshotPreviewDialogProps> = (props) => {
           imageDiffResult={result}
           open={true}
           onClose={handleClose}
+          titleActions={() => (
+            <ScreenshotInfo
+              color="primary"
+              size="medium"
+              screenshotData={screenShotData}
+            />
+          )}
           {...rest}
         />
       )}

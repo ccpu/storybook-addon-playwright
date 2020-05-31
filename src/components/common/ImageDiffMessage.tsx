@@ -2,15 +2,20 @@ import React, { SFC } from 'react';
 import { Snackbar } from '../common';
 import { ImageDiffResult } from '../../api/typings';
 import { getImageDiffMessages } from '../../utils';
-import { ImageDiffPreviewDialog } from './ImageDiffPreviewDialog';
+import {
+  ImageDiffPreviewDialog,
+  ImageDiffPreviewDialogProps,
+} from './ImageDiffPreviewDialog';
 
-export interface ImageDiffMessageProps {
+export interface ImageDiffMessageProps
+  extends Partial<ImageDiffPreviewDialogProps> {
   result: ImageDiffResult;
   onClose: () => void;
+  title?: string;
 }
 
 const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
-  const { result, onClose } = props;
+  const { title, result, onClose, ...rest } = props;
 
   if (!result || result.added) return null;
 
@@ -44,6 +49,8 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
       onClose={onClose}
       open={true}
       activeTab="imageDiff"
+      title={title}
+      {...rest}
     />
   );
 };

@@ -10,28 +10,35 @@ export interface ScreenshotListToolbarProps {
   title: string;
   onPreviewClick: () => void;
   onUpdateClick: () => void;
+  hasScreenShot?: boolean;
 }
 
 const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
-  const { title, onTestClick, onPreviewClick, onUpdateClick } = props;
-
+  const {
+    hasScreenShot,
+    title,
+    onTestClick,
+    onPreviewClick,
+    onUpdateClick,
+  } = props;
+  if (!hasScreenShot) return null;
   return (
     <Toolbar border={['bottom']}>
       <div className="left">
         <div title={title}>Story Screenshots</div>
       </div>
       <div className="right">
+        <IconButton onClick={onUpdateClick} title="Update story screenshots">
+          <Update />
+        </IconButton>
         <IconButton
           onClick={onTestClick}
           title="Run diff test for story screenshots"
         >
-          <Compare viewBox="0 0 28 28" />
+          <Compare viewBox="0 -1 27 27" />
         </IconButton>
-        <IconButton onClick={onPreviewClick}>
+        <IconButton onClick={onPreviewClick} title="Display story screenshots">
           <Visibility />
-        </IconButton>
-        <IconButton onClick={onUpdateClick} title="Update story screenshots">
-          <Update />
         </IconButton>
       </div>
     </Toolbar>

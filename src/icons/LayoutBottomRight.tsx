@@ -8,6 +8,7 @@ const LayoutBottomRight: SFC<React.SVGProps<SVGSVGElement>> = (props) => {
       viewBox="2 6 20 20"
       enableBackground="new 0 0 129 129"
       height={22}
+      fill="currentColor"
       style={{
         fill: 'currentColor',
         transform: 'rotate(180deg)',

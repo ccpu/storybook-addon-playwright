@@ -1,27 +1,13 @@
 import React, { SFC, useCallback } from 'react';
 import { BrowserTypes } from '../../typings';
-import { Firefox, Browser, Chrome, Webkit } from '../../icons';
 import { IconButton } from '@storybook/components';
+import { BrowserIcon } from '../common/BrowserIcon';
 
 export interface BrowserIconProps {
   browserType: BrowserTypes;
   onClick: (browserType: BrowserTypes) => void;
   active: boolean;
 }
-
-const BrowserIcon: SFC<{ browserType?: string }> = (props) => {
-  switch (props.browserType) {
-    case 'chromium':
-      return <Chrome />;
-    case 'firefox':
-      return <Firefox />;
-    case 'webkit':
-      return <Webkit />;
-    default:
-      return <Browser />;
-  }
-};
-BrowserIcon.displayName = 'BrowserIcon';
 
 const BrowserIconButton: SFC<BrowserIconProps> = (props) => {
   const { browserType, onClick, active } = props;
@@ -39,4 +25,4 @@ const BrowserIconButton: SFC<BrowserIconProps> = (props) => {
 
 BrowserIconButton.displayName = 'BrowserIconButton';
 
-export { BrowserIconButton, BrowserIcon };
+export { BrowserIconButton };

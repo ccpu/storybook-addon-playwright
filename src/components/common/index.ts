@@ -20,3 +20,4 @@ export * from './ImageDiffMessage';
 export * from './ImagePreview';
 export * from './ImageDiffPreview';
 export * from './ImageDiffPreviewDialog';
+export * from './BrowserIcon';

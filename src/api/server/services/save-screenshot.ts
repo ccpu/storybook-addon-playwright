@@ -2,6 +2,7 @@ import { SaveScreenshotRequest, ImageDiffResult } from '../../typings';
 import { loadStoryData, getStoryPlaywrightFileInfo } from '../utils';
 import { saveStoryFile } from '../utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
+import { deleteScreenshot } from './delete-screenshot';
 
 export const saveScreenshot = async (
   data: SaveScreenshotRequest,
@@ -15,6 +16,17 @@ export const saveScreenshot = async (
 
   if (!storyData[data.storyId].screenshots) {
     storyData[data.storyId].screenshots = [];
+  }
+
+  if (data.updateStringShotHash) {
+    storyData[data.storyId].screenshots = storyData[
+      data.storyId
+    ].screenshots.filter((x) => x.hash !== data.updateStringShotHash);
+    await deleteScreenshot({
+      fileName: data.fileName,
+      hash: data.updateStringShotHash,
+      storyId: data.storyId,
+    });
   }
 
   const oldScreenshotData = storyData[data.storyId].screenshots.find(

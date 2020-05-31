@@ -38,6 +38,11 @@ export type Action =
       storyId: string;
     }
   | {
+      type: 'addActionSet';
+      actionSet: ActionSet;
+      storyId: string;
+    }
+  | {
       type: 'deleteActionSet';
       actionSetId: string;
       storyId: string;
@@ -112,7 +117,18 @@ const updateStoryActionSet = (
 export function mainReducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
     case 'addActionSetList': {
+      //       return updateStoryActionSet(state, action.storyId, [
+      //   ...(state[action.storyId] ? state[action.storyId].actionSets : []),
+      //   action.actionSet,
+      // ]);
       return updateStoryActionSet(state, action.storyId, action.actionSets);
+    }
+
+    case 'addActionSet': {
+      return updateStoryActionSet(state, action.storyId, [
+        ...(state[action.storyId] ? state[action.storyId].actionSets : []),
+        action.actionSet,
+      ]);
     }
 
     case 'clearCurrentActionSets': {

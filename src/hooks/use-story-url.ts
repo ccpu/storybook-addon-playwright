@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useStorybookState } from '@storybook/api';
-import { constructUrl } from '../utils';
+import { constructStoryUrl } from '../utils';
 
 export const useStoryUrl = () => {
   const state = useStorybookState();
   const [url, setUrl] = useState<string>();
 
   useEffect(() => {
-    let newUrl = constructUrl(state.location.host, state.storyId);
+    let newUrl = constructStoryUrl(state.location.host, state.storyId);
 
     const queryKeys = Object.keys(state.customQueryParams);
     if (queryKeys.length > 0) {

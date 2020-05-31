@@ -59,6 +59,7 @@ export interface DialogProps extends MuDialogProps, StyleProps {
   onClose: () => void;
   footerActions?: React.ComponentType;
   titleActions?: React.ComponentType;
+  enableCloseButton?: boolean;
 }
 
 const Dialog: SFC<DialogProps> = ({
@@ -70,6 +71,7 @@ const Dialog: SFC<DialogProps> = ({
   footerActions,
   subtitle,
   titleActions,
+  enableCloseButton = true,
   ...rest
 }) => {
   const classes = useStyles({ height, width });
@@ -87,24 +89,30 @@ const Dialog: SFC<DialogProps> = ({
       onClose={onClose}
       {...rest}
     >
-      <DialogTitle disableTypography={true} className={classes.title}>
-        <div>
-          {title && <Typography variant="h6">{title}</Typography>}
-          {subtitle && <Typography variant="body1">{subtitle}</Typography>}
-        </div>
-        <div className={classes.titleActions}>
-          {TitleActions && <TitleActions />}
-          <IconButton
-            color="primary"
-            className={classes.closIcon}
-            onClick={onClose}
-            // size="small"
-          >
-            <CloseIcon />
-          </IconButton>
-        </div>
-      </DialogTitle>
-      <Divider />
+      {(TitleActions || enableCloseButton || title || subtitle) && (
+        <>
+          <DialogTitle disableTypography={true} className={classes.title}>
+            <div>
+              {title && <Typography variant="h6">{title}</Typography>}
+              {subtitle && <Typography variant="body1">{subtitle}</Typography>}
+            </div>
+
+            <div className={classes.titleActions}>
+              {TitleActions && <TitleActions />}
+              {enableCloseButton && (
+                <IconButton
+                  color="primary"
+                  className={classes.closIcon}
+                  onClick={onClose}
+                >
+                  <CloseIcon />
+                </IconButton>
+              )}
+            </div>
+          </DialogTitle>
+          <Divider />
+        </>
+      )}
 
       {children}
       {footerActions && (

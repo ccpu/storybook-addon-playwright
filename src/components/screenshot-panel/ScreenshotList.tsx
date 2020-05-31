@@ -58,13 +58,13 @@ const ScreenshotList: SFC = () => {
         hasScreenShot={hasScreenshot}
       />
       <ListWrapper>
-        {state && state.screenshots ? (
+        {state && state.screenshots.length > 0 ? (
           <>
             {state.screenshots.map((screenshot) => (
               <ScreenshotListItem
                 key={screenshot.hash}
                 screenshot={screenshot}
-                storyInput={storyData}
+                storyData={storyData}
                 onClick={toggleSelectedItem}
                 deletePassedImageDiffResult={
                   !updateStoryScreenshots && !showPreview

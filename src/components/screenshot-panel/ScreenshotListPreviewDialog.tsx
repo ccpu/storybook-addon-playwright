@@ -116,7 +116,7 @@ const ScreenshotListPreviewDialog: SFC<
               <ScreenshotListItem
                 key={screenshot.hash}
                 screenshot={screenshot}
-                storyInput={storyData}
+                storyData={storyData}
                 onClick={handleItemClick}
                 selected={currentItem.data.hash === screenshot.hash}
                 imageDiffResult={state.imageDiffResults.find(

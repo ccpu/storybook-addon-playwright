@@ -9,12 +9,13 @@ import { ScreenshotListView } from '../screenshot-preview';
 import { Separator } from '@storybook/components';
 import { ThemeProvider } from '../common';
 import { Selector } from './Selector';
+import { EditScreenshotAlert } from './EditScreenshotAlert';
 
 const useStyles = makeStyles(
   () => {
     return {
       horizontal: {
-        '& $iframeContainer': {
+        '& $preview': {
           position: 'relative',
         },
         '& .Resizer': {
@@ -27,13 +28,19 @@ const useStyles = makeStyles(
       iframeContainer: {
         height: '100%',
         position: 'relative',
-        width: '100%',
       },
       interactive: {
         pointerEvents: 'auto',
       },
       notInteractive: {
         pointerEvents: 'none',
+      },
+      preview: {
+        display: 'flex',
+        flexFlow: 'column',
+        height: '100%',
+        position: 'relative',
+        width: '100%',
       },
       root: {
         '& .Resizer': {
@@ -49,7 +56,7 @@ const useStyles = makeStyles(
         width: '100%',
       },
       vertical: {
-        '& $iframeContainer': {
+        '& $preview': {
           position: 'relative',
         },
         '& .Resizer': {
@@ -123,12 +130,16 @@ const Preview: SFC<PreviewProps> = (props) => {
           onChange={handleResizeChange}
         >
           <div
-            className={clsx(classes.iframeContainer, {
+            className={clsx(classes.preview, {
               [classes.interactive]: !isDragging,
               [classes.notInteractive]: isDragging,
             })}
           >
-            <Selector>{children}</Selector>
+            <div className={classes.iframeContainer}>
+              <Selector>{children}</Selector>
+            </div>
+
+            <EditScreenshotAlert />
           </div>
           <div
             className={clsx(classes.snapshotPanel, {

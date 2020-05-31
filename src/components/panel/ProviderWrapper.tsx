@@ -1,6 +1,6 @@
 import React, { SFC } from 'react';
 import { ThemeProvider } from '../common';
-import { ActionProvider } from '../../store';
+
 import { StateInspector } from 'reinspect';
 
 const ProviderWrapper: SFC = (props) => {
@@ -8,9 +8,7 @@ const ProviderWrapper: SFC = (props) => {
 
   return (
     <StateInspector>
-      <ActionProvider>
-        <ThemeProvider>{children}</ThemeProvider>
-      </ActionProvider>
+      <ThemeProvider>{children}</ThemeProvider>
     </StateInspector>
   );
 };

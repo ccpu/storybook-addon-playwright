@@ -1,7 +1,7 @@
 import React, { SFC } from 'react';
 import { IconButton } from '@storybook/components';
 import { BrowserTypes } from '../../typings';
-import { BrowserIconButton } from './BrowserIcon';
+import { BrowserIconButton } from './BrowserIconButton';
 import CloseOutlined from '@material-ui/icons/CloseOutlined';
 import { Toolbar as CommonToolbar } from '../common';
 import RefreshSharp from '@material-ui/icons/RefreshSharp';

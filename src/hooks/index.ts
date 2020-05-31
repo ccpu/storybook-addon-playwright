@@ -25,3 +25,5 @@ export * from './use-app-screenshot-imageDiff';
 export * from './use-global-imageDiff-results';
 export * from './use-story-screenshots-diff';
 export * from './use-screenshot-update';
+export * from './use-edit-screenshot';
+export * from './use-global-action-dispatch';

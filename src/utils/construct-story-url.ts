@@ -1,7 +1,8 @@
 import { KnobStoreKnob } from '../typings';
 import normalize from 'normalize-url';
+import { knobsToQuerystring } from './knobs-to-querystring';
 
-export const constructUrl = (
+export const constructStoryUrl = (
   endpoint: string,
   id: string,
   knobs?: KnobStoreKnob[],
@@ -9,10 +10,7 @@ export const constructUrl = (
   let storyUrl = `${endpoint}/iframe.html?id=${id}`;
 
   if (knobs) {
-    const knobQuery = knobs.map((knob) => {
-      return `knob-${knob.name}=${knob.value}`;
-    });
-    storyUrl = `${storyUrl}&${knobQuery.join('&')}`;
+    storyUrl = `${storyUrl}&${knobsToQuerystring(knobs)}`;
   }
 
   const normalized = normalize(storyUrl);

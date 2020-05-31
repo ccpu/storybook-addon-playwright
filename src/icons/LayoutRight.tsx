@@ -9,9 +9,7 @@ const LayoutRight: SFC<React.SVGProps<SVGSVGElement>> = (props) => {
       enableBackground="new 0 0 129 129"
       height={20}
       width={20}
-      style={{
-        fill: 'currentColor',
-      }}
+      fill="currentColor"
       {...props}
     >
       <path fill="none" d="M0 0h24v24H0z" />

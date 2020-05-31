@@ -2,12 +2,18 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { IconButton } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
-import { ListItemWrapper, Loader, ImageDiffMessage } from '../common';
+import {
+  ListItemWrapper,
+  Loader,
+  ImageDiffMessage,
+  BrowserIcon,
+} from '../common';
 import { ScreenshotData, StoryData } from '../../typings';
-import { useScreenshotImageDiff } from '../../hooks';
+import { useScreenshotImageDiff, useEditScreenshot } from '../../hooks';
 import { ImageDiffResult } from '../../api/typings';
 import { useScreenshotDispatch } from '../../store/screenshot';
 import CheckCircle from '@material-ui/icons/CheckCircle';
+import EditIcon from '@material-ui/icons/Edit';
 import Error from '@material-ui/icons/Error';
 import { ScreenshotUpdate } from './ScreenshotUpdate';
 import { ScreenshotInfo } from './ScreenshotInfo';
@@ -15,7 +21,7 @@ import { ScreenshotDelete } from './ScreenshotDelete';
 
 export interface ScreenshotListItemProps {
   screenshot: ScreenshotData;
-  storyInput: StoryData;
+  storyData: StoryData;
   imageDiffResult?: ImageDiffResult;
   onClick: (item: ScreenshotData) => void;
   deletePassedImageDiffResult?: boolean;
@@ -28,7 +34,7 @@ export interface ScreenshotListItemProps {
 
 function ScreenshotListItem({
   screenshot,
-  storyInput,
+  storyData,
   imageDiffResult,
   onClick,
   deletePassedImageDiffResult,
@@ -41,6 +47,8 @@ function ScreenshotListItem({
   const dispatch = useScreenshotDispatch();
 
   const [showImageDiffResult, setShowImageDiffResult] = useState(false);
+
+  const { editScreenshot } = useEditScreenshot();
 
   useEffect(() => {
     if (
@@ -62,7 +70,7 @@ function ScreenshotListItem({
     inProgress,
     testScreenshot,
     TestScreenshotErrorSnackbar,
-  } = useScreenshotImageDiff(storyInput);
+  } = useScreenshotImageDiff(storyData);
 
   const handleTestScreenshot = useCallback(async () => {
     await testScreenshot(screenshot.hash);
@@ -88,6 +96,11 @@ function ScreenshotListItem({
     onClick(screenshot);
   }, [onClick, screenshot]);
 
+  const handleEdit = useCallback(() => editScreenshot(screenshot), [
+    editScreenshot,
+    screenshot,
+  ]);
+
   return (
     <ListItemWrapper
       onClick={handleItemClick}
@@ -98,6 +111,15 @@ function ScreenshotListItem({
         cursor: 'pointer',
       }}
     >
+      <BrowserIcon
+        style={{ height: 11, position: 'absolute', right: 1, top: 1 }}
+        browserType={screenshot.browserType}
+      />
+
+      <IconButton onClick={handleEdit} size="small" title="Edit screenshot">
+        <EditIcon />
+      </IconButton>
+
       {showSuccessImageDiff && imageDiffResult && imageDiffResult.pass && (
         <IconButton
           size="small"
@@ -117,7 +139,7 @@ function ScreenshotListItem({
         </IconButton>
       )}
       {enableUpdate && (
-        <ScreenshotUpdate screenshot={screenshot} storyData={storyInput} />
+        <ScreenshotUpdate screenshot={screenshot} storyData={storyData} />
       )}
 
       {enableImageDiff && (

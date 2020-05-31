@@ -5,8 +5,10 @@ import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
 import { BrowserTypes, DeviceDescriptor } from '../typings';
 import { getSnapshotHash } from '../utils';
-import { ImageDiffResult, SaveScreenshotRequest } from '../api/typings';
+import { SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
+import { useAsyncApiCall } from './use-async-api-call';
+import { useEditScreenshot } from './use-edit-screenshot';
 
 export const useSaveScreenshot = () => {
   const knobs = useKnobs();
@@ -14,10 +16,34 @@ export const useSaveScreenshot = () => {
 
   const { dispatch } = useGlobalScreenshotDispatch();
 
+  const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
+
   const { currentActions } = useCurrentActions(storyData && storyData.id);
   const [error, setError] = useState<string>();
-  const [result, setResult] = useState<ImageDiffResult>();
+
   const [saving, setWorking] = useState(false);
+
+  const {
+    makeCall,
+    result,
+    clearError,
+    clearResult,
+    ErrorSnackbar,
+  } = useAsyncApiCall(saveScreenshotClient);
+
+  const isUpdating = useCallback(
+    (browserType: BrowserTypes) => {
+      if (!editScreenshotState) return false;
+      if (editScreenshotState.screenshotData.browserType === browserType)
+        return true;
+      return false;
+    },
+    [editScreenshotState],
+  );
+
+  const getUpdatingScreenshot = useCallback(() => {
+    return editScreenshotState && editScreenshotState.screenshotData.title;
+  }, [editScreenshotState]);
 
   const saveScreenShot = useCallback(
     async (
@@ -45,32 +71,54 @@ export const useSaveScreenshot = () => {
           knobs: knobs,
           storyId: storyData.id,
           title,
+          updateStringShotHash:
+            isUpdating(browserType) && editScreenshotState.screenshotData.hash,
         };
         setWorking(true);
-        const result = await saveScreenshotClient(data);
+        const res = await makeCall(data);
 
-        if (result.added) {
+        if (editScreenshotState && isUpdating(browserType)) {
+          dispatch({
+            screenshotHash: editScreenshotState.screenshotData.hash,
+            type: 'removeScreenshot',
+          });
+        }
+
+        if (!(res instanceof Error) && res.added) {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { base64, ...rest } = data;
           dispatch({ screenshot: rest, type: 'addScreenshot' });
         }
-
-        setResult(result);
       } catch (error) {
         setError(error.message);
       }
       setWorking(false);
     },
-    [currentActions, knobs, storyData, dispatch],
+    [
+      storyData,
+      currentActions,
+      knobs,
+      editScreenshotState,
+      makeCall,
+      dispatch,
+      isUpdating,
+    ],
   );
 
-  const clearError = useCallback(() => {
-    setError(undefined);
-  }, []);
+  const onSuccessClose = useCallback(() => {
+    clearResult();
+    if (editScreenshotState) clearScreenshotEdit();
+  }, [clearResult, clearScreenshotEdit, editScreenshotState]);
 
-  const clearResult = useCallback(() => {
-    setResult(undefined);
-  }, []);
-
-  return { clearError, clearResult, error, result, saveScreenShot, saving };
+  return {
+    ErrorSnackbar,
+    clearError,
+    error,
+    getUpdatingScreenshot,
+    isUpdating,
+    onSuccessClose,
+    result,
+    saveScreenShot,
+    saving,
+  };
 };

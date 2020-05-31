@@ -1,5 +1,5 @@
 import { GetScreenshotRequest } from '../../typings';
-import { constructUrl } from '../../../utils';
+import { constructStoryUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction } from '../utils';
 import { ScreenshotImageData } from '../../../typings';
@@ -12,7 +12,7 @@ export const makeScreenshot = async (
 ): Promise<ScreenshotImageData> => {
   const helper = getConfigs();
 
-  const url = constructUrl(
+  const url = constructStoryUrl(
     helper.storybookEndpoint ? helper.storybookEndpoint : host,
     data.storyId,
     data.knobs,

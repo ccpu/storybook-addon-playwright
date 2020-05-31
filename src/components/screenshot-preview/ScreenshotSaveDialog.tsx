@@ -16,10 +16,10 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
   const {
     saveScreenShot,
     result,
-    clearResult,
-    error,
-    clearError,
+    onSuccessClose,
     saving,
+    getUpdatingScreenshot,
+    ErrorSnackbar,
   } = useSaveScreenshot();
 
   const { browserDevice } = useBrowserDevice();
@@ -44,43 +44,23 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
         onClose={onClose}
         onSave={handleSave}
         title="Title"
+        value={getUpdatingScreenshot()}
         required
       />
-      {error && (
-        <Snackbar
-          message={error}
-          open={error !== undefined}
-          onClose={clearError}
-          type="error"
-        />
-      )}
 
-      {result && result.pass && (
-        <Snackbar
-          title="Identical Screenshot"
-          open={true}
-          onClose={clearResult}
-          type="success"
-        >
-          <div>
-            Title: {result.oldScreenShotTitle}
-            <br />
-            Screenshot with the same setting found, no change has been detected.
-          </div>
-        </Snackbar>
-      )}
+      <ErrorSnackbar />
 
       {result && result.added && (
         <Snackbar
           message={'Screenshot saved successfully.'}
           open={true}
-          onClose={clearResult}
+          onClose={onSuccessClose}
           type="success"
           autoHideDuration={2000}
         />
       )}
       <Loader open={saving} />
-      <ImageDiffMessage result={result} onClose={clearResult} />
+      <ImageDiffMessage result={result} onClose={onSuccessClose} />
     </>
   );
 };

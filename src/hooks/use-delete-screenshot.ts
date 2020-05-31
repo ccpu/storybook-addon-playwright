@@ -24,7 +24,7 @@ export const useDeleteScreenshot = () => {
         hash: hash,
         storyId: storyData.id,
       });
-      console.log(result);
+
       if (!(result instanceof Error))
         dispatch({ screenshotHash: hash, type: 'deleteScreenshot' });
     },

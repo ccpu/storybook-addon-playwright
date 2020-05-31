@@ -38,7 +38,13 @@ const ActionDialog: SFC<ActionDialogDialogProps> = memo(
     }, [onCancel, onClose]);
 
     return (
-      <Dialog open={open} onClose={handleClose} width={width} {...rest}>
+      <Dialog
+        enableCloseButton={false}
+        open={open}
+        onClose={handleClose}
+        width={width}
+        {...rest}
+      >
         <ActionPanel
           onPositiveAction={onPositiveAction}
           negativeActionName={negativeActionName}

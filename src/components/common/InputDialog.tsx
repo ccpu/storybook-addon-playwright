@@ -1,5 +1,5 @@
 import { TextField, makeStyles, Snackbar } from '@material-ui/core';
-import React, { SFC, useCallback, useState } from 'react';
+import React, { SFC, useCallback, useState, useEffect } from 'react';
 import { ActionDialog, ActionDialogDialogProps } from './ActionDialog';
 import Alert from '@material-ui/lab/Alert';
 
@@ -41,16 +41,17 @@ const InputDialog: SFC<InputDialogProps> = ({
   onCancel,
   onClose,
   width = '30%',
+  open,
   ...rest
 }) => {
-  const [inputValue, setValue] = useState(value || '');
+  const [inputValue, setValue] = useState(value);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const classes = useStyles({ width: width });
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value);
+      setValue(e.target.value.trim());
     },
     [],
   );
@@ -60,7 +61,6 @@ const InputDialog: SFC<InputDialogProps> = ({
     if (onCancel) {
       onCancel();
     }
-    setValue('');
   }, [onCancel, onClose]);
 
   const handleSave = useCallback(() => {
@@ -69,18 +69,22 @@ const InputDialog: SFC<InputDialogProps> = ({
       return;
     }
     onSave(inputValue);
-    setValue('');
   }, [inputValue, onSave, required]);
 
   const handleSnackbarClose = useCallback(() => {
     setOpenSnackbar(false);
   }, []);
 
+  useEffect(() => {
+    setValue(value);
+  }, [value, open]);
+
   return (
     <ActionDialog
       onPositiveAction={handleSave}
       onNegativeAction={handleClose}
       onClose={handleClose}
+      open={open}
       {...rest}
     >
       <TextField

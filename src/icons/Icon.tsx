@@ -1,15 +1,14 @@
 import * as React from 'react';
 
-const Icon = () => (
+const Icon: React.SFC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"
     viewBox="2 -1 20 20"
     enableBackground="new 0 0 129 129"
     height={22}
-    style={{
-      fill: 'currentColor',
-    }}
+    fill="currentColor"
+    {...props}
   >
     <path
       xmlns="http://www.w3.org/2000/svg"

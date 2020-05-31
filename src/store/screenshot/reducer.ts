@@ -27,6 +27,10 @@ export type Action =
       type: 'addScreenshot';
       screenshot: ScreenshotData;
     }
+  | {
+      type: 'removeScreenshot';
+      screenshotHash: string;
+    }
   | { type: 'deleteScreenshot'; screenshotHash: string };
 
 export const initialState: ReducerState = {
@@ -42,6 +46,14 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         screenshots: state.screenshots
           ? [...state.screenshots, action.screenshot]
           : [action.screenshot],
+      };
+    }
+    case 'removeScreenshot': {
+      return {
+        ...state,
+        screenshots: state.screenshots.filter(
+          (x) => x.hash !== action.screenshotHash,
+        ),
       };
     }
     case 'setScreenshots': {

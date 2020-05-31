@@ -77,6 +77,7 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
       {getScreenshotResult && (
         <ImageDiffPreviewDialog
           title="Following screenshot will be saved, would you like to continue?"
+          subtitle={screenshot.title}
           imageDiffResult={getScreenshotResult}
           onClose={getScreenshotClearResult}
           open={true}

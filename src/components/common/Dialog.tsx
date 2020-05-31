@@ -7,6 +7,7 @@ import {
   IconButton,
   DialogActions,
   Divider,
+  Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -16,12 +17,15 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles(
-  () => {
+  (theme) => {
+    const { primary } = theme.palette;
+
     return {
       closIcon: {
         position: 'absolute',
         right: 4,
         top: 4,
+        zIndex: 100,
       },
       input: {
         width: '100%',
@@ -34,6 +38,10 @@ const useStyles = makeStyles(
         width: (p: StyleProps) => p.width,
       },
       title: {
+        '& h6': {
+          fontSize: 17,
+        },
+        color: primary.main,
         padding: '12px 24px',
       },
     };
@@ -43,6 +51,7 @@ const useStyles = makeStyles(
 
 export interface DialogProps extends MuDialogProps, StyleProps {
   title?: string;
+  subtitle?: string;
   onClose: () => void;
   actions?: React.ComponentType;
 }
@@ -54,6 +63,7 @@ const Dialog: SFC<DialogProps> = ({
   title,
   onClose,
   actions,
+  subtitle,
   ...rest
 }) => {
   const classes = useStyles({ height, width });
@@ -69,12 +79,19 @@ const Dialog: SFC<DialogProps> = ({
       onClose={onClose}
       {...rest}
     >
-      <IconButton className={classes.closIcon} onClick={onClose}>
+      <IconButton
+        color="primary"
+        className={classes.closIcon}
+        onClick={onClose}
+      >
         <CloseIcon />
       </IconButton>
       {title && (
         <>
-          <DialogTitle className={classes.title}>{title}</DialogTitle>
+          <DialogTitle disableTypography={true} className={classes.title}>
+            <Typography variant="h6">{title}</Typography>
+            {subtitle && <Typography variant="body1">{subtitle}</Typography>}
+          </DialogTitle>
           <Divider />
         </>
       )}

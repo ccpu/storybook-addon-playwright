@@ -43,6 +43,7 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
       imageDiffResult={result}
       onClose={onClose}
       open={true}
+      activeTab="imageDiff"
     />
   );
 };

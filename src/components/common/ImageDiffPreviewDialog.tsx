@@ -1,18 +1,20 @@
 import React, { SFC } from 'react';
-import { ImageDiffPreview } from './ImageDiffPreview';
+import { ImageDiffPreview, ImageDiffPreviewProps } from './ImageDiffPreview';
 import { Dialog, DialogProps } from './Dialog';
-import { ImageDiffResult } from '../../api/typings';
 
-export interface ImageDiffPreviewDialogProps extends DialogProps {
-  imageDiffResult: ImageDiffResult;
-}
+export interface ImageDiffPreviewDialogProps
+  extends DialogProps,
+    ImageDiffPreviewProps {}
 
 const ImageDiffPreviewDialog: SFC<ImageDiffPreviewDialogProps> = (props) => {
-  const { imageDiffResult, ...rest } = props;
+  const { imageDiffResult, activeTab, ...rest } = props;
 
   return (
     <Dialog width="100%" height="100%" {...rest}>
-      <ImageDiffPreview imageDiffResult={imageDiffResult} />
+      <ImageDiffPreview
+        imageDiffResult={imageDiffResult}
+        activeTab={activeTab}
+      />
     </Dialog>
   );
 };

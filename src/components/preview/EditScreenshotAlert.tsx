@@ -30,15 +30,11 @@ const useStyles = makeStyles(
 );
 
 const EditScreenshotAlert: SFC = () => {
-  const {
-    isEditingScreenshot,
-    editScreenshotState,
-    clearScreenshotEdit,
-  } = useEditScreenshot();
+  const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
 
   const classes = useStyles();
 
-  if (!editScreenshotState || !isEditingScreenshot()) return null;
+  if (!editScreenshotState) return null;
 
   return (
     <Alert

@@ -27,7 +27,6 @@ const ActionProvider: SFC = (props) => {
   const { action } = useGlobalActionDispatch();
 
   useEffect(() => {
-    console.log(action);
     if (!action) return;
     dispatch(action);
   }, [action]);

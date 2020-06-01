@@ -2,14 +2,17 @@ import React, { SFC, useState, useCallback } from 'react';
 import { makeStyles, capitalize } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
-import { useScreenshot } from '../../hooks';
+import { useScreenshot, useEditScreenshot } from '../../hooks';
 import { BrowserTypes } from '../../typings';
 import { ErrorPanel, Dialog } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserDevice } from '../../hooks';
 import { ScreenshotSaveDialog } from './ScreenshotSaveDialog';
+import { lighten, darken } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => {
+  const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
+  const getColor = theme.palette.type === 'light' ? darken : lighten;
   const { palette } = theme;
   return {
     card: {
@@ -38,6 +41,13 @@ const useStyles = makeStyles((theme) => {
       width: '100%',
     },
 
+    editMode: {
+      '& .simplebar-track': {
+        backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.8),
+      },
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.8),
+    },
+
     fakeBorder: {
       border: '10px solid ' + palette.divider,
       borderLeft: 0,
@@ -57,7 +67,6 @@ const useStyles = makeStyles((theme) => {
     image: {
       marginRight: 12,
     },
-
     imageContainer: {
       textAlign: 'center',
     },
@@ -76,6 +85,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
   const { browserType, url, height, refresh, onRefreshEnd } = props;
 
   const [openSaveScreenShot, setOpenSaveScreenShot] = useState(false);
+
+  const { isEditing } = useEditScreenshot();
 
   const [openFullScreen, setOpenFullScreen] = useState(false);
 
@@ -115,7 +126,11 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
   }, [openFullScreen]);
 
   return (
-    <div className={clsx(classes.card)}>
+    <div
+      className={clsx(classes.card, {
+        [classes.editMode]: isEditing(browserType as BrowserTypes),
+      })}
+    >
       <ScreenShotViewToolbar
         browserType={browserType}
         onSave={toggleScreenshotTitleDialog}

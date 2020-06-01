@@ -1,22 +1,21 @@
 import { useGlobalState } from './use-global-state';
-import { ScreenshotData } from '../typings';
+import { ScreenshotData, BrowserTypes } from '../typings';
 import { useCallback, useEffect } from 'react';
-import { knobsToQuerystring } from '../utils';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useStorybookApi } from '@storybook/api';
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
+import { RESET, CHANGE } from '@storybook/addon-knobs';
 
 interface EditScreenshotState {
   storyId: string;
   screenshotData: ScreenshotData;
   loaded?: boolean;
 }
-let __reloading = false;
-let __actionsLoaded = false;
+
 export const useEditScreenshot = () => {
   const [editScreenshotState, setEditScreenshotState] = useGlobalState<
     EditScreenshotState
-  >('edit-story-screenshot111', undefined, true);
+  >('edit-story-screenshot', undefined);
 
   const storyData = useCurrentStoryData();
 
@@ -24,76 +23,70 @@ export const useEditScreenshot = () => {
 
   const api = useStorybookApi();
 
-  const editScreenshot = useCallback(
+  const dispatchActions = useCallback(
     (screenshotData: ScreenshotData) => {
-      __reloading = true;
-      setEditScreenshotState({ screenshotData, storyId: storyData.id });
-      let newUrl = window.location.href;
-      if (screenshotData.knobs) {
-        newUrl = `${window.location.href}&${knobsToQuerystring(
-          screenshotData.knobs,
-        )}`;
-      }
-      window.location.href = newUrl + '&editing-screenshot=true';
+      dispatch({
+        actionSet: {
+          actions: screenshotData.actions,
+          description: screenshotData.title + ' actions',
+          id: screenshotData.hash,
+        },
+        storyId: storyData.id,
+        type: 'addActionSet',
+      });
+      dispatch({
+        actionSetId: screenshotData.hash,
+        type: 'toggleCurrentActionSet',
+      });
     },
-    [setEditScreenshotState, storyData],
+    [dispatch, storyData],
   );
 
-  const isEditingScreenshot = useCallback(() => {
-    return Boolean(api.getQueryParam('editing-screenshot'));
-  }, [api]);
+  const editScreenshot = useCallback(
+    (screenshotData: ScreenshotData) => {
+      setEditScreenshotState({ screenshotData, storyId: storyData.id });
+      api.emit(RESET);
+      if (screenshotData.knobs) {
+        screenshotData.knobs.forEach((knob) => {
+          api.emit(CHANGE, knob);
+        });
+      }
+      dispatchActions(screenshotData);
+    },
+    [api, dispatchActions, setEditScreenshotState, storyData],
+  );
+
+  const isEditing = useCallback(
+    (browser: BrowserTypes) => {
+      if (!editScreenshotState) return false;
+
+      return editScreenshotState.screenshotData.browserType === browser;
+    },
+    [editScreenshotState],
+  );
 
   const clearScreenshotEdit = useCallback(() => {
     setEditScreenshotState(undefined);
-    __reloading = false;
-    __actionsLoaded = false;
-    if (isEditingScreenshot()) window.location.reload();
-  }, [isEditingScreenshot, setEditScreenshotState]);
+  }, [setEditScreenshotState]);
 
   useEffect(() => {
-    if (__reloading || !editScreenshotState || !storyData) return;
+    if (!editScreenshotState || !storyData) return;
 
-    if (!isEditingScreenshot()) {
-      setEditScreenshotState(undefined);
-      return;
-    }
     if (editScreenshotState.storyId !== storyData.id) {
       clearScreenshotEdit();
       return;
     }
-    console.log('action');
-    if (!__actionsLoaded && editScreenshotState.screenshotData.actions) {
-      __actionsLoaded = true;
-      setTimeout(() => {
-        dispatch({
-          actionSet: {
-            actions: editScreenshotState.screenshotData.actions,
-            description: editScreenshotState.screenshotData.title + ' actions',
-            id: editScreenshotState.screenshotData.hash,
-          },
-          storyId: storyData.id,
-          type: 'addActionSet',
-        });
-        dispatch({
-          actionSetId: editScreenshotState.screenshotData.hash,
-          type: 'toggleCurrentActionSet',
-        });
-      }, 2000);
-    }
   }, [
-    editScreenshotState,
     clearScreenshotEdit,
-    storyData,
-    api,
+    editScreenshotState,
     setEditScreenshotState,
-    isEditingScreenshot,
-    dispatch,
+    storyData,
   ]);
 
   return {
     clearScreenshotEdit,
     editScreenshot,
     editScreenshotState,
-    isEditingScreenshot,
+    isEditing,
   };
 };

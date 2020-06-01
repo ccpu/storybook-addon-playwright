@@ -1,17 +1,19 @@
 import React, { SFC, useCallback } from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton as MuIconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 import { ConfirmationPopover } from '../common';
 
 export interface DeleteConfirmationButtonProps {
   onDelete: () => void;
+  IconButton?: React.ComponentType;
+  onClose?: () => void;
 }
 
-const DeleteConfirmationButton: SFC<DeleteConfirmationButtonProps> = (
-  props,
-) => {
-  const { onDelete } = props;
-
+const DeleteConfirmationButton: SFC<DeleteConfirmationButtonProps> = ({
+  onDelete,
+  IconButton = MuIconButton,
+  onClose,
+}) => {
   const [
     confirmAnchorEl,
     setConfirmAnchorEl,
@@ -26,8 +28,9 @@ const DeleteConfirmationButton: SFC<DeleteConfirmationButtonProps> = (
   );
 
   const closeDeleteConfirmation = useCallback(() => {
+    if (onClose) onClose();
     setConfirmAnchorEl(undefined);
-  }, []);
+  }, [onClose]);
 
   const handleDeleteConfirmation = useCallback(() => {
     closeDeleteConfirmation();

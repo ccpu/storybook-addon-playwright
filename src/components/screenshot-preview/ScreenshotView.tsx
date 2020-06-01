@@ -12,7 +12,6 @@ import { lighten, darken } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => {
   const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
-  const getColor = theme.palette.type === 'light' ? darken : lighten;
   const { palette } = theme;
   return {
     card: {
@@ -43,9 +42,9 @@ const useStyles = makeStyles((theme) => {
 
     editMode: {
       '& .simplebar-track': {
-        backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.8),
+        backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
       },
-      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.8),
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
     },
 
     fakeBorder: {

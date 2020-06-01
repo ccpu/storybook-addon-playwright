@@ -150,7 +150,6 @@ const Preview: SFC<PreviewProps> = (props) => {
             <Separator />
             {addonState && addonState.previewPanelEnabled && (
               <ScreenshotListView
-                browserTypes={['chromium', 'firefox', 'webkit']}
                 column={isHorizontal ? undefined : 1}
                 onClose={handleClose}
                 viewPanel="main"

@@ -2,7 +2,7 @@ import React, { SFC, useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
-import { BrowserTypes, ScreenShotViewPanel } from '../../typings';
+import { ScreenShotViewPanel } from '../../typings';
 import { Toolbar } from './Toolbar';
 import useMeasure from 'react-use/lib/useMeasure';
 import clsx from 'clsx';
@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  browserTypes: BrowserTypes[];
   showStorybook?: boolean;
   column?: number;
   onClose: () => void;
@@ -52,12 +51,11 @@ interface Props {
 }
 
 const ScreenshotListView: SFC<Props> = (props) => {
-  const { showStorybook, browserTypes, column, onClose, viewPanel } = props;
+  const { showStorybook, column, onClose, viewPanel } = props;
 
   const [ref, rect] = useMeasure();
 
-  const { activeBrowsers, toggleBrowser } = useActiveBrowsers(
-    browserTypes,
+  const { activeBrowsers, toggleBrowser, browserTypes } = useActiveBrowsers(
     viewPanel,
   );
 

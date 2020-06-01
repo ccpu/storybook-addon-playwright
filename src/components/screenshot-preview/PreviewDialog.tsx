@@ -63,7 +63,6 @@ const PreviewDialog: SFC<PreviewDialogProps> = (props) => {
       >
         <div className={classes.container}>
           <ScreenshotListView
-            browserTypes={['chromium', 'firefox', 'webkit']}
             showStorybook={true}
             column={2}
             onClose={onClose}

@@ -4,6 +4,7 @@ import Compare from '@material-ui/icons/Compare';
 import { IconButton } from '@storybook/components';
 import Visibility from '@material-ui/icons/Visibility';
 import Update from '@material-ui/icons/Update';
+import { DeleteConfirmationButton } from '../common';
 
 export interface ScreenshotListToolbarProps {
   onTestClick: () => void;
@@ -11,6 +12,7 @@ export interface ScreenshotListToolbarProps {
   onPreviewClick: () => void;
   onUpdateClick: () => void;
   hasScreenShot?: boolean;
+  onDelete: () => void;
 }
 
 const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
@@ -20,6 +22,7 @@ const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
     onTestClick,
     onPreviewClick,
     onUpdateClick,
+    onDelete,
   } = props;
   if (!hasScreenShot) return null;
   return (
@@ -40,6 +43,7 @@ const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
         <IconButton onClick={onPreviewClick} title="Display story screenshots">
           <Visibility />
         </IconButton>
+        <DeleteConfirmationButton IconButton={IconButton} onDelete={onDelete} />
       </div>
     </Toolbar>
   );

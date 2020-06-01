@@ -36,7 +36,7 @@ export function ActionSetListItem({
   }, [item, onDelete]);
 
   return (
-    <ListItemWrapper title={title} draggable={true}>
+    <ListItemWrapper tooltip={title} title={title} draggable={true}>
       <IconButton className="edit-button" onClick={handleEdit} size="small">
         <EditIcon />
       </IconButton>

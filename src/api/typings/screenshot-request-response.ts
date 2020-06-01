@@ -26,9 +26,14 @@ export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
   base64?: string;
   hash: string;
   device?: DeviceDescriptor;
-  updateStringShotHash?: string;
+  updateScreenshot?: ScreenshotData;
 }
 
 export interface UpdateScreenshot extends ScreenshotInfo {
   base64?: string;
+}
+
+export interface ChangeScreenshotIndex extends StoryInfo {
+  oldIndex: number;
+  newIndex: number;
 }

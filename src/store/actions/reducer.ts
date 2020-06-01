@@ -41,6 +41,7 @@ export type Action =
       type: 'addActionSet';
       actionSet: ActionSet;
       storyId: string;
+      selected: boolean;
     }
   | {
       type: 'deleteActionSet';
@@ -117,18 +118,24 @@ const updateStoryActionSet = (
 export function mainReducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
     case 'addActionSetList': {
-      //       return updateStoryActionSet(state, action.storyId, [
-      //   ...(state[action.storyId] ? state[action.storyId].actionSets : []),
-      //   action.actionSet,
-      // ]);
       return updateStoryActionSet(state, action.storyId, action.actionSets);
     }
 
     case 'addActionSet': {
-      return updateStoryActionSet(state, action.storyId, [
-        ...(state[action.storyId] ? state[action.storyId].actionSets : []),
+      const newState = updateStoryActionSet(state, action.storyId, [
+        ...(state.stories[action.storyId]
+          ? state.stories[action.storyId].actionSets.filter(
+              (x) => x.id !== action.actionSet.id,
+            )
+          : []),
         action.actionSet,
       ]);
+
+      return {
+        ...state,
+        ...newState,
+        currentActionSets: action.selected ? [action.actionSet.id] : [],
+      };
     }
 
     case 'clearCurrentActionSets': {

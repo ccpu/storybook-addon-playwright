@@ -8,12 +8,14 @@ export interface ScreenshotInfoProps {
   screenshotData: ScreenshotData;
   size?: 'small' | 'medium';
   color?: 'inherit' | 'primary' | 'secondary' | 'default';
+  onClose?: () => void;
 }
 
 const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
   screenshotData,
   size = 'small',
   color,
+  onClose,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
@@ -42,9 +44,10 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
 
   const togglePopover = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (onClose && anchorEl) onClose();
       setAnchorEl(anchorEl ? undefined : event.currentTarget);
     },
-    [anchorEl],
+    [anchorEl, onClose],
   );
 
   return (

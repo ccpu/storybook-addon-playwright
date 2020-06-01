@@ -39,6 +39,7 @@ export interface ScreenshotData {
   title: string;
   hash: string;
   device?: DeviceDescriptor;
+  index?: number;
   clip?: {
     width: number;
     height: number;

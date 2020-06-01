@@ -4,12 +4,13 @@ import { useCallback, useEffect } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useStorybookApi } from '@storybook/api';
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
-import { RESET, CHANGE } from '@storybook/addon-knobs';
+import { RESET } from '@storybook/addon-knobs';
+import { useActiveBrowsers } from './use-active-browser';
+import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 
 interface EditScreenshotState {
   storyId: string;
   screenshotData: ScreenshotData;
-  loaded?: boolean;
 }
 
 export const useEditScreenshot = () => {
@@ -19,41 +20,21 @@ export const useEditScreenshot = () => {
 
   const storyData = useCurrentStoryData();
 
+  const { setBrowserState } = useActiveBrowsers('dialog');
+
+  const { loadSetting } = useLoadScreenshotSettings();
+
   const { dispatch } = useGlobalActionDispatch();
 
   const api = useStorybookApi();
 
-  const dispatchActions = useCallback(
-    (screenshotData: ScreenshotData) => {
-      dispatch({
-        actionSet: {
-          actions: screenshotData.actions,
-          description: screenshotData.title + ' actions',
-          id: screenshotData.hash,
-        },
-        storyId: storyData.id,
-        type: 'addActionSet',
-      });
-      dispatch({
-        actionSetId: screenshotData.hash,
-        type: 'toggleCurrentActionSet',
-      });
-    },
-    [dispatch, storyData],
-  );
-
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
       setEditScreenshotState({ screenshotData, storyId: storyData.id });
-      api.emit(RESET);
-      if (screenshotData.knobs) {
-        screenshotData.knobs.forEach((knob) => {
-          api.emit(CHANGE, knob);
-        });
-      }
-      dispatchActions(screenshotData);
+      loadSetting(screenshotData);
+      setBrowserState(screenshotData.browserType, 'main', false);
     },
-    [api, dispatchActions, setEditScreenshotState, storyData],
+    [loadSetting, setBrowserState, setEditScreenshotState, storyData],
   );
 
   const isEditing = useCallback(
@@ -66,8 +47,14 @@ export const useEditScreenshot = () => {
   );
 
   const clearScreenshotEdit = useCallback(() => {
+    dispatch({
+      actionSetId: editScreenshotState.screenshotData.hash,
+      storyId: storyData.id,
+      type: 'deleteActionSet',
+    });
     setEditScreenshotState(undefined);
-  }, [setEditScreenshotState]);
+    api.emit(RESET);
+  }, [api, dispatch, editScreenshotState, setEditScreenshotState, storyData]);
 
   useEffect(() => {
     if (!editScreenshotState || !storyData) return;
@@ -88,5 +75,6 @@ export const useEditScreenshot = () => {
     editScreenshot,
     editScreenshotState,
     isEditing,
+    loadSetting,
   };
 };

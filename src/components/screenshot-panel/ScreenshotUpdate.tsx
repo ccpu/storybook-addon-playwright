@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { SFC, useCallback, useEffect } from 'react';
 import { ScreenshotData, StoryData } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
@@ -10,10 +10,11 @@ import { ScreenshotInfo } from './ScreenshotInfo';
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;
   storyData: StoryData;
+  onStateChange: (state: boolean) => void;
 }
 
 const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
-  const { storyData, screenshot } = props;
+  const { storyData, screenshot, onStateChange } = props;
 
   const {
     UpdateScreenshotErrorSnackbar,
@@ -47,14 +48,15 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     updateScreenshot,
   ]);
 
+  useEffect(() => {
+    onStateChange(getScreenshotInProgress || updateScreenshotInProgress);
+  }, [getScreenshotInProgress, onStateChange, updateScreenshotInProgress]);
+
   return (
     <>
       <IconButton onClick={handleUpdate} size="small" title="Update screenshot">
         <Update />
       </IconButton>
-      {(getScreenshotInProgress || updateScreenshotInProgress) && (
-        <Loader progressSize={20} position="absolute" open={true} />
-      )}
       {getScreenshotResult && (
         <ImageDiffPreviewDialog
           title="Following screenshot will be saved, would you like to continue?"

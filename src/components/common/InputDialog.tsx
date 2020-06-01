@@ -51,7 +51,7 @@ const InputDialog: SFC<InputDialogProps> = ({
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value.trim());
+      setValue(e.target.value);
     },
     [],
   );
@@ -68,7 +68,7 @@ const InputDialog: SFC<InputDialogProps> = ({
       setOpenSnackbar(true);
       return;
     }
-    onSave(inputValue);
+    onSave(inputValue.trim());
   }, [inputValue, onSave, required]);
 
   const handleSnackbarClose = useCallback(() => {

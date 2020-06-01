@@ -2,12 +2,14 @@ import { useCallback, useState, useEffect } from 'react';
 import { BrowserTypes, ScreenShotViewPanel } from '../typings';
 import { useAddonState } from './use-addon-state';
 
-export const useActiveBrowsers = (
-  browserTypes: BrowserTypes[],
-  browserView: ScreenShotViewPanel,
-) => {
+export const useActiveBrowsers = (browserView: ScreenShotViewPanel) => {
   const { addonState, setAddonState } = useAddonState();
   const [activeBrowsers, setActiveBrowsers] = useState<BrowserTypes[]>([]);
+  const [browserTypes] = useState<BrowserTypes[]>([
+    'chromium',
+    'firefox',
+    'webkit',
+  ]);
 
   const isDisabled = useCallback(
     (browserType: BrowserTypes) => {
@@ -24,30 +26,31 @@ export const useActiveBrowsers = (
     [addonState, browserView],
   );
 
-  const toggleBrowser = useCallback(
-    (browserType: BrowserTypes) => {
-      if (isDisabled(browserType)) {
-        delete addonState.disabledBrowser[browserView][browserType];
-      } else {
-        if (!addonState.disabledBrowser) {
-          addonState.disabledBrowser = {};
-        }
-        if (!addonState.disabledBrowser[browserView]) {
-          addonState.disabledBrowser[browserView] = {};
-        }
-        addonState.disabledBrowser[browserView][browserType] = true;
-      }
+  const setBrowserState = useCallback(
+    (
+      browserType: BrowserTypes,
+      activePanel: ScreenShotViewPanel,
+      disable: boolean,
+    ) => {
       setAddonState({
         ...addonState,
         disabledBrowser: {
           ...addonState.disabledBrowser,
-          [browserType]: {
-            ...addonState.disabledBrowser[browserType],
+          [activePanel]: {
+            ...addonState.disabledBrowser[activePanel],
+            [browserType]: disable,
           },
         },
       });
     },
-    [addonState, browserView, isDisabled, setAddonState],
+    [addonState, setAddonState],
+  );
+
+  const toggleBrowser = useCallback(
+    (browserType: BrowserTypes) => {
+      setBrowserState(browserType, browserView, !isDisabled(browserType));
+    },
+    [browserView, isDisabled, setBrowserState],
   );
 
   useEffect(() => {
@@ -56,5 +59,11 @@ export const useActiveBrowsers = (
     setActiveBrowsers(activeBrs);
   }, [addonState, browserTypes, isDisabled]);
 
-  return { activeBrowsers, isDisabled, toggleBrowser };
+  return {
+    activeBrowsers,
+    browserTypes,
+    isDisabled,
+    setBrowserState,
+    toggleBrowser,
+  };
 };

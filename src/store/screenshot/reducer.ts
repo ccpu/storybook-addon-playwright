@@ -1,5 +1,6 @@
 import { ScreenshotData } from '../../typings';
 import { ImageDiffResult } from '../../api/typings';
+import arrayMove from 'array-move';
 
 export interface ReducerState {
   screenshots: ScreenshotData[];
@@ -31,6 +32,14 @@ export type Action =
       type: 'removeScreenshot';
       screenshotHash: string;
     }
+  | {
+      type: 'removeStoryScreenshots';
+    }
+  | {
+      type: 'changeIndex';
+      oldIndex: number;
+      newIndex: number;
+    }
   | { type: 'deleteScreenshot'; screenshotHash: string };
 
 export const initialState: ReducerState = {
@@ -41,11 +50,13 @@ export const initialState: ReducerState = {
 export function reducer(state: ReducerState, action: Action): ReducerState {
   switch (action.type) {
     case 'addScreenshot': {
+      const screenshots = state.screenshots
+        ? [...state.screenshots, action.screenshot]
+        : [action.screenshot];
+
       return {
         ...state,
-        screenshots: state.screenshots
-          ? [...state.screenshots, action.screenshot]
-          : [action.screenshot],
+        screenshots: [...screenshots],
       };
     }
     case 'removeScreenshot': {
@@ -54,6 +65,28 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         screenshots: state.screenshots.filter(
           (x) => x.hash !== action.screenshotHash,
         ),
+      };
+    }
+    case 'changeIndex': {
+      return {
+        ...state,
+        screenshots: [
+          ...arrayMove(
+            state.screenshots,
+
+            action.oldIndex,
+            action.newIndex,
+          ).map((x, i) => {
+            x.index = i;
+            return x;
+          }),
+        ],
+      };
+    }
+    case 'removeStoryScreenshots': {
+      return {
+        ...state,
+        screenshots: [],
       };
     }
     case 'setScreenshots': {

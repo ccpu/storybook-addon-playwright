@@ -18,13 +18,13 @@ export const saveScreenshot = async (
     storyData[data.storyId].screenshots = [];
   }
 
-  if (data.updateStringShotHash) {
+  if (data.updateScreenshot) {
     storyData[data.storyId].screenshots = storyData[
       data.storyId
-    ].screenshots.filter((x) => x.hash !== data.updateStringShotHash);
+    ].screenshots.filter((x) => x.hash !== data.updateScreenshot.hash);
     await deleteScreenshot({
       fileName: data.fileName,
-      hash: data.updateStringShotHash,
+      hash: data.updateScreenshot.hash,
       storyId: data.storyId,
     });
   }
@@ -56,6 +56,10 @@ export const saveScreenshot = async (
   );
 
   if (!oldScreenshotData) {
+    const index =
+      data.index === undefined
+        ? storyData[data.storyId].screenshots.length
+        : data.index;
     storyData[data.storyId].screenshots.push({
       actions:
         data.actions && data.actions.length > 0 ? data.actions : undefined,
@@ -65,10 +69,11 @@ export const saveScreenshot = async (
           ? data.device
           : undefined,
       hash: data.hash,
+      index: index,
       knobs: data.knobs && data.knobs.length > 0 ? data.knobs : undefined,
       title: data.title,
     });
-
+    result.index = index;
     await saveStoryFile(fileInfo, storyData);
   } else {
     result.oldScreenShotTitle = oldScreenshotData.title;

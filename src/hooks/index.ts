@@ -27,3 +27,6 @@ export * from './use-story-screenshots-diff';
 export * from './use-screenshot-update';
 export * from './use-edit-screenshot';
 export * from './use-global-action-dispatch';
+export * from './use-load-screenshot-settings';
+export * from './use-delete-story-screenshots';
+export * from './use-screenshot-index-change';

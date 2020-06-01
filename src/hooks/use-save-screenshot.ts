@@ -14,7 +14,7 @@ export const useSaveScreenshot = () => {
   const knobs = useKnobs();
   const storyData = useCurrentStoryData();
 
-  const { dispatch } = useGlobalScreenshotDispatch();
+  const { dispatch: screenshotDispatch } = useGlobalScreenshotDispatch();
 
   const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
 
@@ -68,26 +68,40 @@ export const useSaveScreenshot = () => {
           device: deviceDescriptor,
           fileName: storyData.parameters.fileName,
           hash,
+          index: isUpdating(browserType)
+            ? editScreenshotState.screenshotData.index
+            : undefined,
           knobs: knobs,
           storyId: storyData.id,
           title,
-          updateStringShotHash:
-            isUpdating(browserType) && editScreenshotState.screenshotData.hash,
+          updateScreenshot:
+            isUpdating(browserType) && editScreenshotState.screenshotData,
         };
+
         setWorking(true);
+
         const res = await makeCall(data);
 
+        if (res instanceof Error) return;
+
         if (editScreenshotState && isUpdating(browserType)) {
-          dispatch({
-            screenshotHash: editScreenshotState.screenshotData.hash,
-            type: 'removeScreenshot',
-          });
+          if (res.added) {
+            screenshotDispatch({
+              screenshotHash: editScreenshotState.screenshotData.hash,
+              type: 'removeScreenshot',
+            });
+          }
+          clearScreenshotEdit();
         }
 
-        if (!(res instanceof Error) && res.added) {
+        if (res.added) {
+          data.index = res.index;
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { base64, ...rest } = data;
-          dispatch({ screenshot: rest, type: 'addScreenshot' });
+          screenshotDispatch({
+            screenshot: rest,
+            type: 'addScreenshot',
+          });
         }
       } catch (error) {
         setError(error.message);
@@ -98,17 +112,17 @@ export const useSaveScreenshot = () => {
       storyData,
       currentActions,
       knobs,
+      isUpdating,
       editScreenshotState,
       makeCall,
-      dispatch,
-      isUpdating,
+      clearScreenshotEdit,
+      screenshotDispatch,
     ],
   );
 
   const onSuccessClose = useCallback(() => {
     clearResult();
-    if (editScreenshotState) clearScreenshotEdit();
-  }, [clearResult, clearScreenshotEdit, editScreenshotState]);
+  }, [clearResult]);
 
   return {
     ErrorSnackbar,

@@ -1,14 +1,17 @@
-import React, { SFC, useCallback } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { SFC, useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../typings';
 import { useDeleteScreenshot } from '../../hooks';
-import { Loader, DeleteConfirmationButton } from '../common';
+import { DeleteConfirmationButton } from '../common';
 
 export interface ScreenshotDeleteProps {
   screenshot: ScreenshotData;
+  onClose: () => void;
+  onStateChange: (working: boolean) => void;
 }
 
 const ScreenshotDelete: SFC<ScreenshotDeleteProps> = (props) => {
-  const { screenshot } = props;
+  const { onStateChange, screenshot, onClose } = props;
 
   const {
     deleteScreenshot,
@@ -20,10 +23,16 @@ const ScreenshotDelete: SFC<ScreenshotDeleteProps> = (props) => {
     deleteScreenshot(screenshot.hash);
   }, [deleteScreenshot, screenshot.hash]);
 
+  useEffect(() => {
+    onStateChange(deleteLoading);
+  }, [deleteLoading]);
+
   return (
     <>
-      <Loader open={deleteLoading} />
-      <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
+      <DeleteConfirmationButton
+        onClose={onClose}
+        onDelete={handleDeleteConfirmation}
+      />
       <ErrorSnackbar />
     </>
   );

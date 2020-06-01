@@ -50,6 +50,7 @@ export interface ListItemWrapperProps {
   title: string;
   draggable?: boolean;
   selected?: boolean;
+  tooltip: string;
 }
 
 const ListItemWrapper: SFC<
@@ -62,6 +63,7 @@ const ListItemWrapper: SFC<
     selected,
     className,
     onClick,
+    tooltip,
     ...rest
   } = props;
 
@@ -86,6 +88,7 @@ const ListItemWrapper: SFC<
       )}
       {...rest}
       onClick={handleClick}
+      title={tooltip}
     >
       <div className={clsx(classes.column, 'clickable')}>
         {draggable && <DragHandle />}

@@ -30,5 +30,9 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
     data.storyId
   ].screenshots.filter((x) => x.hash !== data.hash);
 
+  if (!storyData[data.storyId].screenshots.length) {
+    delete storyData[data.storyId].screenshots;
+  }
+
   await saveStoryFile(fileInfo, storyData);
 };

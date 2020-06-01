@@ -13,6 +13,8 @@ export interface ScreenshotListItemProps extends ScreenshotListItemMenuProps {
   onClick: (item: ScreenshotData) => void;
   selected?: boolean;
   dragStart?: boolean;
+  forceShowMenu?: boolean;
+  draggable?: boolean;
 }
 
 function ScreenshotListItem({
@@ -22,6 +24,8 @@ function ScreenshotListItem({
   deletePassedImageDiffResult,
   selected,
   dragStart,
+  draggable,
+  forceShowMenu,
   ...rest
 }: ScreenshotListItemProps) {
   const dispatch = useScreenshotDispatch();
@@ -59,7 +63,7 @@ function ScreenshotListItem({
     <ListItemWrapper
       onClick={handleItemClick}
       title={screenshot.title}
-      draggable={true}
+      draggable={draggable}
       selected={selected}
       tooltip={screenshot.title}
       onMouseEnter={handleMouseEnter}
@@ -74,7 +78,7 @@ function ScreenshotListItem({
       />
 
       <ScreenshotListItemMenu
-        show={showMenu && !dragStart}
+        show={(forceShowMenu || showMenu) && !dragStart}
         screenshot={screenshot}
         onHide={handleMouseLeave}
         {...rest}

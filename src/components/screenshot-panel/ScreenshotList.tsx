@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, SFC } from 'react';
 import {
   useStoryScreenshotLoader,
   useStoryScreenshotImageDiff,
-  useDeleteStoryScreenshot,
   useScreenshotIndexChange,
 } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
@@ -13,12 +12,11 @@ import {
 } from '../common';
 import { ScreenshotData } from '../../typings';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
-import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 import { SortEnd } from 'react-sortable-hoc';
 
-const ScreenshotList = () => {
+const ScreenshotList: SFC = ({ children }) => {
   const [showPreview, setShowPreview] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState<ScreenshotData>();
@@ -32,13 +30,6 @@ const ScreenshotList = () => {
     doRetry,
     storyData,
   } = useStoryScreenshotLoader();
-
-  const {
-    DeleteScreenshotsErrorSnackbar,
-    SuccessSnackbarDeleteScreenshots,
-    deleteInProgress,
-    deleteStoryScreenshots,
-  } = useDeleteStoryScreenshot();
 
   const {
     ChangeIndexErrorSnackbar,
@@ -83,14 +74,6 @@ const ScreenshotList = () => {
 
   return (
     <>
-      <ScreenshotListToolbar
-        onUpdateClick={toggleStoryUpdateClick}
-        title="Story Screenshots"
-        onTestClick={testStoryScreenShots}
-        onPreviewClick={toggleShowPreview}
-        hasScreenShot={hasScreenshot}
-        onDelete={deleteStoryScreenshots}
-      />
       <ListWrapperSortableContainer
         useDragHandle
         onSortEnd={handleDragEnd}
@@ -111,6 +94,7 @@ const ScreenshotList = () => {
                     !updateStoryScreenshots && !showPreview
                   }
                   dragStart={dragStart}
+                  draggable={true}
                   showSuccessImageDiff={true}
                   enableImageDiff={true}
                   enableUpdate={true}
@@ -131,13 +115,9 @@ const ScreenshotList = () => {
           </div>
         )}
         <Loader
-          open={
-            loading ||
-            imageDiffTestInProgress ||
-            deleteInProgress ||
-            ChangeIndexInProgress
-          }
+          open={loading || imageDiffTestInProgress || ChangeIndexInProgress}
         />
+        {children}
       </ListWrapperSortableContainer>
 
       {error && (
@@ -176,8 +156,6 @@ const ScreenshotList = () => {
           height="100%"
         />
       )}
-      <DeleteScreenshotsErrorSnackbar />
-      <SuccessSnackbarDeleteScreenshots message="Story screenshots deleted successfully." />
       <ChangeIndexErrorSnackbar />
     </>
   );

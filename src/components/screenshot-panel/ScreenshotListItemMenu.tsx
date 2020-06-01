@@ -129,31 +129,30 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
           position="absolute"
           open={inProgress || working}
         />
+        {showSuccessImageDiff && imageDiffResult && imageDiffResult.pass && (
+          <IconButton
+            size="small"
+            color="primary"
+            onClick={handleRemoveScreenShotResult}
+          >
+            <CheckCircle color="primary" />
+          </IconButton>
+        )}
+
+        {imageDiffResult && !imageDiffResult.pass && (
+          <IconButton
+            size="small"
+            color="secondary"
+            onClick={handleShowImageDiffResult}
+          >
+            <Error />
+          </IconButton>
+        )}
 
         <div
           ref={ref}
           className={clsx(classes.menu, { [classes.visible]: show })}
         >
-          {showSuccessImageDiff && imageDiffResult && imageDiffResult.pass && (
-            <IconButton
-              size="small"
-              color="primary"
-              onClick={handleRemoveScreenShotResult}
-            >
-              <CheckCircle color="primary" />
-            </IconButton>
-          )}
-
-          {imageDiffResult && !imageDiffResult.pass && (
-            <IconButton
-              size="small"
-              color="secondary"
-              onClick={handleShowImageDiffResult}
-            >
-              <Error />
-            </IconButton>
-          )}
-
           {enableEditScreenshot && (
             <IconButton
               onClick={handleEdit}

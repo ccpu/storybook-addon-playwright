@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import { ProviderWrapper } from './ProviderWrapper';
 import { useStorybookState } from '@storybook/api';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
-import { ScreenshotList } from '../screenshot-panel';
+import { ScreenshotPanel as ScreenshotPanelComponent } from '../screenshot-panel';
 import { ScreenshotProvider } from '../../store/screenshot';
 
 const ScreenshotPanel: SFC = () => {
@@ -11,7 +11,9 @@ const ScreenshotPanel: SFC = () => {
   return (
     <ProviderWrapper>
       <ScreenshotProvider>
-        {state.selectedPanel === SCREENSHOT_PANEL_ID && <ScreenshotList />}
+        {state.selectedPanel === SCREENSHOT_PANEL_ID && (
+          <ScreenshotPanelComponent />
+        )}
       </ScreenshotProvider>
     </ProviderWrapper>
   );

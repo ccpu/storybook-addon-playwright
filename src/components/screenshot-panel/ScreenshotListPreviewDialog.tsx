@@ -4,8 +4,7 @@ import { Dialog, DialogProps, ListWrapper, ImageDiffPreview } from '../common';
 import { makeStyles, capitalize } from '@material-ui/core';
 import { ImageDiffResult } from '../../api/typings';
 import { useScreenshotContext } from '../../store/screenshot';
-// import { SortableScreenshotListItem } from './ScreenshotListItem';
-import { ScreenshotList } from './ScreenshotList';
+import { ScreenshotListItem } from './ScreenshotListItem';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -111,14 +110,13 @@ const ScreenshotListPreviewDialog: SFC<
       {...rest}
     >
       <div className={classes.root}>
-        <ScreenshotList />
-        {/* <ListWrapper className={classes.list}>
+        <ListWrapper className={classes.list}>
           {currentItem &&
-            screenshots.map((screenshot, i) => (
-              <SortableScreenshotListItem
-                index={i}
+            screenshots.map((screenshot) => (
+              <ScreenshotListItem
                 key={screenshot.hash}
                 screenshot={screenshot}
+                forceShowMenu={true}
                 storyData={storyData}
                 onClick={handleItemClick}
                 selected={currentItem.data.hash === screenshot.hash}
@@ -129,7 +127,7 @@ const ScreenshotListPreviewDialog: SFC<
                 )}
               />
             ))}
-        </ListWrapper> */}
+        </ListWrapper>
         <div className={classes.line} />
         {currentItem && currentItem.imageDiff && (
           <ImageDiffPreview imageDiffResult={currentItem.imageDiff} />

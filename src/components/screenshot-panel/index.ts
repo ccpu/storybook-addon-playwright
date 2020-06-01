@@ -1,1 +1,1 @@
-export * from './ScreenshotList';
+export * from './ScreenshotPanel';

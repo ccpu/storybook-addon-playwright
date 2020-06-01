@@ -3,27 +3,20 @@ import {
   useStoryScreenshotLoader,
   useStoryScreenshotImageDiff,
   useDeleteStoryScreenshot,
-  useScreenshotIndexChange,
 } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
-import {
-  Loader,
-  SnackbarWithRetry,
-  ListWrapperSortableContainer,
-} from '../common';
+import { Loader, SnackbarWithRetry } from '../common';
 import { ScreenshotData } from '../../typings';
-import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
-import { SortEnd } from 'react-sortable-hoc';
+import { ScreenshotList } from './ScreenshotList';
 
-const ScreenshotList = () => {
+const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState<ScreenshotData>();
   const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
-  const [dragStart, setDragStart] = useState(false);
 
   const {
     loading,
@@ -39,12 +32,6 @@ const ScreenshotList = () => {
     deleteInProgress,
     deleteStoryScreenshots,
   } = useDeleteStoryScreenshot();
-
-  const {
-    ChangeIndexErrorSnackbar,
-    changeIndex,
-    ChangeIndexInProgress,
-  } = useScreenshotIndexChange();
 
   const state = useScreenshotContext();
 
@@ -69,18 +56,6 @@ const ScreenshotList = () => {
 
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
 
-  const handleDragStart = useCallback(() => {
-    setDragStart(true);
-  }, []);
-
-  const handleDragEnd = useCallback(
-    (e: SortEnd) => {
-      setDragStart(false);
-      changeIndex(e);
-    },
-    [changeIndex],
-  );
-
   return (
     <>
       <ScreenshotListToolbar
@@ -91,54 +66,9 @@ const ScreenshotList = () => {
         hasScreenShot={hasScreenshot}
         onDelete={deleteStoryScreenshots}
       />
-      <ListWrapperSortableContainer
-        useDragHandle
-        onSortEnd={handleDragEnd}
-        updateBeforeSortStart={handleDragStart}
-      >
-        {hasScreenshot ? (
-          <>
-            {state.screenshots
-              .sort((a, b) => a.index - b.index)
-              .map((screenshot, index) => (
-                <SortableScreenshotListItem
-                  index={index}
-                  key={screenshot.hash}
-                  screenshot={screenshot}
-                  storyData={storyData}
-                  onClick={toggleSelectedItem}
-                  deletePassedImageDiffResult={
-                    !updateStoryScreenshots && !showPreview
-                  }
-                  dragStart={dragStart}
-                  showSuccessImageDiff={true}
-                  enableImageDiff={true}
-                  enableUpdate={true}
-                  showImageDiffResultDialog={true}
-                  enableLoadSetting={true}
-                  enableEditScreenshot={true}
-                  imageDiffResult={state.imageDiffResults.find(
-                    (x) =>
-                      x.storyId === storyData.id &&
-                      x.screenshotHash === screenshot.hash,
-                  )}
-                />
-              ))}
-          </>
-        ) : (
-          <div style={{ marginTop: 30, textAlign: 'center' }}>
-            <div> No screenshot has been found!</div>
-          </div>
-        )}
-        <Loader
-          open={
-            loading ||
-            imageDiffTestInProgress ||
-            deleteInProgress ||
-            ChangeIndexInProgress
-          }
-        />
-      </ListWrapperSortableContainer>
+      <ScreenshotList>
+        <Loader open={loading || imageDiffTestInProgress || deleteInProgress} />
+      </ScreenshotList>
 
       {error && (
         <SnackbarWithRetry
@@ -178,11 +108,10 @@ const ScreenshotList = () => {
       )}
       <DeleteScreenshotsErrorSnackbar />
       <SuccessSnackbarDeleteScreenshots message="Story screenshots deleted successfully." />
-      <ChangeIndexErrorSnackbar />
     </>
   );
 };
 
-ScreenshotList.displayName = 'ScreenshotList';
+ScreenshotPanel.displayName = 'ScreenshotPanel';
 
-export { ScreenshotList };
+export { ScreenshotPanel };

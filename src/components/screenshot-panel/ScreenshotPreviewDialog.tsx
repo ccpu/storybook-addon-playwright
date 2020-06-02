@@ -1,11 +1,18 @@
 import React, { SFC, useEffect, useCallback } from 'react';
 import { ScreenshotData, StoryData } from '../../typings';
 import { useAsyncApiCall } from '../../hooks';
-import { ImageDiffPreviewDialog, Loader, DialogProps } from '../common';
+import {
+  ImageDiffPreviewDialog,
+  Loader,
+  DialogProps,
+  ImageDiffPreviewProps,
+} from '../common';
 import { testScreenshot } from '../../api/client';
 import { ScreenshotInfo } from './ScreenshotInfo';
 
-export interface ScreenshotPreviewDialogProps extends DialogProps {
+export interface ScreenshotPreviewDialogProps
+  extends DialogProps,
+    Partial<ImageDiffPreviewProps> {
   screenShotData: ScreenshotData;
   storyData: StoryData;
 }

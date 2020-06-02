@@ -71,7 +71,10 @@ const ListItemWrapper: SFC<
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      if ((e.target as HTMLDivElement).classList.contains('clickable')) {
+      if (
+        onClick &&
+        (e.target as HTMLDivElement).classList.contains('clickable')
+      ) {
         onClick(e);
       }
     },

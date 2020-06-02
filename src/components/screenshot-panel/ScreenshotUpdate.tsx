@@ -1,20 +1,25 @@
 import React, { SFC, useCallback, useEffect } from 'react';
-import { ScreenshotData, StoryData } from '../../typings';
+import { ScreenshotData } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
-import { useAsyncApiCall, useScreenshotUpdate } from '../../hooks';
+import {
+  useAsyncApiCall,
+  useScreenshotUpdate,
+  useCurrentStoryData,
+} from '../../hooks';
 import { testScreenshot as testScreenshotClient } from '../../api/client';
 import { Loader, ImageDiffPreviewDialog } from '../common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;
-  storyData: StoryData;
   onStateChange: (state: boolean) => void;
 }
 
 const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
-  const { storyData, screenshot, onStateChange } = props;
+  const { screenshot, onStateChange } = props;
+
+  const storyData = useCurrentStoryData();
 
   const {
     UpdateScreenshotErrorSnackbar,

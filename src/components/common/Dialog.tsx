@@ -56,7 +56,7 @@ const useStyles = makeStyles(
 export interface DialogProps extends MuDialogProps, StyleProps {
   title?: string;
   subtitle?: string;
-  onClose: () => void;
+  onClose?: () => void;
   footerActions?: React.ComponentType;
   titleActions?: React.ComponentType;
   enableCloseButton?: boolean;

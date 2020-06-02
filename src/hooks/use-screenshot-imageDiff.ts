@@ -11,7 +11,6 @@ export const useScreenshotImageDiff = (storyData: StoryData) => {
     makeCall,
     error: testScreenshotError,
     inProgress,
-    clearResult,
     ErrorSnackbar,
   } = useAsyncApiCall(testScreenshotClient, false);
 
@@ -28,13 +27,13 @@ export const useScreenshotImageDiff = (storyData: StoryData) => {
           type: 'addImageDiffResult',
         });
       }
+      return result;
     },
     [dispatch, makeCall, storyData],
   );
 
   return {
     TestScreenshotErrorSnackbar: ErrorSnackbar,
-    clearResult,
     inProgress,
     testScreenshot,
     testScreenshotError,

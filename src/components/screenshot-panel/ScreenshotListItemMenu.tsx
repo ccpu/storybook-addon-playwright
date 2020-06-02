@@ -2,20 +2,16 @@
 import React, { useCallback, useState, forwardRef, Ref, SFC } from 'react';
 import { IconButton } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
-import { Loader, ImageDiffMessage } from '../common';
-import { ScreenshotData, StoryData } from '../../typings';
-import { useScreenshotImageDiff, useEditScreenshot } from '../../hooks';
-import { ImageDiffResult } from '../../api/typings';
-import { useScreenshotDispatch } from '../../store/screenshot';
-import CheckCircle from '@material-ui/icons/CheckCircle';
+import { Loader } from '../common';
+import { ScreenshotData } from '../../typings';
+import { useEditScreenshot } from '../../hooks';
 import EditIcon from '@material-ui/icons/Edit';
-import Error from '@material-ui/icons/Error';
 import { ScreenshotUpdate } from './ScreenshotUpdate';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ScreenshotDelete } from './ScreenshotDelete';
 import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
-import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -47,17 +43,13 @@ const useStyles = makeStyles(
 
 export interface ScreenshotListItemMenuProps {
   screenshot: ScreenshotData;
-  storyData: StoryData;
-  imageDiffResult?: ImageDiffResult;
-  deletePassedImageDiffResult?: boolean;
-  showSuccessImageDiff?: boolean;
   enableImageDiff?: boolean;
   enableUpdate?: boolean;
-  showImageDiffResultDialog?: boolean;
   enableLoadSetting?: boolean;
   enableEditScreenshot?: boolean;
   show?: boolean;
   onHide?: () => void;
+  onRunImageDiff?: () => void;
 }
 
 const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
@@ -65,53 +57,19 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
     {
       enableLoadSetting,
       screenshot,
-      storyData,
-      imageDiffResult,
-      deletePassedImageDiffResult,
-      showSuccessImageDiff,
       enableImageDiff,
       enableUpdate,
-      showImageDiffResultDialog,
       enableEditScreenshot,
       show,
       onHide,
+      onRunImageDiff,
     },
     ref: Ref<HTMLDivElement>,
   ) => {
-    const dispatch = useScreenshotDispatch();
-
-    const [showImageDiffResult, setShowImageDiffResult] = useState(false);
     const [working, setWorking] = useState(false);
     const { editScreenshot, loadSetting } = useEditScreenshot();
 
     const classes = useStyles();
-
-    const {
-      clearResult,
-      inProgress,
-      testScreenshot,
-      TestScreenshotErrorSnackbar,
-    } = useScreenshotImageDiff(storyData);
-
-    const handleTestScreenshot = useCallback(async () => {
-      await testScreenshot(screenshot.hash);
-      setShowImageDiffResult(true);
-    }, [screenshot.hash, testScreenshot]);
-
-    const handleShowImageDiffResult = useCallback(() => {
-      setShowImageDiffResult(true);
-    }, []);
-
-    const handleRemoveScreenShotResult = useCallback(() => {
-      clearResult();
-      setShowImageDiffResult(false);
-      if (deletePassedImageDiffResult) {
-        dispatch({
-          screenshotHash: imageDiffResult.screenshotHash,
-          type: 'removeImageDiffResult',
-        });
-      }
-    }, [clearResult, deletePassedImageDiffResult, dispatch, imageDiffResult]);
 
     const handleEdit = useCallback(() => editScreenshot(screenshot), [
       editScreenshot,
@@ -124,31 +82,7 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
 
     return (
       <>
-        <Loader
-          progressSize={20}
-          position="absolute"
-          open={inProgress || working}
-        />
-        {showSuccessImageDiff && imageDiffResult && imageDiffResult.pass && (
-          <IconButton
-            size="small"
-            color="primary"
-            onClick={handleRemoveScreenShotResult}
-          >
-            <CheckCircle color="primary" />
-          </IconButton>
-        )}
-
-        {imageDiffResult && !imageDiffResult.pass && (
-          <IconButton
-            size="small"
-            color="secondary"
-            onClick={handleShowImageDiffResult}
-          >
-            <Error />
-          </IconButton>
-        )}
-
+        <Loader progressSize={20} position="absolute" open={working} />
         <div
           ref={ref}
           className={clsx(classes.menu, { [classes.visible]: show })}
@@ -177,13 +111,12 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
             <ScreenshotUpdate
               onStateChange={setWorking}
               screenshot={screenshot}
-              storyData={storyData}
             />
           )}
 
           {enableImageDiff && (
             <IconButton
-              onClick={handleTestScreenshot}
+              onClick={onRunImageDiff}
               size="small"
               title="Run diff test"
             >
@@ -198,23 +131,6 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
           />
 
           <ScreenshotInfo onClose={onHide} screenshotData={screenshot} />
-
-          <TestScreenshotErrorSnackbar />
-
-          {showImageDiffResult && showImageDiffResultDialog && (
-            <ImageDiffMessage
-              result={imageDiffResult}
-              onClose={handleRemoveScreenShotResult}
-              title={screenshot.title}
-              titleActions={() => (
-                <ScreenshotInfo
-                  color="primary"
-                  size="medium"
-                  screenshotData={screenshot}
-                />
-              )}
-            />
-          )}
         </div>
       </>
     );

@@ -10,18 +10,15 @@ import {
   SnackbarWithRetry,
   ListWrapperSortableContainer,
 } from '../common';
-import { ScreenshotData } from '../../typings';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
-import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 import { SortEnd } from 'react-sortable-hoc';
 
 const ScreenshotList: SFC = ({ children }) => {
   const [showPreview, setShowPreview] = useState(false);
 
-  const [selectedItem, setSelectedItem] = useState<ScreenshotData>();
   const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
-  const [dragStart, setDragStart] = useState(false);
+  const [dragStart, setDragStart] = useState<boolean>(null);
 
   const {
     loading,
@@ -49,10 +46,6 @@ const ScreenshotList: SFC = ({ children }) => {
   const toggleShowPreview = useCallback(() => {
     setShowPreview(!showPreview);
   }, [showPreview]);
-
-  const toggleSelectedItem = useCallback((data?: ScreenshotData) => {
-    setSelectedItem(data);
-  }, []);
 
   const toggleStoryUpdateClick = useCallback(() => {
     setUpdateStoryScreenshots(!updateStoryScreenshots);
@@ -89,13 +82,11 @@ const ScreenshotList: SFC = ({ children }) => {
                   key={screenshot.hash}
                   screenshot={screenshot}
                   storyData={storyData}
-                  onClick={toggleSelectedItem}
                   deletePassedImageDiffResult={
                     !updateStoryScreenshots && !showPreview
                   }
                   dragStart={dragStart}
                   draggable={true}
-                  showSuccessImageDiff={true}
                   enableImageDiff={true}
                   enableUpdate={true}
                   showImageDiffResultDialog={true}
@@ -146,16 +137,7 @@ const ScreenshotList: SFC = ({ children }) => {
           updating={updateStoryScreenshots}
         />
       )}
-      {selectedItem && (
-        <ScreenshotPreviewDialog
-          screenShotData={selectedItem}
-          storyData={storyData}
-          onClose={toggleSelectedItem}
-          open={true}
-          width="100%"
-          height="100%"
-        />
-      )}
+
       <ChangeIndexErrorSnackbar />
     </>
   );

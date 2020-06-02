@@ -1,4 +1,4 @@
-import { KnobStoreKnob } from '../../typings/knobs';
+import { ScreenshotProp } from '../../typings';
 import { StoryAction } from '../../typings/story-action';
 import {
   BrowserTypes,
@@ -9,7 +9,7 @@ import {
 } from '../../typings';
 
 export interface GetScreenshotRequest {
-  knobs?: KnobStoreKnob[];
+  props?: ScreenshotProp[];
   actions?: StoryAction[];
   storyId: string;
   browserType: BrowserTypes;

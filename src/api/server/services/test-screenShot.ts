@@ -19,7 +19,7 @@ export const testScreenshot = async (
       actions: screenshotData.actions,
       browserType: screenshotData.browserType,
       device: screenshotData.device,
-      knobs: screenshotData.knobs,
+      props: screenshotData.props,
       storyId: data.storyId,
     },
     host,

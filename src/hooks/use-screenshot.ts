@@ -30,7 +30,7 @@ export const useScreenshot = (
       actions: currentActions,
       browserType,
       device: deviceInfo,
-      knobs,
+      props: knobs,
       storyId: state.storyId,
     })
       .then((snapShotsInfo) => {

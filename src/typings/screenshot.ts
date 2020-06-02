@@ -1,5 +1,4 @@
 import { Page } from 'playwright-core';
-import { KnobStoreKnob } from './knobs';
 import { StoryAction } from './story-action';
 import { StoryInfo } from './story-info';
 
@@ -33,7 +32,7 @@ export interface ScreenshotInfo extends StoryInfo {
 }
 
 export interface ScreenshotData {
-  knobs?: KnobStoreKnob[];
+  props?: ScreenshotProp[];
   actions?: StoryAction[];
   browserType: BrowserTypes;
   title: string;
@@ -46,4 +45,10 @@ export interface ScreenshotData {
     x?: number;
     y?: number;
   };
+}
+
+export interface ScreenshotProp {
+  name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value?: any;
 }

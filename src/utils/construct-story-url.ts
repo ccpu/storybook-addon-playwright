@@ -1,11 +1,11 @@
-import { KnobStoreKnob } from '../typings';
+import { ScreenshotProp } from '../typings';
 import normalize from 'normalize-url';
 import { knobsToQuerystring } from './knobs-to-querystring';
 
 export const constructStoryUrl = (
   endpoint: string,
   id: string,
-  knobs?: KnobStoreKnob[],
+  knobs?: ScreenshotProp[],
 ) => {
   let storyUrl = `${endpoint}/iframe.html?id=${id}`;
 

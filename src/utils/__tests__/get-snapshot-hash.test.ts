@@ -1,5 +1,4 @@
 import { getSnapshotHash } from '../get-snapshot-hash';
-import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
 
 describe('getSnapshotHash', () => {
   it('should return hash', () => {
@@ -10,11 +9,11 @@ describe('getSnapshotHash', () => {
         {
           name: 'knob-name',
           value: 'knob-value',
-        } as KnobStoreKnob,
+        },
       ],
       'chromium',
       { name: 'device-name' },
     );
-    expect(hash).toBe('3b22c118');
+    expect(hash).toBe('9453f2a0');
   });
 });

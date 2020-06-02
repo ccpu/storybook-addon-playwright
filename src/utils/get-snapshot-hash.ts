@@ -1,7 +1,7 @@
 import sum from 'hash-sum';
 import {
   StoryAction,
-  KnobStoreKnob,
+  ScreenshotProp,
   BrowserTypes,
   DeviceDescriptor,
 } from '../typings';
@@ -9,24 +9,15 @@ import {
 export const getSnapshotHash = (
   storyId: string,
   actions: StoryAction[],
-  knobs: KnobStoreKnob[],
+  props: ScreenshotProp[],
   browserType: BrowserTypes,
   deviceDescriptor: DeviceDescriptor,
 ) => {
-  const knobsKeyValue =
-    knobs &&
-    knobs.map((knob) => {
-      return {
-        key: knob.name,
-        value: knob.value,
-      };
-    });
-
   return sum({
     actions,
     browserType,
     deviceDescriptor,
-    knobsKeyValue,
+    props,
     storyId,
   });
 };

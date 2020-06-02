@@ -17,7 +17,7 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
     saveScreenShot,
     result,
     onSuccessClose,
-    saving,
+    inProgress,
     getUpdatingScreenshot,
     ErrorSnackbar,
   } = useSaveScreenshot();
@@ -59,7 +59,7 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
           autoHideDuration={2000}
         />
       )}
-      <Loader open={saving} />
+      <Loader open={inProgress} />
       <ImageDiffMessage result={result} onClose={onSuccessClose} />
     </>
   );

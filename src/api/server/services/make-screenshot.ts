@@ -15,7 +15,7 @@ export const makeScreenshot = async (
   const url = constructStoryUrl(
     helper.storybookEndpoint ? helper.storybookEndpoint : host,
     data.storyId,
-    data.knobs,
+    data.props,
   );
 
   const page = await helper.getPage(

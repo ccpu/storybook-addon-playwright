@@ -11,7 +11,7 @@ import { useAsyncApiCall } from './use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
 
 export const useSaveScreenshot = () => {
-  const knobs = useKnobs();
+  const props = useKnobs();
   const storyData = useCurrentStoryData();
 
   const { dispatch: screenshotDispatch } = useGlobalScreenshotDispatch();
@@ -21,14 +21,13 @@ export const useSaveScreenshot = () => {
   const { currentActions } = useCurrentActions(storyData && storyData.id);
   const [error, setError] = useState<string>();
 
-  const [saving, setWorking] = useState(false);
-
   const {
     makeCall,
     result,
     clearError,
     clearResult,
     ErrorSnackbar,
+    inProgress,
   } = useAsyncApiCall(saveScreenshotClient);
 
   const isUpdating = useCallback(
@@ -55,7 +54,7 @@ export const useSaveScreenshot = () => {
       const hash = getSnapshotHash(
         storyData.id,
         currentActions,
-        knobs,
+        props,
         browserType,
         deviceDescriptor,
       );
@@ -71,14 +70,12 @@ export const useSaveScreenshot = () => {
           index: isUpdating(browserType)
             ? editScreenshotState.screenshotData.index
             : undefined,
-          knobs: knobs,
+          props: props,
           storyId: storyData.id,
           title,
           updateScreenshot:
             isUpdating(browserType) && editScreenshotState.screenshotData,
         };
-
-        setWorking(true);
 
         const res = await makeCall(data);
 
@@ -106,12 +103,11 @@ export const useSaveScreenshot = () => {
       } catch (error) {
         setError(error.message);
       }
-      setWorking(false);
     },
     [
       storyData,
       currentActions,
-      knobs,
+      props,
       isUpdating,
       editScreenshotState,
       makeCall,
@@ -129,10 +125,10 @@ export const useSaveScreenshot = () => {
     clearError,
     error,
     getUpdatingScreenshot,
+    inProgress,
     isUpdating,
     onSuccessClose,
     result,
     saveScreenShot,
-    saving,
   };
 };

@@ -1,38 +1,48 @@
 import { useEffect, useState } from 'react';
 import { SET } from '@storybook/addon-knobs/dist/shared';
-import { KnobStoreKnob } from '../typings';
+import { ScreenshotProp } from '../typings';
 import { STORY_CHANGED } from '@storybook/core-events';
 import addons from '@storybook/addons';
 import { useEditScreenshot } from './use-edit-screenshot';
 import { useStorybookApi } from '@storybook/api';
 
 export const useKnobs = () => {
-  const [knobs, setKnobs] = useState<KnobStoreKnob[]>();
+  const [props, setProps] = useState<ScreenshotProp[]>();
 
   const { editScreenshotState } = useEditScreenshot();
   const api = useStorybookApi();
 
   useEffect(() => {
-    setKnobs(undefined);
+    setProps(undefined);
     const chanel = addons.getChannel();
     const setKnobStore = (knobStore) => {
       const knobArr = Object.keys(knobStore.knobs)
-        .map((knob) => {
-          return knobStore.knobs[knob] as KnobStoreKnob;
-        })
-        .filter((x) => {
-          if (editScreenshotState && api.getQueryParam('knob-' + x.name)) {
+        .filter((knob) => {
+          const knobData = knobStore.knobs[knob];
+          if (
+            editScreenshotState &&
+            api.getQueryParam('knob-' + knobData.name)
+          ) {
             return true;
           }
 
-          return x.value !== x.defaultValue;
-        });
+          return knobData.value !== knobData.defaultValue;
+        })
+        .map(
+          (knob): ScreenshotProp => {
+            const knobData = knobStore.knobs[knob];
+            return {
+              name: knobData.name,
+              value: knobData.value,
+            };
+          },
+        );
 
-      setKnobs(knobArr.length > 0 ? knobArr : undefined);
+      setProps(knobArr.length > 0 ? knobArr : undefined);
     };
 
     const storyChange = () => {
-      setKnobs(undefined);
+      setProps(undefined);
     };
 
     chanel.on(SET, setKnobStore);
@@ -45,5 +55,5 @@ export const useKnobs = () => {
     };
   }, [api, editScreenshotState]);
 
-  return knobs;
+  return props;
 };

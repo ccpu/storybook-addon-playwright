@@ -21,14 +21,13 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
 
   const getInfo = useCallback(() => {
     const data = { ...screenshotData };
-    if (data.knobs) {
-      (data as {
-        props?: { [k: string]: unknown };
-      }).props = data.knobs.reduce((obj, knob) => {
-        obj[knob.name] = knob.value;
+    if (data.props) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (data as any).props = data.props.reduce((obj, prop) => {
+        obj[prop.name] = prop.value;
         return obj;
       }, {});
-      delete data.knobs;
+      delete data.props;
     }
     if (data.actions) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

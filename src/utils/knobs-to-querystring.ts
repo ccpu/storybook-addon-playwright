@@ -1,9 +1,9 @@
-import { KnobStoreKnob } from '../typings';
+import { ScreenshotProp } from '../typings';
 
-export const knobsToQuerystring = (knobs: KnobStoreKnob[]) => {
-  if (!knobs) return '';
-  const knobQuery = knobs.map((knob) => {
-    return `knob-${knob.name}=${knob.value}`;
+export const knobsToQuerystring = (props: ScreenshotProp[]) => {
+  if (!props) return '';
+  const propQuery = props.map((prop) => {
+    return `knob-${prop.name}=${prop.value}`;
   });
-  return knobQuery.join('&');
+  return propQuery.join('&');
 };

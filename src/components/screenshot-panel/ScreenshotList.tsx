@@ -1,38 +1,17 @@
 import React, { useCallback, useState, SFC } from 'react';
-import {
-  useStoryScreenshotLoader,
-  useStoryScreenshotImageDiff,
-  useScreenshotIndexChange,
-} from '../../hooks';
+import { useStoryScreenshotImageDiff, useCurrentStoryData } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
-import {
-  Loader,
-  SnackbarWithRetry,
-  ListWrapperSortableContainer,
-} from '../common';
+import { Loader, SnackbarWithRetry } from '../common';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
-import { SortEnd } from 'react-sortable-hoc';
+import { ScreenshotListSortable } from './ScreenshotListSortable';
 
 const ScreenshotList: SFC = ({ children }) => {
   const [showPreview, setShowPreview] = useState(false);
 
   const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
-  const [dragStart, setDragStart] = useState<boolean>(null);
 
-  const {
-    loading,
-    error,
-    clearError,
-    doRetry,
-    storyData,
-  } = useStoryScreenshotLoader();
-
-  const {
-    ChangeIndexErrorSnackbar,
-    changeIndex,
-    ChangeIndexInProgress,
-  } = useScreenshotIndexChange();
+  const storyData = useCurrentStoryData();
 
   const state = useScreenshotContext();
 
@@ -53,25 +32,9 @@ const ScreenshotList: SFC = ({ children }) => {
 
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
 
-  const handleDragStart = useCallback(() => {
-    setDragStart(true);
-  }, []);
-
-  const handleDragEnd = useCallback(
-    (e: SortEnd) => {
-      setDragStart(false);
-      changeIndex(e);
-    },
-    [changeIndex],
-  );
-
   return (
     <>
-      <ListWrapperSortableContainer
-        useDragHandle
-        onSortEnd={handleDragEnd}
-        updateBeforeSortStart={handleDragStart}
-      >
+      <ScreenshotListSortable>
         {hasScreenshot ? (
           <>
             {state.screenshots
@@ -79,19 +42,18 @@ const ScreenshotList: SFC = ({ children }) => {
               .map((screenshot, index) => (
                 <SortableScreenshotListItem
                   index={index}
+                  openUpdateDialog={true}
                   key={screenshot.hash}
                   screenshot={screenshot}
                   storyData={storyData}
-                  deletePassedImageDiffResult={
-                    !updateStoryScreenshots && !showPreview
-                  }
-                  dragStart={dragStart}
+                  showPreviewOnClick={true}
                   draggable={true}
                   enableImageDiff={true}
                   enableUpdate={true}
                   showImageDiffResultDialog={true}
                   enableLoadSetting={true}
                   enableEditScreenshot={true}
+                  pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
                   imageDiffResult={state.imageDiffResults.find(
                     (x) =>
                       x.storyId === storyData.id &&
@@ -105,21 +67,10 @@ const ScreenshotList: SFC = ({ children }) => {
             <div> No screenshot has been found!</div>
           </div>
         )}
-        <Loader
-          open={loading || imageDiffTestInProgress || ChangeIndexInProgress}
-        />
+        <Loader open={imageDiffTestInProgress} />
         {children}
-      </ListWrapperSortableContainer>
+      </ScreenshotListSortable>
 
-      {error && (
-        <SnackbarWithRetry
-          type="error"
-          open={true}
-          onClose={clearError}
-          message={error}
-          onRetry={doRetry}
-        />
-      )}
       {storyImageDiffError && (
         <SnackbarWithRetry
           open={true}
@@ -137,8 +88,6 @@ const ScreenshotList: SFC = ({ children }) => {
           updating={updateStoryScreenshots}
         />
       )}
-
-      <ChangeIndexErrorSnackbar />
     </>
   );
 };

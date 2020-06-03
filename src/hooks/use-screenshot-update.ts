@@ -3,6 +3,7 @@ import { useAsyncApiCall } from './use-async-api-call';
 import { useCallback } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useScreenshotDispatch } from '../store/screenshot';
+import { ImageDiffResult } from '../api/typings';
 
 export const useScreenshotUpdate = () => {
   const {
@@ -18,14 +19,27 @@ export const useScreenshotUpdate = () => {
   const dispatch = useScreenshotDispatch();
 
   const updateScreenshot = useCallback(
-    async (screenshotHash: string, newScreenshot: string) => {
+    async (imageDiffResult: ImageDiffResult) => {
       await makeCall({
-        base64: newScreenshot,
+        base64: imageDiffResult.newScreenshot,
         fileName: storyData.parameters.fileName,
-        hash: screenshotHash,
+        hash: imageDiffResult.screenshotHash,
         storyId: storyData.id,
       });
-      dispatch({ screenshotHash, type: 'removeImageDiffResult' });
+
+      const newImageDiffResult: ImageDiffResult = {
+        diffSize: false,
+        index: imageDiffResult.index,
+        newScreenshot: imageDiffResult.newScreenshot,
+        pass: true,
+        screenshotHash: imageDiffResult.screenshotHash,
+        storyId: imageDiffResult.storyId,
+      };
+
+      dispatch({
+        imageDiffResult: newImageDiffResult,
+        type: 'updateImageDiffResult',
+      });
     },
     [dispatch, storyData, makeCall],
   );

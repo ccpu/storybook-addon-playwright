@@ -40,7 +40,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
             `Unable to find image diff result for ${s.title} screenshot.`,
           );
         }
-        updateScreenshot(s.hash, imageDiffResult.newScreenshot);
+        updateScreenshot(imageDiffResult);
       });
 
       await Promise.all(promises);

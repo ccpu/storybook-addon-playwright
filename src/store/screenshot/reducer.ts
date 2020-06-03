@@ -5,6 +5,7 @@ import arrayMove from 'array-move';
 export interface ReducerState {
   screenshots: ScreenshotData[];
   imageDiffResults: ImageDiffResult[];
+  pauseDeleteImageDiffResult: boolean;
 }
 
 export type Action =
@@ -25,6 +26,10 @@ export type Action =
       screenshotHash: string;
     }
   | {
+      type: 'updateImageDiffResult';
+      imageDiffResult: ImageDiffResult;
+    }
+  | {
       type: 'addScreenshot';
       screenshot: ScreenshotData;
     }
@@ -40,10 +45,15 @@ export type Action =
       oldIndex: number;
       newIndex: number;
     }
+  | {
+      type: 'pauseDeleteImageDiffResult';
+      state: boolean;
+    }
   | { type: 'deleteScreenshot'; screenshotHash: string };
 
 export const initialState: ReducerState = {
   imageDiffResults: [],
+  pauseDeleteImageDiffResult: false,
   screenshots: [],
 };
 
@@ -101,6 +111,7 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         imageDiffResults: action.imageDiffResults,
       };
     }
+
     case 'addImageDiffResult': {
       return {
         ...state,
@@ -112,7 +123,25 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
         ],
       };
     }
+    case 'updateImageDiffResult': {
+      return {
+        ...state,
+        imageDiffResults: state.imageDiffResults.map((result) => {
+          if (result.screenshotHash !== action.imageDiffResult.screenshotHash)
+            return result;
+          console.log(action.imageDiffResult);
+          return { ...action.imageDiffResult };
+        }),
+      };
+    }
+    case 'pauseDeleteImageDiffResult': {
+      return {
+        ...state,
+        pauseDeleteImageDiffResult: action.state,
+      };
+    }
     case 'removeImageDiffResult': {
+      if (state.pauseDeleteImageDiffResult) return state;
       return {
         ...state,
         imageDiffResults: state.imageDiffResults.filter(

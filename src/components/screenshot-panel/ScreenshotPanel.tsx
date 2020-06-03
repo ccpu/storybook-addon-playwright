@@ -1,28 +1,29 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import {
   useStoryScreenshotLoader,
   useStoryScreenshotImageDiff,
   useDeleteStoryScreenshot,
 } from '../../hooks';
-import { useScreenshotContext } from '../../store/screenshot';
+import {
+  useScreenshotContext,
+  useScreenshotDispatch,
+} from '../../store/screenshot';
 import { Loader, SnackbarWithRetry } from '../common';
-import { ScreenshotData } from '../../typings';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
-import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 import { ScreenshotList } from './ScreenshotList';
 
 const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
 
-  const [selectedItem, setSelectedItem] = useState<ScreenshotData>();
   const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
 
+  const dispatch = useScreenshotDispatch();
+
   const {
-    loading,
-    error,
-    clearError,
-    doRetry,
+    ScreenshotLoaderErrorSnackbar,
+    loadScreenShots,
+    screenshotLoaderInProgress,
     storyData,
   } = useStoryScreenshotLoader();
 
@@ -46,15 +47,18 @@ const ScreenshotPanel = () => {
     setShowPreview(!showPreview);
   }, [showPreview]);
 
-  const toggleSelectedItem = useCallback((data?: ScreenshotData) => {
-    setSelectedItem(data);
-  }, []);
-
   const toggleStoryUpdateClick = useCallback(() => {
     setUpdateStoryScreenshots(!updateStoryScreenshots);
   }, [updateStoryScreenshots]);
 
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
+
+  useEffect(() => {
+    dispatch({
+      state: showPreview || updateStoryScreenshots,
+      type: 'pauseDeleteImageDiffResult',
+    });
+  }, [dispatch, showPreview, updateStoryScreenshots]);
 
   return (
     <>
@@ -67,18 +71,17 @@ const ScreenshotPanel = () => {
         onDelete={deleteStoryScreenshots}
       />
       <ScreenshotList>
-        <Loader open={loading || imageDiffTestInProgress || deleteInProgress} />
+        <Loader
+          open={
+            screenshotLoaderInProgress ||
+            imageDiffTestInProgress ||
+            deleteInProgress
+          }
+        />
       </ScreenshotList>
 
-      {error && (
-        <SnackbarWithRetry
-          type="error"
-          open={true}
-          onClose={clearError}
-          message={error}
-          onRetry={doRetry}
-        />
-      )}
+      <ScreenshotLoaderErrorSnackbar onRetry={loadScreenShots} />
+
       {storyImageDiffError && (
         <SnackbarWithRetry
           open={true}
@@ -96,16 +99,7 @@ const ScreenshotPanel = () => {
           updating={updateStoryScreenshots}
         />
       )}
-      {selectedItem && (
-        <ScreenshotPreviewDialog
-          screenShotData={selectedItem}
-          storyData={storyData}
-          onClose={toggleSelectedItem}
-          open={true}
-          width="100%"
-          height="100%"
-        />
-      )}
+
       <DeleteScreenshotsErrorSnackbar />
       <SuccessSnackbarDeleteScreenshots message="Story screenshots deleted successfully." />
     </>

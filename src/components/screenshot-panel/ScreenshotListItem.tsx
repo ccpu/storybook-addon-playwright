@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import {
   ListItemWrapper,
   BrowserIcon,
@@ -15,7 +15,7 @@ import {
 } from './ScreenshotListItemMenu';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
-import { useScreenshotImageDiff } from '../../hooks';
+import { useScreenshotImageDiff, useDragStart } from '../../hooks';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../api/typings';
@@ -42,22 +42,23 @@ const useStyles = makeStyles(
 export interface ScreenshotListItemProps extends ScreenshotListItemMenuProps {
   onClick?: (item: ScreenshotData) => void;
   selected?: boolean;
-  dragStart?: boolean;
   forceShowMenu?: boolean;
   draggable?: boolean;
   imageDiffResult?: ImageDiffResult;
-  deletePassedImageDiffResult?: boolean;
   showImageDiffResultDialog?: boolean;
   storyData: StoryData;
+  showPreviewOnClick?: boolean;
+  pauseDeleteImageDiffResult?: boolean;
+  openUpdateDialog?: boolean;
 }
 
 function ScreenshotListItem({
+  pauseDeleteImageDiffResult,
+  showPreviewOnClick,
   screenshot,
   imageDiffResult,
-  deletePassedImageDiffResult,
   selected,
   onClick,
-  dragStart,
   draggable,
   forceShowMenu,
   showImageDiffResultDialog,
@@ -68,6 +69,10 @@ function ScreenshotListItem({
 
   const [showMenu, setShowMenu] = useState(false);
   const [showImageDiffResult, setShowImageDiffResult] = useState(false);
+
+  const timer = useRef(0);
+
+  const { dragStart } = useDragStart();
 
   const classes = useStyles();
 
@@ -81,26 +86,33 @@ function ScreenshotListItem({
 
   const handleRemoveScreenShotResult = useCallback(() => {
     setShowImageDiffResult(false);
-    if (deletePassedImageDiffResult && imageDiffResult.pass) {
+    if (
+      !pauseDeleteImageDiffResult &&
+      imageDiffResult &&
+      imageDiffResult.pass
+    ) {
       dispatch({
         screenshotHash: imageDiffResult.screenshotHash,
         type: 'removeImageDiffResult',
       });
+    } else {
+      window.clearTimeout(timer.current);
     }
-  }, [deletePassedImageDiffResult, dispatch, imageDiffResult]);
+  }, [pauseDeleteImageDiffResult, dispatch, imageDiffResult]);
 
   useEffect(() => {
     if (
-      deletePassedImageDiffResult &&
+      !pauseDeleteImageDiffResult &&
       imageDiffResult &&
       imageDiffResult.pass
     ) {
-      setTimeout(() => {
+      timer.current = window.setTimeout(() => {
         handleRemoveScreenShotResult();
       }, 10000);
     }
+    () => window.clearTimeout(timer.current);
   }, [
-    deletePassedImageDiffResult,
+    pauseDeleteImageDiffResult,
     dispatch,
     handleRemoveScreenShotResult,
     imageDiffResult,
@@ -125,8 +137,10 @@ function ScreenshotListItem({
 
   const toggleSelectedItem = useCallback(() => {
     if (onClick) onClick(screenshot);
-    setShowPreview(!showPreview);
-  }, [onClick, screenshot, showPreview]);
+    if (showPreviewOnClick) {
+      setShowPreview(!showPreview);
+    }
+  }, [onClick, screenshot, showPreview, showPreviewOnClick]);
 
   const isPassesImageDiff = imageDiffResult && imageDiffResult.pass;
 
@@ -187,10 +201,11 @@ function ScreenshotListItem({
         screenshot={screenshot}
         onHide={handleMouseLeave}
         onRunImageDiff={handleRunDiffTest}
+        imageDiffResult={imageDiffResult}
         {...rest}
       />
 
-      {showPreview && (
+      {showPreview && showPreviewOnClick && (
         <ScreenshotPreviewDialog
           screenShotData={screenshot}
           storyData={storyData}

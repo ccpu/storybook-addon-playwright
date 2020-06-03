@@ -10,14 +10,16 @@ import {
 import { testScreenshot as testScreenshotClient } from '../../api/client';
 import { Loader, ImageDiffPreviewDialog } from '../common';
 import { ScreenshotInfo } from './ScreenshotInfo';
+import { ImageDiffResult } from '../../api/typings';
 
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;
   onStateChange: (state: boolean) => void;
+  imageDiffResult?: ImageDiffResult;
 }
 
 const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
-  const { screenshot, onStateChange } = props;
+  const { screenshot, onStateChange, imageDiffResult } = props;
 
   const storyData = useCurrentStoryData();
 
@@ -36,22 +38,27 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   } = useAsyncApiCall(testScreenshotClient);
 
   const handleUpdate = useCallback(async () => {
-    await testScreenshot({
-      fileName: storyData.parameters.fileName,
-      hash: screenshot.hash,
-      storyId: storyData.id,
-    });
-  }, [screenshot.hash, storyData, testScreenshot]);
-
-  const handleSaveScreenshotClick = useCallback(async () => {
-    await updateScreenshot(screenshot.hash, getScreenshotResult.newScreenshot);
-    getScreenshotClearResult();
+    if (imageDiffResult) {
+      await updateScreenshot(imageDiffResult);
+    } else {
+      await testScreenshot({
+        fileName: storyData.parameters.fileName,
+        hash: screenshot.hash,
+        storyId: storyData.id,
+      });
+    }
   }, [
-    getScreenshotClearResult,
-    getScreenshotResult,
-    screenshot,
+    imageDiffResult,
+    screenshot.hash,
+    storyData,
+    testScreenshot,
     updateScreenshot,
   ]);
+
+  const handleSaveScreenshotClick = useCallback(async () => {
+    await updateScreenshot(getScreenshotResult);
+    getScreenshotClearResult();
+  }, [getScreenshotClearResult, getScreenshotResult, updateScreenshot]);
 
   useEffect(() => {
     onStateChange(getScreenshotInProgress || updateScreenshotInProgress);

@@ -25,7 +25,6 @@ const useStyles = makeStyles(
           },
           fontSize: 18,
         },
-
         alignItems: 'center',
         border: '1px solid ' + divider,
         color: text.primary,
@@ -37,6 +36,7 @@ const useStyles = makeStyles(
         padding: '5px 8px',
         paddingLeft: 16,
         position: 'relative',
+        zIndex: 10000,
       },
       selected: {
         border: '1px solid ' + primary.main,

@@ -1,10 +1,10 @@
 import React, { SFC, useCallback, useState, useEffect } from 'react';
 import { StoryData, ScreenshotData } from '../../typings';
-import { Dialog, DialogProps, ListWrapper, ImageDiffPreview } from '../common';
+import { Dialog, DialogProps, ImageDiffPreview } from '../common';
 import { makeStyles, capitalize } from '@material-ui/core';
-import { ImageDiffResult } from '../../api/typings';
 import { useScreenshotContext } from '../../store/screenshot';
-import { ScreenshotListItem } from './ScreenshotListItem';
+import { SortableScreenshotListItem } from './ScreenshotListItem';
+import { ScreenshotListSortable } from './ScreenshotListSortable';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -52,7 +52,7 @@ const ScreenshotListPreviewDialog: SFC<
   } = props;
 
   const [currentItem, setCurrentItem] = useState<{
-    imageDiff: ImageDiffResult;
+    hash: string;
     data: ScreenshotData;
   }>();
 
@@ -60,16 +60,9 @@ const ScreenshotListPreviewDialog: SFC<
 
   const classes = useStyles();
 
-  const handleItemClick = useCallback(
-    async (screenshot: ScreenshotData) => {
-      const diffResult = state.imageDiffResults.find(
-        (x) => x.screenshotHash === screenshot.hash,
-      );
-
-      setCurrentItem({ data: screenshot, imageDiff: diffResult });
-    },
-    [state.imageDiffResults],
-  );
+  const handleItemClick = useCallback(async (screenshot: ScreenshotData) => {
+    setCurrentItem({ data: screenshot, hash: screenshot.hash });
+  }, []);
 
   useEffect(() => {
     if (
@@ -95,6 +88,10 @@ const ScreenshotListPreviewDialog: SFC<
     state.imageDiffResults,
   ]);
 
+  const diffResult =
+    currentItem &&
+    state.imageDiffResults.find((x) => x.screenshotHash === currentItem.hash);
+
   return (
     <Dialog
       width="100%"
@@ -110,28 +107,35 @@ const ScreenshotListPreviewDialog: SFC<
       {...rest}
     >
       <div className={classes.root}>
-        <ListWrapper className={classes.list}>
-          {currentItem &&
-            screenshots.map((screenshot) => (
-              <ScreenshotListItem
-                key={screenshot.hash}
-                screenshot={screenshot}
-                forceShowMenu={true}
-                storyData={storyData}
-                onClick={handleItemClick}
-                selected={currentItem.data.hash === screenshot.hash}
-                imageDiffResult={state.imageDiffResults.find(
-                  (x) =>
-                    x.storyId === storyData.id &&
-                    x.screenshotHash === screenshot.hash,
-                )}
-              />
-            ))}
-        </ListWrapper>
+        <div className={classes.list}>
+          <ScreenshotListSortable>
+            {currentItem &&
+              screenshots.map((screenshot, i) => (
+                <SortableScreenshotListItem
+                  index={i}
+                  openUpdateDialog={false}
+                  showPreviewOnClick={false}
+                  key={screenshot.hash}
+                  screenshot={screenshot}
+                  forceShowMenu={true}
+                  enableUpdate={true}
+                  draggable={true}
+                  storyData={storyData}
+                  pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
+                  onClick={handleItemClick}
+                  selected={currentItem.data.hash === screenshot.hash}
+                  imageDiffResult={state.imageDiffResults.find(
+                    (x) =>
+                      x.storyId === storyData.id &&
+                      x.screenshotHash === screenshot.hash,
+                  )}
+                />
+              ))}
+          </ScreenshotListSortable>
+        </div>
+
         <div className={classes.line} />
-        {currentItem && currentItem.imageDiff && (
-          <ImageDiffPreview imageDiffResult={currentItem.imageDiff} />
-        )}
+        {diffResult && <ImageDiffPreview imageDiffResult={diffResult} />}
         {children}
       </div>
     </Dialog>

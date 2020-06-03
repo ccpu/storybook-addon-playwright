@@ -12,6 +12,7 @@ import { ScreenshotDelete } from './ScreenshotDelete';
 import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
+import { ImageDiffResult } from '../../api/typings';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -30,7 +31,7 @@ const useStyles = makeStyles(
 
         display: 'none',
         position: 'absolute',
-        right: 4,
+        right: 25,
         top: 10,
       },
       visible: {
@@ -50,12 +51,15 @@ export interface ScreenshotListItemMenuProps {
   show?: boolean;
   onHide?: () => void;
   onRunImageDiff?: () => void;
+  imageDiffResult?: ImageDiffResult;
+  openUpdateDialog?: boolean;
 }
 
 const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
   (
     {
       enableLoadSetting,
+      openUpdateDialog,
       screenshot,
       enableImageDiff,
       enableUpdate,
@@ -63,6 +67,7 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
       show,
       onHide,
       onRunImageDiff,
+      imageDiffResult,
     },
     ref: Ref<HTMLDivElement>,
   ) => {
@@ -111,6 +116,7 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
             <ScreenshotUpdate
               onStateChange={setWorking}
               screenshot={screenshot}
+              imageDiffResult={openUpdateDialog ? undefined : imageDiffResult}
             />
           )}
 

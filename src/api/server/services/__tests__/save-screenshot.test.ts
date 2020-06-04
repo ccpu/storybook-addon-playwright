@@ -58,7 +58,7 @@ describe('saveScreenshot', () => {
       });
     });
     const result = await saveScreenshot(getData());
-    expect(result).toStrictEqual({ added: true });
+    expect(result).toStrictEqual({ added: true, index: 0 });
     expect(spyOnSaveStoryFile).toHaveBeenCalledTimes(1);
   });
 

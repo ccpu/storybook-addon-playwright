@@ -26,6 +26,7 @@ const storyData = {
 
 api.useStorybookApi = () => {
   return ({
+    emit: jest.fn(),
     getData: () => {
       return storyData;
     },

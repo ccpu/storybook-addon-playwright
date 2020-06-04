@@ -1,13 +1,14 @@
-import '../../../__manual_mocks__/hooks/use-current-story-data';
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useStoryScreenshotLoader } from '../use-story-screenshot-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
 import { ScreenshotData } from '../../typings';
 
+jest.mock('../use-current-story-data');
+
 describe('useStoryScreenshotLoader', () => {
   afterEach(() => {
-    dispatchMock.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should load story screenshots', async () => {
@@ -30,23 +31,5 @@ describe('useStoryScreenshotLoader', () => {
         type: 'setScreenshots',
       },
     ]);
-  });
-
-  it('should handle error', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
-
-    const { result } = renderHook(() => useStoryScreenshotLoader());
-    await act(async () => {
-      await new Promise((r) => setTimeout(r, 50));
-    });
-
-    expect(result.current.error).toBe('foo');
-
-    await act(async () => {
-      result.current.clearError();
-      await new Promise((r) => setTimeout(r, 50));
-    });
-
-    expect(result.current.error).toBe(undefined);
   });
 });

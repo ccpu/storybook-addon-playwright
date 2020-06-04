@@ -11,9 +11,6 @@ export const useStoryScreenshotsDiff = (storyData: StoryData) => {
 
   useEffect(() => {
     testStoryScreenShots();
-    // () => {
-    //   clearImageDiffError();
-    // };
   }, [clearImageDiffError, testStoryScreenShots]);
 
   return { loading: imageDiffTestInProgress };

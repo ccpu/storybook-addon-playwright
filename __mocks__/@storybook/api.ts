@@ -3,9 +3,7 @@ import { State, API } from '@storybook/api';
 
 type StoryBookApiType = typeof StoryBookApi;
 
-const api = jest.genMockFromModule('@storybook/api') as Partial<
-  StoryBookApiType
->;
+const api = jest.mock('@storybook/api') as Partial<StoryBookApiType>;
 
 const storyData = {
   id: 'story-id',
@@ -24,14 +22,19 @@ const storyData = {
   story: 'With Component',
 };
 
-api.useStorybookApi = () => {
-  return ({
-    emit: jest.fn(),
-    getData: () => {
-      return storyData;
-    },
-  } as unknown) as API;
-};
+const useStorybookApiMock = jest.fn();
+
+useStorybookApiMock.mockImplementation(
+  () =>
+    (({
+      emit: jest.fn(),
+      getData: () => {
+        return storyData;
+      },
+    } as unknown) as API),
+);
+
+api.useStorybookApi = useStorybookApiMock;
 
 api.useStorybookState = () => {
   return ({

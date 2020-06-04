@@ -20,12 +20,14 @@ export const useScreenshotUpdate = () => {
 
   const updateScreenshot = useCallback(
     async (imageDiffResult: ImageDiffResult) => {
-      await makeCall({
+      const result = await makeCall({
         base64: imageDiffResult.newScreenshot,
         fileName: storyData.parameters.fileName,
         hash: imageDiffResult.screenshotHash,
         storyId: storyData.id,
       });
+
+      if (result instanceof Error) return;
 
       const newImageDiffResult: ImageDiffResult = {
         diffSize: false,

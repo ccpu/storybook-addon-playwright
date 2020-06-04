@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { getActionSchema } from '../api/client/get-action-schema';
 import { useGlobalState } from './use-global-state';
 import { useActionDispatchContext } from '../store';
+import { useAsyncApiCall } from './use-async-api-call';
 
 export const useActionSchemaLoader = () => {
   const [loaded, setLoaded] = useGlobalState<boolean>('action-schema');
 
-  const [loading, setLoading] = useState(false);
+  const { makeCall, inProgress } = useAsyncApiCall(getActionSchema, false);
 
   const dispatch = useActionDispatchContext();
 
-  useEffect(() => {
-    if (loading || loaded) return;
-    setLoading(true);
-    getActionSchema()
-      .then((schema) => {
-        dispatch({ actionSchema: schema, type: 'setActionSchema' });
-        setLoaded(true);
-      })
-      .finally(() => setLoading(false));
-  }, [dispatch, loaded, loading, setLoaded, setLoading]);
+  const load = useCallback(async () => {
+    const result = await makeCall();
+    if (result instanceof Error) return;
+    dispatch({ actionSchema: result, type: 'setActionSchema' });
+    setLoaded(true);
+  }, [dispatch, makeCall, setLoaded]);
 
-  return { loaded, loading };
+  useEffect(() => {
+    if (inProgress || loaded) return;
+    load();
+  }, [dispatch, inProgress, load, loaded, setLoaded]);
+
+  return { loaded, loading: inProgress };
 };

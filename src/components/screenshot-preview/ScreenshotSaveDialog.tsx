@@ -18,7 +18,7 @@ const ScreenshotSaveDialog: SFC<ScreenshotSaveDialogProps> = (props) => {
     result,
     onSuccessClose,
     inProgress,
-    getUpdatingScreenshot,
+    getUpdatingScreenshotTitle: getUpdatingScreenshot,
     ErrorSnackbar,
   } = useSaveScreenshot();
 

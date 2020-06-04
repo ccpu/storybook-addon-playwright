@@ -10,7 +10,6 @@ export const useAppScreenshotImageDiff = () => {
     inProgress: imageDiffTestInProgress,
     makeCall,
     clearError: clearImageDiffError,
-    clearResult: clearImageDiffResult,
     error: storyImageDiffError,
   } = useAsyncApiCall(testAppScreenshots, false);
 
@@ -23,8 +22,7 @@ export const useAppScreenshotImageDiff = () => {
         type: 'setImageDiffResults',
       });
     }
-    clearImageDiffResult();
-  }, [clearImageDiffResult, dispatch, makeCall]);
+  }, [dispatch, makeCall]);
 
   return {
     clearImageDiffError,

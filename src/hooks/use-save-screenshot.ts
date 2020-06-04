@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useKnobs } from './use-knobs';
 import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
@@ -19,7 +19,6 @@ export const useSaveScreenshot = () => {
   const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
 
   const { currentActions } = useCurrentActions(storyData && storyData.id);
-  const [error, setError] = useState<string>();
 
   const {
     makeCall,
@@ -28,6 +27,7 @@ export const useSaveScreenshot = () => {
     clearResult,
     ErrorSnackbar,
     inProgress,
+    error,
   } = useAsyncApiCall(saveScreenshotClient);
 
   const isUpdating = useCallback(
@@ -40,7 +40,7 @@ export const useSaveScreenshot = () => {
     [editScreenshotState],
   );
 
-  const getUpdatingScreenshot = useCallback(() => {
+  const getUpdatingScreenshotTitle = useCallback(() => {
     return editScreenshotState && editScreenshotState.screenshotData.title;
   }, [editScreenshotState]);
 
@@ -59,49 +59,42 @@ export const useSaveScreenshot = () => {
         deviceDescriptor,
       );
 
-      try {
-        const data: SaveScreenshotRequest = {
-          actions: currentActions,
-          base64: base64String,
-          browserType,
-          device: deviceDescriptor,
-          fileName: storyData.parameters.fileName,
-          hash,
-          index: isUpdating(browserType)
-            ? editScreenshotState.screenshotData.index
-            : undefined,
-          props: props,
-          storyId: storyData.id,
-          title,
-          updateScreenshot:
-            isUpdating(browserType) && editScreenshotState.screenshotData,
-        };
+      const data: SaveScreenshotRequest = {
+        actions: currentActions,
+        base64: base64String,
+        browserType,
+        device: deviceDescriptor,
+        fileName: storyData.parameters.fileName,
+        hash,
+        props: props,
+        storyId: storyData.id,
+        title,
+        updateScreenshot:
+          isUpdating(browserType) && editScreenshotState.screenshotData,
+      };
 
-        const res = await makeCall(data);
+      const res = await makeCall(data);
 
-        if (res instanceof Error) return;
+      if (res instanceof Error) return;
 
-        if (editScreenshotState && isUpdating(browserType)) {
-          if (res.added) {
-            screenshotDispatch({
-              screenshotHash: editScreenshotState.screenshotData.hash,
-              type: 'removeScreenshot',
-            });
-          }
-          clearScreenshotEdit();
-        }
-
+      if (editScreenshotState && isUpdating(browserType)) {
         if (res.added) {
-          data.index = res.index;
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { base64, ...rest } = data;
           screenshotDispatch({
-            screenshot: rest,
-            type: 'addScreenshot',
+            screenshotHash: editScreenshotState.screenshotData.hash,
+            type: 'removeScreenshot',
           });
         }
-      } catch (error) {
-        setError(error.message);
+        clearScreenshotEdit();
+      }
+
+      if (res.added) {
+        data.index = res.index;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { base64, ...rest } = data;
+        screenshotDispatch({
+          screenshot: rest,
+          type: 'addScreenshot',
+        });
       }
     },
     [
@@ -124,7 +117,7 @@ export const useSaveScreenshot = () => {
     ErrorSnackbar,
     clearError,
     error,
-    getUpdatingScreenshot,
+    getUpdatingScreenshotTitle,
     inProgress,
     isUpdating,
     onSuccessClose,

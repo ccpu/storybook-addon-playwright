@@ -2,7 +2,7 @@ import { useGlobalActionDispatch } from './use-global-action-dispatch';
 import { useStorybookApi } from '@storybook/api';
 import { useCallback } from 'react';
 import { ScreenshotData } from '../typings';
-import { RESET, CHANGE } from '@storybook/addon-knobs';
+import { RESET, CHANGE } from '@storybook/addon-knobs/dist/shared';
 import { useCurrentStoryData } from './use-current-story-data';
 
 export const useLoadScreenshotSettings = () => {

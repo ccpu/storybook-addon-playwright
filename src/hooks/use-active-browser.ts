@@ -32,6 +32,7 @@ export const useActiveBrowsers = (browserView: ScreenShotViewPanel) => {
       activePanel: ScreenShotViewPanel,
       disable: boolean,
     ) => {
+      if (!addonState.disabledBrowser) addonState.disabledBrowser = {};
       setAddonState({
         ...addonState,
         disabledBrowser: {

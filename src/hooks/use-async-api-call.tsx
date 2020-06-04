@@ -55,7 +55,6 @@ export const useAsyncApiCall = <T extends Function>(
 
   const ErrorSnackbar: SFC<{
     onRetry?: () => void;
-    clearResultOnClose?: boolean;
   }> = ({ onRetry }) => {
     if (!error) return null;
     return (

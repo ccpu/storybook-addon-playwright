@@ -56,10 +56,9 @@ export const saveScreenshot = async (
   );
 
   if (!oldScreenshotData) {
-    const index =
-      data.index === undefined
-        ? storyData[data.storyId].screenshots.length
-        : data.index;
+    const index = data.updateScreenshot
+      ? data.updateScreenshot.index
+      : storyData[data.storyId].screenshots.length;
     storyData[data.storyId].screenshots.push({
       actions:
         data.actions && data.actions.length > 0 ? data.actions : undefined,

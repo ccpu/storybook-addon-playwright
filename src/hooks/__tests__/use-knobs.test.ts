@@ -38,12 +38,7 @@ describe('useKnobs', () => {
 
     expect(result.current).toStrictEqual([
       {
-        defaultValue: 'knob-value',
-        groupId: undefined,
-        label: 'text',
         name: 'text',
-        type: 'text',
-        used: true,
         value: 'knob-value 1',
       },
     ]);

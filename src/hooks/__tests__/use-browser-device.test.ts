@@ -1,5 +1,5 @@
 import { useBrowserDevice } from '../use-browser-device';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 describe('useBrowserDevice', () => {
   it('should have empty object', () => {
@@ -9,7 +9,9 @@ describe('useBrowserDevice', () => {
 
   it('should set device', () => {
     const { result } = renderHook(() => useBrowserDevice());
-    result.current.setBrowserDevice('chromium', 'foo');
+    act(() => {
+      result.current.setBrowserDevice('chromium', 'foo');
+    });
     expect(result.current.browserDevice).toStrictEqual({
       chromium: { name: 'foo' },
     });

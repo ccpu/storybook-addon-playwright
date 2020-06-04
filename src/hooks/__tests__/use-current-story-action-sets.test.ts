@@ -8,12 +8,15 @@ jest.mock('../../store/actions/ActionContext', () => ({
 }));
 
 describe('useCurrentStoryActionSets', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   afterAll(() => {
     (useActionContext as jest.Mock).mockRestore();
   });
 
   it('should not have action', () => {
-    (useActionContext as jest.Mock).mockReturnValueOnce({});
+    (useActionContext as jest.Mock).mockReturnValue({});
     const { result } = renderHook(() => useCurrentStoryActionSets());
     expect(result.current.storyActionSets).toStrictEqual([]);
   });
@@ -36,13 +39,5 @@ describe('useCurrentStoryActionSets', () => {
     expect(result.current.storyActionSets).toStrictEqual([
       { actions: [{ id: 'action-id', name: 'action-name' }] },
     ]);
-  });
-
-  it('should not have action if story is not exist ', () => {
-    (useActionContext as jest.Mock).mockReturnValueOnce({
-      stories: {},
-    });
-    const { result } = renderHook(() => useCurrentStoryActionSets());
-    expect(result.current.storyActionSets).toStrictEqual([]);
   });
 });

@@ -13,7 +13,6 @@ export * from './use-current-story-action-sets';
 export * from './use-story-action-sets-loader';
 export * from './use-save-screenshot';
 export * from './use-story-screenshot-loader';
-export * from './use-retry';
 export * from './use-delete-screenshot';
 export * from './use-global-screenshot-dispatch';
 export * from './use-browser-device';

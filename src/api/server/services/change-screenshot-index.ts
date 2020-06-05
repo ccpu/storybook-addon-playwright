@@ -8,7 +8,7 @@ import {
 
 export const changeScreenShotIndex = async (info: ChangeScreenshotIndex) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
   if (!storyData[info.storyId] || !storyData[info.storyId].screenshots) return;
 

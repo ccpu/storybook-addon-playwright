@@ -1,16 +1,11 @@
-import React, { useCallback, useState, SFC } from 'react';
+import React, { SFC } from 'react';
 import { useStoryScreenshotImageDiff, useCurrentStoryData } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
 import { Loader, SnackbarWithRetry } from '../common';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
-import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
 
 const ScreenshotList: SFC = ({ children }) => {
-  const [showPreview, setShowPreview] = useState(false);
-
-  const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
-
   const storyData = useCurrentStoryData();
 
   const state = useScreenshotContext();
@@ -21,14 +16,6 @@ const ScreenshotList: SFC = ({ children }) => {
     imageDiffTestInProgress,
     storyImageDiffError,
   } = useStoryScreenshotImageDiff(storyData);
-
-  const toggleShowPreview = useCallback(() => {
-    setShowPreview(!showPreview);
-  }, [showPreview]);
-
-  const toggleStoryUpdateClick = useCallback(() => {
-    setUpdateStoryScreenshots(!updateStoryScreenshots);
-  }, [updateStoryScreenshots]);
 
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
 
@@ -55,16 +42,14 @@ const ScreenshotList: SFC = ({ children }) => {
                   enableEditScreenshot={true}
                   pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
                   imageDiffResult={state.imageDiffResults.find(
-                    (x) =>
-                      x.storyId === storyData.id &&
-                      x.screenshotHash === screenshot.hash,
+                    (x) => x.screenshotHash === screenshot.hash,
                   )}
                 />
               ))}
           </>
         ) : (
           <div style={{ marginTop: 30, textAlign: 'center' }}>
-            <div> No screenshot has been found!</div>
+            <div>No screenshot has been found!</div>
           </div>
         )}
         <Loader open={imageDiffTestInProgress} />
@@ -78,14 +63,6 @@ const ScreenshotList: SFC = ({ children }) => {
           type="error"
           message={storyImageDiffError}
           onClose={clearImageDiffError}
-        />
-      )}
-      {(updateStoryScreenshots || showPreview) && (
-        <StoryScreenshotPreview
-          storyData={storyData}
-          screenshotsData={state.screenshots}
-          onFinish={showPreview ? toggleShowPreview : toggleStoryUpdateClick}
-          updating={updateStoryScreenshots}
         />
       )}
     </>

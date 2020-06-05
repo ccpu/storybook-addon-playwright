@@ -9,7 +9,7 @@ export const deleteActionSet = async (
   data: DeleteActionSetRequest,
 ): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   if (!data.actionSetId) {
     throw new Error('Action set id has not been provided!');

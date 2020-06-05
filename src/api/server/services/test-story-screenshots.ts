@@ -8,13 +8,9 @@ export const testStoryScreenshot = async (
   host: string,
 ): Promise<ImageDiffResult[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
-  if (
-    !storyData ||
-    !storyData[data.storyId] ||
-    !storyData[data.storyId].screenshots
-  ) {
+  if (!storyData[data.storyId] || !storyData[data.storyId].screenshots) {
     throw new Error('Unable to find story screenshots');
   }
 

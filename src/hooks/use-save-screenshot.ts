@@ -4,7 +4,7 @@ import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
 import { BrowserTypes, DeviceDescriptor } from '../typings';
-import { getSnapshotHash } from '../utils';
+import { getScreenshotHash } from '../utils';
 import { SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { useAsyncApiCall } from './use-async-api-call';
@@ -51,7 +51,7 @@ export const useSaveScreenshot = () => {
       base64String?: string,
       deviceDescriptor?: DeviceDescriptor,
     ) => {
-      const hash = getSnapshotHash(
+      const hash = getScreenshotHash(
         storyData.id,
         currentActions,
         props,

@@ -1,10 +1,11 @@
 import { getActionSet } from '../get-action-set';
-import { spyOnLoadStoryData, spyOnSaveStoryFile } from '../mocks';
+
+jest.mock('../../utils/save-story-file');
+jest.mock('../../utils/load-story-data');
 
 describe('getActionSet', () => {
   beforeEach(() => {
-    spyOnLoadStoryData.mockClear();
-    spyOnSaveStoryFile.mockClear();
+    jest.clearAllMocks();
   });
   it('should have action set', async () => {
     const data = await getActionSet({

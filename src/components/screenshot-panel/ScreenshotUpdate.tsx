@@ -32,9 +32,9 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
 
   const {
     makeCall: testScreenshot,
-    inProgress: getScreenshotInProgress,
-    clearResult: getScreenshotClearResult,
-    result: getScreenshotResult,
+    inProgress: testScreenshotInProgress,
+    clearResult: testScreenshotClearResult,
+    result: testScreenshotResult,
   } = useAsyncApiCall(testScreenshotClient);
 
   const handleUpdate = useCallback(async () => {
@@ -56,25 +56,25 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
   ]);
 
   const handleSaveScreenshotClick = useCallback(async () => {
-    await updateScreenshot(getScreenshotResult);
-    getScreenshotClearResult();
-  }, [getScreenshotClearResult, getScreenshotResult, updateScreenshot]);
+    await updateScreenshot(testScreenshotResult);
+    testScreenshotClearResult();
+  }, [testScreenshotClearResult, testScreenshotResult, updateScreenshot]);
 
   useEffect(() => {
-    onStateChange(getScreenshotInProgress || updateScreenshotInProgress);
-  }, [getScreenshotInProgress, onStateChange, updateScreenshotInProgress]);
+    onStateChange(testScreenshotInProgress || updateScreenshotInProgress);
+  }, [testScreenshotInProgress, onStateChange, updateScreenshotInProgress]);
 
   return (
     <>
       <IconButton onClick={handleUpdate} size="small" title="Update screenshot">
         <Update />
       </IconButton>
-      {getScreenshotResult && (
+      {testScreenshotResult && (
         <ImageDiffPreviewDialog
           title="Following screenshot will be saved, would you like to continue?"
           subtitle={screenshot.title}
-          imageDiffResult={getScreenshotResult}
-          onClose={getScreenshotClearResult}
+          imageDiffResult={testScreenshotResult}
+          onClose={testScreenshotClearResult}
           open={true}
           titleActions={() => (
             <ScreenshotInfo
@@ -85,7 +85,7 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
           )}
           footerActions={() => (
             <>
-              <Button onClick={getScreenshotClearResult} color="primary">
+              <Button onClick={testScreenshotClearResult} color="primary">
                 No
               </Button>
               <Button

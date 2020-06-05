@@ -1,12 +1,20 @@
 import { spyOnSaveStoryFile } from '../../../../../__manual_mocks__/utils/save-story-file';
-import { loadStoryDataMock } from '../../../../../__manual_mocks__/utils/load-story-data';
+import { loadStoryData } from '../../utils';
 import { saveScreenshot } from '../save-screenshot';
 import { SaveScreenshotRequest } from '../../../typings';
 import { setConfig } from '../../configs';
 import { Page } from 'playwright-core';
 import * as diffImageToScreenshot from '../diff-image-to-screenshot';
+import { mocked } from 'ts-jest/utils';
+import { deleteScreenshot } from '../delete-screenshot';
+import { DeviceDescriptor } from '../../../../typings';
 
 jest.mock('../diff-image-to-screenshot');
+jest.mock('../delete-screenshot');
+jest.mock('../../utils/load-story-data');
+
+const loadStoryDataMock = mocked(loadStoryData);
+
 const mockDiffImageToScreenshot = diffImageToScreenshot as jest.Mocked<
   typeof diffImageToScreenshot
 >;
@@ -29,8 +37,10 @@ describe('saveScreenshot', () => {
       ],
       base64: 'base64-image',
       browserType: 'chromium',
+      device: { name: 'iphone' },
       fileName: 'story.ts',
       hash: 'hash',
+      props: [{ name: 'prop', value: 'value' }],
       storyId: 'story-id',
       title: 'screenshot-title',
       ...data,
@@ -137,15 +147,41 @@ describe('saveScreenshot', () => {
     });
   });
 
-  it('should set empty array to undefined (actions)', async () => {
-    await saveScreenshot(getData({ actions: [] }));
+  it('should not allow empty array/object', async () => {
+    await saveScreenshot(
+      getData({
+        actions: [],
+        device: {} as DeviceDescriptor,
+        hash: 'hash-3',
+        props: [],
+      }),
+    );
 
-    const actions =
-      spyOnSaveStoryFile.mock.calls[0][1]['story-id']['screenshots'][0].actions;
+    const data =
+      spyOnSaveStoryFile.mock.calls[0][1]['story-id']['screenshots'][2];
 
-    const data = spyOnSaveStoryFile;
-    expect(data).toBeDefined();
+    expect(data.actions).toBe(undefined);
+    expect(data.props).toBe(undefined);
+    expect(data.device).toBe(undefined);
+  });
 
-    expect(actions).toBe(undefined);
+  it('should update screenshot', async () => {
+    const result = await saveScreenshot(
+      getData({
+        updateScreenshot: {
+          browserType: 'chromium',
+          hash: 'hash',
+          title: 'title',
+        },
+      }),
+    );
+    // should delete old screenshot file
+    expect(mocked(deleteScreenshot)).toHaveBeenCalledWith({
+      fileName: 'story.ts',
+      hash: 'hash',
+      storyId: 'story-id',
+    });
+
+    expect(result).toStrictEqual({ added: true, index: undefined });
   });
 });

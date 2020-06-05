@@ -84,13 +84,11 @@ function ScreenshotListItem({
     TestScreenshotErrorSnackbar,
   } = useScreenshotImageDiff(storyData);
 
+  const isPassesImageDiff = imageDiffResult && imageDiffResult.pass;
+
   const handleRemoveScreenShotResult = useCallback(() => {
     setShowImageDiffResult(false);
-    if (
-      !pauseDeleteImageDiffResult &&
-      imageDiffResult &&
-      imageDiffResult.pass
-    ) {
+    if (!pauseDeleteImageDiffResult && isPassesImageDiff) {
       dispatch({
         screenshotHash: imageDiffResult.screenshotHash,
         type: 'removeImageDiffResult',
@@ -98,7 +96,12 @@ function ScreenshotListItem({
     } else {
       window.clearTimeout(timer.current);
     }
-  }, [pauseDeleteImageDiffResult, dispatch, imageDiffResult]);
+  }, [
+    pauseDeleteImageDiffResult,
+    isPassesImageDiff,
+    dispatch,
+    imageDiffResult,
+  ]);
 
   useEffect(() => {
     if (
@@ -141,8 +144,6 @@ function ScreenshotListItem({
       setShowPreview(!showPreview);
     }
   }, [onClick, screenshot, showPreview, showPreviewOnClick]);
-
-  const isPassesImageDiff = imageDiffResult && imageDiffResult.pass;
 
   return (
     <ListItemWrapper

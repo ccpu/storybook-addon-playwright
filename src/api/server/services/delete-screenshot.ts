@@ -9,7 +9,7 @@ import * as fs from 'fs';
 
 export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   const screenshotInfo = storyData[data.storyId].screenshots.find(
     (x) => x.hash === data.hash,

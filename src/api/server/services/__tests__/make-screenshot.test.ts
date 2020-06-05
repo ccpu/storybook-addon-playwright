@@ -1,14 +1,21 @@
 import { makeScreenshot } from '../make-screenshot';
-import { spyOnExecuteAction, spyOnGetConfig, defaultConfigs } from '../mocks';
+import { getConfigs } from '../../configs';
+import { defaultConfigs } from '../../../../../__test_data__/configs';
+import { mocked } from 'ts-jest/utils';
+import { executeAction } from '../../utils/execute-action';
+
+jest.mock('../../configs');
+jest.mock('../../utils/execute-action');
+
+const getConfigsMock = mocked(getConfigs);
 
 describe('makeScreenshot', () => {
   beforeEach(() => {
-    spyOnGetConfig.mockClear();
-    spyOnExecuteAction.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should throw if no page returned', async () => {
-    spyOnGetConfig.mockImplementationOnce(() => {
+    getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         getPage: async () => {
           return new Promise((resolve) => {
@@ -62,13 +69,13 @@ describe('makeScreenshot', () => {
       'localhost',
       true,
     );
-    expect(spyOnExecuteAction).toBeCalledTimes(1);
+    expect(executeAction).toBeCalledTimes(1);
   });
 
   it('should call beforeSnapshotMock', async () => {
     const beforeSnapshotMock = jest.fn();
 
-    spyOnGetConfig.mockImplementationOnce(() => {
+    getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         beforeSnapshot: beforeSnapshotMock,
       });
@@ -87,7 +94,7 @@ describe('makeScreenshot', () => {
 
   it('should call afterSnapshot', async () => {
     const afterSnapshotMock = jest.fn();
-    spyOnGetConfig.mockImplementationOnce(() => {
+    getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         afterSnapshot: afterSnapshotMock,
       });

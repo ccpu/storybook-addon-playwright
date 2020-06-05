@@ -1,5 +1,7 @@
 import { ReducerState } from '../../../src/store/screenshot/reducer';
 
+jest.unmock('../../../src/store/screenshot/context');
+
 export const dispatchMock = jest.fn();
 
 const mockData: Partial<ReducerState> = {

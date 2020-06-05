@@ -1,13 +1,4 @@
-import { StoryData } from '../../typings';
-
-const storyData: Partial<StoryData> = {
-  id: 'story-id',
-  name: 'story-name',
-  parameters: {
-    fileName: 'story-file.ts',
-    options: {},
-  },
-};
+import { storyData } from '../../../__test_data__/story-data';
 
 const useCurrentStoryData = jest.fn();
 

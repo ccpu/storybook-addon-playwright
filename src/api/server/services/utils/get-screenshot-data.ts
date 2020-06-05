@@ -3,7 +3,7 @@ import { getStoryPlaywrightFileInfo, loadStoryData } from '../../utils';
 
 export const getScreenshotData = async (info: ScreenshotInfo) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
   if (
     !storyData ||

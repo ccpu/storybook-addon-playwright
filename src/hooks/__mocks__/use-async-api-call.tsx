@@ -2,7 +2,9 @@ import { SFC } from 'react';
 import { SnackbarWithRetry, Snackbar } from '../../components';
 import React from 'react';
 
-export const useAsyncApiCall = () => {
+const useAsyncApiCall = jest.fn();
+
+useAsyncApiCall.mockImplementation(() => {
   const ErrorSnackbar: SFC<{
     onRetry?: () => void;
     clearResultOnClose?: boolean;
@@ -35,4 +37,6 @@ export const useAsyncApiCall = () => {
     makeCall: jest.fn(),
     result: undefined,
   };
-};
+});
+
+export { useAsyncApiCall };

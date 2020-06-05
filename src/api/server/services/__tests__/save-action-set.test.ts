@@ -1,39 +1,63 @@
-import { spyOnSaveStoryFile } from '../mocks';
+import { saveStoryFile } from '../../utils';
 import { saveActionSet } from '../save-action-set';
+import { mocked } from 'ts-jest/utils';
+
+jest.mock('../../utils/save-story-file');
+jest.mock('../../utils/load-story-data');
+const saveStoryFileMock = mocked(saveStoryFile);
 
 describe('saveActionSet', () => {
   beforeEach(() => {
-    spyOnSaveStoryFile.mockClear();
+    jest.clearAllMocks();
   });
 
-  it('should create story object if not exist', async () => {
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('should create story actionSets if not exist', async () => {
     await saveActionSet({
       actionSet: {
         actions: [{ id: 'action-id', name: 'action-name' }],
         description: 'action-set-desc',
         id: 'action-set-id',
       },
-      fileName: 'story-file-name',
-      storyId: 'stroy-id-2',
+      fileName: 'story.ts',
+      storyId: 'story-id-2',
     });
-    const data = spyOnSaveStoryFile.mock.calls[0][1]['stroy-id-2'];
-    expect(data).toBeDefined();
+    const data = saveStoryFileMock.mock.calls[0][1]['story-id-2'];
+    expect(data).toStrictEqual({
+      actionSets: [
+        {
+          actions: [{ id: 'action-id', name: 'action-name' }],
+          description: 'action-set-desc',
+          id: 'action-set-id',
+        },
+      ],
+    });
   });
 
   it('should update story action set', async () => {
     await saveActionSet({
       actionSet: {
-        actions: [{ id: 'action-id', name: 'click' }],
+        actions: [{ id: 'action-id', name: 'dbClick' }],
         description: 'action-set-desc',
         id: 'action-set-id',
       },
-      fileName: 'story-file-name',
-      storyId: 'stroy-id',
+      fileName: 'story.ts',
+      storyId: 'story-id',
     });
-    const data = spyOnSaveStoryFile.mock.calls[0][1]['stroy-id'].actionSets;
+    const data = saveStoryFileMock.mock.calls[0][1]['story-id'].actionSets;
     expect(data).toStrictEqual([
       {
-        actions: [{ id: 'action-id', name: 'click' }],
+        actions: [
+          { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+        ],
+        description: 'click',
+        id: 'action-set-id-2',
+      },
+      {
+        actions: [{ id: 'action-id', name: 'dbClick' }],
         description: 'action-set-desc',
         id: 'action-set-id',
       },
@@ -47,10 +71,10 @@ describe('saveActionSet', () => {
         description: 'action-set-desc',
         id: 'action-set-id-3',
       },
-      fileName: 'story-file-name',
+      fileName: 'story.ts',
       storyId: 'story-id',
     });
-    const data = spyOnSaveStoryFile.mock.calls[0][1]['story-id'].actionSets;
+    const data = saveStoryFileMock.mock.calls[0][1]['story-id'].actionSets;
     expect(data).toHaveLength(3);
   });
 });

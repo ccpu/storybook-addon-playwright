@@ -12,7 +12,7 @@ export const testAppScreenshot = async (
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const playWrightData = await loadStoryData(file);
+    const playWrightData = await loadStoryData(file, '*');
 
     Object.keys(playWrightData).forEach((k) => {
       if (

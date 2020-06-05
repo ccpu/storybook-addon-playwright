@@ -8,7 +8,7 @@ export const saveScreenshot = async (
   data: SaveScreenshotRequest,
 ): Promise<ImageDiffResult> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   if (!storyData[data.storyId]) {
     storyData[data.storyId] = {};

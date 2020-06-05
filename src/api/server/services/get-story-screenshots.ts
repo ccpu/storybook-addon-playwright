@@ -3,6 +3,6 @@ import { StoryInfo } from '../../../typings';
 
 export const getStoryScreenshots = async (info: StoryInfo) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, info.storyId);
   return storyData[info.storyId] && storyData[info.storyId].screenshots;
 };

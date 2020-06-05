@@ -6,7 +6,7 @@ export const saveActionSet = async (
   data: SaveActionSetRequest,
 ): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path);
+  const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   if (!storyData[data.storyId].actionSets) {
     storyData[data.storyId].actionSets = [];

@@ -6,7 +6,7 @@ import {
   DeviceDescriptor,
 } from '../typings';
 
-export const getSnapshotHash = (
+export const getScreenshotHash = (
   storyId: string,
   actions: StoryAction[],
   props: ScreenshotProp[],

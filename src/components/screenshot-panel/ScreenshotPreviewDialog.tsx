@@ -34,7 +34,12 @@ const ScreenshotPreviewDialog: SFC<ScreenshotPreviewDialogProps> = (props) => {
       hash: screenShotData.hash,
       storyId: storyData.id,
     });
-  }, [clearResult, makeCall, screenShotData.hash, storyData]);
+  }, [
+    makeCall,
+    screenShotData.hash,
+    storyData.id,
+    storyData.parameters.fileName,
+  ]);
 
   const handleClose = useCallback(() => {
     clearResult();

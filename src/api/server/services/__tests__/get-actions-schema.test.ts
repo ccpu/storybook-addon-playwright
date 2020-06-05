@@ -1,7 +1,8 @@
 import { getActionsSchema } from '../get-actions-schema';
 import * as schemaGenerator from '../get-actions-schema';
 import path from 'path';
-import { spyOnGetConfig } from '../mocks/configs';
+
+jest.mock('../../configs');
 
 describe('getActionsSchema', () => {
   const file = path.resolve(
@@ -9,7 +10,7 @@ describe('getActionsSchema', () => {
   );
 
   beforeEach(() => {
-    spyOnGetConfig.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should return action schema', async () => {

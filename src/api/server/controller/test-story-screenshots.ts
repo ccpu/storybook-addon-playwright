@@ -1,4 +1,4 @@
-import { testStoryScreenshot as testStoryScreenshotService } from '../services/test-story-screenshots';
+import { testStoryScreenshots as testStoryScreenshotService } from '../services/test-story-screenshots';
 import { Request, Response } from 'express';
 import { StoryInfo } from '../../../typings';
 

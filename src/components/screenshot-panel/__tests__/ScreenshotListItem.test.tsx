@@ -9,6 +9,11 @@ import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
 import { ImageDiffMessage, ListItemWrapper } from '../../common';
 import { ScreenshotListItemMenu } from '../ScreenshotListItemMenu';
+import { useScreenshotImageDiff } from './../../../hooks/use-screenshot-imageDiff';
+import { ScreenshotPreviewDialog } from '../ScreenshotPreviewDialog';
+import { ScreenshotInfo } from '../ScreenshotInfo';
+
+jest.mock('../../../hooks/use-screenshot-imageDiff');
 
 describe('ScreenshotListItem', () => {
   beforeEach(() => {
@@ -127,5 +132,86 @@ describe('ScreenshotListItem', () => {
       .onMouseLeave({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
 
     expect(wrapper.find(ScreenshotListItemMenu).props().show).toBeFalsy();
+  });
+
+  it('should run image diff', async () => {
+    const testScreenshotMock = jest.fn();
+
+    (useScreenshotImageDiff as jest.Mock).mockImplementation(() => {
+      return {
+        TestScreenshotErrorSnackbar: () => undefined,
+        testScreenshot: testScreenshotMock,
+      };
+    });
+
+    const wrapper = shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        showImageDiffResultDialog
+      />,
+    );
+
+    wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff();
+
+    await new Promise((resolve) => setImmediate(resolve));
+
+    expect(wrapper.find(ImageDiffMessage)).toHaveLength(1);
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    expect(wrapper.find(ImageDiffMessage).props().titleActions().type).toBe(
+      ScreenshotInfo,
+    );
+
+    expect(testScreenshotMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show ScreenshotPreviewDialog on item click', async () => {
+    const onClickMock = jest.fn();
+
+    const wrapper = shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        onClick={onClickMock}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        showPreviewOnClick
+      />,
+    );
+
+    wrapper
+      .find(ListItemWrapper)
+      .props()
+      .onClick({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
+
+    await new Promise((resolve) => setImmediate(resolve));
+
+    expect(wrapper.find(ScreenshotPreviewDialog)).toHaveLength(1);
+
+    expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should clearTimeout on unmount', async () => {
+    const onClickMock = jest.fn();
+
+    const wrapper = shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        onClick={onClickMock}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        showPreviewOnClick
+      />,
+    );
+
+    wrapper.unmount();
+
+    await new Promise((resolve) => setImmediate(resolve));
+
+    expect(wrapper.find(ScreenshotPreviewDialog)).toHaveLength(1);
+
+    expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 });

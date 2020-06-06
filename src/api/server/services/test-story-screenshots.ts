@@ -1,9 +1,9 @@
 import { ImageDiffResult } from '../../typings';
 import { StoryInfo } from '../../../typings';
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../utils';
-import { testScreenshot } from './test-screenShot';
+import { testScreenshotService } from './test-screenshot-service';
 
-export const testStoryScreenshot = async (
+export const testStoryScreenshots = async (
   data: StoryInfo,
   host: string,
 ): Promise<ImageDiffResult[]> => {
@@ -18,7 +18,7 @@ export const testStoryScreenshot = async (
 
   for (let i = 0; i < storyData[data.storyId].screenshots.length; i++) {
     const screenshot = storyData[data.storyId].screenshots[i];
-    const result = await testScreenshot(
+    const result = await testScreenshotService(
       {
         fileName: data.fileName,
         hash: screenshot.hash,

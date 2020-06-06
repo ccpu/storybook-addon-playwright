@@ -113,7 +113,9 @@ function ScreenshotListItem({
         handleRemoveScreenShotResult();
       }, 10000);
     }
-    () => window.clearTimeout(timer.current);
+    () => {
+      window.clearTimeout(timer.current);
+    };
   }, [
     pauseDeleteImageDiffResult,
     dispatch,

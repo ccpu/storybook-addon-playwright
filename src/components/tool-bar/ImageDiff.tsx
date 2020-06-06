@@ -3,7 +3,7 @@ import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
 import Compare from '@material-ui/icons/Compare';
 import {
-  useGlobalImageDiffResult,
+  useGlobalImageDiffResults,
   useAppScreenshotImageDiff,
   useGlobalScreenshotDispatch,
 } from '../../hooks';
@@ -41,7 +41,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const { imageDiffResult } = useGlobalImageDiffResult();
+  const { imageDiffResult } = useGlobalImageDiffResults();
 
   const { dispatch } = useGlobalScreenshotDispatch();
 

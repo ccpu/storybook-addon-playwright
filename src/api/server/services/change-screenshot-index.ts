@@ -6,7 +6,7 @@ import {
   saveStoryFile,
 } from '../utils';
 
-export const changeScreenShotIndex = async (info: ChangeScreenshotIndex) => {
+export const changeScreenshotIndex = async (info: ChangeScreenshotIndex) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 

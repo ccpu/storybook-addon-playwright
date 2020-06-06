@@ -1,19 +1,20 @@
 import { saveScreenshot } from '../save-screenshot';
 import { Request, Response } from 'express';
+import { SaveScreenshotRequest } from '../../../typings';
 
-jest.mock('../../services/save-snapshot-data', () => ({
-  saveScreenshot: jest.fn(),
-}));
+jest.mock('../../services/save-screenshot.ts');
 
 describe('saveScreenshot', () => {
-  it('should send 200 status', async () => {
-    const statusMock = jest.fn();
-    const endMock = jest.fn();
+  it('should return result', async () => {
+    const jsonMock = jest.fn();
+
     await saveScreenshot(
-      {} as Request,
-      ({ end: endMock, status: statusMock } as unknown) as Response,
+      { body: { hash: 'hash' } as SaveScreenshotRequest } as Request,
+      ({ json: jsonMock } as unknown) as Response,
     );
-    expect(statusMock).toHaveBeenCalledWith(200);
-    expect(endMock).toHaveBeenCalledTimes(1);
+    expect(jsonMock).toHaveBeenCalledWith({
+      pass: true,
+      screenshotHash: 'hash',
+    });
   });
 });

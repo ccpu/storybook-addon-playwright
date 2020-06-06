@@ -3,7 +3,7 @@ import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
 import {
   useGlobalScreenshotDispatch,
-  useGlobalImageDiffResult,
+  useGlobalImageDiffResults,
 } from '../../hooks';
 
 export const ScreenshotDispatchContext = React.createContext<
@@ -33,7 +33,7 @@ const ScreenshotProvider: SFC = (props) => {
 
   const { action } = useGlobalScreenshotDispatch();
 
-  const { setImageDiffResult } = useGlobalImageDiffResult();
+  const { setImageDiffResult } = useGlobalImageDiffResults();
 
   useEffect(() => {
     if (!action) return;

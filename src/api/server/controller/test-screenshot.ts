@@ -1,4 +1,4 @@
-import { testScreenshot as testScreenshotService } from '../services/test-screenShot';
+import { testScreenshotService } from '../services/test-screenshot-service';
 import { Request, Response } from 'express';
 import { ScreenshotInfo } from '../../../typings';
 

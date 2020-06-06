@@ -33,11 +33,11 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
     try {
       const promises = screenshotsData.map((s) => {
         const imageDiffResult = state.imageDiffResults.find(
-          (x) => x.storyId === storyData.id && x.screenshotHash === s.hash,
+          (x) => x.screenshotHash === s.hash,
         );
         if (!imageDiffResult) {
           throw new Error(
-            `Unable to find image diff result for ${s.title} screenshot.`,
+            `Unable to find image diff result for '${s.title}' screenshot.`,
           );
         }
         updateScreenshot(imageDiffResult);
@@ -50,7 +50,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
       setError(error.message);
     }
     setUpdateInProgress(false);
-  }, [screenshotsData, state.imageDiffResults, storyData.id, updateScreenshot]);
+  }, [screenshotsData, state.imageDiffResults, updateScreenshot]);
 
   const handleErrorClose = useCallback(() => {
     setError(undefined);

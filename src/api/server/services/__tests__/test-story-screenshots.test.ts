@@ -1,4 +1,4 @@
-import { testStoryScreenshot } from '../test-story-screenshots';
+import { testStoryScreenshots } from '../test-story-screenshots';
 
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
@@ -10,7 +10,7 @@ describe('testStoryScreenshot', () => {
   });
 
   it('should have diff', async () => {
-    const result = await testStoryScreenshot(
+    const result = await testStoryScreenshots(
       { fileName: 'story.ts', storyId: 'story-id' },
       'localhost',
     );
@@ -32,7 +32,7 @@ describe('testStoryScreenshot', () => {
 
   it('should throw if story not found', async () => {
     await expect(
-      testStoryScreenshot(
+      testStoryScreenshots(
         { fileName: 'story.ts', storyId: 'story-id-2' },
         'localhost',
       ),

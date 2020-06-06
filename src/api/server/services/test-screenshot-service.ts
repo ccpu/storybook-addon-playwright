@@ -4,7 +4,7 @@ import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { makeScreenshot } from './make-screenshot';
 import { ScreenshotInfo } from '../../../typings';
 
-export const testScreenshot = async (
+export const testScreenshotService = async (
   data: ScreenshotInfo,
   host: string,
 ): Promise<ImageDiffResult> => {

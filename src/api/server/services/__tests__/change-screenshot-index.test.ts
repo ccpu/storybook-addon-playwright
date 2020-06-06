@@ -1,4 +1,4 @@
-import { changeScreenShotIndex } from '../change-screenshot-index';
+import { changeScreenshotIndex } from '../change-screenshot-index';
 import { saveStoryFile } from '../../utils';
 import { mocked } from 'ts-jest/utils';
 
@@ -7,7 +7,7 @@ jest.mock('../../utils/save-story-file');
 
 describe('changeScreenShotIndex', () => {
   it('should save to file with new index', async () => {
-    await changeScreenShotIndex({
+    await changeScreenshotIndex({
       fileName: 'story.ts',
       newIndex: 1,
       oldIndex: 0,

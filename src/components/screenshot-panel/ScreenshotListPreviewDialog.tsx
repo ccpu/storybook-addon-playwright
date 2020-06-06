@@ -51,17 +51,14 @@ const ScreenshotListPreviewDialog: SFC<
     ...rest
   } = props;
 
-  const [currentItem, setCurrentItem] = useState<{
-    hash: string;
-    data: ScreenshotData;
-  }>();
+  const [currentItem, setCurrentItem] = useState<ScreenshotData>();
 
   const state = useScreenshotContext();
 
   const classes = useStyles();
 
   const handleItemClick = useCallback(async (screenshot: ScreenshotData) => {
-    setCurrentItem({ data: screenshot, hash: screenshot.hash });
+    setCurrentItem(screenshot);
   }, []);
 
   useEffect(() => {
@@ -77,9 +74,6 @@ const ScreenshotListPreviewDialog: SFC<
         handleItemClick(screenshots[0]);
       }
     }
-    () => {
-      console.log('unm');
-    };
   }, [
     currentItem,
     handleItemClick,
@@ -99,10 +93,10 @@ const ScreenshotListPreviewDialog: SFC<
         title
           ? title
           : currentItem
-          ? capitalize(currentItem.data.title)
+          ? capitalize(currentItem.title)
           : 'Loading ...'
       }
-      subtitle={title && currentItem && currentItem.data.title}
+      subtitle={title && currentItem && currentItem.title}
       height="100%"
       {...rest}
     >
@@ -123,7 +117,7 @@ const ScreenshotListPreviewDialog: SFC<
                   storyData={storyData}
                   pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
                   onClick={handleItemClick}
-                  selected={currentItem.data.hash === screenshot.hash}
+                  selected={currentItem.hash === screenshot.hash}
                   imageDiffResult={state.imageDiffResults.find(
                     (x) =>
                       x.storyId === storyData.id &&

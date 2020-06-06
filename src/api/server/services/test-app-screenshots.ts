@@ -1,9 +1,9 @@
 import { ImageDiffResult } from '../../typings';
 import glob from 'fast-glob';
-import { testStoryScreenshot } from './test-story-screenshots';
+import { testStoryScreenshots } from './test-story-screenshots';
 import { loadStoryData } from '../utils';
 
-export const testAppScreenshot = async (
+export const testAppScreenshots = async (
   host: string,
 ): Promise<ImageDiffResult[]> => {
   const files = await glob(['**/*.playwright.json', '!node_modules/**']);
@@ -19,7 +19,7 @@ export const testAppScreenshot = async (
         playWrightData[k].screenshots &&
         playWrightData[k].screenshots.length
       ) {
-        const result = testStoryScreenshot(
+        const result = testStoryScreenshots(
           {
             fileName: file.replace('.playwright.json', '.tsx'), //testStoryScreenshot expect story file to be able process
             storyId: k,

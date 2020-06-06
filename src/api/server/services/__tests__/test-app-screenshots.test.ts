@@ -7,7 +7,7 @@ jest.mock('fast-glob', () => ({
   },
 }));
 
-import { testAppScreenshot } from '../test-app-screenshots';
+import { testAppScreenshots } from '../test-app-screenshots';
 
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
@@ -21,7 +21,7 @@ describe('testAppScreenshot', () => {
     jest.restoreAllMocks();
   });
   it('should have result', async () => {
-    const result = await testAppScreenshot('localhost');
+    const result = await testAppScreenshots('localhost');
     expect(result).toStrictEqual([
       {
         added: true,

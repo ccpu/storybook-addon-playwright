@@ -1,4 +1,4 @@
-import { changeScreenShotIndex as changeScreenShotIndexClient } from '../services/change-screenshot-index';
+import { changeScreenshotIndex as changeScreenShotIndexClient } from '../services/change-screenshot-index';
 import { ChangeScreenshotIndex } from '../../typings';
 import { Response, Request } from 'express';
 

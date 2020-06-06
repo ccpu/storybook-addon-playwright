@@ -1,4 +1,4 @@
-import { updateScreenshot as updateScreenshotClient } from '../services/update-screenshot';
+import { updateScreenshotService } from '../services/update-screenshot-service';
 import { Request, Response } from 'express';
 import { UpdateScreenshot } from '../../typings';
 
@@ -8,7 +8,7 @@ export const updateScreenshot = async (
 ): Promise<void> => {
   const reqData = req.body as UpdateScreenshot;
 
-  const snapshotData = await updateScreenshotClient(reqData);
+  const snapshotData = await updateScreenshotService(reqData);
 
   res.json(snapshotData);
 };

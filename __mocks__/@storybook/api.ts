@@ -1,42 +1,7 @@
-import * as StoryBookApi from '@storybook/api';
-import { State, API } from '@storybook/api';
+import { getStoryData } from '../../__test_data__/story-data';
+import { State } from '@storybook/api';
 
-type StoryBookApiType = typeof StoryBookApi;
-
-const api = jest.mock('@storybook/api') as Partial<StoryBookApiType>;
-
-const storyData = {
-  id: 'story-id',
-  isLeaf: true,
-  kind: 'Component',
-  name: 'With Component',
-  parameters: {
-    __id: 'story-id',
-    component: {
-      displayName: 'Component',
-    },
-    fileName: './src/stories/story.stories.tsx',
-    framework: 'react',
-  },
-  parent: 'component',
-  story: 'With Component',
-};
-
-const useStorybookApiMock = jest.fn();
-
-useStorybookApiMock.mockImplementation(
-  () =>
-    (({
-      emit: jest.fn(),
-      getData: () => {
-        return storyData;
-      },
-    } as unknown) as API),
-);
-
-api.useStorybookApi = useStorybookApiMock;
-
-api.useStorybookState = () => {
+export const useStorybookState = () => {
   return ({
     customQueryParams: {
       'knob-text': 'some text',
@@ -60,4 +25,11 @@ api.useStorybookState = () => {
   } as unknown) as State;
 };
 
-module.exports = api;
+export const useStorybookApi = jest.fn().mockImplementation(() => ({
+  emit: jest.fn(),
+  getData: () => {
+    return getStoryData();
+  },
+  selectStory: jest.fn(),
+  setSelectedPanel: jest.fn(),
+}));

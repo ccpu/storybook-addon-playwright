@@ -15,13 +15,13 @@ export const useAppScreenshotImageDiff = () => {
 
   const testStoryScreenShots = useCallback(async () => {
     const results = await makeCall();
-
     if (!(results instanceof Error)) {
       dispatch({
         imageDiffResults: results,
         type: 'setImageDiffResults',
       });
     }
+    return results;
   }, [dispatch, makeCall]);
 
   return {

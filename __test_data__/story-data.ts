@@ -1,13 +1,20 @@
 import { StoryData } from '../src/typings';
 
-export const storyData: StoryData = {
-  children: [],
+export const storyData: StoryData = ({
   id: 'story-id',
-  isLeaf: false,
-  kind: 'component',
-  name: 'story-name',
+  isLeaf: true,
+  kind: 'Component',
+  name: 'With Component',
   parameters: {
-    fileName: 'story-file.ts',
-    options: {},
+    __id: 'story-id',
+    component: {
+      displayName: 'Component',
+    },
+    fileName: './src/stories/story.stories.tsx',
+    framework: 'react',
   },
-};
+  parent: 'component',
+  story: 'With Component',
+} as unknown) as StoryData;
+
+export const getStoryData = (): StoryData => storyData;

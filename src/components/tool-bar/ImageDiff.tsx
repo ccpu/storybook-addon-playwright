@@ -1,17 +1,24 @@
-import React, { SFC, useCallback } from 'react';
-import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
+import React, { SFC, useCallback, useState } from 'react';
+import {
+  Menu,
+  makeStyles,
+  Badge,
+  MenuItem,
+  ClickAwayListener,
+} from '@material-ui/core';
 import { IconButton } from '@storybook/components';
 import Compare from '@material-ui/icons/Compare';
+import CheckCircle from '@material-ui/icons/CheckCircle';
 import {
   useGlobalImageDiffResults,
   useAppScreenshotImageDiff,
   useGlobalScreenshotDispatch,
 } from '../../hooks';
-import { Loader } from '../common';
+import { Loader, Snackbar } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 
 const useStyles = makeStyles(
-  () => {
+  (theme) => {
     return {
       button: {},
       imageDiffBadge: {
@@ -24,6 +31,12 @@ const useStyles = makeStyles(
         position: 'absolute',
         right: -2,
         top: 10,
+      },
+      successIcon: {
+        color: theme.palette.primary.main,
+        position: 'absolute',
+        right: -10,
+        top: -4,
       },
     };
   },
@@ -41,6 +54,8 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const [success, setSuccess] = useState(false);
+
   const { imageDiffResult } = useGlobalImageDiffResults();
 
   const { dispatch } = useGlobalScreenshotDispatch();
@@ -51,12 +66,14 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
   } = useAppScreenshotImageDiff();
 
   const handleImageDiffClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    async (event: React.MouseEvent<HTMLButtonElement>) => {
+      //fixes menu close
       if (anchorEl) return;
       if (imageDiffResult.length > 0) {
         setAnchorEl(event.currentTarget);
       } else {
-        testStoryScreenShots();
+        const result = await testStoryScreenShots();
+        if (!(result instanceof Error)) setSuccess(result.length === 0);
       }
     },
     [anchorEl, imageDiffResult.length, testStoryScreenShots],
@@ -71,44 +88,60 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     dispatch({ imageDiffResults: [], type: 'setImageDiffResults' });
   }, [dispatch]);
 
+  const handleSuccessHide = useCallback(() => setSuccess(false), []);
+
   return (
-    <IconButton
-      title="Run diff test for all stories"
-      className={classes.button}
-      onClick={handleImageDiffClick}
-      style={{ position: 'relative' }}
-      disabled={imageDiffTestInProgress}
-    >
-      <Badge
-        badgeContent={imageDiffResult.length}
-        color="secondary"
-        className={classes.imageDiffBadge}
-      />
-      <Compare viewBox="1.5 -2 20 20" />
-
-      {imageDiffResult.length > 0 && (
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
+    <>
+      <ClickAwayListener onClickAway={handleClose}>
+        <IconButton
+          title="Run diff test for all stories"
+          className={classes.button}
+          onClick={handleImageDiffClick}
+          style={{ position: 'relative' }}
+          disabled={imageDiffTestInProgress}
         >
-          <MenuItem onClick={handleClearAllResults}>Clear all results</MenuItem>
-          {imageDiffResult.map((diff) => (
-            <ImageDiffMenuItem
-              key={diff.storyId + diff.screenshotHash}
-              imageDiff={diff}
-              onClick={handleClose}
-            />
-          ))}
-        </Menu>
-      )}
+          <Badge
+            badgeContent={imageDiffResult.length}
+            color="secondary"
+            className={classes.imageDiffBadge}
+          />
+          {success && <CheckCircle className={classes.successIcon} />}
+          <Compare viewBox="1.5 -2 20 20" />
 
-      <Loader
-        position="absolute"
-        open={imageDiffTestInProgress}
-        progressSize={15}
+          {imageDiffResult.length > 0 && (
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClearAllResults}>
+                Clear all results
+              </MenuItem>
+              {imageDiffResult.map((diff) => (
+                <ImageDiffMenuItem
+                  key={diff.storyId + diff.screenshotHash}
+                  imageDiff={diff}
+                  onClick={handleClose}
+                />
+              ))}
+            </Menu>
+          )}
+
+          <Loader
+            position="absolute"
+            open={imageDiffTestInProgress}
+            progressSize={15}
+          />
+        </IconButton>
+      </ClickAwayListener>
+      <Snackbar
+        type="success"
+        open={success}
+        onClose={handleSuccessHide}
+        title="Success"
+        message="All screen shot tests passed successfully."
       />
-    </IconButton>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import { getStoryData } from '../../__test_data__/story-data';
 import { State } from '@storybook/api';
 
-export const useStorybookState = () => {
+export const useStorybookState = jest.fn().mockImplementation(() => {
   return ({
     customQueryParams: {
       'knob-text': 'some text',
@@ -23,7 +23,7 @@ export const useStorybookState = () => {
     },
     ui: { docsMode: true, enableShortcuts: true, sidebarAnimations: true },
   } as unknown) as State;
-};
+});
 
 export const useStorybookApi = jest.fn().mockImplementation(() => ({
   emit: jest.fn(),

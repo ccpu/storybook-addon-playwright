@@ -18,7 +18,7 @@ describe('ActionDialog', () => {
   it('should handle close', () => {
     const wrapper = shallow(<ActionDialog open={true} onClose={onCloseMock} />);
 
-    wrapper.find(Dialog).props().onClose({}, 'backdropClick');
+    wrapper.find(Dialog).props().onClose();
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });
@@ -32,7 +32,7 @@ describe('ActionDialog', () => {
         onCancel={onCancelMock}
       />,
     );
-    wrapper.find(Dialog).props().onClose({}, 'backdropClick');
+    wrapper.find(Dialog).props().onClose();
 
     expect(onCancelMock).toHaveBeenCalledTimes(1);
   });

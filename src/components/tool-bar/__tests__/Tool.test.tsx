@@ -7,7 +7,7 @@ import { LayoutBottom, LayoutRight } from '../../../icons';
 import { useAddonState } from '../../../hooks//use-addon-state';
 import { useStorybookState } from '@storybook/api';
 
-jest.mock('../../../hooks//use-addon-state.ts');
+jest.mock('../../../hooks/use-addon-state.ts');
 
 describe('Tool', () => {
   beforeAll(() => {

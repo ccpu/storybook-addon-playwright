@@ -18,10 +18,10 @@ describe('DeleteConfirmationButton', () => {
     wrapper
       .find(IconButton)
       .props()
-      .onClick({ currentTarget: {} } as React.MouseEvent<
-        HTMLButtonElement,
-        MouseEvent
-      >);
+      .onClick(({
+        currentTarget: {},
+        stopPropagation: () => true,
+      } as unknown) as React.MouseEvent<HTMLButtonElement, MouseEvent>);
     wrapper.find(ConfirmationPopover).props().onConfirm();
     expect(onDeleteMock).toHaveBeenCalledTimes(1);
   });

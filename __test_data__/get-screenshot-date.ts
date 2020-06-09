@@ -1,4 +1,4 @@
-import { ScreenshotData } from '../../../../typings';
+import { ScreenshotData } from '../src/typings';
 
 export const getScreenshotDate = (
   data?: Partial<ScreenshotData>,

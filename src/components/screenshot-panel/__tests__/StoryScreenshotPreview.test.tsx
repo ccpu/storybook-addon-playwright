@@ -1,9 +1,9 @@
 import '../../../../__manual_mocks__/react-useEffect';
 import { storyData } from '../../../../__test_data__/story-data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import { StoryScreenshotPreview } from '../StoryScreenshotPreview';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { getScreenshotDate } from './data';
 import { useScreenshotUpdate } from '../../../hooks/use-screenshot-update';
 import { ScreenshotListPreviewDialog } from '../ScreenshotListPreviewDialog';
 import { Snackbar } from '../../common';

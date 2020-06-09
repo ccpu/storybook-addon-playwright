@@ -14,11 +14,7 @@ describe('ScreenshotList', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <ScreenshotListView
-        browserTypes={['chromium', 'firefox', 'webkit']}
-        onClose={onCloseMock}
-        viewPanel="dialog"
-      />,
+      <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
@@ -31,11 +27,7 @@ describe('ScreenshotList', () => {
     }));
 
     const wrapper = shallow(
-      <ScreenshotListView
-        browserTypes={['chromium', 'firefox', 'webkit']}
-        onClose={onCloseMock}
-        viewPanel="dialog"
-      />,
+      <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
     );
 
     const screenshotView = wrapper.find(ScreenshotView);
@@ -44,11 +36,7 @@ describe('ScreenshotList', () => {
 
   it('should have screenshot view list', () => {
     const wrapper = shallow(
-      <ScreenshotListView
-        browserTypes={['chromium', 'firefox', 'webkit']}
-        onClose={onCloseMock}
-        viewPanel="dialog"
-      />,
+      <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
     );
     const screenshotView = wrapper.find(ScreenshotView);
     expect(screenshotView.exists()).toBeTruthy();
@@ -57,7 +45,6 @@ describe('ScreenshotList', () => {
   it('should show storybook story in screen shot view', () => {
     const wrapper = shallow(
       <ScreenshotListView
-        browserTypes={['chromium']}
         onClose={onCloseMock}
         viewPanel="dialog"
         showStorybook={true}
@@ -69,11 +56,7 @@ describe('ScreenshotList', () => {
 
   it('should handle refresh', () => {
     const wrapper = shallow(
-      <ScreenshotListView
-        browserTypes={['chromium']}
-        onClose={onCloseMock}
-        viewPanel="dialog"
-      />,
+      <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
     );
     const toolbar = wrapper.find(Toolbar);
 

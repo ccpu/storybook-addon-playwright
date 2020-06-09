@@ -2,7 +2,7 @@ import '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotDelete } from '../ScreenshotDelete';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { getScreenshotDate } from './data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import { useDeleteScreenshot } from '../../../hooks/use-delete-screenshot';
 import { DeleteConfirmationButton } from '../../common';
 

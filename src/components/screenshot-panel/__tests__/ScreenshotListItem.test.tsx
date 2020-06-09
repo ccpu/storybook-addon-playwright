@@ -4,7 +4,7 @@ import { ScreenshotListItem } from '../ScreenshotListItem';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { storyData } from '../../../../__test_data__/story-data';
-import { getScreenshotDate } from './data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
 import { ImageDiffMessage, ListItemWrapper } from '../../common';
@@ -185,28 +185,6 @@ describe('ScreenshotListItem', () => {
       .find(ListItemWrapper)
       .props()
       .onClick({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
-
-    await new Promise((resolve) => setImmediate(resolve));
-
-    expect(wrapper.find(ScreenshotPreviewDialog)).toHaveLength(1);
-
-    expect(onClickMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should clearTimeout on unmount', async () => {
-    const onClickMock = jest.fn();
-
-    const wrapper = shallow(
-      <ScreenshotListItem
-        storyData={storyData}
-        onClick={onClickMock}
-        screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
-        showPreviewOnClick
-      />,
-    );
-
-    wrapper.unmount();
 
     await new Promise((resolve) => setImmediate(resolve));
 

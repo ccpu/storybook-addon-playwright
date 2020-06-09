@@ -1,8 +1,8 @@
-import { getSnapshotHash } from '../get-snapshot-hash';
+import { getScreenshotHash } from '../get-screenshot-hash';
 
 describe('getSnapshotHash', () => {
   it('should return hash', () => {
-    const hash = getSnapshotHash(
+    const hash = getScreenshotHash(
       'story-id',
       [{ id: 'action-id', name: 'action-name' }],
       [

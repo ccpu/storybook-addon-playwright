@@ -18,6 +18,7 @@ export const diffImageToScreenshot = (
 ): ImageDiffResult => {
   const paths = getScreenshotPaths(data);
   const config = getConfigs();
+
   const result = runDiffImageToSnapshot({
     blur: 0,
     diffDir: paths.diffDir,

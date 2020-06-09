@@ -1,4 +1,4 @@
-import React, { SFC, memo, useEffect, useRef, useState } from 'react';
+import React, { SFC, memo, useEffect, useState, useRef } from 'react';
 import { useSelectorManager } from '../../hooks';
 import { SelectorOverlay } from './SelectorOverlay';
 
@@ -10,7 +10,7 @@ const Selector: SFC = memo((props) => {
   const [iframe, setIframe] = useState<HTMLIFrameElement>();
 
   useEffect(() => {
-    setIframe(rootRef.current.querySelector('iframe'));
+    if (rootRef.current) setIframe(rootRef.current.querySelector('iframe'));
   }, []);
 
   const isActive = selectorManager && selectorManager.start;

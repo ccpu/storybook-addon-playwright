@@ -3,7 +3,7 @@ import { storyData } from '../../../../__test_data__/story-data';
 import { ScreenshotListPreviewDialog } from '../ScreenshotListPreviewDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { getScreenshotDate } from './data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import { SortableScreenshotListItem } from '../ScreenshotListItem';
 import { act } from 'react-dom/test-utils';
 import { ImageDiffPreview } from '../../common';

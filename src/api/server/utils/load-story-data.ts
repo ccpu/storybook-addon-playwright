@@ -19,7 +19,7 @@ export const loadStoryData = async (
       if (err) {
         reject(err);
       }
-      if (!data[storyId] || storyId === '*') {
+      if (!data[storyId] && storyId !== '*') {
         data[storyId] = {};
       }
       resolve(data);

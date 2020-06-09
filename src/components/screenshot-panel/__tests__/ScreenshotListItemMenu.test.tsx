@@ -1,7 +1,7 @@
 import { ScreenshotListItemMenu } from '../ScreenshotListItemMenu';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { getScreenshotDate } from './data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import EditIcon from '@material-ui/icons/Edit';
 import { useEditScreenshot } from '../../../hooks/use-edit-screenshot';
 import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';

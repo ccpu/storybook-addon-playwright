@@ -1,6 +1,5 @@
 import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import '../../../../__manual_mocks__/nanoid';
-import '../../../../__manual_mocks__/hooks/use-current-story-data';
 import { ActionSetMain } from '../ActionSetMain';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -10,6 +9,8 @@ import { ActionSetEditor } from '../ActionSetEditor';
 import fetch from 'jest-fetch-mock';
 import { ActionSetList } from '../ActionSetList';
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
+
+jest.mock('../../../hooks/use-current-story-data');
 
 describe('ActionSetMain', () => {
   beforeEach(() => {

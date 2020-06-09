@@ -2,7 +2,7 @@ import '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotUpdate } from '../ScreenshotUpdate';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { getScreenshotDate } from './data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import { IconButton } from '@material-ui/core';
 import { testScreenshot } from '../../../api/client/test-screenshot';
 import { updateScreenshot } from '../../../api/client/update-screenshot';
@@ -61,7 +61,7 @@ describe('ScreenshotUpdate', () => {
     expect(imageDiffPreviewDialog.props().titleActions()).toBeDefined();
 
     expect(testScreenshotMock).toHaveBeenCalledWith({
-      fileName: 'story-file.ts',
+      fileName: './src/stories/story.stories.tsx',
       hash: 'hash',
       storyId: 'story-id',
     });
@@ -80,7 +80,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
-      fileName: 'story-file.ts',
+      fileName: './src/stories/story.stories.tsx',
       hash: 'hash',
       storyId: 'story-id',
     });
@@ -112,7 +112,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
-      fileName: 'story-file.ts',
+      fileName: './src/stories/story.stories.tsx',
       hash: 'hash',
       storyId: 'story-id',
     });

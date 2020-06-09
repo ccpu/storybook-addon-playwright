@@ -1,6 +1,6 @@
 import { ScreenshotInfo } from '../ScreenshotInfo';
 import { shallow } from 'enzyme';
-import { getScreenshotDate } from './data';
+import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import React from 'react';
 import { IconButton, Popover } from '@material-ui/core';
 import ReactJson from 'react-json-view';

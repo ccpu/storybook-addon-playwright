@@ -1,14 +1,33 @@
-import { setBrowserDeviceMock } from '../../../../__manual_mocks__/hooks/use-browser-device';
-import { useScreenshotMock } from '../../../../__manual_mocks__/hooks/use-screenshot';
+import '../../../../__manual_mocks__/react-useEffect';
+// import { setBrowserDeviceMock } from '../../../../__manual_mocks__/hooks/use-browser-device';
 import { ScreenshotView } from '../ScreenshotView';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { ErrorPanel } from '../../common';
+import { ErrorPanel, Dialog } from '../../common';
 import { ScreenShotViewToolbar } from '../ScreenShotViewToolbar';
 import { ScreenshotSaveDialog } from '../ScreenshotSaveDialog';
+import { useScreenshot } from '../../../hooks/use-screenshot';
+import { useBrowserDevice } from '../../../hooks/use-browser-device';
+
+jest.mock('../../../hooks/use-screenshot.ts');
+jest.mock('../../../hooks/use-browser-device.ts');
+
+const useScreenshotMock = useScreenshot as jest.Mock;
 
 describe('ScreenshotView', () => {
+  const useScreenshotMockData = () => ({
+    getSnapshot: jest.fn(),
+    loading: false,
+    screenshot: {
+      base64: 'base64-image',
+      error: undefined,
+    },
+  });
+
   beforeEach(() => {
+    useScreenshotMock.mockImplementation(() => ({
+      ...useScreenshotMockData(),
+    }));
     jest.clearAllMocks();
   });
 
@@ -21,11 +40,13 @@ describe('ScreenshotView', () => {
   });
 
   it('should display error when unable to get screen shot', () => {
-    useScreenshotMock.mockImplementationOnce(() => ({
+    useScreenshotMock.mockImplementation(() => ({
+      ...useScreenshotMockData(),
       screenshot: {
         error: 'foo',
       },
     }));
+
     const wrapper = shallow(
       <ScreenshotView browserType="chromium" height={200} />,
     );
@@ -34,7 +55,8 @@ describe('ScreenshotView', () => {
   });
 
   it('should render storybook story in iframe', () => {
-    useScreenshotMock.mockImplementationOnce(() => ({
+    useScreenshotMock.mockImplementation(() => ({
+      ...useScreenshotMockData(),
       screenshot: undefined,
     }));
     const wrapper = shallow(
@@ -45,14 +67,6 @@ describe('ScreenshotView', () => {
   });
 
   it('should handle refresh', () => {
-    const useEffectMock = jest.spyOn(React, 'useEffect');
-    let cnt = 0;
-    useEffectMock.mockImplementation((f) => {
-      cnt = cnt + 1;
-      if (cnt > 9) return; // let other hooks call finish
-      f();
-    });
-
     const onRefreshEndMock = jest.fn();
     const wrapper = shallow(
       <ScreenshotView
@@ -84,10 +98,23 @@ describe('ScreenshotView', () => {
   });
 
   it('should handle screenshot device selection', () => {
+    const setBrowserDeviceMockMock = jest.fn();
+    (useBrowserDevice as jest.Mock).mockImplementation(() => ({
+      browserDevice: {},
+      setBrowserDevice: setBrowserDeviceMockMock,
+    }));
     const wrapper = shallow(
       <ScreenshotView browserType="firefox" height={200} />,
     );
     wrapper.find(ScreenShotViewToolbar).props().onDeviceSelect('foo');
-    expect(setBrowserDeviceMock).toHaveBeenCalledTimes(1);
+    expect(setBrowserDeviceMockMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should open/close image in full screen', () => {
+    const wrapper = shallow(
+      <ScreenshotView browserType="firefox" height={200} />,
+    );
+    wrapper.find(ScreenShotViewToolbar).props().onFullScreen();
+    expect(wrapper.find(Dialog).props().open).toBe(true);
   });
 });

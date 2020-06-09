@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { ImageDiffResult } from '../../api/typings';
 import { makeStyles, Tabs, Tab, Divider } from '@material-ui/core';
 import { ImagePreview } from './ImagePreview';
@@ -37,7 +37,7 @@ const ImageDiffPreview: SFC<ImageDiffPreviewProps> = (props) => {
 
   const [value, setValue] = React.useState(activeTab === 'imageDiff' ? 1 : 0);
 
-  const [showDiff, setShowDiff] = useState(activeTab === 'imageDiff');
+  const [showDiff, setShowDiff] = React.useState(activeTab === 'imageDiff');
 
   const classes = useStyles();
 

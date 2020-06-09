@@ -1,10 +1,4 @@
-import '../../../../__manual_mocks__/hooks/use-current-story-data';
 import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
-import { useCurrentStoryActionSetsMock } from '../../../../__manual_mocks__/hooks/use-current-story-action-sets';
-import {
-  useStoryActionSetsLoaderMock,
-  useStoryActionSetsLoaderRetryMock,
-} from '../../../../__manual_mocks__/hooks/use-story-action-sets-loader';
 import { ActionSetList } from '../ActionSetList';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -13,16 +7,28 @@ import { Snackbar } from '../../common';
 import { Button } from '@material-ui/core';
 import fetch from 'jest-fetch-mock';
 import { SortableActionSetListItem } from '../ActionSetListItem';
+import { useStoryActionSetsLoader } from '../../../hooks/use-story-action-sets-loader';
+import { useCurrentStoryActionSets } from '../../../hooks/use-current-story-action-sets';
+
+jest.mock('../../../hooks/use-current-story-data');
+jest.mock('../../../hooks/use-story-action-sets-loader');
+jest.mock('../../../hooks/use-current-story-action-sets');
+
+(useCurrentStoryActionSets as jest.Mock).mockImplementation(() => ({
+  currentActionSets: ['action-set-id'],
+  storyActionSets: [
+    {
+      actions: [{ id: 'action-id', name: 'action-name' }],
+      id: 'action-set-id',
+    },
+  ] as ActionSet[],
+}));
 
 describe('ActionSetList', () => {
   const onEditMock = jest.fn();
 
   beforeEach(() => {
-    onEditMock.mockClear();
-    dispatchMock.mockClear();
-    useCurrentStoryActionSetsMock.mockClear();
-    useStoryActionSetsLoaderMock.mockClear();
-    useStoryActionSetsLoaderRetryMock.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should render', () => {
@@ -36,10 +42,11 @@ describe('ActionSetList', () => {
   });
 
   it('should show no data message', () => {
-    useCurrentStoryActionSetsMock.mockImplementationOnce(() => ({
-      currentActionSets: ['action-set-id'],
+    (useCurrentStoryActionSets as jest.Mock).mockImplementationOnce(() => ({
+      currentActionSets: [],
       storyActionSets: [] as ActionSet[],
     }));
+
     const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
       disableLifecycleMethods: true,
     })
@@ -140,7 +147,7 @@ describe('ActionSetList', () => {
 
   it('should show action set loader error and retry', () => {
     const retry = jest.fn();
-    useStoryActionSetsLoaderMock.mockImplementationOnce(() => ({
+    (useStoryActionSetsLoader as jest.Mock).mockImplementationOnce(() => ({
       error: 'foo',
       loading: false,
       retry,

@@ -1,4 +1,4 @@
-import { updateScreenshot } from '../update-screenshot';
+import { updateScreenshotService } from '../update-screenshot-service';
 
 jest.mock('../../utils/save-story-file');
 jest.mock('../../utils/load-story-data');
@@ -10,7 +10,7 @@ describe('updateScreenshot', () => {
   });
 
   it('should update', async () => {
-    const result = await updateScreenshot({
+    const result = await updateScreenshotService({
       base64: 'base64-image',
       fileName: 'story.ts',
       hash: 'hash',
@@ -25,7 +25,7 @@ describe('updateScreenshot', () => {
 
   it('should throw if screenshotData not found', async () => {
     await expect(
-      updateScreenshot({
+      updateScreenshotService({
         base64: 'base64-image',
         fileName: 'story.ts',
         hash: 'invalid-hash',

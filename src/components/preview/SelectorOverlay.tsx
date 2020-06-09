@@ -1,4 +1,4 @@
-import React, { SFC, memo, useEffect, useRef, useState } from 'react';
+import React, { SFC, useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useSelectorManager } from '../../hooks';
 import useMouseHovered from 'react-use/lib/useMouseHovered';
@@ -51,7 +51,7 @@ const defaultRect = {
   width: ('100%' as unknown) as number,
 } as ClientRect;
 
-const SelectorOverlay: SFC<Props> = memo((props) => {
+const SelectorOverlay: SFC<Props> = (props) => {
   const { iframe } = props;
   const {
     stopSelector,
@@ -77,14 +77,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
     whenHovered: true,
   });
 
-  useKey(
-    'Escape',
-    () => {
-      stopSelector();
-    },
-    undefined,
-    [setSelectorInfo, stopSelector],
-  );
+  useKey('Escape', stopSelector, undefined, [setSelectorInfo, stopSelector]);
 
   useThrottleFn(
     (x, y) => {
@@ -159,7 +152,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
       {selectorManager && selectorInfo && selectorInfo.rect && (
         <>
           <div
-            className={classes.preview}
+            className={clsx(classes.preview, 'selector-preview')}
             style={
               isSelector
                 ? {
@@ -183,7 +176,7 @@ const SelectorOverlay: SFC<Props> = memo((props) => {
       )}
     </div>
   );
-});
+};
 
 SelectorOverlay.displayName = 'SelectorOverlay';
 

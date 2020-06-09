@@ -1,5 +1,5 @@
 import React, { SFC, useState, useCallback } from 'react';
-import { API, useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/api';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
@@ -71,11 +71,7 @@ const useStyles = makeStyles(
   { name: 'Preview' },
 );
 
-export interface PreviewProps {
-  api: API;
-}
-
-const Preview: SFC<PreviewProps> = (props) => {
+const Preview: SFC = (props) => {
   const { children } = props;
 
   const [isDragging, setIsDragging] = useState(false);
@@ -130,7 +126,7 @@ const Preview: SFC<PreviewProps> = (props) => {
           onChange={handleResizeChange}
         >
           <div
-            className={clsx(classes.preview, {
+            className={clsx('preview-main', classes.preview, {
               [classes.interactive]: !isDragging,
               [classes.notInteractive]: isDragging,
             })}

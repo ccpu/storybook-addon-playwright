@@ -1,41 +1,23 @@
 import { ScreenshotSaveDialog } from '../ScreenshotSaveDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
-import * as hook from '../../../hooks/use-save-screenshot';
-import { Snackbar, InputDialog } from '../../common';
+import { useSaveScreenshot } from '../../../hooks/use-save-screenshot';
+import { Snackbar, ImageDiffMessage, InputDialog } from '../../common';
 
 jest.mock('../../../hooks/use-save-screenshot');
-const mockedCounterHook = hook as jest.Mocked<typeof hook>;
+const useSaveScreenshotMock = useSaveScreenshot as jest.Mock;
 
 describe('ScreenshotSaveDialog', () => {
-  it('should show error', () => {
-    mockedCounterHook.useSaveScreenshot.mockImplementationOnce(() => {
-      return {
-        error: 'foo',
-      } as never;
-    });
-
-    const wrapper = shallow(
-      <ScreenshotSaveDialog
-        open={true}
-        base64="base64-image"
-        browserType="chromium"
-        onClose={jest.fn()}
-      />,
-    );
-    expect(wrapper.find(Snackbar).props().message).toBe('foo');
+  const useSaveScreenshotMockData = () => ({
+    ErrorSnackbar: () => null,
+    getUpdatingScreenshotTitle: jest.fn(),
+    inProgress: false,
+    onSuccessClose: jest.fn(),
+    result: undefined,
+    saveScreenShot: jest.fn(),
   });
 
-  it('should show screenshot diff pass message', () => {
-    mockedCounterHook.useSaveScreenshot.mockImplementationOnce(() => {
-      return {
-        result: {
-          oldScreenShotTitle: 'foo',
-          pass: true,
-        },
-      } as never;
-    });
-
+  it('should have ImageDiffMessage ', () => {
     const wrapper = shallow(
       <ScreenshotSaveDialog
         open={true}
@@ -44,14 +26,13 @@ describe('ScreenshotSaveDialog', () => {
         onClose={jest.fn()}
       />,
     );
-    expect(wrapper.find(Snackbar).text()).toBe(
-      'Title: fooScreenshot with the same setting found, no change has been detected.',
-    );
+    expect(wrapper.find(ImageDiffMessage)).toHaveLength(1);
   });
 
   it('should show success message for added screenshot', () => {
-    mockedCounterHook.useSaveScreenshot.mockImplementationOnce(() => {
+    useSaveScreenshotMock.mockImplementationOnce(() => {
       return {
+        ...useSaveScreenshotMockData(),
         result: {
           added: true,
         },
@@ -73,8 +54,9 @@ describe('ScreenshotSaveDialog', () => {
 
   it('should call for save', () => {
     const onSaveMock = jest.fn();
-    mockedCounterHook.useSaveScreenshot.mockImplementationOnce(() => {
+    useSaveScreenshotMock.mockImplementationOnce(() => {
       return {
+        ...useSaveScreenshotMockData(),
         saveScreenShot: onSaveMock,
       } as never;
     });

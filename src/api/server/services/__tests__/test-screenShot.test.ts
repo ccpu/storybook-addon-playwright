@@ -1,4 +1,4 @@
-import { testScreenshot } from '../test-screenShot';
+import { testScreenshotService } from '../test-screenshot-service';
 
 jest.mock('../make-screenshot');
 jest.mock('../diff-image-to-screenshot');
@@ -6,7 +6,7 @@ jest.mock('../../utils/load-story-data');
 
 describe('testScreenshot', () => {
   it('should have result', async () => {
-    const result = await testScreenshot(
+    const result = await testScreenshotService(
       {
         fileName: 'story.ts',
         hash: 'hash',
@@ -24,7 +24,7 @@ describe('testScreenshot', () => {
 
   it('should throw if  screenshot not found', async () => {
     await expect(
-      testScreenshot(
+      testScreenshotService(
         {
           fileName: 'story.ts',
           hash: 'hash',

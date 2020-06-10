@@ -35,7 +35,7 @@ export const saveScreenshot = async (
 
   if (!oldScreenshotData) {
     const sameDesc = storyData[data.storyId].screenshots.find(
-      (x) => x.title === data.title,
+      (x) => x.title === data.title && x.browserType === data.browserType,
     );
     if (sameDesc) {
       throw new Error(

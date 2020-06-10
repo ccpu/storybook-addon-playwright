@@ -10,6 +10,8 @@ import { PreviewPlacementMenu } from './PreviewPlacementMenu';
 import { useStorybookState } from '@storybook/api';
 import { isHorizontalPanel } from '../preview/utils';
 import { ImageDiff } from './ImageDiff';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import { useResetSetting } from '../../hooks/use-reset-setting';
 
 const useStyles = makeStyles(() => ({
   button: {
@@ -31,6 +33,8 @@ const Tool: SFC = () => {
   const { setAddonState, addonState } = useAddonState();
 
   const state = useStorybookState();
+
+  const resetSetting = useResetSetting();
 
   const isHorizontal = isHorizontalPanel(
     addonState,
@@ -80,6 +84,13 @@ const Tool: SFC = () => {
         )}
       </IconButton>
       <ImageDiff classes={{ button: classes.button }} />
+      <IconButton
+        onClick={resetSetting}
+        title="Reset settings"
+        className={classes.button}
+      >
+        <RefreshIcon viewBox="1.5 -2 20 20" />
+      </IconButton>
       <Separator />
       <PreviewDialog open={open} onClose={handleClose} />
     </ThemeProvider>

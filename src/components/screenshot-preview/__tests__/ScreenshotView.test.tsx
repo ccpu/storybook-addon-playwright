@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ErrorPanel, Dialog } from '../../common';
 import { ScreenShotViewToolbar } from '../ScreenShotViewToolbar';
-import { ScreenshotSaveDialog } from '../ScreenshotSaveDialog';
+import { ScreenshotSave } from '../ScreenshotSave';
 import { useScreenshot } from '../../../hooks/use-screenshot';
 import { useBrowserDevice } from '../../../hooks/use-browser-device';
 
@@ -80,7 +80,7 @@ describe('ScreenshotView', () => {
     expect(onRefreshEndMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should show screenshot description dialog on save and close', () => {
+  it('should show screenshot options dialog on save and close', () => {
     const wrapper = shallow(
       <ScreenshotView browserType="firefox" height={200} />,
     );
@@ -90,11 +90,11 @@ describe('ScreenshotView', () => {
 
     toolbar.props().onSave();
 
-    expect(wrapper.find(ScreenshotSaveDialog).props().open).toBeTruthy();
+    expect(wrapper.find(ScreenshotSave).props().open).toBeTruthy();
 
-    wrapper.find(ScreenshotSaveDialog).props().onClose();
+    wrapper.find(ScreenshotSave).props().onClose();
 
-    expect(wrapper.find(ScreenshotSaveDialog).props().open).toBeFalsy();
+    expect(wrapper.find(ScreenshotSave).props().open).toBeFalsy();
   });
 
   it('should handle screenshot device selection', () => {

@@ -4,6 +4,8 @@ import { StoryInfo } from './story-info';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
+type PageScreenshotOptions = Parameters<Page['screenshot']>[0];
+
 export interface DeviceDescriptor {
   name: string;
   viewport?: {
@@ -31,20 +33,23 @@ export interface ScreenshotInfo extends StoryInfo {
   hash: string;
 }
 
-export interface ScreenshotData {
+export interface ScreenshotClip {
+  width: number;
+  height: number;
+  x?: number;
+  y?: number;
+}
+
+export type ScreenshotOptions = PageScreenshotOptions;
+
+export interface ScreenshotData extends ScreenshotOptions {
+  title: string;
+  browserType: BrowserTypes;
   props?: ScreenshotProp[];
   actions?: StoryAction[];
-  browserType: BrowserTypes;
-  title: string;
   hash: string;
   device?: DeviceDescriptor;
   index?: number;
-  clip?: {
-    width: number;
-    height: number;
-    x?: number;
-    y?: number;
-  };
 }
 
 export interface ScreenshotProp {

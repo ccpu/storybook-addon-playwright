@@ -11,6 +11,7 @@ describe('Toolbar', () => {
         onCLose={jest.fn()}
         onRefresh={jest.fn()}
         toggleBrowser={jest.fn()}
+        onSave={jest.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();

@@ -17,7 +17,19 @@ export interface ImageDiffMessageProps
 const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
   const { title, result, onClose, ...rest } = props;
 
-  if (!result || result.added) return null;
+  if (!result) return null;
+
+  if (result.added) {
+    return (
+      <Snackbar
+        message={'Screenshot saved successfully.'}
+        open={true}
+        onClose={onClose}
+        type="success"
+        autoHideDuration={2000}
+      />
+    );
+  }
 
   if (result.pass) {
     return (

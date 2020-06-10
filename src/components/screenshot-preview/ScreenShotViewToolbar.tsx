@@ -1,11 +1,12 @@
 import React, { SFC } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
-import { BrowserTypes } from '../../typings';
+import { BrowserTypes, ScreenshotOptions } from '../../typings';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { DeviceList } from '../common';
 import RefreshIcon from '@material-ui/icons/RefreshOutlined';
 import Fullscreen from '@material-ui/icons/FullscreenSharp';
+import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -53,6 +54,7 @@ export interface PreviewItemProps {
   onDeviceSelect: (deviceName: string) => void;
   selectedDevice: string;
   onFullScreen: () => void;
+  onSettingChange: (options: ScreenshotOptions) => void;
 }
 
 const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
@@ -65,6 +67,7 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
     onDeviceSelect,
     selectedDevice,
     onFullScreen,
+    onSettingChange,
   } = props;
 
   const classes = useStyles();
@@ -93,6 +96,7 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
         )}
         {showSaveButton && <SaveIcon onClick={onSave} />}
         <Fullscreen onClick={onFullScreen} />
+        <ScreenshotOptionsPopover onChange={onSettingChange} />
       </div>
     </div>
   );

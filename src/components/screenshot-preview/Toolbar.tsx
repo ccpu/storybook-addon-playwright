@@ -5,6 +5,7 @@ import CloseOutlined from '@material-ui/icons/CloseOutlined';
 import { Toolbar as CommonToolbar } from '../common';
 import RefreshSharp from '@material-ui/icons/RefreshSharp';
 import { BrowserIconButton } from '../common/BrowserIconButton';
+import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -12,6 +13,7 @@ export interface ToolbarProps {
   toggleBrowser: (type: BrowserTypes) => void;
   onCLose: () => void;
   onRefresh: () => void;
+  onSave?: () => void;
 }
 
 const Toolbar: SFC<ToolbarProps> = (props) => {
@@ -21,6 +23,7 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
     activeBrowsers,
     onCLose,
     onRefresh,
+    onSave,
   } = props;
 
   return (
@@ -34,11 +37,14 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
             active={activeBrowsers.find((x) => x === browserType) !== undefined}
           />
         ))}
+      </div>
+      <div className="right">
         <IconButton onClick={onRefresh}>
           <RefreshSharp />
         </IconButton>
-      </div>
-      <div className="right">
+        <IconButton onClick={onSave}>
+          <SaveIcon />
+        </IconButton>
         <IconButton onClick={onCLose}>
           <CloseOutlined />
         </IconButton>

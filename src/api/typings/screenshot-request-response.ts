@@ -1,4 +1,4 @@
-import { ScreenshotProp } from '../../typings';
+import { ScreenshotProp, ScreenshotOptions } from '../../typings';
 import { StoryAction } from '../../typings/story-action';
 import {
   BrowserTypes,
@@ -14,6 +14,7 @@ export interface GetScreenshotRequest {
   storyId: string;
   browserType: BrowserTypes;
   device?: DeviceDescriptor;
+  options?: ScreenshotOptions;
 }
 
 export type GetScreenshotResponse = {

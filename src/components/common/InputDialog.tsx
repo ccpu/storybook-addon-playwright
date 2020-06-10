@@ -31,6 +31,7 @@ export interface InputDialogProps
   value?: string;
   required?: boolean;
   requiredMessage?: string;
+  label?: string;
 }
 
 const InputDialog: SFC<InputDialogProps> = ({
@@ -42,6 +43,8 @@ const InputDialog: SFC<InputDialogProps> = ({
   onClose,
   width = '30%',
   open,
+  children,
+  label,
   ...rest
 }) => {
   const [inputValue, setValue] = useState(value);
@@ -90,11 +93,18 @@ const InputDialog: SFC<InputDialogProps> = ({
       <TextField
         className={classes.input}
         multiline
-        rows={5}
+        rows={3}
         value={inputValue}
         onChange={handleChange}
         variant="outlined"
+        label={label}
+        error={openSnackbar}
+        required
+        InputLabelProps={{
+          shrink: true,
+        }}
       ></TextField>
+      {children}
       <Snackbar
         autoHideDuration={6000}
         open={openSnackbar}

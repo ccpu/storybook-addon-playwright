@@ -7,8 +7,9 @@ import { BrowserTypes } from '../../typings';
 import { ErrorPanel, Dialog } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserDevice } from '../../hooks';
-import { ScreenshotSaveDialog } from './ScreenshotSaveDialog';
+// import { ScreenshotSaveDialog } from './ScreenshotSaveDialog';
 import { lighten, darken } from '@material-ui/core/styles';
+import { ScreenshotSave } from './ScreenshotSave';
 
 const useStyles = makeStyles((theme) => {
   const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
@@ -171,7 +172,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
       </div>
 
       {isValidToSave && (
-        <ScreenshotSaveDialog
+        <ScreenshotSave
           open={openSaveScreenShot}
           onClose={toggleScreenshotTitleDialog}
           base64={screenshot.base64}

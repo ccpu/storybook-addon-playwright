@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScreenshotOptions should have defaults 1`] = `
+<div>
+  <label>
+    Screenshot Clip:
+  </label>
+  <form
+    autoComplete="off"
+    className="makeStyles-root-1"
+    noValidate={true}
+  >
+    <WithStyles(ForwardRef(TextField))
+      InputLabelProps={
+        Object {
+          "shrink": true,
+        }
+      }
+      label="Width"
+      name="width"
+      onChange={[Function]}
+      size="small"
+      type="number"
+      value={2}
+      variant="outlined"
+    />
+    <WithStyles(ForwardRef(TextField))
+      InputLabelProps={
+        Object {
+          "shrink": true,
+        }
+      }
+      label="Height"
+      name="height"
+      onChange={[Function]}
+      size="small"
+      type="number"
+      value={1}
+      variant="outlined"
+    />
+    <WithStyles(ForwardRef(TextField))
+      InputLabelProps={
+        Object {
+          "shrink": true,
+        }
+      }
+      label="X"
+      name="x"
+      onChange={[Function]}
+      size="small"
+      type="number"
+      value={3}
+      variant="outlined"
+    />
+    <WithStyles(ForwardRef(TextField))
+      InputLabelProps={
+        Object {
+          "shrink": true,
+        }
+      }
+      label="Y"
+      name="y"
+      onChange={[Function]}
+      size="small"
+      type="number"
+      value={4}
+      variant="outlined"
+    />
+  </form>
+</div>
+`;

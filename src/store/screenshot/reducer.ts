@@ -57,7 +57,10 @@ export const initialState: ReducerState = {
   screenshots: [],
 };
 
-export function reducer(state: ReducerState, action: Action): ReducerState {
+export function reducer(
+  state: ReducerState = initialState,
+  action: Action,
+): ReducerState {
   switch (action.type) {
     case 'addScreenshot': {
       const screenshots = state.screenshots
@@ -150,15 +153,16 @@ export function reducer(state: ReducerState, action: Action): ReducerState {
       };
     }
     case 'deleteScreenshot': {
-      return {
+      const newState = {
         ...state,
         imageDiffResults: state.imageDiffResults.filter(
-          (x) => x !== action.screenshotHash,
+          (x) => x.screenshotHash !== action.screenshotHash,
         ),
         screenshots: state.screenshots.filter(
           (x) => x.hash !== action.screenshotHash,
         ),
       };
+      return newState;
     }
     default:
       return state;

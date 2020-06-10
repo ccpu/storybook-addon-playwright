@@ -69,14 +69,8 @@ export type Action =
     }
   | { type: 'setEditorActionDescription'; description: string }
   | { type: 'setActionSchema'; actionSchema: ActionSchemaList }
-  | { type: 'setStoryActions'; actions: StoryAction[] }
   | { type: 'toggleActionExpansion'; actionId: string }
   | { type: 'toggleSubtitleItem'; actionId: string; actionOptionPath: string }
-  | {
-      type: 'removeFromActionTitle';
-      actionId: string;
-      actionOptionPath: string;
-    }
   | { type: 'clearActionExpansion' }
   | {
       type: 'setActionOptions';
@@ -115,7 +109,10 @@ const updateStoryActionSet = (
   };
 };
 
-export function mainReducer(state: ReducerState, action: Action): ReducerState {
+export function mainReducer(
+  state: ReducerState = initialState,
+  action: Action,
+): ReducerState {
   switch (action.type) {
     case 'addActionSetList': {
       return updateStoryActionSet(state, action.storyId, action.actionSets);
@@ -156,9 +153,9 @@ export function mainReducer(state: ReducerState, action: Action): ReducerState {
       return {
         ...state,
         ...newState,
-        currentActionSets: state.currentActionSets.filter(
-          (x) => x !== action.actionSetId,
-        ),
+        currentActionSets:
+          state.currentActionSets &&
+          state.currentActionSets.filter((x) => x !== action.actionSetId),
       };
     }
 
@@ -210,7 +207,7 @@ export function mainReducer(state: ReducerState, action: Action): ReducerState {
 }
 
 export function actionReducer(
-  state: ReducerState,
+  state: ReducerState = initialState,
   action: Action,
 ): ReducerState {
   switch (action.type) {
@@ -276,27 +273,6 @@ export function actionReducer(
                         (x) => x !== action.actionOptionPath,
                       )
                     : [...(act.subtitleItems || []), action.actionOptionPath],
-              };
-            }
-            return act;
-          }),
-        },
-      };
-    }
-    case 'removeFromActionTitle': {
-      return {
-        ...state,
-        editorActionSet: {
-          ...state.editorActionSet,
-          actions: state.editorActionSet.actions.map((act) => {
-            if (act.id === action.actionId) {
-              return {
-                ...act,
-                subtitleItems:
-                  act.subtitleItems &&
-                  act.subtitleItems.filter(
-                    (x) => x !== action.actionOptionPath,
-                  ),
               };
             }
             return act;

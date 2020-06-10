@@ -1,6 +1,5 @@
 import React, { SFC } from 'react';
 import { ThemeProvider } from '../common';
-
 import { StateInspector } from 'reinspect';
 
 const ProviderWrapper: SFC = (props) => {

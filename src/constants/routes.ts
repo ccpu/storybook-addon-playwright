@@ -1,7 +1,7 @@
 export const ROUTE = {
+  CHANGE_SCREENSHOT_INDEX: '/screenshot/changeIndex',
   DELETE_ACTION_SET: '/actionSet/delete',
   DELETE_SCREENSHOT: '/screenshot/delete',
-  CHANGE_SCREENSHOT_INDEX: '/screenshot/changeIndex',
   DELETE_STORY_SCREENSHOT: '/screenshot/deleteStory',
   GET_ACTIONS_DATA: '/screenshot/actionsData',
   GET_ACTION_SET: '/actionSet/get',

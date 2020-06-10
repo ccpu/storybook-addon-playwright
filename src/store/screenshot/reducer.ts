@@ -132,7 +132,6 @@ export function reducer(
         imageDiffResults: state.imageDiffResults.map((result) => {
           if (result.screenshotHash !== action.imageDiffResult.screenshotHash)
             return result;
-          console.log(action.imageDiffResult);
           return { ...action.imageDiffResult };
         }),
       };

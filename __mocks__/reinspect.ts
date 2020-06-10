@@ -1,3 +1,5 @@
+import { createElement } from 'react';
+
 export const useReducer = jest
   .fn()
   .mockImplementation(
@@ -6,3 +8,5 @@ export const useReducer = jest
       return [initialState, jest.fn()];
     },
   );
+
+export const StateInspector = () => createElement('div');

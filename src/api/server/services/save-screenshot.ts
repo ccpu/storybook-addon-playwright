@@ -69,6 +69,7 @@ export const saveScreenshot = async (
           : undefined,
       hash: data.hash,
       index: index,
+      options: data.options,
       props: data.props && data.props.length > 0 ? data.props : undefined,
       title: data.title,
     });

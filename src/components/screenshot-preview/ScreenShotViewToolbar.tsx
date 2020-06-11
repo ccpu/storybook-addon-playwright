@@ -1,12 +1,13 @@
 import React, { SFC } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
-import { BrowserTypes, ScreenshotOptions } from '../../typings';
+import { BrowserTypes } from '../../typings';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { DeviceList } from '../common';
 import RefreshIcon from '@material-ui/icons/RefreshOutlined';
 import Fullscreen from '@material-ui/icons/FullscreenSharp';
-import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
+// import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
+import { IconButton } from '@storybook/components';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -17,14 +18,6 @@ const useStyles = makeStyles((theme) => {
     },
 
     root: {
-      '& svg:not(.browser-loader)': {
-        '&:hover': {
-          color: theme.palette.primary.main,
-        },
-        cursor: 'pointer',
-        marginLeft: 5,
-        padding: 3,
-      },
       alignItems: 'center',
       backgroundColor: theme.palette.divider,
       color: palette.text.secondary,
@@ -39,6 +32,14 @@ const useStyles = makeStyles((theme) => {
     },
 
     toolbarPanels: {
+      '& button': {
+        alignItems: 'center',
+        display: 'flex',
+        marginLeft: 8,
+      },
+      '& svg:not(.browser-loader)': {
+        width: 17,
+      },
       alignItems: 'center',
       display: 'flex',
     },
@@ -54,7 +55,7 @@ export interface PreviewItemProps {
   onDeviceSelect: (deviceName: string) => void;
   selectedDevice: string;
   onFullScreen: () => void;
-  onSettingChange: (options: ScreenshotOptions) => void;
+  // onSettingChange: (options: ScreenshotOptions) => void;
 }
 
 const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
@@ -67,7 +68,7 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
     onDeviceSelect,
     selectedDevice,
     onFullScreen,
-    onSettingChange,
+    // onSettingChange,
   } = props;
 
   const classes = useStyles();
@@ -87,16 +88,25 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
         )}
       </div>
       <div className={classes.toolbarPanels}>
-        <RefreshIcon onClick={onRefresh} />
+        {showSaveButton && (
+          <IconButton onClick={onSave}>
+            <SaveIcon />
+          </IconButton>
+        )}
+        <IconButton onClick={onRefresh}>
+          <RefreshIcon />
+        </IconButton>
         {browserType !== 'storybook' && (
           <DeviceList
             onDeviceSelect={onDeviceSelect}
             selectedDevice={selectedDevice}
           />
         )}
-        {showSaveButton && <SaveIcon onClick={onSave} />}
-        <Fullscreen onClick={onFullScreen} />
-        <ScreenshotOptionsPopover onChange={onSettingChange} />
+
+        <IconButton onClick={onFullScreen}>
+          <Fullscreen />
+        </IconButton>
+        {/* <ScreenshotOptionsPopover onChange={onSettingChange} /> */}
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
   hash: string;
   device?: DeviceDescriptor;
   updateScreenshot?: ScreenshotData;
+  options: ScreenshotOptions;
 }
 
 export interface UpdateScreenshot extends ScreenshotInfo {

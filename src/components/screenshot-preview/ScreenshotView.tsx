@@ -67,9 +67,7 @@ const useStyles = makeStyles((theme) => {
     image: {
       marginRight: 12,
     },
-    imageContainer: {
-      textAlign: 'center',
-    },
+    imageContainer: {},
   };
 });
 
@@ -94,7 +92,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const { browserDevice, setBrowserDevice } = useBrowserDevice();
 
-  const { loading, screenshot, getSnapshot } = useScreenshot(
+  const { loading, screenshot, getSnapshot, error } = useScreenshot(
     browserType,
     browserDevice[browserType],
   );
@@ -125,6 +123,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     setOpenFullScreen(!openFullScreen);
   }, [openFullScreen]);
 
+  const errorMessage = (screenshot && screenshot.error) || error;
+
   return (
     <div
       className={clsx(classes.card, {
@@ -148,16 +148,16 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
       <div className={classes.container} style={{ height: containerHeight }}>
         <div className={classes.fakeBorder} />
-        {screenshot ? (
+        {browserType !== 'storybook' ? (
           <ScrollArea vertical={true} horizontal={true}>
             <div className={classes.imageContainer}>
-              {screenshot.base64 ? (
+              {screenshot && screenshot.base64 && !errorMessage ? (
                 <img
                   className={classes.image}
                   src={`data:image/gif;base64,${screenshot.base64}`}
                 />
               ) : (
-                <ErrorPanel message={screenshot.error} />
+                <>{errorMessage && <ErrorPanel message={errorMessage} />}</>
               )}
             </div>
           </ScrollArea>

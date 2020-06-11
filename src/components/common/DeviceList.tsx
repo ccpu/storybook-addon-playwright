@@ -5,6 +5,7 @@ import { Menu } from '@material-ui/core';
 import { DeviceListItem } from './DeviceListItem';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
+import { IconButton } from '@storybook/components';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -24,11 +25,15 @@ export interface DeviceListProps {
 
 const DeviceList: SFC<DeviceListProps> = (props) => {
   const { onDeviceSelect, selectedDevice } = props;
-  const [anchorEl, setAnchorEl] = React.useState<null | SVGSVGElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLButtonElement>(
+    null,
+  );
 
   const classes = useStyles();
 
-  const handleClick = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -52,12 +57,13 @@ const DeviceList: SFC<DeviceListProps> = (props) => {
         placement="top"
         title={selectedDevice ? selectedDevice : 'device list'}
       >
-        <DevicesIcon
-          onClick={handleClick}
-          className={clsx({
-            [classes.active]: Boolean(selectedDevice),
-          })}
-        />
+        <IconButton onClick={handleClick}>
+          <DevicesIcon
+            className={clsx({
+              [classes.active]: Boolean(selectedDevice),
+            })}
+          />
+        </IconButton>
       </Tooltip>
 
       <Menu

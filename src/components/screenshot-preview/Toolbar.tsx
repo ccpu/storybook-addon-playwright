@@ -6,6 +6,8 @@ import { Toolbar as CommonToolbar } from '../common';
 import RefreshSharp from '@material-ui/icons/RefreshSharp';
 import { BrowserIconButton } from '../common/BrowserIconButton';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
+import { useScreenshotOptions } from '../../hooks';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -26,6 +28,8 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
     onSave,
   } = props;
 
+  const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
+
   return (
     <CommonToolbar border={['top']}>
       <div className="left">
@@ -45,6 +49,10 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
         <IconButton onClick={onSave}>
           <SaveIcon />
         </IconButton>
+        <ScreenshotOptionsPopover
+          onChange={setScreenshotOptions}
+          options={screenshotOptions}
+        />
         <IconButton onClick={onCLose}>
           <CloseOutlined />
         </IconButton>

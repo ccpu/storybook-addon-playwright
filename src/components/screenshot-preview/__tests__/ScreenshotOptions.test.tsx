@@ -1,7 +1,7 @@
 import { ScreenshotOptions } from '../ScreenshotOptions';
-import { shallow } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { TextField } from '@material-ui/core';
+// import { TextField } from '@material-ui/core';
 
 describe('ScreenshotOptions', () => {
   it('should render', () => {
@@ -9,65 +9,80 @@ describe('ScreenshotOptions', () => {
     expect(wrapper.exists()).toBeTruthy();
   });
 
-  it('should have defaults', () => {
-    const wrapper = shallow(
-      <ScreenshotOptions
-        onChange={jest.fn()}
-        options={{ clip: { height: 1, width: 2, x: 3, y: 4 } }}
-      />,
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
+  // it('should have defaults', () => {
+  //   const wrapper = shallow(
+  //     <ScreenshotOptions
+  //       onChange={jest.fn()}
+  //       options={{
+  //         clip: { height: 1, width: 2, x: 3, y: 4 },
+  //         fullPage: true,
+  //         omitBackground: true,
+  //         quality: 1,
+  //         type: 'jpeg',
+  //       }}
+  //     />,
+  //   );
+  //   expect(wrapper).toMatchSnapshot();
+  // });
 
-  it('should set clip width', () => {
+  const clipInputs = (
+    wrapper: ShallowWrapper<
+      unknown,
+      Readonly<{}>,
+      React.Component<{}, {}, unknown>
+    >,
+    clipPropName: string,
+  ) => {
+    const input = wrapper.find({ name: clipPropName });
+
+    expect(input).toHaveLength(1);
+
+    input.props().onChange({
+      target: { name: clipPropName, value: 1 },
+    });
+
+    expect(wrapper.find({ name: clipPropName }).props().value).toBe(1);
+  };
+
+  it('should set clip width but not call onChange', () => {
     const changeMock = jest.fn();
     const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
-    wrapper
-      .find(TextField)
-      .first()
-      .props()
-      .onChange(({
-        target: { name: 'width', value: 1 },
-      } as unknown) as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
-    expect(changeMock).toHaveBeenCalledWith({ clip: { width: 1 } });
+    clipInputs(wrapper, 'width');
+
+    expect(changeMock).toHaveBeenCalledTimes(1);
+    expect(changeMock).toHaveBeenCalledWith(undefined);
   });
 
-  it('should set clip height', () => {
-    const changeMock = jest.fn();
-    const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
-    wrapper
-      .find(TextField)
-      .at(1)
-      .props()
-      .onChange(({
-        target: { name: 'height', value: 1 },
-      } as unknown) as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
-    expect(changeMock).toHaveBeenCalledWith({ clip: { height: 1 } });
-  });
+  // it('should set clip height but not call onChange', () => {
+  //   const changeMock = jest.fn();
+  //   const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
+  //   clipInputs(wrapper, 'height');
+  //   expect(changeMock).toHaveBeenCalledTimes(0);
+  // });
 
-  it('should set clip x', () => {
-    const changeMock = jest.fn();
-    const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
-    wrapper
-      .find(TextField)
-      .at(2)
-      .props()
-      .onChange(({
-        target: { name: 'x', value: 1 },
-      } as unknown) as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
-    expect(changeMock).toHaveBeenCalledWith({ clip: { x: 1 } });
-  });
+  // it('should set clip x but not call onChange', () => {
+  //   const changeMock = jest.fn();
+  //   const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
+  //   clipInputs(wrapper, 'x');
+  //   expect(changeMock).toHaveBeenCalledTimes(0);
+  // });
 
-  it('should set clip y', () => {
+  // it('should set clip y but not call onChange', () => {
+  //   const changeMock = jest.fn();
+  //   const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
+  //   clipInputs(wrapper, 'y');
+  //   expect(changeMock).toHaveBeenCalledTimes(0);
+  // });
+
+  it('should call onChange when all required fields set', () => {
     const changeMock = jest.fn();
     const wrapper = shallow(<ScreenshotOptions onChange={changeMock} />);
-    wrapper
-      .find(TextField)
-      .at(3)
-      .props()
-      .onChange(({
-        target: { name: 'y', value: 1 },
-      } as unknown) as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>);
-    expect(changeMock).toHaveBeenCalledWith({ clip: { y: 1 } });
+    clipInputs(wrapper, 'width');
+    clipInputs(wrapper, 'height');
+    clipInputs(wrapper, 'x');
+    clipInputs(wrapper, 'y');
+    expect(changeMock).toHaveBeenCalledWith({
+      clip: { height: 1, width: 1, x: 1, y: 1 },
+    });
   });
 });

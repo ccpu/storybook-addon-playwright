@@ -9,9 +9,13 @@ import { SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
+import { useScreenshotOptions } from './use-screenshot-options';
 
 export const useSaveScreenshot = () => {
   const props = useKnobs();
+
+  const { screenshotOptions } = useScreenshotOptions();
+
   const storyData = useCurrentStoryData();
 
   const { dispatch: screenshotDispatch } = useGlobalScreenshotDispatch();
@@ -66,6 +70,7 @@ export const useSaveScreenshot = () => {
         device: deviceDescriptor,
         fileName: storyData.parameters.fileName,
         hash,
+        options: screenshotOptions,
         props: props,
         storyId: storyData.id,
         title,

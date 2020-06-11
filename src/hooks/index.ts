@@ -30,3 +30,4 @@ export * from './use-load-screenshot-settings';
 export * from './use-delete-story-screenshots';
 export * from './use-screenshot-index-change';
 export * from './use-drag-start';
+export * from './use-screenshot-options';

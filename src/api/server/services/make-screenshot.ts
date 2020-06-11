@@ -40,7 +40,7 @@ export const makeScreenshot = async (
     await helper.beforeSnapshot(page, data.browserType);
   }
 
-  const buffer = await page.screenshot();
+  const buffer = await page.screenshot(data.options);
 
   if (helper.afterSnapshot) {
     await helper.afterSnapshot(page, data.browserType);

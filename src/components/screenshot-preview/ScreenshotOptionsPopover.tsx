@@ -2,14 +2,17 @@ import React, { SFC, useState, useCallback } from 'react';
 import SettingIcon from '@material-ui/icons/Settings';
 import { Popover } from '@material-ui/core';
 import { ScreenshotOptions, ScreenshotOptionsProps } from './ScreenshotOptions';
+import { IconButton } from '@storybook/components';
 
-// export interface ScreenshotOptionsPopoverProps extends ScreenshotOptionsProps {
+export interface ScreenshotOptionsPopoverProps extends ScreenshotOptionsProps {
+  wrapWithButton?: boolean;
+}
 
-// }
-
-const ScreenshotOptionsPopover: SFC<ScreenshotOptionsProps> = (props) => {
-  const { ...rest } = props;
-
+const ScreenshotOptionsPopover: SFC<ScreenshotOptionsPopoverProps> = ({
+  wrapWithButton = true,
+  options,
+  onChange,
+}) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement>();
 
   const handleClick = useCallback((e) => {
@@ -28,14 +31,17 @@ const ScreenshotOptionsPopover: SFC<ScreenshotOptionsProps> = (props) => {
         onClose={handleClose}
         style={{ margin: 20, width: 500 }}
         anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-        transformOrigin={{ horizontal: 'center', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <div style={{ margin: 20 }}>
-          <ScreenshotOptions {...rest} />
-        </div>
+        <ScreenshotOptions options={options} onChange={onChange} />
       </Popover>
-
-      <SettingIcon onClick={handleClick} />
+      {wrapWithButton ? (
+        <IconButton onClick={handleClick} active={Boolean(options)}>
+          <SettingIcon />
+        </IconButton>
+      ) : (
+        <SettingIcon onClick={handleClick} />
+      )}
     </>
   );
 };

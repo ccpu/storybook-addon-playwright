@@ -10,3 +10,4 @@ export * from './get-screenshot-hash';
 export * from './combine-reducer';
 export * from './get-image-diff-messages';
 export * from './knobs-to-querystring';
+export * from './get-device-info';

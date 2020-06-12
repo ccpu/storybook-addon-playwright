@@ -7,7 +7,7 @@ import { isHorizontalPanel } from './utils';
 import { useAddonState } from '../../hooks';
 import { ScreenshotListView } from '../screenshot-preview';
 import { Separator } from '@storybook/components';
-import { ThemeProvider } from '../common';
+import { CommonProvider } from '../common';
 import { Selector } from './Selector';
 import { EditScreenshotAlert } from './EditScreenshotAlert';
 
@@ -109,7 +109,7 @@ const Preview: SFC = (props) => {
   if (!addonState) return null;
 
   return (
-    <ThemeProvider>
+    <CommonProvider>
       <div
         id="preview-container"
         className={clsx(classes.root, {
@@ -153,8 +153,9 @@ const Preview: SFC = (props) => {
             )}
           </div>
         </SplitPane>
+        <div id="react-notification" />
       </div>
-    </ThemeProvider>
+    </CommonProvider>
   );
 };
 

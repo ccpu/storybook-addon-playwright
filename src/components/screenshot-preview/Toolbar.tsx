@@ -8,6 +8,7 @@ import { BrowserIconButton } from '../common/BrowserIconButton';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
 import { useScreenshotOptions } from '../../hooks';
+import { Tooltip } from '@material-ui/core';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -44,17 +45,24 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
       </div>
       <div className="right">
         <IconButton onClick={onRefresh}>
-          <RefreshSharp />
+          <Tooltip placement="top" title="Refresh">
+            <RefreshSharp />
+          </Tooltip>
         </IconButton>
         <IconButton onClick={onSave}>
-          <SaveIcon />
+          <Tooltip placement="top" title="Save screenshots">
+            <SaveIcon />
+          </Tooltip>
         </IconButton>
+
         <ScreenshotOptionsPopover
           onChange={setScreenshotOptions}
           options={screenshotOptions}
         />
         <IconButton onClick={onCLose}>
-          <CloseOutlined />
+          <Tooltip placement="top" title="Close panel">
+            <CloseOutlined />
+          </Tooltip>
         </IconButton>
       </div>
     </CommonToolbar>

@@ -4,19 +4,27 @@ import {
   ScreenshotProp,
   BrowserTypes,
   DeviceDescriptor,
+  ScreenshotOptions,
 } from '../typings';
 
-export const getScreenshotHash = (
-  storyId: string,
-  actions: StoryAction[],
-  props: ScreenshotProp[],
-  browserType: BrowserTypes,
-  deviceDescriptor: DeviceDescriptor,
+interface ScreenshotHash {
+  storyId: string;
+  actions: StoryAction[];
+  props: ScreenshotProp[];
+  browserType: BrowserTypes;
+  device: DeviceDescriptor;
+  options: ScreenshotOptions;
+}
+export const getScreenshotHash: (options: ScreenshotHash) => string = (
+  props,
 ) => {
+  const { actions, browserType, device, options, storyId } = props;
+
   return sum({
     actions,
     browserType,
-    deviceDescriptor,
+    device,
+    options,
     props,
     storyId,
   });

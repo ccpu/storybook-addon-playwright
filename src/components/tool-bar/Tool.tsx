@@ -1,7 +1,7 @@
 import React, { SFC, useState, useCallback } from 'react';
 import { IconButton, Separator } from '@storybook/components';
 import { makeStyles } from '@material-ui/core';
-import { ThemeProvider } from '../common';
+import { CommonProvider } from '../common';
 import { PreviewDialog } from '../screenshot-preview';
 import WebOutlined from '@material-ui/icons/Launch';
 import { useAddonState } from '../../hooks';
@@ -61,7 +61,7 @@ const Tool: SFC = () => {
 
   const classes = useStyles();
   return (
-    <ThemeProvider>
+    <CommonProvider>
       <Separator />
       <PreviewPlacementMenu />
       <IconButton
@@ -93,7 +93,7 @@ const Tool: SFC = () => {
       </IconButton>
       <Separator />
       <PreviewDialog open={open} onClose={handleClose} />
-    </ThemeProvider>
+    </CommonProvider>
   );
 };
 

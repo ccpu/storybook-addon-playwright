@@ -3,24 +3,13 @@ import { DeviceDescriptors } from 'playwright-core/lib/deviceDescriptors';
 import DevicesIcon from '@material-ui/icons/Devices';
 import { Menu } from '@material-ui/core';
 import { DeviceListItem } from './DeviceListItem';
-import { makeStyles, Tooltip } from '@material-ui/core';
-import clsx from 'clsx';
+import { Tooltip } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
-
-const useStyles = makeStyles(
-  (theme) => {
-    return {
-      active: {
-        color: theme.palette.primary.main,
-      },
-    };
-  },
-  { name: 'DeviceList' },
-);
+import { DeviceDescriptor } from '../../typings';
 
 export interface DeviceListProps {
   onDeviceSelect?: (deviceName?: string) => void;
-  selectedDevice?: string;
+  selectedDevice?: DeviceDescriptor;
 }
 
 const DeviceList: SFC<DeviceListProps> = (props) => {
@@ -28,8 +17,6 @@ const DeviceList: SFC<DeviceListProps> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLButtonElement>(
     null,
   );
-
-  const classes = useStyles();
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -53,18 +40,18 @@ const DeviceList: SFC<DeviceListProps> = (props) => {
 
   return (
     <>
-      <Tooltip
-        placement="top"
-        title={selectedDevice ? selectedDevice : 'device list'}
-      >
-        <IconButton onClick={handleClick}>
-          <DevicesIcon
-            className={clsx({
-              [classes.active]: Boolean(selectedDevice),
-            })}
-          />
-        </IconButton>
-      </Tooltip>
+      <IconButton onClick={handleClick} active={Boolean(selectedDevice)}>
+        <Tooltip
+          placement="top"
+          title={
+            selectedDevice && selectedDevice.name
+              ? selectedDevice.name
+              : 'device list'
+          }
+        >
+          <DevicesIcon />
+        </Tooltip>
+      </IconButton>
 
       <Menu
         id="simple-menu"
@@ -83,9 +70,9 @@ const DeviceList: SFC<DeviceListProps> = (props) => {
           <DeviceListItem
             name={deviceName}
             key={deviceName}
-            viewportSize={DeviceDescriptors[deviceName].viewport}
+            viewportSize={selectedDevice && selectedDevice.viewport}
             onClick={handleSelection}
-            selected={selectedDevice === deviceName}
+            selected={selectedDevice && selectedDevice.name === deviceName}
             value={deviceName}
           />
         ))}

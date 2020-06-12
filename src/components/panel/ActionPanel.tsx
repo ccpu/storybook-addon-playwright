@@ -1,15 +1,15 @@
 import React, { SFC, memo } from 'react';
 import { ActionSetMain } from '../action-set';
-import { ProviderWrapper } from './ProviderWrapper';
+import { CommonProvider } from '../common';
 import { ActionProvider } from '../../store';
 
 const ActionPanel: SFC = memo(() => {
   return (
-    <ProviderWrapper>
+    <CommonProvider>
       <ActionProvider>
         <ActionSetMain />
       </ActionProvider>
-    </ProviderWrapper>
+    </CommonProvider>
   );
 });
 

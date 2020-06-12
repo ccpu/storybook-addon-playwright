@@ -21,7 +21,6 @@ describe('ScreenShotViewToolbar', () => {
         onSave={onSaveMock}
         showSaveButton={false}
         onDeviceSelect={jest.fn()}
-        selectedDevice=""
         onFullScreen={jest.fn()}
       />,
     );
@@ -37,7 +36,6 @@ describe('ScreenShotViewToolbar', () => {
         onSave={onSaveMock}
         showSaveButton={false}
         onDeviceSelect={jest.fn()}
-        selectedDevice=""
         onFullScreen={jest.fn()}
       />,
     );
@@ -54,7 +52,6 @@ describe('ScreenShotViewToolbar', () => {
         showSaveButton={false}
         onDeviceSelect={jest.fn()}
         onFullScreen={jest.fn()}
-        selectedDevice=""
       />,
     );
     expect(wrapper.find(SaveIcon).exists()).toBeFalsy();

@@ -26,7 +26,7 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
         open={true}
         onClose={onClose}
         type="success"
-        autoHideDuration={2000}
+        autoHideDuration={5000}
       />
     );
   }
@@ -36,11 +36,15 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
       <Snackbar
         open={true}
         title={'Success'}
-        message="No change has been detected."
-        autoHideDuration={3000}
+        autoHideDuration={5000}
         onClose={onClose}
         type="success"
-      />
+      >
+        <div>
+          Testing existing screenshot were successful, no change has been
+          detected.
+        </div>
+      </Snackbar>
     );
   }
 

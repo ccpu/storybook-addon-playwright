@@ -1,15 +1,23 @@
-import React, { SFC, useState, useCallback } from 'react';
+import React, { SFC, useState, useCallback, useEffect } from 'react';
 import { makeStyles, capitalize } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
-import { useScreenshot, useEditScreenshot } from '../../hooks';
+import {
+  useScreenshot,
+  useEditScreenshot,
+  useSaveScreenshot,
+} from '../../hooks';
 import { BrowserTypes } from '../../typings';
-import { ErrorPanel, Dialog } from '../common';
+import {
+  ErrorPanel,
+  Dialog,
+  Loader,
+  ImageDiffMessage,
+  InputDialog,
+} from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserDevice } from '../../hooks';
-// import { ScreenshotSaveDialog } from './ScreenshotSaveDialog';
 import { lighten, darken } from '@material-ui/core/styles';
-import { ScreenshotSave } from './ScreenshotSave';
 
 const useStyles = makeStyles((theme) => {
   const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
@@ -77,12 +85,22 @@ export interface PreviewItemProps {
   height: number;
   refresh?: boolean;
   onRefreshEnd?: () => void;
+  savingWithTitle?: string;
+  onSaveComplete?: (browserType: string) => void;
 }
 
 const ScreenshotView: SFC<PreviewItemProps> = (props) => {
-  const { browserType, url, height, refresh, onRefreshEnd } = props;
+  const {
+    browserType,
+    url,
+    height,
+    refresh,
+    onRefreshEnd,
+    savingWithTitle,
+    onSaveComplete,
+  } = props;
 
-  const [openSaveScreenShot, setOpenSaveScreenShot] = useState(false);
+  const [showTitleDialog, setShowTitleDialog] = useState(false);
 
   const { isEditing } = useEditScreenshot();
 
@@ -97,7 +115,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     browserDevice[browserType],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!refresh || loading) return;
     getSnapshot();
     onRefreshEnd();
@@ -105,9 +123,11 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const containerHeight = height - 30;
 
-  const toggleScreenshotTitleDialog = useCallback(() => {
-    setOpenSaveScreenShot(!openSaveScreenShot);
-  }, [openSaveScreenShot]);
+  const handleShowTitleDialog = useCallback(() => setShowTitleDialog(true), []);
+  const handleCloseTitleDialog = useCallback(
+    () => setShowTitleDialog(false),
+    [],
+  );
 
   const isValidToSave =
     screenshot && !screenshot.error && browserType !== 'storybook';
@@ -125,6 +145,39 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const errorMessage = (screenshot && screenshot.error) || error;
 
+  const {
+    saveScreenShot,
+    onSuccessClose,
+    inProgress,
+    getUpdatingScreenshotTitle,
+    ErrorSnackbar,
+    result,
+  } = useSaveScreenshot();
+
+  const handleSave = useCallback(
+    async (title: string) => {
+      await saveScreenShot(
+        browserType as BrowserTypes,
+        title,
+        screenshot.base64,
+        browserDevice[browserType],
+      );
+
+      setShowTitleDialog(false);
+    },
+    [saveScreenShot, browserType, screenshot, browserDevice],
+  );
+
+  useEffect(() => {
+    if (savingWithTitle) {
+      if (!inProgress) {
+        handleSave(savingWithTitle);
+      } else {
+        onSaveComplete(browserType);
+      }
+    }
+  }, [browserType, handleSave, inProgress, onSaveComplete, savingWithTitle]);
+
   return (
     <div
       className={clsx(classes.card, {
@@ -133,17 +186,13 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
     >
       <ScreenShotViewToolbar
         browserType={browserType}
-        onSave={toggleScreenshotTitleDialog}
+        onSave={handleShowTitleDialog}
         loading={loading}
         onRefresh={getSnapshot}
         onDeviceSelect={handleSelectedBrowserDevice}
         showSaveButton={isValidToSave}
         onFullScreen={toggleFullScreen}
-        selectedDevice={
-          browserDevice &&
-          browserDevice[browserType] &&
-          browserDevice[browserType].name
-        }
+        selectedDevice={browserDevice && browserDevice[browserType]}
       />
 
       <div className={classes.container} style={{ height: containerHeight }}>
@@ -172,12 +221,22 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
       </div>
 
       {isValidToSave && (
-        <ScreenshotSave
-          open={openSaveScreenShot}
-          onClose={toggleScreenshotTitleDialog}
-          base64={screenshot.base64}
-          browserType={browserType as BrowserTypes}
-        />
+        <>
+          <InputDialog
+            open={showTitleDialog}
+            onClose={handleCloseTitleDialog}
+            onSave={handleSave}
+            title="Title"
+            value={getUpdatingScreenshotTitle()}
+            required
+          />
+
+          <Loader open={inProgress && !savingWithTitle} />
+
+          <ErrorSnackbar />
+
+          <ImageDiffMessage result={result} onClose={onSuccessClose} />
+        </>
       )}
 
       <Dialog

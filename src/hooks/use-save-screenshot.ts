@@ -55,13 +55,14 @@ export const useSaveScreenshot = () => {
       base64String?: string,
       deviceDescriptor?: DeviceDescriptor,
     ) => {
-      const hash = getScreenshotHash(
-        storyData.id,
-        currentActions,
-        props,
+      const hash = getScreenshotHash({
+        actions: currentActions,
         browserType,
-        deviceDescriptor,
-      );
+        device: deviceDescriptor,
+        options: screenshotOptions,
+        props,
+        storyId: storyData.id,
+      });
 
       const data: SaveScreenshotRequest = {
         actions: currentActions,
@@ -80,7 +81,7 @@ export const useSaveScreenshot = () => {
 
       const res = await makeCall(data);
 
-      if (res instanceof Error) return;
+      if (res instanceof Error) return res;
 
       if (editScreenshotState && isUpdating(browserType)) {
         if (res.added) {
@@ -101,11 +102,13 @@ export const useSaveScreenshot = () => {
           type: 'addScreenshot',
         });
       }
+      return res;
     },
     [
-      storyData,
       currentActions,
       props,
+      screenshotOptions,
+      storyData,
       isUpdating,
       editScreenshotState,
       makeCall,

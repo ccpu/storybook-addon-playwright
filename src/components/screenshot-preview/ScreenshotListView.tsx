@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { SFC, useCallback, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
@@ -6,6 +6,7 @@ import { ScreenShotViewPanel } from '../../typings';
 import { Toolbar } from './Toolbar';
 import useMeasure from 'react-use/lib/useMeasure';
 import clsx from 'clsx';
+import { InputDialog, Loader } from '../common';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -53,6 +54,12 @@ interface Props {
 const ScreenshotListView: SFC<Props> = (props) => {
   const { showStorybook, column, onClose, viewPanel } = props;
 
+  const [showTitleDialog, setShowTitleDialog] = useState(false);
+
+  const [savingWithTitle, setSavingWithTitle] = useState<string>();
+
+  const savedScreenshotCount = useRef(0);
+
   const [ref, rect] = useMeasure();
 
   const { activeBrowsers, toggleBrowser, browserTypes } = useActiveBrowsers(
@@ -73,6 +80,10 @@ const ScreenshotListView: SFC<Props> = (props) => {
     setRefresh(false);
   }, []);
 
+  const toggleTitleDialog = useCallback(() => {
+    setShowTitleDialog(!showTitleDialog);
+  }, [showTitleDialog]);
+
   const flex = `0 1 calc(${
     100 / (column ? column : activeBrowsers.length)
   }% - 2px)`;
@@ -84,6 +95,16 @@ const ScreenshotListView: SFC<Props> = (props) => {
       ? rect.height / 2
       : rect.height;
 
+  const handleScreenshotsSaveComplete = useCallback(() => {
+    if (savedScreenshotCount.current === activeBrowsers.length) {
+      console.log(savedScreenshotCount.current, activeBrowsers.length);
+      savedScreenshotCount.current = 0;
+      setSavingWithTitle(undefined);
+      setShowTitleDialog(false);
+    }
+    savedScreenshotCount.current = savedScreenshotCount.current + 1;
+  }, [activeBrowsers.length]);
+
   return (
     <div className={classes.root}>
       <Toolbar
@@ -92,6 +113,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
         toggleBrowser={toggleBrowser}
         onCLose={onClose}
         onRefresh={handleRefresh}
+        onSave={toggleTitleDialog}
       />
       <div className={classes.preview}>
         {activeBrowsers && activeBrowsers.length > 0 && (
@@ -117,12 +139,22 @@ const ScreenshotListView: SFC<Props> = (props) => {
                   height={itemHeight}
                   refresh={refresh}
                   onRefreshEnd={handleRefreshEnd}
+                  savingWithTitle={savingWithTitle}
+                  onSaveComplete={handleScreenshotsSaveComplete}
                 />
               </div>
             ))}
           </div>
         )}
       </div>
+      <InputDialog
+        open={showTitleDialog}
+        onClose={toggleTitleDialog}
+        onSave={setSavingWithTitle}
+        title="Title"
+        required
+      />
+      <Loader open={Boolean(savingWithTitle)} />
     </div>
   );
 };

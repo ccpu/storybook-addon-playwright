@@ -5,6 +5,6 @@ describe('getDeviceInfo', () => {
     expect(getDeviceInfo()).not.toBeDefined();
   });
   it('should device have info', () => {
-    expect(getDeviceInfo({ name: 'Blackberry PlayBook' })).toBeDefined();
+    expect(getDeviceInfo('Blackberry PlayBook')).toBeDefined();
   });
 });

@@ -21,3 +21,5 @@ export * from './ImagePreview';
 export * from './ImageDiffPreview';
 export * from './ImageDiffPreviewDialog';
 export * from './BrowserIcon';
+export * from './CommonProvider';
+export * from './Alert';

@@ -1,6 +1,6 @@
 import React, { SFC, useState, useCallback } from 'react';
 import SettingIcon from '@material-ui/icons/Settings';
-import { Popover } from '@material-ui/core';
+import { Popover, Tooltip } from '@material-ui/core';
 import { ScreenshotOptions, ScreenshotOptionsProps } from './ScreenshotOptions';
 import { IconButton } from '@storybook/components';
 
@@ -37,7 +37,9 @@ const ScreenshotOptionsPopover: SFC<ScreenshotOptionsPopoverProps> = ({
       </Popover>
       {wrapWithButton ? (
         <IconButton onClick={handleClick} active={Boolean(options)}>
-          <SettingIcon />
+          <Tooltip placement="top" title="Screenshot options">
+            <SettingIcon />
+          </Tooltip>
         </IconButton>
       ) : (
         <SettingIcon onClick={handleClick} />

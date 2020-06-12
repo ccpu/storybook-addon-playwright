@@ -24,10 +24,13 @@ export { useStyles as useInputDialogStyles };
 
 export interface InputDialogProps
   extends StyleProps,
-    Omit<ActionDialogDialogProps, 'onNegativeAction' | 'onPositiveAction'> {
+    Omit<
+      ActionDialogDialogProps,
+      'onNegativeAction' | 'onPositiveAction' | 'onClose'
+    > {
   onSave: (content: string) => void;
   onCancel?: () => void;
-  onClose: () => void;
+  onClose: (closed: true) => void;
   value?: string;
   required?: boolean;
   requiredMessage?: string;
@@ -60,7 +63,7 @@ const InputDialog: SFC<InputDialogProps> = ({
   );
 
   const handleClose = useCallback(() => {
-    onClose();
+    onClose(true);
     if (onCancel) {
       onCancel();
     }

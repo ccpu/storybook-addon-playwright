@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useGlobalState } from './use-global-state';
 import { BrowserTypes, DeviceDescriptor } from '../typings';
+import { getDeviceInfo } from '../utils';
 
 export interface BrowserDevice {
   chromium?: DeviceDescriptor;
@@ -18,10 +19,7 @@ export const useBrowserDevice = () => {
     (browserType: BrowserTypes, deviceName: string) => {
       setDeviceName({
         ...browserDevice,
-        [browserType]: {
-          ...browserDevice[browserType],
-          name: deviceName,
-        },
+        [browserType]: getDeviceInfo(deviceName),
       });
     },
     [browserDevice, setDeviceName],

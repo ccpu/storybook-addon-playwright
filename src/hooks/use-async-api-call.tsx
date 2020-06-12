@@ -57,14 +57,22 @@ export const useAsyncApiCall = <T extends Function>(
     onRetry?: () => void;
   }> = ({ onRetry }) => {
     if (!error) return null;
+
     return (
       <SnackbarWithRetry
         type="error"
+        title="Error"
         open={true}
         onClose={clearError}
-        message={error}
+        // message={error}
         onRetry={onRetry}
-      />
+      >
+        <div>
+          {error.split('\n').map((x, i) => {
+            return <div key={i}>{x}</div>;
+          })}
+        </div>
+      </SnackbarWithRetry>
     );
   };
 

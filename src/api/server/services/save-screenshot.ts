@@ -39,14 +39,18 @@ export const saveScreenshot = async (
     );
     if (sameDesc) {
       throw new Error(
-        'Found screenshot with the same title (' +
+        'Found screenshot with the same title, title must be unique.\nTitle: ' +
           sameDesc.title +
-          '), title must be unique.',
+          '\nBrowser: ' +
+          data.browserType,
       );
     }
   } else if (oldScreenshotData && oldScreenshotData.title !== data.title) {
     throw new Error(
-      'Found screenshot with same setting (' + oldScreenshotData.title + ').',
+      'Found screenshot with the same setting.\nTitle: ' +
+        oldScreenshotData.title +
+        '\nBrowser: ' +
+        data.browserType,
     );
   }
 

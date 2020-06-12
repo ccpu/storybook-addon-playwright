@@ -31,6 +31,7 @@ export interface ScreenshotImageData {
 
 export interface ScreenshotInfo extends StoryInfo {
   hash: string;
+  options?: ScreenshotOptions;
 }
 
 export interface ScreenshotClip {

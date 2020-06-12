@@ -2,10 +2,10 @@
 
 exports[`ScreenshotOptions should have defaults 1`] = `
 <div
-  className="makeStyles-root-7"
+  className="makeStyles-root-8"
 >
   <div
-    className="makeStyles-title-8"
+    className="makeStyles-title-9"
   >
     Screenshot Options
   </div>
@@ -13,18 +13,35 @@ exports[`ScreenshotOptions should have defaults 1`] = `
   <div
     className="makeStyles-content-2"
   >
-    <label
-      className="makeStyles-label-6"
+    <div
+      className="makeStyles-labelWrapper-7"
     >
-      Screenshot Clip:
-      <WithStyles(ForwardRef(Tooltip))
-        title="An object which specifies clipping of the resulting image."
+      <label
+        className="makeStyles-label-6"
       >
-        <HelpOutlineSharpIcon
-          className="makeStyles-helpIcon-5"
+        Screenshot Clip:
+        <WithStyles(ForwardRef(Tooltip))
+          title="An object which specifies clipping of the resulting image."
+        >
+          <HelpOutlineSharpIcon
+            className="makeStyles-helpIcon-5"
+          />
+        </WithStyles(ForwardRef(Tooltip))>
+      </label>
+      <WithStyles(ForwardRef(IconButton))
+        onClick={[Function]}
+        size="small"
+      >
+        <RestoreIcon
+          style={
+            Object {
+              "height": 18,
+              "width": 18,
+            }
+          }
         />
-      </WithStyles(ForwardRef(Tooltip))>
-    </label>
+      </WithStyles(ForwardRef(IconButton))>
+    </div>
     <form
       autoComplete="off"
       className="makeStyles-form-4"
@@ -160,7 +177,7 @@ exports[`ScreenshotOptions should have defaults 1`] = `
         inputProps={
           Object {
             "max": "100",
-            "min": "0",
+            "min": "-1",
           }
         }
         label="Quality"
@@ -231,6 +248,7 @@ exports[`ScreenshotOptions should have defaults 1`] = `
   <div
     className="makeStyles-actions-1"
   >
+    <div />
     <WithStyles(ForwardRef(Button))
       onClick={[Function]}
     >

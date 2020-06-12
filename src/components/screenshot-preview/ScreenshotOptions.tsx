@@ -10,15 +10,18 @@ import {
   FormControlLabel,
   Checkbox,
   Tooltip,
+  Typography,
+  IconButton,
 } from '@material-ui/core';
 import HelpOutlineSharpIcon from '@material-ui/icons/HelpOutlineSharp';
 import useThrottleFn from 'react-use/lib/useThrottleFn';
+import RestoreIcon from '@material-ui/icons/Restore';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     actions: {
       display: 'flex',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       paddingBottom: 2,
       paddingTop: 2,
     },
@@ -47,6 +50,10 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       marginBottom: 2,
     },
+    labelWrapper: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
     root: {
       margin: 10,
       marginBottom: 0,
@@ -63,14 +70,21 @@ export interface ScreenshotOptionsProps {
   options?: ScreenshotOptionsType;
 }
 
+interface Clip {
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+}
+
 const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
   onChange,
   options = {},
 }) => {
   const classes = useStyles();
 
-  const [autoSetPropName, setAutoSetPropName] = useState<string>();
   const requiredField = useRef<{ [key: string]: boolean }>({});
+  const autoSetPropName = useRef<string>();
 
   const [screenshotOptions, setScreenshotOptions] = useState<
     ScreenshotOptionsType
@@ -85,6 +99,27 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
     (name: string) =>
       ['x', 'y', 'width', 'height', 'quality'].indexOf(name) !== -1,
     [],
+  );
+
+  const setClipProps = useCallback(
+    (clip: Clip) => {
+      if (Object.keys(clip).length) {
+        requiredField.current = {
+          height: !(clip.height > 0),
+          width: !(clip.width > 0),
+          x: clip.x === undefined,
+          y: clip.y === undefined,
+        };
+        screenshotOptions.clip = clip;
+      } else {
+        delete screenshotOptions.clip;
+        requiredField.current = {};
+      }
+      setScreenshotOptions({
+        ...screenshotOptions,
+      });
+    },
+    [screenshotOptions],
   );
 
   const handleChange = useCallback(
@@ -109,8 +144,8 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
       const shouldMatchValue = (prop: string) => {
         if (!isSizeProp(name) || !isSizeProp(prop)) return false;
         const reverse = prop === 'width' ? 'height' : 'width';
-        if (!getClipPopValue(reverse) || autoSetPropName === reverse) {
-          setAutoSetPropName(reverse);
+        if (!getClipPopValue(reverse) || autoSetPropName.current === reverse) {
+          autoSetPropName.current = reverse;
           return true;
         }
         return false;
@@ -129,8 +164,7 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
       };
 
       if (isClipProp(name)) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let clip: any = {
+        let clip: Clip = {
           height: getClipValue('height'),
           width: getClipValue('width'),
           x: getClipValue('x'),
@@ -141,30 +175,15 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
           if (clip[k] === undefined || clip[k] === '') return o;
           o[k] = clip[k];
           return o;
-        }, {});
+        }, {}) as Clip;
 
-        if (Object.keys(clip).length) {
-          requiredField.current = {
-            height: !(clip.height > 0),
-            width: !(clip.width > 0),
-            x: clip.x === undefined,
-            y: clip.y === undefined,
-          };
-          screenshotOptions.clip = clip;
-        } else {
-          delete screenshotOptions.clip;
-          requiredField.current = {};
-        }
-
-        setScreenshotOptions({
-          ...screenshotOptions,
-        });
+        setClipProps(clip);
       } else {
-        if (name === 'quality' && val === 0) val = undefined;
+        if (name === 'quality' && (val === '' || val === -1)) val = undefined;
         setScreenshotOptions({ ...screenshotOptions, [name]: val });
       }
     },
-    [autoSetPropName, isClipProp, isNumeric, screenshotOptions],
+    [isClipProp, isNumeric, screenshotOptions, setClipProps],
   );
 
   const getValue = useCallback(
@@ -188,15 +207,16 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
   }, []);
 
   const handleBlur = useCallback(() => {
-    setAutoSetPropName(undefined);
+    autoSetPropName.current = undefined;
   }, []);
+
+  const hasRequiredField = Object.keys(requiredField.current).some(
+    (x) => requiredField.current[x],
+  );
 
   useThrottleFn(
     (screenshotOptions) => {
-      if (
-        Object.keys(requiredField.current).some((x) => requiredField.current[x])
-      )
-        return;
+      if (hasRequiredField) return;
       onChange(
         !Object.keys(screenshotOptions).length ? undefined : screenshotOptions,
       );
@@ -205,17 +225,31 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
     [screenshotOptions],
   );
 
+  const handleClipReset = useCallback(() => {
+    setClipProps({} as Clip);
+  }, [setClipProps]);
+
   return (
     <div className={classes.root}>
       <div className={classes.title}>Screenshot Options</div>
       <Divider />
       <div className={classes.content}>
-        <label className={classes.label}>
-          Screenshot Clip:
-          <Tooltip title="An object which specifies clipping of the resulting image.">
-            <HelpOutlineSharpIcon className={classes.helpIcon} />
-          </Tooltip>
-        </label>
+        <div className={classes.labelWrapper}>
+          <label className={classes.label}>
+            Screenshot Clip:
+            <Tooltip title="An object which specifies clipping of the resulting image.">
+              <HelpOutlineSharpIcon className={classes.helpIcon} />
+            </Tooltip>
+          </label>
+          <IconButton
+            onClick={handleClipReset}
+            size="small"
+            title="Clear clip fields"
+          >
+            <RestoreIcon style={{ height: 18, width: 18 }} />
+          </IconButton>
+        </div>
+
         <form noValidate autoComplete="off" className={classes.form}>
           <TextField
             label="Width"
@@ -307,7 +341,7 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
           <TextField
             name="quality"
             label="Quality"
-            inputProps={{ max: '100', min: '0' }}
+            inputProps={{ max: '100', min: '-1' }}
             size="small"
             value={getValue('quality')}
             onChange={handleChange}
@@ -359,6 +393,13 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
       </div>
       <Divider />
       <div className={classes.actions}>
+        <div>
+          {hasRequiredField && (
+            <Typography color="error">
+              Please current items highlighted in red.
+            </Typography>
+          )}
+        </div>
         <Button onClick={handleClear}>Clear</Button>
       </div>
     </div>

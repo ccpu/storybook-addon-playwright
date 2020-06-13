@@ -47,7 +47,7 @@ export const saveScreenshot = async (
     }
   } else if (oldScreenshotData && oldScreenshotData.title !== data.title) {
     throw new Error(
-      'Found screenshot with the same setting.\nTitle: ' +
+      'Found screenshot with the same setting, Screenshot settings must be unique for each screenshot.\nTitle: ' +
         oldScreenshotData.title +
         '\nBrowser: ' +
         data.browserType,

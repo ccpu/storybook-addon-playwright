@@ -31,6 +31,7 @@ exports[`ScreenshotOptions should have defaults 1`] = `
       <WithStyles(ForwardRef(IconButton))
         onClick={[Function]}
         size="small"
+        title="Clear clip fields"
       >
         <RestoreIcon
           style={

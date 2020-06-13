@@ -1,14 +1,15 @@
 import { DeviceList } from '../DeviceList';
 import { shallow } from 'enzyme';
-import DevicesIcon from '@material-ui/icons/Devices';
 import React from 'react';
-import { Menu } from '@material-ui/core';
+import { Menu, Tooltip } from '@material-ui/core';
 import { DeviceListItem } from '../DeviceListItem';
+import { IconButton } from '@storybook/components';
 
 describe('DeviceList', () => {
   it('should render', () => {
     const wrapper = shallow(<DeviceList />);
     expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.find(Tooltip).props().title).toBe('device list');
   });
 
   it('should open close menu', () => {
@@ -17,10 +18,10 @@ describe('DeviceList', () => {
     expect(wrapper.find(Menu).props().anchorEl).toBe(null);
 
     wrapper
-      .find(DevicesIcon)
+      .find(IconButton)
       .props()
       .onClick({ currentTarget: {} } as React.MouseEvent<
-        SVGSVGElement,
+        HTMLButtonElement,
         MouseEvent
       >);
 
@@ -39,5 +40,22 @@ describe('DeviceList', () => {
     wrapper.find(DeviceListItem).first().props().onClick('foo');
 
     expect(onSelectedMock).toHaveBeenCalledWith('foo');
+  });
+
+  it('should have selected', () => {
+    const onSelectedMock = jest.fn();
+
+    const wrapper = shallow(
+      <DeviceList
+        onDeviceSelect={onSelectedMock}
+        selectedDevice={{ name: 'iPhone 6' }}
+      />,
+    );
+
+    expect(
+      wrapper.find(DeviceListItem).find({ selected: true }).props().name,
+    ).toBe('iPhone 6');
+
+    expect(wrapper.find(Tooltip).props().title).toBe('iPhone 6');
   });
 });

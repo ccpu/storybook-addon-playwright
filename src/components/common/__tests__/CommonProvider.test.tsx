@@ -1,13 +1,14 @@
-import { ProviderWrapper } from '../ProviderWrapper';
+import '../../../../__manual_mocks__/react-useEffect';
+import { CommonProvider } from '../CommonProvider';
 import { shallow } from 'enzyme';
 import React from 'react';
 
-describe('ProviderWrapper', () => {
+describe('CommonProvider', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <ProviderWrapper>
+      <CommonProvider>
         <div>test</div>
-      </ProviderWrapper>,
+      </CommonProvider>,
     );
     expect(wrapper.exists()).toBeTruthy();
   });

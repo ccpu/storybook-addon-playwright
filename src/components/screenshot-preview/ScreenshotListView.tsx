@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState, useRef } from 'react';
+import React, { SFC, useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
@@ -56,9 +56,9 @@ const ScreenshotListView: SFC<Props> = (props) => {
 
   const [showTitleDialog, setShowTitleDialog] = useState(false);
 
-  const [savingWithTitle, setSavingWithTitle] = useState<string>();
-
-  const savedScreenshotCount = useRef(0);
+  const [saveScreenshot, setSaveScreenshot] = useState<{
+    [browser: string]: string;
+  }>();
 
   const [ref, rect] = useMeasure();
 
@@ -95,15 +95,30 @@ const ScreenshotListView: SFC<Props> = (props) => {
       ? rect.height / 2
       : rect.height;
 
-  const handleScreenshotsSaveComplete = useCallback(() => {
-    if (savedScreenshotCount.current === activeBrowsers.length) {
-      console.log(savedScreenshotCount.current, activeBrowsers.length);
-      savedScreenshotCount.current = 0;
-      setSavingWithTitle(undefined);
-      setShowTitleDialog(false);
-    }
-    savedScreenshotCount.current = savedScreenshotCount.current + 1;
-  }, [activeBrowsers.length]);
+  const handleScreenshotsSaveComplete = useCallback(
+    (browser: string) => {
+      delete saveScreenshot[browser];
+      if (Object.keys(saveScreenshot).length) {
+        setSaveScreenshot({ ...saveScreenshot });
+      } else {
+        setSaveScreenshot(undefined);
+        setShowTitleDialog(false);
+      }
+    },
+    [saveScreenshot],
+  );
+
+  const handleSaveScreenshot = useCallback(
+    (title: string) => {
+      const browsers = activeBrowsers.reduce((obj, b) => {
+        obj[b] = title;
+        return obj;
+      }, {});
+
+      setSaveScreenshot(browsers);
+    },
+    [activeBrowsers],
+  );
 
   return (
     <div className={classes.root}>
@@ -139,7 +154,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
                   height={itemHeight}
                   refresh={refresh}
                   onRefreshEnd={handleRefreshEnd}
-                  savingWithTitle={savingWithTitle}
+                  savingWithTitle={saveScreenshot && saveScreenshot[browser]}
                   onSaveComplete={handleScreenshotsSaveComplete}
                 />
               </div>
@@ -150,11 +165,11 @@ const ScreenshotListView: SFC<Props> = (props) => {
       <InputDialog
         open={showTitleDialog}
         onClose={toggleTitleDialog}
-        onSave={setSavingWithTitle}
+        onSave={handleSaveScreenshot}
         title="Title"
         required
       />
-      <Loader open={Boolean(savingWithTitle)} />
+      <Loader open={Boolean(saveScreenshot)} />
     </div>
   );
 };

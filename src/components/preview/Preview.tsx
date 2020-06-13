@@ -153,7 +153,6 @@ const Preview: SFC = (props) => {
             )}
           </div>
         </SplitPane>
-        <div id="react-notification" />
       </div>
     </CommonProvider>
   );

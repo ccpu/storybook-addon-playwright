@@ -100,7 +100,8 @@ describe('useAsyncApiCall', () => {
             });
           },
         })
-        .props.onRetry();
+        // click the button
+        .props.action.props.onClick();
     });
 
     expect(result.current.result).toStrictEqual({ resolved: true });

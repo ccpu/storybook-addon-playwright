@@ -6,6 +6,7 @@ import {
 } from '../../typings';
 import * as immutableObject from 'object-path-immutable';
 import arrayMove from 'array-move';
+import { combineReducers } from '../../utils';
 
 export interface ReducerState {
   actionSchema: ActionSchemaList;
@@ -87,9 +88,6 @@ export const initialState: ReducerState = {
   initialised: true,
   stories: {},
 };
-
-export const combineReducers = (...reducers) => (prevState, value) =>
-  reducers.reduce((newState, reducer) => reducer(newState, value), prevState);
 
 const updateStoryActionSet = (
   state: ReducerState,

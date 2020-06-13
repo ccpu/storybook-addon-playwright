@@ -71,7 +71,9 @@ export const useSaveScreenshot = () => {
         device: deviceDescriptor,
         fileName: storyData.parameters.fileName,
         hash,
-        options: screenshotOptions,
+        options: Object.keys(screenshotOptions).length
+          ? screenshotOptions
+          : undefined,
         props: props,
         storyId: storyData.id,
         title,

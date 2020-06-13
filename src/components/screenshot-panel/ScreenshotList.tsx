@@ -1,9 +1,10 @@
 import React, { SFC } from 'react';
 import { useStoryScreenshotImageDiff, useCurrentStoryData } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
-import { Loader, SnackbarWithRetry } from '../common';
+import { Loader, Snackbar } from '../common';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
+import { Button } from '@material-ui/core';
 
 const ScreenshotList: SFC = ({ children }) => {
   const storyData = useCurrentStoryData();
@@ -57,10 +58,14 @@ const ScreenshotList: SFC = ({ children }) => {
       </ScreenshotListSortable>
 
       {storyImageDiffError && (
-        <SnackbarWithRetry
+        <Snackbar
           open={true}
-          onRetry={testStoryScreenShots}
-          type="error"
+          action={
+            <Button color="inherit" onClick={testStoryScreenShots}>
+              Retry
+            </Button>
+          }
+          variant="error"
           message={storyImageDiffError}
           onClose={clearImageDiffError}
         />

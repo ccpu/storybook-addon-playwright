@@ -1,3 +1,4 @@
+import '../../../../__manual_mocks__/react-useEffect';
 import { InputDialog } from '../InputDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -75,5 +76,18 @@ describe('InputDialog', () => {
     wrapper.find(ActionDialog).props().onClose();
     expect(closeMock).toHaveBeenCalledTimes(1);
     expect(cancelMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should have default value', () => {
+    const wrapper = shallow(
+      <InputDialog
+        onClose={jest.fn()}
+        open={true}
+        onSave={jest.fn()}
+        value={'val'}
+      />,
+    );
+
+    expect(wrapper.find(TextField).props().value).toBe('val');
   });
 });

@@ -4,12 +4,7 @@ import { Popover, Tooltip } from '@material-ui/core';
 import { ScreenshotOptions, ScreenshotOptionsProps } from './ScreenshotOptions';
 import { IconButton } from '@storybook/components';
 
-export interface ScreenshotOptionsPopoverProps extends ScreenshotOptionsProps {
-  wrapWithButton?: boolean;
-}
-
-const ScreenshotOptionsPopover: SFC<ScreenshotOptionsPopoverProps> = ({
-  wrapWithButton = true,
+const ScreenshotOptionsPopover: SFC<ScreenshotOptionsProps> = ({
   options,
   onChange,
 }) => {
@@ -35,15 +30,12 @@ const ScreenshotOptionsPopover: SFC<ScreenshotOptionsPopoverProps> = ({
       >
         <ScreenshotOptions options={options} onChange={onChange} />
       </Popover>
-      {wrapWithButton ? (
-        <IconButton onClick={handleClick} active={Boolean(options)}>
-          <Tooltip placement="top" title="Screenshot options">
-            <SettingIcon />
-          </Tooltip>
-        </IconButton>
-      ) : (
-        <SettingIcon onClick={handleClick} />
-      )}
+
+      <IconButton onClick={handleClick} active={Boolean(options)}>
+        <Tooltip placement="top" title="Screenshot options">
+          <SettingIcon />
+        </Tooltip>
+      </IconButton>
     </>
   );
 };

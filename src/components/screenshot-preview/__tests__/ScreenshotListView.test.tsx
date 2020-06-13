@@ -4,12 +4,13 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ScreenshotView } from '../ScreenshotView';
 import { Toolbar } from '../Toolbar';
+import { InputDialog, Loader } from '../../common';
 
 describe('ScreenshotList', () => {
   const onCloseMock = jest.fn();
 
   beforeEach(() => {
-    useActiveBrowserMock.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should render', () => {
@@ -68,5 +69,61 @@ describe('ScreenshotList', () => {
     screenshotView.first().props().onRefreshEnd();
     screenshotView = wrapper.find(ScreenshotView);
     expect(screenshotView.first().props().refresh).toBeFalsy();
+  });
+
+  it('should show save screenshot title dialog ', () => {
+    const wrapper = shallow(
+      <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
+    );
+    const toolbar = wrapper.find(Toolbar);
+
+    toolbar.props().onSave();
+
+    expect(wrapper.find(InputDialog).props().open).toBeTruthy();
+  });
+
+  it('should save screenshot', () => {
+    useActiveBrowserMock.mockImplementation(() => ({
+      activeBrowsers: ['chromium', 'firefox'],
+      isDisabled: jest.fn(),
+      toggleBrowser: jest.fn(),
+    }));
+
+    const wrapper = shallow(
+      <ScreenshotListView
+        onClose={onCloseMock}
+        viewPanel="dialog"
+        showStorybook={false}
+      />,
+    );
+    const toolbar = wrapper.find(Toolbar);
+
+    toolbar.props().onSave();
+
+    wrapper.find(InputDialog).props().onSave('title');
+
+    const chromium = wrapper.find(ScreenshotView).first();
+
+    expect(chromium.props().savingWithTitle).toBe('title');
+
+    chromium.props().onSaveComplete('chromium');
+
+    expect(wrapper.find(ScreenshotView).first().props().savingWithTitle).toBe(
+      undefined,
+    );
+
+    // Loader should be visible until all screenshot processed
+    expect(wrapper.find(Loader).props().open).toBeTruthy();
+
+    const firefox = wrapper.find(ScreenshotView).last();
+    expect(firefox.props().savingWithTitle).toBe('title');
+
+    firefox.props().onSaveComplete('firefox');
+
+    expect(wrapper.find(ScreenshotView).last().props().savingWithTitle).toBe(
+      undefined,
+    );
+
+    expect(wrapper.find(Loader).props().open).toBeFalsy();
   });
 });

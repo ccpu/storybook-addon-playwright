@@ -30,7 +30,7 @@ export interface InputDialogProps
     > {
   onSave: (content: string) => void;
   onCancel?: () => void;
-  onClose: (closed: true) => void;
+  onClose: (closed?: true) => void;
   value?: string;
   required?: boolean;
   requiredMessage?: string;

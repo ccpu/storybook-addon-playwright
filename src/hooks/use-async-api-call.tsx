@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, SFC } from 'react';
-import { SnackbarWithRetry, Snackbar } from '../components';
+import { Snackbar, SnackbarProps } from '../components';
 import React from 'react';
+import { Button } from '@material-ui/core';
 
 type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
 
@@ -53,51 +54,55 @@ export const useAsyncApiCall = <T extends Function>(
     setError(undefined);
   }, []);
 
-  const ErrorSnackbar: SFC<{
-    onRetry?: () => void;
-  }> = ({ onRetry }) => {
-    if (!error) return null;
+  const ErrorSnackbar: SFC<
+    SnackbarProps & { onRetry?: () => void }
+  > = useCallback(
+    ({ onRetry }) => {
+      if (!error) return null;
+      return (
+        <Snackbar
+          variant="error"
+          open={true}
+          onClose={clearError}
+          action={
+            onRetry && (
+              <Button color="inherit" onClick={onRetry}>
+                Retry
+              </Button>
+            )
+          }
+          message={error}
+        />
+      );
+    },
+    [clearError, error],
+  );
 
-    return (
-      <SnackbarWithRetry
-        type="error"
-        title="Error"
-        open={true}
-        onClose={clearError}
-        // message={error}
-        onRetry={onRetry}
-      >
-        <div>
-          {error.split('\n').map((x, i) => {
-            return <div key={i}>{x}</div>;
-          })}
-        </div>
-      </SnackbarWithRetry>
-    );
-  };
-
-  const SuccessSnackbar: SFC<{
-    message: string;
-    clearResultOnClose?: boolean;
-  }> = ({ message, clearResultOnClose }) => {
-    if (!success) return null;
-    const handleClose = () => {
-      setSuccess(false);
-      if (clearResultOnClose) {
-        clearResult();
-      }
-    };
-    return (
-      <Snackbar
-        type="success"
-        title="Success"
-        open={true}
-        onClose={handleClose}
-        message={message}
-        autoHideDuration={4000}
-      />
-    );
-  };
+  const SuccessSnackbar: SFC<
+    SnackbarProps & {
+      clearResultOnClose?: boolean;
+    }
+  > = useCallback(
+    ({ message, clearResultOnClose }) => {
+      if (!success) return null;
+      const handleClose = () => {
+        setSuccess(false);
+        if (clearResultOnClose) {
+          clearResult();
+        }
+      };
+      return (
+        <Snackbar
+          variant="success"
+          open={true}
+          onClose={handleClose}
+          message={message}
+          autoHideDuration={4000}
+        />
+      );
+    },
+    [clearResult, success],
+  );
 
   return {
     ErrorSnackbar,

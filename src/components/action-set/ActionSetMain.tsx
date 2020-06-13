@@ -134,7 +134,7 @@ const ActionSetMain: SFC = () => {
           open={true}
           message={error}
           onClose={handleErrorSnackbarClose}
-          type="error"
+          variant="error"
         />
       )}
     </div>

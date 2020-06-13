@@ -14,6 +14,7 @@ import {
   Loader,
   ImageDiffMessage,
   InputDialog,
+  ImagePreview,
 } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserDevice } from '../../hooks';
@@ -162,10 +163,9 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         screenshot.base64,
         browserDevice[browserType],
       );
-
       setShowTitleDialog(false);
     },
-    [saveScreenShot, browserType, screenshot, browserDevice],
+    [browserDevice, browserType, saveScreenShot, screenshot],
   );
 
   useEffect(() => {
@@ -235,7 +235,12 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
           <ErrorSnackbar />
 
-          <ImageDiffMessage result={result} onClose={onSuccessClose} />
+          <ImageDiffMessage
+            browserType={browserType as BrowserTypes}
+            title={savingWithTitle}
+            result={result}
+            onClose={onSuccessClose}
+          />
         </>
       )}
 
@@ -247,10 +252,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         title={`${capitalize(browserType)} screenshot`}
       >
         {screenshot && openFullScreen && (
-          <img
-            style={{ margin: 10 }}
-            src={`data:image/gif;base64,${screenshot.base64}`}
-          />
+          <ImagePreview imgSrcString={screenshot.base64} />
         )}
       </Dialog>
     </div>

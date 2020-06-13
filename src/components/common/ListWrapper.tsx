@@ -28,7 +28,8 @@ const ListWrapper: SFC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || !ref.current.parentElement) return;
+    //setting storybook panel to height to stretch our panel
     ref.current.parentElement.style.height = '100%';
   }, []);
 

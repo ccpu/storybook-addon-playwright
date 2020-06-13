@@ -51,7 +51,7 @@ export interface ScreenshotData extends ScreenshotOptions {
   hash: string;
   device?: DeviceDescriptor;
   index?: number;
-  options: ScreenshotOptions;
+  options?: ScreenshotOptions;
 }
 
 export interface ScreenshotProp {

@@ -37,9 +37,10 @@ describe('saveScreenshot', () => {
       ],
       base64: 'base64-image',
       browserType: 'chromium',
-      device: { name: 'iphone' },
+      device: { name: 'iPhone 6' },
       fileName: 'story.ts',
       hash: 'hash',
+      options: { fullPage: true },
       props: [{ name: 'prop', value: 'value' }],
       storyId: 'story-id',
       title: 'screenshot-title',
@@ -91,9 +92,7 @@ describe('saveScreenshot', () => {
 
     await expect(
       saveScreenshot(getData({ title: 'foo' })),
-    ).rejects.toThrowError(
-      'Found screenshot with the same title (foo), title must be unique.',
-    );
+    ).rejects.toThrowError();
   });
 
   it('should not have screenshot with the same setting (using hash for comparison)', async () => {
@@ -115,7 +114,7 @@ describe('saveScreenshot', () => {
 
     await expect(
       saveScreenshot(getData({ hash: 'hash-1', title: 'foo' })),
-    ).rejects.toThrowError('Found screenshot with same setting (bar).');
+    ).rejects.toThrowError();
   });
 
   it('should not save if dealing with existing screen shot', async () => {

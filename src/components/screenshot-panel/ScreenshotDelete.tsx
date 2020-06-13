@@ -17,6 +17,7 @@ const ScreenshotDelete: SFC<ScreenshotDeleteProps> = (props) => {
     deleteScreenshot,
     inProgress: deleteLoading,
     ErrorSnackbar,
+    SuccessSnackbar,
   } = useDeleteScreenshot();
 
   const handleDeleteConfirmation = useCallback(() => {
@@ -34,6 +35,7 @@ const ScreenshotDelete: SFC<ScreenshotDeleteProps> = (props) => {
         onDelete={handleDeleteConfirmation}
       />
       <ErrorSnackbar />
+      <SuccessSnackbar message="Screenshot deleted successfully." />
     </>
   );
 };

@@ -87,8 +87,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
         </ScreenshotListPreviewDialog>
       )}
       <Snackbar
-        type="success"
-        title="Success"
+        variant="success"
         message="Story screenshots updates successfully."
         open={success}
         onClose={onFinish}
@@ -96,7 +95,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
       />
 
       <Snackbar
-        type="error"
+        variant="error"
         title="Error"
         message={error}
         open={Boolean(error)}

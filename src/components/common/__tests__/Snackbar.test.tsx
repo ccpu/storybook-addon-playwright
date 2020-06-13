@@ -1,8 +1,10 @@
-import { Snackbar, getColor } from '../Snackbar';
+import { Snackbar } from '../Snackbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Snackbar as MUSnackbar } from '@material-ui/core';
-import { Color } from '@material-ui/lab';
+import { useSnackbar } from 'notistack';
+import { AlertTitle } from '@material-ui/lab';
+import { DialogContent } from '@material-ui/core';
+import CloseSharp from '@material-ui/icons/CloseSharp';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -10,42 +12,111 @@ jest.mock('react', () => ({
 }));
 
 describe('Snackbar', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('should render', () => {
     const wrapper = shallow(<Snackbar onClose={jest.fn()} />);
-    expect(wrapper.find(MUSnackbar)).toHaveLength(1);
+    expect(wrapper.type()).toBeNull();
   });
 
-  it('should handle close', () => {
-    const closeMock = jest.fn();
-    const wrapper = shallow(<Snackbar onClose={closeMock} />);
-    wrapper
-      .find(MUSnackbar)
-      .props()
-      .onClose({} as React.SyntheticEvent<unknown, Event>, 'clickaway');
-    expect(closeMock).toHaveBeenCalledTimes(1);
+  it('should request snackbar', () => {
+    const enqueueSnackbarMock = jest.fn();
+    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+      enqueueSnackbar: enqueueSnackbarMock,
+    }));
+    shallow(<Snackbar onClose={jest.fn()} open={true} message="foo" />);
+    const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
+    expect(enqueueSnackbarMock).toHaveBeenCalledTimes(1);
+    expect(wrapper.text()).toBe('foo');
   });
 
-  it('should have valid color base on types', () => {
-    expect(getColor('error')).toBe('#FAB3AE');
-    expect(getColor('error', true)).toBe('#DD3C31');
+  it('should close snackbar', () => {
+    const closeSnackbar = jest.fn();
+    let closeFun;
+    const onCloseMock = jest.fn();
+    const mockData = {
+      closeSnackbar,
+      enqueueSnackbar: (_e, options) => {
+        closeFun = options.onClose;
+        return 'key';
+      },
+    };
+    (useSnackbar as jest.Mock)
+      .mockImplementationOnce(() => mockData)
+      .mockImplementationOnce(() => mockData);
 
-    expect(getColor('info')).toBe('#A6D5FA');
-    expect(getColor('info', true)).toBe('#1D88DC');
-
-    expect(getColor('warning')).toBe('rgb(255, 213, 153)');
-    expect(getColor('warning', true)).toBe('#ff9800');
-
-    expect(getColor('success')).toBe('rgb(183, 223, 185)');
-    expect(getColor('success', true)).toBe('#4caf50');
-
-    expect(getColor('invalid' as Color)).toBe('');
-  });
-
-  it('should append div to body to be used by portal', () => {
-    shallow(<Snackbar onClose={jest.fn()} />);
-
-    expect(document.body.querySelector('.snackbar-portal').nodeName).toBe(
-      'DIV',
+    const wrapper = shallow(
+      <Snackbar onClose={onCloseMock} open={true} message="foo" />,
     );
+
+    wrapper.setProps({ open: false });
+    closeFun();
+
+    expect(closeSnackbar).toHaveBeenCalledTimes(1);
+    expect(onCloseMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should replace "\n" with div ', () => {
+    const enqueueSnackbarMock = jest.fn();
+    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+      enqueueSnackbar: enqueueSnackbarMock,
+    }));
+    shallow(<Snackbar onClose={jest.fn()} open={true} message={`foo\nbar`} />);
+    const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
+
+    expect(wrapper.find('div')).toHaveLength(3);
+  });
+
+  it('should have title', () => {
+    const enqueueSnackbarMock = jest.fn();
+    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+      enqueueSnackbar: enqueueSnackbarMock,
+    }));
+    shallow(
+      <Snackbar
+        onClose={jest.fn()}
+        open={true}
+        message={`foo`}
+        title="title"
+      />,
+    );
+    const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
+    expect(wrapper.find(AlertTitle)).toHaveLength(1);
+  });
+
+  it('should render children and', () => {
+    const enqueueSnackbarMock = jest.fn();
+    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+      enqueueSnackbar: enqueueSnackbarMock,
+    }));
+    shallow(
+      <Snackbar onClose={jest.fn()} open={true}>
+        <DialogContent>tets</DialogContent>
+      </Snackbar>,
+    );
+    const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
+    expect(wrapper.find(DialogContent)).toHaveLength(1);
+  });
+
+  it('should have close icon and close', () => {
+    const enqueueSnackbarMock = jest.fn();
+    const closeSnackbar = jest.fn();
+    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+      closeSnackbar,
+      enqueueSnackbar: enqueueSnackbarMock,
+    }));
+    shallow(
+      <Snackbar onClose={jest.fn()} open={true} closeIcon={true}>
+        <DialogContent>tets</DialogContent>
+      </Snackbar>,
+    );
+    const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
+    expect(wrapper.find(CloseSharp)).toHaveLength(1);
+    wrapper
+      .find(CloseSharp)
+      .props()
+      .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
+    expect(closeSnackbar).toHaveBeenCalledTimes(1);
   });
 });

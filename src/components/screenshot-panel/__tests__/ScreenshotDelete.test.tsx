@@ -26,7 +26,11 @@ describe('ScreenshotDelete', () => {
   it('should delete', () => {
     const deleteMock = jest.fn();
     useDeleteScreenshotMock.mockImplementationOnce(() => {
-      return { ErrorSnackbar: () => undefined, deleteScreenshot: deleteMock };
+      return {
+        ErrorSnackbar: () => undefined,
+        SuccessSnackbar: () => undefined,
+        deleteScreenshot: deleteMock,
+      };
     });
 
     const wrapper = shallow(

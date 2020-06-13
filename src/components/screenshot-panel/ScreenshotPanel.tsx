@@ -8,10 +8,11 @@ import {
   useScreenshotContext,
   useScreenshotDispatch,
 } from '../../store/screenshot';
-import { Loader, SnackbarWithRetry } from '../common';
+import { Loader, Snackbar } from '../common';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotList } from './ScreenshotList';
+import { Button } from '@material-ui/core';
 
 const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -83,10 +84,14 @@ const ScreenshotPanel = () => {
       <ScreenshotLoaderErrorSnackbar onRetry={loadScreenShots} />
 
       {storyImageDiffError && (
-        <SnackbarWithRetry
+        <Snackbar
           open={true}
-          onRetry={testStoryScreenShots}
-          type="error"
+          action={
+            <Button color="inherit" onClick={testStoryScreenShots}>
+              Retry
+            </Button>
+          }
+          variant="error"
           message={storyImageDiffError}
           onClose={clearImageDiffError}
         />

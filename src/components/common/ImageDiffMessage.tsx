@@ -6,26 +6,30 @@ import {
   ImageDiffPreviewDialog,
   ImageDiffPreviewDialogProps,
 } from './ImageDiffPreviewDialog';
+import { BrowserTypes } from '../../typings';
 
 export interface ImageDiffMessageProps
   extends Partial<ImageDiffPreviewDialogProps> {
   result: ImageDiffResult;
   onClose: () => void;
   title?: string;
+  browserType?: BrowserTypes;
 }
 
 const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
-  const { title, result, onClose, ...rest } = props;
+  const { title, result, onClose, browserType, ...rest } = props;
 
   if (!result) return null;
 
+  const titleMsg = title || result.oldScreenShotTitle;
   if (result.added) {
     return (
       <Snackbar
-        message={'Screenshot saved successfully.'}
+        variant="success"
+        // prettier-ignore
+        message={`Screenshot ${titleMsg? `'${titleMsg}'-`: `${browserType ? ` for '${browserType}'` : ''}`} saved successfully.`}
         open={true}
         onClose={onClose}
-        type="success"
         autoHideDuration={5000}
       />
     );
@@ -35,16 +39,14 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
     return (
       <Snackbar
         open={true}
-        title={'Success'}
         autoHideDuration={5000}
         onClose={onClose}
-        type="success"
-      >
-        <div>
-          Testing existing screenshot were successful, no change has been
-          detected.
-        </div>
-      </Snackbar>
+        variant="success"
+        message={`Testing existing screenshot were successful,
+        no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${
+          browserType ? `\nBrowser: ` + browserType : ''
+        }`}
+      />
     );
   }
 
@@ -54,7 +56,7 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
         message={getImageDiffMessages(result)}
         open={true}
         onClose={onClose}
-        type="error"
+        variant="error"
       />
     );
   }
@@ -65,7 +67,7 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
       onClose={onClose}
       open={true}
       activeTab="imageDiff"
-      title={title}
+      title={titleMsg}
       {...rest}
     />
   );

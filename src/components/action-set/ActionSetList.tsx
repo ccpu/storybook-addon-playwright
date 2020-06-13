@@ -110,7 +110,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
       <Loader open={loading} />
       {(error || actionSetLoaderError) && (
-        <Snackbar type="error" open={true} onClose={handleErrorClose}>
+        <Snackbar variant="error" open={true} onClose={handleErrorClose}>
           <>
             {error || actionSetLoaderError}
             {actionSetLoaderError && (

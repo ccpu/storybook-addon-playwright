@@ -16,9 +16,12 @@ describe('ImageDiffMessage', () => {
     const wrapper = shallow(
       <ImageDiffMessage result={{ pass: true }} onClose={jest.fn()} />,
     );
-    expect(wrapper.find(Snackbar).props().message).toBe(
-      'No change has been detected.',
-    );
+    expect(
+      wrapper
+        .find(Snackbar)
+        .props()
+        .message.startsWith('Testing existing screenshot were successful'),
+    ).toBe(true);
   });
 
   it('should show error message if found image size difference', () => {

@@ -106,7 +106,7 @@ const ActionSetEditor: SFC<Props> = ({ onClose, onSaved }) => {
           open={true}
           title="Validation failed."
           onClose={handleValidationSnackbarClose}
-          type="error"
+          variant="error"
           anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
           autoHideDuration={60000}
           closeIcon={true}

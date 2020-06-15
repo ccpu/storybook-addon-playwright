@@ -32,5 +32,5 @@ export const testScreenshots = async (
 
   if (onComplete) onComplete(results);
 
-  return results.filter((x) => !x.pass);
+  return results;
 };

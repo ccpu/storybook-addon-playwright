@@ -34,4 +34,6 @@ function readdirSync(directoryPath) {
 fs.__setMockFiles = __setMockFiles;
 fs.readdirSync = readdirSync;
 
+fs.unlinkSync = jest.fn();
+
 module.exports = fs;

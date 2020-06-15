@@ -17,12 +17,13 @@ export const runImageDiff = async (
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
 
-    const storyData = await testScreenshots({
+    const result = await testScreenshots({
       fileName: file,
     });
-    console.log(storyData);
+
+    console.log(result);
   }
-  if (options.onComplete) {
+  if (options && options.onComplete) {
     options.onComplete();
   }
 

@@ -7,7 +7,7 @@ describe('config', () => {
     );
   });
   it('should set config', () => {
-    setConfig({ getPage: jest.fn() });
+    setConfig({ getPage: jest.fn(), storybookEndpoint: 'localhost:3000' });
     expect(getConfigs()).toBeDefined();
   });
 });

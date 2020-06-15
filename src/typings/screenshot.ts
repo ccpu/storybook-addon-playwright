@@ -6,6 +6,8 @@ export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
 type PageScreenshotOptions = Parameters<Page['screenshot']>[0];
 
+export type ScreenshotOptions = PageScreenshotOptions;
+
 export interface DeviceDescriptor {
   name: string;
   viewport?: {
@@ -31,7 +33,6 @@ export interface ScreenshotImageData {
 
 export interface ScreenshotInfo extends StoryInfo {
   hash: string;
-  options?: ScreenshotOptions;
 }
 
 export interface ScreenshotClip {
@@ -41,17 +42,18 @@ export interface ScreenshotClip {
   y?: number;
 }
 
-export type ScreenshotOptions = PageScreenshotOptions;
-
-export interface ScreenshotData extends ScreenshotOptions {
-  title: string;
+export interface ScreenshotSetting {
   browserType: BrowserTypes;
   props?: ScreenshotProp[];
   actions?: StoryAction[];
-  hash: string;
   device?: DeviceDescriptor;
-  index?: number;
   options?: ScreenshotOptions;
+}
+
+export interface ScreenshotData extends ScreenshotOptions, ScreenshotSetting {
+  title: string;
+  hash: string;
+  index?: number;
 }
 
 export interface ScreenshotProp {

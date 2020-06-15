@@ -1,20 +1,9 @@
-import { ScreenshotProp, ScreenshotOptions } from '../../typings';
-import { StoryAction } from '../../typings/story-action';
-import {
-  BrowserTypes,
-  ScreenshotData,
-  StoryInfo,
-  DeviceDescriptor,
-  ScreenshotInfo,
-} from '../../typings';
+import { ScreenshotSetting } from '../../typings';
 
-export interface GetScreenshotRequest {
-  props?: ScreenshotProp[];
-  actions?: StoryAction[];
+import { ScreenshotData, StoryInfo, ScreenshotInfo } from '../../typings';
+
+export interface GetScreenshotRequest extends ScreenshotSetting {
   storyId: string;
-  browserType: BrowserTypes;
-  device?: DeviceDescriptor;
-  options?: ScreenshotOptions;
 }
 
 export type GetScreenshotResponse = {
@@ -26,9 +15,7 @@ export type GetScreenshotResponse = {
 export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
   base64?: string;
   hash: string;
-  device?: DeviceDescriptor;
   updateScreenshot?: ScreenshotData;
-  options: ScreenshotOptions;
 }
 
 export interface UpdateScreenshot extends ScreenshotInfo {

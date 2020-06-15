@@ -1,8 +1,8 @@
 import glob from 'fast-glob';
 
-export const getPlaywrightConfigFiles = async (path?: string) => {
+export const getPlaywrightConfigFiles = async (configPath?: string | '*') => {
   const files = await glob([
-    path ? path : '**/*.playwright.json',
+    configPath && configPath !== '*' ? configPath : '**/*.playwright.json',
     '!node_modules/**',
   ]);
   return files;

@@ -4,8 +4,8 @@ import {
   saveStoryFile,
 } from '../utils';
 import { ScreenshotInfo } from '../../../typings';
-import { getScreenshotPaths } from './utils';
 import * as fs from 'fs';
+import { getScreenshotPaths } from '../utils/get-screenshot-paths';
 
 export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);

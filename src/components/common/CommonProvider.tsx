@@ -9,9 +9,10 @@ const CommonProvider: SFC = (props) => {
   const div = useRef<HTMLDivElement>(document.createElement('div'));
 
   useEffect(() => {
-    document.body.appendChild(div.current);
+    const elm = div.current;
+    document.body.appendChild(elm);
     return () => {
-      document.body.removeChild(div.current);
+      document.body.removeChild(elm);
     };
   }, []);
 

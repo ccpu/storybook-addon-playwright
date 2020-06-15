@@ -1,19 +1,23 @@
 import { ScreenshotProp } from '../typings';
 import normalize from 'normalize-url';
 import { knobsToQuerystring } from './knobs-to-querystring';
+import { parse } from 'url';
+import { resolve } from 'path';
 
 export const constructStoryUrl = (
   endpoint: string,
   id: string,
   knobs?: ScreenshotProp[],
 ) => {
-  let storyUrl = `${endpoint}/iframe.html?id=${id}`;
+  const normalized = parse(endpoint).hostname
+    ? normalize(endpoint)
+    : 'file:///' + resolve(endpoint);
+
+  let storyUrl = `${normalized}/iframe.html?id=${id}`;
 
   if (knobs) {
     storyUrl = `${storyUrl}&${knobsToQuerystring(knobs)}`;
   }
 
-  const normalized = normalize(storyUrl);
-
-  return normalized;
+  return storyUrl.replace(/\\/g, '/');
 };

@@ -1,10 +1,10 @@
-import { getScreenshotPaths } from './utils';
 import { DiffImageToScreenShot } from '../../typings';
 import { runDiffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { ImageDiffResult } from '../../typings';
 import * as fs from 'fs';
 import { getConfigs } from '../configs';
+import { getScreenshotPaths } from '../utils/get-screenshot-paths';
 
 interface SnapshotOptions extends MatchImageSnapshotOptions {
   receivedImageBuffer: Buffer;
@@ -26,8 +26,8 @@ export const diffImageToScreenshot = (
     failureThreshold: 0,
     failureThresholdType: 'pixel',
     receivedImageBuffer: imageBuffer,
-    snapshotIdentifier: paths.snapshotIdentifier,
-    snapshotsDir: paths.snapshotsDir,
+    snapshotIdentifier: paths.screenshotIdentifier,
+    snapshotsDir: paths.screenshotsDir,
     updatePassedSnapshot: false,
     updateSnapshot: false,
     ...options,

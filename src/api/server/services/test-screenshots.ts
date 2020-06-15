@@ -1,6 +1,6 @@
 import { ImageDiffResult } from '../../typings';
 import { testStoryScreenshots } from './test-story-screenshots';
-import { loadStoryData } from '../utils';
+import { getStoryPlaywrightData } from '../utils';
 
 interface TestScreenshotsOptions {
   fileName: string;
@@ -12,23 +12,20 @@ export const testScreenshots = async (
 ): Promise<ImageDiffResult[]> => {
   const { fileName, onComplete } = options;
 
-  const resultsPromise: Promise<ImageDiffResult[]>[] = [];
+  let results: ImageDiffResult[] = [];
 
-  const playWrightData = await loadStoryData(fileName, '*');
+  const storiesData = await getStoryPlaywrightData(fileName);
 
-  Object.keys(playWrightData).forEach((k) => {
-    if (playWrightData[k].screenshots && playWrightData[k].screenshots.length) {
-      const result = testStoryScreenshots({
+  for (let i = 0; i < storiesData.length; i++) {
+    const story = storiesData[i];
+    if (story.data.screenshots && story.data.screenshots.length) {
+      const result = await testStoryScreenshots({
         fileName: fileName,
-        storyId: k,
+        storyId: story.storyId,
       });
-      resultsPromise.push(result);
+      results = [...results, ...result];
     }
-  });
-
-  const data = await Promise.all(resultsPromise);
-
-  const results = [].concat(...data);
+  }
 
   if (onComplete) onComplete(results);
 

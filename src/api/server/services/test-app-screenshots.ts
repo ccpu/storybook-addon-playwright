@@ -6,14 +6,14 @@ import { testScreenshots } from './test-screenshots';
 export const testAppScreenshots = async (): Promise<ImageDiffResult[]> => {
   const files = await getPlaywrightConfigFiles();
 
-  let resultsPromise: ImageDiffResult[] = [];
+  let results: ImageDiffResult[] = [];
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
 
     const result = await testScreenshots({ fileName: file });
-    resultsPromise = [...resultsPromise, ...result];
+    results = [...results, ...result];
   }
 
-  return resultsPromise.filter((x) => !x.pass);
+  return results.filter((x) => !x.pass);
 };

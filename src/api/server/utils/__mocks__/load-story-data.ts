@@ -4,7 +4,7 @@ const loadStoryData = jest.fn();
 
 loadStoryData.mockImplementation((_filePAth: string, storyId: string) => {
   const data = storyFileInfo();
-  if (!data[storyId]) data[storyId] = {};
+  if (!data[storyId] && storyId !== '*') data[storyId] = {};
   return new Promise((resolve) => {
     resolve(data);
   });

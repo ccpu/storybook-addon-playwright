@@ -6,13 +6,12 @@ import { ScreenshotImageData } from '../../../typings';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,
-  host: string,
   convertToBase64?: boolean,
 ): Promise<ScreenshotImageData> => {
   const configs = getConfigs();
 
   const url = constructStoryUrl(
-    configs.storybookEndpoint ? configs.storybookEndpoint : host,
+    configs.storybookEndpoint,
     data.storyId,
     data.props,
   );

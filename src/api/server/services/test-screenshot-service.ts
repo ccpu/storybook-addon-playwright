@@ -6,7 +6,6 @@ import { ScreenshotInfo } from '../../../typings';
 
 export const testScreenshotService = async (
   data: ScreenshotInfo,
-  host: string,
 ): Promise<ImageDiffResult> => {
   const screenshotData = await getScreenshotData(data);
 
@@ -23,7 +22,6 @@ export const testScreenshotService = async (
       props: screenshotData.props,
       storyId: data.storyId,
     },
-    host,
     true,
   );
 

@@ -5,7 +5,6 @@ import { testScreenshotService } from './test-screenshot-service';
 
 export const testStoryScreenshots = async (
   data: StoryInfo,
-  host: string,
 ): Promise<ImageDiffResult[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
@@ -18,14 +17,11 @@ export const testStoryScreenshots = async (
 
   for (let i = 0; i < storyData[data.storyId].screenshots.length; i++) {
     const screenshot = storyData[data.storyId].screenshots[i];
-    const result = await testScreenshotService(
-      {
-        fileName: data.fileName,
-        hash: screenshot.hash,
-        storyId: data.storyId,
-      },
-      host,
-    );
+    const result = await testScreenshotService({
+      fileName: data.fileName,
+      hash: screenshot.hash,
+      storyId: data.storyId,
+    });
     diffs.push(result);
   }
 

@@ -8,7 +8,7 @@ export const getScreenshot = async (
 ): Promise<void> => {
   const reqData = req.body as GetScreenshotRequest;
 
-  const snapshotData = await makeScreenshot(reqData, req.headers.host, true);
+  const snapshotData = await makeScreenshot(reqData, true);
 
   res.json({ base64: snapshotData.base64 } as GetScreenshotResponse);
 };

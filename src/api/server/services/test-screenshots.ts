@@ -4,14 +4,13 @@ import { loadStoryData } from '../utils';
 
 interface TestScreenshotsOptions {
   fileName: string;
-  host: string;
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
 }
 
 export const testScreenshots = async (
   options: TestScreenshotsOptions,
 ): Promise<ImageDiffResult[]> => {
-  const { fileName, host, onComplete } = options;
+  const { fileName, onComplete } = options;
 
   const resultsPromise: Promise<ImageDiffResult[]>[] = [];
 
@@ -19,13 +18,10 @@ export const testScreenshots = async (
 
   Object.keys(playWrightData).forEach((k) => {
     if (playWrightData[k].screenshots && playWrightData[k].screenshots.length) {
-      const result = testStoryScreenshots(
-        {
-          fileName: fileName,
-          storyId: k,
-        },
-        host,
-      );
+      const result = testStoryScreenshots({
+        fileName: fileName,
+        storyId: k,
+      });
       resultsPromise.push(result);
     }
   });

@@ -26,27 +26,23 @@ describe('makeScreenshot', () => {
     });
 
     await expect(
-      makeScreenshot(
-        { browserType: 'chromium', storyId: 'story-id' },
-        'localhost',
-      ),
+      makeScreenshot({ browserType: 'chromium', storyId: 'story-id' }),
     ).rejects.toThrowError(
       'Make sure to return an instance of a page from getPage.',
     );
   });
 
   it('should make screenshot', async () => {
-    const screenshot = await makeScreenshot(
-      { browserType: 'chromium', storyId: 'story-id' },
-      'localhost',
-    );
+    const screenshot = await makeScreenshot({
+      browserType: 'chromium',
+      storyId: 'story-id',
+    });
     expect(screenshot.buffer).toBeDefined();
   });
 
   it('should convert to base64', async () => {
     const screenshot = await makeScreenshot(
       { browserType: 'chromium', storyId: 'story-id' },
-      'localhost',
       true,
     );
     expect(screenshot.base64).toBe(
@@ -66,7 +62,6 @@ describe('makeScreenshot', () => {
         browserType: 'chromium',
         storyId: 'story-id',
       },
-      'localhost',
       true,
     );
     expect(executeAction).toBeCalledTimes(1);
@@ -86,7 +81,6 @@ describe('makeScreenshot', () => {
         browserType: 'chromium',
         storyId: 'story-id',
       },
-      'localhost',
       true,
     );
     expect(beforeSnapshotMock).toBeCalledTimes(1);
@@ -105,7 +99,6 @@ describe('makeScreenshot', () => {
         browserType: 'chromium',
         storyId: 'story-id',
       },
-      'localhost',
       true,
     );
     expect(afterSnapshotMock).toBeCalledTimes(1);

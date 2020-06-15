@@ -6,14 +6,11 @@ jest.mock('../../utils/load-story-data');
 
 describe('testScreenshot', () => {
   it('should have result', async () => {
-    const result = await testScreenshotService(
-      {
-        fileName: 'story.ts',
-        hash: 'hash',
-        storyId: 'story-id',
-      },
-      'localhost',
-    );
+    const result = await testScreenshotService({
+      fileName: 'story.ts',
+      hash: 'hash',
+      storyId: 'story-id',
+    });
     expect(result).toStrictEqual({
       added: true,
       newScreenshot: 'base64-image',
@@ -24,14 +21,11 @@ describe('testScreenshot', () => {
 
   it('should throw if  screenshot not found', async () => {
     await expect(
-      testScreenshotService(
-        {
-          fileName: 'story.ts',
-          hash: 'hash',
-          storyId: 'story-id-2',
-        },
-        'localhost',
-      ),
+      testScreenshotService({
+        fileName: 'story.ts',
+        hash: 'hash',
+        storyId: 'story-id-2',
+      }),
     ).rejects.toThrowError('Unable to find screenshot data.');
   });
 });

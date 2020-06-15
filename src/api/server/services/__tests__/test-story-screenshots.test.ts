@@ -10,10 +10,10 @@ describe('testStoryScreenshot', () => {
   });
 
   it('should have diff', async () => {
-    const result = await testStoryScreenshots(
-      { fileName: 'story.ts', storyId: 'story-id' },
-      'localhost',
-    );
+    const result = await testStoryScreenshots({
+      fileName: 'story.ts',
+      storyId: 'story-id',
+    });
     expect(result).toStrictEqual([
       {
         added: true,
@@ -32,10 +32,7 @@ describe('testStoryScreenshot', () => {
 
   it('should throw if story not found', async () => {
     await expect(
-      testStoryScreenshots(
-        { fileName: 'story.ts', storyId: 'story-id-2' },
-        'localhost',
-      ),
+      testStoryScreenshots({ fileName: 'story.ts', storyId: 'story-id-2' }),
     ).rejects.toThrowError('Unable to find story screenshots');
   });
 });

@@ -24,6 +24,7 @@ describe('diffImageToScreenshot', () => {
       getPage: async () => {
         return {} as Page;
       },
+      storybookEndpoint: 'localhost',
     }));
   });
 
@@ -51,6 +52,7 @@ describe('diffImageToScreenshot', () => {
       getPage: async () => {
         return {} as Page;
       },
+      storybookEndpoint: 'localhost',
     }));
 
     const result = diffImageToScreenshot(diffData, new Buffer('image'));

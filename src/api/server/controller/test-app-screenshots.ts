@@ -2,10 +2,10 @@ import { testAppScreenshots as testAppScreenshotService } from '../services/test
 import { Request, Response } from 'express';
 
 export const testAppScreenshots = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
-  const snapshotData = await testAppScreenshotService(req.headers.host);
+  const snapshotData = await testAppScreenshotService();
 
   res.json(snapshotData);
 };

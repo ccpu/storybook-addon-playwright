@@ -21,7 +21,7 @@ describe('testAppScreenshot', () => {
     jest.restoreAllMocks();
   });
   it('should have result', async () => {
-    const result = await testAppScreenshots('localhost');
+    const result = await testAppScreenshots();
     expect(result).toStrictEqual([
       {
         added: true,

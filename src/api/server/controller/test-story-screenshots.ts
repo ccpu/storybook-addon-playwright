@@ -8,10 +8,7 @@ export const testStoryScreenshots = async (
 ): Promise<void> => {
   const reqData = req.body as StoryInfo;
 
-  const snapshotData = await testStoryScreenshotService(
-    reqData,
-    req.headers.host,
-  );
+  const snapshotData = await testStoryScreenshotService(reqData);
 
   res.json(snapshotData);
 };

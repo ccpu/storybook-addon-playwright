@@ -52,6 +52,7 @@ describe('saveScreenshot', () => {
     getPage: async () => {
       return {} as Page;
     },
+    storybookEndpoint: 'localhost',
   });
 
   beforeEach(() => {

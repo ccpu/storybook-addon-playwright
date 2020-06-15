@@ -25,7 +25,6 @@ describe('testScreenshots', () => {
     const onCompleteMock = jest.fn();
     const result = await testScreenshots({
       fileName: 'story.ts',
-      host: 'localhost',
       onComplete: onCompleteMock,
     });
 

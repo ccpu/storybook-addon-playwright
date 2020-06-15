@@ -9,7 +9,7 @@ export interface Config<T extends unknown = Page> {
     browserType: BrowserTypes,
     deviceDescriptor: DeviceDescriptor,
   ) => Promise<T>;
-  beforeSnapshot?: (page: T, browserType: BrowserTypes) => void;
-  afterSnapshot?: (page: T, browserType: BrowserTypes) => void;
+  beforeScreenshot?: (page: T, browserType: BrowserTypes) => void;
+  afterScreenshot?: (page: T, browserType: BrowserTypes) => void;
   diffDirection?: 'horizontal' | 'vertical';
 }

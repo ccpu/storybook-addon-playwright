@@ -11,8 +11,11 @@ import { Tool } from './components/tool-bar';
 import { ActionPanel, ScreenshotPanel } from './components/panel';
 import { AddonPanel } from '@storybook/components';
 import { Preview } from './components/preview';
+import * as url from 'url';
 
 addons.register(ADDON_ID, () => {
+  if (!url.parse(window.location.href).hostname) return;
+
   addons.add(TOOL_ID, {
     render: () => <Tool />,
     title: 'snapshot',

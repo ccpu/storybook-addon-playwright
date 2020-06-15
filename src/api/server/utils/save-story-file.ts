@@ -6,6 +6,7 @@ export const saveStoryFile = async (
   fileInfo: StoryPlaywrightFileInfo,
   data: StoryPlaywrightData,
 ) => {
+  data.fil;
   await writeFile(fileInfo.path, data, {
     EOL: '\r\n',
     spaces: 2,

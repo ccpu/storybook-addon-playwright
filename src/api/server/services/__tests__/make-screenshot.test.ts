@@ -77,7 +77,7 @@ describe('makeScreenshot', () => {
 
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
-        beforeSnapshot: beforeSnapshotMock,
+        beforeScreenshot: beforeSnapshotMock,
       });
     });
 
@@ -96,7 +96,7 @@ describe('makeScreenshot', () => {
     const afterSnapshotMock = jest.fn();
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
-        afterSnapshot: afterSnapshotMock,
+        afterScreenshot: afterSnapshotMock,
       });
     });
 

@@ -9,15 +9,15 @@ export const makeScreenshot = async (
   host: string,
   convertToBase64?: boolean,
 ): Promise<ScreenshotImageData> => {
-  const helper = getConfigs();
+  const configs = getConfigs();
 
   const url = constructStoryUrl(
-    helper.storybookEndpoint ? helper.storybookEndpoint : host,
+    configs.storybookEndpoint ? configs.storybookEndpoint : host,
     data.storyId,
     data.props,
   );
 
-  const page = await helper.getPage(data.browserType, data.device);
+  const page = await configs.getPage(data.browserType, data.device);
 
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');
@@ -32,14 +32,14 @@ export const makeScreenshot = async (
     }
   }
 
-  if (helper.beforeSnapshot) {
-    await helper.beforeSnapshot(page, data.browserType);
+  if (configs.beforeScreenshot) {
+    await configs.beforeScreenshot(page, data.browserType);
   }
 
   const buffer = await page.screenshot(data.options);
 
-  if (helper.afterSnapshot) {
-    await helper.afterSnapshot(page, data.browserType);
+  if (configs.afterScreenshot) {
+    await configs.afterScreenshot(page, data.browserType);
   }
 
   return {

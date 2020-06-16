@@ -1,4 +1,5 @@
 import { constructStoryUrl } from '../construct-story-url';
+import { parse } from 'url';
 
 describe('constructStoryUrl', () => {
   it('should construct http url', () => {
@@ -11,11 +12,11 @@ describe('constructStoryUrl', () => {
 
   it('should construct file ', () => {
     expect(
-      constructStoryUrl('./storybook-static', 'story-id', [
-        { name: 'prop', value: 'val' },
-      ]),
-    ).toBe(
-      'file:///Z:/github/storybook-addons-playwright/storybook-static/iframe.html?id=story-id&knob-prop=val',
-    );
+      parse(
+        constructStoryUrl('./storybook-static', 'story-id', [
+          { name: 'prop', value: 'val' },
+        ]),
+      ).protocol,
+    ).toBe('file:');
   });
 });

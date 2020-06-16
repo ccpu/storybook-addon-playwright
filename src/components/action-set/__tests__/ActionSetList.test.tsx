@@ -54,7 +54,7 @@ describe('ActionSetList', () => {
       .shallow();
 
     expect(wrapper.find('.no-data').text()).toBe(
-      `No action set to display!Creat action set by clicking on the '+' button.`,
+      `No action set to display!Click the '+' button to create an action set.`,
     );
   });
 

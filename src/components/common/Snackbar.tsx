@@ -40,15 +40,15 @@ const Snackbar: SFC<SnackbarProps> = memo(
       if (key.current || !open) return undefined;
 
       key.current = enqueueSnackbar(
-        <div>
+        <div style={{ position: 'relative' }}>
           {closeIcon && (
             <CloseSharp
               style={{
                 cursor: 'pointer',
                 fontSize: 16,
                 position: 'absolute',
-                right: 4,
-                top: 4,
+                right: -15,
+                top: -13,
               }}
               onClick={() => closeSnackbar(key.current)}
             />

@@ -8,9 +8,9 @@ exports[`ActionList should show error id no actions provided 1`] = `
     No action to display!
   </div>
   <div>
-    Creat action by click on the 
+    Click the 
     '+'
-     button.
+     button to create an action.
   </div>
 </div>
 `;

@@ -1,12 +1,3 @@
-jest.mock('fast-glob', () => ({
-  __esModule: true,
-  default: () => {
-    return new Promise((resolve) => {
-      resolve(['story.ts']);
-    });
-  },
-}));
-
 import { testAppScreenshots } from '../test-app-screenshots';
 
 jest.mock('../make-screenshot');

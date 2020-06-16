@@ -167,10 +167,17 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         browserDevice[browserType],
       );
       onSaveComplete(browserType);
-      setShowTitleDialog(false);
+      handleCloseTitleDialog();
       isSaving.current = false;
     },
-    [browserDevice, browserType, onSaveComplete, saveScreenShot, screenshot],
+    [
+      browserDevice,
+      browserType,
+      handleCloseTitleDialog,
+      onSaveComplete,
+      saveScreenShot,
+      screenshot,
+    ],
   );
 
   useEffect(() => {
@@ -180,7 +187,6 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
       }
     }
   }, [browserType, handleSave, inProgress, savingWithTitle]);
-
   return (
     <div
       className={clsx(classes.card, {
@@ -229,7 +235,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
             open={showTitleDialog}
             onClose={handleCloseTitleDialog}
             onSave={handleSave}
-            title="Title"
+            title="Screenshot Title"
             value={getUpdatingScreenshotTitle()}
             required
           />

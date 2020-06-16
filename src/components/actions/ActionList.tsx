@@ -72,7 +72,7 @@ const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
     return (
       <div className={classes.noActionMessage}>
         <div>No action to display!</div>
-        <div>Creat action by click on the {"'+'"} button.</div>
+        <div>Click the {"'+'"} button to create an action.</div>
       </div>
     );
   }

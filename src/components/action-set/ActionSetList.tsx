@@ -104,7 +104,7 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
       ) : (
         <div className={clsx(classes.message, 'no-data')}>
           <div>No action set to display!</div>
-          <div>Creat action set by clicking on the {"'+'"} button.</div>
+          <div>Click the {"'+'"} button to create an action set.</div>
         </div>
       )}
 

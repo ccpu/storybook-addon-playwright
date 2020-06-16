@@ -97,6 +97,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
 
   const handleScreenshotsSaveComplete = useCallback(
     (browser: string) => {
+      if (!saveScreenshot) return;
       const title = saveScreenshot[browser];
       delete saveScreenshot[browser];
       const keys = Object.keys(saveScreenshot);
@@ -174,7 +175,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
         open={showTitleDialog}
         onClose={toggleTitleDialog}
         onSave={handleSaveScreenshot}
-        title="Title"
+        title="Screenshots Title"
         required
       />
       <Loader open={Boolean(saveScreenshot)} />

@@ -1,5 +1,4 @@
 import { ImageDiffResult } from '../../typings';
-
 import { getPlaywrightConfigFiles } from '../../../utils/get-playwright-config-files';
 import { testScreenshots } from './test-screenshots';
 

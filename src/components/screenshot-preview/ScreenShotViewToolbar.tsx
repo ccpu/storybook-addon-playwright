@@ -1,5 +1,5 @@
 import React, { SFC } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Tooltip } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 import { BrowserTypes, DeviceDescriptor } from '../../typings';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
@@ -88,11 +88,15 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
       <div className={classes.toolbarPanels}>
         {showSaveButton && (
           <IconButton onClick={onSave}>
-            <SaveIcon />
+            <Tooltip placement="top" title="Save screenshot">
+              <SaveIcon />
+            </Tooltip>
           </IconButton>
         )}
         <IconButton onClick={onRefresh}>
-          <RefreshIcon />
+          <Tooltip placement="top" title="Refresh">
+            <RefreshIcon />
+          </Tooltip>
         </IconButton>
         {browserType !== 'storybook' && (
           <DeviceList
@@ -102,7 +106,9 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
         )}
 
         <IconButton onClick={onFullScreen}>
-          <Fullscreen />
+          <Tooltip placement="top" title="Full screen">
+            <Fullscreen />
+          </Tooltip>
         </IconButton>
       </div>
     </div>

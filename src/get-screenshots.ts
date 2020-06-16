@@ -1,5 +1,4 @@
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
-import { ImageDiffResult } from './api/typings';
 import { getStoryPlaywrightData } from './api/server/utils';
 import { makeScreenshot } from './api/server/services';
 import {
@@ -16,6 +15,12 @@ interface RunImageDiffOptions {
   playwrightJsonPath?: string;
 }
 
+interface GetScreenshot {
+  buffer: Buffer;
+  storyId: string;
+  configFile: string;
+}
+
 export const getScreenshots = async (options: RunImageDiffOptions) => {
   const { onScreenshotReady, playwrightJsonPath } = options;
 
@@ -23,7 +28,7 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
     ? [playwrightJsonPath]
     : await getPlaywrightConfigFiles(playwrightJsonPath);
 
-  const results: ImageDiffResult[] = [];
+  const results: GetScreenshot[] = [];
 
   for (let i = 0; i < files.length; i++) {
     const fileName = files[i];
@@ -49,6 +54,12 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
             fileName,
             storyId: story.storyId,
             title: screenShotData.title,
+          });
+
+          results.push({
+            buffer: screenShot.buffer,
+            configFile: fileName,
+            storyId: story.storyId,
           });
 
           if (onScreenshotReady) {

@@ -13,9 +13,7 @@ export const setConfig = <T extends unknown = Page>(setup: Config<T>) => {
 
 export const getConfigs = () => {
   if (!configs) {
-    throw new Error(
-      'Configuration has not been set, make sure to set configurations in storybook middleware or config.',
-    );
+    throw new Error('Configuration has not been set.');
   }
 
   return configs;

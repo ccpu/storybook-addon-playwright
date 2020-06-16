@@ -23,11 +23,12 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
 
   const titleMsg = title || result.oldScreenShotTitle;
   if (result.added) {
+    console.log(browserType);
     return (
       <Snackbar
         variant="success"
         // prettier-ignore
-        message={`Screenshot ${titleMsg? `'${titleMsg}'-`: `${browserType ? ` for '${browserType}'` : ''}`} saved successfully.`}
+        message={`Screenshot ${(titleMsg? `'${titleMsg}'`:'') + `${(browserType ? ` for '${browserType}'` : '')}`} saved successfully.`}
         open={true}
         onClose={onClose}
         autoHideDuration={5000}

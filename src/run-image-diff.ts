@@ -20,6 +20,7 @@ export const runImageDiff = async (
     const result = await testScreenshots({
       fileName: file,
     });
+
     results = [...results, ...result];
   }
 

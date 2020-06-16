@@ -10,6 +10,11 @@ import { useSaveScreenshot } from '../../../hooks/use-save-screenshot';
 jest.mock('../../../hooks/use-save-screenshot');
 const useSaveScreenshotMock = useSaveScreenshot as jest.Mock;
 const onSaveMock = jest.fn();
+onSaveMock.mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve();
+  });
+});
 
 const useSaveScreenshotMockData = () => ({
   ErrorSnackbar: () => null,
@@ -37,6 +42,7 @@ describe('ScreenshotView', () => {
   });
 
   beforeEach(() => {
+    jest.clearAllMocks();
     useScreenshotMock.mockImplementation(() => ({
       ...useScreenshotMockData(),
     }));
@@ -46,8 +52,6 @@ describe('ScreenshotView', () => {
         saveScreenShot: onSaveMock,
       } as never;
     });
-
-    jest.clearAllMocks();
   });
 
   it('should render', () => {
@@ -124,18 +128,24 @@ describe('ScreenshotView', () => {
     expect(wrapper.find(InputDialog).props().open).toBeFalsy();
   });
 
-  it('should save screenshot', () => {
+  it('should save screenshot', async () => {
     const wrapper = shallow(
-      <ScreenshotView browserType="chromium" height={200} />,
+      <ScreenshotView
+        browserType="chromium"
+        height={200}
+        onSaveComplete={jest.fn()}
+      />,
     );
     wrapper.find(ScreenShotViewToolbar).props().onSave();
 
     wrapper.find(InputDialog).props().onSave('title');
 
+    await new Promise((resolve) => setImmediate(resolve));
+
     expect(onSaveMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should save screenshot when parent request it', () => {
+  it('should save screenshot when parent request it', async () => {
     const onSaveCompleteMock = jest.fn();
 
     useSaveScreenshotMock.mockImplementationOnce(() => {
@@ -172,12 +182,7 @@ describe('ScreenshotView', () => {
 
     expect(onSaveMock).toHaveBeenCalledTimes(1);
 
-    useSaveScreenshotMock.mockImplementationOnce(() => {
-      return {
-        ...useSaveScreenshotMockData(),
-        inProgress: false,
-      } as never;
-    });
+    await new Promise((resolve) => setImmediate(resolve));
 
     expect(onSaveCompleteMock).toHaveBeenCalledTimes(1);
   });

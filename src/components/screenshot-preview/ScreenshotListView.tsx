@@ -97,8 +97,13 @@ const ScreenshotListView: SFC<Props> = (props) => {
 
   const handleScreenshotsSaveComplete = useCallback(
     (browser: string) => {
+      const title = saveScreenshot[browser];
       delete saveScreenshot[browser];
-      if (Object.keys(saveScreenshot).length) {
+      const keys = Object.keys(saveScreenshot);
+
+      if (keys.length) {
+        // to take screenshot in sequent we set title one at the time, it will prevent file overwriting problem
+        saveScreenshot[keys[0]] = title;
         setSaveScreenshot({ ...saveScreenshot });
       } else {
         setSaveScreenshot(undefined);
@@ -111,9 +116,12 @@ const ScreenshotListView: SFC<Props> = (props) => {
   const handleSaveScreenshot = useCallback(
     (title: string) => {
       const browsers = activeBrowsers.reduce((obj, b) => {
-        obj[b] = title;
+        obj[b] = undefined;
         return obj;
       }, {});
+
+      // to take screenshot in sequent we set title one at the time, it will prevent file  overwriting problem
+      browsers[activeBrowsers[0]] = title;
 
       setSaveScreenshot(browsers);
     },

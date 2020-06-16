@@ -1,4 +1,4 @@
-import React, { SFC, useState, useCallback, useEffect } from 'react';
+import React, { SFC, useState, useCallback, useEffect, useRef } from 'react';
 import { makeStyles, capitalize } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
@@ -103,6 +103,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const [showTitleDialog, setShowTitleDialog] = useState(false);
 
+  const isSaving = useRef<boolean>(false);
+
   const { isEditing } = useEditScreenshot();
 
   const [openFullScreen, setOpenFullScreen] = useState(false);
@@ -157,26 +159,27 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const handleSave = useCallback(
     async (title: string) => {
+      isSaving.current = true;
       await saveScreenShot(
         browserType as BrowserTypes,
         title,
         screenshot.base64,
         browserDevice[browserType],
       );
+      onSaveComplete(browserType);
       setShowTitleDialog(false);
+      isSaving.current = false;
     },
-    [browserDevice, browserType, saveScreenShot, screenshot],
+    [browserDevice, browserType, onSaveComplete, saveScreenShot, screenshot],
   );
 
   useEffect(() => {
     if (savingWithTitle) {
-      if (!inProgress) {
+      if (!isSaving.current && !inProgress) {
         handleSave(savingWithTitle);
-      } else {
-        onSaveComplete(browserType);
       }
     }
-  }, [browserType, handleSave, inProgress, onSaveComplete, savingWithTitle]);
+  }, [browserType, handleSave, inProgress, savingWithTitle]);
 
   return (
     <div

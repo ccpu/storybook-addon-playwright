@@ -1,6 +1,20 @@
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { getScreenshots } from './get-screenshots';
 import path from 'path';
+import { toMatchImageSnapshot } from 'jest-image-snapshot';
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace jest {
+    interface Matchers<R, T> {
+      toMatchScreenshots(options?: MatchImageSnapshotOptions): R;
+    }
+  }
+}
+
+beforeAll(() => {
+  expect.extend({ toMatchImageSnapshot });
+});
 
 export async function toMatchScreenshots(
   playwrightJsonPath?: string,

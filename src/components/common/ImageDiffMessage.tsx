@@ -23,7 +23,6 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
 
   const titleMsg = title || result.oldScreenShotTitle;
   if (result.added) {
-    console.log(browserType);
     return (
       <Snackbar
         variant="success"

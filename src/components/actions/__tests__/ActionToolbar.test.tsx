@@ -43,7 +43,7 @@ describe('ActionToolbar', () => {
     const iconButton = wrapper.find('.close');
     iconButton.props().onClick(({
       currentTarget: {},
-    } as unknown) as React.MouseEvent<{}, MouseEvent>);
+    } as unknown) as React.MouseEvent<unknown, MouseEvent>);
 
     const dialog = wrapper.find(ConfirmationPopover);
 
@@ -81,7 +81,7 @@ describe('ActionToolbar', () => {
     const iconButton = wrapper.find('.add-action');
     iconButton.props().onClick(({
       currentTarget: {},
-    } as unknown) as React.MouseEvent<{}, MouseEvent>);
+    } as unknown) as React.MouseEvent<unknown, MouseEvent>);
 
     const menu = wrapper.find(ActionMenu);
 
@@ -101,7 +101,7 @@ describe('ActionToolbar', () => {
     const iconButton = wrapper.find('.add-action');
     iconButton.props().onClick(({
       currentTarget: {},
-    } as unknown) as React.MouseEvent<{}, MouseEvent>);
+    } as unknown) as React.MouseEvent<unknown, MouseEvent>);
 
     const menu = wrapper.find(ActionMenu);
 
@@ -123,7 +123,7 @@ describe('ActionToolbar', () => {
       />,
     );
     const iconButton = wrapper.find('.edit-desc');
-    iconButton.props().onClick({} as React.MouseEvent<{}, MouseEvent>);
+    iconButton.props().onClick({} as React.MouseEvent<unknown, MouseEvent>);
 
     const dialog = wrapper.find(InputDialog);
 

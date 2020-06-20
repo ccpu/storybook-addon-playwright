@@ -80,14 +80,14 @@ describe('ImageDiffPreview', () => {
     wrapper
       .find(Tabs)
       .props()
-      .onChange({} as React.ChangeEvent<{}>, 0);
+      .onChange({} as React.ChangeEvent<unknown>, 0);
 
     expect(wrapper.find(ImagePreview).props().imgSrcString).toBe('diff');
 
     wrapper
       .find(Tabs)
       .props()
-      .onChange({} as React.ChangeEvent<{}>, 1);
+      .onChange({} as React.ChangeEvent<unknown>, 1);
 
     expect(wrapper.find(ImagePreview).props().imgSrcString).toBe('new');
   });

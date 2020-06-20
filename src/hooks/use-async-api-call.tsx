@@ -7,10 +7,12 @@ type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-types
 type AsyncApiCallReturnType<T extends Function> = ThenArg<ReturnType<T>>;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const useAsyncApiCall = <T extends Function>(
   func: T,
   setResponseResult = true,

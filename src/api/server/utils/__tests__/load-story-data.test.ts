@@ -11,7 +11,10 @@ jest.mock('fs', () => ({
 }));
 
 jest.mock('jsonfile', () => ({
-  readFile: (file: string, callBack: (err?: string, data?: {}) => void) => {
+  readFile: (
+    file: string,
+    callBack: (err?: string, data?: unknown) => void,
+  ) => {
     if (file.indexOf('story-error.playwright.json') !== -1) {
       callBack('some-error');
     } else if (file.indexOf('no-story-id.playwright.json') !== -1) {

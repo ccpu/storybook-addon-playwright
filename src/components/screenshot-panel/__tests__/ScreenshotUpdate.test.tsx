@@ -56,7 +56,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(imageDiffPreviewDialog).toHaveLength(1);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(imageDiffPreviewDialog.props().titleActions()).toBeDefined();
 
@@ -70,7 +70,7 @@ describe('ScreenshotUpdate', () => {
 
     const footerButtons = imageDiffPreviewDialog
       .props()
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       .footerActions().props.children as { props: { onClick: () => void } }[];
 

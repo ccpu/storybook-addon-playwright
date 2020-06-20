@@ -49,7 +49,7 @@ const ImageDiffPreview: SFC<ImageDiffPreviewProps> = (props) => {
   const error = getImageDiffMessages(imageDiffResult);
 
   const toggleScreenshotDiff = useCallback(
-    (_event: React.ChangeEvent<{}>, newValue: number) => {
+    (_event: React.ChangeEvent<unknown>, newValue: number) => {
       setValue(newValue);
       setShowDiff(!showDiff);
     },

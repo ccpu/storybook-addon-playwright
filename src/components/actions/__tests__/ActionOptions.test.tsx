@@ -66,7 +66,7 @@ describe('ActionOptions', () => {
     wrapper
       .find(ExpansionPanel)
       .props()
-      .onChange({} as React.ChangeEvent<{}>, true);
+      .onChange({} as React.ChangeEvent<unknown>, true);
 
     expect(dispatchMock).toHaveBeenCalledWith([
       { actionId: 'action-id', type: 'toggleActionExpansion' },

@@ -40,7 +40,7 @@ describe('ActionSetListItem', () => {
     wrapper
       .find('.edit-button')
       .props()
-      .onClick({} as React.MouseEvent<{}, MouseEvent>);
+      .onClick({} as React.MouseEvent<unknown, MouseEvent>);
 
     expect(editMock).toHaveBeenCalledTimes(1);
   });

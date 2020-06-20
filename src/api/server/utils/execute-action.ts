@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { StoryAction } from '../../../typings';
 import { Page } from 'playwright-core';
 import { getActionsSchema } from '../services/get-actions-schema';
@@ -27,6 +26,7 @@ export const executeAction = async (page: Page, action: StoryAction) => {
 
   if (pageObjects.length === 1) return;
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return await pageObj.call(pageObjects[pageObjects.length - 2], ...args);
 };

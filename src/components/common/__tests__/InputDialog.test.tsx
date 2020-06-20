@@ -56,7 +56,7 @@ describe('InputDialog', () => {
     wrapper
       .find(Snackbar)
       .props()
-      .onClose({} as React.SyntheticEvent<{}, Event>, 'clickaway');
+      .onClose({} as React.SyntheticEvent<unknown, Event>, 'clickaway');
 
     expect(wrapper.find(Snackbar).props().open).toBe(false);
   });

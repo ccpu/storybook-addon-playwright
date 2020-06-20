@@ -49,7 +49,7 @@ describe('StoryScreenshotPreview', () => {
     const previewDialog = wrapper.find(ScreenshotListPreviewDialog);
     expect(previewDialog.exists()).toBeTruthy();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const footerActions = previewDialog.props().footerActions().props.children;
 
@@ -79,7 +79,7 @@ describe('StoryScreenshotPreview', () => {
     const previewDialog = wrapper.find(ScreenshotListPreviewDialog);
     expect(previewDialog.exists()).toBeTruthy();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const footerActions = previewDialog.props().footerActions().props.children;
 

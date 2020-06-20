@@ -3,7 +3,7 @@ import { ControlTypes, ControlProps } from '../typings';
 import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
 import { getKnobControl } from '@storybook/addon-knobs/dist/components/types';
 
-const convertOptions = (options?: string[]): {} => {
+const convertOptions = (options?: string[]) => {
   return options.reduce((obj, key) => {
     obj[key] = key;
     return obj;

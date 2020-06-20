@@ -159,7 +159,7 @@ describe('ScreenshotListItem', () => {
 
     expect(wrapper.find(ImageDiffMessage)).toHaveLength(1);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(wrapper.find(ImageDiffMessage).props().titleActions().type).toBe(
       ScreenshotInfo,

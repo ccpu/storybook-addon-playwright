@@ -37,8 +37,8 @@ describe('ImageDiff', () => {
   async function clickOnIconButton(
     wrapper: ShallowWrapper<
       unknown,
-      Readonly<{}>,
-      React.Component<{}, {}, unknown>
+      Readonly<unknown>,
+      React.Component<unknown, unknown, unknown>
     >,
   ) {
     await wrapper

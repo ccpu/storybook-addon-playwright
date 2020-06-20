@@ -31,8 +31,8 @@ describe('ScreenshotOptions', () => {
   const clipInputs = (
     wrapper: ShallowWrapper<
       unknown,
-      Readonly<{}>,
-      React.Component<{}, {}, unknown>
+      Readonly<unknown>,
+      React.Component<unknown, unknown, unknown>
     >,
     clipPropName: string,
     val = '1',

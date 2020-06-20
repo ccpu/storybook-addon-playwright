@@ -47,7 +47,7 @@ describe('ScreenshotPreviewDialog', () => {
 
     expect(imageDiffPreviewDialog.exists()).toBeTruthy();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(imageDiffPreviewDialog.props().titleActions()).toBeDefined();
   });

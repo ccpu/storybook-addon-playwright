@@ -1,12 +1,13 @@
 {
   "name": "storybook-addon-playwright",
-  "version": "0.2.1",
+  "version": "0.2.13",
   "description": "An addon to visually test the stories in the multiple browsers whiting storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {
     "node": ">= 12.13 <13"
   },
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "types": "",
   "repository": {
     "type": "git",
@@ -17,7 +18,10 @@
     "README.md",
     "LICENSE",
     "assets",
-    "typings/global.d.ts"
+    "typings/global.d.ts",
+    "register.js",
+    "configs.js",
+    "configs.d.ts"
   ],
   "devDependencies": {
     "@storybook/addon-knobs": "^5.3.19",

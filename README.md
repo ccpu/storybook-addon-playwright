@@ -1,12 +1,12 @@
-# storybook-addons-playwright
+# storybook-addon-playwright
 
-storybook-addons-playwright is an Addon to visually test the storybook stories directly in the storybook environment..
+An addon to visually test the stories in the multiple browsers whiting storybook environment.
 
 > Note that this add-on meant to be used in development environment as it will interact with the file system.
 
 > Addon will not work in storybook static build.
 
-> This package has been tested with react component, therefore it may not work with other frameworks.
+> This package has been tested with react component only, therefore it may not work with other frameworks.
 
 ![addon-screenshot](assets/addon-screenshot.gif)
 
@@ -18,12 +18,12 @@ Being able to make components that feel and look same in all browser were always
 
 Required packages:
 
-- storybook-addons-playwright
+- storybook-addon-playwright
 - playwright-core
 - @storybook/addon-knobs
 
 ```js
-yarn add playwright playwright-core storybook-addons-playwright @storybook/addon-knobs --dev
+yarn add playwright playwright-core storybook-addon-playwright @storybook/addon-knobs --dev
 ```
 
 The `playwright` package is not required if docker used to connect to the browsers.
@@ -57,7 +57,7 @@ import playwright from 'playwright';
 module.exports = {
   addons: [
     '@storybook/addon-knobs/register',
-    'storybook-addons-playwright/register',
+    'storybook-addon-playwright/register',
   ],
 };
 ```
@@ -65,7 +65,7 @@ module.exports = {
 within .storybook/middleware.js:
 
 ```js
-const middleware = require('storybook-addons-playwright/middleware');
+const middleware = require('storybook-addon-playwright/middleware');
 module.exports = middleware;
 ```
 
@@ -117,7 +117,7 @@ module.exports = {
 within jest.setup.js
 
 ```js
-import { toMatchScreenshots } from 'storybook-addons-playwright';
+import { toMatchScreenshots } from 'storybook-addon-playwright';
 
 (async () => {
   let browser = {

@@ -9,7 +9,7 @@
   "main": "dist",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ccpu/storybook-addons-playwright.git"
+    "url": "https://github.com/ccpu/storybook-addon-playwright.git"
   },
   "devDependencies": {
     "@storybook/addon-knobs": "^5.3.18",

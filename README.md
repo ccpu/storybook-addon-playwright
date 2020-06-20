@@ -184,7 +184,7 @@ describe('test screenshots manually', () => {
 
 ## Typescript
 
-If your editor does not recognise the `toMatchScreenshots` matchers, add a global.d.ts file to your project with:
+If your editor does not recognise the `toMatchScreenshots` matcher, add a global.d.ts file to your project with:
 
 ```js
 import 'storybook-addon-playwright';

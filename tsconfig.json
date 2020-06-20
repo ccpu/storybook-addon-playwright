@@ -31,7 +31,9 @@
     "setupTests.ts",
     "test-data/**/*",
     "__test_data__/**/*",
-    "__manual_mocks__/**/*"
+    "__manual_mocks__/**/*",
+    "middleware.d.ts",
+    "configs.d.ts"
   ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

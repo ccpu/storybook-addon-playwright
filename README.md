@@ -1,8 +1,6 @@
 # storybook-addon-playwright
 
-An addon to visually test the stories in the multiple browsers whiting storybook environment.
-
-> An addon to visually test the stories in the multiple browsers whiting storybook environment.
+An addon to visually test the stories in the multiple browsers within storybook environment.
 
 > Addon will not work in storybook static build, but the screenshots can be tested against the static build files.
 

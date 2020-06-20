@@ -80,14 +80,14 @@ describe('SelectorControl', () => {
     const wrapper = mount(<Component />);
     const input = wrapper.find('textarea');
     input.simulate('change', { target: { value: 'div' } });
-    expect(wrapper.find('.selector-error')).toExist();
+    expect(wrapper.find('.selector-error').exists()).toBeTruthy();
   });
 
   it('should validate on blur', () => {
     const wrapper = mount(<Component />);
     const input = wrapper.find('textarea');
     input.simulate('blur');
-    expect(wrapper.find('.selector-error')).toExist();
+    expect(wrapper.find('.selector-error').exists()).toBeTruthy();
   });
 
   it('should not validate positions', () => {
@@ -102,7 +102,7 @@ describe('SelectorControl', () => {
     );
     const input = wrapper.find('input');
     input.simulate('change', { target: { value: 10 } });
-    expect(wrapper.find('.selector-error')).not.toExist();
+    expect(wrapper.find('.selector-error').exists()).toBeFalsy();
   });
 
   it('should handle incoming value', () => {

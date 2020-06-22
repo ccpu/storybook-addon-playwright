@@ -33,7 +33,8 @@
     "__test_data__/**/*",
     "__manual_mocks__/**/*",
     "middleware.d.ts",
-    "configs.d.ts"
+    "configs.d.ts",
+    "stories/**/*"
   ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

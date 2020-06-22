@@ -20,65 +20,73 @@ import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserDevice } from '../../hooks';
 import { lighten, darken } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => {
-  const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
-  const { palette } = theme;
-  return {
-    card: {
-      '& .simplebar-track': {
-        '&:after': {
-          backgroundColor: palette.divider,
-          content: '""',
-          display: 'block',
-          height: '100%',
-          width: '100%',
+const useStyles = makeStyles(
+  (theme) => {
+    const getBackgroundColor =
+      theme.palette.type === 'light' ? lighten : darken;
+    const { palette } = theme;
+    return {
+      card: {
+        '& .simplebar-track': {
+          '&:after': {
+            backgroundColor: palette.divider,
+            content: '""',
+            display: 'block',
+            height: '100%',
+            width: '100%',
+          },
+          backgroundColor: palette.background.paper,
+          visibility: 'visible !important',
         },
-        backgroundColor: palette.background.paper,
+        borderLeft: '10px solid ' + palette.divider,
+        overflow: 'hidden',
+        position: 'relative',
+        width: '100%',
+        zIndex: 10,
       },
-      borderLeft: '10px solid ' + palette.divider,
 
-      overflow: 'hidden',
-      position: 'relative',
-      width: '100%',
-    },
+      container: {
+        alignItems: 'center',
+        height: '100%',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '100%',
+      },
 
-    container: {
-      alignItems: 'center',
-      height: '100%',
-      overflow: 'hidden',
-      position: 'relative',
-      width: '100%',
-    },
-
-    editMode: {
-      '& .simplebar-track': {
+      editMode: {
+        '& .simplebar-track': {
+          backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
+        },
         backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
       },
-      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
-    },
 
-    fakeBorder: {
-      border: '10px solid ' + palette.divider,
-      borderLeft: 0,
-      borderTop: 0,
-      bottom: 0,
-      left: 0,
-      pointerEvents: 'none',
-      position: 'absolute',
-      right: 0,
-      top: 0,
-    },
+      fakeBorder: {
+        border: '10px solid ' + palette.divider,
+        borderLeft: 0,
+        borderTop: 0,
+        bottom: 0,
+        left: 0,
+        pointerEvents: 'none',
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 1,
+      },
 
-    iframe: {
-      width: '100%',
-    },
+      iframe: {
+        width: '100%',
+      },
 
-    image: {
-      marginRight: 12,
-    },
-    imageContainer: {},
-  };
-});
+      image: {
+        marginRight: 12,
+      },
+      imageContainer: {
+        paddingBottom: 10,
+      },
+    };
+  },
+  { name: 'ScreenshotView' },
+);
 
 export interface PreviewItemProps {
   browserType: BrowserTypes | 'storybook';

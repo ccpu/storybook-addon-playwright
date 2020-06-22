@@ -34,7 +34,7 @@ const Loader: SFC<LoaderProps> = memo((props) => {
       style={{ position: position }}
       open={open}
     >
-      <CircularProgress size={progressSize} />
+      {open && <CircularProgress size={progressSize} />}
     </Backdrop>
   );
 });

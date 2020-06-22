@@ -28,11 +28,22 @@ The `playwright` package is not required if [docker](https://github.com/ccpu/pla
 
 ## Configuration
 
-within `.storybook/main.js`:
+within `.storybook/main.js`
 
 ```js
-import playwright from 'playwright';
-import { setConfig } from 'storybook-addon-playwright/configs';
+module.exports = {
+  addons: [
+    '@storybook/addon-knobs/register',
+    'storybook-addon-playwright/register',
+  ],
+};
+```
+
+within `.storybook/main.js` OR `.storybook/middleware.js`:
+
+```js
+const { setConfig } = require('storybook-addon-playwright/configs');
+const playwright = require('playwright');
 
 (async () => {
   let browser = {
@@ -52,13 +63,6 @@ import { setConfig } from 'storybook-addon-playwright/configs';
     },
   });
 })();
-
-module.exports = {
-  addons: [
-    '@storybook/addon-knobs/register',
-    'storybook-addon-playwright/register',
-  ],
-};
 ```
 
 within .storybook/middleware.js:
@@ -114,9 +118,9 @@ module.exports = {
 within jest.setup.js
 
 ```js
-import playwright from 'playwright';
-import { setConfig } from 'storybook-addon-playwright/configs';
-import { toMatchScreenshots } from 'storybook-addon-playwright';
+const playwright = require('playwright');
+const { setConfig } = require('storybook-addon-playwright/configs');
+const { toMatchScreenshots } = require('storybook-addon-playwright');
 
 expect.extend({ toMatchScreenshots });
 
@@ -152,8 +156,6 @@ afterAll(async () => {
 and within the test file:
 
 ```js
-import 'storybook-addon-playwright';
-
 describe('test screenshots', () => {
   it('should pass image diff', async () => {
     await expect('*').toMatchScreenshots();
@@ -164,7 +166,7 @@ describe('test screenshots', () => {
 Or with `toMatchImageSnapshot`:
 
 ```js
-import { getScreenshots } from 'storybook-addon-playwright';
+const { getScreenshots } = require('storybook-addon-playwright');
 
 describe('test screenshots manually', () => {
   it('should pass image diff', async () => {

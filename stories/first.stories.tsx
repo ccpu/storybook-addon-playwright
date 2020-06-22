@@ -1,9 +1,15 @@
 import React from 'react';
-import { Button } from './button';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 export default {
-  component: Button,
-  title: 'Button',
+  title: 'Tippy',
 };
 
-export const Text = () => <Button>Hello Button</Button>;
+export const WithTippy = () => {
+  return (
+    <Tippy content="Tippy.js" placement="bottom-start">
+      <button>HOVER ME</button>
+    </Tippy>
+  );
+};

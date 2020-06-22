@@ -35,3 +35,5 @@ dist/
 
 # Local History for Visual Studio Code
 .history/
+__screenshots__/**/*
+*.playwright.json

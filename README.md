@@ -40,11 +40,9 @@ module.exports = {
 };
 ```
 
-<div>
-<div><span style="color: #ff0000;font-size:18px"><strong>Important Note</strong></span></div>
-<div> </div>
-<div><span style="color: #ff0000;font-size:16px">For addon to be able to save the files next to the story, its important to not having the folder name in the matcher string, for example having this matcher <strong>['../src/**/*.stories.[tj]s']</strong> will cause addon to save the files in a different place. and causing confusion.</span></div>
-</div>
+> **Important Note**
+>
+> For addon to be able to save the files next to the story, its important to not having the folder name in the matcher string, for example having this matcher `['../src/**/*.stories.[tj]s']` will cause addon to save the files in a different place and causing confusion.
 
 within `.storybook/main.js` OR `.storybook/middleware.js`:
 

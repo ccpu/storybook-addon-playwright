@@ -59,7 +59,7 @@ const playwright = require('playwright');
     webkit: await playwright['webkit'].launch(),
   };
   setConfig({
-    storybookEndpoint: `http://localhost:9001/`,
+    storybookEndpoint: `http://localhost:6006/`,
     getPage: async (browserType, device) => {
       const context = await browser[browserType].newContext({ ...device });
       const page = await context.newPage();
@@ -140,7 +140,7 @@ beforeAll(async () => {
     webkit: await playwright['webkit'].launch(),
   };
   setConfig({
-    storybookEndpoint: `http://localhost:9001/`, // or  `./storybook-static`
+    storybookEndpoint: `http://localhost:6006/`, // or  `./storybook-static`
     getPage: async (browserType, device) => {
       const context = await browsers[browserType].newContext({ ...device });
       const page = await context.newPage();

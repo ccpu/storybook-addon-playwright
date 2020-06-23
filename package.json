@@ -64,7 +64,7 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
-    "start:storybook": "start-storybook -p 9001 --ci",
+    "start:storybook": "start-storybook -p 6006 --ci",
     "clean": "rimraf coverage dist/* tmp",
     "build": "npm run clean && tsc -p tsconfig.release.json",
     "watch": "tsc -w -p tsconfig.release.json",

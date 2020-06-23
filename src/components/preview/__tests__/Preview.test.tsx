@@ -7,8 +7,16 @@ import { ScreenshotListView } from '../../screenshot-preview';
 import SplitPane from 'react-split-pane';
 
 jest.mock('../../../hooks/use-addon-state.ts');
+(useAddonState as jest.Mock).mockImplementation(() => ({
+  addonState: {
+    previewPanelEnabled: true,
+  } as AddonState,
+}));
 
 describe('Preview', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('should render', () => {
     const wrapper = shallow(<Preview />);
     expect(wrapper.exists()).toBeTruthy();
@@ -19,15 +27,10 @@ describe('Preview', () => {
       addonState: undefined,
     }));
     const wrapper = shallow(<Preview />);
-    expect(wrapper.type()).toBe(null);
+    expect(wrapper.type()).toBe(React.Fragment);
   });
 
   it('should preview panel horizontal', () => {
-    (useAddonState as jest.Mock).mockImplementationOnce(() => ({
-      addonState: {
-        previewPanelEnabled: true,
-      } as AddonState,
-    }));
     const wrapper = shallow(<Preview />);
 
     expect(wrapper.find(SplitPane).props().split).toBe('horizontal');
@@ -85,7 +88,9 @@ describe('Preview', () => {
     const setAddonState = jest.fn();
 
     (useAddonState as jest.Mock).mockImplementationOnce(() => ({
-      addonState: {},
+      addonState: {
+        previewPanelEnabled: true,
+      },
       setAddonState,
     }));
 
@@ -93,7 +98,10 @@ describe('Preview', () => {
 
     wrapper.find(SplitPane).props().onChange(50);
 
-    expect(setAddonState).toHaveBeenCalledWith({ previewPanelSize: 50 });
+    expect(setAddonState).toHaveBeenCalledWith({
+      previewPanelEnabled: true,
+      previewPanelSize: 50,
+    });
   });
 
   it('should handle closing browser screenshot preview panel', () => {

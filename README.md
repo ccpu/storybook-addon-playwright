@@ -40,7 +40,7 @@ module.exports = {
 };
 ```
 
-> **Important Note**
+> [**Important Note**](#save-problem)
 >
 > For addon to be able to save the files next to the story, its important to not having the folder name in the matcher string, for example having this matcher `['../src/**/*.stories.[tj]s']` will cause addon to save the files in a different place and causing confusion.
 

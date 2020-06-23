@@ -10,6 +10,7 @@ export const useCurrentStoryData = () => {
   const state = useStorybookState();
 
   useEffect(() => {
+    // const data = (api.getCurrentStoryData() as unknown) as StoryData;
     const data = (api.getData(state.storyId) as unknown) as StoryData;
     setData(data);
   }, [api, state]);

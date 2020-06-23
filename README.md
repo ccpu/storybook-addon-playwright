@@ -32,6 +32,7 @@ within `.storybook/main.js`
 
 ```js
 module.exports = {
+  stories: ['../**/*.stories.[tj]sx'],
   addons: [
     '@storybook/addon-knobs/register',
     'storybook-addon-playwright/register',

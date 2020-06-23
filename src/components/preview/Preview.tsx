@@ -106,7 +106,7 @@ const Preview: SFC = (props) => {
     setAddonState({ ...addonState, previewPanelEnabled: false });
   }, [addonState, setAddonState]);
 
-  if (!addonState) return null;
+  if (!addonState || !addonState.previewPanelEnabled) return <>{children}</>;
 
   return (
     <CommonProvider>

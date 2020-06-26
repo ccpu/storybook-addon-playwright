@@ -31,3 +31,4 @@ export * from './use-delete-story-screenshots';
 export * from './use-screenshot-index-change';
 export * from './use-drag-start';
 export * from './use-screenshot-options';
+export * from './use-iframe';

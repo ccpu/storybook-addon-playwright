@@ -1,19 +1,26 @@
 import { useState, useEffect } from 'react';
-import { useStorybookApi, useStorybookState } from '@storybook/api';
+import { useStorybookApi } from '@storybook/api';
 import { StoryData } from '../typings';
+import { getStoryFilePath } from '../utils';
 
 export const useCurrentStoryData = () => {
   const [storyData, setData] = useState<StoryData>();
 
   const api = useStorybookApi();
 
-  const state = useStorybookState();
+  const currentStory = (api.getCurrentStoryData() as unknown) as StoryData;
 
   useEffect(() => {
-    // const data = (api.getCurrentStoryData() as unknown) as StoryData;
-    const data = (api.getData(state.storyId) as unknown) as StoryData;
-    setData(data);
-  }, [api, state]);
+    if (!currentStory) return;
+
+    const data = currentStory;
+    const fileName = getStoryFilePath(data.parameters.fileName, data.id);
+
+    setData({
+      ...data,
+      parameters: { ...data.parameters, fileName: fileName },
+    });
+  }, [currentStory]);
 
   return storyData;
 };

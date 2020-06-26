@@ -7,6 +7,7 @@ import sum from 'hash-sum';
 import { useCurrentActions } from './use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { useAsyncApiCall } from './use-async-api-call';
+import { useIframe } from './use-iframe';
 
 export const useScreenshot = (
   browserType: BrowserTypes | 'storybook',
@@ -47,14 +48,23 @@ export const useScreenshot = (
     state.storyId,
   ]);
 
+  const iframe = useIframe();
+
+  const latHotReload =
+    iframe &&
+    ((iframe.contentWindow as unknown) as {
+      __playwright_addon_hot_reload_time__: number;
+    }).__playwright_addon_hot_reload_time__;
+
   useEffect(() => {
-    if (inProgress) return;
+    if (inProgress || !latHotReload) return;
 
     const currentHash = sum({
       currentActions,
       deviceInfo,
       id: state.storyId,
       knobs,
+      latHotReload,
       screenshotOptions,
     });
 
@@ -73,6 +83,7 @@ export const useScreenshot = (
     state.storyId,
     screenshotOptions,
     inProgress,
+    latHotReload,
   ]);
 
   return { error, getSnapshot, loading: inProgress, screenshot: result };

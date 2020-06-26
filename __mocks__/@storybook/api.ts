@@ -46,6 +46,9 @@ export const useStorybookState = jest.fn().mockImplementation(() => {
 
 export const useStorybookApi = jest.fn().mockImplementation(() => ({
   emit: jest.fn(),
+  getCurrentStoryData: () => {
+    return getStoryData();
+  },
   getData: () => {
     return getStoryData();
   },

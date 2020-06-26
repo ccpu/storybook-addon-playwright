@@ -9,6 +9,8 @@ jest.mock('../use-knobs', () => ({
   },
 }));
 
+jest.mock('../../utils/get-iframe.ts');
+
 describe('useScreenshot', () => {
   beforeEach(() => {
     fetch.resetMocks();

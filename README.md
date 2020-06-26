@@ -6,6 +6,8 @@ An addon to visually test the stories in the multiple browsers within storybook 
 
 > This package has been tested with react framework only, therefore it may not work with other frameworks.
 
+> Works with [Component Story Format (CSF)](https://storybook.js.org/docs/formats/component-story-format/) only.
+
 ![addon-screenshot](assets/addon-screenshot.gif)
 
 ## Motivation
@@ -39,11 +41,6 @@ module.exports = {
   ],
 };
 ```
-
-> [**Important Note**](#save-addon-files)
->
-> For addon to be able to save the files next to the story, its important to not having the folder name in the matcher string, for example having this matcher `['../src/**/*.stories.[tj]s']` will cause addon to save the files in a different place and causing confusion.
-> [more...](#save-addon-files)
 
 within `.storybook/main.js` OR `.storybook/middleware.js`:
 
@@ -197,11 +194,3 @@ If your editor does not recognise the `toMatchScreenshots` matcher, add a global
 ```js
 import 'storybook-addon-playwright';
 ```
-
-## TODO
-
-### Save Addon Files
-
-As described earlier, currently its not possible to use `['../src/**/*.stories.[tj]s']` matcher to find the story absolute path, the reason is that story book not returning full path of the story file, instead it will return relative path to the story, as a result full path of story unknown to addon and it will save related files to different place, therefore we need to find a way to get the full path of the story from storybook, current the best solution is to use `['../**/*.stories.[tj]sx']` matcher or use `glob` or `fast-glob` to get all stories absolute path and pass it to storybook.
-
-Starting point `useCurrentStoryData` hook.

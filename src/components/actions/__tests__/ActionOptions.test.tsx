@@ -84,6 +84,7 @@ describe('ActionOptions', () => {
 
     wrapper
       .find(IconButton)
+      .last()
       .props()
       .onClick(({
         preventDefault: jest.fn(),

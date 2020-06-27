@@ -6,7 +6,9 @@ export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
 type PageScreenshotOptions = Parameters<Page['screenshot']>[0];
 
-export type ScreenshotOptions = PageScreenshotOptions;
+export interface ScreenshotOptions extends PageScreenshotOptions {
+  cursor?: boolean;
+}
 
 export interface DeviceDescriptor {
   name: string;

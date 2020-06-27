@@ -1,7 +1,7 @@
 import { GetScreenshotRequest } from '../../typings';
 import { constructStoryUrl } from '../../../utils';
 import { getConfigs } from '../configs';
-import { executeAction } from '../utils';
+import { executeAction, installMouseHelper } from '../utils';
 import { ScreenshotImageData } from '../../../typings';
 
 export const makeScreenshot = async (
@@ -22,7 +22,11 @@ export const makeScreenshot = async (
     throw new Error('Make sure to return an instance of a page from getPage.');
   }
 
-  await page.goto(url);
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+  if (data.options && data.options.cursor) {
+    await installMouseHelper(page);
+  }
 
   if (data.actions) {
     for (let i = 0; i < data.actions.length; i++) {

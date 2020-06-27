@@ -31,7 +31,7 @@ const ScreenshotOptionsPopover: SFC<ScreenshotOptionsProps> = ({
         <ScreenshotOptions options={options} onChange={onChange} />
       </Popover>
 
-      <IconButton onClick={handleClick} active={Boolean(options)}>
+      <IconButton onClick={handleClick}>
         <Tooltip placement="top" title="Screenshot options">
           <SettingIcon />
         </Tooltip>

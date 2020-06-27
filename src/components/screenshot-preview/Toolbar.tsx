@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { IconButton } from '@storybook/components';
 import { BrowserTypes } from '../../typings';
 import CloseOutlined from '@material-ui/icons/CloseOutlined';
@@ -9,6 +9,7 @@ import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
 import { useScreenshotOptions } from '../../hooks';
 import { Tooltip } from '@material-ui/core';
+import NearMeIcon from '@material-ui/icons/NearMe';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -31,6 +32,17 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
 
   const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
 
+  const enableDisableCursor = useCallback(() => {
+    setScreenshotOptions({
+      ...(screenshotOptions ? screenshotOptions : {}),
+      cursor: !screenshotOptions
+        ? true
+        : screenshotOptions.cursor
+        ? undefined
+        : true,
+    });
+  }, [screenshotOptions, setScreenshotOptions]);
+
   return (
     <CommonToolbar border={['top']}>
       <div className="left">
@@ -44,6 +56,22 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
         ))}
       </div>
       <div className="right">
+        <IconButton
+          className="cursor-button"
+          onClick={enableDisableCursor}
+          active={screenshotOptions && screenshotOptions.cursor}
+        >
+          <Tooltip
+            placement="top"
+            title={
+              screenshotOptions && screenshotOptions.cursor
+                ? `Hide cursor`
+                : `Show cursor`
+            }
+          >
+            <NearMeIcon style={{ transform: 'rotate(-80deg)' }} />
+          </Tooltip>
+        </IconButton>
         <IconButton onClick={onRefresh}>
           <Tooltip placement="top" title="Refresh">
             <RefreshSharp />

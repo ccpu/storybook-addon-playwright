@@ -3,9 +3,11 @@ import { getConfigs } from '../../configs';
 import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { mocked } from 'ts-jest/utils';
 import { executeAction } from '../../utils/execute-action';
+import { installMouseHelper } from '../../utils/install-mouse-helper';
 
 jest.mock('../../configs');
 jest.mock('../../utils/execute-action');
+jest.mock('../../utils/install-mouse-helper.ts');
 
 const getConfigsMock = mocked(getConfigs);
 
@@ -102,5 +104,19 @@ describe('makeScreenshot', () => {
       true,
     );
     expect(afterSnapshotMock).toBeCalledTimes(1);
+  });
+
+  it('should install mouse helper', async () => {
+    await makeScreenshot(
+      {
+        browserType: 'chromium',
+        options: {
+          cursor: true,
+        },
+        storyId: 'story-id',
+      },
+      true,
+    );
+    expect(installMouseHelper).toBeCalledTimes(1);
   });
 });

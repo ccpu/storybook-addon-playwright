@@ -12,7 +12,7 @@ const requiredFunc = (path: string) => {
   if (path === './story-same-func.ts') {
     return {
       WithStory: () => {
-        data: true;
+        // data: true;
       },
     };
   }
@@ -25,7 +25,7 @@ const requiredFunc = (path: string) => {
 };
 
 requiredFunc.resolve = (path: string) => {
-  return path === './story.ts' ? 'actual-relative-path' : undefined;
+  return path === './story.ts' ? './stories/story.ts' : undefined;
 };
 
 getIframe.mockImplementation(() => ({

@@ -37,6 +37,7 @@ module.exports = {
   stories: ['../**/*.stories.[tj]sx'],
   addons: [
     '@storybook/addon-knobs/register',
+    'storybook-addon-playwright/preset',
     'storybook-addon-playwright/register',
   ],
 };

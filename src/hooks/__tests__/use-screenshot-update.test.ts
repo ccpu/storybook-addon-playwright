@@ -3,8 +3,21 @@ import { useScreenshotUpdate } from '../use-screenshot-update';
 import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
 import { UpdateScreenshot } from '../../api/typings';
+import mockConsole from 'jest-mock-console';
+
+jest.mock('../../utils/get-iframe.ts');
 
 describe('useScreenshotUpdate', () => {
+  let restoreConsole;
+
+  beforeAll(() => {
+    restoreConsole = mockConsole();
+  });
+
+  afterAll(() => {
+    restoreConsole();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });

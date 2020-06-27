@@ -6,7 +6,7 @@ jest.mock('../../utils/get-iframe.ts');
 describe('getStoryFilePath', () => {
   it('should have filePath', () => {
     expect(getStoryFilePath('./story.ts', 'story-id')).toBe(
-      'actual-relative-path',
+      './stories/story.ts',
     );
   });
 

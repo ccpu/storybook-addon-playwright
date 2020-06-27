@@ -61,7 +61,7 @@ describe('ScreenshotUpdate', () => {
     expect(imageDiffPreviewDialog.props().titleActions()).toBeDefined();
 
     expect(testScreenshotMock).toHaveBeenCalledWith({
-      fileName: './src/stories/story.stories.tsx',
+      fileName: './story.ts',
       hash: 'hash',
       storyId: 'story-id',
     });
@@ -80,7 +80,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
-      fileName: './src/stories/story.stories.tsx',
+      fileName: './story.ts',
       hash: 'hash',
       storyId: 'story-id',
     });
@@ -112,7 +112,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
-      fileName: './src/stories/story.stories.tsx',
+      fileName: './story.ts',
       hash: 'hash',
       storyId: 'story-id',
     });

@@ -4,11 +4,23 @@ import { globalDispatchMock } from '../../../__manual_mocks__/hooks/use-global-s
 import { useSaveScreenshot } from '../use-save-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
+import mockConsole from 'jest-mock-console';
 
+jest.mock('../../utils/get-iframe.ts');
 jest.mock('../use-edit-screenshot');
 const useEditScreenshotMock = mocked(useEditScreenshot);
 
 describe('useSaveScreenshot', () => {
+  let restoreConsole;
+
+  beforeAll(() => {
+    restoreConsole = mockConsole();
+  });
+
+  afterAll(() => {
+    restoreConsole();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -38,7 +50,7 @@ describe('useSaveScreenshot', () => {
         actions: [],
         browserType: 'chromium',
         device: undefined,
-        fileName: './src/stories/story.stories.tsx',
+        fileName: './stories/story.ts',
         hash: 'a48dba58',
         index: undefined,
         options: undefined,

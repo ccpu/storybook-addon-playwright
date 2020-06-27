@@ -2,8 +2,21 @@ import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context
 import { useDeleteScreenshot } from '../use-delete-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
+import mockConsole from 'jest-mock-console';
+
+jest.mock('../../utils/get-iframe.ts');
 
 describe('useDeleteScreenshot', () => {
+  let restoreConsole;
+
+  beforeAll(() => {
+    restoreConsole = mockConsole();
+  });
+
+  afterAll(() => {
+    restoreConsole();
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });

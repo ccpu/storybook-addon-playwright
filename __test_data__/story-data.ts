@@ -10,7 +10,7 @@ export const storyData: StoryData = ({
     component: {
       displayName: 'Component',
     },
-    fileName: './src/stories/story.stories.tsx',
+    fileName: './story.ts',
     framework: 'react',
   },
   parent: 'component',

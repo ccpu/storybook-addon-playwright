@@ -20,8 +20,7 @@ describe('useDeleteStoryScreenshot', () => {
     expect(mockReq).toHaveBeenCalledWith(
       'http://localhost/screenshot/deleteStory',
       {
-        body:
-          '{"fileName":"./src/stories/story.stories.tsx","storyId":"story-id"}',
+        body: '{"fileName":"./story.ts","storyId":"story-id"}',
         headers: {
           Accept: 'application/json, text/plain, */*',
           'Content-Type': 'application/json',

@@ -1,10 +1,7 @@
 import webpack from 'webpack';
 import VirtualModulePlugin from 'webpack-virtual-modules';
 import path from 'path';
-
-const storiesFilename = path.resolve(
-  path.join(__dirname, `generated.playwright-addon.js`),
-);
+import { toRequireContextString } from '@storybook/core/dist/server/preview/to-require-context';
 
 module.exports = {
   addons: [],
@@ -18,7 +15,9 @@ module.exports = {
     return config;
   },
   webpackFinal: async (config: webpack.Configuration, options) => {
-    (config.entry as string[]).push(storiesFilename);
+    const storiesFilename = path.resolve(
+      path.join(options.configDir, `generated.playwright-addon.js`),
+    );
 
     const stories = (await options.presets.apply(
       'stories',
@@ -28,20 +27,16 @@ module.exports = {
 
     config.plugins.push(
       new VirtualModulePlugin({
-        [storiesFilename]: ``,
+        [storiesFilename]: `window.__playwright_addon_required_context__ = [${stories
+          .map(toRequireContextString)
+          .join(
+            ',',
+          )}];window.__playwright_addon_hot_reload_time__ = Date.now();`,
       }),
     );
 
-    config.module.rules.push({
-      exclude: [/node_modules/],
-      test: /\.playwright-addon.js?$/,
-      use: {
-        loader: path.resolve(__dirname, '../dist/loader'),
-        options: {
-          stories: stories,
-        },
-      },
-    });
+    (config.entry as string[]).push(storiesFilename);
+
     return config;
   },
 };

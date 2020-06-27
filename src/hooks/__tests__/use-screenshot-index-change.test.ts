@@ -3,8 +3,22 @@ import { useScreenshotIndexChange } from '../use-screenshot-index-change';
 import fetch from 'jest-fetch-mock';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { SortEnd } from 'react-sortable-hoc';
+import mockConsole from 'jest-mock-console';
+
+jest.mock('../../utils/get-iframe.ts');
+jest.mock('../../store/screenshot/context.tsx');
 
 describe('useScreenshotIndexChange', () => {
+  let restoreConsole;
+
+  beforeAll(() => {
+    restoreConsole = mockConsole();
+  });
+
+  afterAll(() => {
+    restoreConsole();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });

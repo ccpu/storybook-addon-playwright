@@ -6,10 +6,22 @@ import { useScreenshotDispatch } from '../../../store/screenshot/context';
 import { mocked } from 'ts-jest/utils';
 import { ScreenshotListToolbar } from '../ScreenshotListToolbar';
 import { StoryScreenshotPreview } from '../StoryScreenshotPreview';
+import mockConsole from 'jest-mock-console';
 
+jest.mock('../../../utils/get-iframe.ts');
 jest.mock('../../../store/screenshot/context');
 
 describe('ScreenshotPanel', () => {
+  let restoreConsole;
+
+  beforeAll(() => {
+    restoreConsole = mockConsole();
+  });
+
+  afterAll(() => {
+    restoreConsole();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });

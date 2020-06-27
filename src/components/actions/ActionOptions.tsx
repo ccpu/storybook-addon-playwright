@@ -7,6 +7,7 @@ import {
   Typography,
   Chip,
   IconButton,
+  Tooltip,
 } from '@material-ui/core';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../utils';
@@ -14,6 +15,7 @@ import { useActionContext, useActionDispatchContext } from '../../store';
 import { useEditorAction } from '../../hooks';
 import { getActionOptionValue } from './utils';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
+import HelpIcon from '@material-ui/icons/HelpOutline';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -107,7 +109,6 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     },
     [actionId, dispatch],
   );
-
   return (
     <div className={classes.root}>
       <ExpansionPanel
@@ -152,6 +153,17 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
             </div>
           </div>
           <div>
+            <Tooltip
+              title={
+                schema && schema.description
+                  ? schema.description
+                  : 'Not Available!'
+              }
+            >
+              <IconButton size="small">
+                <HelpIcon className={classes.icon} />
+              </IconButton>
+            </Tooltip>
             <IconButton
               size="small"
               color="inherit"

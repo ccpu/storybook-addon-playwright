@@ -12,9 +12,9 @@ async function installMouseHelper(page: Page) {
     styleElement.innerHTML = `
         playwright-mouse-pointer {
             position: absolute;
-            top: 100px;
+            top: -100px;
             z-index: 1000;
-            left: 100px;
+            left: -100px;
             width: 14px;
             height: 14px;
             background: rgba(0, 0, 0, 0.39);

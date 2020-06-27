@@ -69,7 +69,7 @@ const playwright = require('playwright');
 })();
 ```
 
-within .storybook/middleware.js:
+within `.storybook/middleware.js` :
 
 ```js
 const middleware = require('storybook-addon-playwright/middleware');
@@ -111,7 +111,7 @@ The screenshots are saved in the folder named `__screenshots__` under the story 
 
 Screenshots saved with the addon can also be tested with the test framework like jest. to do so configure the jest as follow:
 
-add setup file to jest.config.js
+add setup file to `jest.config.js`
 
 ```js
 module.exports = {
@@ -119,7 +119,7 @@ module.exports = {
 };
 ```
 
-within jest.setup.js
+within `jest.setup.js`
 
 ```js
 const playwright = require('playwright');

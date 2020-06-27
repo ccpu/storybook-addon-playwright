@@ -1,6 +1,6 @@
 import { useGlobalState } from './use-global-state';
 import { ScreenshotData, BrowserTypes } from '../typings';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useStorybookApi } from '@storybook/api';
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
@@ -25,6 +25,8 @@ export const useEditScreenshot = () => {
   const { loadSetting } = useLoadScreenshotSettings();
 
   const { dispatch } = useGlobalActionDispatch();
+
+  const unmounted = useRef<boolean>(false);
 
   const api = useStorybookApi();
 
@@ -67,12 +69,16 @@ export const useEditScreenshot = () => {
   );
 
   useEffect(() => {
-    if (!editScreenshotState || !storyData) return;
+    if (!editScreenshotState || !storyData || unmounted.current)
+      return undefined;
 
     if (editScreenshotState.storyId !== storyData.id) {
       clearScreenshotEdit();
-      return;
+      return undefined;
     }
+    return () => {
+      unmounted.current = true;
+    };
   }, [
     clearScreenshotEdit,
     editScreenshotState,

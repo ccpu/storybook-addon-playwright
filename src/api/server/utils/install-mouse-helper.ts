@@ -5,6 +5,7 @@
 import { Page } from 'playwright-core';
 
 async function installMouseHelper(page: Page) {
+  await page.waitForLoadState('load');
   await page.evaluate(() => {
     if (window !== window.parent) return;
     const box = document.createElement('playwright-mouse-pointer');

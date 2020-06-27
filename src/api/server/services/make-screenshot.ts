@@ -22,7 +22,7 @@ export const makeScreenshot = async (
     throw new Error('Make sure to return an instance of a page from getPage.');
   }
 
-  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  await page.goto(url);
 
   if (data.options && data.options.cursor) {
     await installMouseHelper(page);

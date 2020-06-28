@@ -195,6 +195,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
       }
     }
   }, [browserType, handleSave, inProgress, savingWithTitle]);
+
   return (
     <div
       className={clsx(classes.card, {

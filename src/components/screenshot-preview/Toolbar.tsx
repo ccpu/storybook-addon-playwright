@@ -18,6 +18,7 @@ export interface ToolbarProps {
   onCLose: () => void;
   onRefresh: () => void;
   onSave?: () => void;
+  isVertical: boolean;
 }
 
 const Toolbar: SFC<ToolbarProps> = (props) => {
@@ -27,6 +28,7 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
     activeBrowsers,
     onCLose,
     onRefresh,
+    isVertical,
     onSave,
   } = props;
 
@@ -44,7 +46,7 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
   }, [screenshotOptions, setScreenshotOptions]);
 
   return (
-    <CommonToolbar border={['top']}>
+    <CommonToolbar border={isVertical ? undefined : ['top']}>
       <div className="left">
         {browserTypes.map((browserType) => (
           <BrowserIconButton

@@ -13,8 +13,10 @@ jest.mock('react', () => ({
 
 describe('Snackbar', () => {
   beforeEach(() => {
+    window.__visible_snackbar_messages__ = {};
     jest.clearAllMocks();
   });
+
   it('should render', () => {
     const wrapper = shallow(<Snackbar onClose={jest.fn()} />);
     expect(wrapper.type()).toBeNull();
@@ -118,5 +120,21 @@ describe('Snackbar', () => {
       .props()
       .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
     expect(closeSnackbar).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not show duplicates when rerender', () => {
+    const wrapper = shallow(
+      <Snackbar onClose={jest.fn()} open={true} message="foo" />,
+    );
+
+    expect(window.__visible_snackbar_messages__).toStrictEqual({
+      '3bf61d4c': true,
+    });
+
+    wrapper.setProps({ closeIcon: false });
+
+    expect(window.__visible_snackbar_messages__).toStrictEqual({
+      '3bf61d4c': true,
+    });
   });
 });

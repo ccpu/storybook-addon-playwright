@@ -9,4 +9,7 @@ declare global {
       toMatchScreenshots(options?: MatchImageSnapshotOptions): R;
     }
   }
+  interface Window {
+    __visible_snackbar_messages__: { [message: string]: boolean };
+  }
 }

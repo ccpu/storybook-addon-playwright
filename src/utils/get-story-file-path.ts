@@ -10,9 +10,16 @@ interface RequiredContext {
 }
 
 export function getStoryFilePath(path: string, storyId: string) {
-  const iframeWindow = (getIframe()
-    .contentWindow as unknown) as RequiredContext;
+  const iframe = getIframe();
+
+  if (!iframe) return;
+
+  const iframeWindow = (iframe.contentWindow as unknown) as RequiredContext;
   const requiredContext = iframeWindow.__playwright_addon_required_context__;
+
+  if (!requiredContext) {
+    return undefined;
+  }
 
   const storyFunc = getStoryFunction(storyId);
 

@@ -10,6 +10,10 @@ jest.mock('../use-load-screenshot-settings');
 const useCurrentStoryDataMock = mocked(useCurrentStoryData);
 
 describe('useEditScreenshot', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should set edit state', () => {
     const { result } = renderHook(() => useEditScreenshot());
 

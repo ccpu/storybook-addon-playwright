@@ -36,8 +36,10 @@ export const useEditScreenshot = () => {
       storyId: storyData.id,
       type: 'deleteActionSet',
     });
-    setEditScreenshotState(undefined);
     api.emit(RESET);
+    if (!unmounted.current) {
+      setEditScreenshotState(undefined);
+    }
   }, [api, dispatch, editScreenshotState, setEditScreenshotState, storyData]);
 
   const editScreenshot = useCallback(
@@ -69,16 +71,18 @@ export const useEditScreenshot = () => {
   );
 
   useEffect(() => {
-    if (!editScreenshotState || !storyData || unmounted.current)
-      return undefined;
+    return () => {
+      unmounted.current = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!editScreenshotState || !storyData) return undefined;
 
     if (editScreenshotState.storyId !== storyData.id) {
       clearScreenshotEdit();
       return undefined;
     }
-    return () => {
-      unmounted.current = true;
-    };
   }, [
     clearScreenshotEdit,
     editScreenshotState,

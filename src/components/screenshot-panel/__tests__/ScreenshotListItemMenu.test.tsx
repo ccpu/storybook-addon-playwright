@@ -3,14 +3,11 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import EditIcon from '@material-ui/icons/Edit';
-import { useEditScreenshot } from '../../../hooks/use-edit-screenshot';
 import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
 import { ScreenshotUpdate } from '../ScreenshotUpdate';
 import Compare from '@material-ui/icons/Compare';
 import { ScreenshotDelete } from '../ScreenshotDelete';
 import { ScreenshotInfo } from '../ScreenshotInfo';
-
-jest.mock('../../../hooks/use-edit-screenshot');
 
 describe('ScreenshotListItemMenu', () => {
   it('should render', () => {
@@ -28,16 +25,11 @@ describe('ScreenshotListItemMenu', () => {
 
   it('should have edit icon', () => {
     const editMock = jest.fn();
-    (useEditScreenshot as jest.Mock).mockImplementationOnce(() => {
-      return {
-        clearScreenshotEdit: jest.fn(),
-        editScreenshot: editMock,
-      };
-    });
 
     const wrapper = shallow(
       <ScreenshotListItemMenu
         screenshot={getScreenshotDate()}
+        onEditClick={editMock}
         enableEditScreenshot
       />,
     );
@@ -54,17 +46,12 @@ describe('ScreenshotListItemMenu', () => {
   });
 
   it('should render load screenshot setting into storybook icon', () => {
-    const funcMock = jest.fn();
-    (useEditScreenshot as jest.Mock).mockImplementationOnce(() => {
-      return {
-        clearScreenshotEdit: jest.fn(),
-        loadSetting: funcMock,
-      };
-    });
+    const editMock = jest.fn();
 
     const wrapper = shallow(
       <ScreenshotListItemMenu
         screenshot={getScreenshotDate()}
+        onLoadSettingClick={editMock}
         enableLoadSetting
       />,
     );
@@ -77,7 +64,7 @@ describe('ScreenshotListItemMenu', () => {
       .props()
       .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
 
-    expect(funcMock).toHaveBeenCalledTimes(1);
+    expect(editMock).toHaveBeenCalledTimes(1);
   });
 
   it('should render update component', () => {

@@ -15,7 +15,11 @@ import {
 } from './ScreenshotListItemMenu';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
-import { useScreenshotImageDiff, useDragStart } from '../../hooks';
+import {
+  useScreenshotImageDiff,
+  useDragStart,
+  useEditScreenshot,
+} from '../../hooks';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../api/typings';
@@ -147,12 +151,31 @@ function ScreenshotListItem({
     }
   }, [onClick, screenshot, showPreview, showPreviewOnClick]);
 
+  const {
+    editScreenshot,
+    loadSetting,
+    editScreenshotState,
+  } = useEditScreenshot();
+
+  const handleEdit = useCallback(() => editScreenshot(screenshot), [
+    editScreenshot,
+    screenshot,
+  ]);
+
+  const handleLoadSetting = useCallback(() => {
+    loadSetting(screenshot);
+  }, [loadSetting, screenshot]);
+
   return (
     <ListItemWrapper
       onClick={toggleSelectedItem}
       title={screenshot.title}
       draggable={draggable}
-      selected={selected}
+      selected={
+        selected ||
+        (editScreenshotState &&
+          editScreenshotState.screenshotData.hash === screenshot.hash)
+      }
       tooltip={screenshot.title}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -205,6 +228,9 @@ function ScreenshotListItem({
         onHide={handleMouseLeave}
         onRunImageDiff={handleRunDiffTest}
         imageDiffResult={imageDiffResult}
+        onEditClick={handleEdit}
+        onLoadSettingClick={handleLoadSetting}
+        isEditing={Boolean(editScreenshotState)}
         {...rest}
       />
 

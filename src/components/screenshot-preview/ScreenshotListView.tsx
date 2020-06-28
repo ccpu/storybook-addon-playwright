@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     height: '100%',
   },
+  vertical: {
+    borderLeft: '1px solid ' + theme.palette.divider,
+  },
 }));
 
 interface Props {
@@ -130,7 +133,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
   );
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, { [classes.vertical]: column === 1 })}>
       <Toolbar
         browserTypes={browserTypes}
         activeBrowsers={activeBrowsers}
@@ -138,6 +141,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
         onCLose={onClose}
         onRefresh={handleRefresh}
         onSave={toggleTitleDialog}
+        isVertical={column === 1}
       />
       <div className={classes.preview}>
         {activeBrowsers && activeBrowsers.length > 0 && (

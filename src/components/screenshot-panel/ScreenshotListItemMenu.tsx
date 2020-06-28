@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useState, forwardRef, Ref, SFC } from 'react';
+import React, { useState, forwardRef, Ref, SFC } from 'react';
 import { IconButton } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
 import { Loader } from '../common';
 import { ScreenshotData } from '../../typings';
-import { useEditScreenshot } from '../../hooks';
 import EditIcon from '@material-ui/icons/Edit';
 import { ScreenshotUpdate } from './ScreenshotUpdate';
 import { ScreenshotInfo } from './ScreenshotInfo';
@@ -28,7 +27,6 @@ const useStyles = makeStyles(
           right: 0,
           top: 0,
         },
-
         display: 'none',
         position: 'absolute',
         right: 25,
@@ -53,6 +51,9 @@ export interface ScreenshotListItemMenuProps {
   onRunImageDiff?: () => void;
   imageDiffResult?: ImageDiffResult;
   openUpdateDialog?: boolean;
+  onEditClick?: () => void;
+  onLoadSettingClick?: () => void;
+  isEditing?: boolean;
 }
 
 const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
@@ -68,22 +69,15 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
       onHide,
       onRunImageDiff,
       imageDiffResult,
+      onLoadSettingClick,
+      onEditClick,
+      isEditing,
     },
     ref: Ref<HTMLDivElement>,
   ) => {
     const [working, setWorking] = useState(false);
-    const { editScreenshot, loadSetting } = useEditScreenshot();
 
     const classes = useStyles();
-
-    const handleEdit = useCallback(() => editScreenshot(screenshot), [
-      editScreenshot,
-      screenshot,
-    ]);
-
-    const handleLoadSetting = useCallback(() => {
-      loadSetting(screenshot);
-    }, [loadSetting, screenshot]);
 
     return (
       <>
@@ -92,9 +86,9 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
           ref={ref}
           className={clsx(classes.menu, { [classes.visible]: show })}
         >
-          {enableEditScreenshot && (
+          {!isEditing && enableEditScreenshot && (
             <IconButton
-              onClick={handleEdit}
+              onClick={onEditClick}
               size="small"
               title="Edit screenshot"
             >
@@ -104,7 +98,7 @@ const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
 
           {enableLoadSetting && (
             <IconButton
-              onClick={handleLoadSetting}
+              onClick={onLoadSettingClick}
               size="small"
               title="Load screenshot settings"
             >

@@ -12,8 +12,21 @@ import { ScreenshotListItemMenu } from '../ScreenshotListItemMenu';
 import { useScreenshotImageDiff } from './../../../hooks/use-screenshot-imageDiff';
 import { ScreenshotPreviewDialog } from '../ScreenshotPreviewDialog';
 import { ScreenshotInfo } from '../ScreenshotInfo';
+import { useEditScreenshot } from '../../../hooks/use-edit-screenshot';
 
 jest.mock('../../../hooks/use-screenshot-imageDiff');
+jest.mock('../../../hooks/use-edit-screenshot');
+
+const loadSettingMock = jest.fn();
+const editMock = jest.fn();
+
+(useEditScreenshot as jest.Mock).mockImplementation(() => {
+  return {
+    clearScreenshotEdit: jest.fn(),
+    editScreenshot: editMock,
+    loadSetting: loadSettingMock,
+  };
+});
 
 describe('ScreenshotListItem', () => {
   beforeEach(() => {
@@ -191,5 +204,43 @@ describe('ScreenshotListItem', () => {
     expect(wrapper.find(ScreenshotPreviewDialog)).toHaveLength(1);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should handle edit screenshot', () => {
+    const wrapper = shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        showPreviewOnClick
+      />,
+    );
+
+    wrapper.find(ScreenshotListItemMenu).props().onEditClick();
+
+    expect(editMock).toHaveBeenCalledWith({
+      browserType: 'chromium',
+      hash: 'hash',
+      title: 'title',
+    });
+  });
+
+  it('should handle load screenshot settings', () => {
+    const wrapper = shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        showPreviewOnClick
+      />,
+    );
+
+    wrapper.find(ScreenshotListItemMenu).props().onLoadSettingClick();
+
+    expect(loadSettingMock).toHaveBeenCalledWith({
+      browserType: 'chromium',
+      hash: 'hash',
+      title: 'title',
+    });
   });
 });

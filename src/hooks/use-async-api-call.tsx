@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, SFC } from 'react';
+import { useState, useCallback, useRef, SFC, useEffect } from 'react';
 import { Snackbar, SnackbarProps } from '../components';
 import React from 'react';
 import { Button } from '@material-ui/core';
@@ -105,6 +105,13 @@ export const useAsyncApiCall = <T extends Function>(
     },
     [clearResult, success],
   );
+
+  useEffect(() => {
+    return () => {
+      clearResult();
+      clearError();
+    };
+  }, [clearError, clearResult]);
 
   return {
     ErrorSnackbar,

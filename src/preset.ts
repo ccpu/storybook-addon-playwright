@@ -21,7 +21,9 @@ module.exports = {
     )) as string[];
 
     const virtualModulePlugins = config.plugins.filter(
-      (x) => x instanceof VirtualModulePlugin,
+      (x) =>
+        ((x as unknown) as { _staticModules: { [key: string]: string } })
+          ._staticModules,
     );
 
     config.plugins = config.plugins.filter(

@@ -79,7 +79,9 @@ module.exports = middleware;
 ## How it works
 
 This add-on is basically an interface between playwright and storybook stories.
-Add-on executes user instruction on the page provided in configuration file. It will save the user instruction in a json file saved next to the story file.
+Add-on executes user instruction on the page provided in configuration.
+
+Instructions created by user will save in a json file next to the story file. therefore its available for the next load.
 
 This add-on consist of there parts:
 
@@ -106,6 +108,102 @@ The preview panel displays the latest screenshots taken by the playwright, it ca
 Here you can save and change the screenshots settings such as with, height etc.
 
 The screenshots are saved in the folder named `__screenshots__` under the story folder.
+
+## Add or extend playwright page methods
+
+To add or extend the playwright method, the following properties are available in the `setConfig` method:
+
+- customActionSchema
+- pageMethods
+
+### customActionSchema
+
+This property enables developer to add a new method to the playwright page. every entries in the `customActionSchema` property will appear in the 'Add Actions' menu under the `Actions` panel.
+
+> This property follows the [json-schema]('http://json-schema.org/') rules with one additional property named `parameters`, therefore clear understanding of `json-schema` required.
+
+Here is an example to add a box to the page:
+
+```js
+//async function addBox(this: Page, position: { x: number; y: number })
+async function addBox(position) {
+  await this.evaluate((pos) => {
+    if (!pos) return;
+    const div = document.createElement('div');
+    div.style.backgroundColor = '#009EEA';
+    div.style.width = '200px';
+    div.style.height = '200px';
+    div.style.position = 'absolute';
+    div.style.top = pos.y + 'px';
+    div.style.left = pos.x + 'px';
+    document.body.append(div);
+  }, position);
+}
+
+(async () => {
+  let browser = {
+    chromium: await playwright['chromium'].launch(),
+    firefox: await playwright['firefox'].launch(),
+    webkit: await playwright['webkit'].launch(),
+  };
+  setConfig({
+    storybookEndpoint: `http://localhost:6006/`,
+    getPage: async (browserType, device) => {
+      const context = await browser[browserType].newContext({ ...device });
+      const page = await context.newPage();
+      page.addBox = addBox;
+      return page;
+    },
+    afterScreenshot: async (page) => {
+      await page.close();
+    },
+    customActionSchema: {
+      addBox: {
+        type: 'promise',
+        parameters: {
+          position: {
+            type: 'object',
+            properties: {
+              x: {
+                type: 'number',
+              },
+              y: {
+                type: 'number',
+              },
+            },
+            required: ['x', 'y'],
+          },
+        },
+      },
+    },
+  });
+})();
+```
+
+### pageMethods
+
+The `pageMethods` property enables developer to add existing playwright methods to the 'Add Actions' menu under the `Actions` panel.
+
+Currently following methods are available:
+
+```js
+  'click',
+  'dblclick',
+  'fill',
+  'focus',
+  'hover',
+  'hover',
+  'press',
+  'waitForSelector',
+  'waitForTimeout',
+  'mouse.click',
+  'mouse.dblclick',
+  'mouse.down',
+  'mouse.move',
+  'mouse.up',
+```
+
+> Note that the method must have interactive characteristic, for example `evaluate` method can not be used with this addon because its not directly interacting with the page like above methods do.
 
 ## Testing
 

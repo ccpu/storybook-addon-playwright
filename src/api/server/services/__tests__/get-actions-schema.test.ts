@@ -1,6 +1,8 @@
-import { getActionsSchema } from '../get-actions-schema';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { getActionsSchema, _schema } from '../get-actions-schema';
 import * as schemaGenerator from '../get-actions-schema';
 import path from 'path';
+import { getConfigs } from '../../configs';
 
 jest.mock('../../configs');
 
@@ -30,5 +32,18 @@ describe('getActionsSchema', () => {
     const schema = getActionsSchema(file);
 
     expect(schema['clickSelector']).toBeDefined();
+  });
+
+  it('should add page method from config', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    _schema = undefined;
+    (getConfigs as jest.Mock).mockImplementationOnce(() => ({
+      pageMethods: ['isClosed'],
+    }));
+
+    const schema = getActionsSchema(file);
+
+    expect(schema['isClosed']).toBeDefined();
   });
 });

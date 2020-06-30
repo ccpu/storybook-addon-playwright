@@ -10,13 +10,11 @@ import { Mouse } from 'playwright-core';
 import { join } from 'path';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
-import { PlaywrightPage } from './typings/playwright-page';
+import { PageMethodKeys } from './typings/playwright-page';
 
 type MouseKeys = keyof Mouse;
 
-type PageKeys = keyof PlaywrightPage;
-
-const selectedPageKeys: PageKeys[] = [
+const selectedPageKeys: PageMethodKeys[] = [
   'click',
   'dblclick',
   'fill',
@@ -38,15 +36,21 @@ const selectedMouseKeys: MouseKeys[] = [
   'up',
 ];
 
-const selectedKeys = [
+let selectedKeys = [
   ...selectedPageKeys,
   ...selectedMouseKeys.map((x) => 'mouse.' + x),
 ] as string[];
 
-let _schema: ActionSchemaList;
+export let _schema: ActionSchemaList = undefined;
 
 export const generateSchema = (path: string) => {
   const type = 'PlaywrightPage';
+
+  const pageMethods = getConfigs().pageMethods;
+  if (pageMethods) {
+    selectedKeys = [...new Set(selectedKeys.concat(pageMethods))];
+  }
+
   const config: Config = {
     encodeRefs: false,
     expose: 'none',

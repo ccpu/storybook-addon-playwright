@@ -50,7 +50,7 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
     );
   }
 
-  if (result.diffSize) {
+  if (result.diffSize || result.error) {
     return (
       <Snackbar
         message={getImageDiffMessages(result)}

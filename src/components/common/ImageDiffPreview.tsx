@@ -35,9 +35,12 @@ export interface ImageDiffPreviewProps {
 const ImageDiffPreview: SFC<ImageDiffPreviewProps> = (props) => {
   const { imageDiffResult, activeTab } = props;
 
-  const [value, setValue] = React.useState(activeTab === 'imageDiff' ? 1 : 0);
+  const shouldShowDiff =
+    activeTab === 'imageDiff' || imageDiffResult.error !== undefined;
 
-  const [showDiff, setShowDiff] = React.useState(activeTab === 'imageDiff');
+  const [value, setValue] = React.useState(shouldShowDiff ? 1 : 0);
+
+  const [showDiff, setShowDiff] = React.useState(shouldShowDiff);
 
   const classes = useStyles();
 
@@ -73,7 +76,13 @@ const ImageDiffPreview: SFC<ImageDiffPreviewProps> = (props) => {
           <Divider />
         </>
       )}
-      {error && value === 1 && <Alert severity="error">{error}</Alert>}
+      {error && value === 1 && (
+        <Alert severity="error">
+          {error.split('\n').map((x, i) => {
+            return <div key={i}>{x}</div>;
+          })}
+        </Alert>
+      )}
       <div className={classes.preview}>
         <ImagePreview imgSrcString={currentImage} />
       </div>

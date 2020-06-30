@@ -1,13 +1,15 @@
 import React, { SFC, useEffect, useRef, useState } from 'react';
 import { MapInteraction } from 'react-map-interaction';
 import { useKeyPress } from '../../hooks';
+import { DiffDirection } from '../../api/typings/image-diff';
 
 export interface ImagePreviewProps {
   imgSrcString: string;
+  diffDirection?: DiffDirection;
 }
 
 const ImagePreview: SFC<ImagePreviewProps> = (props) => {
-  const { imgSrcString } = props;
+  const { imgSrcString, diffDirection } = props;
   const isPressed = useKeyPress('Control');
   const prevImage = useRef<string>();
   const timer = useRef<number>(0);
@@ -50,9 +52,13 @@ const ImagePreview: SFC<ImagePreviewProps> = (props) => {
                 display: 'inline-block', // size to content
                 transform: transform,
                 transformOrigin: '0 0 ',
+                width: '100%',
               }}
             >
               <img
+                style={{
+                  width: diffDirection === 'horizontal' ? '100%' : undefined,
+                }}
                 src={
                   imgSrcString.startsWith('data:image')
                     ? imgSrcString

@@ -1,5 +1,7 @@
 import { StoryInfo, BrowserTypes } from '../../typings';
 
+export type DiffDirection = 'horizontal' | 'vertical';
+
 export interface ImageDiffResult {
   added?: boolean;
   pass?: boolean;
@@ -20,6 +22,7 @@ export interface ImageDiffResult {
   index?: number;
   selected?: boolean;
   error?: string;
+  diffDirection?: DiffDirection;
 }
 
 export interface DiffImageToScreenShot extends StoryInfo {

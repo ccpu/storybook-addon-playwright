@@ -37,5 +37,7 @@ export const diffImageToScreenshot = (
     fs.rmdirSync(paths.diffDir, { recursive: true });
   }
 
+  result.diffDirection = config.diffDirection;
+
   return result;
 };

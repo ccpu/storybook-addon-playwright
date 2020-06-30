@@ -84,7 +84,10 @@ const ImageDiffPreview: SFC<ImageDiffPreviewProps> = (props) => {
         </Alert>
       )}
       <div className={classes.preview}>
-        <ImagePreview imgSrcString={currentImage} />
+        <ImagePreview
+          imgSrcString={currentImage}
+          diffDirection={imageDiffResult.diffDirection}
+        />
       </div>
     </div>
   );

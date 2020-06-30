@@ -184,6 +184,48 @@ describe('SelectorControl', () => {
     expect(onChangeMock).toHaveBeenCalledWith(10);
   });
 
+  it('should set top position', () => {
+    const wrapper = mount(
+      <Component
+        label="top"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.top"
+        appendValueToTitle={false}
+        value={1}
+      />,
+    );
+
+    const button = wrapper.find('button');
+
+    act(() => {
+      button.props().onClick({} as React.MouseEvent);
+    });
+
+    expect(onChangeMock).toHaveBeenCalledWith(10);
+  });
+
+  it('should set left position', () => {
+    const wrapper = mount(
+      <Component
+        label="left"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.left"
+        appendValueToTitle={false}
+        value={1}
+      />,
+    );
+
+    const button = wrapper.find('button');
+
+    act(() => {
+      button.props().onClick({} as React.MouseEvent);
+    });
+
+    expect(onChangeMock).toHaveBeenCalledWith(10);
+  });
+
   it('should set x y position when isFollowedByPositionProp', () => {
     const wrapper = mount(
       <Component

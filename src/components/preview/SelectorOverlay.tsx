@@ -14,6 +14,14 @@ const useStyles = makeStyles(
         display: 'none',
         pointerEvents: 'none',
       },
+      info: {
+        bottom: 0,
+        color: theme.palette.primary.main,
+        fontSize: 14,
+        left: 2,
+        pointerEvents: 'none',
+        position: 'absolute',
+      },
       overlay: {
         backgroundColor: 'transparent',
         bottom: 0,
@@ -23,13 +31,6 @@ const useStyles = makeStyles(
         right: 0,
         top: 0,
         zIndex: 100,
-      },
-      path: {
-        bottom: 0,
-        color: theme.palette.primary.main,
-        fontSize: 14,
-        left: 2,
-        position: 'absolute',
       },
       preview: {
         border: '1px solid ' + theme.palette.primary.main,
@@ -168,14 +169,12 @@ const SelectorOverlay: SFC<Props> = (props) => {
                 : defaultRect
             }
           />
-          {isSelector ? (
-            <div className={classes.path}>{selectorInfo.selector}</div>
-          ) : (
-            <div className={classes.path}>
-              <div>{`X: ${elX}`}</div>
-              <div>{`Y: ${elY}`}</div>
-            </div>
-          )}
+
+          <div className={classes.info}>
+            <div>{`X: ${elX}`}</div>
+            <div>{`Y: ${elY}`}</div>
+            <div>{selectorInfo.selector}</div>
+          </div>
         </>
       )}
     </div>

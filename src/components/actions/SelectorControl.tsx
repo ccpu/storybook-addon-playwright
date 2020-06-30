@@ -103,7 +103,8 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
             val: data.y,
           });
         } else {
-          handleChange(data[label]);
+          const key = label === 'top' ? 'y' : label === 'left' ? 'x' : label;
+          handleChange(data[key]);
         }
       },
       type: selectorType,

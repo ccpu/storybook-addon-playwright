@@ -41,7 +41,7 @@ describe('diffImageToScreenshot', () => {
   it('should have diff result in vertical', () => {
     const result = diffImageToScreenshot(diffData, new Buffer('image'));
 
-    expect(result).toStrictEqual({ added: true });
+    expect(result).toStrictEqual({ added: true, diffDirection: undefined });
     const data = runDiffImageToSnapshotMock.mock.calls[0][0];
     expect(data.diffDirection).toBe('vertical');
   });
@@ -57,7 +57,7 @@ describe('diffImageToScreenshot', () => {
 
     const result = diffImageToScreenshot(diffData, new Buffer('image'));
 
-    expect(result).toStrictEqual({ added: true });
+    expect(result).toStrictEqual({ added: true, diffDirection: 'horizontal' });
     const data = runDiffImageToSnapshotMock.mock.calls[0][0];
     expect(data.diffDirection).toBe('horizontal');
   });
@@ -71,7 +71,7 @@ describe('diffImageToScreenshot', () => {
 
     const result = diffImageToScreenshot(diffData, new Buffer('image'));
 
-    expect(result).toStrictEqual({ pass: false });
+    expect(result).toStrictEqual({ diffDirection: undefined, pass: false });
 
     expect(spyOnRmdirSyncMock).toHaveBeenCalledTimes(1);
   });

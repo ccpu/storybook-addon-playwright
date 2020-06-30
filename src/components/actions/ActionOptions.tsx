@@ -109,6 +109,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     },
     [actionId, dispatch],
   );
+
   return (
     <div className={classes.root}>
       <ExpansionPanel

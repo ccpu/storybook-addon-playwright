@@ -52,30 +52,69 @@ describe('ActionSchemaProp', () => {
     expect(selector).toHaveLength(1);
   });
 
-  it('should render selector component when action name is x', () => {
+  it('should render selector component when action name is x and type is number', () => {
     const wrapper = shallow(
       <ActionSchemaProp
         actionId="action-id"
         name="x"
         nextPropName=""
-        schema={schema['click']['parameters']['selector']}
+        schema={{ type: 'number' }}
       />,
     );
     const selector = wrapper.find(SelectorControl);
     expect(selector).toHaveLength(1);
   });
 
-  it('should render selector component when action name is y', () => {
+  it('should render selector component when action name is y and type is number', () => {
     const wrapper = shallow(
       <ActionSchemaProp
         actionId="action-id"
         name="y"
         nextPropName=""
-        schema={schema['click']['parameters']['selector']}
+        schema={{ type: 'number' }}
       />,
     );
     const selector = wrapper.find(SelectorControl);
     expect(selector).toHaveLength(1);
+  });
+
+  it('should render selector component when action name is top and type is number', () => {
+    const wrapper = shallow(
+      <ActionSchemaProp
+        actionId="action-id"
+        name="top"
+        nextPropName=""
+        schema={{ type: 'number' }}
+      />,
+    );
+    const selector = wrapper.find(SelectorControl);
+    expect(selector).toHaveLength(1);
+  });
+
+  it('should render selector component when action name is left and type is number', () => {
+    const wrapper = shallow(
+      <ActionSchemaProp
+        actionId="action-id"
+        name="left"
+        nextPropName=""
+        schema={{ type: 'number' }}
+      />,
+    );
+    const selector = wrapper.find(SelectorControl);
+    expect(selector).toHaveLength(1);
+  });
+
+  it('should render selector component when action name is left but type is no number', () => {
+    const wrapper = shallow(
+      <ActionSchemaProp
+        actionId="action-id"
+        name="x"
+        nextPropName=""
+        schema={{ type: 'string' }}
+      />,
+    );
+    const selector = wrapper.find(SelectorControl);
+    expect(selector).toHaveLength(0);
   });
 
   it('should render select control', () => {

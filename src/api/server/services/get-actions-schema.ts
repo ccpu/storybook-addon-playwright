@@ -6,14 +6,15 @@ import {
   Config,
   Definition,
 } from 'ts-to-json';
-import { Page, Mouse } from 'playwright-core';
+import { Mouse } from 'playwright-core';
 import { join } from 'path';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
+import { PlaywrightPage } from './typings/playwright-page';
 
 type MouseKeys = keyof Mouse;
 
-type PageKeys = keyof Page;
+type PageKeys = keyof PlaywrightPage;
 
 const selectedPageKeys: PageKeys[] = [
   'click',
@@ -23,8 +24,10 @@ const selectedPageKeys: PageKeys[] = [
   'hover',
   'hover',
   'press',
+  'scrollSelector',
   'waitForSelector',
   'waitForTimeout',
+  'dragDropSelector',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [
@@ -50,6 +53,7 @@ export const generateSchema = (path: string) => {
     handleUnknownTypes: true,
     includeProps: selectedKeys,
     jsDoc: 'extended',
+    maxDepth: 5,
     path: path,
     skipParseFiles: ['lib.dom.d.ts'],
     skipParseTypes: ['HTMLElementTagNameMap[K]', 'Promise', 'JSHandle'],

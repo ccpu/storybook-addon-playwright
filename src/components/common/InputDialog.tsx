@@ -100,6 +100,7 @@ const InputDialog: SFC<InputDialogProps> = ({
         value={inputValue}
         onChange={handleChange}
         variant="outlined"
+        autoFocus
         label={label}
         error={openSnackbar}
         required

@@ -18,7 +18,7 @@ export interface ToolbarProps {
   onCLose: () => void;
   onRefresh: () => void;
   onSave?: () => void;
-  isVertical: boolean;
+  isVertical?: boolean;
 }
 
 const Toolbar: SFC<ToolbarProps> = (props) => {

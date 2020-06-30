@@ -84,15 +84,19 @@ const SelectorOverlay: SFC<Props> = (props) => {
       if (iframe) {
         const node = iframe.contentWindow.document.elementFromPoint(x, y);
         if (node) {
+          const path = getSelectorPath(node, { minify: true }).replace(
+            'html>body>div:nth-child(3)',
+            'html>body>#root',
+          );
           if (node.tagName === 'HTML') {
             setSelectorInfo({
               rect: defaultRect,
-              selector: getSelectorPath(node),
+              selector: path,
             });
           } else {
             setSelectorInfo({
               rect: node.getBoundingClientRect(),
-              selector: getSelectorPath(node),
+              selector: path,
             });
           }
         } else {

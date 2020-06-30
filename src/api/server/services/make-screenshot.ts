@@ -3,6 +3,7 @@ import { constructStoryUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction, installMouseHelper } from '../utils';
 import { ScreenshotImageData } from '../../../typings';
+import { extendPage } from '@playwright-utils/page';
 
 export const makeScreenshot = async (
   data: GetScreenshotRequest,
@@ -21,6 +22,8 @@ export const makeScreenshot = async (
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');
   }
+
+  extendPage(page);
 
   await page.goto(url);
 

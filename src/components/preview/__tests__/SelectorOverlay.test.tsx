@@ -140,7 +140,7 @@ describe('SelectorOverlay', () => {
     expect(useThrottleFn).toHaveBeenCalled();
     useThrottleFnCallback(10, 10);
 
-    expect(wrapper.find('div').first().text()).toBe('X: 10Y: 10');
+    expect(wrapper.find('div').first().text()).toBe('X: 10Y: 10div');
   });
 
   it('should start path selector and show info', () => {
@@ -150,7 +150,7 @@ describe('SelectorOverlay', () => {
 
     useThrottleFnCallback(10, 10);
 
-    expect(wrapper.find('div').first().text()).toBe('div');
+    expect(wrapper.find('div').first().text()).toBe('X: 10Y: 10div');
   });
 
   it('should set selector data on mouse up', () => {

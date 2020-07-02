@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "removeComments": true
+    "removeComments": false
   },
   "include": ["src/**/*", "typings/**/*"],
   "exclude": [

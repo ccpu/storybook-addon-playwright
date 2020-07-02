@@ -22,7 +22,7 @@ export const diffImageToScreenshot = (
   const result = runDiffImageToSnapshot({
     blur: 0,
     diffDir: paths.diffDir,
-    diffDirection: config.diffDirection ? config.diffDirection : 'vertical',
+    diffDirection: config.diffDirection ? config.diffDirection : 'horizontal',
     failureThreshold: 0,
     failureThresholdType: 'pixel',
     receivedImageBuffer: imageBuffer,

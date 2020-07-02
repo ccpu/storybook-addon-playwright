@@ -52,7 +52,7 @@ const ImagePreview: SFC<ImagePreviewProps> = (props) => {
                 display: 'inline-block', // size to content
                 transform: transform,
                 transformOrigin: '0 0 ',
-                width: '100%',
+                // width: '100%',
               }}
             >
               <img

@@ -36,7 +36,6 @@ async function addBox(position) {
     afterScreenshot: async (page) => {
       await page.close();
     },
-    diffDirection: 'horizontal',
     customActionSchema: {
       addBox: {
         type: 'promise',

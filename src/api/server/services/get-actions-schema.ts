@@ -26,6 +26,8 @@ const selectedPageKeys: PageMethodKeys[] = [
   'waitForSelector',
   'waitForTimeout',
   'dragDropSelector',
+  'takeScreenshot',
+  'takeScreenshotOptions',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [
@@ -58,7 +60,7 @@ export const generateSchema = (path: string) => {
     includeProps: selectedKeys,
     jsDoc: 'extended',
     maxDepth: 5,
-    path: path,
+    path,
     skipParseFiles: ['lib.dom.d.ts'],
     skipParseTypes: ['HTMLElementTagNameMap[K]', 'Promise', 'JSHandle'],
     skipTypeCheck: true,

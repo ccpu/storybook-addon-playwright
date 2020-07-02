@@ -110,11 +110,16 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     [actionId, dispatch],
   );
 
+  const hasParameters =
+    schema && schema.parameters && Object.keys(schema.parameters).length !== 0;
+
   return (
     <div className={classes.root}>
       <ExpansionPanel
         expanded={
-          state.expandedActions && state.expandedActions[actionId] === true
+          state.expandedActions &&
+          state.expandedActions[actionId] === true &&
+          hasParameters
         }
         onChange={handleExpand}
         className={classes.expansionPanel}
@@ -175,9 +180,11 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.detailPanel}>
-          {state.expandedActions && state.expandedActions[actionId] && (
-            <ActionSchemaRenderer schema={schema} actionId={actionId} />
-          )}
+          {state.expandedActions &&
+            state.expandedActions[actionId] &&
+            hasParameters && (
+              <ActionSchemaRenderer schema={schema} actionId={actionId} />
+            )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

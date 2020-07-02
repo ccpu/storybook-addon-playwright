@@ -47,7 +47,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
 
     if (!action) return null;
 
-    const value = getActionOptionValue(action, optionObjectPath);
+    const value = getActionOptionValue(action, optionObjectPath, schema);
     const appendToTile =
       action.subtitleItems && action.subtitleItems.includes(optionObjectPath);
 

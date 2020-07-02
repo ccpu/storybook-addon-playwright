@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-playwright",
-  "version": "0.3.22",
+  "version": "0.4.0",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {
@@ -56,6 +56,7 @@
     "@types/jest-image-snapshot": "^3.1.0",
     "@types/jsonfile": "^6.0.0",
     "@types/node": "^14.0.13",
+    "@types/sharp": "^0.25.0",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
     "babel-loader": "^8.1.0",
@@ -111,6 +112,7 @@
     "hash-sum": "^2.0.0",
     "ip": "^1.1.5",
     "jest-image-snapshot": "^4.0.2",
+    "join-images": "^0.1.8",
     "jsonfile": "^6.0.1",
     "lodash": "^4.17.15",
     "nanoid": "^3.1.10",
@@ -124,6 +126,7 @@
     "react-split-pane": "^0.1.91",
     "react-use": "^15.3.0",
     "reinspect": "^1.1.0",
+    "sharp": "^0.25.4",
     "tinycolor2": "^1.4.1",
     "ts-to-json": "^0.65.3",
     "webpack-virtual-modules": "^0.2.2"

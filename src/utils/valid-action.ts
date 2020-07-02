@@ -16,7 +16,7 @@ export const validAction = (
 ): ValidationResult => {
   const actionSchema = getActionSchema(schema, action.name);
 
-  if (!actionSchema.required) return {};
+  if (!actionSchema.required || !actionSchema.required.length) return {};
 
   if (!action.args) {
     return { required: actionSchema.required };

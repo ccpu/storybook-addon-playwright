@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { Page } from 'playwright-core';
 import { NewPageFunc } from '@playwright-utils/page/src/typings/page';
-import { Blend } from 'sharp';
 import { Options } from 'join-images/lib/typings';
 
 export type MergeType = 'overlay' | 'stitch';
@@ -24,7 +23,34 @@ export interface TakeScreenshotOverlayOptions {
    *  how to blend this image with the image below. (optional)
    * @default "multiply"
    */
-  blend?: Blend;
+  blend?:
+    | 'clear'
+    | 'source'
+    | 'over'
+    | 'in'
+    | 'out'
+    | 'atop'
+    | 'dest'
+    | 'dest-over'
+    | 'dest-in'
+    | 'dest-out'
+    | 'dest-atop'
+    | 'xor'
+    | 'add'
+    | 'saturate'
+    | 'multiply'
+    | 'screen'
+    | 'overlay'
+    | 'darken'
+    | 'lighten'
+    | 'colour-dodge'
+    | 'colour-dodge'
+    | 'colour-burn'
+    | 'colour-burn'
+    | 'hard-light'
+    | 'soft-light'
+    | 'difference'
+    | 'exclusion';
 }
 
 export interface PlaywrightPage extends Page, NewPageFunc {

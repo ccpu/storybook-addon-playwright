@@ -1,11 +1,23 @@
 /* istanbul ignore file */
 import { Page } from 'playwright-core';
 import { NewPageFunc } from '@playwright-utils/page/src/typings/page';
-import { Options } from 'join-images/lib/typings';
 
 export type MergeType = 'overlay' | 'stitch';
+export interface TakeScreenshotStitchOptions {
+  /**
+   * Direction of the merged image.
+   */
+  direction?: 'vertical' | 'horizontal';
+  /**
+   * Aligning of given images. If the images are not all the same size, images will be sorted to largest image. Possible values are `start`, `center` and `end`. Default is `start`.
+   */
 
-export interface TakeScreenshotStitchOptions extends Options {
+  align?: 'start' | 'center' | 'end' | 'start';
+  /**
+   * Offset in pixels between each image. Default is `0`
+   */
+
+  offset?: number;
   /**
    *  Set the margin of image, considered as standard css shorthand properties (e.g. '40 40 0 10')
    * @default "0 0 0 0"
@@ -13,14 +25,13 @@ export interface TakeScreenshotStitchOptions extends Options {
   margin?: string;
   /**
    *  Set the background color of image.
-   *  @default "0 0 0 0"
    */
-  color: string;
+  color?: string;
 }
 
 export interface TakeScreenshotOverlayOptions {
   /**
-   *  how to blend this image with the image below. (optional)
+   *  How to blend this image with the image below. (optional)
    * @default "multiply"
    */
   blend?:

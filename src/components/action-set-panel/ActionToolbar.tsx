@@ -1,12 +1,8 @@
 import React, { SFC, useCallback } from 'react';
 import { ActionMenu } from './ActionMenu';
-import { IconButton } from '@storybook/components';
-import AddIcon from '@material-ui/icons/AddSharp';
-import CloseIcon from '@material-ui/icons/CloseSharp';
-import SaveIcon from '@material-ui/icons/SaveSharp';
+
 import { Toolbar, ConfirmationPopover, InputDialog } from '../common';
 import { makeStyles } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/EditSharp';
 
 const useStyles = makeStyles(
   () => {
@@ -33,7 +29,7 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
   const {
     onAddAction,
     onClose,
-    onSave,
+
     description,
     onDescriptionChange,
   } = props;
@@ -71,10 +67,6 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
     [onAddAction],
   );
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setMenuAnchorEl(event.currentTarget);
-  };
-
   const handleMenuClose = (): void => {
     setMenuAnchorEl(null);
   };
@@ -100,7 +92,7 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
           </div>
         </div>
         <div className="right">
-          <IconButton
+          {/* <IconButton
             className="edit-desc"
             onClick={toggleEditDescription}
             title="Edit description"
@@ -127,7 +119,7 @@ const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
             onClick={toggleConfirmAnchorEl}
           >
             <CloseIcon />
-          </IconButton>
+          </IconButton> */}
         </div>
       </Toolbar>
 

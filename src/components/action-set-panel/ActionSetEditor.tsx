@@ -1,16 +1,10 @@
-import React, { SFC, useCallback, useEffect, useState } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { ActionList } from '../actions/ActionList';
-import { StoryAction, ActionSet } from '../../typings';
-import {
-  useActionDispatchContext,
-  useActionContext,
-} from '../../store/actions';
-import { ActionToolbar } from '../actions/ActionToolbar';
-import { nanoid } from 'nanoid';
-import { validateActionList, ActionListValidationResult } from '../../utils';
-import { Snackbar, Loader } from '../common';
+import { ActionSet } from '../../typings';
+import { Snackbar, Loader, ListItemWrapper, InputDialog } from '../common';
 import { makeStyles } from '@material-ui/core';
-import { useActionSchemaLoader } from '../../hooks';
+import { useActionSchemaLoader, useActionSetEditor } from '../../hooks';
+import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 
 const useStyles = makeStyles(
   () => {
@@ -30,107 +24,99 @@ const useStyles = makeStyles(
 );
 
 interface Props {
-  onClose: () => void;
-  onSaved: (actionSet: ActionSet) => void;
+  // onClose: () => void;
+  // onSaved: (actionSet: ActionSet) => void;
+  actionSet: ActionSet;
 }
 
-const ActionSetEditor: SFC<Props> = ({ onClose, onSaved }) => {
-  const dispatch = useActionDispatchContext();
+const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
+  const [editDescription, setEditDescription] = React.useState(false);
+
+  const {
+    handleAddAction,
+    handleDescriptionChange,
+    handleSave,
+    handleValidationSnackbarClose,
+    validationResult,
+  } = useActionSetEditor();
 
   const classes = useStyles();
 
   const { loading } = useActionSchemaLoader();
 
-  const state = useActionContext();
+  const toggleEditDescription = useCallback(() => {
+    setEditDescription(!editDescription);
+  }, [editDescription]);
 
-  const [validationResult, setValidationResult] = useState<
-    ActionListValidationResult[]
-  >();
-
-  const handleAddAction = useCallback(
-    (actionName: string) => {
-      const actionId = nanoid(10);
-      const newAction: StoryAction = {
-        id: actionId,
-        name: actionName,
-      };
-      dispatch({ type: 'clearActionExpansion' });
-      dispatch({ action: newAction, type: 'addActionSetAction' });
-      dispatch({ actionId, type: 'toggleActionExpansion' });
+  const saveDescription = useCallback(
+    (desc: string) => {
+      handleDescriptionChange(desc);
+      setEditDescription(!editDescription);
     },
-    [dispatch],
+    [editDescription, handleDescriptionChange],
   );
 
-  useEffect(() => {
-    dispatch({ type: 'clearActionExpansion' });
-  }, [dispatch]);
-
-  const handleSave = useCallback(() => {
-    const validateResult = validateActionList(
-      state.actionSchema,
-      state.editorActionSet.actions,
-    );
-
-    if (validateResult) {
-      setValidationResult(validateResult);
-    } else {
-      onSaved(state.editorActionSet);
-    }
-  }, [onSaved, state.actionSchema, state.editorActionSet]);
-
-  const handleValidationSnackbarClose = useCallback(() => {
-    setValidationResult(undefined);
+  const handleClose = useCallback(() => {
+    throw new Error('Method not implemented.');
   }, []);
 
-  const handleDescriptionChange = useCallback(
-    (description: string) => {
-      dispatch({ description, type: 'setEditorActionDescription' });
-    },
-    [dispatch],
-  );
-
   return (
-    <div className={classes.root}>
-      <ActionToolbar
-        onAddAction={handleAddAction}
-        onClose={onClose}
-        onSave={handleSave}
-        description={state.editorActionSet && state.editorActionSet.description}
-        onDescriptionChange={handleDescriptionChange}
-      />
+    <ListItemWrapper
+      tooltip={actionSet.title}
+      title={actionSet.title}
+      draggable={true}
+      icons={
+        <ActionSetEditorIcons
+          onAddAction={handleAddAction}
+          onClose={handleClose}
+          onEditDescription={toggleEditDescription}
+          onSave={handleSave}
+        />
+      }
+    >
+      <div className={classes.root}>
+        <ActionList actionSet={actionSet} />
 
-      <ActionList actionSet={state.editorActionSet} />
-
-      {validationResult && (
-        <Snackbar
-          open={true}
-          title="Validation failed."
-          onClose={handleValidationSnackbarClose}
-          variant="error"
-          anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-          autoHideDuration={60000}
-          closeIcon={true}
-        >
-          <div style={{ width: 300 }}>
-            {validationResult.map((result) => {
-              return (
-                <div key={result.id}>
-                  {result.required && (
-                    <div key={result.id}>
-                      <div>Action name: {result.name}</div>
-                      <div style={{ fontSize: 12, marginLeft: 5 }}>
-                        Required: {result.required.join(',')}
+        {validationResult && (
+          <Snackbar
+            open={true}
+            // title="Validation failed."
+            onClose={handleValidationSnackbarClose}
+            variant="error"
+            anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+            autoHideDuration={60000}
+            closeIcon={true}
+          >
+            <div style={{ width: 300 }}>
+              {validationResult.map((result) => {
+                return (
+                  <div key={result.id}>
+                    {result.required && (
+                      <div key={result.id}>
+                        <div>Action name: {result.name}</div>
+                        <div style={{ fontSize: 12, marginLeft: 5 }}>
+                          Required: {result.required.join(',')}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </Snackbar>
-      )}
-      <Loader open={loading} />
-    </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </Snackbar>
+        )}
+        <Loader open={loading} />
+        {editDescription && (
+          <InputDialog
+            title="Edit description"
+            value={actionSet.title}
+            open={true}
+            onClose={toggleEditDescription}
+            onSave={saveDescription}
+          />
+        )}
+      </div>
+    </ListItemWrapper>
   );
 };
 

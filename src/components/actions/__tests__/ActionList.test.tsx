@@ -14,8 +14,8 @@ describe('ActionList', () => {
       <ActionList
         actionSet={{
           actions: [{ id: 'action-id', name: 'action-name' }],
-          description: 'action-set-desc',
           id: 'action-set-id',
+          title: 'action-set-desc',
         }}
       />,
     );
@@ -28,8 +28,8 @@ describe('ActionList', () => {
       <ActionList
         actionSet={{
           actions: [],
-          description: 'action-set-desc',
           id: 'action-set-id',
+          title: 'action-set-desc',
         }}
       />,
     );
@@ -41,8 +41,8 @@ describe('ActionList', () => {
       <ActionList
         actionSet={{
           actions: [{ id: 'action-id', name: 'action-name' }],
-          description: 'action-set-desc',
           id: 'action-set-id',
+          title: 'action-set-desc',
         }}
       />,
     );

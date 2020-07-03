@@ -56,8 +56,8 @@ describe('ActionSetMain', () => {
     expect(actionSetList).toHaveLength(1);
     actionSetList.props().onEdit({
       actions: [],
-      description: 'action-set-desc',
       id: 'action-set-id',
+      title: 'action-set-desc',
     });
     expect(dispatchMock).toHaveBeenCalledWith([
       {
@@ -107,8 +107,8 @@ describe('ActionSetMain', () => {
 
     actionSetEditor.props().onSaved({
       actions: [{ id: 'action-id', name: 'action-name' }],
-      description: 'action-set-desc',
       id: 'action-set-id',
+      title: 'action-set-desc',
     });
 
     await new Promise((resolve) => setTimeout(resolve, 40));
@@ -139,8 +139,8 @@ describe('ActionSetMain', () => {
 
     actionSetEditor.props().onSaved({
       actions: [{ id: 'action-id', name: 'action-name' }],
-      description: 'action-set-desc',
       id: 'action-set-id',
+      title: 'action-set-desc',
     });
 
     expect(wrapper.find(Snackbar)).toHaveLength(0);

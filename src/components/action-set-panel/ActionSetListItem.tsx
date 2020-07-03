@@ -5,6 +5,7 @@ import EditIcon from '@material-ui/icons/EditSharp';
 import { SortableElement, SortableElementProps } from 'react-sortable-hoc';
 import { ListItemWrapper, DeleteConfirmationButton, CheckBox } from '../common';
 import { ActionSet } from '../../typings';
+import { ActionSetEditor } from './ActionSetEditor';
 
 export interface ActionSetActionSetListItemProps extends SortableElementProps {
   onEdit: (item: ActionSet) => void;
@@ -35,6 +36,10 @@ export function ActionSetListItem({
     onDelete(item);
   }, [item, onDelete]);
 
+  if (item.isEditing) {
+    return <ActionSetEditor actionSet={item} />;
+  }
+
   return (
     <ListItemWrapper
       tooltip={title}
@@ -49,9 +54,7 @@ export function ActionSetListItem({
           <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
         </>
       }
-    >
-      {/* <div style={{ border: '1px solid red', height: 200 }}></div> */}
-    </ListItemWrapper>
+    />
   );
 }
 

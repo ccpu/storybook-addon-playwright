@@ -14,8 +14,8 @@ export const storyFileInfo = (): StoryPlaywrightData => {
               name: 'click',
             },
           ],
-          description: 'click',
           id: 'action-set-id',
+          title: 'click',
         },
         {
           actions: [
@@ -27,8 +27,8 @@ export const storyFileInfo = (): StoryPlaywrightData => {
               name: 'click',
             },
           ],
-          description: 'click',
           id: 'action-set-id-2',
+          title: 'click',
         },
       ],
       screenshots: [

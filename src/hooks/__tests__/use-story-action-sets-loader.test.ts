@@ -25,8 +25,8 @@ describe('useStoryFileActionSets', () => {
           name: 'click',
         },
       ],
-      description: 'action-desc',
       id: 'action-id',
+      title: 'action-desc',
     },
   ];
 

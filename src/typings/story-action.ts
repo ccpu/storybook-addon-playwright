@@ -19,6 +19,7 @@ export interface Stories {
 
 export interface ActionSet {
   id: string;
-  description: string;
+  title: string;
   actions: StoryAction[];
+  isEditing?: boolean;
 }

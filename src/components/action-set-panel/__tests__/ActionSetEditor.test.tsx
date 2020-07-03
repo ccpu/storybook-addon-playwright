@@ -73,7 +73,7 @@ describe('ActionSetEditor', () => {
     wrapper.find(ActionToolbar).props().onDescriptionChange('click');
 
     expect(dispatchMock).toHaveBeenCalledWith([
-      { description: 'click', type: 'setEditorActionDescription' },
+      { description: 'click', type: 'setActionSetTitle' },
     ]);
   });
 

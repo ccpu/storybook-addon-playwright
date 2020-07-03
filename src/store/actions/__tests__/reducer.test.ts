@@ -15,8 +15,8 @@ describe('action reducer', () => {
       { id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
     ],
-    description: 'desc',
     id: 'action-set-id',
+    title: 'desc',
     ...data,
   });
 
@@ -232,15 +232,15 @@ describe('action reducer', () => {
     expect(result.editorActionSet).toStrictEqual(getActionSetData());
   });
 
-  it('should setEditorActionDescription', () => {
+  it('should setActionSetTitle', () => {
     const result = reducer(
       { editorActionSet: getActionSetData() },
       {
-        description: 'desc-2',
-        type: 'setEditorActionDescription',
+        title: 'desc-2',
+        type: 'setActionSetTitle',
       },
     );
-    expect(result.editorActionSet.description).toStrictEqual('desc-2');
+    expect(result.editorActionSet.title).toStrictEqual('desc-2');
   });
 
   it('should saveEditorActionSet (add)', () => {

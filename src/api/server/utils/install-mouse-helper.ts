@@ -10,6 +10,22 @@ async function installMouseHelper(page: Page) {
     if (window !== window.parent) return;
     const box = document.createElement('playwright-mouse-pointer');
     const styleElement = document.createElement('style');
+    function getHighestZIndex() {
+      let highestZIndex = 0;
+      let currentZIndex = 0;
+      const nodes = document.body.getElementsByTagName('*');
+
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        if (node === box) continue;
+        currentZIndex = Number(window.getComputedStyle(node).zIndex);
+        if (currentZIndex > highestZIndex) {
+          highestZIndex = currentZIndex;
+        }
+      }
+
+      return highestZIndex + 1;
+    }
     styleElement.innerHTML = `
         playwright-mouse-pointer {
             position: absolute;
@@ -36,6 +52,7 @@ async function installMouseHelper(page: Page) {
       (event) => {
         box.style.left = event.pageX + 'px';
         box.style.top = event.pageY + 'px';
+        box.style.zIndex = getHighestZIndex().toString();
       },
       true,
     );
@@ -43,6 +60,7 @@ async function installMouseHelper(page: Page) {
       'mousedown',
       () => {
         box.classList.add('button-mousedown');
+        box.style.zIndex = getHighestZIndex().toString();
       },
       true,
     );
@@ -50,6 +68,7 @@ async function installMouseHelper(page: Page) {
       'mouseup',
       () => {
         box.classList.remove('button-mousedown');
+        box.style.zIndex = getHighestZIndex().toString();
       },
       true,
     );

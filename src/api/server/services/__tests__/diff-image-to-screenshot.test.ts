@@ -43,7 +43,7 @@ describe('diffImageToScreenshot', () => {
 
     expect(result).toStrictEqual({ added: true, diffDirection: undefined });
     const data = runDiffImageToSnapshotMock.mock.calls[0][0];
-    expect(data.diffDirection).toBe('vertical');
+    expect(data.diffDirection).toBe('horizontal');
   });
 
   it('should have diff result in horizontal', () => {

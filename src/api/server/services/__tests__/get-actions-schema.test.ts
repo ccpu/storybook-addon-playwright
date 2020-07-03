@@ -17,7 +17,6 @@ describe('getActionsSchema', () => {
 
   it('should return action schema', async () => {
     const schema = getActionsSchema(file);
-    console.log(JSON.stringify(schema['takeScreenshotOptions'], null, 2));
     expect(schema).toBeDefined();
   });
 

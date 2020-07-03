@@ -205,6 +205,34 @@ Currently following methods are available:
 
 > Note that the method must have interactive characteristic, for example `evaluate` method can not be used with this addon because its not directly interacting with the page like above methods do.
 
+## Additional Page Methods
+
+The following custom methods has been added to the playwright page:
+
+- scrollSelector
+- dragDropSelector
+- takeScreenshot
+- takeScreenshotOptions
+
+### scrollSelector
+
+This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.
+
+### dragDropSelector
+
+This method fetches an element with `selector`, and move it to the position given by user.
+
+### takeScreenshot
+
+This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions.
+In the end the screenshots will be merged with the final screenshot.
+
+### takeScreenshotOptions
+
+The purpose of this action is to have centralized options for all screenshots.
+This action can be used in conjunction with takeScreenshot action only.
+Only one instance can be used.
+
 ## Testing
 
 Screenshots saved with the addon can also be tested with the test framework like jest. to do so configure the jest as follow:

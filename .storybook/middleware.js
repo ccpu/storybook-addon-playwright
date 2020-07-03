@@ -15,6 +15,8 @@ async function addBox(position) {
     div.style.position = 'absolute';
     div.style.top = pos.y + 'px';
     div.style.left = pos.x + 'px';
+    div.style.zIndex = '10000000';
+
     document.body.append(div);
   }, position);
 }

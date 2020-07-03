@@ -18,6 +18,14 @@ const useStyles = makeStyles(
       handle: {
         fontSize: 24,
       },
+      iconWrapper: {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'space-between',
+        minHeight: '48px',
+        padding: '5px 8px',
+        paddingLeft: 16,
+      },
       root: {
         '& svg': {
           '&:hover': {
@@ -25,16 +33,13 @@ const useStyles = makeStyles(
           },
           fontSize: 18,
         },
-        alignItems: 'center',
+
         border: '1px solid ' + divider,
         color: text.primary,
         display: 'flex',
+        flexDirection: 'column',
         fontSize: 13,
-        justifyContent: 'space-between',
         marginBottom: 4,
-        minHeight: '48px',
-        padding: '5px 8px',
-        paddingLeft: 16,
         position: 'relative',
         zIndex: 10000,
       },
@@ -51,6 +56,7 @@ export interface ListItemWrapperProps {
   draggable?: boolean;
   selected?: boolean;
   tooltip: string;
+  icons: React.ReactNode;
 }
 
 const ListItemWrapper: SFC<
@@ -64,6 +70,7 @@ const ListItemWrapper: SFC<
     className,
     onClick,
     tooltip,
+    icons,
     ...rest
   } = props;
 
@@ -93,11 +100,14 @@ const ListItemWrapper: SFC<
       onClick={handleClick}
       title={tooltip}
     >
-      <div className={clsx(classes.column, 'clickable')}>
-        {draggable && <DragHandle />}
-        {title}
+      <div className={classes.iconWrapper}>
+        <div className={clsx(classes.column, 'clickable')}>
+          {draggable && <DragHandle />}
+          {title}
+        </div>
+        <div className={classes.column}>{icons}</div>
       </div>
-      <div className={classes.column}>{children}</div>
+      <div>{children}</div>
     </div>
   );
 };

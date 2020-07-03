@@ -36,12 +36,21 @@ export function ActionSetListItem({
   }, [item, onDelete]);
 
   return (
-    <ListItemWrapper tooltip={title} title={title} draggable={true}>
-      <IconButton className="edit-button" onClick={handleEdit} size="small">
-        <EditIcon />
-      </IconButton>
-      <CheckBox onClick={handleCheckStateChanged} checked={checked} />
-      <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
+    <ListItemWrapper
+      tooltip={title}
+      title={title}
+      draggable={true}
+      icons={
+        <>
+          <IconButton className="edit-button" onClick={handleEdit} size="small">
+            <EditIcon />
+          </IconButton>
+          <CheckBox onClick={handleCheckStateChanged} checked={checked} />
+          <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
+        </>
+      }
+    >
+      {/* <div style={{ border: '1px solid red', height: 200 }}></div> */}
     </ListItemWrapper>
   );
 }

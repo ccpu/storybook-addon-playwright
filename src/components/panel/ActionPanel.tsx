@@ -1,5 +1,5 @@
 import React, { SFC, memo } from 'react';
-import { ActionSetMain } from '../action-set';
+import { ActionSetMain } from '../action-set-panel';
 import { CommonProvider } from '../common';
 import { ActionProvider } from '../../store';
 

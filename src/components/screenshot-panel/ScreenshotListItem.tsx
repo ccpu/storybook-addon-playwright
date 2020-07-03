@@ -182,70 +182,73 @@ function ScreenshotListItem({
       style={{
         cursor: 'pointer',
       }}
-    >
-      <Loader progressSize={20} position="absolute" open={inProgress} />
+      icons={
+        <>
+          <Loader progressSize={20} position="absolute" open={inProgress} />
 
-      {isPassesImageDiff && (
-        <CheckCircle
-          color="primary"
-          onClick={handleRemoveScreenShotResult}
-          className={classes.indicatorIcon}
-        />
-      )}
-
-      {imageDiffResult && !imageDiffResult.pass && (
-        <Error
-          color="secondary"
-          onClick={handleShowImageDiffResult}
-          className={classes.indicatorIcon}
-        />
-      )}
-
-      <BrowserIcon
-        style={{ height: 16 }}
-        browserType={screenshot.browserType}
-      />
-
-      {showImageDiffResult && showImageDiffResultDialog && (
-        <ImageDiffMessage
-          result={imageDiffResult}
-          onClose={handleRemoveScreenShotResult}
-          title={screenshot.title}
-          titleActions={() => (
-            <ScreenshotInfo
+          {isPassesImageDiff && (
+            <CheckCircle
               color="primary"
-              size="medium"
-              screenshotData={screenshot}
+              onClick={handleRemoveScreenShotResult}
+              className={classes.indicatorIcon}
             />
           )}
-        />
-      )}
 
-      <TestScreenshotErrorSnackbar />
-      <ScreenshotListItemMenu
-        show={(forceShowMenu || showMenu) && !dragStart}
-        screenshot={screenshot}
-        onHide={handleMouseLeave}
-        onRunImageDiff={handleRunDiffTest}
-        imageDiffResult={imageDiffResult}
-        onEditClick={handleEdit}
-        onLoadSettingClick={handleLoadSetting}
-        isEditing={Boolean(editScreenshotState)}
-        {...rest}
-      />
+          {imageDiffResult && !imageDiffResult.pass && (
+            <Error
+              color="secondary"
+              onClick={handleShowImageDiffResult}
+              className={classes.indicatorIcon}
+            />
+          )}
 
-      {showPreview && showPreviewOnClick && (
-        <ScreenshotPreviewDialog
-          screenShotData={screenshot}
-          storyData={storyData}
-          onClose={toggleSelectedItem}
-          open={true}
-          width="100%"
-          height="100%"
-          activeTab={!isPassesImageDiff ? 'imageDiff' : 'newScreenshot'}
-        />
-      )}
-    </ListItemWrapper>
+          <BrowserIcon
+            style={{ height: 16 }}
+            browserType={screenshot.browserType}
+          />
+
+          {showImageDiffResult && showImageDiffResultDialog && (
+            <ImageDiffMessage
+              result={imageDiffResult}
+              onClose={handleRemoveScreenShotResult}
+              title={screenshot.title}
+              titleActions={() => (
+                <ScreenshotInfo
+                  color="primary"
+                  size="medium"
+                  screenshotData={screenshot}
+                />
+              )}
+            />
+          )}
+
+          <TestScreenshotErrorSnackbar />
+          <ScreenshotListItemMenu
+            show={(forceShowMenu || showMenu) && !dragStart}
+            screenshot={screenshot}
+            onHide={handleMouseLeave}
+            onRunImageDiff={handleRunDiffTest}
+            imageDiffResult={imageDiffResult}
+            onEditClick={handleEdit}
+            onLoadSettingClick={handleLoadSetting}
+            isEditing={Boolean(editScreenshotState)}
+            {...rest}
+          />
+
+          {showPreview && showPreviewOnClick && (
+            <ScreenshotPreviewDialog
+              screenShotData={screenshot}
+              storyData={storyData}
+              onClose={toggleSelectedItem}
+              open={true}
+              width="100%"
+              height="100%"
+              activeTab={!isPassesImageDiff ? 'imageDiff' : 'newScreenshot'}
+            />
+          )}
+        </>
+      }
+    ></ListItemWrapper>
   );
 }
 const SortableScreenshotListItem = SortableElement(ScreenshotListItem);

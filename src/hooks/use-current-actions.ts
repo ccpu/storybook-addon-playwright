@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StoryAction } from '../typings';
+import { StoryAction, ActionSet } from '../typings';
 import { useGlobalState } from './use-global-state';
 import { useActionContext } from '../store';
 
@@ -15,13 +15,21 @@ export const useCurrentActions = (storyId: string) => {
     // state is not available in preview
     if (!state.initialised) return;
 
-    const actionSetArr = state.editorActionSet
-      ? [state.editorActionSet]
-      : state.stories[storyId] && state.stories[storyId].actionSets
-      ? state.stories[storyId].actionSets.filter((x) =>
-          state.currentActionSets.includes(x.id),
-        )
-      : [];
+    let actionSetArr: ActionSet[] = [];
+
+    const getStorySelectedActions = () => {
+      return state.stories[storyId] && state.stories[storyId].actionSets
+        ? state.stories[storyId].actionSets.filter((x) =>
+            state.currentActionSets.includes(x.id),
+          )
+        : [];
+    };
+
+    if (state.editorActionSet) {
+      actionSetArr = [state.editorActionSet];
+    } else {
+      actionSetArr = getStorySelectedActions();
+    }
 
     const allActions = actionSetArr.reduce((arr, set) => {
       arr = [...arr, ...set.actions];

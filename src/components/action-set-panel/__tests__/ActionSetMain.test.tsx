@@ -1,14 +1,14 @@
 import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
+import '../../../../__manual_mocks__/react-useEffect';
 import '../../../../__manual_mocks__/nanoid';
 import { ActionSetMain } from '../ActionSetMain';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { ActionToolbar } from '../../action-set/ActionSetToolbar';
-import { InputDialog, Snackbar } from '../../common';
-import { ActionSetEditor } from '../ActionSetEditor';
-import fetch from 'jest-fetch-mock';
+import { ActionToolbar } from '../ActionSetToolbar';
+import { InputDialog } from '../../common';
 import { ActionSetList } from '../ActionSetList';
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
+import { useStorybookState } from '@storybook/api';
 
 jest.mock('../../../hooks/use-current-story-data');
 
@@ -49,28 +49,6 @@ describe('ActionSetMain', () => {
     ]);
   });
 
-  it('should edit action set', () => {
-    const wrapper = shallow(<ActionSetMain />);
-    const actionSetList = wrapper.find(ActionSetList);
-
-    expect(actionSetList).toHaveLength(1);
-    actionSetList.props().onEdit({
-      actions: [],
-      id: 'action-set-id',
-      title: 'action-set-desc',
-    });
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSet: {
-          actions: [],
-          description: 'action-set-desc',
-          id: 'action-set-id',
-        },
-        type: 'setEditorActionSet',
-      },
-    ]);
-  });
-
   it('should create new action set and cancel', () => {
     const wrapper = shallow(<ActionSetMain />);
     const toolbar = wrapper.find(ActionToolbar);
@@ -79,39 +57,9 @@ describe('ActionSetMain', () => {
     const inputDialog = wrapper.find(InputDialog);
     inputDialog.props().onSave('new action set');
 
-    const actionSetEditor = wrapper.find(ActionSetEditor);
-
-    expect(dispatchMock).toBeCalledTimes(1);
-    expect(actionSetEditor).toHaveLength(1);
-
-    actionSetEditor.props().onClose();
-
-    expect(wrapper.find(ActionSetEditor)).toHaveLength(0);
-
     expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearEditorActionSet' },
+      { storyId: 'story-id', type: 'cancelEditActionSet' },
     ]);
-  });
-
-  it('should create new action set and save', async () => {
-    fetch.mockResponseOnce(JSON.stringify('{success:true}'));
-
-    const wrapper = shallow(<ActionSetMain />);
-    const toolbar = wrapper.find(ActionToolbar);
-
-    toolbar.props().onAddActionSet();
-    const inputDialog = wrapper.find(InputDialog);
-    inputDialog.props().onSave('new action set');
-
-    const actionSetEditor = wrapper.find(ActionSetEditor);
-
-    actionSetEditor.props().onSaved({
-      actions: [{ id: 'action-id', name: 'action-name' }],
-      id: 'action-set-id',
-      title: 'action-set-desc',
-    });
-
-    await new Promise((resolve) => setTimeout(resolve, 40));
 
     expect(dispatchMock).toHaveBeenCalledWith([
       {
@@ -120,37 +68,24 @@ describe('ActionSetMain', () => {
           description: 'new action set',
           id: 'action-id',
         },
-        type: 'setEditorActionSet',
+        new: true,
+        selected: true,
+        storyId: 'story-id',
+        type: 'addActionSet',
       },
     ]);
   });
 
-  it('should show error if it cannot save new action set and close', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
-
+  it('should clearCurrentActionSets on story change', () => {
     const wrapper = shallow(<ActionSetMain />);
-    const toolbar = wrapper.find(ActionToolbar);
 
-    toolbar.props().onAddActionSet();
-    const inputDialog = wrapper.find(InputDialog);
-    inputDialog.props().onSave('new action set');
+    (useStorybookState as jest.Mock).mockImplementationOnce(() => ({
+      storyId: 'new-story-id',
+    }));
 
-    const actionSetEditor = wrapper.find(ActionSetEditor);
+    wrapper.setProps({ ['fake']: 'true' });
 
-    actionSetEditor.props().onSaved({
-      actions: [{ id: 'action-id', name: 'action-name' }],
-      id: 'action-set-id',
-      title: 'action-set-desc',
-    });
-
-    expect(wrapper.find(Snackbar)).toHaveLength(0);
-
-    await new Promise((resolve) => setTimeout(resolve, 40));
-
-    expect(wrapper.find(Snackbar)).toHaveLength(1);
-
-    wrapper.find(Snackbar).props().onClose();
-
-    expect(wrapper.find(Snackbar)).toHaveLength(0);
+    // should called on mount an story change
+    expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
 });

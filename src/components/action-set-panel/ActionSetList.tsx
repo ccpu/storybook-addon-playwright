@@ -22,11 +22,7 @@ const useStyles = makeStyles(
   { name: 'ActionSetList' },
 );
 
-export interface ActionSetListProps {
-  onEdit: (actionSet: ActionSet) => void;
-}
-
-const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
+const ActionSetList = SortableContainer(() => {
   const classes = useStyles();
 
   const storyData = useCurrentStoryData();
@@ -35,14 +31,18 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
   const storyId = storyData ? storyData.id : undefined;
 
-  const { storyActionSets, currentActionSets } = useCurrentStoryActionSets();
+  const {
+    storyActionSets,
+    currentActionSets,
+    state,
+  } = useCurrentStoryActionSets();
 
   const {
     loading,
     error: actionSetLoaderError,
     retry,
   } = useStoryActionSetsLoader(
-    storyData && storyData.parameters.fileName,
+    storyData && storyData.parameters && storyData.parameters.fileName,
     storyData && storyId,
   );
 
@@ -70,9 +70,9 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
 
   const handleEdit = useCallback(
     (actionSet: ActionSet) => {
-      onEdit(actionSet);
+      dispatch({ actionSet, type: 'editActionSet' });
     },
-    [onEdit],
+    [dispatch],
   );
 
   const handleErrorClose = useCallback(() => {
@@ -86,19 +86,25 @@ const ActionSetList = SortableContainer(({ onEdit }: ActionSetListProps) => {
     [dispatch],
   );
 
+  const isEditing = state.orgEditingActionSet !== undefined;
+
   return (
     <ListWrapper>
       {storyActionSets.length > 0 ? (
         storyActionSets.map((actionSet, i) => (
           <SortableActionSetListItem
             index={i}
-            key={actionSet.id}
+            key={actionSet.id + isEditing}
             item={actionSet}
             onDelete={handleDelete}
             onEdit={handleEdit}
             onCheckBoxClick={handleCheckBox}
             checked={currentActionSets.includes(actionSet.id)}
-            title={actionSet.title}
+            title={actionSet.description}
+            isEditing={
+              isEditing && state.orgEditingActionSet.id === actionSet.id
+            }
+            hideIcons={isEditing}
           />
         ))
       ) : (

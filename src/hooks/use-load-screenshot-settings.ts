@@ -18,8 +18,8 @@ export const useLoadScreenshotSettings = () => {
       dispatch({
         actionSet: {
           actions: screenshotData.actions,
+          description: screenshotData.title + ' actions',
           id: screenshotData.hash,
-          title: screenshotData.title + ' actions',
         },
         selected: true,
         storyId: storyData.id,

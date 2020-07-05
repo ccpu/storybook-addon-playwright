@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { SFC, useCallback } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, capitalize } from '@material-ui/core';
 import { DragHandle } from './DragHandle';
 import clsx from 'clsx';
+import tinycolor from 'tinycolor2';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -19,6 +20,12 @@ const useStyles = makeStyles(
         fontSize: 24,
       },
       iconWrapper: {
+        '& svg': {
+          '&:hover': {
+            color: theme.palette.primary.main,
+          },
+          fontSize: 18,
+        },
         alignItems: 'center',
         display: 'flex',
         justifyContent: 'space-between',
@@ -27,24 +34,17 @@ const useStyles = makeStyles(
         paddingLeft: 16,
       },
       root: {
-        '& svg': {
-          '&:hover': {
-            color: theme.palette.primary.main,
-          },
-          fontSize: 18,
-        },
-
         border: '1px solid ' + divider,
         color: text.primary,
         display: 'flex',
         flexDirection: 'column',
-        fontSize: 13,
+        fontSize: 14,
         marginBottom: 4,
         position: 'relative',
         zIndex: 10000,
       },
       selected: {
-        border: '1px solid ' + primary.main,
+        border: '1px solid ' + tinycolor(primary.main).setAlpha(0.6),
       },
     };
   },
@@ -103,7 +103,7 @@ const ListItemWrapper: SFC<
       <div className={classes.iconWrapper}>
         <div className={clsx(classes.column, 'clickable')}>
           {draggable && <DragHandle />}
-          {title}
+          {capitalize(title)}
         </div>
         <div className={classes.column}>{icons}</div>
       </div>

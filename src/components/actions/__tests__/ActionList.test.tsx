@@ -14,8 +14,8 @@ describe('ActionList', () => {
       <ActionList
         actionSet={{
           actions: [{ id: 'action-id', name: 'action-name' }],
+          description: 'action-set-desc',
           id: 'action-set-id',
-          title: 'action-set-desc',
         }}
       />,
     );
@@ -28,8 +28,8 @@ describe('ActionList', () => {
       <ActionList
         actionSet={{
           actions: [],
+          description: 'action-set-desc',
           id: 'action-set-id',
-          title: 'action-set-desc',
         }}
       />,
     );
@@ -41,8 +41,8 @@ describe('ActionList', () => {
       <ActionList
         actionSet={{
           actions: [{ id: 'action-id', name: 'action-name' }],
+          description: 'action-set-desc',
           id: 'action-set-id',
-          title: 'action-set-desc',
         }}
       />,
     );
@@ -62,6 +62,7 @@ describe('ActionList', () => {
           { id: 'action-id-1', name: 'action-name-1' },
           { id: 'action-id-2', name: 'action-name-2' },
         ]}
+        actionSetId="action-set-id"
       />,
       { disableLifecycleMethods: true },
     )

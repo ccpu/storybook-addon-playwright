@@ -1,22 +1,17 @@
-import { getActionSchemaData } from '../../../__test_data__/action-schema';
 import { ReducerState } from '../../../src/store/actions/reducer';
+import { useActionDispatchContext } from '../../../src/store/actions/ActionContext';
+import { mocked } from 'ts-jest/utils';
+
+jest.mock('../../../src/store/actions/ActionContext');
 
 export const dispatchMock = jest.fn();
 
-const mockData: Partial<ReducerState> = {
-  actionSchema: getActionSchemaData(),
-};
+const useActionDispatchContextMock = mocked(useActionDispatchContext);
 
-export const useActionContext = jest.fn() as jest.Mock<Partial<ReducerState>>;
-useActionContext.mockImplementation(() => mockData);
-
-jest.mock('../../../src/store/actions/ActionContext', () => ({
-  useActionContext,
-  useActionDispatchContext: () => {
-    return (...arg) => {
-      return dispatchMock(arg);
-    };
-  },
-}));
+useActionDispatchContextMock.mockImplementation(() => {
+  return (...arg) => {
+    return dispatchMock(arg);
+  };
+});
 
 export { ReducerState };

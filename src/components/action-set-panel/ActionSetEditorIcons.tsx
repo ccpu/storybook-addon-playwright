@@ -35,7 +35,7 @@ const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
     setMenuAnchorEl(null);
   }, []);
 
-  const handleMEnuChange = useCallback(
+  const handleMenuChange = useCallback(
     (action: string) => {
       onAddAction(action);
       setMenuAnchorEl(null);
@@ -72,8 +72,8 @@ const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
       </IconButton>
       <IconButton
         size="small"
-        className="close"
-        title="Close"
+        className="Cancel"
+        title="Cancel"
         onClick={onClose}
       >
         <CloseIcon />
@@ -81,7 +81,7 @@ const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
       <ActionMenu
         onClose={handleMenuClose}
         anchorEl={menuAnchorEl}
-        onChange={handleMEnuChange}
+        onChange={handleMenuChange}
       />
     </>
   );

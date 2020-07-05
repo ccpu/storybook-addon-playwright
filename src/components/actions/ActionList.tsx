@@ -9,6 +9,7 @@ import { useActionDispatchContext } from '../../store';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../typings';
 import { DragHandle, ListWrapper } from '../common';
+import { useCurrentStoryData } from '../../hooks';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -19,7 +20,7 @@ const useStyles = makeStyles(
     return {
       noActionMessage: {
         color: text.primary,
-        marginTop: 20,
+        margin: 20,
         textAlign: 'center',
       },
     };
@@ -27,22 +28,28 @@ const useStyles = makeStyles(
   { name: 'ActionSetList' },
 );
 
-export const SortableItem = SortableElement(({ action }) => (
+export const SortableItem = SortableElement(({ action, actionSetId }) => (
   <div>
     <ActionOptions
       key={action.id}
       actionName={action.name}
       actionId={action.id}
       DragHandle={() => <DragHandle />}
+      actionSetId={actionSetId}
     />
   </div>
 ));
 
-export const SortableList = SortableContainer(({ items }) => {
+export const SortableList = SortableContainer(({ items, actionSetId }) => {
   return (
     <div>
       {items.map((action, index) => (
-        <SortableItem key={`item-${action.id}`} action={action} index={index} />
+        <SortableItem
+          key={`item-${action.id}`}
+          action={action}
+          actionSetId={actionSetId}
+          index={index}
+        />
       ))}
     </div>
   );
@@ -57,21 +64,24 @@ const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
 
   const classes = useStyles();
 
+  const story = useCurrentStoryData();
+
   const handleSortEnd = useCallback(
     (e: SortEnd) => {
       dispatch({
+        actionSetId: actionSet.id,
         newIndex: e.newIndex,
         oldIndex: e.oldIndex,
+        storyId: story.id,
         type: 'moveActionSetAction',
       });
     },
-    [dispatch],
+    [actionSet.id, dispatch, story.id],
   );
 
   if (!actionSet || !actionSet.actions.length) {
     return (
       <div className={classes.noActionMessage}>
-        <div>No action to display!</div>
         <div>Click the {"'+'"} button to create an action.</div>
       </div>
     );
@@ -83,6 +93,7 @@ const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
         useDragHandle
         items={actionSet.actions}
         onSortEnd={handleSortEnd}
+        actionSetId={actionSet.id}
       />
     </ListWrapper>
   );

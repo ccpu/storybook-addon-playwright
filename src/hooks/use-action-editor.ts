@@ -1,5 +1,5 @@
 import { useActionDispatchContext, useActionContext } from '../store';
-import { useEffect, useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { StoryAction, ActionSet } from '../typings';
 import { ActionListValidationResult, validateActionList } from '../utils';
@@ -7,7 +7,7 @@ import { saveActionSet } from '../api/client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCurrentStoryData } from './use-current-story-data';
 
-export const useActionSetEditor = () => {
+export const useActionSetEditor = (actionSet: ActionSet) => {
   const dispatch = useActionDispatchContext();
 
   const {
@@ -16,8 +16,6 @@ export const useActionSetEditor = () => {
     SuccessSnackbar,
     inProgress,
   } = useAsyncApiCall(saveActionSet, false);
-
-  // const [actionId, setActionId] = useState<string>();
 
   const state = useActionContext();
 
@@ -35,76 +33,80 @@ export const useActionSetEditor = () => {
         name: actionName,
       };
       dispatch({ type: 'clearActionExpansion' });
-      dispatch({ action: newAction, type: 'addActionSetAction' });
+      dispatch({
+        action: newAction,
+        actionSetId: actionSet.id,
+        storyId: storyData.id,
+        type: 'addActionSetAction',
+      });
       dispatch({ actionId, type: 'toggleActionExpansion' });
     },
-    [dispatch],
+    [dispatch, storyData, actionSet.id],
   );
 
   useEffect(() => {
-    dispatch({ type: 'clearActionExpansion' });
+    return () => dispatch({ type: 'clearActionExpansion' });
   }, [dispatch]);
 
-  const handleSaved = useCallback(
-    async (editingActionSet: ActionSet) => {
-      const result = await makeCall({
-        actionSet: editingActionSet,
-        fileName: storyData.parameters.fileName as string,
-        storyId: storyData.id,
-      });
-      if (result instanceof Error) {
-        dispatch({
-          actionSet: editingActionSet,
-          storyId: storyData.id,
-          type: 'saveEditorActionSet',
-        });
-      }
-    },
-    [dispatch, makeCall, storyData],
-  );
-
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
     const validateResult = validateActionList(
       state.actionSchema,
-      state.editorActionSet.actions,
+      actionSet.actions,
     );
 
     if (validateResult) {
       setValidationResult(validateResult);
-    } else {
-      handleSaved(state.editorActionSet);
+      return;
     }
-  }, [handleSaved, state.actionSchema, state.editorActionSet]);
 
-  const handleValidationSnackbarClose = useCallback(() => {
+    const result = await makeCall({
+      actionSet,
+      fileName: storyData.parameters.fileName as string,
+      storyId: storyData.id,
+    });
+
+    if (!(result instanceof Error)) {
+      dispatch({
+        actionSet,
+        storyId: storyData.id,
+        type: 'saveActionSet',
+      });
+    }
+  }, [actionSet, dispatch, makeCall, state.actionSchema, storyData]);
+
+  const clearValidationResult = useCallback(() => {
     setValidationResult(undefined);
   }, []);
 
   const handleDescriptionChange = useCallback(
     (description: string) => {
       dispatch({
-        actionSetId: state.editingActionId,
+        actionSetId: state.orgEditingActionSet.id,
+        description,
         storyId: storyData.id,
-        title: description,
-        type: 'setActionSetTitle',
+        type: 'setActionSetDescription',
       });
     },
-    [dispatch, storyData, state.editingActionId],
+    [dispatch, storyData, state.orgEditingActionSet],
   );
 
-  const clearEditActionSet = useCallback(() => {
-    dispatch({ type: 'clearEditorActionSet' });
-  }, [dispatch]);
+  const cancelEditActionSet = useCallback(() => {
+    dispatch({
+      storyId: storyData.id,
+      type: 'cancelEditActionSet',
+    });
+  }, [dispatch, storyData.id]);
 
   return {
     ErrorSnackbar,
     SuccessSnackbar,
-    clearEditActionSet,
+    cancelEditActionSet,
+    clearValidationResult,
     handleAddAction,
     handleDescriptionChange,
     handleSave,
-    handleValidationSnackbarClose,
     inProgress,
+    state,
     validationResult,
   };
 };

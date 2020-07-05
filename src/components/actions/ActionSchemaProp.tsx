@@ -4,7 +4,7 @@ import { ActionSchemaProps } from './ActionSchemaProps';
 import { useActionDispatchContext } from '../../store';
 import { getActionOptionValue } from './utils';
 import { SelectorControl } from './SelectorControl';
-import { useEditorAction } from '../../hooks';
+import { useEditorAction, useCurrentStoryData } from '../../hooks';
 import { ActionSchema } from '../../typings';
 import { capitalize } from '@material-ui/core';
 import startCase from 'lodash/startCase';
@@ -16,34 +16,48 @@ export interface ActionSchemaPropProps {
   actionId: string;
   nextPropName: string;
   isRequired?: boolean;
+  actionSetId: string;
 }
 
 const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
-  ({ name, schema, parents = [], actionId, nextPropName, isRequired }) => {
+  ({
+    name,
+    schema,
+    parents = [],
+    actionId,
+    nextPropName,
+    isRequired,
+    actionSetId,
+  }) => {
     const dispatch = useActionDispatchContext();
     const optionObjectPath = [...parents, name].join('.');
+    const story = useCurrentStoryData();
 
     const handleChange = useCallback(
       (val) => {
         dispatch({
           actionId,
+          actionSetId,
           objPath: optionObjectPath,
+          storyId: story.id,
           type: 'setActionOptions',
           val,
         });
       },
-      [actionId, dispatch, optionObjectPath],
+      [actionId, actionSetId, dispatch, optionObjectPath, story.id],
     );
 
     const handleAppendToTile = useCallback(() => {
       dispatch({
         actionId,
         actionOptionPath: optionObjectPath,
+        actionSetId,
+        storyId: story.id,
         type: 'toggleSubtitleItem',
       });
-    }, [actionId, dispatch, optionObjectPath]);
+    }, [actionId, actionSetId, dispatch, optionObjectPath, story.id]);
 
-    const action = useEditorAction(actionId);
+    const action = useEditorAction(story.id, actionId);
 
     if (!action) return null;
 
@@ -72,6 +86,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
           fullObjectPath={optionObjectPath}
           actionId={actionId}
           isRequired={isRequired}
+          actionSetId={actionSetId}
         />
       );
     }
@@ -168,6 +183,7 @@ const ActionSchemaProp: SFC<ActionSchemaPropProps> = memo(
                 parents={[...parents, name]}
                 actionId={actionId}
                 required={schema.required}
+                actionSetId={actionSetId}
               />
             </div>
           </div>

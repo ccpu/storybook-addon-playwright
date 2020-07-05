@@ -4,7 +4,6 @@ import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   makeStyles,
-  Typography,
   Chip,
   IconButton,
   Tooltip,
@@ -12,7 +11,7 @@ import {
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../utils';
 import { useActionContext, useActionDispatchContext } from '../../store';
-import { useEditorAction } from '../../hooks';
+import { useEditorAction, useCurrentStoryData } from '../../hooks';
 import { getActionOptionValue } from './utils';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 import HelpIcon from '@material-ui/icons/HelpOutline';
@@ -37,7 +36,8 @@ const useStyles = makeStyles(
         boxShadow: 'none',
       },
       heading: {
-        fontSize: theme.typography.pxToRem(15),
+        alignItems: 'center',
+        display: 'flex',
         fontWeight: theme.typography.fontWeightRegular,
         marginRight: 10,
       },
@@ -67,18 +67,19 @@ export interface ActionOptionsProps {
   actionId: string;
   actionName: string;
   DragHandle: React.ComponentType;
+  actionSetId: string;
 }
 
 const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
-  const { actionId, actionName, DragHandle } = props;
+  const { actionId, actionName, DragHandle, actionSetId } = props;
 
   const [subtitle, setSubtitle] = useState<string[]>();
 
-  const action = useEditorAction(actionId);
-
+  const story = useCurrentStoryData();
   const state = useActionContext();
   const dispatch = useActionDispatchContext();
 
+  const action = useEditorAction(story.id, actionId);
   const schema = getActionSchema(state.actionSchema, actionName);
 
   const classes = useStyles();
@@ -105,9 +106,14 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();
       e.stopPropagation();
-      dispatch({ actionId, type: 'deleteActionSetAction' });
+      dispatch({
+        actionId,
+        actionSetId,
+        storyId: story.id,
+        type: 'deleteActionSetAction',
+      });
     },
-    [actionId, dispatch],
+    [actionId, actionSetId, dispatch, story.id],
   );
 
   const hasParameters =
@@ -139,9 +145,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           <div className={classes.summaryInner}>
             <DragHandle />
             <div className={classes.heading}>
-              <Typography>
-                {capitalize(schema && schema.title ? schema.title : actionName)}
-              </Typography>
+              {capitalize(schema && schema.title ? schema.title : actionName)}
             </div>
 
             <div className={classes.subtitleWrap}>
@@ -183,7 +187,11 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           {state.expandedActions &&
             state.expandedActions[actionId] &&
             hasParameters && (
-              <ActionSchemaRenderer schema={schema} actionId={actionId} />
+              <ActionSchemaRenderer
+                schema={schema}
+                actionId={actionId}
+                actionSetId={actionSetId}
+              />
             )}
         </ExpansionPanelDetails>
       </ExpansionPanel>

@@ -2,19 +2,13 @@ import React, { SFC, useCallback } from 'react';
 import { ActionList } from '../actions/ActionList';
 import { ActionSet } from '../../typings';
 import { Snackbar, Loader, ListItemWrapper, InputDialog } from '../common';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Divider } from '@material-ui/core';
 import { useActionSchemaLoader, useActionSetEditor } from '../../hooks';
 import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 
 const useStyles = makeStyles(
   () => {
     return {
-      button: {
-        marginTop: 20,
-      },
-      noActionMessage: {
-        textAlign: 'center',
-      },
       root: {
         height: '100%',
       },
@@ -24,8 +18,6 @@ const useStyles = makeStyles(
 );
 
 interface Props {
-  // onClose: () => void;
-  // onSaved: (actionSet: ActionSet) => void;
   actionSet: ActionSet;
 }
 
@@ -36,9 +28,10 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
     handleAddAction,
     handleDescriptionChange,
     handleSave,
-    handleValidationSnackbarClose,
+    clearValidationResult,
     validationResult,
-  } = useActionSetEditor();
+    cancelEditActionSet,
+  } = useActionSetEditor(actionSet);
 
   const classes = useStyles();
 
@@ -57,14 +50,15 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
   );
 
   const handleClose = useCallback(() => {
-    throw new Error('Method not implemented.');
-  }, []);
+    cancelEditActionSet();
+  }, [cancelEditActionSet]);
 
   return (
     <ListItemWrapper
-      tooltip={actionSet.title}
-      title={actionSet.title}
+      tooltip={actionSet.description}
+      title={actionSet.description}
       draggable={true}
+      selected={true}
       icons={
         <ActionSetEditorIcons
           onAddAction={handleAddAction}
@@ -75,13 +69,13 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
       }
     >
       <div className={classes.root}>
+        <Divider />
         <ActionList actionSet={actionSet} />
 
         {validationResult && (
           <Snackbar
             open={true}
-            // title="Validation failed."
-            onClose={handleValidationSnackbarClose}
+            onClose={clearValidationResult}
             variant="error"
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
             autoHideDuration={60000}
@@ -108,8 +102,8 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
         <Loader open={loading} />
         {editDescription && (
           <InputDialog
-            title="Edit description"
-            value={actionSet.title}
+            title="Edit Description"
+            value={actionSet.description}
             open={true}
             onClose={toggleEditDescription}
             onSave={saveDescription}

@@ -221,33 +221,33 @@ describe('action reducer', () => {
     expect(result.editorActionSet).toStrictEqual(undefined);
   });
 
-  it('should setEditorActionSet', () => {
+  it('should editorActionSet', () => {
     const result = reducer(
       { editorActionSet: undefined },
       {
         actionSet: getActionSetData(),
-        type: 'setEditorActionSet',
+        type: 'editorActionSet',
       },
     );
     expect(result.editorActionSet).toStrictEqual(getActionSetData());
   });
 
-  it('should setActionSetTitle', () => {
+  it('should setActionSetDescription', () => {
     const result = reducer(
       { editorActionSet: getActionSetData() },
       {
         title: 'desc-2',
-        type: 'setActionSetTitle',
+        type: 'setActionSetDescription',
       },
     );
     expect(result.editorActionSet.title).toStrictEqual('desc-2');
   });
 
-  it('should saveEditorActionSet (add)', () => {
+  it('should saveActionSet (add)', () => {
     const result = reducer(undefined, {
       actionSet: getActionSetData(),
       storyId: storyId,
-      type: 'saveEditorActionSet',
+      type: 'saveActionSet',
     });
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
@@ -261,13 +261,13 @@ describe('action reducer', () => {
     ]);
   });
 
-  it('should saveEditorActionSet (replace)', () => {
+  it('should saveActionSet (replace)', () => {
     const result = reducer(
       { stories: getStoryData() },
       {
         actionSet: getActionSetData(),
         storyId: storyId,
-        type: 'saveEditorActionSet',
+        type: 'saveActionSet',
       },
     );
     expect(result.stories[storyId].actionSets).toStrictEqual([

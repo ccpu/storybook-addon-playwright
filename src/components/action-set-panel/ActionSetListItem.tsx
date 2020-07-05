@@ -14,6 +14,8 @@ export interface ActionSetActionSetListItemProps extends SortableElementProps {
   item: ActionSet;
   checked?: boolean;
   title: string;
+  isEditing: boolean;
+  hideIcons: boolean;
 }
 
 export function ActionSetListItem({
@@ -23,6 +25,8 @@ export function ActionSetListItem({
   onCheckBoxClick,
   checked,
   title,
+  isEditing,
+  hideIcons,
 }: ActionSetActionSetListItemProps) {
   const handleEdit = useCallback(() => {
     onEdit(item);
@@ -36,7 +40,7 @@ export function ActionSetListItem({
     onDelete(item);
   }, [item, onDelete]);
 
-  if (item.isEditing) {
+  if (isEditing) {
     return <ActionSetEditor actionSet={item} />;
   }
 
@@ -47,11 +51,19 @@ export function ActionSetListItem({
       draggable={true}
       icons={
         <>
-          <IconButton className="edit-button" onClick={handleEdit} size="small">
-            <EditIcon />
-          </IconButton>
+          {!hideIcons && (
+            <IconButton
+              className="edit-button"
+              onClick={handleEdit}
+              size="small"
+            >
+              <EditIcon />
+            </IconButton>
+          )}
           <CheckBox onClick={handleCheckStateChanged} checked={checked} />
-          <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
+          {!hideIcons && (
+            <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
+          )}
         </>
       }
     />

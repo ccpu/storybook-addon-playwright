@@ -1,7 +1,12 @@
 import React, { SFC, memo, useCallback, useState, useEffect } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { ControlProps } from '../../typings';
-import { useControl, useSelectorManager, SelectorType } from '../../hooks';
+import {
+  useControl,
+  useSelectorManager,
+  SelectorType,
+  useCurrentStoryData,
+} from '../../hooks';
 import { FormControl } from './FormControl';
 import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
 import { isValidSelector } from '../../utils';
@@ -45,6 +50,7 @@ export interface SelectorControlProps extends ControlProps {
   isFollowedByPositionProp: boolean;
   fullObjectPath: string;
   actionId: string;
+  actionSetId: string;
 }
 
 const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
@@ -59,9 +65,12 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     fullObjectPath,
     actionId,
     isRequired,
+    actionSetId,
   } = props;
 
   const [validate, setValidate] = useState(false);
+
+  const story = useCurrentStoryData();
 
   const classes = useStyles();
 
@@ -80,7 +89,9 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
         if (selectorType === 'selector') {
           dispatch({
             actionId,
+            actionSetId,
             objPath: fullObjectPath,
+            storyId: story.id,
             type: 'setActionOptions',
             val: data.path,
           });
@@ -92,13 +103,17 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
 
           dispatch({
             actionId,
+            actionSetId,
             objPath: objPath + `x`,
+            storyId: story.id,
             type: 'setActionOptions',
             val: data.x,
           });
           dispatch({
             actionId,
+            actionSetId,
             objPath: objPath + `y`,
+            storyId: story.id,
             type: 'setActionOptions',
             val: data.y,
           });
@@ -118,6 +133,8 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     label,
     selectorType,
     startSelector,
+    story,
+    actionSetId,
   ]);
 
   useEffect(() => {

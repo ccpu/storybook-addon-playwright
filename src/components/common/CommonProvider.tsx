@@ -17,13 +17,11 @@ const CommonProvider: SFC = (props) => {
   }, []);
 
   return (
-    <StateInspector>
-      <ThemeProvider>
-        <SnackbarProvider domRoot={div.current} preventDuplicate>
-          {children}
-        </SnackbarProvider>
-      </ThemeProvider>
-    </StateInspector>
+    <ThemeProvider>
+      <SnackbarProvider domRoot={div.current} preventDuplicate>
+        <StateInspector>{children}</StateInspector>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 };
 

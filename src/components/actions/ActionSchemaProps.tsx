@@ -7,10 +7,11 @@ export interface ActionSchemaPropsProps {
   parents?: string[];
   actionId: string;
   required?: string[];
+  actionSetId: string;
 }
 
 const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
-  ({ schemaProps, required, parents = [], actionId }) => {
+  ({ schemaProps, required, parents = [], actionId, actionSetId }) => {
     return (
       <>
         {Object.keys(schemaProps).map((name, i, array) => {
@@ -24,6 +25,7 @@ const ActionSchemaProps: SFC<ActionSchemaPropsProps> = memo(
               actionId={actionId}
               nextPropName={array[i + 1]}
               isRequired={required && required.indexOf(name) !== -1}
+              actionSetId={actionSetId}
             />
           );
         })}

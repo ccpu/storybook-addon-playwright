@@ -1,35 +1,69 @@
 import { useEditorAction } from '../use-editor-action';
 import { renderHook } from '@testing-library/react-hooks';
-import { ActionSet } from '../../typings';
 import { useActionContext } from '../../store/actions/ActionContext';
+import { storyFileInfo } from '../../../__test_data__/story-file-info';
+import { getOrgEditingActionSet } from '../../../__test_data__/get-org-editing-actionSet';
+import { mocked } from 'ts-jest/utils';
+import { ReducerState } from '../../store/actions/reducer';
 
-const editorActionSetData: ActionSet = {
-  actions: [{ id: 'action-id', name: 'action-name' }],
-  id: 'action-set-id',
-  title: 'action-set-desc',
-};
+jest.mock('../../store/actions/ActionContext');
 
-jest.mock('../../store/actions/ActionContext', () => ({
-  useActionContext: jest.fn(),
-}));
+const useActionContextMock = mocked(useActionContext);
+
+const stories = storyFileInfo();
 
 describe('useAction', () => {
+  const orgEditingActionSet = getOrgEditingActionSet();
+
+  beforeEach(() => {
+    useActionContextMock.mockImplementation(
+      () =>
+        (({
+          orgEditingActionSet: orgEditingActionSet,
+          stories,
+        } as unknown) as ReducerState),
+    );
+  });
+
   it('should have action', () => {
-    (useActionContext as jest.Mock).mockReturnValue({
-      editorActionSet: editorActionSetData,
-    });
-    const { result } = renderHook(() => useEditorAction('action-id'));
+    const { result } = renderHook(() =>
+      useEditorAction('story-id', 'action-id'),
+    );
+
     expect(result.current).toStrictEqual({
+      args: { selector: 'html' },
       id: 'action-id',
-      name: 'action-name',
+      name: 'click',
     });
   });
 
   it('should not have action', () => {
-    (useActionContext as jest.Mock).mockReturnValue({
+    useActionContextMock.mockReturnValue(({
       editorActionSet: undefined,
-    });
-    const { result } = renderHook(() => useEditorAction('action-id'));
+    } as unknown) as ReducerState);
+
+    const { result } = renderHook(() =>
+      useEditorAction('story-id', 'action-id'),
+    );
+
+    expect(result.current).toStrictEqual(undefined);
+  });
+
+  it(`should not have action if story don't have actionSet`, () => {
+    const orgEditingActionSet = getOrgEditingActionSet();
+    orgEditingActionSet.id = 'invalid';
+    useActionContextMock.mockImplementation(
+      () =>
+        (({
+          orgEditingActionSet: orgEditingActionSet,
+          stories,
+        } as unknown) as ReducerState),
+    );
+
+    const { result } = renderHook(() =>
+      useEditorAction('story-id', 'action-id'),
+    );
+
     expect(result.current).toStrictEqual(undefined);
   });
 });

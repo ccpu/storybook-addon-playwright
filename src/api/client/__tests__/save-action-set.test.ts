@@ -11,8 +11,8 @@ describe('saveActionSet', () => {
         name: 'action-name',
       },
     ],
+    description: 'action-set-desc',
     id: 'action-set-id',
-    title: 'action-set-desc',
   };
 
   const data: SaveActionSetRequest = {

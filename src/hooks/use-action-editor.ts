@@ -7,7 +7,7 @@ import { saveActionSet } from '../api/client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCurrentStoryData } from './use-current-story-data';
 
-export const useActionSetEditor = (actionSet: ActionSet) => {
+export const useActionEditor = (actionSet: ActionSet) => {
   const dispatch = useActionDispatchContext();
 
   const {

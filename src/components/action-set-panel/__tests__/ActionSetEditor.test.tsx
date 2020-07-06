@@ -1,16 +1,14 @@
-import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import { storyFileInfo } from '../../../../__test_data__/story-file-info';
 import { ActionSetEditor } from '../ActionSetEditor';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionSet } from '../../../typings';
-import { ActionSetEditorIcons } from '../ActionSetEditorIcons';
-import { ListItemWrapper } from '../../common';
+import { ActionSetEditorIconsProps } from '../ActionSetEditorIcons';
+import { ListItemWrapper, InputDialog, Snackbar } from '../../common';
+import { useActionEditor } from '../../../hooks/use-action-editor';
+import { mocked } from 'ts-jest/utils';
 
-// import { getActionSchemaData } from '../../../../__test_data__';
-// import { Snackbar } from '../../common';
-// import { StoryAction, ActionSet } from '../../../typings';
-// import { useActionContext } from '../../../store/actions/ActionContext';
+jest.mock('../../../hooks/use-action-editor');
 
 jest.mock('../../../hooks/use-action-schema-loader', () => ({
   useActionSchemaLoader: () => {
@@ -18,16 +16,26 @@ jest.mock('../../../hooks/use-action-schema-loader', () => ({
   },
 }));
 
+const handleAddActionMock = jest.fn();
+const handleDescriptionChangeMock = jest.fn();
+mocked(useActionEditor).mockImplementation(
+  () =>
+    (({
+      handleAddAction: handleAddActionMock,
+      handleDescriptionChange: handleDescriptionChangeMock,
+    } as unknown) as ReturnType<typeof useActionEditor>),
+);
+
 describe('ActionSetEditor', () => {
   const actionSet: ActionSet = storyFileInfo()['story-id'].actionSets[0];
 
   afterEach(() => {
-    dispatchMock.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should render', () => {
     const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);
-    expect(wrapper).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should handle add action call', () => {
@@ -35,90 +43,41 @@ describe('ActionSetEditor', () => {
 
     const listWrapperProps = wrapper.find(ListItemWrapper).props().icons;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (listWrapperProps as any).props.onAddAction();
+    (listWrapperProps as {
+      props: ActionSetEditorIconsProps;
+    }).props.onAddAction('click actionSet');
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearActionExpansion' },
-    ]);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        action: { id: 'action-id', name: 'click' },
-        type: 'addActionSetAction',
-      },
-    ]);
+    expect(handleAddActionMock).toHaveBeenCalledWith('click actionSet');
   });
 
-  // it('should handle save description', () => {
-  //   const wrapper = shallow(
-  //     <ActionSetEditor onClose={onCloseMock} onSaved={onSaveMock} />,
-  //   );
+  it('should handle actionSet  description', () => {
+    const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);
 
-  //   wrapper.find(ActionToolbar).props().onDescriptionChange('click');
+    const listWrapperProps = wrapper.find(ListItemWrapper).props().icons;
 
-  //   expect(dispatchMock).toHaveBeenCalledWith([
-  //     { description: 'click', type: 'setActionSetDescription' },
-  //   ]);
-  // });
+    (listWrapperProps as {
+      props: ActionSetEditorIconsProps;
+    }).props.onEditDescription();
 
-  // it('should show required props message and close message', () => {
-  //   const data = {
-  //     actionSchema: getActionSchemaData(),
-  //     editorActionSet: {
-  //       actions: [
-  //         {
-  //           id: 'action-id',
-  //           name: 'click',
-  //         },
-  //       ],
-  //       description: 'desc',
-  //       id: 'action-set-id',
-  //     },
-  //   };
+    const inputDialog = wrapper.find(InputDialog);
+    expect(inputDialog.exists()).toBeTruthy();
+    inputDialog.props().onSave('new-desc');
 
-  //   useActionContext.mockReturnValueOnce(data);
+    expect(handleDescriptionChangeMock).toHaveBeenCalledWith('new-desc');
+  });
 
-  //   const wrapper = shallow(
-  //     <ActionSetEditor onClose={onCloseMock} onSaved={onSaveMock} />,
-  //   );
+  it('should handle validation results', () => {
+    mocked(useActionEditor).mockImplementation(
+      () =>
+        (({
+          validationResult: [{ id: 'action-id', required: ['foo'] }],
+        } as unknown) as ReturnType<typeof useActionEditor>),
+    );
 
-  //   wrapper.find(ActionToolbar).props().onSave();
+    const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);
 
-  //   const snackbar = wrapper.find(Snackbar);
+    const snackbar = wrapper.find(Snackbar);
 
-  //   expect(snackbar).toHaveLength(1);
-
-  //   snackbar.props().onClose();
-
-  //   expect(wrapper.find(Snackbar)).toHaveLength(0);
-  // });
-
-  // it('should save if pass validation', () => {
-  //   const data = {
-  //     actionSchema: getActionSchemaData(),
-  //     editorActionSet: {
-  //       actions: [
-  //         {
-  //           args: {
-  //             selector: 'div',
-  //           },
-  //           id: 'action-id',
-  //           name: 'click',
-  //         },
-  //       ] as StoryAction[],
-  //       description: 'desc',
-  //       id: 'action-set-id',
-  //     },
-  //   };
-
-  //   useActionContext.mockReturnValueOnce(data);
-
-  //   const wrapper = shallow(
-  //     <ActionSetEditor onClose={onCloseMock} onSaved={onSaveMock} />,
-  //   );
-
-  //   wrapper.find(ActionToolbar).props().onSave();
-
-  //   expect(onSaveMock).toHaveBeenCalled();
-  // });
+    expect(snackbar.exists()).toBeTruthy();
+  });
 });

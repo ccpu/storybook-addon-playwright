@@ -19,7 +19,7 @@ const useStyles = makeStyles(
       handle: {
         fontSize: 24,
       },
-      iconWrapper: {
+      header: {
         '& svg': {
           '&:hover': {
             color: theme.palette.primary.main,
@@ -51,17 +51,16 @@ const useStyles = makeStyles(
   { name: 'ListItemWrapper' },
 );
 
-export interface ListItemWrapperProps {
+export interface ListItemWrapperProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   draggable?: boolean;
   selected?: boolean;
   tooltip: string;
-  icons: React.ReactNode;
+  icons?: React.ReactNode;
 }
 
-const ListItemWrapper: SFC<
-  ListItemWrapperProps & React.HTMLAttributes<HTMLDivElement>
-> = (props) => {
+const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
   const {
     title,
     draggable,
@@ -94,20 +93,21 @@ const ListItemWrapper: SFC<
         classes.root,
         { [classes.selected]: selected },
         className,
-        'clickable',
       )}
       {...rest}
-      onClick={handleClick}
       title={tooltip}
     >
-      <div className={classes.iconWrapper}>
-        <div className={clsx(classes.column, 'clickable')}>
+      <div
+        onClick={handleClick}
+        className={clsx('clickable', classes.header, 'list-item-header')}
+      >
+        <div className={classes.column}>
           {draggable && <DragHandle />}
           {capitalize(title)}
         </div>
         <div className={classes.column}>{icons}</div>
       </div>
-      <div>{children}</div>
+      {children && <div className="list-item-content">{children}</div>}
     </div>
   );
 };

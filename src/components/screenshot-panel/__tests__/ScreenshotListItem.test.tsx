@@ -7,12 +7,13 @@ import { storyData } from '../../../../__test_data__/story-data';
 import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
-import { ImageDiffMessage, ListItemWrapper } from '../../common';
+import { ImageDiffMessage } from '../../common';
 import { ScreenshotListItemMenu } from '../ScreenshotListItemMenu';
 import { useScreenshotImageDiff } from './../../../hooks/use-screenshot-imageDiff';
 import { ScreenshotPreviewDialog } from '../ScreenshotPreviewDialog';
 import { ScreenshotInfo } from '../ScreenshotInfo';
 import { useEditScreenshot } from '../../../hooks/use-edit-screenshot';
+import { ScreenshotListItemWrapper } from '../ScreenshotListItemWrapper';
 
 jest.mock('../../../hooks/use-screenshot-imageDiff');
 jest.mock('../../../hooks/use-edit-screenshot');
@@ -132,7 +133,7 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    const itemWrapper = wrapper.find(ListItemWrapper);
+    const itemWrapper = wrapper.find(ScreenshotListItemWrapper);
 
     itemWrapper
       .props()
@@ -195,7 +196,7 @@ describe('ScreenshotListItem', () => {
     );
 
     wrapper
-      .find(ListItemWrapper)
+      .find(ScreenshotListItemWrapper)
       .props()
       .onClick({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
 

@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import {
-  ListItemWrapper,
-  BrowserIcon,
-  ImageDiffMessage,
-  Loader,
-} from '../common';
+import { BrowserIcon, ImageDiffMessage, Loader } from '../common';
 import { ScreenshotData, StoryData } from '../../typings';
 import { useScreenshotDispatch } from '../../store/screenshot';
 import { SortableElement } from 'react-sortable-hoc';
@@ -24,6 +19,7 @@ import { ScreenshotInfo } from './ScreenshotInfo';
 import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../api/typings';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
+import { ScreenshotListItemWrapper } from './ScreenshotListItemWrapper';
 
 const useStyles = makeStyles(
   () => {
@@ -145,6 +141,7 @@ function ScreenshotListItem({
   }, [screenshot.hash, testScreenshot]);
 
   const toggleSelectedItem = useCallback(() => {
+    console.log('click');
     if (onClick) onClick(screenshot);
     if (showPreviewOnClick) {
       setShowPreview(!showPreview);
@@ -167,7 +164,7 @@ function ScreenshotListItem({
   }, [loadSetting, screenshot]);
 
   return (
-    <ListItemWrapper
+    <ScreenshotListItemWrapper
       onClick={toggleSelectedItem}
       title={screenshot.title}
       draggable={draggable}
@@ -182,73 +179,72 @@ function ScreenshotListItem({
       style={{
         cursor: 'pointer',
       }}
-      icons={
-        <>
-          <Loader progressSize={20} position="absolute" open={inProgress} />
+    >
+      <>
+        <Loader progressSize={20} position="absolute" open={inProgress} />
 
-          {isPassesImageDiff && (
-            <CheckCircle
-              color="primary"
-              onClick={handleRemoveScreenShotResult}
-              className={classes.indicatorIcon}
-            />
-          )}
-
-          {imageDiffResult && !imageDiffResult.pass && (
-            <Error
-              color="secondary"
-              onClick={handleShowImageDiffResult}
-              className={classes.indicatorIcon}
-            />
-          )}
-
-          <BrowserIcon
-            style={{ height: 16 }}
-            browserType={screenshot.browserType}
+        {isPassesImageDiff && (
+          <CheckCircle
+            color="primary"
+            onClick={handleRemoveScreenShotResult}
+            className={classes.indicatorIcon}
           />
+        )}
 
-          {showImageDiffResult && showImageDiffResultDialog && (
-            <ImageDiffMessage
-              result={imageDiffResult}
-              onClose={handleRemoveScreenShotResult}
-              title={screenshot.title}
-              titleActions={() => (
-                <ScreenshotInfo
-                  color="primary"
-                  size="medium"
-                  screenshotData={screenshot}
-                />
-              )}
-            />
-          )}
-
-          <TestScreenshotErrorSnackbar />
-          <ScreenshotListItemMenu
-            show={(forceShowMenu || showMenu) && !dragStart}
-            screenshot={screenshot}
-            onHide={handleMouseLeave}
-            onRunImageDiff={handleRunDiffTest}
-            imageDiffResult={imageDiffResult}
-            onEditClick={handleEdit}
-            onLoadSettingClick={handleLoadSetting}
-            isEditing={Boolean(editScreenshotState)}
-            {...rest}
+        {imageDiffResult && !imageDiffResult.pass && (
+          <Error
+            color="secondary"
+            onClick={handleShowImageDiffResult}
+            className={classes.indicatorIcon}
           />
+        )}
 
-          {showPreview && showPreviewOnClick && (
-            <ScreenshotPreviewDialog
-              screenShotData={screenshot}
-              storyData={storyData}
-              onClose={toggleSelectedItem}
-              open={true}
-              width="100%"
-              height="100%"
-              activeTab={!isPassesImageDiff ? 'imageDiff' : 'newScreenshot'}
-            />
-          )}
-        </>
-      }
-    ></ListItemWrapper>
+        <BrowserIcon
+          style={{ height: 16 }}
+          browserType={screenshot.browserType}
+        />
+
+        {showImageDiffResult && showImageDiffResultDialog && (
+          <ImageDiffMessage
+            result={imageDiffResult}
+            onClose={handleRemoveScreenShotResult}
+            title={screenshot.title}
+            titleActions={() => (
+              <ScreenshotInfo
+                color="primary"
+                size="medium"
+                screenshotData={screenshot}
+              />
+            )}
+          />
+        )}
+
+        <TestScreenshotErrorSnackbar />
+        <ScreenshotListItemMenu
+          show={(forceShowMenu || showMenu) && !dragStart}
+          screenshot={screenshot}
+          onHide={handleMouseLeave}
+          onRunImageDiff={handleRunDiffTest}
+          imageDiffResult={imageDiffResult}
+          onEditClick={handleEdit}
+          onLoadSettingClick={handleLoadSetting}
+          isEditing={Boolean(editScreenshotState)}
+          {...rest}
+        />
+
+        {showPreview && showPreviewOnClick && (
+          <ScreenshotPreviewDialog
+            screenShotData={screenshot}
+            storyData={storyData}
+            onClose={toggleSelectedItem}
+            open={true}
+            width="100%"
+            height="100%"
+            activeTab={!isPassesImageDiff ? 'imageDiff' : 'newScreenshot'}
+          />
+        )}
+      </>
+    </ScreenshotListItemWrapper>
   );
 }
 const SortableScreenshotListItem = SortableElement(ScreenshotListItem);

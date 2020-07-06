@@ -3,7 +3,7 @@ import {
   ReducerState,
 } from '../../../__manual_mocks__/store/action/context';
 import { getOrgEditingActionSet } from '../../../__test_data__/get-org-editing-actionSet';
-import { useActionSetEditor } from '../use-action-editor';
+import { useActionEditor } from '../use-action-editor';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ActionSet } from '../../typings';
 import { useAsyncApiCall } from '../use-async-api-call';
@@ -46,7 +46,7 @@ describe('useActionSetEditor', () => {
   };
 
   it('should clearActionExpansion on unmount ', () => {
-    const { unmount } = renderHook(() => useActionSetEditor(actionSet));
+    const { unmount } = renderHook(() => useActionEditor(actionSet));
     unmount();
     expect(dispatchMock).toHaveBeenCalledWith([
       { type: 'clearActionExpansion' },
@@ -54,7 +54,7 @@ describe('useActionSetEditor', () => {
   });
 
   it('should add action to actionSet', () => {
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
     result.current.handleAddAction('click');
     expect(dispatchMock).toHaveBeenCalledWith([
       { type: 'clearActionExpansion' },
@@ -70,7 +70,7 @@ describe('useActionSetEditor', () => {
   });
 
   it('should handle save', async () => {
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
     await result.current.handleSave();
     expect(dispatchMock).toHaveBeenCalledWith([
       {
@@ -99,7 +99,7 @@ describe('useActionSetEditor', () => {
     mocked(validateActionList).mockImplementationOnce(() => [
       { id: 'action-id', name: 'click' },
     ]);
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
     await act(async () => {
       await result.current.handleSave();
     });
@@ -121,7 +121,7 @@ describe('useActionSetEditor', () => {
     mocked(validateActionList).mockImplementationOnce(() => [
       { id: 'action-id', name: 'click' },
     ]);
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
 
     await act(async () => {
       await result.current.handleSave();
@@ -149,7 +149,7 @@ describe('useActionSetEditor', () => {
           },
         } as unknown) as ReturnType<typeof useAsyncApiCall>),
     );
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
     await act(async () => {
       await result.current.handleSave();
     });
@@ -165,7 +165,7 @@ describe('useActionSetEditor', () => {
         } as unknown) as ReducerState),
     );
 
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
 
     result.current.handleDescriptionChange('new-dec');
     expect(dispatchMock).toHaveBeenCalledWith([
@@ -179,7 +179,7 @@ describe('useActionSetEditor', () => {
   });
 
   it('should cancel', () => {
-    const { result } = renderHook(() => useActionSetEditor(actionSet));
+    const { result } = renderHook(() => useActionEditor(actionSet));
     result.current.cancelEditActionSet();
     expect(dispatchMock).toHaveBeenCalledWith([
       { storyId: 'story-id', type: 'cancelEditActionSet' },

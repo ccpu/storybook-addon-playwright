@@ -10,6 +10,8 @@ import { ActionSchemaProps } from '../ActionSchemaProps';
 
 const schema = getActionSchemaData();
 
+jest.mock('../../../hooks/use-current-story-data');
+
 jest.mock('../../../hooks/use-editor-action', () => ({
   useEditorAction: jest.fn(),
 }));
@@ -34,6 +36,7 @@ describe('ActionSchemaProp', () => {
         name="click"
         nextPropName="click"
         schema={schema['click']['parameters']['selector']}
+        actionSetId="action-set-id"
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -46,6 +49,7 @@ describe('ActionSchemaProp', () => {
         name="selector"
         nextPropName=""
         schema={schema['click']['parameters']['selector']}
+        actionSetId="action-set-id"
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -59,6 +63,7 @@ describe('ActionSchemaProp', () => {
         name="x"
         nextPropName=""
         schema={{ type: 'number' }}
+        actionSetId="action-set-id"
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -72,6 +77,7 @@ describe('ActionSchemaProp', () => {
         name="y"
         nextPropName=""
         schema={{ type: 'number' }}
+        actionSetId="action-set-id"
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -85,6 +91,7 @@ describe('ActionSchemaProp', () => {
         name="top"
         nextPropName=""
         schema={{ type: 'number' }}
+        actionSetId="action-set-id"
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -98,6 +105,7 @@ describe('ActionSchemaProp', () => {
         name="left"
         nextPropName=""
         schema={{ type: 'number' }}
+        actionSetId="action-set-id"
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -111,6 +119,7 @@ describe('ActionSchemaProp', () => {
         name="x"
         nextPropName=""
         schema={{ type: 'string' }}
+        actionSetId="action-set-id"
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -124,6 +133,7 @@ describe('ActionSchemaProp', () => {
         name="list"
         nextPropName=""
         schema={{ enum: ['bar', 'foo'] }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -138,6 +148,7 @@ describe('ActionSchemaProp', () => {
         name="string"
         nextPropName=""
         schema={{ type: 'string' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -152,6 +163,7 @@ describe('ActionSchemaProp', () => {
         name="num"
         nextPropName=""
         schema={{ type: 'number' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -166,6 +178,7 @@ describe('ActionSchemaProp', () => {
         name="num"
         nextPropName=""
         schema={{ type: 'integer' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -180,6 +193,7 @@ describe('ActionSchemaProp', () => {
         name="bool"
         nextPropName=""
         schema={{ type: 'boolean' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -194,6 +208,7 @@ describe('ActionSchemaProp', () => {
         name="array"
         nextPropName=""
         schema={{ items: { enum: ['bar', 'foo'] }, type: 'array' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -208,6 +223,7 @@ describe('ActionSchemaProp', () => {
         name="array"
         nextPropName=""
         schema={{ type: 'array' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -221,6 +237,7 @@ describe('ActionSchemaProp', () => {
         name="array"
         nextPropName=""
         schema={{ items: { enum: undefined }, type: 'array' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -234,6 +251,7 @@ describe('ActionSchemaProp', () => {
         name="object"
         nextPropName=""
         schema={{ type: 'object' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(ActionSchemaProps);
@@ -247,6 +265,7 @@ describe('ActionSchemaProp', () => {
         name="null"
         nextPropName=""
         schema={{ type: 'null' }}
+        actionSetId="action-set-id"
       />,
     );
     expect(wrapper.type()).toBe(null);
@@ -259,6 +278,7 @@ describe('ActionSchemaProp', () => {
         name="string"
         nextPropName=""
         schema={{ type: 'string' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -267,6 +287,8 @@ describe('ActionSchemaProp', () => {
       {
         actionId: 'action-id',
         actionOptionPath: 'string',
+        actionSetId: 'action-set-id',
+        storyId: 'story-id',
         type: 'toggleSubtitleItem',
       },
     ]);
@@ -279,6 +301,7 @@ describe('ActionSchemaProp', () => {
         name="string"
         nextPropName=""
         schema={{ type: 'string' }}
+        actionSetId="action-set-id"
       />,
     );
     const control = wrapper.find(Control);
@@ -286,7 +309,9 @@ describe('ActionSchemaProp', () => {
     expect(dispatchMock).toHaveBeenCalledWith([
       {
         actionId: 'action-id',
+        actionSetId: 'action-set-id',
         objPath: 'string',
+        storyId: 'story-id',
         type: 'setActionOptions',
         val: 'foo',
       },

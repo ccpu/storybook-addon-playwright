@@ -3,7 +3,7 @@ import { ActionList } from '../actions/ActionList';
 import { ActionSet } from '../../typings';
 import { Snackbar, Loader, ListItemWrapper, InputDialog } from '../common';
 import { makeStyles, Divider } from '@material-ui/core';
-import { useActionSchemaLoader, useActionSetEditor } from '../../hooks';
+import { useActionSchemaLoader, useActionEditor } from '../../hooks';
 import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 
 const useStyles = makeStyles(
@@ -31,7 +31,7 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
     clearValidationResult,
     validationResult,
     cancelEditActionSet,
-  } = useActionSetEditor(actionSet);
+  } = useActionEditor(actionSet);
 
   const classes = useStyles();
 
@@ -49,10 +49,6 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
     [editDescription, handleDescriptionChange],
   );
 
-  const handleClose = useCallback(() => {
-    cancelEditActionSet();
-  }, [cancelEditActionSet]);
-
   return (
     <ListItemWrapper
       tooltip={actionSet.description}
@@ -62,7 +58,7 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
       icons={
         <ActionSetEditorIcons
           onAddAction={handleAddAction}
-          onClose={handleClose}
+          onCancel={cancelEditActionSet}
           onEditDescription={toggleEditDescription}
           onSave={handleSave}
         />

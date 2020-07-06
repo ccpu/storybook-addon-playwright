@@ -15,8 +15,8 @@ describe('action reducer', () => {
       { id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
     ],
+    description: 'desc',
     id: 'action-set-id',
-    title: 'desc',
     ...data,
   });
 
@@ -74,6 +74,38 @@ describe('action reducer', () => {
         ],
         description: 'desc',
         id: 'action-set-id',
+      },
+    ]);
+  });
+
+  it('should add new action-set addActionSet', () => {
+    const result = reducer(
+      { stories: getStoryData() },
+      {
+        actionSet: getActionSetData({ id: 'action-set-id-2' }),
+        new: true,
+        selected: false,
+        storyId: storyId,
+        type: 'addActionSet',
+      },
+    );
+    expect(result.stories[storyId].actionSets).toHaveLength(2);
+    expect(result.stories[storyId].actionSets).toStrictEqual([
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        description: 'desc',
+        id: 'action-set-id',
+      },
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        description: 'desc',
+        id: 'action-set-id-2',
       },
     ]);
   });
@@ -211,44 +243,30 @@ describe('action reducer', () => {
     });
   });
 
-  it('should clearEditorActionSet', () => {
-    const result = reducer(
-      { editorActionSet: getActionSetData() },
-      {
-        type: 'clearEditorActionSet',
-      },
-    );
-    expect(result.editorActionSet).toStrictEqual(undefined);
-  });
-
-  it('should editorActionSet', () => {
-    const result = reducer(
-      { editorActionSet: undefined },
-      {
-        actionSet: getActionSetData(),
-        type: 'editorActionSet',
-      },
-    );
-    expect(result.editorActionSet).toStrictEqual(getActionSetData());
-  });
-
   it('should setActionSetDescription', () => {
     const result = reducer(
-      { editorActionSet: getActionSetData() },
+      { stories: getStoryData() },
       {
-        title: 'desc-2',
+        actionSetId: 'action-set-id',
+        description: 'desc-2',
+        storyId,
         type: 'setActionSetDescription',
       },
     );
-    expect(result.editorActionSet.title).toStrictEqual('desc-2');
+    expect(result.stories[storyId].actionSets[0].description).toStrictEqual(
+      'desc-2',
+    );
   });
 
   it('should saveActionSet (add)', () => {
-    const result = reducer(undefined, {
-      actionSet: getActionSetData(),
-      storyId: storyId,
-      type: 'saveActionSet',
-    });
+    const result = reducer(
+      { stories: getStoryData() },
+      {
+        actionSet: getActionSetData(),
+        storyId: storyId,
+        type: 'saveActionSet',
+      },
+    );
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
@@ -284,18 +302,16 @@ describe('action reducer', () => {
 
   it('should toggleSubtitleItem (add)', () => {
     const result = reducer(
-      {
-        editorActionSet: getActionSetData({
-          actions: [{ id: 'action-id', name: 'action-name' }],
-        }),
-      },
+      { stories: getStoryData() },
       {
         actionId: 'action-id',
         actionOptionPath: 'selector',
+        actionSetId: 'action-set-id',
+        storyId,
         type: 'toggleSubtitleItem',
       },
     );
-    expect(result.editorActionSet.actions[0]).toStrictEqual({
+    expect(result.stories[storyId].actionSets[0].actions[0]).toStrictEqual({
       id: 'action-id',
       name: 'action-name',
       subtitleItems: ['selector'],
@@ -303,59 +319,54 @@ describe('action reducer', () => {
   });
 
   it('should toggleSubtitleItem (remove)', () => {
+    const stories = getStoryData();
     const result = reducer(
       {
-        editorActionSet: getActionSetData({
-          actions: [
-            {
-              id: 'action-id',
-              name: 'action-name',
-              subtitleItems: ['selector'],
-            },
-          ],
-        }),
+        stories: {
+          ...stories,
+          [storyId]: {
+            ...stories[storyId],
+            actionSets: [
+              getActionSetData({
+                actions: [
+                  {
+                    id: 'action-id',
+                    name: 'action-name',
+                    subtitleItems: ['selector'],
+                  },
+                ],
+              }),
+            ],
+          },
+        },
       },
       {
         actionId: 'action-id',
         actionOptionPath: 'selector',
+        actionSetId: 'action-set-id',
+        storyId,
         type: 'toggleSubtitleItem',
       },
     );
-    expect(result.editorActionSet.actions[0]).toStrictEqual({
+    expect(result.stories[storyId].actionSets[0].actions[0]).toStrictEqual({
       id: 'action-id',
       name: 'action-name',
       subtitleItems: [],
     });
   });
-  it('should toggleSubtitleItem do nothing if not exist', () => {
-    const result = reducer(
-      {
-        editorActionSet: getActionSetData(),
-      },
-      {
-        actionId: 'action-id-3',
-        actionOptionPath: 'selector',
-        type: 'toggleSubtitleItem',
-      },
-    );
-    expect(result.editorActionSet.actions[0]).toStrictEqual({
-      id: 'action-id',
-      name: 'action-name',
-    });
-  });
 
   it('should moveActionSetAction', () => {
     const result = reducer(
+      { stories: getStoryData() },
       {
-        editorActionSet: getActionSetData({ id: 'action-id-2' }),
-      },
-      {
+        actionSetId: 'action-set-id',
         newIndex: 0,
         oldIndex: 1,
+        storyId,
         type: 'moveActionSetAction',
       },
     );
-    expect(result.editorActionSet.actions).toStrictEqual([
+    expect(result.stories[storyId].actionSets[0].actions).toStrictEqual([
       { id: 'action-id-2', name: 'action-name-2' },
       { id: 'action-id', name: 'action-name' },
     ]);
@@ -363,30 +374,31 @@ describe('action reducer', () => {
 
   it('should deleteActionSetAction', () => {
     const result = reducer(
-      {
-        editorActionSet: getActionSetData(),
-      },
+      { stories: getStoryData() },
       {
         actionId: 'action-id',
+        actionSetId: 'action-set-id',
+        storyId,
         type: 'deleteActionSetAction',
       },
     );
-    expect(result.editorActionSet.actions).toStrictEqual([
+    expect(result.stories[storyId].actionSets[0].actions).toStrictEqual([
       { id: 'action-id-2', name: 'action-name-2' },
     ]);
   });
 
   it('should addActionSetAction', () => {
     const result = reducer(
-      {
-        editorActionSet: getActionSetData(),
-      },
+      { stories: getStoryData() },
+
       {
         action: { id: 'action-id-3', name: 'action-name' },
+        actionSetId: 'action-set-id',
+        storyId,
         type: 'addActionSetAction',
       },
     );
-    expect(result.editorActionSet.actions).toStrictEqual([
+    expect(result.stories[storyId].actionSets[0].actions).toStrictEqual([
       { id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
       { id: 'action-id-3', name: 'action-name' },
@@ -395,19 +407,123 @@ describe('action reducer', () => {
 
   it('should setActionOptions', () => {
     const result = reducer(
-      {
-        editorActionSet: getActionSetData(),
-      },
+      { stories: getStoryData() },
       {
         actionId: 'action-id',
+        actionSetId: 'action-set-id',
         objPath: 'selector',
+        storyId,
         type: 'setActionOptions',
         val: 'div',
       },
     );
-    expect(result.editorActionSet.actions).toStrictEqual([
+    expect(result.stories[storyId].actionSets[0].actions).toStrictEqual([
       { args: { selector: 'div' }, id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
     ]);
+  });
+
+  it('should cancelEditActionSet (remove if new action-set)', () => {
+    const stories = getStoryData();
+
+    const newActionSet: ActionSet = {
+      actions: [],
+      description: 'action-set-desc',
+      id: 'action-set-id-3',
+    };
+
+    const result = reducer(
+      {
+        orgEditingActionSet: {
+          ...newActionSet,
+          isNew: true,
+        },
+        stories: {
+          ...stories,
+          [storyId]: { ...stories[storyId], actionSets: [newActionSet] },
+        },
+      },
+      {
+        storyId,
+        type: 'cancelEditActionSet',
+      },
+    );
+    expect(result.stories[storyId].actionSets).toStrictEqual([]);
+  });
+
+  it('should cancelEditActionSet (revert change if editing existing action-set)', () => {
+    const stories = getStoryData();
+
+    const result = reducer(
+      {
+        orgEditingActionSet: getActionSetData(),
+        stories: {
+          ...stories,
+          [storyId]: {
+            ...stories[storyId],
+            actionSets: [getActionSetData({ description: 'changed-desc' })],
+          },
+        },
+      },
+      {
+        storyId,
+        type: 'cancelEditActionSet',
+      },
+    );
+    expect(result.stories[storyId].actionSets).toStrictEqual([
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        description: 'desc',
+        id: 'action-set-id',
+      },
+    ]);
+  });
+
+  it('should do nothing when calling cancelEditActionSet but orgEditingActionSet is undefined', () => {
+    const result = reducer(
+      {
+        orgEditingActionSet: undefined,
+        stories: getStoryData(),
+      },
+      {
+        storyId,
+        type: 'cancelEditActionSet',
+      },
+    );
+    expect(result.stories[storyId].actionSets).toStrictEqual([
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        description: 'desc',
+        id: 'action-set-id',
+      },
+    ]);
+  });
+
+  it('should set currentActionSets and orgEditingActionSet when using editActionSet', () => {
+    const result = reducer(
+      {
+        currentActionSets: [],
+        stories: getStoryData(),
+      },
+      {
+        actionSet: getActionSetData(),
+        type: 'editActionSet',
+      },
+    );
+    expect(result.orgEditingActionSet).toStrictEqual({
+      actions: [
+        { id: 'action-id', name: 'action-name' },
+        { id: 'action-id-2', name: 'action-name-2' },
+      ],
+      description: 'desc',
+      id: 'action-set-id',
+    });
+    expect(result.currentActionSets).toStrictEqual(['action-set-id']);
   });
 });

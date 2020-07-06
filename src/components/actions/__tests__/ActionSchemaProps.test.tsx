@@ -7,6 +7,7 @@ describe('ActionSchemaProps', () => {
       <ActionSchemaProps
         actionId="action-id"
         schemaProps={{ name: 'schema-name' }}
+        actionSetId="action-set-id"
       />,
     );
     expect(wrapper.exists()).toBeTruthy();

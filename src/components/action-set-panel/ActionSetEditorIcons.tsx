@@ -11,12 +11,12 @@ import { Loader } from '../common';
 export interface ActionSetEditorIconsProps {
   onSave: () => void;
   onEditDescription: () => void;
-  onClose: () => void;
+  onCancel: () => void;
   onAddAction: (actionName: string) => void;
 }
 
 const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
-  const { onSave, onEditDescription, onClose, onAddAction } = props;
+  const { onSave, onEditDescription, onCancel, onAddAction } = props;
 
   const { loading } = useActionSchemaLoader();
 
@@ -56,7 +56,7 @@ const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
       </IconButton>
       <IconButton
         size="small"
-        className="add-action"
+        className="open-action-menu"
         onClick={handleMenuOpen}
         title="Add Actions"
       >
@@ -74,7 +74,7 @@ const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
         size="small"
         className="Cancel"
         title="Cancel"
-        onClick={onClose}
+        onClick={onCancel}
       >
         <CloseIcon />
       </IconButton>

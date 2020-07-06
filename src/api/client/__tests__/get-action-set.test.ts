@@ -16,8 +16,8 @@ describe('getActionSet', () => {
           name: 'action-name',
         },
       ],
+      description: 'desc',
       id: 'action-set-id',
-      title: 'desc',
     },
   ];
 

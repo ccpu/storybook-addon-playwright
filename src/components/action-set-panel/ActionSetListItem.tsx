@@ -14,8 +14,8 @@ export interface ActionSetActionSetListItemProps extends SortableElementProps {
   item: ActionSet;
   checked?: boolean;
   title: string;
-  isEditing: boolean;
-  hideIcons: boolean;
+  isEditing?: boolean;
+  hideIcons?: boolean;
 }
 
 export function ActionSetListItem({

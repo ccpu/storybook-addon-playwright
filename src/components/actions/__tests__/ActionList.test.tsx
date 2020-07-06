@@ -23,7 +23,7 @@ describe('ActionList', () => {
     expect(wrapper.find(SortableList).exists()).toBeTruthy();
   });
 
-  it('should show error id no actions provided', () => {
+  it('should show error if no actions provided', () => {
     const wrapper = shallow(
       <ActionList
         actionSet={{

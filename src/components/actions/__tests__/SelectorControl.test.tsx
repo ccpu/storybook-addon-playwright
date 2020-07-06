@@ -48,6 +48,7 @@ describe('SelectorControl', () => {
           onAppendValueToTitle={onAppendValueToTitleMock}
           value={'value'}
           isRequired={false}
+          actionSetId="action-set-id"
           {...props}
         />
       </ThemeProvider>
@@ -157,7 +158,9 @@ describe('SelectorControl', () => {
 
     expect(data).toStrictEqual({
       actionId: 'actionId',
+      actionSetId: 'action-set-id',
       objPath: 'options.prop.selector',
+      storyId: 'story-id',
       type: 'setActionOptions',
       val: 'div>div',
     });
@@ -248,14 +251,18 @@ describe('SelectorControl', () => {
 
     expect(data[0][0][0]).toStrictEqual({
       actionId: 'actionId',
+      actionSetId: 'action-set-id',
       objPath: 'options.prop.x',
+      storyId: 'story-id',
       type: 'setActionOptions',
       val: 10,
     });
 
     expect(data[1][0][0]).toStrictEqual({
       actionId: 'actionId',
+      actionSetId: 'action-set-id',
       objPath: 'options.prop.y',
+      storyId: 'story-id',
       type: 'setActionOptions',
       val: 10,
     });

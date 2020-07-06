@@ -25,23 +25,16 @@ describe('ListItemWrapper', () => {
         tooltip={'foo-tooltip'}
         title="foo"
       >
-        <div className="not-clickable">test</div>
+        <div className="content">test</div>
       </ListItemWrapper>,
     );
 
-    const div = wrapper.find('div').first();
+    const header = wrapper.find('.list-item-header');
 
-    div
+    header
       .props()
       .onClick({ target: { classList: { contains: () => true } } } as never);
 
-    expect(onClickMock).toHaveBeenCalledTimes(1);
-
-    div
-      .props()
-      .onClick({ target: { classList: { contains: () => false } } } as never);
-
-    //should not change
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 });

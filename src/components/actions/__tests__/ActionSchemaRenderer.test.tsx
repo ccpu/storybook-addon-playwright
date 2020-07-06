@@ -7,7 +7,11 @@ describe('ActionSchemaRenderer', () => {
   const schema = getActionSchemaData();
   it('should render', () => {
     const wrapper = shallow(
-      <ActionSchemaRenderer schema={schema} actionId="action-id" />,
+      <ActionSchemaRenderer
+        schema={schema}
+        actionId="action-id"
+        actionSetId="action-set-id"
+      />,
     );
     expect(wrapper).toBeTruthy();
   });

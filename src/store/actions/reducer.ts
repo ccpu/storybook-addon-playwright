@@ -55,9 +55,6 @@ export type Action =
       storyId: string;
     }
   | {
-      type: 'clearEditorActionSet';
-    }
-  | {
       type: 'clearCurrentActionSets';
     }
   | {

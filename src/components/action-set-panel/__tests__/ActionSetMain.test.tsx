@@ -86,6 +86,6 @@ describe('ActionSetMain', () => {
     wrapper.setProps({ ['fake']: 'true' });
 
     // should called on mount an story change
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledTimes(2);
   });
 });

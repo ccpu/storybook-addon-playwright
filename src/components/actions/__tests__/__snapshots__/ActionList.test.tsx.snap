@@ -1,12 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActionList should show error id no actions provided 1`] = `
+exports[`ActionList should show error if no actions provided 1`] = `
 <div
   className="ActionSetList-noActionMessage-1"
 >
-  <div>
-    No action to display!
-  </div>
   <div>
     Click the 
     '+'

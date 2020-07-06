@@ -9,30 +9,34 @@ import fetch from 'jest-fetch-mock';
 import { SortableActionSetListItem } from '../ActionSetListItem';
 import { useStoryActionSetsLoader } from '../../../hooks/use-story-action-sets-loader';
 import { useCurrentStoryActionSets } from '../../../hooks/use-current-story-action-sets';
+import { mocked } from 'ts-jest/utils';
 
 jest.mock('../../../hooks/use-current-story-data');
 jest.mock('../../../hooks/use-story-action-sets-loader');
 jest.mock('../../../hooks/use-current-story-action-sets');
 
-(useCurrentStoryActionSets as jest.Mock).mockImplementation(() => ({
+const useCurrentStoryActionSetsData = {
   currentActionSets: ['action-set-id'],
+  state: {},
   storyActionSets: [
     {
       actions: [{ id: 'action-id', name: 'action-name' }],
       id: 'action-set-id',
     },
   ] as ActionSet[],
-}));
+} as ReturnType<typeof useCurrentStoryActionSets>;
+
+mocked(useCurrentStoryActionSets).mockImplementation(
+  () => useCurrentStoryActionSetsData,
+);
 
 describe('ActionSetList', () => {
-  const onEditMock = jest.fn();
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('should render', () => {
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -43,11 +47,12 @@ describe('ActionSetList', () => {
 
   it('should show no data message', () => {
     (useCurrentStoryActionSets as jest.Mock).mockImplementationOnce(() => ({
+      ...useCurrentStoryActionSetsData,
       currentActionSets: [],
       storyActionSets: [] as ActionSet[],
     }));
 
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -59,7 +64,7 @@ describe('ActionSetList', () => {
   });
 
   it('should show list of action sets ', () => {
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -73,7 +78,7 @@ describe('ActionSetList', () => {
   it('should delete action set ', async () => {
     fetch.mockResponseOnce(JSON.stringify('{success:true}'));
 
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -96,7 +101,7 @@ describe('ActionSetList', () => {
   it('should display error if request failed and close after', async () => {
     fetch.mockRejectOnce(() => Promise.reject(new Error('foo')));
 
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -117,7 +122,7 @@ describe('ActionSetList', () => {
   it('should handle edit', async () => {
     fetch.mockRejectOnce(() => Promise.reject(new Error('foo')));
 
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -126,11 +131,11 @@ describe('ActionSetList', () => {
     const list = wrapper.find(SortableActionSetListItem);
     list.props().onEdit({ id: 'action-set-id' } as ActionSet);
 
-    expect(onEditMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
 
   it('should toggle story current action sets ', () => {
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()
@@ -153,7 +158,7 @@ describe('ActionSetList', () => {
       retry,
     }));
 
-    const wrapper = shallow(<ActionSetList onEdit={onEditMock} />, {
+    const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
       .first()

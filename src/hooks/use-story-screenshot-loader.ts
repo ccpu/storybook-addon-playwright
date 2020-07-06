@@ -30,7 +30,13 @@ export const useStoryScreenshotLoader = () => {
   }, [dispatch, makeCall, storyData]);
 
   useEffect(() => {
-    if (screenshotLoaderInProgress || !storyData || error) return;
+    if (
+      screenshotLoaderInProgress ||
+      !storyData ||
+      !storyData.parameters ||
+      error
+    )
+      return;
     if (loadedStoryId.current && loadedStoryId.current === storyData.id) {
       return;
     }

@@ -27,6 +27,7 @@ describe('ActionOptions', () => {
       <ActionOptions
         DragHandle={() => <div />}
         actionId="action-id"
+        actionSetId="action-set-id"
         actionName="click"
       />,
     );
@@ -48,6 +49,7 @@ describe('ActionOptions', () => {
         DragHandle={() => <div />}
         actionId="action-id"
         actionName="click"
+        actionSetId="action-set-id"
       />,
     );
 
@@ -60,6 +62,7 @@ describe('ActionOptions', () => {
         DragHandle={() => <div />}
         actionId="action-id"
         actionName="click"
+        actionSetId="action-set-id"
       />,
     );
 
@@ -79,6 +82,7 @@ describe('ActionOptions', () => {
         DragHandle={() => <div />}
         actionId="action-id"
         actionName="click"
+        actionSetId="action-set-id"
       />,
     );
 
@@ -92,7 +96,13 @@ describe('ActionOptions', () => {
       } as unknown) as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(dispatchMock).toHaveBeenCalledWith([
-      { actionId: 'action-id', type: 'deleteActionSetAction' },
+      {
+        actionId: 'action-id',
+        actionSetId: 'action-set-id',
+
+        storyId: 'story-id',
+        type: 'deleteActionSetAction',
+      },
     ]);
   });
 });

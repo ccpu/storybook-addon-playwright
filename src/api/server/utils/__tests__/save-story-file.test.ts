@@ -19,7 +19,7 @@ describe('saveStoryFile', () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
     await saveStoryFile(fileInfo, {
       'story-id': {
-        actionSets: [{ actions: [], id: 'id', title: 'desc' }],
+        actionSets: [{ actions: [], description: 'desc', id: 'id' }],
       },
     });
 
@@ -35,7 +35,7 @@ describe('saveStoryFile', () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
     await saveStoryFile(fileInfo, {
       'story-id': {
-        actionSets: [{ actions: [], id: 'id', title: 'desc' }],
+        actionSets: [{ actions: [], description: 'desc', id: 'id' }],
       },
       'story-id_2': {},
     });

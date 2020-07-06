@@ -1,4 +1,3 @@
-import { spyOnSaveStoryFile } from '../../../../../__manual_mocks__/utils/save-story-file';
 import { loadStoryData } from '../../utils';
 import { saveScreenshot } from '../save-screenshot';
 import { SaveScreenshotRequest } from '../../../typings';
@@ -8,10 +7,12 @@ import * as diffImageToScreenshot from '../diff-image-to-screenshot';
 import { mocked } from 'ts-jest/utils';
 import { deleteScreenshot } from '../delete-screenshot';
 import { DeviceDescriptor } from '../../../../typings';
+import { saveStoryFile } from '../../utils';
 
 jest.mock('../diff-image-to-screenshot');
 jest.mock('../delete-screenshot');
 jest.mock('../../utils/load-story-data');
+jest.mock('../../utils/save-story-file');
 
 const loadStoryDataMock = mocked(loadStoryData);
 
@@ -71,7 +72,7 @@ describe('saveScreenshot', () => {
     });
     const result = await saveScreenshot(getData());
     expect(result).toStrictEqual({ added: true, index: 0 });
-    expect(spyOnSaveStoryFile).toHaveBeenCalledTimes(1);
+    expect(saveStoryFile).toHaveBeenCalledTimes(1);
   });
 
   it('should not allow duplicate title', async () => {
@@ -139,7 +140,7 @@ describe('saveScreenshot', () => {
 
     const result = await saveScreenshot(getData());
 
-    expect(spyOnSaveStoryFile).toHaveBeenCalledTimes(0);
+    expect(saveStoryFile).toHaveBeenCalledTimes(0);
 
     expect(result).toStrictEqual({
       oldScreenShotTitle: 'screenshot-title',
@@ -157,8 +158,9 @@ describe('saveScreenshot', () => {
       }),
     );
 
-    const data =
-      spyOnSaveStoryFile.mock.calls[0][1]['story-id']['screenshots'][2];
+    const data = mocked(saveStoryFile).mock.calls[0][1]['story-id'][
+      'screenshots'
+    ][2];
 
     expect(data.actions).toBe(undefined);
     expect(data.props).toBe(undefined);
@@ -183,5 +185,23 @@ describe('saveScreenshot', () => {
     });
 
     expect(result).toStrictEqual({ added: true, index: undefined });
+  });
+
+  it('should change actions id to prevent react duplicated key when editing screesnhot', async () => {
+    const data = getData({
+      actions: [{ id: 'action-id', name: 'click' }],
+      updateScreenshot: {
+        browserType: 'chromium',
+        hash: 'hash',
+        title: 'title',
+      },
+    });
+
+    await saveScreenshot(data);
+
+    const newId = mocked(saveStoryFile).mock.calls[0][1]['story-id']
+      .screenshots[1].actions[0].id;
+
+    expect(newId === 'action-id').toBeFalsy();
   });
 });

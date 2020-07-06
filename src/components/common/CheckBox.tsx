@@ -12,7 +12,12 @@ const CheckBox: SFC<CheckBoxProps> = (props) => {
   const { onClick, checked } = props;
 
   return (
-    <IconButton className="check-box" onClick={onClick} size="small">
+    <IconButton
+      className="check-box"
+      color={checked ? 'primary' : 'default'}
+      onClick={onClick}
+      size="small"
+    >
       {checked ? <CheckBoxChecked /> : <CheckBoxUnchecked />}
     </IconButton>
   );

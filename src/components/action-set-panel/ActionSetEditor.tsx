@@ -7,8 +7,15 @@ import { useActionSchemaLoader, useActionEditor } from '../../hooks';
 import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 
 const useStyles = makeStyles(
-  () => {
+  (theme) => {
+    const {
+      palette: { secondary },
+    } = theme;
+
     return {
+      divider: {
+        backgroundColor: secondary.main,
+      },
       root: {
         height: '100%',
       },
@@ -55,6 +62,7 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
       title={actionSet.description}
       draggable={true}
       selected={true}
+      secondaryColor={true}
       icons={
         <ActionSetEditorIcons
           onAddAction={handleAddAction}
@@ -65,7 +73,7 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
       }
     >
       <div className={classes.root}>
-        <Divider />
+        <Divider className={classes.divider} />
         <ActionList actionSet={actionSet} />
 
         {validationResult && (

@@ -8,7 +8,7 @@ import tinycolor from 'tinycolor2';
 const useStyles = makeStyles(
   (theme) => {
     const {
-      palette: { divider, text, primary },
+      palette: { divider, text, primary, secondary },
     } = theme;
 
     return {
@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       header: {
         '& svg': {
           '&:hover': {
-            color: theme.palette.primary.main,
+            color: primary.main,
           },
           fontSize: 18,
         },
@@ -43,8 +43,17 @@ const useStyles = makeStyles(
         position: 'relative',
         zIndex: 10000,
       },
+      secondaryColor: {
+        '& svg': {
+          color: secondary.main,
+        },
+        color: secondary.main,
+      },
       selected: {
         border: '1px solid ' + tinycolor(primary.main).setAlpha(0.6),
+      },
+      selectedSecondary: {
+        border: '1px solid ' + secondary.main,
       },
     };
   },
@@ -58,6 +67,7 @@ export interface ListItemWrapperProps
   selected?: boolean;
   tooltip: string;
   icons?: React.ReactNode;
+  secondaryColor?: boolean;
 }
 
 const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
@@ -70,6 +80,7 @@ const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
     onClick,
     tooltip,
     icons,
+    secondaryColor,
     ...rest
   } = props;
 
@@ -91,7 +102,8 @@ const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
     <div
       className={clsx(
         classes.root,
-        { [classes.selected]: selected },
+        { [classes.selected]: selected && !secondaryColor },
+        { [classes.selectedSecondary]: selected && secondaryColor },
         className,
       )}
       {...rest}
@@ -99,11 +111,21 @@ const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
       onClick={handleClick}
     >
       <div className={clsx('clickable', classes.header, 'list-item-header')}>
-        <div className={clsx(classes.column, 'clickable')}>
+        <div
+          className={clsx(classes.column, 'clickable', {
+            [classes.secondaryColor]: secondaryColor,
+          })}
+        >
           {draggable && <DragHandle />}
           {capitalize(title)}
         </div>
-        <div className={clsx('clickable', classes.column)}>{icons}</div>
+        <div
+          className={clsx('clickable', classes.column, {
+            [classes.secondaryColor]: secondaryColor,
+          })}
+        >
+          {icons}
+        </div>
       </div>
       {children && <div className="list-item-content">{children}</div>}
     </div>

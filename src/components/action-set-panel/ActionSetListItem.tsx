@@ -49,6 +49,7 @@ export function ActionSetListItem({
       tooltip={title}
       title={title}
       draggable={true}
+      selected={checked}
       icons={
         <>
           {!hideIcons && (

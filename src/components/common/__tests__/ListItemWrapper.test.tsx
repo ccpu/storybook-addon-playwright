@@ -29,9 +29,7 @@ describe('ListItemWrapper', () => {
       </ListItemWrapper>,
     );
 
-    const header = wrapper.find('.list-item-header');
-
-    header
+    wrapper
       .props()
       .onClick({ target: { classList: { contains: () => true } } } as never);
 

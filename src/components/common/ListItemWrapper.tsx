@@ -96,16 +96,14 @@ const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
       )}
       {...rest}
       title={tooltip}
+      onClick={handleClick}
     >
-      <div
-        onClick={handleClick}
-        className={clsx('clickable', classes.header, 'list-item-header')}
-      >
-        <div className={classes.column}>
+      <div className={clsx('clickable', classes.header, 'list-item-header')}>
+        <div className={clsx(classes.column, 'clickable')}>
           {draggable && <DragHandle />}
           {capitalize(title)}
         </div>
-        <div className={classes.column}>{icons}</div>
+        <div className={clsx('clickable', classes.column)}>{icons}</div>
       </div>
       {children && <div className="list-item-content">{children}</div>}
     </div>

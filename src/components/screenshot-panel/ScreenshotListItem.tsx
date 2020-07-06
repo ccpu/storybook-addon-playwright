@@ -141,7 +141,6 @@ function ScreenshotListItem({
   }, [screenshot.hash, testScreenshot]);
 
   const toggleSelectedItem = useCallback(() => {
-    console.log('click');
     if (onClick) onClick(screenshot);
     if (showPreviewOnClick) {
       setShowPreview(!showPreview);

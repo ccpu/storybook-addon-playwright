@@ -195,7 +195,9 @@ export function mainReducer(
       return {
         ...state,
         ...newState,
-        currentActionSets: action.selected ? [action.actionSet.id] : [],
+        currentActionSets: action.selected
+          ? [...state.currentActionSets, action.actionSet.id]
+          : state.currentActionSets,
         orgEditingActionSet: action.new
           ? { ...action.actionSet, isNew: true }
           : undefined,

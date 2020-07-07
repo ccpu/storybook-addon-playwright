@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-playwright",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {
@@ -73,8 +73,8 @@
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
     "jest-mock-console": "^1.0.1",
-    "playwright": "^1.1.1",
-    "playwright-core": "^1.1.1",
+    "playwright": "1.1.1",
+    "playwright-core": "^1.2.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "storybook-dark-mode": "^0.6.1",
@@ -94,7 +94,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@playwright-utils/page": "^0.2.1",
-    "playwright-core": "^1.1.1"
+    "playwright-core": "^1.2.0"
   },
   "dependencies": {
     "@dom-utils/selector-path": "^1.0.1",

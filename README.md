@@ -209,10 +209,15 @@ Currently following methods are available:
 
 The following custom methods has been added to the playwright page:
 
+- setSelectorSize
 - scrollSelector
 - dragDropSelector
 - takeScreenshot
 - takeScreenshotOptions
+
+### setSelectorSize
+
+This method fetches an element with `selector`, and set the selector with or height.
 
 ### scrollSelector
 

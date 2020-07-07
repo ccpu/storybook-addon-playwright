@@ -28,6 +28,7 @@ const selectedPageKeys: PageMethodKeys[] = [
   'dragDropSelector',
   'takeScreenshot',
   'takeScreenshotOptions',
+  'setSelectorSize',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [

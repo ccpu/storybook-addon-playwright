@@ -93,7 +93,8 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "playwright-core": "^1.1.1"
+    "playwright-core": "^1.1.1",
+    "@playwright-utils/page": "^0.2.1"
   },
   "dependencies": {
     "@dom-utils/selector-path": "^1.0.1",

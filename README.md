@@ -270,7 +270,8 @@ beforeAll(async () => {
   setConfig({
     storybookEndpoint: `http://localhost:6006/`, // or  `./storybook-static`
     getPage: async (browserType, device) => {
-      const context = await browsers[browserType].newContext({ ...device });
+      const browser = browsers[browserType];
+      const context = await browser.newContext({ ...device });
       const page = await context.newPage();
       return page;
     },

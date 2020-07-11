@@ -9,6 +9,7 @@ jest.mock('fast-glob', () => ({
 
 import { testScreenshots } from '../test-screenshots';
 
+jest.mock('../../configs');
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
 jest.mock('../diff-image-to-screenshot');

@@ -1,8 +1,18 @@
 import { testStoryScreenshots } from '../test-story-screenshots';
+import { getConfigs } from '../../configs';
+import { mocked } from 'ts-jest/utils';
+import { defaultConfigs } from '../../../../../__test_data__/configs';
 
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
 jest.mock('../diff-image-to-screenshot');
+jest.mock('../../configs');
+
+const afterStoryImageDiffMock = jest.fn();
+mocked(getConfigs).mockImplementation(() => ({
+  afterStoryImageDiff: afterStoryImageDiffMock,
+  ...defaultConfigs(),
+}));
 
 describe('testStoryScreenshot', () => {
   beforeEach(() => {
@@ -34,5 +44,26 @@ describe('testStoryScreenshot', () => {
     await expect(
       testStoryScreenshots({ fileName: 'story.ts', storyId: 'story-id-2' }),
     ).rejects.toThrowError('Unable to find story screenshots');
+  });
+
+  it('should call afterAppImageDiffMock with result', async () => {
+    await testStoryScreenshots({
+      fileName: 'story.ts',
+      storyId: 'story-id',
+    });
+    expect(afterStoryImageDiffMock).toHaveBeenCalledWith([
+      {
+        added: true,
+        newScreenshot: 'base64-image',
+        screenshotHash: 'hash',
+        storyId: 'story-id',
+      },
+      {
+        added: true,
+        newScreenshot: 'base64-image',
+        screenshotHash: 'hash-2',
+        storyId: 'story-id',
+      },
+    ]);
   });
 });

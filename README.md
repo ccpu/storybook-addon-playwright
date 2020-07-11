@@ -76,6 +76,29 @@ const middleware = require('storybook-addon-playwright/middleware');
 module.exports = middleware;
 ```
 
+## Events
+
+- beforeScreenshot
+- afterScreenshot
+- afterStoryImageDiff
+- afterAppImageDiff
+
+### beforeScreenshot
+
+Will be called before taking a screenshot, useful to manipulate the page.
+
+### afterScreenshot
+
+Will be called after a screenshot taken.
+
+### afterStoryImageDiff
+
+Will be called after imageDiff process of story screenshots complete.
+
+### afterAppImageDiff
+
+Will be called after imageDiff process of all stories screenshots complete.
+
 ## How it works
 
 This add-on is basically an interface between playwright and storybook stories.

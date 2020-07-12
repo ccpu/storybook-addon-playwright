@@ -9,8 +9,10 @@ jest.mock('../diff-image-to-screenshot');
 jest.mock('../../configs');
 
 const afterStoryImageDiffMock = jest.fn();
+const beforeStoryImageDiffMock = jest.fn();
 mocked(getConfigs).mockImplementation(() => ({
   afterStoryImageDiff: afterStoryImageDiffMock,
+  beforeStoryImageDiff: beforeStoryImageDiffMock,
   ...defaultConfigs(),
 }));
 
@@ -65,5 +67,16 @@ describe('testStoryScreenshot', () => {
         storyId: 'story-id',
       },
     ]);
+  });
+
+  it('should call beforeStoryImageDiffMock with request data', async () => {
+    await testStoryScreenshots({
+      fileName: 'story.ts',
+      storyId: 'story-id',
+    });
+    expect(beforeStoryImageDiffMock).toHaveBeenCalledWith({
+      fileName: 'story.ts',
+      storyId: 'story-id',
+    });
   });
 });

@@ -6,8 +6,9 @@ import {
   ScreenshotPathInfo,
 } from './api/server/utils/get-screenshot-paths';
 import fs from 'fs';
+import { RequestData } from './typings/request';
 
-interface RunImageDiffOptions {
+interface RunImageDiffOptions extends RequestData {
   onScreenshotReady?: (
     buffer: Buffer,
     baselineScreenshotPathInfo: ScreenshotPathInfo,
@@ -22,7 +23,7 @@ interface GetScreenshot {
 }
 
 export const getScreenshots = async (options: RunImageDiffOptions) => {
-  const { onScreenshotReady, playwrightJsonPath } = options;
+  const { onScreenshotReady, playwrightJsonPath, requestId } = options;
 
   const files = fs.existsSync(playwrightJsonPath)
     ? [playwrightJsonPath]
@@ -43,6 +44,7 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
 
           const screenShot = await makeScreenshot(
             {
+              requestId: requestId,
               storyId: story.storyId,
               ...screenShotData,
             },

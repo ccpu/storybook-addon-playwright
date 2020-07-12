@@ -9,8 +9,10 @@ jest.mock('../diff-image-to-screenshot');
 jest.mock('../../configs');
 
 const afterAppImageDiffMock = jest.fn();
+const beforeAppImageDiffMock = jest.fn();
 mocked(getConfigs).mockImplementation(() => ({
   afterAppImageDiff: afterAppImageDiffMock,
+  beforeAppImageDiff: beforeAppImageDiffMock,
   ...defaultConfigs(),
 }));
 
@@ -20,7 +22,7 @@ describe('testAppScreenshot', () => {
   });
 
   it('should have result', async () => {
-    const result = await testAppScreenshots();
+    const result = await testAppScreenshots({ requestId: 'request-id' });
     expect(result).toStrictEqual([
       {
         added: true,
@@ -38,7 +40,7 @@ describe('testAppScreenshot', () => {
   });
 
   it('should call afterAppImageDiffMock with result', async () => {
-    await testAppScreenshots();
+    await testAppScreenshots({ requestId: 'request-id' });
     expect(afterAppImageDiffMock).toHaveBeenCalledWith([
       {
         added: true,
@@ -53,5 +55,12 @@ describe('testAppScreenshot', () => {
         storyId: 'story-id',
       },
     ]);
+  });
+
+  it('should call beforeAppImageDiff with data', async () => {
+    await testAppScreenshots({ requestId: 'request-id' });
+    expect(beforeAppImageDiffMock).toHaveBeenCalledWith({
+      requestId: 'request-id',
+    });
   });
 });

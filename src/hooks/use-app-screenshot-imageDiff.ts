@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useAsyncApiCall } from './use-async-api-call';
 import { testAppScreenshots } from '../api/client';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
+import { nanoid } from 'nanoid';
 
 export const useAppScreenshotImageDiff = () => {
   const { dispatch } = useGlobalScreenshotDispatch();
@@ -14,7 +15,7 @@ export const useAppScreenshotImageDiff = () => {
   } = useAsyncApiCall(testAppScreenshots, false);
 
   const testStoryScreenShots = useCallback(async () => {
-    const results = await makeCall();
+    const results = await makeCall({ requestId: nanoid() });
     if (!(results instanceof Error)) {
       dispatch({
         imageDiffResults: results,

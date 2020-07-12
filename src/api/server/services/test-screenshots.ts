@@ -1,8 +1,9 @@
 import { ImageDiffResult } from '../../typings';
 import { testStoryScreenshots } from './test-story-screenshots';
 import { getStoryPlaywrightData } from '../utils';
+import { RequestData } from '../../../typings/request';
 
-interface TestScreenshotsOptions {
+interface TestScreenshotsOptions extends RequestData {
   fileName: string;
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
 }
@@ -21,6 +22,7 @@ export const testScreenshots = async (
     if (story.data.screenshots && story.data.screenshots.length) {
       const result = await testStoryScreenshots({
         fileName: fileName,
+        requestId: options.requestId,
         storyId: story.storyId,
       });
       results = [...results, ...result];

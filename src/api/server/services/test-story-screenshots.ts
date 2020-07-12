@@ -3,9 +3,10 @@ import { StoryInfo } from '../../../typings';
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../utils';
 import { testScreenshotService } from './test-screenshot-service';
 import { getConfigs } from '../configs';
+import { RequestData } from '../../../typings/request';
 
 export const testStoryScreenshots = async (
-  data: StoryInfo,
+  data: StoryInfo & RequestData,
 ): Promise<ImageDiffResult[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
@@ -18,11 +19,16 @@ export const testStoryScreenshots = async (
 
   const diffs: ImageDiffResult[] = [];
 
+  if (configs.beforeStoryImageDiff) {
+    await configs.beforeStoryImageDiff(data);
+  }
+
   for (let i = 0; i < storyData[data.storyId].screenshots.length; i++) {
     const screenshot = storyData[data.storyId].screenshots[i];
     const result = await testScreenshotService({
       fileName: data.fileName,
       hash: screenshot.hash,
+      requestId: data.requestId,
       storyId: data.storyId,
     });
     diffs.push(result);

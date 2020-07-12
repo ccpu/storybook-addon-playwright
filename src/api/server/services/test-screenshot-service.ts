@@ -3,9 +3,10 @@ import { getScreenshotData } from './utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { makeScreenshot } from './make-screenshot';
 import { ScreenshotInfo, ScreenshotImageData } from '../../../typings';
+import { RequestData } from '../../../typings/request';
 
 export const testScreenshotService = async (
-  data: ScreenshotInfo,
+  data: ScreenshotInfo & RequestData,
 ): Promise<ImageDiffResult> => {
   const screenshotData = await getScreenshotData(data);
 
@@ -22,6 +23,7 @@ export const testScreenshotService = async (
         device: screenshotData.device,
         options: screenshotData.options,
         props: screenshotData.props,
+        requestId: data.requestId,
         storyId: data.storyId,
       },
       true,

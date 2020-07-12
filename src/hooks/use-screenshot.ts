@@ -8,6 +8,7 @@ import { useCurrentActions } from './use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useIframe } from './use-iframe';
+import { nanoid } from 'nanoid';
 
 export const useScreenshot = (
   browserType: BrowserTypes | 'storybook',
@@ -36,6 +37,7 @@ export const useScreenshot = (
       device: deviceInfo,
       options: screenshotOptions,
       props: knobs,
+      requestId: nanoid(),
       storyId: state.storyId,
     });
   }, [

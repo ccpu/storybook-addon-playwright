@@ -1,4 +1,4 @@
-import { GetScreenshotRequest } from '../../typings';
+import { ScreenshotRequest } from '../../typings';
 import { constructStoryUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction, installMouseHelper } from '../utils';
@@ -16,17 +16,17 @@ interface ImageInfo {
 
 async function takeScreenshot(
   page: Page,
-  data: GetScreenshotRequest,
+  data: ScreenshotRequest,
   configs: Config<Page>,
 ) {
   if (configs.beforeScreenshot) {
-    await configs.beforeScreenshot(page, data.browserType);
+    await configs.beforeScreenshot(page, data);
   }
   return await page.screenshot(data.options);
 }
 
 export const makeScreenshot = async (
-  data: GetScreenshotRequest,
+  data: ScreenshotRequest,
   convertToBase64?: boolean,
 ): Promise<ScreenshotImageData> => {
   const configs = getConfigs();
@@ -70,7 +70,7 @@ export const makeScreenshot = async (
   let buffer = await takeScreenshot(page, data, configs);
 
   if (configs.afterScreenshot) {
-    await configs.afterScreenshot(page, data.browserType);
+    await configs.afterScreenshot(page, data);
   }
 
   if (imageInfos.length) {

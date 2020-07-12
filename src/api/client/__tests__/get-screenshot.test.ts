@@ -1,13 +1,13 @@
 import { getScreenshot } from '../get-screenshot';
 import fetch from 'jest-fetch-mock';
-import { GetScreenshotRequest, GetScreenshotResponse } from '../../typings';
+import { ScreenshotRequest, GetScreenshotResponse } from '../../typings';
 
 describe('getSnapShot', () => {
   beforeEach(() => {
     fetch.doMock();
   });
 
-  const reqData: GetScreenshotRequest = {
+  const reqData: ScreenshotRequest = {
     browserType: 'chromium',
     storyId: 'story-id',
   };

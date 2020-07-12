@@ -21,6 +21,7 @@ export const testAppScreenshots = async (
     const file = files[i];
 
     const result = await testScreenshots({
+      disableEvans: true,
       fileName: file,
       requestId: data.requestId,
     });

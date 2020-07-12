@@ -48,7 +48,7 @@ describe('testStoryScreenshot', () => {
     ).rejects.toThrowError('Unable to find story screenshots');
   });
 
-  it('should call afterAppImageDiffMock with result', async () => {
+  it('should call afterAppImageDiff with result', async () => {
     await testStoryScreenshots({
       fileName: 'story.ts',
       storyId: 'story-id',
@@ -69,7 +69,7 @@ describe('testStoryScreenshot', () => {
     ]);
   });
 
-  it('should call beforeStoryImageDiffMock with request data', async () => {
+  it('should call beforeStoryImageDiff with request data', async () => {
     await testStoryScreenshots({
       fileName: 'story.ts',
       storyId: 'story-id',
@@ -78,5 +78,17 @@ describe('testStoryScreenshot', () => {
       fileName: 'story.ts',
       storyId: 'story-id',
     });
+  });
+
+  it('should not call events when disableEvent set to true', async () => {
+    await testStoryScreenshots(
+      {
+        fileName: 'story.ts',
+        storyId: 'story-id',
+      },
+      true,
+    );
+    expect(beforeStoryImageDiffMock).toHaveBeenCalledTimes(0);
+    expect(afterStoryImageDiffMock).toHaveBeenCalledTimes(0);
   });
 });

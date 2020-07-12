@@ -7,6 +7,7 @@ import { RequestData } from '../../../typings/request';
 
 export const testStoryScreenshots = async (
   data: StoryInfo & RequestData,
+  disableEvent = false,
 ): Promise<ImageDiffResult[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
@@ -19,7 +20,7 @@ export const testStoryScreenshots = async (
 
   const diffs: ImageDiffResult[] = [];
 
-  if (configs.beforeStoryImageDiff) {
+  if (configs.beforeStoryImageDiff && !disableEvent) {
     await configs.beforeStoryImageDiff(data);
   }
 
@@ -34,7 +35,7 @@ export const testStoryScreenshots = async (
     diffs.push(result);
   }
 
-  if (configs.afterStoryImageDiff) {
+  if (configs.afterStoryImageDiff && !disableEvent) {
     await configs.afterStoryImageDiff(diffs);
   }
 

@@ -6,6 +6,7 @@ import { RequestData } from '../../../typings/request';
 interface TestScreenshotsOptions extends RequestData {
   fileName: string;
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
+  disableEvans?: boolean;
 }
 
 export const testScreenshots = async (
@@ -20,11 +21,14 @@ export const testScreenshots = async (
   for (let i = 0; i < storiesData.length; i++) {
     const story = storiesData[i];
     if (story.data.screenshots && story.data.screenshots.length) {
-      const result = await testStoryScreenshots({
-        fileName: fileName,
-        requestId: options.requestId,
-        storyId: story.storyId,
-      });
+      const result = await testStoryScreenshots(
+        {
+          fileName: fileName,
+          requestId: options.requestId,
+          storyId: story.storyId,
+        },
+        options.disableEvans,
+      );
       results = [...results, ...result];
     }
   }

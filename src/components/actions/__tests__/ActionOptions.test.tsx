@@ -2,8 +2,9 @@ import { dispatchMock } from '../../../../__manual_mocks__/store/action/context'
 import React from 'react';
 import { ActionOptions } from '../ActionOptions';
 import { mount } from 'enzyme';
-import { ExpansionPanel, Chip, IconButton } from '@material-ui/core';
+import { Chip, IconButton } from '@material-ui/core';
 import { useEditorAction } from '../../../hooks/use-editor-action';
+import Accordion from '@material-ui/core/Accordion';
 
 jest.mock('../../../hooks/use-editor-action', () => ({
   useEditorAction: jest.fn(),
@@ -67,7 +68,7 @@ describe('ActionOptions', () => {
     );
 
     wrapper
-      .find(ExpansionPanel)
+      .find(Accordion)
       .props()
       .onChange({} as React.ChangeEvent<unknown>, true);
 

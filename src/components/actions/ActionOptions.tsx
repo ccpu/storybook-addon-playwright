@@ -1,13 +1,13 @@
 import React, { memo, SFC, useCallback, useState, useEffect } from 'react';
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
   ExpansionPanelDetails,
   makeStyles,
   Chip,
   IconButton,
   Tooltip,
 } from '@material-ui/core';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../utils';
 import { useActionContext, useActionDispatchContext } from '../../store';
@@ -121,7 +121,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
 
   return (
     <div className={classes.root}>
-      <ExpansionPanel
+      <Accordion
         expanded={
           state.expandedActions &&
           state.expandedActions[actionId] === true &&
@@ -134,7 +134,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
           timeout: 100,
         }}
       >
-        <ExpansionPanelSummary
+        <AccordionSummary
           aria-controls="panel1a-content"
           id="panel1a-header"
           classes={{
@@ -182,7 +182,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
               <DeleteIcon className={classes.icon} />
             </IconButton>
           </div>
-        </ExpansionPanelSummary>
+        </AccordionSummary>
         <ExpansionPanelDetails className={classes.detailPanel}>
           {state.expandedActions &&
             state.expandedActions[actionId] &&
@@ -194,7 +194,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
               />
             )}
         </ExpansionPanelDetails>
-      </ExpansionPanel>
+      </Accordion>
     </div>
   );
 });

@@ -1,5 +1,5 @@
 jest.mock('fast-glob', () => ({
-  __esModule: true,
+  __esModule: true as never,
   default: () => {
     return new Promise((resolve) => {
       resolve(['story.ts']);

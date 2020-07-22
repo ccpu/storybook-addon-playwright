@@ -138,6 +138,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
         variant="success"
         open={success}
         onClose={handleSuccessHide}
+        autoHideDuration={null}
         message="All screen shot tests are passed successfully."
       />
     </>

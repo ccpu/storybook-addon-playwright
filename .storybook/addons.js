@@ -6,13 +6,6 @@ import { addParameters } from '@storybook/react';
 
 addParameters({
   darkMode: {
-    // Set the initial theme
-    current: 'dark',
-  },
-});
-
-addParameters({
-  darkMode: {
     // Override the default dark theme
     dark: { ...themes.dark, appBg: 'black' },
     // Override the default light theme

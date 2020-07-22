@@ -7,6 +7,7 @@ import { useGlobalActionDispatch } from './use-global-action-dispatch';
 import { RESET } from '@storybook/addon-knobs/dist/shared';
 import { useActiveBrowsers } from './use-active-browser';
 import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
+import { useAddonState } from './use-addon-state';
 
 interface EditScreenshotState {
   storyId: string;
@@ -19,6 +20,8 @@ export const useEditScreenshot = () => {
   >('edit-story-screenshot', undefined);
 
   const storyData = useCurrentStoryData();
+
+  const { setAddonState, addonState } = useAddonState();
 
   const { setBrowserState } = useActiveBrowsers('dialog');
 
@@ -50,14 +53,26 @@ export const useEditScreenshot = () => {
       setEditScreenshotState({ screenshotData, storyId: storyData.id });
       loadSetting(screenshotData);
       setBrowserState(screenshotData.browserType, 'main', false);
+      if (!addonState.previewPanelEnabled) {
+        setAddonState({
+          ...addonState,
+          previewPanelEnabled: true,
+        });
+      }
+      dispatch({
+        type: 'clearCurrentActionSets',
+      });
     },
     [
+      addonState,
       clearScreenshotEdit,
+      dispatch,
       editScreenshotState,
       loadSetting,
+      setAddonState,
       setBrowserState,
       setEditScreenshotState,
-      storyData,
+      storyData.id,
     ],
   );
 

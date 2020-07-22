@@ -1,17 +1,34 @@
+import { useGlobalActionDispatch } from '../../hooks/use-global-action-dispatch';
 import { useEditScreenshot } from '../use-edit-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useCurrentStoryData } from '../use-current-story-data';
 import { mocked } from 'ts-jest/utils';
 import { StoryData } from '../../typings';
+import { useAddonState } from '../use-addon-state';
 
+jest.mock('../use-global-action-dispatch');
 jest.mock('../use-current-story-data');
 jest.mock('../use-load-screenshot-settings');
+jest.mock('../use-addon-state.ts');
 
 const useCurrentStoryDataMock = mocked(useCurrentStoryData);
 
 describe('useEditScreenshot', () => {
+  const dispatchMock = jest.fn();
+  const setAddonStateMock = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
+    (useGlobalActionDispatch as jest.Mock).mockImplementation(() => ({
+      dispatch: dispatchMock,
+    }));
+
+    (useAddonState as jest.Mock).mockImplementation(() => {
+      return {
+        addonState: {},
+        setAddonState: setAddonStateMock,
+      };
+    });
   });
 
   it('should set edit state', () => {
@@ -30,6 +47,14 @@ describe('useEditScreenshot', () => {
     expect(result.current.editScreenshotState).toStrictEqual({
       screenshotData: { browserType: 'chromium', hash: 'hash', title: 'title' },
       storyId: 'story-id',
+    });
+
+    expect(dispatchMock).toHaveBeenCalledWith({
+      type: 'clearCurrentActionSets',
+    });
+
+    expect(setAddonStateMock).toHaveBeenCalledWith({
+      previewPanelEnabled: true,
     });
   });
 

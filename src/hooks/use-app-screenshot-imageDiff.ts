@@ -12,6 +12,7 @@ export const useAppScreenshotImageDiff = () => {
     makeCall,
     clearError: clearImageDiffError,
     error: storyImageDiffError,
+    ErrorSnackbar,
   } = useAsyncApiCall(testAppScreenshots, false);
 
   const testStoryScreenShots = useCallback(async () => {
@@ -26,6 +27,7 @@ export const useAppScreenshotImageDiff = () => {
   }, [dispatch, makeCall]);
 
   return {
+    ErrorSnackbar,
     clearImageDiffError,
     imageDiffTestInProgress,
     storyImageDiffError,

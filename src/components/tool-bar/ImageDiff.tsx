@@ -63,6 +63,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
   const {
     testStoryScreenShots,
     imageDiffTestInProgress,
+    ErrorSnackbar,
   } = useAppScreenshotImageDiff();
 
   const handleImageDiffClick = useCallback(
@@ -141,6 +142,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
         autoHideDuration={null}
         message="All screen shot tests are passed successfully."
       />
+      <ErrorSnackbar />
     </>
   );
 };

@@ -30,7 +30,7 @@ const useStyles = makeStyles(
         display: 'none',
         position: 'absolute',
         right: 25,
-        top: 10,
+        top: 12,
       },
       visible: {
         display: 'block',

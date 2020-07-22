@@ -142,7 +142,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
         autoHideDuration={null}
         message="All screen shot tests are passed successfully."
       />
-      <ErrorSnackbar />
+      <ErrorSnackbar autoHideDuration={null} />
     </>
   );
 };

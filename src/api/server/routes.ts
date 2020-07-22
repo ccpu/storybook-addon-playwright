@@ -33,8 +33,16 @@ export const asyncCatch = function (func) {
 };
 
 const expressMiddleWare = (router: Partial<Router>) => {
-  router.use(bodyParser.json({ limit: '50mb' }));
-  router.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+  router.use(bodyParser.json({ limit: '500mb' }));
+  router.use(bodyParser.urlencoded({ extended: true, limit: '500mb' }));
+
+  router.use((req, res, next) => {
+    // Set the timeout for all HTTP requests
+    req.setTimeout(0);
+    // Set the server response timeout for all HTTP requests
+    res.setTimeout(0);
+    next();
+  });
 
   router.post(ROUTE.TAKE_SCREENSHOT, asyncCatch(getScreenshot));
   router.post(ROUTE.SAVE_SCREENSHOT, asyncCatch(saveScreenshot));

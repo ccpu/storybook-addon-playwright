@@ -135,6 +135,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
           />
         </IconButton>
       </ClickAwayListener>
+      <ErrorSnackbar />
       <Snackbar
         variant="success"
         open={success}
@@ -142,7 +143,6 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
         autoHideDuration={null}
         message="All screen shot tests are passed successfully."
       />
-      <ErrorSnackbar autoHideDuration={null} />
     </>
   );
 };

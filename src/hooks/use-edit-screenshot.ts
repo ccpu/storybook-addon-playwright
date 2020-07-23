@@ -47,6 +47,9 @@ export const useEditScreenshot = () => {
 
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
+      dispatch({
+        type: 'clearCurrentActionSets',
+      });
       if (editScreenshotState) {
         clearScreenshotEdit();
       }
@@ -59,9 +62,6 @@ export const useEditScreenshot = () => {
           previewPanelEnabled: true,
         });
       }
-      dispatch({
-        type: 'clearCurrentActionSets',
-      });
     },
     [
       addonState,

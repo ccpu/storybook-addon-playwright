@@ -185,4 +185,26 @@ describe('useActionSetEditor', () => {
       { storyId: 'story-id', type: 'cancelEditActionSet' },
     ]);
   });
+
+  it('should not save temp actions', async () => {
+    const { result } = renderHook(() =>
+      useActionEditor({ ...actionSet, temp: true }),
+    );
+    await result.current.handleSave();
+
+    expect(onSaveMock).toHaveBeenCalledTimes(0);
+
+    expect(dispatchMock).toHaveBeenCalledWith([
+      {
+        actionSet: {
+          actions: [],
+          description: 'action-set-desc',
+          id: 'action-set-id',
+          temp: true,
+        },
+        storyId: 'story-id',
+        type: 'saveActionSet',
+      },
+    ]);
+  });
 });

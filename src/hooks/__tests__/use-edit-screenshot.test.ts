@@ -49,10 +49,6 @@ describe('useEditScreenshot', () => {
       storyId: 'story-id',
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith({
-      type: 'clearCurrentActionSets',
-    });
-
     expect(setAddonStateMock).toHaveBeenCalledWith({
       previewPanelEnabled: true,
     });
@@ -77,6 +73,12 @@ describe('useEditScreenshot', () => {
     });
 
     expect(result.current.editScreenshotState).toStrictEqual(undefined);
+    expect(dispatchMock).toHaveBeenCalledWith({
+      actionSetId: 'hash',
+      clearCurrentActionSets: true,
+      storyId: 'story-id',
+      type: 'deleteActionSet',
+    });
   });
 
   it('should clare editScreenshotState on story change', () => {

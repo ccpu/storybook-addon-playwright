@@ -58,12 +58,15 @@ export const useActionEditor = (actionSet: ActionSet) => {
       setValidationResult(validateResult);
       return;
     }
+    let result: void | Error;
 
-    const result = await makeCall({
-      actionSet,
-      fileName: storyData.parameters.fileName as string,
-      storyId: storyData.id,
-    });
+    if (!actionSet.temp) {
+      result = await makeCall({
+        actionSet,
+        fileName: storyData.parameters.fileName as string,
+        storyId: storyData.id,
+      });
+    }
 
     if (!(result instanceof Error)) {
       dispatch({

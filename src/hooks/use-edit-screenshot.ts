@@ -36,6 +36,7 @@ export const useEditScreenshot = () => {
   const clearScreenshotEdit = useCallback(() => {
     dispatch({
       actionSetId: editScreenshotState.screenshotData.hash,
+      clearCurrentActionSets: true,
       storyId: storyData.id,
       type: 'deleteActionSet',
     });
@@ -47,9 +48,6 @@ export const useEditScreenshot = () => {
 
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
-      dispatch({
-        type: 'clearCurrentActionSets',
-      });
       if (editScreenshotState) {
         clearScreenshotEdit();
       }
@@ -66,7 +64,6 @@ export const useEditScreenshot = () => {
     [
       addonState,
       clearScreenshotEdit,
-      dispatch,
       editScreenshotState,
       loadSetting,
       setAddonState,

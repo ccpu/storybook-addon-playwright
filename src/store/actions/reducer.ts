@@ -53,6 +53,7 @@ export type Action =
       type: 'deleteActionSet';
       actionSetId: string;
       storyId: string;
+      clearCurrentActionSets?: boolean;
     }
   | {
       type: 'clearCurrentActionSets';
@@ -157,6 +158,7 @@ const deleteActionSet = (
   state: ReducerState,
   storyId: string,
   actionSetId: string,
+  clearCurrentActionSets?: boolean,
 ): ReducerState => {
   const newState = updateStoryActionSet(
     state,
@@ -168,7 +170,9 @@ const deleteActionSet = (
     ...newState,
     currentActionSets:
       state.currentActionSets &&
-      state.currentActionSets.filter((x) => x !== actionSetId),
+      (clearCurrentActionSets
+        ? []
+        : state.currentActionSets.filter((x) => x !== actionSetId)),
     orgEditingActionSet: undefined,
   };
 };
@@ -196,7 +200,12 @@ export function mainReducer(
         ...state,
         ...newState,
         currentActionSets: action.selected
-          ? [...state.currentActionSets, action.actionSet.id]
+          ? action.actionSet.temp
+            ? [action.actionSet.id]
+            : [
+                ...(state.currentActionSets ? state.currentActionSets : []),
+                action.actionSet.id,
+              ]
           : state.currentActionSets,
         orgEditingActionSet: action.new
           ? { ...action.actionSet, isNew: true }
@@ -212,7 +221,12 @@ export function mainReducer(
     }
 
     case 'deleteActionSet': {
-      return deleteActionSet(state, action.storyId, action.actionSetId);
+      return deleteActionSet(
+        state,
+        action.storyId,
+        action.actionSetId,
+        action.clearCurrentActionSets,
+      );
     }
 
     case 'sortActionSets': {

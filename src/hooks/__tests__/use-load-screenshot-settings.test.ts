@@ -40,8 +40,9 @@ describe('useLoadScreenshotSettings', () => {
     expect(dispatchMock).toHaveBeenCalledWith({
       actionSet: {
         actions: [{ id: 'action-id', name: 'action-name' }],
-        description: 'title actions',
+        description: 'title- actions',
         id: 'hash',
+        temp: true,
       },
       selected: true,
       storyId: 'story-id',

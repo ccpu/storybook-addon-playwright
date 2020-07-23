@@ -84,12 +84,13 @@ describe('action reducer', () => {
       {
         actionSet: getActionSetData({ id: 'action-set-id-2' }),
         new: true,
-        selected: false,
+        selected: true,
         storyId: storyId,
         type: 'addActionSet',
       },
     );
     expect(result.stories[storyId].actionSets).toHaveLength(2);
+    expect(result.currentActionSets).toStrictEqual(['action-set-id-2']);
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
@@ -108,6 +109,21 @@ describe('action reducer', () => {
         id: 'action-set-id-2',
       },
     ]);
+  });
+
+  it('should add new temporary action-set addActionSet', () => {
+    const result = reducer(
+      { currentActionSets: ['action-set-id-5'], stories: getStoryData() },
+      {
+        actionSet: getActionSetData({ id: 'action-set-id-2', temp: true }),
+        new: true,
+        selected: true,
+        storyId: storyId,
+        type: 'addActionSet',
+      },
+    );
+    expect(result.stories[storyId].actionSets).toHaveLength(2);
+    expect(result.currentActionSets).toStrictEqual(['action-set-id-2']);
   });
 
   it('should clearCurrentActionSets', () => {
@@ -138,6 +154,22 @@ describe('action reducer', () => {
       },
       {
         actionSetId: 'action-set-id',
+        storyId: storyId,
+        type: 'deleteActionSet',
+      },
+    );
+    expect(result2.currentActionSets).toStrictEqual([]);
+  });
+
+  it('should deleteActionSet and clear currentActionSets', () => {
+    const result2 = reducer(
+      {
+        currentActionSets: ['action-set-id', 'action-set-id-2'],
+        stories: { [storyId]: { actionSets: [getActionSetData()] } },
+      },
+      {
+        actionSetId: 'action-set-id',
+        clearCurrentActionSets: true,
         storyId: storyId,
         type: 'deleteActionSet',
       },

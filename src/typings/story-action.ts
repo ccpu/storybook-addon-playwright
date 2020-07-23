@@ -21,4 +21,5 @@ export interface ActionSet {
   id: string;
   description: string;
   actions: StoryAction[];
+  temp?: boolean;
 }

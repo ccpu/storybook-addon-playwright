@@ -24,8 +24,6 @@ const ActionProvider: SFC = (props) => {
     'Actions',
   );
 
-  console.log(state);
-
   const { action } = useGlobalActionDispatch();
 
   useEffect(() => {

@@ -61,7 +61,7 @@ export interface ControlFormProps {
   label: string;
   description?: string;
   appendValueToTitle: boolean;
-  onAppendValueToTitle: () => void;
+  onAppendValueToTitle?: () => void;
   isRequired: boolean;
 }
 
@@ -99,19 +99,24 @@ const FormControl: SFC<ControlFormProps> = memo((props) => {
             </Tooltip>
           )}
         </div>
-        <div onClick={onAppendValueToTitle}>
-          <Tooltip
-            placement="top"
-            enterDelay={800}
-            title="Append value to title"
-          >
-            {appendValueToTitle ? (
-              <CheckSelected style={{ opacity: 1 }} className={classes.icons} />
-            ) : (
-              <CheckNotSelected className={classes.icons} />
-            )}
-          </Tooltip>
-        </div>
+        {onAppendValueToTitle && (
+          <div onClick={onAppendValueToTitle}>
+            <Tooltip
+              placement="top"
+              enterDelay={800}
+              title="Append value to title"
+            >
+              {appendValueToTitle ? (
+                <CheckSelected
+                  style={{ opacity: 1 }}
+                  className={classes.icons}
+                />
+              ) : (
+                <CheckNotSelected className={classes.icons} />
+              )}
+            </Tooltip>
+          </div>
+        )}
       </div>
     </div>
   );

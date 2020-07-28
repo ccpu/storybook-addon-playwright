@@ -1,6 +1,6 @@
 import React, { memo, SFC, useCallback, useState, useEffect } from 'react';
 import {
-  ExpansionPanelDetails,
+  AccordionDetails,
   makeStyles,
   Chip,
   IconButton,
@@ -183,7 +183,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
             </IconButton>
           </div>
         </AccordionSummary>
-        <ExpansionPanelDetails className={classes.detailPanel}>
+        <AccordionDetails className={classes.detailPanel}>
           {state.expandedActions &&
             state.expandedActions[actionId] &&
             hasParameters && (
@@ -193,7 +193,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
                 actionSetId={actionSetId}
               />
             )}
-        </ExpansionPanelDetails>
+        </AccordionDetails>
       </Accordion>
     </div>
   );

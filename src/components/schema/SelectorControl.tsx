@@ -1,18 +1,12 @@
 import React, { SFC, memo, useCallback, useState, useEffect } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { ControlProps } from '../../typings';
-import {
-  useControl,
-  useSelectorManager,
-  SelectorType,
-  useCurrentStoryData,
-} from '../../hooks';
+import { useControl, useSelectorManager, SelectorType } from '../../hooks';
 import { FormControl } from './FormControl';
 import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
 import { isValidSelector } from '../../utils';
 import clsx from 'clsx';
 import PointerIcon from '@material-ui/icons/FilterTiltShift';
-import { useActionDispatchContext } from '../../store';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -49,8 +43,7 @@ export interface SelectorControlProps extends ControlProps {
   selectorType: SelectorType;
   isFollowedByPositionProp: boolean;
   fullObjectPath: string;
-  actionId: string;
-  actionSetId: string;
+  onSelectorChange: (objPath: string, val: unknown) => void;
 }
 
 const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
@@ -63,20 +56,15 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     value,
     isFollowedByPositionProp,
     fullObjectPath,
-    actionId,
     isRequired,
-    actionSetId,
+    onSelectorChange,
   } = props;
 
   const [validate, setValidate] = useState(false);
 
-  const story = useCurrentStoryData();
-
   const classes = useStyles();
 
   const [invalidSelector, setInvalidSelector] = useState(false);
-
-  const dispatch = useActionDispatchContext();
 
   const { startSelector } = useSelectorManager();
 
@@ -87,36 +75,14 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
     startSelector({
       onData: (data) => {
         if (selectorType === 'selector') {
-          dispatch({
-            actionId,
-            actionSetId,
-            objPath: fullObjectPath,
-            storyId: story.id,
-            type: 'setActionOptions',
-            val: data.path,
-          });
+          onSelectorChange(fullObjectPath, data.path);
         } else if (isFollowedByPositionProp) {
           const objPath =
             fullObjectPath.length === 1
               ? ''
               : fullObjectPath.slice(0, -2) + '.';
-
-          dispatch({
-            actionId,
-            actionSetId,
-            objPath: objPath + `x`,
-            storyId: story.id,
-            type: 'setActionOptions',
-            val: data.x,
-          });
-          dispatch({
-            actionId,
-            actionSetId,
-            objPath: objPath + `y`,
-            storyId: story.id,
-            type: 'setActionOptions',
-            val: data.y,
-          });
+          onSelectorChange(objPath + `x`, data.x);
+          onSelectorChange(objPath + `y`, data.y);
         } else {
           const key = label === 'top' ? 'y' : label === 'left' ? 'x' : label;
           handleChange(data[key]);
@@ -125,16 +91,13 @@ const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
       type: selectorType,
     });
   }, [
-    actionId,
-    dispatch,
-    fullObjectPath,
-    handleChange,
-    isFollowedByPositionProp,
-    label,
-    selectorType,
     startSelector,
-    story,
-    actionSetId,
+    selectorType,
+    isFollowedByPositionProp,
+    onSelectorChange,
+    fullObjectPath,
+    label,
+    handleChange,
   ]);
 
   useEffect(() => {

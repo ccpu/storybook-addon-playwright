@@ -5,12 +5,6 @@ exports[`ScreenshotOptions should have defaults 1`] = `
   className="makeStyles-root-8"
 >
   <div
-    className="makeStyles-title-9"
-  >
-    Screenshot Options
-  </div>
-  <WithStyles(ForwardRef(Divider)) />
-  <div
     className="makeStyles-content-2"
   >
     <div

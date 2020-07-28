@@ -3,8 +3,8 @@ import React from 'react';
 import { ActionOptions } from '../ActionOptions';
 import { mount } from 'enzyme';
 import { Chip, IconButton } from '@material-ui/core';
-import { useEditorAction } from '../../../hooks/use-editor-action';
 import Accordion from '@material-ui/core/Accordion';
+import { useEditorAction } from '../../../hooks/use-editor-action';
 
 jest.mock('../../../hooks/use-editor-action', () => ({
   useEditorAction: jest.fn(),

@@ -7,6 +7,7 @@ export interface BrowserDevice {
   chromium?: BrowserOptions;
   firefox?: BrowserOptions;
   webkit?: BrowserOptions;
+  all?: BrowserOptions;
 }
 
 export const useBrowserDevice = () => {
@@ -25,5 +26,15 @@ export const useBrowserDevice = () => {
     [browserDevice, setDeviceName],
   );
 
-  return { browserDevice, setBrowserDevice };
+  const setOptions = useCallback(
+    (browserType: keyof BrowserDevice, options: BrowserOptions) => {
+      setDeviceName({
+        ...browserDevice,
+        [browserType]: options,
+      });
+    },
+    [browserDevice, setDeviceName],
+  );
+
+  return { browserDevice, setBrowserDevice, setOptions };
 };

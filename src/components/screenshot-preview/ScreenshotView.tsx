@@ -121,6 +121,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const { browserDevice, setBrowserDevice } = useBrowserDevice();
 
+  console.log(browserDevice);
+
   const { loading, screenshot, getSnapshot, error } = useScreenshot(
     browserType,
     browserDevice[browserType],

@@ -1,55 +1,47 @@
-import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
-import { ActionSchemaProp } from '../ActionSchemaProp';
+import { SchemaProp } from '../SchemaProp';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { getActionSchemaData } from '../../../../__test_data__/action-schema';
-import { useEditorAction } from '../../../hooks/use-editor-action';
 import { SelectorControl } from '../SelectorControl';
 import { Control } from '../Control';
-import { ActionSchemaProps } from '../ActionSchemaProps';
+import { SchemaRenderer } from '../SchemaRenderer';
 
 const schema = getActionSchemaData();
 
-jest.mock('../../../hooks/use-current-story-data');
+describe('SchemaProp', () => {
+  const onChangeMock = jest.fn();
 
-jest.mock('../../../hooks/use-editor-action', () => ({
-  useEditorAction: jest.fn(),
-}));
-
-describe('ActionSchemaProp', () => {
-  const defaultMockData = {
-    args: { selector: 'html' },
-    id: 'action-id',
-    name: 'click',
+  const getVal = () => {
+    return null;
   };
 
   beforeEach(() => {
-    (useEditorAction as jest.Mock).mockImplementation(() => defaultMockData);
-    dispatchMock.mockClear();
+    jest.clearAllMocks();
   });
 
-  it('should not render if useEditorAction return nothing', () => {
-    (useEditorAction as jest.Mock).mockImplementationOnce(() => undefined);
+  it('should render', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
+        schema={schema['click']['parameters']['selector']}
+        onChange={onChangeMock}
         name="click"
         nextPropName="click"
-        schema={schema['click']['parameters']['selector']}
-        actionSetId="action-set-id"
+        getValue={getVal}
       />,
     );
+
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should render selector component when action name is selector', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
+        getValue={getVal}
         name="selector"
         nextPropName=""
         schema={schema['click']['parameters']['selector']}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        onSelectorChange={jest.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -58,12 +50,13 @@ describe('ActionSchemaProp', () => {
 
   it('should render selector component when action name is x and type is number', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="x"
         nextPropName=""
         schema={{ type: 'number' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
+        onSelectorChange={jest.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -72,12 +65,13 @@ describe('ActionSchemaProp', () => {
 
   it('should render selector component when action name is y and type is number', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="y"
         nextPropName=""
         schema={{ type: 'number' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
+        onSelectorChange={jest.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -86,12 +80,13 @@ describe('ActionSchemaProp', () => {
 
   it('should render selector component when action name is top and type is number', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="top"
         nextPropName=""
         schema={{ type: 'number' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
+        onSelectorChange={jest.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -100,12 +95,13 @@ describe('ActionSchemaProp', () => {
 
   it('should render selector component when action name is left and type is number', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="left"
         nextPropName=""
         schema={{ type: 'number' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
+        onSelectorChange={jest.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -114,12 +110,13 @@ describe('ActionSchemaProp', () => {
 
   it('should render selector component when action name is left but type is no number', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="x"
         nextPropName=""
         schema={{ type: 'string' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
+        onSelectorChange={jest.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -128,12 +125,12 @@ describe('ActionSchemaProp', () => {
 
   it('should render select control', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="list"
         nextPropName=""
         schema={{ enum: ['bar', 'foo'] }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -143,12 +140,12 @@ describe('ActionSchemaProp', () => {
 
   it('should render text control', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="string"
         nextPropName=""
         schema={{ type: 'string' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -158,12 +155,12 @@ describe('ActionSchemaProp', () => {
 
   it('should render number control', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="num"
         nextPropName=""
         schema={{ type: 'number' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -173,12 +170,12 @@ describe('ActionSchemaProp', () => {
 
   it('should render number control with integer type', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="num"
         nextPropName=""
         schema={{ type: 'integer' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -188,12 +185,12 @@ describe('ActionSchemaProp', () => {
 
   it('should render boolean type control', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="bool"
         nextPropName=""
         schema={{ type: 'boolean' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -203,12 +200,12 @@ describe('ActionSchemaProp', () => {
 
   it('should render array type control', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="array"
         nextPropName=""
         schema={{ items: { enum: ['bar', 'foo'] }, type: 'array' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -218,12 +215,12 @@ describe('ActionSchemaProp', () => {
 
   it('should not render array type control if schema items not provided', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="array"
         nextPropName=""
         schema={{ type: 'array' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -232,12 +229,12 @@ describe('ActionSchemaProp', () => {
 
   it('should not render array type control if schema enum for items not provided', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="array"
         nextPropName=""
         schema={{ items: { enum: undefined }, type: 'array' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
@@ -246,75 +243,61 @@ describe('ActionSchemaProp', () => {
 
   it('should start recursion if type is object', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="object"
         nextPropName=""
         schema={{ type: 'object' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
-    const control = wrapper.find(ActionSchemaProps);
+    const control = wrapper.find(SchemaRenderer);
     expect(control).toHaveLength(1);
   });
 
   it('should render nothing if types not matched', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="null"
         nextPropName=""
         schema={{ type: 'null' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     expect(wrapper.type()).toBe(null);
   });
 
   it('should handle handleAppendToTile ', () => {
+    const onAppendValueToTitleMock = jest.fn();
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="string"
         nextPropName=""
         schema={{ type: 'string' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
+        onAppendValueToTitle={onAppendValueToTitleMock}
       />,
     );
     const control = wrapper.find(Control);
     control.props().onAppendValueToTitle();
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionId: 'action-id',
-        actionOptionPath: 'string',
-        actionSetId: 'action-set-id',
-        storyId: 'story-id',
-        type: 'toggleSubtitleItem',
-      },
-    ]);
+
+    expect(onAppendValueToTitleMock).toHaveBeenCalledWith('string');
   });
 
   it('should handle change ', () => {
     const wrapper = shallow(
-      <ActionSchemaProp
-        actionId="action-id"
+      <SchemaProp
         name="string"
         nextPropName=""
         schema={{ type: 'string' }}
-        actionSetId="action-set-id"
+        onChange={onChangeMock}
+        getValue={getVal}
       />,
     );
     const control = wrapper.find(Control);
     control.props().onChange('foo');
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionId: 'action-id',
-        actionSetId: 'action-set-id',
-        objPath: 'string',
-        storyId: 'story-id',
-        type: 'setActionOptions',
-        val: 'foo',
-      },
-    ]);
+    expect(onChangeMock).toHaveBeenLastCalledWith('string', 'foo');
   });
 });

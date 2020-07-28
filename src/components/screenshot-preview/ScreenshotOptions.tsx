@@ -58,10 +58,6 @@ const useStyles = makeStyles((theme) =>
       margin: 10,
       marginBottom: 0,
     },
-    title: {
-      fontSize: 20,
-      paddingBottom: 10,
-    },
   }),
 );
 
@@ -231,8 +227,6 @@ const ScreenshotOptions: SFC<ScreenshotOptionsProps> = ({
 
   return (
     <div className={classes.root}>
-      <div className={classes.title}>Screenshot Options</div>
-      <Divider />
       <div className={classes.content}>
         <div className={classes.labelWrapper}>
           <label className={classes.label}>

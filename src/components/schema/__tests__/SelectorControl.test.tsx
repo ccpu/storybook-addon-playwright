@@ -1,4 +1,3 @@
-import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import * as React from 'react';
 import { SelectorControl, SelectorControlProps } from '../SelectorControl';
 import { mount } from 'enzyme';
@@ -20,21 +19,20 @@ describe('SelectorControl', () => {
   const onChangeMock = jest.fn();
   const onAppendValueToTitleMock = jest.fn();
 
+  const onSelectorChangeMock = jest.fn();
+
   beforeEach(() => {
-    onChangeMock.mockClear();
-    dispatchMock.mockClear();
-    onAppendValueToTitleMock.mockClear();
+    jest.clearAllMocks();
   });
 
   afterAll(() => {
     onChangeMock.mockRestore();
-    dispatchMock.mockRestore();
+
     onAppendValueToTitleMock.mockRestore();
   });
 
   const Component = (props: Partial<SelectorControlProps>) => {
     return (
-      // <ActionProvider>
       <ThemeProvider theme={convert(themes.light)}>
         <SelectorControl
           label="selector"
@@ -42,17 +40,15 @@ describe('SelectorControl', () => {
           type="text"
           selectorType="selector"
           fullObjectPath="options.prop.selector"
-          actionId="actionId"
           isFollowedByPositionProp={false}
           appendValueToTitle={false}
           onAppendValueToTitle={onAppendValueToTitleMock}
           value={'value'}
           isRequired={false}
-          actionSetId="action-set-id"
+          onSelectorChange={onSelectorChangeMock}
           {...props}
         />
       </ThemeProvider>
-      // </ActionProvider>
     );
   };
 
@@ -154,16 +150,10 @@ describe('SelectorControl', () => {
       button.props().onClick({} as React.MouseEvent);
     });
 
-    const data = dispatchMock.mock.calls[0][0][0];
-
-    expect(data).toStrictEqual({
-      actionId: 'actionId',
-      actionSetId: 'action-set-id',
-      objPath: 'options.prop.selector',
-      storyId: 'story-id',
-      type: 'setActionOptions',
-      val: 'div>div',
-    });
+    expect(onSelectorChangeMock).toHaveBeenCalledWith(
+      'options.prop.selector',
+      'div>div',
+    );
   });
 
   it('should set x position', () => {
@@ -247,24 +237,7 @@ describe('SelectorControl', () => {
       button.props().onClick({} as React.MouseEvent);
     });
 
-    const data = dispatchMock.mock.calls;
-
-    expect(data[0][0][0]).toStrictEqual({
-      actionId: 'actionId',
-      actionSetId: 'action-set-id',
-      objPath: 'options.prop.x',
-      storyId: 'story-id',
-      type: 'setActionOptions',
-      val: 10,
-    });
-
-    expect(data[1][0][0]).toStrictEqual({
-      actionId: 'actionId',
-      actionSetId: 'action-set-id',
-      objPath: 'options.prop.y',
-      storyId: 'story-id',
-      type: 'setActionOptions',
-      val: 10,
-    });
+    expect(onSelectorChangeMock).toHaveBeenCalledWith('options.prop.x', 10);
+    expect(onSelectorChangeMock).toHaveBeenCalledWith('options.prop.y', 10);
   });
 });

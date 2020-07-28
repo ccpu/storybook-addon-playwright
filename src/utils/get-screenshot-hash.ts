@@ -3,7 +3,7 @@ import {
   StoryAction,
   ScreenshotProp,
   BrowserTypes,
-  DeviceDescriptor,
+  BrowserOptions,
   ScreenshotOptions,
 } from '../typings';
 
@@ -12,20 +12,26 @@ interface ScreenshotHash {
   actions: StoryAction[];
   props: ScreenshotProp[];
   browserType: BrowserTypes;
-  device: DeviceDescriptor;
-  options: ScreenshotOptions;
+  browserOptions: BrowserOptions;
+  screenshotOptions: ScreenshotOptions;
 }
 export const getScreenshotHash: (options: ScreenshotHash) => string = (
   props,
 ) => {
-  const { actions, browserType, device, options, storyId } = props;
+  const {
+    actions,
+    browserType,
+    browserOptions,
+    screenshotOptions,
+    storyId,
+  } = props;
 
   return sum({
     actions,
+    browserOptions,
     browserType,
-    device,
-    options,
     props,
+    screenshotOptions,
     storyId,
   });
 };

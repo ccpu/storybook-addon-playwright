@@ -48,7 +48,7 @@ describe('DeviceList', () => {
     const wrapper = shallow(
       <DeviceList
         onDeviceSelect={onSelectedMock}
-        selectedDevice={{ name: 'iPhone 6' }}
+        selectedDevice={{ deviceName: 'iPhone 6' }}
       />,
     );
 

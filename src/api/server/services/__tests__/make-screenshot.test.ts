@@ -157,7 +157,7 @@ describe('makeScreenshot', () => {
     await makeScreenshot(
       {
         browserType: 'chromium',
-        options: {
+        screenshotOptions: {
           cursor: true,
         },
         storyId: 'story-id',

@@ -2,7 +2,7 @@ import { useCallback, useRef, useEffect } from 'react';
 import { useKnobs } from './use-knobs';
 import { useStorybookState } from '@storybook/api';
 import { getScreenshot } from '../api/client';
-import { BrowserTypes, DeviceDescriptor } from '../typings';
+import { BrowserTypes, BrowserOptions } from '../typings';
 import sum from 'hash-sum';
 import { useCurrentActions } from './use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
@@ -12,7 +12,7 @@ import { nanoid } from 'nanoid';
 
 export const useScreenshot = (
   browserType: BrowserTypes | 'storybook',
-  deviceInfo?: DeviceDescriptor,
+  deviceInfo?: BrowserOptions,
 ) => {
   const knobs = useKnobs();
 
@@ -33,11 +33,11 @@ export const useScreenshot = (
 
     makeCall({
       actions: currentActions,
+      browserOptions: deviceInfo && { ...deviceInfo },
       browserType,
-      device: deviceInfo,
-      options: screenshotOptions,
       props: knobs,
       requestId: nanoid(),
+      screenshotOptions,
       storyId: state.storyId,
     });
   }, [

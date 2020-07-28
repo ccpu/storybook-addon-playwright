@@ -6,7 +6,7 @@ import { Page } from 'playwright-core';
 import * as diffImageToScreenshot from '../diff-image-to-screenshot';
 import { mocked } from 'ts-jest/utils';
 import { deleteScreenshot } from '../delete-screenshot';
-import { DeviceDescriptor } from '../../../../typings';
+import { BrowserOptions } from '../../../../typings';
 import { saveStoryFile } from '../../utils';
 
 jest.mock('../diff-image-to-screenshot');
@@ -37,12 +37,12 @@ describe('saveScreenshot', () => {
         },
       ],
       base64: 'base64-image',
+      browserOptions: { deviceName: 'iPhone 6' },
       browserType: 'chromium',
-      device: { name: 'iPhone 6' },
       fileName: 'story.ts',
       hash: 'hash',
-      options: { fullPage: true },
       props: [{ name: 'prop', value: 'value' }],
+      screenshotOptions: { fullPage: true },
       storyId: 'story-id',
       title: 'screenshot-title',
       ...data,
@@ -152,7 +152,7 @@ describe('saveScreenshot', () => {
     await saveScreenshot(
       getData({
         actions: [],
-        device: {} as DeviceDescriptor,
+        browserOptions: {} as BrowserOptions,
         hash: 'hash-3',
         props: [],
       }),
@@ -164,7 +164,7 @@ describe('saveScreenshot', () => {
 
     expect(data.actions).toBe(undefined);
     expect(data.props).toBe(undefined);
-    expect(data.device).toBe(undefined);
+    expect(data.browserOptions).toBe(undefined);
   });
 
   it('should update screenshot', async () => {
@@ -187,7 +187,7 @@ describe('saveScreenshot', () => {
     expect(result).toStrictEqual({ added: true, index: undefined });
   });
 
-  it('should change actions id to prevent react duplicated key when editing screesnhot', async () => {
+  it('should change actions id to prevent react duplicated key when editing screenshot', async () => {
     const data = getData({
       actions: [{ id: 'action-id', name: 'click' }],
       updateScreenshot: {

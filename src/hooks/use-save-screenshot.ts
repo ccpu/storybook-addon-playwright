@@ -3,7 +3,7 @@ import { useKnobs } from './use-knobs';
 import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
-import { BrowserTypes, DeviceDescriptor } from '../typings';
+import { BrowserTypes, BrowserOptions } from '../typings';
 import { getScreenshotHash } from '../utils';
 import { SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
@@ -53,29 +53,33 @@ export const useSaveScreenshot = () => {
       browserType: BrowserTypes,
       title: string,
       base64String?: string,
-      deviceDescriptor?: DeviceDescriptor,
+      deviceDescriptor?: BrowserOptions,
     ) => {
+      const browserOptions = deviceDescriptor
+        ? { ...deviceDescriptor }
+        : undefined;
+
       const hash = getScreenshotHash({
         actions: currentActions,
+        browserOptions,
         browserType,
-        device: deviceDescriptor,
-        options: screenshotOptions,
         props,
+        screenshotOptions: screenshotOptions,
         storyId: storyData.id,
       });
 
       const data: SaveScreenshotRequest = {
         actions: currentActions,
         base64: base64String,
+        browserOptions,
         browserType,
-        device: deviceDescriptor,
         fileName: storyData.parameters.fileName,
         hash,
-        options:
+        props: props,
+        screenshotOptions:
           screenshotOptions && Object.keys(screenshotOptions).length
             ? screenshotOptions
             : undefined,
-        props: props,
         storyId: storyData.id,
         title,
         updateScreenshot:

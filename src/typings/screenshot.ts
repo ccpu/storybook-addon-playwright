@@ -1,4 +1,4 @@
-import { Page } from 'playwright-core';
+import { Page, BrowserContextOptions } from 'playwright-core';
 import { StoryAction } from './story-action';
 import { StoryInfo } from './story-info';
 
@@ -10,16 +10,8 @@ export interface ScreenshotOptions extends PageScreenshotOptions {
   cursor?: boolean;
 }
 
-export interface DeviceDescriptor {
-  name: string;
-  viewport?: {
-    width: number;
-    height: number;
-  };
-  userAgent?: string;
-  deviceScaleFactor?: number;
-  isMobile?: boolean;
-  hasTouch?: boolean;
+export interface BrowserOptions extends BrowserContextOptions {
+  deviceName: string;
 }
 
 export interface PageInfo<T extends unknown = Page> {
@@ -48,8 +40,8 @@ export interface ScreenshotSetting {
   browserType: BrowserTypes;
   props?: ScreenshotProp[];
   actions?: StoryAction[];
-  device?: DeviceDescriptor;
-  options?: ScreenshotOptions;
+  browserOptions?: BrowserOptions;
+  screenshotOptions?: ScreenshotOptions;
 }
 
 export interface ScreenshotData extends ScreenshotOptions, ScreenshotSetting {

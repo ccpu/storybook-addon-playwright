@@ -22,7 +22,7 @@ async function takeScreenshot(
   if (configs.beforeScreenshot) {
     await configs.beforeScreenshot(page, data);
   }
-  return await page.screenshot(data.options);
+  return await page.screenshot(data.screenshotOptions);
 }
 
 export const makeScreenshot = async (
@@ -37,7 +37,7 @@ export const makeScreenshot = async (
     data.props,
   );
 
-  const page = await configs.getPage(data.browserType, data.device);
+  const page = await configs.getPage(data.browserType, data.browserOptions);
 
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');
@@ -47,7 +47,7 @@ export const makeScreenshot = async (
 
   await page.goto(url);
 
-  if (data.options && data.options.cursor) {
+  if (data.screenshotOptions && data.screenshotOptions.cursor) {
     await installMouseHelper(page);
   }
 
@@ -75,7 +75,9 @@ export const makeScreenshot = async (
 
   if (imageInfos.length) {
     const format =
-      data && data.options && data.options.type ? data.options.type : 'png';
+      data && data.screenshotOptions && data.screenshotOptions.type
+        ? data.screenshotOptions.type
+        : 'png';
 
     const screenshotOptionAction = data.actions.find(
       (a) => a.name === 'takeScreenshotOptions',

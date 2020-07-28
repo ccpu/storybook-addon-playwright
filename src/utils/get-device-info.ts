@@ -1,12 +1,12 @@
 import { DeviceDescriptors } from 'playwright-core/lib/deviceDescriptors';
-import { DeviceDescriptor } from '../typings';
+import { BrowserOptions } from '../typings';
 
 export const getDeviceInfo = (
   deviceName?: string,
-): DeviceDescriptor | undefined => {
+): BrowserOptions | undefined => {
   if (!deviceName) return undefined;
-  const device = DeviceDescriptors[deviceName] as DeviceDescriptor;
+  const device = DeviceDescriptors[deviceName] as BrowserOptions;
   if (!device) return undefined;
-  device.name = deviceName;
+  device.deviceName = deviceName;
   return device;
 };

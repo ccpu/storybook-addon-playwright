@@ -72,15 +72,15 @@ export const saveScreenshot = async (
               return x;
             })
           : undefined,
-      browserType: data.browserType,
-      device:
-        data.device && Object.keys(data.device).length
-          ? data.device
+      browserOptions:
+        data.browserOptions && Object.keys(data.browserOptions).length
+          ? data.browserOptions
           : undefined,
+      browserType: data.browserType,
       hash: data.hash,
       index: index,
-      options: data.options,
       props: data.props && data.props.length > 0 ? data.props : undefined,
+      screenshotOptions: data.screenshotOptions,
       title: data.title,
     });
     result.index = index;

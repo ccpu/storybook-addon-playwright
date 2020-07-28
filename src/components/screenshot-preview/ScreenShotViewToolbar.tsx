@@ -1,7 +1,7 @@
 import React, { SFC } from 'react';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
-import { BrowserTypes, DeviceDescriptor } from '../../typings';
+import { BrowserTypes, BrowserOptions } from '../../typings';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { DeviceList } from '../common';
 import RefreshIcon from '@material-ui/icons/RefreshOutlined';
@@ -53,7 +53,7 @@ export interface PreviewItemProps {
   showSaveButton: boolean;
   onRefresh: () => void;
   onDeviceSelect?: (deviceName: string) => void;
-  selectedDevice?: DeviceDescriptor;
+  selectedDevice?: BrowserOptions;
   onFullScreen: () => void;
 }
 

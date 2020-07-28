@@ -48,13 +48,14 @@ describe('useSaveScreenshot', () => {
     expect(globalDispatchMock).toHaveBeenCalledWith({
       screenshot: {
         actions: [],
+        browserOptions: undefined,
         browserType: 'chromium',
         device: undefined,
         fileName: './stories/story.ts',
-        hash: 'a48dba58',
+        hash: '02347032',
         index: undefined,
-        options: undefined,
         props: undefined,
+        screenshotOptions: undefined,
         storyId: 'story-id',
         title: 'title',
         updateScreenshot: false,

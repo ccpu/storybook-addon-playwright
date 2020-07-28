@@ -19,11 +19,11 @@ export const testScreenshotService = async (
     snapshotData = await makeScreenshot(
       {
         actions: screenshotData.actions,
+        browserOptions: screenshotData.browserOptions,
         browserType: screenshotData.browserType,
-        device: screenshotData.device,
-        options: screenshotData.options,
         props: screenshotData.props,
         requestId: data.requestId,
+        screenshotOptions: screenshotData.screenshotOptions,
         storyId: data.storyId,
       },
       true,

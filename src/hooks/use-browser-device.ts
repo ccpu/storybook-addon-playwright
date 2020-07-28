@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 import { useGlobalState } from './use-global-state';
-import { BrowserTypes, DeviceDescriptor } from '../typings';
+import { BrowserTypes, BrowserOptions } from '../typings';
 import { getDeviceInfo } from '../utils';
 
 export interface BrowserDevice {
-  chromium?: DeviceDescriptor;
-  firefox?: DeviceDescriptor;
-  webkit?: DeviceDescriptor;
+  chromium?: BrowserOptions;
+  firefox?: BrowserOptions;
+  webkit?: BrowserOptions;
 }
 
 export const useBrowserDevice = () => {

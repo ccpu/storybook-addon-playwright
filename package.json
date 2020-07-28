@@ -91,7 +91,9 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "prepublish": "npm run lint && npm run build",
-    "release": "release-it --dry-run"
+    "release:dry": "release-it --dry-run",
+    "release:beta-dry": "release-it --dry-run --preRelease=beta",
+    "release:alpha-dry": "release-it --dry-run --preRelease=alpha"
   },
   "license": "MIT",
   "peerDependencies": {

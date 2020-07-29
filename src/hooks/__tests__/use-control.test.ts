@@ -41,7 +41,7 @@ describe('useControl', () => {
       useControl({ ...getControlOptions(), type: 'number' }),
     );
     expect(Control).toBeDefined();
-    expect(knob.value).toBe(0);
+    expect(knob.value).toBe('');
   });
 
   it('should return boolean control', () => {

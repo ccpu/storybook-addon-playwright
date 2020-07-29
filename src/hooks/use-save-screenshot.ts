@@ -3,7 +3,7 @@ import { useKnobs } from './use-knobs';
 import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
-import { BrowserTypes, BrowserOptions } from '../typings';
+import { BrowserTypes, BrowserContextOptions } from '../typings';
 import { getScreenshotHash } from '../utils';
 import { SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
@@ -53,7 +53,7 @@ export const useSaveScreenshot = () => {
       browserType: BrowserTypes,
       title: string,
       base64String?: string,
-      deviceDescriptor?: BrowserOptions,
+      deviceDescriptor?: BrowserContextOptions,
     ) => {
       const browserOptions = deviceDescriptor
         ? { ...deviceDescriptor }

@@ -1,12 +1,22 @@
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
 import { useStorybookApi } from '@storybook/api';
 import { useCallback } from 'react';
-import { ScreenshotData } from '../typings';
+import { ScreenshotData, ScreenshotOptions } from '../typings';
 import { RESET, CHANGE } from '@storybook/addon-knobs/dist/shared';
 import { useCurrentStoryData } from './use-current-story-data';
+import { useBrowserOptions, BrowsersOption } from './use-browser-options';
+import { useScreenshotOptions } from './use-screenshot-options';
 
-export const useLoadScreenshotSettings = () => {
+interface ReturnType {
+  browserOptions: BrowsersOption;
+  loadSetting: (screenshotData: ScreenshotData, force?: boolean) => void;
+  screenshotOptions: ScreenshotOptions;
+}
+export const useLoadScreenshotSettings = (): ReturnType => {
   const { dispatch } = useGlobalActionDispatch();
+
+  const { setBrowserOptions, browserOptions } = useBrowserOptions();
+  const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
 
   const api = useStorybookApi();
 
@@ -30,7 +40,7 @@ export const useLoadScreenshotSettings = () => {
     [dispatch, storyData],
   );
   const loadSetting = useCallback(
-    (screenshotData: ScreenshotData) => {
+    (screenshotData: ScreenshotData, force = false) => {
       api.emit(RESET);
       if (screenshotData.props) {
         screenshotData.props.forEach((prop) => {
@@ -38,9 +48,15 @@ export const useLoadScreenshotSettings = () => {
         });
       }
       dispatchActions(screenshotData);
+      if (screenshotData.browserOptions || force) {
+        setBrowserOptions('all', screenshotData.browserOptions);
+      }
+      if (screenshotData.screenshotOptions || force) {
+        setScreenshotOptions(screenshotData.screenshotOptions);
+      }
     },
-    [api, dispatchActions],
+    [api, dispatchActions, setBrowserOptions, setScreenshotOptions],
   );
 
-  return { loadSetting };
+  return { browserOptions, loadSetting, screenshotOptions };
 };

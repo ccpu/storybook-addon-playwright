@@ -1,16 +1,8 @@
-import {
-  createProgram,
-  SchemaGenerator,
-  createParser,
-  createFormatter,
-  Config,
-  Definition,
-} from 'ts-to-json';
 import { Mouse } from 'playwright-core';
-import { join } from 'path';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
-import { PageMethodKeys } from './typings/playwright-page';
+import { PageMethodKeys } from './typings/types';
+import { generateSchema } from './generate-schema';
 
 type MouseKeys = keyof Mouse;
 
@@ -44,54 +36,28 @@ let selectedKeys = [
   ...selectedMouseKeys.map((x) => 'mouse.' + x),
 ] as string[];
 
-export let _schema: ActionSchemaList = undefined;
-
-export const generateSchema = (path: string) => {
-  const type = 'PlaywrightPage';
-
+export const getSchema = (path: string) => {
   const pageMethods = getConfigs().pageMethods;
   if (pageMethods) {
     selectedKeys = [...new Set(selectedKeys.concat(pageMethods))];
   }
 
-  const config: Config = {
-    encodeRefs: false,
-    expose: 'none',
-    handleUnknownTypes: true,
+  const result = generateSchema({
     includeProps: selectedKeys,
-    jsDoc: 'extended',
-    maxDepth: 5,
     path,
-    skipParseFiles: ['lib.dom.d.ts'],
-    skipParseTypes: ['HTMLElementTagNameMap[K]', 'Promise', 'JSHandle'],
-    skipTypeCheck: true,
-    topRef: true,
-    type,
-  };
+    type: 'PlaywrightPage',
+  });
 
-  const program = createProgram(config);
-
-  const generator: SchemaGenerator = new SchemaGenerator(
-    program,
-    createParser(program, config),
-    createFormatter(config),
-  );
-
-  const result = generator.createSchema(type);
-
-  return (result.definitions[type] as Definition)
-    .properties as ActionSchemaList;
+  return result as ActionSchemaList;
 };
 
 export const getActionsSchema = (path?: string) => {
-  if (!path) path = join(__dirname, '/typings/playwright-page.d.ts');
-
-  if (!_schema) _schema = generateSchema(path);
+  let schema = getSchema(path);
 
   const customSchema = getConfigs().customActionSchema;
 
   if (customSchema) {
-    _schema = { ..._schema, ...customSchema };
+    schema = { ...schema, ...customSchema };
   }
-  return _schema;
+  return schema;
 };

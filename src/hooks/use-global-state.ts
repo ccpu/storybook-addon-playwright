@@ -6,7 +6,6 @@ import {
   SetStateAction,
 } from 'react';
 import addons from '@storybook/addons';
-import useMount from 'react-use/lib/useMount';
 
 export const makeGlobalStateId = (id: string) => {
   return `__playwright_${id}`;
@@ -39,7 +38,9 @@ export const useGlobalState = <T>(
   defaultState?: T,
   persistence?: boolean,
 ): [T, Dispatch<SetStateAction<T>>] => {
-  const [globalState, setState] = useState<T>(defaultState);
+  const [globalState, setState] = useState<T>(
+    getData(id, persistence, defaultState),
+  );
 
   const setGlobalState = useCallback(
     (state: T) => {
@@ -49,11 +50,6 @@ export const useGlobalState = <T>(
     },
     [id, persistence],
   );
-
-  useMount(() => {
-    const storedData = getData(id, persistence, defaultState);
-    setState(storedData);
-  });
 
   useEffect(() => {
     const chanel = addons.getChannel();

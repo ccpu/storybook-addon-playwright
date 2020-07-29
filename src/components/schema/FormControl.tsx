@@ -5,10 +5,14 @@ import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
 import { Tooltip } from '@material-ui/core';
 import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';
 import CheckNotSelected from '@material-ui/icons/RadioButtonUncheckedRounded';
+import clsx from 'clsx';
 
 const useStyles = makeStyles(
-  () => {
+  (theme) => {
     return {
+      active: {
+        color: theme.palette.primary.main,
+      },
       controlWrap: {
         flex: 2,
       },
@@ -63,6 +67,7 @@ export interface ControlFormProps {
   appendValueToTitle: boolean;
   onAppendValueToTitle?: () => void;
   isRequired: boolean;
+  active?: boolean;
 }
 
 const FormControl: SFC<ControlFormProps> = memo((props) => {
@@ -73,13 +78,14 @@ const FormControl: SFC<ControlFormProps> = memo((props) => {
     onAppendValueToTitle,
     children,
     isRequired,
+    active,
   } = props;
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <div className={classes.labelWrap}>
+      <div className={clsx(classes.labelWrap, { [classes.active]: active })}>
         <span className="form-label">
           {capitalize(label)}
           {isRequired && <span style={{ marginLeft: 2 }}>*</span>}

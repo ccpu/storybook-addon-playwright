@@ -52,7 +52,7 @@ describe('useSaveScreenshot', () => {
         browserType: 'chromium',
         device: undefined,
         fileName: './stories/story.ts',
-        hash: '02347032',
+        hash: '5e9bb8e7',
         index: undefined,
         props: undefined,
         screenshotOptions: undefined,

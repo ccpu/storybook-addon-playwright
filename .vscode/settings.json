@@ -3,11 +3,13 @@
     "Resizer",
     "Toolshown",
     "autorun",
+    "dblclick",
     "draggables",
     "droppable",
     "mobx",
     "normalazed",
     "scrl",
-    "scrollbar"
+    "scrollbar",
+    "tippyjs"
   ]
 }

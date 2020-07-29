@@ -25,7 +25,10 @@ import { mocked } from 'ts-jest/utils';
 import { executeAction } from '../../utils/execute-action';
 import { installMouseHelper } from '../../utils/install-mouse-helper';
 import { Page } from 'playwright-core';
-import { TakeScreenshotOptionsParams, TakeScreenshotParams } from '../typings';
+import {
+  TakeScreenshotOptionsParams,
+  TakeScreenshotParams,
+} from '../typings/types';
 
 jest.mock('../../configs');
 jest.mock('../../utils/execute-action');
@@ -156,10 +159,10 @@ describe('makeScreenshot', () => {
   it('should install mouse helper', async () => {
     await makeScreenshot(
       {
-        browserType: 'chromium',
-        screenshotOptions: {
+        browserOptions: {
           cursor: true,
         },
+        browserType: 'chromium',
         storyId: 'story-id',
       },
       true,

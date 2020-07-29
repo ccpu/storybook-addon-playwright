@@ -1,5 +1,5 @@
 import { useGlobalState } from './use-global-state';
-import { ScreenshotData, BrowserTypes } from '../typings';
+import { ScreenshotData, BrowserTypes, ScreenshotOptions } from '../typings';
 import { useCallback, useEffect, useRef } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useStorybookApi } from '@storybook/api';
@@ -8,10 +8,13 @@ import { RESET } from '@storybook/addon-knobs/dist/shared';
 import { useActiveBrowsers } from './use-active-browser';
 import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 import { useAddonState } from './use-addon-state';
+import { BrowserContextOptions } from 'playwright-core';
 
 interface EditScreenshotState {
   storyId: string;
   screenshotData: ScreenshotData;
+  currentScreenshotOptions?: ScreenshotOptions;
+  currentBrowserOptions?: BrowserContextOptions;
 }
 
 export const useEditScreenshot = () => {
@@ -25,7 +28,11 @@ export const useEditScreenshot = () => {
 
   const { setBrowserState } = useActiveBrowsers('dialog');
 
-  const { loadSetting } = useLoadScreenshotSettings();
+  const {
+    loadSetting,
+    screenshotOptions,
+    browserOptions,
+  } = useLoadScreenshotSettings();
 
   const { dispatch } = useGlobalActionDispatch();
 
@@ -41,17 +48,40 @@ export const useEditScreenshot = () => {
       type: 'deleteActionSet',
     });
     api.emit(RESET);
+
+    loadSetting(
+      {
+        browserOptions: editScreenshotState.currentBrowserOptions,
+        browserType: editScreenshotState.screenshotData.browserType,
+        hash: editScreenshotState.screenshotData.hash,
+        screenshotOptions: editScreenshotState.currentScreenshotOptions,
+        title: editScreenshotState.screenshotData.title,
+      },
+      true,
+    );
     if (!unmounted.current) {
       setEditScreenshotState(undefined);
     }
-  }, [api, dispatch, editScreenshotState, setEditScreenshotState, storyData]);
+  }, [
+    api,
+    dispatch,
+    editScreenshotState,
+    loadSetting,
+    setEditScreenshotState,
+    storyData.id,
+  ]);
 
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
       if (editScreenshotState) {
         clearScreenshotEdit();
       }
-      setEditScreenshotState({ screenshotData, storyId: storyData.id });
+      setEditScreenshotState({
+        currentBrowserOptions: browserOptions.all,
+        currentScreenshotOptions: screenshotOptions,
+        screenshotData,
+        storyId: storyData.id,
+      });
       loadSetting(screenshotData);
       setBrowserState(screenshotData.browserType, 'main', false);
       if (!addonState.previewPanelEnabled) {
@@ -63,9 +93,11 @@ export const useEditScreenshot = () => {
     },
     [
       addonState,
+      browserOptions.all,
       clearScreenshotEdit,
       editScreenshotState,
       loadSetting,
+      screenshotOptions,
       setAddonState,
       setBrowserState,
       setEditScreenshotState,

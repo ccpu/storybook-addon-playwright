@@ -21,3 +21,4 @@ export * from './ImageDiffPreview';
 export * from './ImageDiffPreviewDialog';
 export * from './BrowserIcon';
 export * from './CommonProvider';
+export * from './SchemaFormLoader';

@@ -6,10 +6,11 @@ import { Toolbar as CommonToolbar } from '../common';
 import RefreshSharp from '@material-ui/icons/RefreshSharp';
 import { BrowserIconButton } from '../common/BrowserIconButton';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
-import { ScreenshotOptionsPopover } from './ScreenshotOptionsPopover';
-import { useScreenshotOptions } from '../../hooks';
+import { useBrowserOptions } from '../../hooks';
 import { Tooltip } from '@material-ui/core';
 import NearMeIcon from '@material-ui/icons/NearMe';
+import { BrowserOptions } from './BrowserOptions';
+import { ScreenshotOptions } from './ScreenshotOptions';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -32,18 +33,15 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
     onSave,
   } = props;
 
-  const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
+  const { setBrowserOptions, browserOptions } = useBrowserOptions();
 
   const enableDisableCursor = useCallback(() => {
-    setScreenshotOptions({
-      ...(screenshotOptions ? screenshotOptions : {}),
-      cursor: !screenshotOptions
-        ? true
-        : screenshotOptions.cursor
-        ? undefined
-        : true,
+    const enable = browserOptions.all && browserOptions.all.cursor;
+    setBrowserOptions('all', {
+      ...browserOptions.all,
+      cursor: enable ? undefined : true,
     });
-  }, [screenshotOptions, setScreenshotOptions]);
+  }, [browserOptions, setBrowserOptions]);
 
   return (
     <CommonToolbar border={isVertical ? undefined : ['top']}>
@@ -61,14 +59,14 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
         <IconButton
           className="cursor-button"
           onClick={enableDisableCursor}
-          active={screenshotOptions && screenshotOptions.cursor}
+          active={browserOptions.all && browserOptions.all.cursor}
         >
           <Tooltip
             placement="top"
             title={
-              screenshotOptions && screenshotOptions.cursor
-                ? `Hide cursor`
-                : `Show cursor`
+              browserOptions.all && browserOptions.all.cursor
+                ? 'Hide cursor'
+                : 'Show cursor'
             }
           >
             <NearMeIcon style={{ transform: 'rotate(-80deg)' }} />
@@ -85,10 +83,9 @@ const Toolbar: SFC<ToolbarProps> = (props) => {
           </Tooltip>
         </IconButton>
 
-        <ScreenshotOptionsPopover
-          onChange={setScreenshotOptions}
-          options={screenshotOptions}
-        />
+        <ScreenshotOptions />
+
+        <BrowserOptions browserType="all" />
         <IconButton onClick={onCLose}>
           <Tooltip placement="top" title="Close panel">
             <CloseOutlined />

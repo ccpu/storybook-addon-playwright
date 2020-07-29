@@ -57,9 +57,8 @@ const playwright = require('playwright');
   };
   setConfig({
     storybookEndpoint: `http://localhost:6006/`,
-    getPage: async (browserType, device) => {
-      const context = await browser[browserType].newContext({ ...device });
-      const page = await context.newPage();
+    getPage: async (browserType, options) => {
+      const page = await browser[browserType].newPage(options);
       return page;
     },
     afterScreenshot: async (page) => {
@@ -171,9 +170,8 @@ async function addBox(position) {
   };
   setConfig({
     storybookEndpoint: `http://localhost:6006/`,
-    getPage: async (browserType, device) => {
-      const context = await browser[browserType].newContext({ ...device });
-      const page = await context.newPage();
+    getPage: async (browserType, options) => {
+      const page = await browser[browserType].newPage(options);
       page.addBox = addBox;
       return page;
     },
@@ -292,10 +290,8 @@ beforeAll(async () => {
   };
   setConfig({
     storybookEndpoint: `http://localhost:6006/`, // or  `./storybook-static`
-    getPage: async (browserType, device) => {
-      const browser = browsers[browserType];
-      const context = await browser.newContext({ ...device });
-      const page = await context.newPage();
+    getPage: async (browserType, options) => {
+      const page = await browser[browserType].newPage(options);
       return page;
     },
     afterScreenshot: async (page) => {

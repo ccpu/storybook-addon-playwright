@@ -7,7 +7,10 @@ import { extendPage } from '@playwright-utils/page';
 import { Page } from 'playwright-core';
 import joinImage from 'join-images';
 import sharp from 'sharp';
-import { TakeScreenshotParams, TakeScreenshotOptionsParams } from './typings';
+import {
+  TakeScreenshotParams,
+  TakeScreenshotOptionsParams,
+} from './typings/types';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -47,7 +50,7 @@ export const makeScreenshot = async (
 
   await page.goto(url);
 
-  if (data.screenshotOptions && data.screenshotOptions.cursor) {
+  if (data.browserOptions && data.browserOptions.cursor) {
     await installMouseHelper(page);
   }
 

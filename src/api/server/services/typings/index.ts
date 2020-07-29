@@ -1,1 +1,1 @@
-export * from './playwright-page';
+export * from './types';

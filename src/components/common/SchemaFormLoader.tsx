@@ -1,0 +1,109 @@
+import React, { SFC, useEffect, useState, useCallback } from 'react';
+import { makeStyles, Divider, Button } from '@material-ui/core';
+import { MemoizedSchemaRenderer } from '../schema';
+import { Config } from 'ts-to-json/dist/src/Config';
+import { useAsyncApiCall } from '../../hooks';
+import { Loader } from './Loader';
+import { Definition } from 'ts-to-json';
+import * as immutableObject from 'object-path-immutable';
+import { getSchemaClient } from '../../api/client/get-schema-client';
+
+const useStyles = makeStyles(
+  () => {
+    return {
+      footer: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        paddingTop: 2,
+      },
+      main: {
+        fontSize: 14,
+        height: 400,
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        padding: 5,
+        paddingRight: 20,
+      },
+    };
+  },
+  { name: 'SchemaFormLoader' },
+);
+
+export interface SchemaFormProps extends Partial<Config> {
+  type: string;
+  defaultData?: unknown;
+  onSave: (data: unknown) => void;
+}
+
+const SchemaFormLoader: SFC<SchemaFormProps> = ({
+  defaultData,
+  onSave,
+  ...rest
+}) => {
+  const classes = useStyles();
+
+  const [tempOptions, setTempOptions] = useState(defaultData);
+
+  const [reset, setReset] = useState(false);
+
+  const { makeCall, result: schema, inProgress } = useAsyncApiCall(
+    getSchemaClient,
+  );
+
+  useEffect(() => {
+    if (schema || inProgress) return;
+    makeCall(rest);
+  }, [inProgress, makeCall, rest, schema]);
+
+  const handleSave = useCallback(() => {
+    onSave(tempOptions);
+  }, [onSave, tempOptions]);
+
+  const handleClear = useCallback(() => {
+    onSave({});
+    setTempOptions({});
+    setReset(true);
+  }, [onSave]);
+
+  const handleChange = useCallback(
+    (path, val) => {
+      const options = immutableObject.set(tempOptions, path, val);
+      setTempOptions(options);
+    },
+    [tempOptions],
+  );
+
+  const getValue = (path) => {
+    const val = immutableObject.get(tempOptions, path);
+    return val;
+  };
+
+  useEffect(() => {
+    if (reset) setReset(false);
+  }, [reset]);
+
+  return (
+    <>
+      <div className={classes.main}>
+        <Loader open={schema === undefined} position="relative" />
+        {schema && !reset && (
+          <MemoizedSchemaRenderer
+            schemaProps={schema as Definition}
+            onChange={handleChange}
+            getValue={getValue}
+          />
+        )}
+      </div>
+      <Divider />
+      <div className={classes.footer}>
+        <Button onClick={handleClear}>Clear</Button>
+        <Button onClick={handleSave}>Save</Button>
+      </div>
+    </>
+  );
+};
+
+SchemaFormLoader.displayName = 'SchemaFormLoader';
+
+const MemoizedSchemaFormLoader = React.memo(SchemaFormLoader);
+export { SchemaFormLoader, MemoizedSchemaFormLoader };

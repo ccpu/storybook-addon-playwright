@@ -2,14 +2,23 @@ import { useGlobalActionDispatch } from '../../hooks/use-global-action-dispatch'
 import { useEditScreenshot } from '../use-edit-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useCurrentStoryData } from '../use-current-story-data';
-import { mocked } from 'ts-jest/utils';
 import { StoryData } from '../../typings';
 import { useAddonState } from '../use-addon-state';
+import { useLoadScreenshotSettings } from '../use-load-screenshot-settings';
+import { mocked } from 'ts-jest/utils';
 
 jest.mock('../use-global-action-dispatch');
 jest.mock('../use-current-story-data');
 jest.mock('../use-load-screenshot-settings');
 jest.mock('../use-addon-state.ts');
+jest.mock('../use-browser-options.ts');
+
+const loadSettingMock = jest.fn();
+mocked(useLoadScreenshotSettings).mockImplementation(() => ({
+  browserOptions: { all: {} },
+  loadSetting: loadSettingMock,
+  screenshotOptions: {},
+}));
 
 const useCurrentStoryDataMock = mocked(useCurrentStoryData);
 
@@ -18,6 +27,7 @@ describe('useEditScreenshot', () => {
   const setAddonStateMock = jest.fn();
 
   beforeEach(() => {
+    loadSettingMock.mockClear();
     jest.clearAllMocks();
     (useGlobalActionDispatch as jest.Mock).mockImplementation(() => ({
       dispatch: dispatchMock,
@@ -45,6 +55,8 @@ describe('useEditScreenshot', () => {
     });
 
     expect(result.current.editScreenshotState).toStrictEqual({
+      currentBrowserOptions: {},
+      currentScreenshotOptions: {},
       screenshotData: { browserType: 'chromium', hash: 'hash', title: 'title' },
       storyId: 'story-id',
     });
@@ -54,7 +66,7 @@ describe('useEditScreenshot', () => {
     });
   });
 
-  it('should cleat edit state', () => {
+  it('should clear edit state', () => {
     const { result } = renderHook(() => useEditScreenshot());
 
     act(() => {
@@ -79,6 +91,17 @@ describe('useEditScreenshot', () => {
       storyId: 'story-id',
       type: 'deleteActionSet',
     });
+    expect(loadSettingMock).toHaveBeenNthCalledWith(
+      3,
+      {
+        browserOptions: {},
+        browserType: 'chromium',
+        hash: 'hash',
+        screenshotOptions: {},
+        title: 'title',
+      },
+      true,
+    );
   });
 
   it('should clare editScreenshotState on story change', () => {

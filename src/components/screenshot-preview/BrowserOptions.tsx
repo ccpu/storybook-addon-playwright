@@ -1,70 +1,34 @@
 import React, { SFC, useCallback } from 'react';
-import { ActionProvider } from '../../store/actions';
-import { MemoizedSchemaRenderer } from '../schema';
-import { Definition } from 'ts-to-json';
-import * as immutableObject from 'object-path-immutable';
-import { useBrowserDevice } from '../../hooks/';
-import { BrowserOptions } from '../../typings';
+import { useBrowserOptions, BrowsersOption } from '../../hooks/';
+import { OptionPopover } from './OptionPopover';
+import SettingIcon from '@material-ui/icons/Settings';
+import { MemoizedSchemaFormLoader } from '../common';
 
-const options = {
-  deviceScaleFactor: {
-    type: 'number',
-  },
-  hasTouch: {
-    type: 'boolean',
-  },
-  isMobile: {
-    type: 'boolean',
-  },
-  javaScriptEnabled: {
-    type: 'boolean',
-  },
-  userAgent: {
-    type: 'string',
-  },
-  viewPort: {
-    properties: {
-      height: {
-        type: 'number',
-      },
-      width: {
-        type: 'number',
-      },
+export interface BrowserOptionsProps {
+  browserType: keyof BrowsersOption;
+}
+
+const BrowserOptions: SFC<BrowserOptionsProps> = ({ browserType }) => {
+  const { setBrowserOptions, browserOptions } = useBrowserOptions();
+
+  const handleSave = useCallback(
+    (data) => {
+      setBrowserOptions(browserType, data);
     },
-    required: ['width', 'height'],
-    type: 'object',
-  },
-};
-
-// export interface BrowserOptionsProps {
-//   schema: ActionSchema;
-// }
-
-const BrowserOptions: SFC = () => {
-  const { setOptions, browserDevice } = useBrowserDevice();
-
-  const handleChange = useCallback(
-    (path, val) => {
-      // const options = immutableObject.set(browserDevice['all'], path, val);
-      // setOptions('all', options as BrowserOptions);
-      // console.log(immutableObject.set({}, path, val));
-      // console.log(path, val);
-    },
-    [browserDevice, setOptions],
+    [browserType, setBrowserOptions],
   );
 
-  const getValue = useCallback(() => {
-    console.log();
-  }, []);
+  if (!browserOptions) return null;
 
   return (
-    <ActionProvider>
-      <MemoizedSchemaRenderer
-        schemaProps={options as Definition}
-        onChange={handleChange}
-        getValue={getValue}
+    <OptionPopover title="Browser Options" Icon={SettingIcon}>
+      <MemoizedSchemaFormLoader
+        onSave={handleSave}
+        type={'BrowserOptions'}
+        excludeProps={['extraHTTPHeaders', 'logger']}
+        defaultData={browserOptions && browserOptions[browserType]}
       />
-    </ActionProvider>
+    </OptionPopover>
   );
 };
 

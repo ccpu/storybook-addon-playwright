@@ -5,11 +5,11 @@ import { Menu } from '@material-ui/core';
 import { DeviceListItem } from './DeviceListItem';
 import { Tooltip } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
-import { BrowserOptions } from '../../typings';
+import { BrowserContextOptions } from '../../typings';
 
 export interface DeviceListProps {
   onDeviceSelect?: (deviceName?: string) => void;
-  selectedDevice?: BrowserOptions;
+  selectedDevice?: BrowserContextOptions;
 }
 
 const DeviceList: SFC<DeviceListProps> = (props) => {
@@ -40,7 +40,12 @@ const DeviceList: SFC<DeviceListProps> = (props) => {
 
   return (
     <>
-      <IconButton onClick={handleClick} active={Boolean(selectedDevice)}>
+      <IconButton
+        onClick={handleClick}
+        active={
+          selectedDevice && devices.indexOf(selectedDevice.deviceName) !== -1
+        }
+      >
         <Tooltip
           placement="top"
           title={

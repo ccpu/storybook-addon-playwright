@@ -15,6 +15,7 @@ import {
   updateScreenshot,
   deleteStoryScreenshot,
   changeScreenShotIndex,
+  getSchemaController,
 } from './controller';
 import { Router, Response, Request } from 'express';
 
@@ -59,6 +60,7 @@ const expressMiddleWare = (router: Partial<Router>) => {
   router.post(ROUTE.UPDATE_SCREENSHOT, asyncCatch(updateScreenshot));
   router.post(ROUTE.DELETE_STORY_SCREENSHOT, asyncCatch(deleteStoryScreenshot));
   router.post(ROUTE.CHANGE_SCREENSHOT_INDEX, asyncCatch(changeScreenShotIndex));
+  router.post(ROUTE.GET_SCHEMA, asyncCatch(getSchemaController));
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   router.use((error, _req, res, next) => {

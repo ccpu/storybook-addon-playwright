@@ -2,8 +2,12 @@ import { dispatchMock } from '../../../__manual_mocks__/hooks/use-global-action-
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useLoadScreenshotSettings } from '../use-load-screenshot-settings';
 import { ScreenshotData } from '../../typings';
+import { useScreenshotOptions } from '../use-screenshot-options';
+import { useBrowserOptions } from '../use-browser-options';
 
 jest.mock('../use-current-story-data');
+jest.mock('../use-browser-options.ts');
+jest.mock('../use-screenshot-options.ts');
 
 jest.unmock('@storybook/api');
 
@@ -21,17 +25,20 @@ describe('useLoadScreenshotSettings', () => {
     emitMock.mockClear();
   });
 
-  const getData = () => {
+  const getData = (opt?: Partial<ScreenshotData>) => {
     const data: ScreenshotData = {
       actions: [{ id: 'action-id', name: 'action-name' }],
+
       browserType: 'chromium',
       hash: 'hash',
+
       title: 'title',
+      ...opt,
     };
     return data;
   };
 
-  it('should load ', () => {
+  it('should load', () => {
     const { result } = renderHook(() => useLoadScreenshotSettings());
 
     act(() => {
@@ -75,6 +82,33 @@ describe('useLoadScreenshotSettings', () => {
     expect(emitMock).toHaveBeenCalledWith('storybookjs/knobs/change', {
       name: 'prop',
       value: 'prop-val',
+    });
+  });
+
+  it('should set screenshotOptions and browserOptions', () => {
+    const setScreenshotOptionsMock = jest.fn();
+    const setBrowserOptionsMock = jest.fn();
+    (useScreenshotOptions as jest.Mock).mockImplementation(() => ({
+      setScreenshotOptions: setScreenshotOptionsMock,
+    }));
+    (useBrowserOptions as jest.Mock).mockImplementation(() => ({
+      setBrowserOptions: setBrowserOptionsMock,
+    }));
+
+    const { result } = renderHook(() => useLoadScreenshotSettings());
+
+    act(() => {
+      const data = getData({
+        browserOptions: { deviceName: 'iphone' },
+        screenshotOptions: { fullPage: true },
+      });
+      delete data.actions;
+      result.current.loadSetting(data);
+    });
+
+    expect(setScreenshotOptionsMock).toHaveBeenCalledWith({ fullPage: true });
+    expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', {
+      deviceName: 'iphone',
     });
   });
 });

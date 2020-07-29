@@ -1,4 +1,7 @@
-import { Page, BrowserContextOptions } from 'playwright-core';
+import {
+  Page,
+  BrowserContextOptions as PlaywrightBrowserContextOptions,
+} from 'playwright-core';
 import { StoryAction } from './story-action';
 import { StoryInfo } from './story-info';
 
@@ -6,12 +9,11 @@ export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
 type PageScreenshotOptions = Parameters<Page['screenshot']>[0];
 
-export interface ScreenshotOptions extends PageScreenshotOptions {
-  cursor?: boolean;
-}
+export type ScreenshotOptions = PageScreenshotOptions;
 
-export interface BrowserOptions extends BrowserContextOptions {
-  deviceName: string;
+export interface BrowserContextOptions extends PlaywrightBrowserContextOptions {
+  cursor?: boolean;
+  deviceName?: string;
 }
 
 export interface PageInfo<T extends unknown = Page> {
@@ -40,7 +42,7 @@ export interface ScreenshotSetting {
   browserType: BrowserTypes;
   props?: ScreenshotProp[];
   actions?: StoryAction[];
-  browserOptions?: BrowserOptions;
+  browserOptions?: BrowserContextOptions;
   screenshotOptions?: ScreenshotOptions;
 }
 

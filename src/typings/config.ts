@@ -1,7 +1,7 @@
 import { Page } from 'playwright-core';
 import { ActionSchemaList } from './action-schema';
-import { BrowserTypes, BrowserOptions } from './screenshot';
-import { PageMethodKeys } from '../api/server/services/typings';
+import { BrowserTypes, BrowserContextOptions } from './screenshot';
+import { PageMethodKeys } from '../api/server/services/typings/types';
 import {
   DiffDirection,
   ImageDiffResult,
@@ -14,7 +14,10 @@ export interface Config<T extends unknown = Page> {
   storybookEndpoint: string;
   customActionSchema?: ActionSchemaList;
   pageMethods?: PageMethodKeys[];
-  getPage: (browserType: BrowserTypes, options: BrowserOptions) => Promise<T>;
+  getPage: (
+    browserType: BrowserTypes,
+    options: BrowserContextOptions,
+  ) => Promise<T>;
   beforeScreenshot?: (page: T, data: ScreenshotRequest) => Promise<void>;
   afterScreenshot?: (page: T, data: ScreenshotRequest) => Promise<void>;
   beforeStoryImageDiff?: (data: StoryInfo & RequestData) => Promise<void>;

@@ -6,7 +6,7 @@ import { Page } from 'playwright-core';
 import * as diffImageToScreenshot from '../diff-image-to-screenshot';
 import { mocked } from 'ts-jest/utils';
 import { deleteScreenshot } from '../delete-screenshot';
-import { BrowserOptions } from '../../../../typings';
+import { BrowserContextOptions } from '../../../../typings';
 import { saveStoryFile } from '../../utils';
 
 jest.mock('../diff-image-to-screenshot');
@@ -152,7 +152,7 @@ describe('saveScreenshot', () => {
     await saveScreenshot(
       getData({
         actions: [],
-        browserOptions: {} as BrowserOptions,
+        browserOptions: {} as BrowserContextOptions,
         hash: 'hash-3',
         props: [],
       }),

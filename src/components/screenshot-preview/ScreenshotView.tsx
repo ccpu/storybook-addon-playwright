@@ -17,7 +17,7 @@ import {
   ImagePreview,
 } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
-import { useBrowserDevice } from '../../hooks';
+import { useBrowserOptions } from '../../hooks';
 import { lighten, darken } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(
@@ -119,13 +119,13 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const classes = useStyles();
 
-  const { browserDevice, setBrowserDevice } = useBrowserDevice();
+  const { setBrowserDeviceOptions, getBrowserOptions } = useBrowserOptions();
 
-  console.log(browserDevice);
+  const browserOptions = getBrowserOptions(browserType as BrowserTypes);
 
   const { loading, screenshot, getSnapshot, error } = useScreenshot(
     browserType,
-    browserDevice[browserType],
+    browserOptions,
   );
 
   useEffect(() => {
@@ -147,9 +147,9 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const handleSelectedBrowserDevice = useCallback(
     (name: string) => {
-      setBrowserDevice(browserType as BrowserTypes, name);
+      setBrowserDeviceOptions(browserType as BrowserTypes, name);
     },
-    [browserType, setBrowserDevice],
+    [browserType, setBrowserDeviceOptions],
   );
 
   const toggleFullScreen = useCallback(() => {
@@ -174,14 +174,14 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         browserType as BrowserTypes,
         title,
         screenshot.base64,
-        browserDevice[browserType],
+        browserOptions,
       );
       onSaveComplete(browserType);
       handleCloseTitleDialog();
       isSaving.current = false;
     },
     [
-      browserDevice,
+      browserOptions,
       browserType,
       handleCloseTitleDialog,
       onSaveComplete,
@@ -212,7 +212,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         onDeviceSelect={handleSelectedBrowserDevice}
         showSaveButton={isValidToSave}
         onFullScreen={toggleFullScreen}
-        selectedDevice={browserDevice && browserDevice[browserType]}
+        selectedDevice={browserOptions}
       />
 
       <div className={classes.container} style={{ height: containerHeight }}>

@@ -40,7 +40,8 @@ const SchemaProp: SFC<SchemaPropProps> = ({
     [onChange, optionObjectPath],
   );
 
-  const value = getValue(optionObjectPath, schema);
+  const value = schema.type !== 'object' && getValue(optionObjectPath, schema);
+
   const appendToTile =
     shouldAppendToTitle && shouldAppendToTitle(optionObjectPath);
 

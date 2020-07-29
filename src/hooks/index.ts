@@ -15,7 +15,7 @@ export * from './use-save-screenshot';
 export * from './use-story-screenshot-loader';
 export * from './use-delete-screenshot';
 export * from './use-global-screenshot-dispatch';
-export * from './use-browser-device';
+export * from './use-browser-options';
 export * from './use-async-api-call';
 export * from './use-key-press';
 export * from './use-story-screenshot-imageDiff';

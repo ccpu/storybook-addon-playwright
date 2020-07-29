@@ -16,7 +16,7 @@ const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
     case 'boolean':
       return false;
     case 'number':
-      return 0;
+      return '';
     case 'options':
       return [];
     default:

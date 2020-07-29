@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getActionsSchema, _schema } from '../get-actions-schema';
-import * as schemaGenerator from '../get-actions-schema';
+import { getActionsSchema } from '../get-actions-schema';
 import path from 'path';
 import { getConfigs } from '../../configs';
+import * as generateSchema from '../generate-schema';
 
 jest.mock('../../configs');
 
 describe('getActionsSchema', () => {
-  const file = path.resolve(
-    './src/api/server/services/typings/playwright-page.ts',
-  );
+  const file = path.resolve('./src/api/server/services/typings/types.ts');
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -20,14 +18,6 @@ describe('getActionsSchema', () => {
     expect(schema).toBeDefined();
   });
 
-  it('should use cache', () => {
-    const spy = jest.spyOn(schemaGenerator, 'generateSchema');
-
-    getActionsSchema(file);
-
-    expect(spy).toHaveBeenCalledTimes(0);
-  });
-
   it('should include custom schema', () => {
     const schema = getActionsSchema(file);
 
@@ -35,15 +25,16 @@ describe('getActionsSchema', () => {
   });
 
   it('should add page method from config', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    _schema = undefined;
+    const spy = jest.spyOn(generateSchema, 'generateSchema');
+
     (getConfigs as jest.Mock).mockImplementationOnce(() => ({
       pageMethods: ['isClosed'],
     }));
 
-    const schema = getActionsSchema(file);
+    getActionsSchema(file);
 
-    expect(schema['isClosed']).toBeDefined();
+    expect(
+      spy.mock.calls[0][0].includeProps.indexOf('isClosed') > -1,
+    ).toBeTruthy();
   });
 });

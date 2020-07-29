@@ -1,19 +1,22 @@
 import { Toolbar } from '../Toolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useScreenshotOptions } from '../../../hooks/use-screenshot-options';
+import { useBrowserOptions } from '../../../hooks/use-browser-options';
 
-jest.mock('../../../hooks//use-screenshot-options.ts');
+jest.mock('../../../hooks//use-browser-options.ts');
 
-const setScreenshotOptionsMock = jest.fn();
-(useScreenshotOptions as jest.Mock).mockImplementation(() => {
+const setBrowserOptionsMock = jest.fn();
+(useBrowserOptions as jest.Mock).mockImplementation(() => {
   return {
-    screenshotOptions: undefined,
-    setScreenshotOptions: setScreenshotOptionsMock,
+    browserOptions: {},
+    setBrowserOptions: setBrowserOptionsMock,
   };
 });
 
 describe('Toolbar', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('should render', () => {
     const wrapper = shallow(
       <Toolbar
@@ -45,13 +48,13 @@ describe('Toolbar', () => {
       .props()
       .onClick({} as React.MouseEvent<unknown, MouseEvent>);
 
-    expect(setScreenshotOptionsMock).toHaveBeenCalledWith({ cursor: true });
+    expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', { cursor: true });
   });
 
-  it('should handle hide cursor', () => {
-    (useScreenshotOptions as jest.Mock).mockImplementationOnce(() => ({
-      screenshotOptions: { cursor: true },
-      setScreenshotOptions: setScreenshotOptionsMock,
+  it('should handle disable cursor', () => {
+    (useBrowserOptions as jest.Mock).mockImplementationOnce(() => ({
+      browserOptions: { all: { cursor: true } },
+      setBrowserOptions: setBrowserOptionsMock,
     }));
 
     const wrapper = shallow(
@@ -70,7 +73,7 @@ describe('Toolbar', () => {
       .props()
       .onClick({} as React.MouseEvent<unknown, MouseEvent>);
 
-    expect(setScreenshotOptionsMock).toHaveBeenCalledWith({
+    expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', {
       cursor: undefined,
     });
   });

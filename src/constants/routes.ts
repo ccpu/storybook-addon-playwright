@@ -5,6 +5,7 @@ export const ROUTE = {
   DELETE_STORY_SCREENSHOT: '/screenshot/deleteStory',
   GET_ACTIONS_DATA: '/screenshot/actionsData',
   GET_ACTION_SET: '/actionSet/get',
+  GET_SCHEMA: '/getSchema',
   GET_STORY_SCREENSHOTS: '/screenshot/all',
   SAVE_ACTION_SET: '/actionSet/save',
   SAVE_SCREENSHOT: '/screenshot/save',

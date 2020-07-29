@@ -37,7 +37,6 @@ const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
 
   const handleGetValue = useCallback(
     (optionObjectPath: string, schema: ActionSchema) => {
-      console.log(optionObjectPath, schema);
       return getActionOptionValue(action, optionObjectPath, schema);
     },
     [action],

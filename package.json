@@ -89,10 +89,7 @@
     "lint": "yarn eslint . --ext .ts,.tsx",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "prepublish": "npm run lint && npm run build",
-    "release:dry": "release-it --dry-run",
-    "release:beta-dry": "release-it --dry-run --preRelease=beta",
-    "release:alpha-dry": "release-it --dry-run --preRelease=alpha"
+    "prepublish": "npm run lint && npm run build"
   },
   "license": "MIT",
   "peerDependencies": {

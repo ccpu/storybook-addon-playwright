@@ -18,8 +18,9 @@ export const testScreenshots = async (
 
   const storiesData = await getStoryPlaywrightData(fileName);
 
-  for (let i = 0; i < storiesData.length; i++) {
-    const story = storiesData[i];
+  for (let i = 0; i < storiesData.storyData.length; i++) {
+    const story = storiesData.storyData[i];
+
     if (story.data.screenshots && story.data.screenshots.length) {
       const result = await testStoryScreenshots(
         {

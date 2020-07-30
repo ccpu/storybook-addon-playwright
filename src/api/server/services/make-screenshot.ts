@@ -2,7 +2,11 @@ import { ScreenshotRequest } from '../../typings';
 import { constructStoryUrl } from '../../../utils';
 import { getConfigs } from '../configs';
 import { executeAction, installMouseHelper } from '../utils';
-import { ScreenshotImageData, Config } from '../../../typings';
+import {
+  ScreenshotImageData,
+  Config,
+  BrowserContextOptions,
+} from '../../../typings';
 import { extendPage } from '@playwright-utils/page';
 import { Page } from 'playwright-core';
 import joinImage from 'join-images';
@@ -34,13 +38,15 @@ export const makeScreenshot = async (
 ): Promise<ScreenshotImageData> => {
   const configs = getConfigs();
 
+  const browserOptions = data.browserOptions as BrowserContextOptions;
+
   const url = constructStoryUrl(
     configs.storybookEndpoint,
     data.storyId,
     data.props,
   );
 
-  const page = await configs.getPage(data.browserType, data.browserOptions);
+  const page = await configs.getPage(data.browserType, browserOptions);
 
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');
@@ -50,7 +56,7 @@ export const makeScreenshot = async (
 
   await page.goto(url);
 
-  if (data.browserOptions && data.browserOptions.cursor) {
+  if (browserOptions && browserOptions.cursor) {
     await installMouseHelper(page);
   }
 

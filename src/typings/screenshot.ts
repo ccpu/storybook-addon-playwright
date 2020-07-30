@@ -43,7 +43,9 @@ export interface ScreenshotSetting {
   props?: ScreenshotProp[];
   actions?: StoryAction[];
   browserOptions?: BrowserContextOptions;
+  browserOptionsId?: string;
   screenshotOptions?: ScreenshotOptions;
+  screenshotOptionsId?: string;
 }
 
 export interface ScreenshotData extends ScreenshotOptions, ScreenshotSetting {

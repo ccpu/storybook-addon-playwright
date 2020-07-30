@@ -9,18 +9,21 @@ export const loadStoryData = async (
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(storyDataPath)) {
       if (storyId === '*') {
-        resolve({});
+        resolve({ stories: {} });
       } else {
-        resolve({ [storyId]: {} });
+        resolve({ stories: { [storyId]: {} } });
       }
       return;
     }
-    readFile(storyDataPath, (err, data) => {
+    readFile(storyDataPath, (err, data?: StoryPlaywrightData) => {
       if (err) {
         reject(err);
       }
-      if (!data[storyId] && storyId !== '*') {
-        data[storyId] = {};
+      if (!data.stories) {
+        data.stories = {};
+      }
+      if (!data.stories[storyId] && storyId !== '*') {
+        data.stories[storyId] = {};
       }
       resolve(data);
     });

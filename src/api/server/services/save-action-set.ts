@@ -1,6 +1,7 @@
 import { SaveActionSetRequest } from '../../typings';
 import { saveStoryFile } from '../utils';
 import { loadStoryData, getStoryPlaywrightFileInfo } from '../utils';
+import { getStoryData } from './utils';
 
 export const saveActionSet = async (
   data: SaveActionSetRequest,
@@ -8,15 +9,15 @@ export const saveActionSet = async (
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
-  if (!storyData[data.storyId].actionSets) {
-    storyData[data.storyId].actionSets = [];
+  const story = getStoryData(storyData, data.storyId, true);
+
+  if (!story.actionSets) {
+    story.actionSets = [];
   }
 
-  storyData[data.storyId].actionSets = storyData[
-    data.storyId
-  ].actionSets.filter((x) => x.id !== data.actionSet.id);
+  story.actionSets = story.actionSets.filter((x) => x.id !== data.actionSet.id);
 
-  storyData[data.storyId].actionSets.push(data.actionSet);
+  story.actionSets.push(data.actionSet);
 
   await saveStoryFile(fileInfo, storyData);
 };

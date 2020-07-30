@@ -1,10 +1,10 @@
-import { storyFileInfo } from '../../../../../__manual_mocks__/utils/story-file-info';
+import { storyFileInfo } from '../../../../../__test_data__/story-file-info';
 
 const loadStoryData = jest.fn();
 
 loadStoryData.mockImplementation((_filePAth: string, storyId: string) => {
   const data = storyFileInfo();
-  if (!data[storyId] && storyId !== '*') data[storyId] = {};
+  if (!data.stories[storyId] && storyId !== '*') data.stories[storyId] = {};
   return new Promise((resolve) => {
     resolve(data);
   });

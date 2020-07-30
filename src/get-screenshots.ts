@@ -7,6 +7,7 @@ import {
 } from './api/server/utils/get-screenshot-paths';
 import fs from 'fs';
 import { RequestData } from './typings/request';
+import { setStoryScreenshotOptions } from './api/server/services/utils/set-story-screenshot-options';
 
 interface RunImageDiffOptions extends RequestData {
   onScreenshotReady?: (
@@ -36,11 +37,14 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
 
     const storiesData = await getStoryPlaywrightData(fileName);
 
-    for (let i = 0; i < storiesData.length; i++) {
-      const story = storiesData[i];
+    for (let i = 0; i < storiesData.storyData.length; i++) {
+      const story = storiesData.storyData[i];
+
       if (story.data.screenshots && story.data.screenshots.length) {
         for (let s = 0; s < story.data.screenshots.length; s++) {
           const screenShotData = story.data.screenshots[s];
+
+          setStoryScreenshotOptions(storiesData.playWrightData, screenShotData);
 
           const screenShot = await makeScreenshot(
             {

@@ -1,4 +1,4 @@
-import { storyFileInfo } from './story-file-info';
+import { storyFileInfo } from '../../__test_data__/story-file-info';
 
 export const loadStoryDataMock = jest.fn();
 

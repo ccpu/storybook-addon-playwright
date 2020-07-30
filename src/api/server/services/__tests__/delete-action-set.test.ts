@@ -40,7 +40,7 @@ describe('deleteActionSet', () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         const data = storyFileInfo();
-        delete data['story-id'].actionSets;
+        delete data.stories['story-id'].actionSets;
         resolve(data);
       });
     });
@@ -63,11 +63,17 @@ describe('deleteActionSet', () => {
     expect(saveStoryFileMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should save empty object when there is no actionSets ', async () => {
+  it('should delete actionSets if empty', async () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         const data = storyFileInfo();
-        data['story-id'].actionSets = [];
+        data.stories['story-id'].actionSets = [
+          {
+            actions: [],
+            description: '',
+            id: 'action-set-id',
+          },
+        ];
         resolve(data);
       });
     });
@@ -78,7 +84,8 @@ describe('deleteActionSet', () => {
       storyId: 'story-id',
     });
 
-    const actionSets = saveStoryFileMock.mock.calls[0][1];
-    expect(actionSets).toStrictEqual({});
+    const actionSets =
+      saveStoryFileMock.mock.calls[0][1].stories['story-id'].actionSets;
+    expect(actionSets).toStrictEqual(undefined);
   });
 });

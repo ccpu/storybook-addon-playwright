@@ -6,6 +6,7 @@ import { RESET, CHANGE } from '@storybook/addon-knobs/dist/shared';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useBrowserOptions, BrowsersOption } from './use-browser-options';
 import { useScreenshotOptions } from './use-screenshot-options';
+import { BrowserContextOptions } from 'playwright-core';
 
 interface ReturnType {
   browserOptions: BrowsersOption;
@@ -49,7 +50,10 @@ export const useLoadScreenshotSettings = (): ReturnType => {
       }
       dispatchActions(screenshotData);
       if (screenshotData.browserOptions || force) {
-        setBrowserOptions('all', screenshotData.browserOptions);
+        setBrowserOptions(
+          'all',
+          screenshotData.browserOptions as BrowserContextOptions,
+        );
       }
       if (screenshotData.screenshotOptions || force) {
         setScreenshotOptions(screenshotData.screenshotOptions);

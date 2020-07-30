@@ -21,19 +21,22 @@ export const getScreenshotHash: (options: ScreenshotHash) => string = (
   props,
 ) => {
   //! keep order
-  const vals = [
-    props.actions,
-    props.browserOptions,
-    props.browserType,
-    props.props,
-    props.screenshotOptions,
-    props.storyId,
-  ].reduce((arr, opt) => {
-    if (opt) {
-      arr.push(opt);
-    }
-    return arr;
-  }, [] as Array<unknown>);
 
-  return sum(vals);
+  const newObj = {
+    actions: props.actions,
+    browserOptions: props.browserOptions,
+    browserType: props.browserType,
+    props: props.props,
+    screenshotOptions: props.screenshotOptions,
+    storyId: props.storyId,
+  };
+
+  const objWithValue = Object.keys(newObj).reduce((obj, k) => {
+    if (newObj[k] !== undefined) {
+      obj[k] = newObj[k];
+    }
+    return obj;
+  }, {});
+
+  return sum(objWithValue);
 };

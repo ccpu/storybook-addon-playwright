@@ -1,7 +1,7 @@
 const unlinkSyncMock = jest.fn();
 jest.mock('fs', () => ({ existsSync: () => true, unlinkSync: unlinkSyncMock }));
 
-import { storyFileInfo } from '../../../../../__manual_mocks__/utils/story-file-info';
+import { storyFileInfo } from '../../../../../__test_data__/story-file-info';
 import { deleteScreenshot } from '../delete-screenshot';
 import { saveStoryFile, loadStoryData } from '../../utils';
 import { mocked } from 'ts-jest/utils';
@@ -25,7 +25,7 @@ describe('deleteScreenshot', () => {
       storyId: 'story-id',
     });
     expect(
-      mocked(saveStoryFile).mock.calls[0][1]['story-id'].screenshots,
+      mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
     ).toStrictEqual([
       {
         actions: [{ id: 'action-id', name: 'action-name' }],
@@ -41,7 +41,9 @@ describe('deleteScreenshot', () => {
     mocked(loadStoryData).mockImplementationOnce(() => {
       const data = storyFileInfo();
       return new Promise((resolve) => {
-        data['story-id'].screenshots = [data['story-id'].screenshots[0]];
+        data.stories['story-id'].screenshots = [
+          data.stories['story-id'].screenshots[0],
+        ];
         resolve(data);
       });
     });
@@ -53,7 +55,7 @@ describe('deleteScreenshot', () => {
     });
 
     expect(
-      mocked(saveStoryFile).mock.calls[0][1]['story-id'].screenshots,
+      mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
     ).toStrictEqual(undefined);
 
     expect(unlinkSyncMock).toBeCalledTimes(1);

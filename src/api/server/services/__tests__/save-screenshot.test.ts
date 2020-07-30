@@ -79,14 +79,16 @@ describe('saveScreenshot', () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         resolve({
-          ['story-id']: {
-            screenshots: [
-              {
-                browserType: 'chromium',
-                hash: 'hash-2',
-                title: 'foo',
-              },
-            ],
+          stories: {
+            ['story-id']: {
+              screenshots: [
+                {
+                  browserType: 'chromium',
+                  hash: 'hash-2',
+                  title: 'foo',
+                },
+              ],
+            },
           },
         });
       });
@@ -101,14 +103,16 @@ describe('saveScreenshot', () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         resolve({
-          ['story-id']: {
-            screenshots: [
-              {
-                browserType: 'chromium',
-                hash: 'hash-1',
-                title: 'bar',
-              },
-            ],
+          stories: {
+            ['story-id']: {
+              screenshots: [
+                {
+                  browserType: 'chromium',
+                  hash: 'hash-1',
+                  title: 'bar',
+                },
+              ],
+            },
           },
         });
       });
@@ -123,8 +127,10 @@ describe('saveScreenshot', () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         resolve({
-          ['story-id']: {
-            screenshots: [getData()],
+          stories: {
+            ['story-id']: {
+              screenshots: [getData()],
+            },
           },
         });
       });
@@ -158,7 +164,7 @@ describe('saveScreenshot', () => {
       }),
     );
 
-    const data = mocked(saveStoryFile).mock.calls[0][1]['story-id'][
+    const data = mocked(saveStoryFile).mock.calls[0][1].stories['story-id'][
       'screenshots'
     ][2];
 
@@ -199,7 +205,7 @@ describe('saveScreenshot', () => {
 
     await saveScreenshot(data);
 
-    const newId = mocked(saveStoryFile).mock.calls[0][1]['story-id']
+    const newId = mocked(saveStoryFile).mock.calls[0][1].stories['story-id']
       .screenshots[1].actions[0].id;
 
     expect(newId === 'action-id').toBeFalsy();

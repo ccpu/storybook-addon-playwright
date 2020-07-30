@@ -4,30 +4,29 @@ import {
   saveStoryFile,
 } from '../utils';
 import { DeleteActionSetRequest } from '../../typings';
+import { getStoryData, deleteEmptyStory } from './utils';
 
 export const deleteActionSet = async (
   data: DeleteActionSetRequest,
 ): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path, data.storyId);
+  let storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   if (!data.actionSetId) {
     throw new Error('Action set id has not been provided!');
   }
 
-  if (!storyData[data.storyId] || !storyData[data.storyId].actionSets) return;
+  const story = getStoryData(storyData, data.storyId);
 
-  storyData[data.storyId].actionSets = storyData[
-    data.storyId
-  ].actionSets.filter((x) => x.id !== data.actionSetId);
+  if (!story || !story.actionSets) return;
 
-  if (storyData[data.storyId].actionSets.length === 0) {
-    delete storyData[data.storyId].actionSets;
+  story.actionSets = story.actionSets.filter((x) => x.id !== data.actionSetId);
+
+  if (story.actionSets.length === 0) {
+    delete story.actionSets;
   }
 
-  if (Object.keys(storyData[data.storyId]).length === 0) {
-    delete storyData[data.storyId];
-  }
+  storyData = deleteEmptyStory(storyData, data.storyId);
 
   await saveStoryFile(fileInfo, storyData);
 };

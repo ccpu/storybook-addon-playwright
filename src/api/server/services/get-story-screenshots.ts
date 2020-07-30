@@ -1,8 +1,23 @@
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../utils';
 import { StoryInfo } from '../../../typings';
+import { setStoryScreenshotOptions } from './utils/set-story-screenshot-options';
+import { getStoryData } from './utils';
 
 export const getStoryScreenshots = async (info: StoryInfo) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
-  return storyData[info.storyId] && storyData[info.storyId].screenshots;
+
+  const story = getStoryData(storyData, info.storyId);
+
+  if (!story || !story.screenshots || !story.screenshots.length)
+    return undefined;
+
+  if (!storyData.browserOptions) {
+    return story.screenshots;
+  }
+
+  return story.screenshots.map((screenshot) => {
+    setStoryScreenshotOptions(storyData, screenshot);
+    return screenshot;
+  });
 };

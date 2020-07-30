@@ -4,6 +4,7 @@ import { getStoryPlaywrightFileInfo, loadStoryData } from '../utils';
 import { testScreenshotService } from './test-screenshot-service';
 import { getConfigs } from '../configs';
 import { RequestData } from '../../../typings/request';
+import { getStoryData } from './utils';
 
 export const testStoryScreenshots = async (
   data: StoryInfo & RequestData,
@@ -14,7 +15,9 @@ export const testStoryScreenshots = async (
 
   const configs = getConfigs();
 
-  if (!storyData[data.storyId] || !storyData[data.storyId].screenshots) {
+  const story = getStoryData(storyData, data.storyId);
+
+  if (!story || !story.screenshots) {
     throw new Error('Unable to find story screenshots');
   }
 
@@ -24,8 +27,9 @@ export const testStoryScreenshots = async (
     await configs.beforeStoryImageDiff(data);
   }
 
-  for (let i = 0; i < storyData[data.storyId].screenshots.length; i++) {
-    const screenshot = storyData[data.storyId].screenshots[i];
+  for (let i = 0; i < story.screenshots.length; i++) {
+    const screenshot = story.screenshots[i];
+
     const result = await testScreenshotService({
       fileName: data.fileName,
       hash: screenshot.hash,

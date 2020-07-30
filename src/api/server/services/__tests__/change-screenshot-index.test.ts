@@ -15,39 +15,41 @@ describe('changeScreenShotIndex', () => {
     });
 
     expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
-      'story-id': {
-        actionSets: [
-          {
-            actions: [
-              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-            ],
-            description: 'click',
-            id: 'action-set-id',
-          },
-          {
-            actions: [
-              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-            ],
-            description: 'click',
-            id: 'action-set-id-2',
-          },
-        ],
-        screenshots: [
-          {
-            actions: [{ id: 'action-id', name: 'action-name' }],
-            browserType: 'chromium',
-            hash: 'hash-2',
-            index: 0,
-            title: 'title-2',
-          },
-          {
-            actions: [{ id: 'action-id', name: 'action-name' }],
-            browserType: 'chromium',
-            hash: 'hash',
-            index: 1,
-            title: 'title',
-          },
-        ],
+      stories: {
+        'story-id': {
+          actionSets: [
+            {
+              actions: [
+                { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+              ],
+              description: 'click',
+              id: 'action-set-id',
+            },
+            {
+              actions: [
+                { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+              ],
+              description: 'click',
+              id: 'action-set-id-2',
+            },
+          ],
+          screenshots: [
+            {
+              actions: [{ id: 'action-id', name: 'action-name' }],
+              browserType: 'chromium',
+              hash: 'hash-2',
+              index: 0,
+              title: 'title-2',
+            },
+            {
+              actions: [{ id: 'action-id', name: 'action-name' }],
+              browserType: 'chromium',
+              hash: 'hash',
+              index: 1,
+              title: 'title',
+            },
+          ],
+        },
       },
     });
   });

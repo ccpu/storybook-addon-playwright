@@ -4,6 +4,8 @@ import { saveStoryFile } from '../utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { deleteScreenshot } from './delete-screenshot';
 import { nanoid } from 'nanoid';
+import { setStoryOptions } from './utils/set-story-options';
+import { getStoryData } from './utils';
 
 export const saveScreenshot = async (
   data: SaveScreenshotRequest,
@@ -11,18 +13,16 @@ export const saveScreenshot = async (
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
-  if (!storyData[data.storyId]) {
-    storyData[data.storyId] = {};
-  }
+  const story = getStoryData(storyData, data.storyId, true);
 
-  if (!storyData[data.storyId].screenshots) {
-    storyData[data.storyId].screenshots = [];
+  if (!story.screenshots) {
+    story.screenshots = [];
   }
 
   if (data.updateScreenshot) {
-    storyData[data.storyId].screenshots = storyData[
-      data.storyId
-    ].screenshots.filter((x) => x.hash !== data.updateScreenshot.hash);
+    story.screenshots = story.screenshots.filter(
+      (x) => x.hash !== data.updateScreenshot.hash,
+    );
     await deleteScreenshot({
       fileName: data.fileName,
       hash: data.updateScreenshot.hash,
@@ -30,12 +30,10 @@ export const saveScreenshot = async (
     });
   }
 
-  const oldScreenshotData = storyData[data.storyId].screenshots.find(
-    (x) => x.hash === data.hash,
-  );
+  const oldScreenshotData = story.screenshots.find((x) => x.hash === data.hash);
 
   if (!oldScreenshotData) {
-    const sameDesc = storyData[data.storyId].screenshots.find(
+    const sameDesc = story.screenshots.find(
       (x) => x.title === data.title && x.browserType === data.browserType,
     );
     if (sameDesc) {
@@ -63,8 +61,8 @@ export const saveScreenshot = async (
   if (!oldScreenshotData) {
     const index = data.updateScreenshot
       ? data.updateScreenshot.index
-      : storyData[data.storyId].screenshots.length;
-    storyData[data.storyId].screenshots.push({
+      : story.screenshots.length;
+    story.screenshots.push({
       actions:
         data.actions && data.actions.length > 0
           ? data.actions.map((x) => {
@@ -72,15 +70,20 @@ export const saveScreenshot = async (
               return x;
             })
           : undefined,
-      browserOptions:
-        data.browserOptions && Object.keys(data.browserOptions).length
-          ? data.browserOptions
-          : undefined,
+      browserOptionsId: setStoryOptions(
+        storyData,
+        'browserOptions',
+        data.browserOptions,
+      ),
       browserType: data.browserType,
       hash: data.hash,
       index: index,
       props: data.props && data.props.length > 0 ? data.props : undefined,
-      screenshotOptions: data.screenshotOptions,
+      screenshotOptionsId: setStoryOptions(
+        storyData,
+        'screenshotOptions',
+        data.screenshotOptions,
+      ),
       title: data.title,
     });
     result.index = index;

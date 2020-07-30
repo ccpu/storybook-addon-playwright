@@ -9,14 +9,17 @@ export interface StoryPlaywrightData {
 export const getStoryPlaywrightData = async (fileName: string) => {
   const playWrightData = await loadStoryData(fileName, '*');
 
-  const stories = Object.keys(playWrightData);
+  const stories = Object.keys(playWrightData.stories);
 
-  const data: StoryPlaywrightData[] = stories.map((story) => {
+  const storyData: StoryPlaywrightData[] = stories.map((story) => {
     return {
-      data: playWrightData[story],
+      data: playWrightData.stories[story],
       storyId: story,
     };
   });
 
-  return data;
+  return {
+    playWrightData,
+    storyData,
+  };
 };

@@ -18,8 +18,10 @@ describe('saveStoryFile', () => {
   it('should save', async () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
     await saveStoryFile(fileInfo, {
-      'story-id': {
-        actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+      stories: {
+        'story-id': {
+          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+        },
       },
     });
 
@@ -34,8 +36,10 @@ describe('saveStoryFile', () => {
   it('should remove empty story', async () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
     await saveStoryFile(fileInfo, {
-      'story-id': {
-        actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+      stories: {
+        'story-id': {
+          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+        },
       },
       'story-id_2': {},
     });

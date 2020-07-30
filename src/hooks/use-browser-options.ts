@@ -16,7 +16,7 @@ export const useBrowserOptions = (browserName?: keyof BrowsersOption) => {
   >('browser-options', { all: {} }, true);
 
   const setBrowserDeviceOptions = useCallback(
-    (browserType: BrowserTypes, deviceName: string) => {
+    (browserType: keyof BrowsersOption, deviceName: string) => {
       setGlobalBrowserOptions({
         ...browserOptions,
         [browserType]: getDeviceInfo(deviceName),

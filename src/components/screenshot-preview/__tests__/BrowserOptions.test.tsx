@@ -1,3 +1,4 @@
+import '../../../../__manual_mocks__/react-useEffect';
 import { BrowserOptions } from '../BrowserOptions';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -8,12 +9,12 @@ import { OptionPopover } from '../OptionPopover';
 
 jest.mock('../../../hooks/use-browser-options.ts');
 const setBrowserOptionsMock = jest.fn();
-
+const setBrowserDeviceOptionsMock = jest.fn();
 mocked(useBrowserOptions).mockImplementation(() => ({
   browserOptions: {},
   getBrowserOptions: jest.fn(),
   hasOption: false,
-  setBrowserDeviceOptions: jest.fn(),
+  setBrowserDeviceOptions: setBrowserDeviceOptionsMock,
   setBrowserOptions: setBrowserOptionsMock,
 }));
 
@@ -41,5 +42,20 @@ describe('BrowserOptions', () => {
     expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', {
       type: 'MyType',
     });
+  });
+
+  it('should handleDeviceSelection', () => {
+    const wrapper = shallow(<BrowserOptions browserType="all" />);
+
+    const FooterComponent = wrapper.find(MemoizedSchemaFormLoader).props()
+      .FooterComponent;
+
+    expect(FooterComponent).toBeDefined();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    FooterComponent.props.onDeviceSelect('iphone 6');
+
+    expect(setBrowserDeviceOptionsMock).toHaveBeenCalledWith('all', 'iphone 6');
   });
 });

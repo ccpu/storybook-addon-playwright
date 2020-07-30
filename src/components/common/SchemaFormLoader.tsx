@@ -13,7 +13,7 @@ const useStyles = makeStyles(
     return {
       footer: {
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         paddingTop: 2,
       },
       main: {
@@ -34,11 +34,13 @@ export interface SchemaFormProps extends Partial<Config> {
   defaultData?: unknown;
   onSave: (data: unknown) => void;
   active?: boolean;
+  FooterComponent?: React.ReactNode;
 }
 
 const SchemaFormLoader: SFC<SchemaFormProps> = ({
   defaultData,
   onSave,
+  FooterComponent,
   ...rest
 }) => {
   const classes = useStyles();
@@ -97,8 +99,11 @@ const SchemaFormLoader: SFC<SchemaFormProps> = ({
       </div>
       <Divider />
       <div className={classes.footer}>
-        <Button onClick={handleClear}>Clear</Button>
-        <Button onClick={handleSave}>Save</Button>
+        <div>{FooterComponent}</div>
+        <div>
+          <Button onClick={handleClear}>Clear</Button>
+          <Button onClick={handleSave}>Save</Button>
+        </div>
       </div>
     </>
   );

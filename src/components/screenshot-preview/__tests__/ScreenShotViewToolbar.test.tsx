@@ -20,7 +20,6 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
-        onDeviceSelect={jest.fn()}
         onFullScreen={jest.fn()}
       />,
     );
@@ -35,7 +34,6 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
-        onDeviceSelect={jest.fn()}
         onFullScreen={jest.fn()}
       />,
     );
@@ -50,7 +48,6 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
-        onDeviceSelect={jest.fn()}
         onFullScreen={jest.fn()}
       />,
     );

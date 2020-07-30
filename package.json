@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-playwright",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {

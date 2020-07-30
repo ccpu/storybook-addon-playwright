@@ -33,6 +33,7 @@ export interface SchemaFormProps extends Partial<Config> {
   type: string;
   defaultData?: unknown;
   onSave: (data: unknown) => void;
+  active?: boolean;
 }
 
 const SchemaFormLoader: SFC<SchemaFormProps> = ({

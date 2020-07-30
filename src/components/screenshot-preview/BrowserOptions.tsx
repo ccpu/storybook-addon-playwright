@@ -9,7 +9,11 @@ export interface BrowserOptionsProps {
 }
 
 const BrowserOptions: SFC<BrowserOptionsProps> = ({ browserType }) => {
-  const { setBrowserOptions, browserOptions } = useBrowserOptions();
+  const {
+    setBrowserOptions,
+    browserOptions,
+    hasOption: isActive,
+  } = useBrowserOptions(browserType);
 
   const handleSave = useCallback(
     (data) => {
@@ -21,7 +25,7 @@ const BrowserOptions: SFC<BrowserOptionsProps> = ({ browserType }) => {
   if (!browserOptions) return null;
 
   return (
-    <OptionPopover title="Browser Options" Icon={SettingIcon}>
+    <OptionPopover title="Browser Options" Icon={SettingIcon} active={isActive}>
       <MemoizedSchemaFormLoader
         onSave={handleSave}
         type={'BrowserOptions'}

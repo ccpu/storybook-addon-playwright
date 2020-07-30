@@ -1,12 +1,12 @@
 import React, { SFC } from 'react';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
-import { BrowserTypes, BrowserContextOptions } from '../../typings';
+import { BrowserTypes } from '../../typings';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
-import { DeviceList } from '../common';
 import RefreshIcon from '@material-ui/icons/RefreshOutlined';
 import Fullscreen from '@material-ui/icons/FullscreenSharp';
 import { IconButton } from '@storybook/components';
+import { BrowserOptions } from './BrowserOptions';
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -52,8 +52,6 @@ export interface PreviewItemProps {
   loading: boolean;
   showSaveButton: boolean;
   onRefresh: () => void;
-  onDeviceSelect?: (deviceName: string) => void;
-  selectedDevice?: BrowserContextOptions;
   onFullScreen: () => void;
 }
 
@@ -64,8 +62,6 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
     showSaveButton,
     loading,
     onRefresh,
-    onDeviceSelect,
-    selectedDevice,
     onFullScreen,
   } = props;
 
@@ -99,10 +95,7 @@ const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
           </Tooltip>
         </IconButton>
         {browserType !== 'storybook' && (
-          <DeviceList
-            onDeviceSelect={onDeviceSelect}
-            selectedDevice={selectedDevice}
-          />
+          <BrowserOptions browserType={browserType} />
         )}
 
         <IconButton onClick={onFullScreen}>

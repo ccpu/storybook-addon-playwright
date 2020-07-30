@@ -12,6 +12,7 @@ const setBrowserOptionsMock = jest.fn();
 mocked(useBrowserOptions).mockImplementation(() => ({
   browserOptions: {},
   getBrowserOptions: jest.fn(),
+  hasOption: false,
   setBrowserDeviceOptions: jest.fn(),
   setBrowserOptions: setBrowserOptionsMock,
 }));
@@ -26,6 +27,7 @@ describe('BrowserOptions', () => {
     mocked(useBrowserOptions).mockImplementationOnce(() => ({
       browserOptions: undefined,
       getBrowserOptions: jest.fn(),
+      hasOption: false,
       setBrowserDeviceOptions: jest.fn(),
       setBrowserOptions: setBrowserOptionsMock,
     }));

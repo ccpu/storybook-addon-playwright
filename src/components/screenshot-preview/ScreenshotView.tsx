@@ -119,7 +119,7 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const classes = useStyles();
 
-  const { setBrowserDeviceOptions, getBrowserOptions } = useBrowserOptions();
+  const { getBrowserOptions } = useBrowserOptions();
 
   const browserOptions = getBrowserOptions(browserType as BrowserTypes);
 
@@ -144,13 +144,6 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
 
   const isValidToSave =
     screenshot && !screenshot.error && browserType !== 'storybook';
-
-  const handleSelectedBrowserDevice = useCallback(
-    (name: string) => {
-      setBrowserDeviceOptions(browserType as BrowserTypes, name);
-    },
-    [browserType, setBrowserDeviceOptions],
-  );
 
   const toggleFullScreen = useCallback(() => {
     setOpenFullScreen(!openFullScreen);
@@ -209,10 +202,8 @@ const ScreenshotView: SFC<PreviewItemProps> = (props) => {
         onSave={handleShowTitleDialog}
         loading={loading}
         onRefresh={getSnapshot}
-        onDeviceSelect={handleSelectedBrowserDevice}
         showSaveButton={isValidToSave}
         onFullScreen={toggleFullScreen}
-        selectedDevice={browserOptions}
       />
 
       <div className={classes.container} style={{ height: containerHeight }}>

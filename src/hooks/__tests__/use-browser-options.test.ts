@@ -55,4 +55,13 @@ describe('useBrowserDevice', () => {
       },
     });
   });
+
+  it('should check if browser type has options', () => {
+    const { result } = renderHook(() => useBrowserOptions('chromium'));
+    act(() => {
+      result.current.setBrowserDeviceOptions('chromium', 'iPhone 6');
+    });
+
+    expect(result.current.hasOption).toBe(true);
+  });
 });

@@ -35,6 +35,7 @@ export interface OptionPopoverProps {
   title: string;
   Icon: React.ElementType;
   width?: number;
+  active?: boolean;
 }
 
 const OptionPopover: SFC<OptionPopoverProps> = ({
@@ -42,6 +43,7 @@ const OptionPopover: SFC<OptionPopoverProps> = ({
   Icon,
   children,
   width,
+  active,
 }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement>();
 
@@ -77,7 +79,7 @@ const OptionPopover: SFC<OptionPopoverProps> = ({
         </div>
       </Popover>
 
-      <SIconButton onClick={handleClick}>
+      <SIconButton onClick={handleClick} active={active}>
         <Tooltip placement="top" title="Browser Options">
           <Icon />
         </Tooltip>

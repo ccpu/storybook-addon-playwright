@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useGlobalState } from './use-global-state';
 import { BrowserTypes, BrowserContextOptions } from '../typings';
 import { getDeviceInfo } from '../utils';
@@ -10,7 +10,7 @@ export interface BrowsersOption {
   all?: BrowserContextOptions;
 }
 
-export const useBrowserOptions = () => {
+export const useBrowserOptions = (browserName?: keyof BrowsersOption) => {
   const [browserOptions, setGlobalBrowserOptions] = useGlobalState<
     BrowsersOption
   >('browser-options', { all: {} }, true);
@@ -42,9 +42,18 @@ export const useBrowserOptions = () => {
     [browserOptions],
   );
 
+  const hasOption = useMemo(() => {
+    const hasOpt =
+      browserOptions &&
+      browserOptions[browserName] &&
+      Object.keys(browserOptions[browserName]).length > 0;
+    return hasOpt;
+  }, [browserOptions, browserName]);
+
   return {
     browserOptions,
     getBrowserOptions,
+    hasOption,
     setBrowserDeviceOptions,
     setBrowserOptions,
   };

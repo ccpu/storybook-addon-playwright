@@ -44,7 +44,7 @@ export const testScreenshotService = async (
     result.error = error.message;
   }
 
-  result.screenshotHash = data.hash;
+  result.screenshotId = data.screenshotId;
   result.storyId = data.storyId;
 
   return result;

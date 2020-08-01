@@ -16,7 +16,9 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
 
   if (!story) return;
 
-  const screenshotInfo = story.screenshots.find((x) => x.hash === data.hash);
+  const screenshotInfo = story.screenshots.find(
+    (x) => x.id === data.screenshotId,
+  );
 
   const paths = getScreenshotPaths({
     browserType: screenshotInfo.browserType,
@@ -29,7 +31,9 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
     fs.unlinkSync(paths.fileName);
   }
 
-  story.screenshots = story.screenshots.filter((x) => x.hash !== data.hash);
+  story.screenshots = story.screenshots.filter(
+    (x) => x.id !== data.screenshotId,
+  );
 
   if (!story.screenshots.length) {
     delete story.screenshots;
@@ -39,6 +43,11 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
     storyData,
     'browserOptions',
     screenshotInfo.browserOptionsId,
+  );
+  deleteStoryOptions(
+    storyData,
+    'screenshotOptions',
+    screenshotInfo.screenshotOptionsId,
   );
 
   await saveStoryFile(fileInfo, storyData);

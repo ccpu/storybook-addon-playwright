@@ -22,7 +22,7 @@ describe('useScreenshotImageDiff', () => {
     );
 
     await act(async () => {
-      await result.current.testScreenshot('hash');
+      await result.current.testScreenshot('screenshot-id');
     });
 
     expect(dispatchMock).toHaveBeenCalledWith([

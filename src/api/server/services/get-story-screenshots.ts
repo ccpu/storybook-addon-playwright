@@ -12,10 +12,6 @@ export const getStoryScreenshots = async (info: StoryInfo) => {
   if (!story || !story.screenshots || !story.screenshots.length)
     return undefined;
 
-  if (!storyData.browserOptions) {
-    return story.screenshots;
-  }
-
   return story.screenshots.map((screenshot) => {
     setStoryScreenshotOptions(storyData, screenshot);
     return screenshot;

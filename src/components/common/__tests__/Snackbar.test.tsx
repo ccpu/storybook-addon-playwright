@@ -128,13 +128,13 @@ describe('Snackbar', () => {
     );
 
     expect(window.__visible_snackbar_messages__).toStrictEqual({
-      '3bf61d4c': true,
+      '83bd044348ea9694a81d3873682c0d2ca45bb296': true,
     });
 
     wrapper.setProps({ closeIcon: false });
 
     expect(window.__visible_snackbar_messages__).toStrictEqual({
-      '3bf61d4c': true,
+      '83bd044348ea9694a81d3873682c0d2ca45bb296': true,
     });
   });
 });

@@ -31,7 +31,7 @@ const ScreenshotList: SFC = ({ children }) => {
                 <SortableScreenshotListItem
                   index={index}
                   openUpdateDialog={true}
-                  key={screenshot.hash}
+                  key={screenshot.id}
                   screenshot={screenshot}
                   storyData={storyData}
                   showPreviewOnClick={true}
@@ -43,7 +43,7 @@ const ScreenshotList: SFC = ({ children }) => {
                   enableEditScreenshot={true}
                   pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
                   imageDiffResult={state.imageDiffResults.find(
-                    (x) => x.screenshotHash === screenshot.hash,
+                    (x) => x.screenshotId === screenshot.id,
                   )}
                 />
               ))}

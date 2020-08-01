@@ -6,7 +6,7 @@ mocked(testScreenshot).mockImplementation(() => {
     resolve({
       newScreenshot: 'base64-image',
       pass: true,
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
     });
   });
 });

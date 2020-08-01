@@ -44,6 +44,6 @@ describe('ScreenshotDelete', () => {
     const dialog = wrapper.find(DeleteConfirmationButton);
     dialog.props().onDelete();
     expect(dialog).toBeDefined();
-    expect(deleteMock).toHaveBeenCalledWith('hash');
+    expect(deleteMock).toHaveBeenCalledWith('screenshot-id');
   });
 });

@@ -15,7 +15,7 @@ describe('getSnapShot', () => {
   const respData: GetScreenshotResponse = {
     base64: 'base64',
     error: '',
-    hash: 'hash',
+    id: 'screenshot-id',
   };
 
   it('should ', async () => {

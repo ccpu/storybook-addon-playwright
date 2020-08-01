@@ -4,7 +4,7 @@ import { StoryData } from '../typings';
 import { getStoryFilePath } from '../utils';
 
 export const useCurrentStoryData = () => {
-  const [storyData, setData] = useState<StoryData>({} as StoryData);
+  const [storyData, setData] = useState<StoryData>();
 
   const api = useStorybookApi();
 

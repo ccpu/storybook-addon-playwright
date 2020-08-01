@@ -4,8 +4,9 @@ import {
   ScreenshotOptions,
   StoryOptions,
 } from '../../../../typings';
-import equal from 'fast-deep-equal';
+
 import { nanoid } from 'nanoid';
+import { getOptionsKey } from './get-options-key';
 
 export const setStoryOptions = (
   storyData: StoryPlaywrightData,
@@ -18,14 +19,10 @@ export const setStoryOptions = (
     storyData[optionProp] = {};
   }
 
-  const keys = Object.keys(storyData[optionProp]);
+  const optionsKey = getOptionsKey(storyData, optionProp, options);
 
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-    const options = storyData[optionProp][key];
-    if (equal(options, options)) {
-      return key;
-    }
+  if (optionsKey) {
+    return optionsKey;
   }
 
   const id = nanoid();

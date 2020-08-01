@@ -12,7 +12,7 @@ describe('updateScreenshot', () => {
       {
         body: {
           base64: 'base64-image',
-          hash: 'hash-1',
+          screenshotId: 'screenshot-id',
           storyId: 'story-id',
         } as UpdateScreenshot,
         headers: { host: 'localhost' },
@@ -23,7 +23,7 @@ describe('updateScreenshot', () => {
     expect(jsonMock).toHaveBeenCalledWith({
       newScreenshot: 'base64-image',
       pass: true,
-      screenshotHash: 'hash-1',
+      screenshotId: 'screenshot-id',
     });
   });
 });

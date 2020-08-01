@@ -121,6 +121,7 @@
     "nanoid": "^3.1.10",
     "normalize-url": "^5.0.0",
     "notistack": "^0.9.17",
+    "object-hash": "^2.0.3",
     "object-path-immutable": "^4.1.0",
     "react": "^16.13.1",
     "react-json-view": "^1.19.1",

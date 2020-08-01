@@ -31,12 +31,12 @@ const ScreenshotPreviewDialog: SFC<ScreenshotPreviewDialogProps> = (props) => {
   useEffect(() => {
     makeCall({
       fileName: storyData.parameters.fileName,
-      hash: screenShotData.hash,
+      screenshotId: screenShotData.id,
       storyId: storyData.id,
     });
   }, [
     makeCall,
-    screenShotData.hash,
+    screenShotData.id,
     storyData.id,
     storyData.parameters.fileName,
   ]);

@@ -40,7 +40,7 @@ describe('saveScreenshot', () => {
       browserOptions: { deviceName: 'iPhone 6' },
       browserType: 'chromium',
       fileName: 'story.ts',
-      hash: 'hash',
+      id: 'screenshot-id',
       props: [{ name: 'prop', value: 'value' }],
       screenshotOptions: { fullPage: true },
       storyId: 'story-id',
@@ -57,6 +57,17 @@ describe('saveScreenshot', () => {
   });
 
   beforeEach(() => {
+    loadStoryDataMock.mockImplementation(() => {
+      return new Promise((resolve) => {
+        resolve({
+          stories: {
+            ['story-id']: {
+              screenshots: [getData()],
+            },
+          },
+        });
+      });
+    });
     jest.clearAllMocks();
   });
 
@@ -84,7 +95,7 @@ describe('saveScreenshot', () => {
               screenshots: [
                 {
                   browserType: 'chromium',
-                  hash: 'hash-2',
+                  id: 'screenshot-id-2',
                   title: 'foo',
                 },
               ],
@@ -99,43 +110,13 @@ describe('saveScreenshot', () => {
     ).rejects.toThrowError();
   });
 
-  it('should not have screenshot with the same setting (using hash for comparison)', async () => {
-    loadStoryDataMock.mockImplementationOnce(() => {
-      return new Promise((resolve) => {
-        resolve({
-          stories: {
-            ['story-id']: {
-              screenshots: [
-                {
-                  browserType: 'chromium',
-                  hash: 'hash-1',
-                  title: 'bar',
-                },
-              ],
-            },
-          },
-        });
-      });
-    });
-
+  it('should not have screenshot with the same setting', async () => {
     await expect(
-      saveScreenshot(getData({ hash: 'hash-1', title: 'foo' })),
+      saveScreenshot(getData({ id: 'screenshot-id-3', title: 'tets-title' })),
     ).rejects.toThrowError();
   });
 
-  it('should not save if dealing with existing screen shot', async () => {
-    loadStoryDataMock.mockImplementationOnce(() => {
-      return new Promise((resolve) => {
-        resolve({
-          stories: {
-            ['story-id']: {
-              screenshots: [getData()],
-            },
-          },
-        });
-      });
-    });
-
+  it('should not save if dealing with existing screenshot', async () => {
     mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementationOnce(
       () => {
         return {
@@ -159,14 +140,15 @@ describe('saveScreenshot', () => {
       getData({
         actions: [],
         browserOptions: {} as BrowserContextOptions,
-        hash: 'hash-3',
+        id: 'screenshot-id-3',
         props: [],
+        title: 'new title',
       }),
     );
 
-    const data = mocked(saveStoryFile).mock.calls[0][1].stories['story-id'][
-      'screenshots'
-    ][2];
+    const mockData = mocked(saveStoryFile).mock;
+
+    const data = mockData.calls[0][1].stories['story-id'].screenshots[1];
 
     expect(data.actions).toBe(undefined);
     expect(data.props).toBe(undefined);
@@ -178,7 +160,7 @@ describe('saveScreenshot', () => {
       getData({
         updateScreenshot: {
           browserType: 'chromium',
-          hash: 'hash',
+          id: 'screenshot-id',
           title: 'title',
         },
       }),
@@ -186,7 +168,7 @@ describe('saveScreenshot', () => {
     // should delete old screenshot file
     expect(mocked(deleteScreenshot)).toHaveBeenCalledWith({
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
 
@@ -198,15 +180,17 @@ describe('saveScreenshot', () => {
       actions: [{ id: 'action-id', name: 'click' }],
       updateScreenshot: {
         browserType: 'chromium',
-        hash: 'hash',
+        id: 'screenshot-id',
         title: 'title',
       },
     });
 
     await saveScreenshot(data);
 
-    const newId = mocked(saveStoryFile).mock.calls[0][1].stories['story-id']
-      .screenshots[1].actions[0].id;
+    const mockData = mocked(saveStoryFile).mock;
+
+    const newId =
+      mockData.calls[0][1].stories['story-id'].screenshots[0].actions[0].id;
 
     expect(newId === 'action-id').toBeFalsy();
   });

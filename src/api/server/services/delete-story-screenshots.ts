@@ -11,7 +11,7 @@ export const deleteStoryScreenshots = async (
     const screenshot = screenshots[i];
     await deleteScreenshot({
       fileName: storyInfo.fileName,
-      hash: screenshot.hash,
+      screenshotId: screenshot.id,
       storyId: storyInfo.storyId,
     });
   }

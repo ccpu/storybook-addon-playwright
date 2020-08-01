@@ -28,7 +28,7 @@ describe('ScreenshotListPreviewDialog', () => {
         open={true}
         screenshots={[
           getScreenshotDate(),
-          getScreenshotDate({ hash: 'hash-2', index: 1 }),
+          getScreenshotDate({ id: 'screenshot-id-2', index: 1 }),
         ]}
         storyData={storyData}
       />,
@@ -45,10 +45,10 @@ describe('ScreenshotListPreviewDialog', () => {
         open={true}
         screenshots={[
           getScreenshotDate(),
-          getScreenshotDate({ hash: 'hash-2', index: 1 }),
+          getScreenshotDate({ id: 'screenshot-id-2', index: 1 }),
         ]}
         storyData={storyData}
-        selectedItem={'hash-2'}
+        selectedItem={'screenshot-id-2'}
       />,
     );
     const item = wrapper.find(SortableScreenshotListItem);
@@ -64,7 +64,7 @@ describe('ScreenshotListPreviewDialog', () => {
           getScreenshotDate(),
           getScreenshotDate({
             browserType: 'chromium',
-            hash: 'hash-2',
+            id: 'screenshot-id-2',
             index: 1,
           }),
         ]}
@@ -78,7 +78,11 @@ describe('ScreenshotListPreviewDialog', () => {
       items
         .last()
         .props()
-        .onClick({ browserType: 'chromium', hash: 'hash-2', title: 'title' });
+        .onClick({
+          browserType: 'chromium',
+          id: 'screenshot-id-2',
+          title: 'title',
+        });
     });
 
     await new Promise((resolve) => setImmediate(resolve));

@@ -25,13 +25,13 @@ describe('ScreenshotList', () => {
     expect(items).toHaveLength(2);
     expect(items.first().props().imageDiffResult).toStrictEqual({
       pass: true,
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
     });
   });
 
   it('should show no data message', () => {
     useScreenshotContextMock.mockImplementationOnce(() => ({
-      imageDiffResults: [{ pass: true, screenshotHash: 'hash' }],
+      imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id-3' }],
       pauseDeleteImageDiffResult: false,
       screenshots: [],
     }));

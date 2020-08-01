@@ -55,12 +55,12 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: true, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
       />,
     );
     jest.runTimersToTime(10000);
     expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshotHash: 'hash', type: 'removeImageDiffResult' },
+      { screenshotId: 'screenshot-id', type: 'removeImageDiffResult' },
     ]);
   });
 
@@ -69,7 +69,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: true, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
       />,
     );
 
@@ -79,7 +79,7 @@ describe('ScreenshotListItem', () => {
       .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
 
     expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshotHash: 'hash', type: 'removeImageDiffResult' },
+      { screenshotId: 'screenshot-id', type: 'removeImageDiffResult' },
     ]);
   });
 
@@ -90,7 +90,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: true, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
         pauseDeleteImageDiffResult
       />,
     );
@@ -110,7 +110,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
         showImageDiffResultDialog
       />,
     );
@@ -128,7 +128,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
         showImageDiffResultDialog
       />,
     );
@@ -162,7 +162,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
         showImageDiffResultDialog
       />,
     );
@@ -190,7 +190,7 @@ describe('ScreenshotListItem', () => {
         storyData={storyData}
         onClick={onClickMock}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
         showPreviewOnClick
       />,
     );
@@ -212,7 +212,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
         showPreviewOnClick
       />,
     );
@@ -221,7 +221,7 @@ describe('ScreenshotListItem', () => {
 
     expect(editMock).toHaveBeenCalledWith({
       browserType: 'chromium',
-      hash: 'hash',
+      id: 'screenshot-id',
       title: 'title',
     });
   });
@@ -231,7 +231,7 @@ describe('ScreenshotListItem', () => {
       <ScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
-        imageDiffResult={{ pass: false, screenshotHash: 'hash' }}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
         showPreviewOnClick
       />,
     );
@@ -240,7 +240,7 @@ describe('ScreenshotListItem', () => {
 
     expect(loadSettingMock).toHaveBeenCalledWith({
       browserType: 'chromium',
-      hash: 'hash',
+      id: 'screenshot-id',
       title: 'title',
     });
   });

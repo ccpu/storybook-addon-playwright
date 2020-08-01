@@ -43,13 +43,13 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     } else {
       await testScreenshot({
         fileName: storyData.parameters.fileName,
-        hash: screenshot.hash,
+        screenshotId: screenshot.id,
         storyId: storyData.id,
       });
     }
   }, [
     imageDiffResult,
-    screenshot.hash,
+    screenshot.id,
     storyData,
     testScreenshot,
     updateScreenshot,

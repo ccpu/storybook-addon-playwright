@@ -54,7 +54,7 @@ describe('ScreenshotProvider', () => {
       return [
         {
           imageDiffResults: [
-            { pass: false, screenshotHash: 'hash' },
+            { pass: false, screenshotId: 'screenshot-id' },
           ] as ImageDiffResult[],
         },
         dispatchMock,
@@ -67,7 +67,7 @@ describe('ScreenshotProvider', () => {
 
     shallow(<ScreenshotProvider />);
     expect(setImageDiffResultMock).toHaveBeenCalledWith([
-      { pass: false, screenshotHash: 'hash' },
+      { pass: false, screenshotId: 'screenshot-id' },
     ]);
   });
 

@@ -32,8 +32,8 @@ export const testStoryScreenshots = async (
 
     const result = await testScreenshotService({
       fileName: data.fileName,
-      hash: screenshot.hash,
       requestId: data.requestId,
+      screenshotId: screenshot.id,
       storyId: data.storyId,
     });
     diffs.push(result);

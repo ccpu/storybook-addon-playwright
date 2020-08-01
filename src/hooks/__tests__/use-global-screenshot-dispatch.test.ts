@@ -7,13 +7,13 @@ describe('useGlobalScreenshotDispatch', () => {
 
     act(() => {
       result.current.dispatch({
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         type: 'deleteScreenshot',
       });
     });
 
     expect(result.current.action).toStrictEqual({
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
       type: 'deleteScreenshot',
     });
   });

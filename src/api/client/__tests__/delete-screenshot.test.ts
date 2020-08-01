@@ -6,11 +6,12 @@ describe('deleteScreenshot', () => {
     const mock = fetch.mockResponseOnce(JSON.stringify({}));
     await deleteScreenshot({
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(mock).toHaveBeenCalledWith('http://localhost/screenshot/delete', {
-      body: '{"fileName":"story.ts","hash":"hash","storyId":"story-id"}',
+      body:
+        '{"fileName":"story.ts","screenshotId":"screenshot-id","storyId":"story-id"}',
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',

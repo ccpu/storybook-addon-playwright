@@ -30,7 +30,7 @@ export const useLoadScreenshotSettings = (): ReturnType => {
         actionSet: {
           actions: screenshotData.actions,
           description: screenshotData.title + '- actions',
-          id: screenshotData.hash,
+          id: screenshotData.id,
           temp: true,
         },
         selected: true,

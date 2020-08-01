@@ -23,7 +23,7 @@ export const useScreenshotUpdate = () => {
       const result = await makeCall({
         base64: imageDiffResult.newScreenshot,
         fileName: storyData.parameters.fileName,
-        hash: imageDiffResult.screenshotHash,
+        screenshotId: imageDiffResult.screenshotId,
         storyId: storyData.id,
       });
 
@@ -34,7 +34,7 @@ export const useScreenshotUpdate = () => {
         index: imageDiffResult.index,
         newScreenshot: imageDiffResult.newScreenshot,
         pass: true,
-        screenshotHash: imageDiffResult.screenshotHash,
+        screenshotId: imageDiffResult.screenshotId,
         storyId: imageDiffResult.storyId,
       };
 

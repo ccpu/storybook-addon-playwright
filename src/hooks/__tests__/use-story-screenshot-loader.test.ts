@@ -15,7 +15,7 @@ describe('useStoryScreenshotLoader', () => {
     fetch.mockResponseOnce(
       JSON.stringify({
         browserType: 'chromium',
-        hash: 'hash',
+        id: 'screenshot-id',
         title: 'title',
       } as ScreenshotData),
     );
@@ -27,7 +27,11 @@ describe('useStoryScreenshotLoader', () => {
 
     expect(dispatchMock).toHaveBeenCalledWith([
       {
-        screenshots: { browserType: 'chromium', hash: 'hash', title: 'title' },
+        screenshots: {
+          browserType: 'chromium',
+          id: 'screenshot-id',
+          title: 'title',
+        },
         type: 'setScreenshots',
       },
     ]);

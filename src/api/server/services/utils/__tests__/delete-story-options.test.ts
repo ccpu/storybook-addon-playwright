@@ -26,7 +26,7 @@ describe('deleteStoryOptions', () => {
               {
                 browserOptionsId: 'option-id',
                 browserType: 'chromium',
-                hash: 'hash',
+                id: 'screenshot-id',
                 title: 'title',
               },
             ],
@@ -44,7 +44,7 @@ describe('deleteStoryOptions', () => {
             {
               browserOptionsId: 'option-id',
               browserType: 'chromium',
-              hash: 'hash',
+              id: 'screenshot-id',
               title: 'title',
             },
           ],

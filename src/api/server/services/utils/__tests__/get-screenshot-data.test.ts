@@ -6,7 +6,7 @@ describe('getScreenshotData', () => {
   it('should return nothing if not story found', async () => {
     const data = await getScreenshotData({
       fileName: 'file-name',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id-2',
     });
     expect(data).toStrictEqual(undefined);
@@ -15,13 +15,13 @@ describe('getScreenshotData', () => {
   it('should return data', async () => {
     const data = await getScreenshotData({
       fileName: 'file-name',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(data).toStrictEqual({
       actions: [{ id: 'action-id', name: 'action-name' }],
       browserType: 'chromium',
-      hash: 'hash',
+      id: 'screenshot-id',
       index: 0,
       title: 'title',
     });

@@ -12,7 +12,7 @@ export const getScreenshotData = async (info: ScreenshotInfo) => {
   if (!story || !story.screenshots) {
     return undefined;
   }
-  const screenShot = story.screenshots.find((x) => x.hash === info.hash);
+  const screenShot = story.screenshots.find((x) => x.id === info.screenshotId);
 
   if (screenShot) {
     setStoryScreenshotOptions(storyData, screenShot);

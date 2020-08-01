@@ -5,7 +5,7 @@ import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { deleteScreenshot } from './delete-screenshot';
 import { nanoid } from 'nanoid';
 import { setStoryOptions } from './utils/set-story-options';
-import { getStoryData } from './utils';
+import { getStoryData, findScreenshotWithSameSetting } from './utils';
 
 export const saveScreenshot = async (
   data: SaveScreenshotRequest,
@@ -21,16 +21,16 @@ export const saveScreenshot = async (
 
   if (data.updateScreenshot) {
     story.screenshots = story.screenshots.filter(
-      (x) => x.hash !== data.updateScreenshot.hash,
+      (x) => x.id !== data.updateScreenshot.id,
     );
     await deleteScreenshot({
       fileName: data.fileName,
-      hash: data.updateScreenshot.hash,
+      screenshotId: data.updateScreenshot.id,
       storyId: data.storyId,
     });
   }
 
-  const oldScreenshotData = story.screenshots.find((x) => x.hash === data.hash);
+  const oldScreenshotData = story.screenshots.find((x) => x.id === data.id);
 
   if (!oldScreenshotData) {
     const sameDesc = story.screenshots.find(
@@ -44,13 +44,21 @@ export const saveScreenshot = async (
           data.browserType,
       );
     }
-  } else if (oldScreenshotData && oldScreenshotData.title !== data.title) {
-    throw new Error(
-      'Found screenshot with the same setting, Screenshot settings must be unique for each screenshot.\nTitle: ' +
-        oldScreenshotData.title +
-        '\nBrowser: ' +
-        data.browserType,
+
+    const sameScreenshotData = findScreenshotWithSameSetting(
+      storyData,
+      story.screenshots,
+      data,
     );
+
+    if (sameScreenshotData) {
+      throw new Error(
+        'Found screenshot with the same setting, Screenshot settings must be unique for each screenshot.\nTitle: ' +
+          sameScreenshotData.title +
+          '\nBrowser: ' +
+          sameScreenshotData.browserType,
+      );
+    }
   }
 
   const result = diffImageToScreenshot(
@@ -76,7 +84,7 @@ export const saveScreenshot = async (
         data.browserOptions,
       ),
       browserType: data.browserType,
-      hash: data.hash,
+      id: data.id,
       index: index,
       props: data.props && data.props.length > 0 ? data.props : undefined,
       screenshotOptionsId: setStoryOptions(

@@ -79,7 +79,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
   const state = useActionContext();
   const dispatch = useActionDispatchContext();
 
-  const action = useEditorAction(story.id, actionId);
+  const action = useEditorAction(story && story.id, actionId);
   const schema = getActionSchema(state.actionSchema, actionName);
 
   const classes = useStyles();
@@ -113,7 +113,7 @@ const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
         type: 'deleteActionSetAction',
       });
     },
-    [actionId, actionSetId, dispatch, story.id],
+    [actionId, actionSetId, dispatch, story],
   );
 
   const hasParameters =

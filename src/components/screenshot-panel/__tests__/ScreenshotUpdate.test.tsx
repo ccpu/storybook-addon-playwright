@@ -62,7 +62,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(testScreenshotMock).toHaveBeenCalledWith({
       fileName: './story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
 
@@ -81,7 +81,7 @@ describe('ScreenshotUpdate', () => {
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
       fileName: './story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
   });
@@ -94,7 +94,7 @@ describe('ScreenshotUpdate', () => {
         imageDiffResult={{
           newScreenshot: 'base64-image',
           pass: true,
-          screenshotHash: 'hash',
+          screenshotId: 'screenshot-id',
         }}
       />,
     );
@@ -113,7 +113,7 @@ describe('ScreenshotUpdate', () => {
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
       fileName: './story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
   });

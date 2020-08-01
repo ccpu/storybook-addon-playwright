@@ -8,7 +8,7 @@ updateScreenshotService.mockImplementation(
       resolve({
         newScreenshot: data.base64,
         pass: true,
-        screenshotHash: data.hash,
+        screenshotId: data.screenshotId,
       });
     });
   },

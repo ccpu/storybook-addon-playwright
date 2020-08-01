@@ -27,7 +27,6 @@ describe('useEditScreenshot', () => {
   const setAddonStateMock = jest.fn();
 
   beforeEach(() => {
-    loadSettingMock.mockClear();
     jest.clearAllMocks();
     (useGlobalActionDispatch as jest.Mock).mockImplementation(() => ({
       dispatch: dispatchMock,
@@ -49,7 +48,7 @@ describe('useEditScreenshot', () => {
     act(() => {
       result.current.editScreenshot({
         browserType: 'chromium',
-        hash: 'hash',
+        id: 'screenshot-id',
         title: 'title',
       });
     });
@@ -57,7 +56,11 @@ describe('useEditScreenshot', () => {
     expect(result.current.editScreenshotState).toStrictEqual({
       currentBrowserOptions: {},
       currentScreenshotOptions: {},
-      screenshotData: { browserType: 'chromium', hash: 'hash', title: 'title' },
+      screenshotData: {
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        title: 'title',
+      },
       storyId: 'story-id',
     });
 
@@ -72,7 +75,7 @@ describe('useEditScreenshot', () => {
     act(() => {
       result.current.editScreenshot({
         browserType: 'chromium',
-        hash: 'hash',
+        id: 'screenshot-id',
         title: 'title',
       });
     });
@@ -86,7 +89,7 @@ describe('useEditScreenshot', () => {
 
     expect(result.current.editScreenshotState).toStrictEqual(undefined);
     expect(dispatchMock).toHaveBeenCalledWith({
-      actionSetId: 'hash',
+      actionSetId: 'screenshot-id',
       clearCurrentActionSets: true,
       storyId: 'story-id',
       type: 'deleteActionSet',
@@ -96,7 +99,7 @@ describe('useEditScreenshot', () => {
       {
         browserOptions: {},
         browserType: 'chromium',
-        hash: 'hash',
+        id: 'screenshot-id',
         screenshotOptions: {},
         title: 'title',
       },
@@ -109,7 +112,7 @@ describe('useEditScreenshot', () => {
     act(() => {
       result.current.editScreenshot({
         browserType: 'chromium',
-        hash: 'hash',
+        id: 'screenshot-id',
         title: 'title',
       });
     });

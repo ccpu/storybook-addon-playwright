@@ -17,7 +17,7 @@ describe('ImageDiff', () => {
   const testStoryScreenShotsMock = jest.fn();
 
   const imageDiffResult = [
-    { pass: true, screenshotHash: 'hash' },
+    { pass: true, screenshotId: 'screenshot-id' },
   ] as ImageDiffResult[];
 
   (useAppScreenshotImageDiff as jest.Mock).mockImplementation(() => {
@@ -100,7 +100,7 @@ describe('ImageDiff', () => {
   it('should show menu', () => {
     (useGlobalImageDiffResults as jest.Mock).mockImplementationOnce(() => ({
       imageDiffResult: [
-        { pass: true, screenshotHash: 'hash' },
+        { pass: true, screenshotId: 'screenshot-id' },
       ] as ImageDiffResult[],
     }));
     const wrapper = shallow(<ImageDiff />);

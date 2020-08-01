@@ -33,7 +33,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
     try {
       const promises = screenshotsData.map((s) => {
         const imageDiffResult = state.imageDiffResults.find(
-          (x) => x.screenshotHash === s.hash,
+          (x) => x.screenshotId === s.id,
         );
         if (!imageDiffResult) {
           throw new Error(

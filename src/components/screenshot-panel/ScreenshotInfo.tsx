@@ -36,7 +36,7 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
         return obj;
       }, {});
     }
-    delete data.hash;
+    delete data.id;
     delete data.index;
 
     return data;

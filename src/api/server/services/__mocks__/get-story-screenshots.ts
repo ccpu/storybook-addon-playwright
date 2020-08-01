@@ -8,7 +8,7 @@ getStoryScreenshots.mockImplementation(
       resolve([
         {
           browserType: 'chromium',
-          hash: data.storyId + '-hash',
+          id: 'screenshot-id',
           title: data.fileName + '-screenshot',
         },
       ]);

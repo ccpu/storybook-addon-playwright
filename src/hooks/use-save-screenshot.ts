@@ -4,12 +4,12 @@ import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../api/client';
 import { BrowserTypes, BrowserContextOptions } from '../typings';
-import { getScreenshotHash } from '../utils';
 import { SaveScreenshotRequest } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
 import { useScreenshotOptions } from './use-screenshot-options';
+import { nanoid } from 'nanoid';
 
 export const useSaveScreenshot = () => {
   const props = useKnobs();
@@ -59,22 +59,13 @@ export const useSaveScreenshot = () => {
         ? { ...deviceDescriptor }
         : undefined;
 
-      const hash = getScreenshotHash({
-        actions: currentActions,
-        browserOptions,
-        browserType,
-        props,
-        screenshotOptions: screenshotOptions,
-        storyId: storyData.id,
-      });
-
       const data: SaveScreenshotRequest = {
         actions: currentActions,
         base64: base64String,
         browserOptions,
         browserType,
         fileName: storyData.parameters.fileName,
-        hash,
+        id: nanoid(15),
         props: props,
         screenshotOptions:
           screenshotOptions && Object.keys(screenshotOptions).length
@@ -93,7 +84,7 @@ export const useSaveScreenshot = () => {
       if (editScreenshotState && isUpdating(browserType)) {
         if (res.added) {
           screenshotDispatch({
-            screenshotHash: editScreenshotState.screenshotData.hash,
+            screenshotId: editScreenshotState.screenshotData.id,
             type: 'removeScreenshot',
           });
         }

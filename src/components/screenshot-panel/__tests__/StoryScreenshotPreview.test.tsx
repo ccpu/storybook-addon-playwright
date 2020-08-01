@@ -57,7 +57,7 @@ describe('StoryScreenshotPreview', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       pass: true,
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
     });
   });
 
@@ -69,7 +69,7 @@ describe('StoryScreenshotPreview', () => {
 
     const wrapper = shallow(
       <StoryScreenshotPreview
-        screenshotsData={[getScreenshotDate({ hash: 'invalid-hash' })]}
+        screenshotsData={[getScreenshotDate({ id: 'invalid-id' })]}
         storyData={storyData}
         onFinish={jest.fn()}
         updating

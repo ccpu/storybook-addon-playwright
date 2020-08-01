@@ -6,6 +6,12 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
 import mockConsole from 'jest-mock-console';
 
+jest.mock('nanoid', () => ({
+  nanoid: () => {
+    return 'some-id';
+  },
+}));
+
 jest.mock('../../utils/get-iframe.ts');
 jest.mock('../use-edit-screenshot');
 const useEditScreenshotMock = mocked(useEditScreenshot);
@@ -52,7 +58,7 @@ describe('useSaveScreenshot', () => {
         browserType: 'chromium',
         device: undefined,
         fileName: './stories/story.ts',
-        hash: '2a91b674',
+        id: 'some-id',
         index: undefined,
         props: undefined,
         screenshotOptions: undefined,
@@ -111,7 +117,7 @@ describe('useSaveScreenshot', () => {
         editScreenshotState: {
           screenshotData: {
             browserType: 'chromium',
-            hash: 'hash',
+            id: 'screenshot-id',
             index: 1,
             title: 'foo',
           },
@@ -138,7 +144,7 @@ describe('useSaveScreenshot', () => {
 
     expect(data.updateScreenshot).toStrictEqual({
       browserType: 'chromium',
-      hash: 'hash',
+      id: 'screenshot-id',
       index: 1,
       title: 'foo',
     });

@@ -120,7 +120,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
               </MenuItem>
               {imageDiffResult.map((diff) => (
                 <ImageDiffMenuItem
-                  key={diff.storyId + diff.screenshotHash}
+                  key={diff.storyId + diff.screenshotId}
                   imageDiff={diff}
                   onClick={handleClose}
                 />

@@ -23,12 +23,15 @@ describe('useScreenshotUpdate', () => {
   });
   it('should dispatch new result', async () => {
     fetch.mockResponseOnce(
-      JSON.stringify({ hash: 'hash', storyId: 'story-id' } as UpdateScreenshot),
+      JSON.stringify({
+        screenshotId: 'screenshot-id',
+        storyId: 'story-id',
+      } as UpdateScreenshot),
     );
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {
-      await result.current.updateScreenshot({ screenshotHash: 'hash' });
+      await result.current.updateScreenshot({ screenshotId: 'screenshot-id' });
     });
 
     expect(dispatchMock).toHaveBeenCalledWith([
@@ -38,7 +41,7 @@ describe('useScreenshotUpdate', () => {
           index: undefined,
           newScreenshot: undefined,
           pass: true,
-          screenshotHash: 'hash',
+          screenshotId: 'screenshot-id',
           storyId: undefined,
         },
         type: 'updateImageDiffResult',
@@ -51,7 +54,7 @@ describe('useScreenshotUpdate', () => {
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {
-      await result.current.updateScreenshot({ screenshotHash: 'hash' });
+      await result.current.updateScreenshot({ screenshotId: 'screenshot-id' });
     });
 
     expect(dispatchMock).toHaveBeenCalledTimes(0);

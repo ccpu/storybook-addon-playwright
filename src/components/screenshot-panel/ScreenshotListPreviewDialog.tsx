@@ -69,7 +69,7 @@ const ScreenshotListPreviewDialog: SFC<
       !currentItem
     ) {
       if (selectedItem) {
-        handleItemClick(screenshots.find((x) => x.hash === selectedItem));
+        handleItemClick(screenshots.find((x) => x.id === selectedItem));
       } else if (screenshots[0]) {
         handleItemClick(screenshots[0]);
       }
@@ -84,7 +84,7 @@ const ScreenshotListPreviewDialog: SFC<
 
   const diffResult =
     currentItem &&
-    state.imageDiffResults.find((x) => x.screenshotHash === currentItem.hash);
+    state.imageDiffResults.find((x) => x.screenshotId === currentItem.id);
 
   return (
     <Dialog
@@ -109,7 +109,7 @@ const ScreenshotListPreviewDialog: SFC<
                   index={i}
                   openUpdateDialog={false}
                   showPreviewOnClick={false}
-                  key={screenshot.hash}
+                  key={screenshot.id}
                   screenshot={screenshot}
                   forceShowMenu={true}
                   enableUpdate={true}
@@ -117,11 +117,11 @@ const ScreenshotListPreviewDialog: SFC<
                   storyData={storyData}
                   pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
                   onClick={handleItemClick}
-                  selected={currentItem.hash === screenshot.hash}
+                  selected={currentItem.id === screenshot.id}
                   imageDiffResult={state.imageDiffResults.find(
                     (x) =>
                       x.storyId === storyData.id &&
-                      x.screenshotHash === screenshot.hash,
+                      x.screenshotId === screenshot.id,
                   )}
                 />
               ))}

@@ -98,7 +98,7 @@ export const useActionEditor = (actionSet: ActionSet) => {
       storyId: storyData.id,
       type: 'cancelEditActionSet',
     });
-  }, [dispatch, storyData.id]);
+  }, [dispatch, storyData]);
 
   return {
     ErrorSnackbar,

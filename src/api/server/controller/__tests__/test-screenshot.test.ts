@@ -10,14 +10,14 @@ describe('testScreenshot', () => {
 
     await testScreenshot(
       {
-        body: { hash: 'hash-1' } as ScreenshotInfo,
+        body: { screenshotId: 'screenshot-id' } as ScreenshotInfo,
         headers: { host: 'localhost' },
       } as Request,
       ({ json: jsonMock } as unknown) as Response,
     );
     expect(jsonMock).toHaveBeenCalledWith({
       pass: true,
-      screenshotHash: 'hash-1',
+      screenshotId: 'screenshot-id',
     });
   });
 });

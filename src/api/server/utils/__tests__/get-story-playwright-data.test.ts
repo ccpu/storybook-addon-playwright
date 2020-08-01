@@ -38,14 +38,14 @@ describe('getStoryPlaywrightData', () => {
               {
                 actions: [{ id: 'action-id', name: 'action-name' }],
                 browserType: 'chromium',
-                hash: 'hash',
+                id: 'screenshot-id',
                 index: 0,
                 title: 'title',
               },
               {
                 actions: [{ id: 'action-id', name: 'action-name' }],
                 browserType: 'chromium',
-                hash: 'hash-2',
+                id: 'screenshot-id-2',
                 index: 1,
                 title: 'title-2',
               },
@@ -84,14 +84,14 @@ describe('getStoryPlaywrightData', () => {
               {
                 actions: [{ id: 'action-id', name: 'action-name' }],
                 browserType: 'chromium',
-                hash: 'hash',
+                id: 'screenshot-id',
                 index: 0,
                 title: 'title',
               },
               {
                 actions: [{ id: 'action-id', name: 'action-name' }],
                 browserType: 'chromium',
-                hash: 'hash-2',
+                id: 'screenshot-id-2',
                 index: 1,
                 title: 'title-2',
               },

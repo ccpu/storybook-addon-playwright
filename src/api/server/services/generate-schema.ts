@@ -7,12 +7,12 @@ import {
   Definition,
 } from 'ts-to-json';
 import { join } from 'path';
-import sum from 'hash-sum';
+import objHash from 'object-hash';
 
 export const cachedSchema = {};
 
 export const generateSchema = (options?: Partial<Config>) => {
-  const hash = sum(options);
+  const hash = objHash(options);
 
   if (!options.path) {
     options.path = join(__dirname, '/typings/types.d.ts');

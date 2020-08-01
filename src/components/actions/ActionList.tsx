@@ -76,7 +76,7 @@ const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
         type: 'moveActionSetAction',
       });
     },
-    [actionSet.id, dispatch, story.id],
+    [actionSet.id, dispatch, story],
   );
 
   if (!actionSet || !actionSet.actions.length) {

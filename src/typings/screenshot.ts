@@ -28,7 +28,7 @@ export interface ScreenshotImageData {
 }
 
 export interface ScreenshotInfo extends StoryInfo {
-  hash: string;
+  screenshotId: string;
 }
 
 export interface ScreenshotClip {
@@ -48,9 +48,9 @@ export interface ScreenshotSetting {
   screenshotOptionsId?: string;
 }
 
-export interface ScreenshotData extends ScreenshotOptions, ScreenshotSetting {
+export interface ScreenshotData extends ScreenshotSetting {
   title: string;
-  hash: string;
+  id: string;
   index?: number;
 }
 

@@ -30,7 +30,7 @@ describe('useLoadScreenshotSettings', () => {
       actions: [{ id: 'action-id', name: 'action-name' }],
 
       browserType: 'chromium',
-      hash: 'hash',
+      id: 'screenshot-id',
 
       title: 'title',
       ...opt,
@@ -48,7 +48,7 @@ describe('useLoadScreenshotSettings', () => {
       actionSet: {
         actions: [{ id: 'action-id', name: 'action-name' }],
         description: 'title- actions',
-        id: 'hash',
+        id: 'screenshot-id',
         temp: true,
       },
       selected: true,

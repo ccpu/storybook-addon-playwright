@@ -4,6 +4,8 @@ import { ActionList, SortableList, SortableItem } from '../ActionList';
 import { shallow } from 'enzyme';
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
 
+jest.mock('../../../hooks/use-current-story-data.ts');
+
 describe('ActionList', () => {
   beforeEach(() => {
     dispatchMock.mockClear();

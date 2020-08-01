@@ -42,7 +42,7 @@ export const useEditScreenshot = () => {
 
   const clearScreenshotEdit = useCallback(() => {
     dispatch({
-      actionSetId: editScreenshotState.screenshotData.hash,
+      actionSetId: editScreenshotState.screenshotData.id,
       clearCurrentActionSets: true,
       storyId: storyData.id,
       type: 'deleteActionSet',
@@ -53,7 +53,7 @@ export const useEditScreenshot = () => {
       {
         browserOptions: editScreenshotState.currentBrowserOptions,
         browserType: editScreenshotState.screenshotData.browserType,
-        hash: editScreenshotState.screenshotData.hash,
+        id: editScreenshotState.screenshotData.id,
         screenshotOptions: editScreenshotState.currentScreenshotOptions,
         title: editScreenshotState.screenshotData.title,
       },
@@ -68,7 +68,7 @@ export const useEditScreenshot = () => {
     editScreenshotState,
     loadSetting,
     setEditScreenshotState,
-    storyData.id,
+    storyData,
   ]);
 
   const editScreenshot = useCallback(
@@ -101,7 +101,7 @@ export const useEditScreenshot = () => {
       setAddonState,
       setBrowserState,
       setEditScreenshotState,
-      storyData.id,
+      storyData,
     ],
   );
 

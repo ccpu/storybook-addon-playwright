@@ -26,6 +26,7 @@ const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
 
 export const useControl = (props: ControlProps) => {
   const { label, type, onChange, value, options, display } = props;
+
   const [knob, setKnob] = useState<Partial<KnobStoreKnob>>({
     defaultValue: value,
     name: label,

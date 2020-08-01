@@ -14,12 +14,11 @@ export interface ActionSchemaRendererProps {
 
 const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
   const { schema, actionId, actionSetId } = props;
-
   const dispatch = useActionDispatchContext();
 
   const story = useCurrentStoryData();
 
-  const action = useEditorAction(story.id, actionId);
+  const action = useEditorAction(story && story.id, actionId);
 
   const handleChange = useCallback(
     (objPath, val) => {
@@ -32,12 +31,13 @@ const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
         val,
       });
     },
-    [actionId, actionSetId, dispatch, story.id],
+    [actionId, actionSetId, dispatch, story],
   );
 
   const handleGetValue = useCallback(
     (optionObjectPath: string, schema: ActionSchema) => {
-      return getActionOptionValue(action, optionObjectPath, schema);
+      const val = getActionOptionValue(action, optionObjectPath, schema);
+      return val;
     },
     [action],
   );
@@ -63,7 +63,7 @@ const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
         type: 'toggleSubtitleItem',
       });
     },
-    [actionId, actionSetId, dispatch, story.id],
+    [actionId, actionSetId, dispatch, story],
   );
 
   const handleSelectorChange = useCallback(
@@ -77,8 +77,10 @@ const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
         val,
       });
     },
-    [actionId, actionSetId, dispatch, story.id],
+    [actionId, actionSetId, dispatch, story],
   );
+
+  if (!action) return null;
 
   return (
     <div>

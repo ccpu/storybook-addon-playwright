@@ -2,7 +2,7 @@ import React, { SFC, memo, useEffect, useRef, useCallback } from 'react';
 import { useSnackbar, SnackbarKey, OptionsObject } from 'notistack';
 import { AlertTitle } from '@material-ui/lab';
 import CloseSharp from '@material-ui/icons/CloseSharp';
-import sum from 'hash-sum';
+import objectHash from 'object-hash';
 
 export interface SnackbarProps extends Omit<OptionsObject, 'onClose'> {
   title?: string;
@@ -30,7 +30,7 @@ const Snackbar: SFC<SnackbarProps> = memo(
   }) => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const key = useRef<SnackbarKey>();
-    const messageHash = useRef<string>(sum({ children, message }));
+    const messageHash = useRef<string>(objectHash({ children, message }));
     const unmounted = useRef<boolean>();
 
     const handleClose = useCallback(() => {

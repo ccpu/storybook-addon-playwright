@@ -10,10 +10,20 @@ useScreenshotDispatch.mockImplementation(() => {
 const useScreenshotContext = jest.fn();
 
 const StateData: Partial<ReducerState> = {
-  imageDiffResults: [{ pass: true, screenshotHash: 'hash' }],
+  imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
   screenshots: [
-    { browserType: 'chromium', hash: 'hash', index: 0, title: 'title' },
-    { browserType: 'chromium', hash: 'hash-2', index: 0, title: 'title' },
+    {
+      browserType: 'chromium',
+      id: 'screenshot-id',
+      index: 0,
+      title: 'title',
+    },
+    {
+      browserType: 'chromium',
+      id: 'screenshot-id-2',
+      index: 0,
+      title: 'title',
+    },
   ],
 };
 

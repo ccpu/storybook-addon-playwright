@@ -23,7 +23,7 @@ export type Action =
     }
   | {
       type: 'removeImageDiffResult';
-      screenshotHash: string;
+      screenshotId: string;
     }
   | {
       type: 'updateImageDiffResult';
@@ -35,7 +35,7 @@ export type Action =
     }
   | {
       type: 'removeScreenshot';
-      screenshotHash: string;
+      screenshotId: string;
     }
   | {
       type: 'removeStoryScreenshots';
@@ -49,7 +49,7 @@ export type Action =
       type: 'pauseDeleteImageDiffResult';
       state: boolean;
     }
-  | { type: 'deleteScreenshot'; screenshotHash: string };
+  | { type: 'deleteScreenshot'; screenshotId: string };
 
 export const initialState: ReducerState = {
   imageDiffResults: [],
@@ -76,7 +76,7 @@ export function reducer(
       return {
         ...state,
         screenshots: state.screenshots.filter(
-          (x) => x.hash !== action.screenshotHash,
+          (x) => x.id !== action.screenshotId,
         ),
       };
     }
@@ -120,7 +120,7 @@ export function reducer(
         ...state,
         imageDiffResults: [
           ...state.imageDiffResults.filter(
-            (x) => x.screenshotHash !== action.imageDiffResult.screenshotHash,
+            (x) => x.screenshotId !== action.imageDiffResult.screenshotId,
           ),
           action.imageDiffResult,
         ],
@@ -130,7 +130,7 @@ export function reducer(
       return {
         ...state,
         imageDiffResults: state.imageDiffResults.map((result) => {
-          if (result.screenshotHash !== action.imageDiffResult.screenshotHash)
+          if (result.screenshotId !== action.imageDiffResult.screenshotId)
             return result;
           return { ...action.imageDiffResult };
         }),
@@ -147,7 +147,7 @@ export function reducer(
       return {
         ...state,
         imageDiffResults: state.imageDiffResults.filter(
-          (x) => x.screenshotHash !== action.screenshotHash,
+          (x) => x.screenshotId !== action.screenshotId,
         ),
       };
     }
@@ -155,10 +155,10 @@ export function reducer(
       const newState = {
         ...state,
         imageDiffResults: state.imageDiffResults.filter(
-          (x) => x.screenshotHash !== action.screenshotHash,
+          (x) => x.screenshotId !== action.screenshotId,
         ),
         screenshots: state.screenshots.filter(
-          (x) => x.hash !== action.screenshotHash,
+          (x) => x.id !== action.screenshotId,
         ),
       };
       return newState;

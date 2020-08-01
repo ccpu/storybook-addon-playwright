@@ -90,7 +90,7 @@ function ScreenshotListItem({
     setShowImageDiffResult(false);
     if (!pauseDeleteImageDiffResult && isPassesImageDiff) {
       dispatch({
-        screenshotHash: imageDiffResult.screenshotHash,
+        screenshotId: imageDiffResult.screenshotId,
         type: 'removeImageDiffResult',
       });
     } else {
@@ -136,9 +136,9 @@ function ScreenshotListItem({
   }, []);
 
   const handleRunDiffTest = useCallback(async () => {
-    await testScreenshot(screenshot.hash);
+    await testScreenshot(screenshot.id);
     setShowImageDiffResult(true);
-  }, [screenshot.hash, testScreenshot]);
+  }, [screenshot.id, testScreenshot]);
 
   const toggleSelectedItem = useCallback(() => {
     if (onClick) onClick(screenshot);
@@ -170,7 +170,7 @@ function ScreenshotListItem({
       selected={
         selected ||
         (editScreenshotState &&
-          editScreenshotState.screenshotData.hash === screenshot.hash)
+          editScreenshotState.screenshotData.id === screenshot.id)
       }
       tooltip={screenshot.title}
       onMouseEnter={handleMouseEnter}

@@ -16,10 +16,30 @@ describe('setStoryOptions', () => {
     });
   });
 
-  it('should return undefined if option is empty object', () => {
+  it('should set data ', () => {
+    const data = { ...storyData };
+    const id = setStoryOptions(data, 'browserOptions', { fullPage: true });
+    expect(id).toBe('some-id');
+    expect(data).toStrictEqual({
+      browserOptions: { 'some-id': { fullPage: true } },
+    });
+  });
+
+  it('should return undefined if option has no prop', () => {
     const data = { ...storyData };
     const id = setStoryOptions(data, 'browserOptions', {});
-    expect(id).toBeUndefined();
+    expect(id).toBe(undefined);
+  });
+
+  it('should return key if found equal object', () => {
+    const id = setStoryOptions(
+      { screenshotOptions: { ['option-id']: { fullPage: true } } },
+      'screenshotOptions',
+      {
+        fullPage: true,
+      },
+    );
+    expect(id).toBe('option-id');
   });
 
   it('should return object id if equal', () => {
@@ -28,6 +48,6 @@ describe('setStoryOptions', () => {
       'browserOptions',
       { fullPage: true },
     );
-    expect(id).toBe('option-id');
+    expect(id).toBe('some-id');
   });
 });

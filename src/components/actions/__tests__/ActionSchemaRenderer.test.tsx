@@ -8,6 +8,7 @@ import { useEditorAction } from '../../../hooks/use-editor-action';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('../../../hooks/use-editor-action');
+jest.mock('../../../hooks/use-current-story-data.ts');
 
 const defaultMockData = {
   args: { selector: 'html' },
@@ -35,6 +36,18 @@ describe('ActionSchemaRenderer', () => {
     expect(wrapper).toBeTruthy();
   });
 
+  it('should not render until receive current editing actions data', () => {
+    mocked(useEditorAction).mockImplementationOnce(() => undefined);
+    const wrapper = shallow(
+      <ActionSchemaRenderer
+        schema={schema}
+        actionId="action-id"
+        actionSetId="action-set-id"
+      />,
+    );
+    expect(wrapper.type()).toBe(null);
+  });
+
   it('should dispatch change', () => {
     const wrapper = shallow(
       <ActionSchemaRenderer
@@ -51,7 +64,7 @@ describe('ActionSchemaRenderer', () => {
         actionId: 'action-id',
         actionSetId: 'action-set-id',
         objPath: 'opt.path',
-        storyId: undefined,
+        storyId: 'story-id',
         type: 'setActionOptions',
         val: 1,
       },
@@ -93,7 +106,7 @@ describe('ActionSchemaRenderer', () => {
         actionId: 'action-id',
         actionOptionPath: 'opt.path',
         actionSetId: 'action-set-id',
-        storyId: undefined,
+        storyId: 'story-id',
         type: 'toggleSubtitleItem',
       },
     ]);
@@ -135,7 +148,7 @@ describe('ActionSchemaRenderer', () => {
         actionId: 'action-id',
         actionSetId: 'action-set-id',
         objPath: 'opt.path',
-        storyId: undefined,
+        storyId: 'story-id',
         type: 'setActionOptions',
         val: 1,
       },

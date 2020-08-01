@@ -21,8 +21,8 @@ const ScreenshotDelete: SFC<ScreenshotDeleteProps> = (props) => {
   } = useDeleteScreenshot();
 
   const handleDeleteConfirmation = useCallback(() => {
-    deleteScreenshot(screenshot.hash);
-  }, [deleteScreenshot, screenshot.hash]);
+    deleteScreenshot(screenshot.id);
+  }, [deleteScreenshot, screenshot.id]);
 
   useEffect(() => {
     onStateChange(deleteLoading);

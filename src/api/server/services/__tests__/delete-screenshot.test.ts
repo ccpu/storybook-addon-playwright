@@ -21,7 +21,7 @@ describe('deleteScreenshot', () => {
   it('should delete', async () => {
     await deleteScreenshot({
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(
@@ -30,7 +30,7 @@ describe('deleteScreenshot', () => {
       {
         actions: [{ id: 'action-id', name: 'action-name' }],
         browserType: 'chromium',
-        hash: 'hash-2',
+        id: 'screenshot-id-2',
         index: 1,
         title: 'title-2',
       },
@@ -50,7 +50,7 @@ describe('deleteScreenshot', () => {
 
     await deleteScreenshot({
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
 

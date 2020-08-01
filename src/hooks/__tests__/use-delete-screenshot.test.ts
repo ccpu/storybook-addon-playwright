@@ -32,11 +32,11 @@ describe('useDeleteScreenshot', () => {
     const { result } = renderHook(() => useDeleteScreenshot());
 
     await act(async () => {
-      await result.current.deleteScreenshot('hash');
+      await result.current.deleteScreenshot('screenshot-id');
     });
 
     expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshotHash: 'hash', type: 'deleteScreenshot' },
+      { screenshotId: 'screenshot-id', type: 'deleteScreenshot' },
     ]);
   });
 
@@ -45,7 +45,7 @@ describe('useDeleteScreenshot', () => {
     const { result } = renderHook(() => useDeleteScreenshot());
 
     await act(async () => {
-      await result.current.deleteScreenshot('hash');
+      await result.current.deleteScreenshot('screenshot-id');
     });
 
     expect(result.current.error).toBe('foo');

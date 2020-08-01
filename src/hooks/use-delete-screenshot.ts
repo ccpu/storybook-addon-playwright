@@ -19,15 +19,15 @@ export const useDeleteScreenshot = () => {
   } = useAsyncApiCall(deleteScreenshotService, false);
 
   const deleteScreenshot = useCallback(
-    async (hash: string) => {
+    async (id: string) => {
       const result = await makeCall({
         fileName: storyData.parameters.fileName,
-        hash: hash,
+        screenshotId: id,
         storyId: storyData.id,
       });
 
       if (!(result instanceof Error))
-        dispatch({ screenshotHash: hash, type: 'deleteScreenshot' });
+        dispatch({ screenshotId: id, type: 'deleteScreenshot' });
     },
     [dispatch, makeCall, storyData],
   );

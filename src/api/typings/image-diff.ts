@@ -16,7 +16,7 @@ export interface ImageDiffResult {
   diffRatio?: number;
   diffPixelCount?: number;
   oldScreenShotTitle?: string;
-  screenshotHash?: string;
+  screenshotId?: string;
   storyId?: string;
   newScreenshot?: string;
   index?: number;

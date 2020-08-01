@@ -27,13 +27,13 @@ describe('testAppScreenshot', () => {
       {
         added: true,
         newScreenshot: 'base64-image',
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         storyId: 'story-id',
       },
       {
         added: true,
         newScreenshot: 'base64-image',
-        screenshotHash: 'hash-2',
+        screenshotId: 'screenshot-id-2',
         storyId: 'story-id',
       },
     ]);
@@ -45,13 +45,13 @@ describe('testAppScreenshot', () => {
       {
         added: true,
         newScreenshot: 'base64-image',
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         storyId: 'story-id',
       },
       {
         added: true,
         newScreenshot: 'base64-image',
-        screenshotHash: 'hash-2',
+        screenshotId: 'screenshot-id-2',
         storyId: 'story-id',
       },
     ]);

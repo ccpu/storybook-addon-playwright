@@ -10,12 +10,12 @@ export interface ScreenshotRequest extends ScreenshotSetting, RequestData {
 export type GetScreenshotResponse = {
   base64: string;
   error: string;
-  hash: string;
+  id: string;
 };
 
 export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
   base64?: string;
-  hash: string;
+  id: string;
   updateScreenshot?: ScreenshotData;
 }
 

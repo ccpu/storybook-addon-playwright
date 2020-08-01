@@ -6,7 +6,7 @@ saveScreenshot.mockImplementation(
     return new Promise((resolve) => {
       resolve({
         pass: true,
-        screenshotHash: data.hash,
+        screenshotId: data.id,
       });
     });
   },

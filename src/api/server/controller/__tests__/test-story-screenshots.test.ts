@@ -16,7 +16,7 @@ describe('testStoryScreenshots', () => {
       ({ json: jsonMock } as unknown) as Response,
     );
     expect(jsonMock).toHaveBeenCalledWith([
-      { pass: true, screenshotHash: 'hash' },
+      { pass: true, screenshotId: 'screenshot-id' },
     ]);
   });
 });

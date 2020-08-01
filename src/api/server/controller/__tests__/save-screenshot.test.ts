@@ -9,12 +9,12 @@ describe('saveScreenshot', () => {
     const jsonMock = jest.fn();
 
     await saveScreenshot(
-      { body: { hash: 'hash' } as SaveScreenshotRequest } as Request,
+      { body: { id: 'screenshot-id' } as SaveScreenshotRequest } as Request,
       ({ json: jsonMock } as unknown) as Response,
     );
     expect(jsonMock).toHaveBeenCalledWith({
       pass: true,
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
     });
   });
 });

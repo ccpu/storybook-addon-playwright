@@ -10,13 +10,13 @@ describe('testScreenshot', () => {
   it('should have result', async () => {
     const result = await testScreenshotService({
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual({
       added: true,
       newScreenshot: 'base64-image',
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
   });
@@ -25,7 +25,7 @@ describe('testScreenshot', () => {
     await expect(
       testScreenshotService({
         fileName: 'story.ts',
-        hash: 'hash',
+        screenshotId: 'screenshot-id',
         storyId: 'story-id-2',
       }),
     ).rejects.toThrowError('Unable to find screenshot data.');
@@ -37,13 +37,13 @@ describe('testScreenshot', () => {
     });
     const result = await testScreenshotService({
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual({
       error: 'ops',
       pass: false,
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
   });

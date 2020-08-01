@@ -5,12 +5,15 @@ describe('deleteStoryScreenshots', () => {
   it('should ', async () => {
     const fetchMock = fetch.mockResponseOnce('');
 
-    await updateScreenshot({ hash: 'hash', storyId: 'story-id' });
+    await updateScreenshot({
+      screenshotId: 'screenshot-id',
+      storyId: 'story-id',
+    });
 
     expect(fetchMock).toHaveBeenCalledWith(
       'http://localhost/screenshot/update',
       {
-        body: '{"hash":"hash","storyId":"story-id"}',
+        body: '{"screenshotId":"screenshot-id","storyId":"story-id"}',
         headers: {
           Accept: 'application/json, text/plain, */*',
           'Content-Type': 'application/json',

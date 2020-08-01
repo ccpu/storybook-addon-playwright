@@ -13,7 +13,7 @@ describe('screenshot reducer', () => {
     data?: Partial<ScreenshotData>,
   ): ScreenshotData => ({
     browserType: 'chromium',
-    hash: 'hash',
+    id: 'screenshot-id',
     index: 0,
     title: 'title',
     ...data,
@@ -34,7 +34,12 @@ describe('screenshot reducer', () => {
       type: 'addScreenshot',
     });
     expect(result.screenshots).toStrictEqual([
-      { browserType: 'chromium', hash: 'hash', index: 0, title: 'title' },
+      {
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        index: 0,
+        title: 'title',
+      },
     ]);
   });
 
@@ -47,7 +52,12 @@ describe('screenshot reducer', () => {
       },
     );
     expect(result.screenshots).toStrictEqual([
-      { browserType: 'chromium', hash: 'hash', index: 0, title: 'title' },
+      {
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        index: 0,
+        title: 'title',
+      },
     ]);
   });
 
@@ -55,7 +65,7 @@ describe('screenshot reducer', () => {
     const result = reducer(
       { screenshots: [getScreenshotData()] },
       {
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         type: 'removeScreenshot',
       },
     );
@@ -66,7 +76,7 @@ describe('screenshot reducer', () => {
       {
         screenshots: [
           getScreenshotData(),
-          getScreenshotData({ hash: 'hash-2', index: 1 }),
+          getScreenshotData({ id: 'screenshotId-2', index: 1 }),
         ],
       },
       {
@@ -77,8 +87,18 @@ describe('screenshot reducer', () => {
     );
     expect(result).toStrictEqual({
       screenshots: [
-        { browserType: 'chromium', hash: 'hash-2', index: 0, title: 'title' },
-        { browserType: 'chromium', hash: 'hash', index: 1, title: 'title' },
+        {
+          browserType: 'chromium',
+          id: 'screenshotId-2',
+          index: 0,
+          title: 'title',
+        },
+        {
+          browserType: 'chromium',
+          id: 'screenshot-id',
+          index: 1,
+          title: 'title',
+        },
       ],
     });
   });
@@ -88,7 +108,7 @@ describe('screenshot reducer', () => {
       {
         screenshots: [
           getScreenshotData(),
-          getScreenshotData({ hash: 'hash-2', index: 1 }),
+          getScreenshotData({ id: 'screenshotId-2', index: 1 }),
         ],
       },
       {
@@ -104,7 +124,12 @@ describe('screenshot reducer', () => {
       type: 'setScreenshots',
     });
     expect(result.screenshots).toStrictEqual([
-      { browserType: 'chromium', hash: 'hash', index: 0, title: 'title' },
+      {
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        index: 0,
+        title: 'title',
+      },
     ]);
   });
 
@@ -118,54 +143,54 @@ describe('screenshot reducer', () => {
 
   it('should addImageDiffResult (should remove replace old one)', () => {
     const result = reducer(
-      { imageDiffResults: [{ pass: true, screenshotHash: 'hash' }] },
+      { imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }] },
       {
-        imageDiffResult: { pass: true, screenshotHash: 'hash' },
+        imageDiffResult: { pass: true, screenshotId: 'screenshot-id' },
         type: 'addImageDiffResult',
       },
     );
     expect(result.imageDiffResults).toStrictEqual([
-      { pass: true, screenshotHash: 'hash' },
+      { pass: true, screenshotId: 'screenshot-id' },
     ]);
   });
 
   it('should addImageDiffResult (add)', () => {
     const result = reducer(
-      { imageDiffResults: [{ pass: true, screenshotHash: 'hash' }] },
+      { imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }] },
       {
-        imageDiffResult: { pass: true, screenshotHash: 'hash-2' },
+        imageDiffResult: { pass: true, screenshotId: 'screenshotId-2' },
         type: 'addImageDiffResult',
       },
     );
     expect(result.imageDiffResults).toStrictEqual([
-      { pass: true, screenshotHash: 'hash' },
-      { pass: true, screenshotHash: 'hash-2' },
+      { pass: true, screenshotId: 'screenshot-id' },
+      { pass: true, screenshotId: 'screenshotId-2' },
     ]);
   });
 
   it('should updateImageDiffResult', () => {
     const result = reducer(
-      { imageDiffResults: [{ pass: false, screenshotHash: 'hash' }] },
+      { imageDiffResults: [{ pass: false, screenshotId: 'screenshot-id' }] },
       {
-        imageDiffResult: { pass: true, screenshotHash: 'hash' },
+        imageDiffResult: { pass: true, screenshotId: 'screenshot-id' },
         type: 'updateImageDiffResult',
       },
     );
     expect(result).toStrictEqual({
-      imageDiffResults: [{ pass: true, screenshotHash: 'hash' }],
+      imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
     });
   });
 
   it('should updateImageDiffResult (do nothing if not exist)', () => {
     const result = reducer(
-      { imageDiffResults: [{ pass: false, screenshotHash: 'hash' }] },
+      { imageDiffResults: [{ pass: false, screenshotId: 'screenshot-id' }] },
       {
-        imageDiffResult: { pass: true, screenshotHash: 'hash-2' },
+        imageDiffResult: { pass: true, screenshotId: 'screenshot-id-3' },
         type: 'updateImageDiffResult',
       },
     );
     expect(result).toStrictEqual({
-      imageDiffResults: [{ pass: false, screenshotHash: 'hash' }],
+      imageDiffResults: [{ pass: false, screenshotId: 'screenshot-id' }],
     });
   });
 
@@ -179,9 +204,9 @@ describe('screenshot reducer', () => {
 
   it('should removeImageDiffResult', () => {
     const result = reducer(
-      { imageDiffResults: [{ pass: false, screenshotHash: 'hash' }] },
+      { imageDiffResults: [{ pass: false, screenshotId: 'screenshot-id' }] },
       {
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         type: 'removeImageDiffResult',
       },
     );
@@ -191,27 +216,27 @@ describe('screenshot reducer', () => {
   it('should not removeImageDiffResult if paused', () => {
     const result = reducer(
       {
-        imageDiffResults: [{ pass: false, screenshotHash: 'hash' }],
+        imageDiffResults: [{ pass: false, screenshotId: 'screenshot-id' }],
         pauseDeleteImageDiffResult: true,
       },
       {
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         type: 'removeImageDiffResult',
       },
     );
     expect(result.imageDiffResults).toStrictEqual([
-      { pass: false, screenshotHash: 'hash' },
+      { pass: false, screenshotId: 'screenshot-id' },
     ]);
   });
 
   it('should deleteScreenshot and remove from imageDiffResults', () => {
     const result = reducer(
       {
-        imageDiffResults: [{ pass: true, screenshotHash: 'hash' }],
+        imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
         screenshots: [getScreenshotData()],
       },
       {
-        screenshotHash: 'hash',
+        screenshotId: 'screenshot-id',
         type: 'deleteScreenshot',
       },
     );

@@ -15,10 +15,10 @@ export const useScreenshotImageDiff = (storyData: StoryData) => {
   } = useAsyncApiCall(testScreenshotClient, false);
 
   const testScreenshot = useCallback(
-    async (hash: string) => {
+    async (id: string) => {
       const result = await makeCall({
         fileName: storyData.parameters.fileName,
-        hash,
+        screenshotId: id,
         storyId: storyData.id,
       });
       if (!(result instanceof Error)) {

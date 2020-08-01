@@ -5,7 +5,7 @@ const testScreenshotService = jest.fn();
 testScreenshotService.mockImplementation(
   (data: ScreenshotInfo): Promise<ImageDiffResult> => {
     return new Promise((resolve) => {
-      resolve({ pass: true, screenshotHash: data.hash });
+      resolve({ pass: true, screenshotId: data.screenshotId });
     });
   },
 );

@@ -22,7 +22,7 @@ describe('getStoryScreenshots', () => {
     expect(jsonMock).toHaveBeenCalledWith([
       {
         browserType: 'chromium',
-        hash: 'story-id-hash',
+        id: 'screenshot-id',
         title: 'story-filename-screenshot',
       },
     ]);

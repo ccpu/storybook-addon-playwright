@@ -13,12 +13,12 @@ describe('updateScreenshot', () => {
     const result = await updateScreenshotService({
       base64: 'base64-image',
       fileName: 'story.ts',
-      hash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual({
       added: true,
-      screenshotHash: 'hash',
+      screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
   });
@@ -28,7 +28,7 @@ describe('updateScreenshot', () => {
       updateScreenshotService({
         base64: 'base64-image',
         fileName: 'story.ts',
-        hash: 'invalid-hash',
+        screenshotId: 'invalid-screenshot-id',
         storyId: 'story-id',
       }),
     ).rejects.toThrowError('Unable to find screenshot data.');

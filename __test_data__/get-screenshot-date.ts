@@ -5,7 +5,7 @@ export const getScreenshotDate = (
 ): ScreenshotData => {
   return {
     browserType: 'chromium',
-    hash: 'hash',
+    id: 'screenshot-id',
     title: 'title',
     ...data,
   };

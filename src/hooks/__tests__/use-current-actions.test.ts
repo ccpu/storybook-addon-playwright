@@ -1,13 +1,12 @@
 import { useCurrentActions } from '../use-current-actions';
 import { renderHook } from '@testing-library/react-hooks';
 import { useActionContext } from '../../store/actions/ActionContext';
-import { Stories } from '../../typings';
 import { storyFileInfo } from '../../../__test_data__/story-file-info';
 
 jest.mock('../../store/actions/ActionContext');
 
 describe('useCurrentActions', () => {
-  const storyActionSets: Stories = storyFileInfo();
+  const data = storyFileInfo();
 
   it('should not have action if context not initialised', () => {
     (useActionContext as jest.Mock).mockReturnValueOnce({});
@@ -20,7 +19,7 @@ describe('useCurrentActions', () => {
     (useActionContext as jest.Mock).mockReturnValue({
       currentActionSets: ['action-set-id'],
       initialised: true,
-      stories: storyActionSets,
+      stories: data.stories,
     });
 
     const { result } = renderHook(() => useCurrentActions('story-id'));
@@ -34,7 +33,7 @@ describe('useCurrentActions', () => {
     (useActionContext as jest.Mock).mockReturnValue({
       currentActionSets: [],
       initialised: true,
-      stories: storyActionSets,
+      stories: data.stories,
     });
 
     const { result } = renderHook(() => useCurrentActions('story-id'));

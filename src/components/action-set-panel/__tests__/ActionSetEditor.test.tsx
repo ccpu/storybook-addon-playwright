@@ -27,7 +27,8 @@ mocked(useActionEditor).mockImplementation(
 );
 
 describe('ActionSetEditor', () => {
-  const actionSet: ActionSet = storyFileInfo()['story-id'].actionSets[0];
+  const actionSet: ActionSet = storyFileInfo().stories['story-id']
+    .actionSets[0];
 
   afterEach(() => {
     jest.clearAllMocks();

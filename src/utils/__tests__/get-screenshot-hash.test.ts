@@ -24,14 +24,14 @@ describe('getSnapshotHash', () => {
       storyId: 'storyId',
     });
 
-    expect(sumMock).toHaveBeenCalledWith([
-      [{ id: 'action-id', name: 'action-name' }],
-      { deviceName: 'device-name' },
-      'chromium',
-      [{ name: 'knob-name', value: 'knob-value' }],
-      { fullPage: true },
-      'storyId',
-    ]);
+    expect(sumMock).toHaveBeenCalledWith({
+      actions: [{ id: 'action-id', name: 'action-name' }],
+      browserOptions: { deviceName: 'device-name' },
+      browserType: 'chromium',
+      props: [{ name: 'knob-name', value: 'knob-value' }],
+      screenshotOptions: { fullPage: true },
+      storyId: 'storyId',
+    });
   });
 
   // it('order should not matter', () => {

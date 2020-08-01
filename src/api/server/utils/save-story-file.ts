@@ -7,13 +7,15 @@ export const saveStoryFile = async (
   fileInfo: StoryPlaywrightFileInfo,
   data: StoryPlaywrightData,
 ) => {
-  Object.keys(data.stories).forEach((key) => {
-    if (!Object.keys(data.stories[key]).length) {
-      delete data.stories[key];
-    }
-  });
+  if (data.stories) {
+    Object.keys(data.stories).forEach((key) => {
+      if (!Object.keys(data.stories[key]).length) {
+        delete data.stories[key];
+      }
+    });
+  }
 
-  if (Object.keys(data.stories).length) {
+  if (data.stories && Object.keys(data.stories).length) {
     await writeFile(fileInfo.path, data, {
       EOL: '\r\n',
       spaces: 2,

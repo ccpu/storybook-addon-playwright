@@ -10,7 +10,7 @@ jest.mock('../../store/actions/ActionContext');
 
 const useActionContextMock = mocked(useActionContext);
 
-const stories = storyFileInfo();
+const data = storyFileInfo();
 
 describe('useAction', () => {
   const orgEditingActionSet = getOrgEditingActionSet();
@@ -20,7 +20,7 @@ describe('useAction', () => {
       () =>
         (({
           orgEditingActionSet: orgEditingActionSet,
-          stories,
+          stories: data.stories,
         } as unknown) as ReducerState),
     );
   });
@@ -56,7 +56,7 @@ describe('useAction', () => {
       () =>
         (({
           orgEditingActionSet: orgEditingActionSet,
-          stories,
+          stories: data.stories,
         } as unknown) as ReducerState),
     );
 

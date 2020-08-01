@@ -27,8 +27,10 @@ describe('saveStoryFile', () => {
 
     expect(jsonfile.writeFile).toHaveBeenCalledTimes(1);
     expect(writeFileMock.mock.calls[0][1]).toStrictEqual({
-      'story-id': {
-        actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+      stories: {
+        'story-id': {
+          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+        },
       },
     });
   });
@@ -40,14 +42,16 @@ describe('saveStoryFile', () => {
         'story-id': {
           actionSets: [{ actions: [], description: 'desc', id: 'id' }],
         },
+        'story-id_2': {},
       },
-      'story-id_2': {},
     });
 
     expect(jsonfile.writeFile).toHaveBeenCalledTimes(1);
     expect(writeFileMock.mock.calls[0][1]).toStrictEqual({
-      'story-id': {
-        actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+      stories: {
+        'story-id': {
+          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+        },
       },
     });
   });

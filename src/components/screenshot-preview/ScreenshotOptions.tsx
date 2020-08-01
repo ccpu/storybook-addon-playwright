@@ -15,7 +15,11 @@ const ScreenshotOptions: SFC = () => {
   );
 
   return (
-    <OptionPopover title="Screenshot Options" Icon={CameraIcon}>
+    <OptionPopover
+      title="Screenshot Options"
+      Icon={CameraIcon}
+      active={screenshotOptions !== undefined}
+    >
       <MemoizedSchemaFormLoader
         onSave={handleSave}
         type={'ScreenshotOptions'}

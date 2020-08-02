@@ -103,7 +103,8 @@ export type TakeScreenshotOptionsParams = {
   overlayOptions?: TakeScreenshotOverlayOptions;
 };
 
-export interface BrowserOptions extends BrowserContextOptions {
+export interface AddonPlaywrightBrowserContextOptions
+  extends BrowserContextOptions {
   viewport?: ViewportSize;
 }
 

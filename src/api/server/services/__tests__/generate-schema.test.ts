@@ -7,7 +7,7 @@ import { generateSchema, cachedSchema } from '../generate-schema';
 import { resolve } from 'path';
 
 describe('generateSchema', () => {
-  const path = resolve('./src/api/server/services/typings/types.ts');
+  const path = resolve('./src/api/server/services/typings/app-types.ts');
 
   beforeEach(() => {
     jest.clearAllMocks();

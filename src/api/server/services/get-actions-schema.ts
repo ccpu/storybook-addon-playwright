@@ -1,7 +1,7 @@
 import { Mouse } from 'playwright-core';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
-import { PageMethodKeys } from './typings/types';
+import { PageMethodKeys } from './typings/app-types';
 import { generateSchema } from './generate-schema';
 
 type MouseKeys = keyof Mouse;

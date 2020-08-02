@@ -7,7 +7,7 @@ import * as generateSchema from '../generate-schema';
 jest.mock('../../configs');
 
 describe('getActionsSchema', () => {
-  const file = path.resolve('./src/api/server/services/typings/types.ts');
+  const file = path.resolve('./src/api/server/services/typings/app-types.ts');
 
   beforeEach(() => {
     jest.clearAllMocks();

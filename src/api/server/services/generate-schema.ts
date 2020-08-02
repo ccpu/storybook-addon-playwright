@@ -15,7 +15,7 @@ export const generateSchema = (options?: Partial<Config>) => {
   const hash = objHash(options);
 
   if (!options.path) {
-    options.path = join(__dirname, '/typings/types.d.ts');
+    options.path = join(__dirname, '/typings/app-types.d.ts');
   }
 
   if (cachedSchema[hash]) {

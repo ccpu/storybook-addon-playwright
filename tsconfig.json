@@ -37,8 +37,7 @@
     "__manual_mocks__/**/*",
     "middleware.d.ts",
     "configs.d.ts",
-    "stories/**/*",
-    "./.storybook/setup-playwright"
+    "stories/**/*"
   ],
   "exclude": [
     "node_modules",

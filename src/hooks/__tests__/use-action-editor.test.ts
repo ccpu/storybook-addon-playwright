@@ -41,8 +41,8 @@ describe('useActionSetEditor', () => {
 
   const actionSet: ActionSet = {
     actions: [],
-    description: 'action-set-desc',
     id: 'action-set-id',
+    title: 'action-set-desc',
   };
 
   it('should clearActionExpansion on unmount ', () => {
@@ -76,8 +76,8 @@ describe('useActionSetEditor', () => {
       {
         actionSet: {
           actions: [],
-          description: 'action-set-desc',
           id: 'action-set-id',
+          title: 'action-set-desc',
         },
         storyId: 'story-id',
         type: 'saveActionSet',
@@ -87,8 +87,8 @@ describe('useActionSetEditor', () => {
     expect(onSaveMock).toHaveBeenCalledWith({
       actionSet: {
         actions: [],
-        description: 'action-set-desc',
         id: 'action-set-id',
+        title: 'action-set-desc',
       },
       fileName: './story.ts',
       storyId: 'story-id',
@@ -108,8 +108,8 @@ describe('useActionSetEditor', () => {
       {
         actionSet: {
           actions: [],
-          description: 'action-set-desc',
           id: 'action-set-id',
+          title: 'action-set-desc',
         },
         storyId: 'story-id',
         type: 'saveActionSet',
@@ -156,7 +156,7 @@ describe('useActionSetEditor', () => {
     expect(onSaveMock).toHaveBeenCalledTimes(0);
   });
 
-  it('should handle description change', () => {
+  it('should handle title change', () => {
     const orgEditingActionSet = getOrgEditingActionSet();
     mocked(useActionContext).mockImplementation(
       () =>
@@ -171,9 +171,9 @@ describe('useActionSetEditor', () => {
     expect(dispatchMock).toHaveBeenCalledWith([
       {
         actionSetId: 'action-set-id',
-        description: 'new-dec',
         storyId: 'story-id',
-        type: 'setActionSetDescription',
+        title: 'new-dec',
+        type: 'setActionSetTitle',
       },
     ]);
   });
@@ -198,9 +198,9 @@ describe('useActionSetEditor', () => {
       {
         actionSet: {
           actions: [],
-          description: 'action-set-desc',
           id: 'action-set-id',
           temp: true,
+          title: 'action-set-desc',
         },
         storyId: 'story-id',
         type: 'saveActionSet',

@@ -1,6 +1,6 @@
 import {
   StoryAction,
-  Stories,
+  PlaywrightDataStories,
   ActionSchemaList,
   ActionSet,
 } from '../../typings';
@@ -11,7 +11,7 @@ import { combineReducers } from '../../utils';
 export interface ReducerState {
   actionSchema: ActionSchemaList;
   expandedActions: { [k: string]: boolean };
-  stories: Stories;
+  stories: PlaywrightDataStories;
   initialised: boolean;
   currentActionSets: string[];
   orgEditingActionSet?: ActionSet & { isNew?: boolean };
@@ -68,8 +68,8 @@ export type Action =
       actionSetId: string;
     }
   | {
-      type: 'setActionSetDescription';
-      description: string;
+      type: 'setActionSetTitle';
+      title: string;
       storyId: string;
       actionSetId: string;
     }
@@ -313,12 +313,12 @@ export function actionReducer(
       };
     }
 
-    case 'setActionSetDescription': {
+    case 'setActionSetTitle': {
       return updateStoryEditingActionSet(
         state,
         action.storyId,
         action.actionSetId,
-        (actionSet) => ({ ...actionSet, description: action.description }),
+        (actionSet) => ({ ...actionSet, title: action.title }),
       );
     }
 

@@ -22,7 +22,7 @@ describe('ActionSetMain', () => {
     expect(wrapper.exists()).toBeTruthy();
   });
 
-  it('should show description dialog and close', () => {
+  it('should show title dialog and close', () => {
     const wrapper = shallow(<ActionSetMain />);
     const toolbar = wrapper.find(ActionToolbar);
 
@@ -65,8 +65,8 @@ describe('ActionSetMain', () => {
       {
         actionSet: {
           actions: [],
-          description: 'new action set',
           id: 'action-id',
+          title: 'new action set',
         },
         new: true,
         selected: true,

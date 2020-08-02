@@ -1,13 +1,13 @@
 import equal from 'fast-deep-equal';
 import {
   StoryOptions,
-  StoryPlaywrightData,
+  PlaywrightData,
   ScreenshotOptions,
 } from '../../../../typings';
 import { BrowserContextOptions } from 'playwright-core';
 
 export const getOptionsKey = (
-  storyData: StoryPlaywrightData,
+  storyData: PlaywrightData,
   optionProp: keyof StoryOptions,
   options?: BrowserContextOptions | ScreenshotOptions,
 ) => {

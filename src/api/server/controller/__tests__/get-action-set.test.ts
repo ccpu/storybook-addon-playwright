@@ -12,8 +12,8 @@ jest.mock('../../services/get-action-set', () => ({
             name: 'name',
           },
         ],
-        description: 'desc',
         id: 'id',
+        title: 'desc',
       },
     ];
   },
@@ -31,8 +31,8 @@ describe('getActionSet', () => {
             name: 'name',
           },
         ],
-        description: 'desc',
         id: 'id',
+        title: 'desc',
       },
     ]);
   });

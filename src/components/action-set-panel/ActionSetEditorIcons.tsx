@@ -10,13 +10,18 @@ import { Loader } from '../common';
 
 export interface ActionSetEditorIconsProps {
   onSave: () => void;
-  onEditDescription: () => void;
+  onEditTitle: () => void;
   onCancel: () => void;
   onAddAction: (actionName: string) => void;
 }
 
 const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
-  const { onSave, onEditDescription, onCancel, onAddAction } = props;
+  const {
+    onSave,
+    onEditTitle: onEditDescription,
+    onCancel,
+    onAddAction,
+  } = props;
 
   const { loading } = useActionSchemaLoader();
 
@@ -50,7 +55,7 @@ const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
         size="small"
         className="edit-desc"
         onClick={onEditDescription}
-        title="Edit description"
+        title="Edit Title"
       >
         <EditIcon />
       </IconButton>

@@ -1,7 +1,7 @@
-import { StoryPlaywrightData, StoryOptions } from '../../../../typings';
+import { PlaywrightData, StoryOptions } from '../../../../typings';
 
 export const deleteStoryOptions = (
-  storyData: StoryPlaywrightData,
+  storyData: PlaywrightData,
   optionsProp: keyof StoryOptions,
   optionsId: string,
 ) => {

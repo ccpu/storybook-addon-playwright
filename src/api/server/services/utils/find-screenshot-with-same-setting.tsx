@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ScreenshotData, StoryPlaywrightData } from '../../../../typings';
+import { ScreenshotData, PlaywrightData } from '../../../../typings';
 import equal from 'fast-deep-equal';
 import { getOptionsKey } from './get-options-key';
 
 export const findScreenshotWithSameSetting = (
-  data: StoryPlaywrightData,
+  data: PlaywrightData,
   screenshots: ScreenshotData[],
   screenshot: ScreenshotData,
 ) => {

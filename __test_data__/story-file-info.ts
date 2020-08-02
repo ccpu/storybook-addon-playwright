@@ -1,8 +1,6 @@
-import { StoryPlaywrightData } from '../src/typings';
+import { PlaywrightData } from '../src/typings';
 
-export const storyFileInfo = (
-  data?: StoryPlaywrightData,
-): StoryPlaywrightData => {
+export const storyFileInfo = (data?: PlaywrightData): PlaywrightData => {
   return {
     stories: {
       'story-id': {
@@ -17,8 +15,8 @@ export const storyFileInfo = (
                 name: 'click',
               },
             ],
-            description: 'click',
             id: 'action-set-id',
+            title: 'click',
           },
           {
             actions: [
@@ -30,8 +28,8 @@ export const storyFileInfo = (
                 name: 'click',
               },
             ],
-            description: 'click',
             id: 'action-set-id-2',
+            title: 'click',
           },
         ],
         screenshots: [

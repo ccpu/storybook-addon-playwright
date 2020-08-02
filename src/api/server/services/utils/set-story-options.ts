@@ -1,5 +1,5 @@
 import {
-  StoryPlaywrightData,
+  PlaywrightData,
   BrowserContextOptions,
   ScreenshotOptions,
   StoryOptions,
@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid';
 import { getOptionsKey } from './get-options-key';
 
 export const setStoryOptions = (
-  storyData: StoryPlaywrightData,
+  storyData: PlaywrightData,
   optionProp: keyof StoryOptions,
   options?: BrowserContextOptions | ScreenshotOptions,
 ) => {

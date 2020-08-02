@@ -1,8 +1,8 @@
 import { findScreenshotWithSameSetting } from '../find-screenshot-with-same-setting';
-import { StoryPlaywrightData } from '../../../../../typings';
+import { PlaywrightData } from '../../../../../typings';
 
 describe('findScreenshotWithSameSetting', () => {
-  const data: StoryPlaywrightData = {
+  const data: PlaywrightData = {
     browserOptions: { ['browser-option-id']: { cursor: true } },
     screenshotOptions: { ['screenshot-options-id']: { fullPage: true } },
     stories: {

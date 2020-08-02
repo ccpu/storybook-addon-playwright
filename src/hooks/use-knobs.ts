@@ -22,7 +22,7 @@ export const useKnobs = () => {
           return obj;
         }, {} as ScreenshotProp);
 
-      setProps(Object.keys(propObj).length ? propObj : undefined);
+      setProps(Object.keys(propObj).length > 0 ? propObj : undefined);
     };
 
     const storyChange = () => {

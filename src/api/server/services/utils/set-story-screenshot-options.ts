@@ -1,7 +1,7 @@
-import { ScreenshotData, StoryPlaywrightData } from '../../../../typings';
+import { ScreenshotData, PlaywrightData } from '../../../../typings';
 
 export const setStoryScreenshotOptions = (
-  storyData: StoryPlaywrightData,
+  storyData: PlaywrightData,
   screenshot: ScreenshotData,
 ) => {
   if (storyData.browserOptions && screenshot.browserOptionsId) {

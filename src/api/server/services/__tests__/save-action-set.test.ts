@@ -19,8 +19,8 @@ describe('saveActionSet', () => {
     await saveActionSet({
       actionSet: {
         actions: [{ id: 'action-id', name: 'action-name' }],
-        description: 'action-set-desc',
         id: 'action-set-id',
+        title: 'action-set-desc',
       },
       fileName: 'story.ts',
       storyId: 'story-id-2',
@@ -30,8 +30,8 @@ describe('saveActionSet', () => {
       actionSets: [
         {
           actions: [{ id: 'action-id', name: 'action-name' }],
-          description: 'action-set-desc',
           id: 'action-set-id',
+          title: 'action-set-desc',
         },
       ],
     });
@@ -41,8 +41,8 @@ describe('saveActionSet', () => {
     await saveActionSet({
       actionSet: {
         actions: [{ id: 'action-id', name: 'dbClick' }],
-        description: 'action-set-desc',
         id: 'action-set-id',
+        title: 'action-set-desc',
       },
       fileName: 'story.ts',
       storyId: 'story-id',
@@ -54,13 +54,13 @@ describe('saveActionSet', () => {
         actions: [
           { args: { selector: 'html' }, id: 'action-id', name: 'click' },
         ],
-        description: 'click',
         id: 'action-set-id-2',
+        title: 'click',
       },
       {
         actions: [{ id: 'action-id', name: 'dbClick' }],
-        description: 'action-set-desc',
         id: 'action-set-id',
+        title: 'action-set-desc',
       },
     ]);
   });
@@ -69,8 +69,8 @@ describe('saveActionSet', () => {
     await saveActionSet({
       actionSet: {
         actions: [{ id: 'action-id', name: 'click' }],
-        description: 'action-set-desc',
         id: 'action-set-id-3',
+        title: 'action-set-desc',
       },
       fileName: 'story.ts',
       storyId: 'story-id',

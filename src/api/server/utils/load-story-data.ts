@@ -1,11 +1,11 @@
-import { StoryPlaywrightData } from '../../../typings';
+import { PlaywrightData } from '../../../typings';
 import { readFile } from 'jsonfile';
 import fs from 'fs';
 
 export const loadStoryData = async (
   storyDataPath: string,
   storyId: string,
-): Promise<StoryPlaywrightData> => {
+): Promise<PlaywrightData> => {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(storyDataPath)) {
       if (storyId === '*') {
@@ -15,7 +15,7 @@ export const loadStoryData = async (
       }
       return;
     }
-    readFile(storyDataPath, (err, data?: StoryPlaywrightData) => {
+    readFile(storyDataPath, (err, data?: PlaywrightData) => {
       if (err) {
         reject(err);
       }

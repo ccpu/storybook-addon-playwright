@@ -1,0 +1,60 @@
+{
+  "with-defaults": {
+    "screenshots": [
+      {
+        "actions": [
+          {
+            "id": "yryt9qdYHQ",
+            "name": "mouse.down",
+            "args": {
+              "options": {
+                "button": "middle"
+              }
+            }
+          }
+        ],
+        "browserType": "chromium",
+        "hash": "421fb0ae",
+        "index": 4,
+        "options": {
+          "cursor": true,
+          "clip": {
+            "height": 600,
+            "width": 600,
+            "x": 0,
+            "y": 0
+          }
+        },
+        "props": [
+          {
+            "name": "arrowColor",
+            "value": "red"
+          },
+          {
+            "name": "arrowSize",
+            "value": 20
+          }
+        ],
+        "title": "should apply arrow styles"
+      }
+    ]
+  },
+  "with-actionSets": {
+    "actionSets": [
+      {
+        "actions": [
+          {
+            "id": "4ps_NuM6B2",
+            "name": "waitForTimeout",
+            "args": {
+              "timeout": 500
+            }
+          }
+        ],
+        "description": "delay 500",
+        "id": "k71GTTcObZen"
+      }
+    ]
+  },
+  "with-empty": {}
+}

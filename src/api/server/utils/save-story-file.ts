@@ -1,13 +1,13 @@
 import { StoryPlaywrightFileInfo } from './get-story-playwright-file-info';
-import { StoryPlaywrightData } from '../../../typings';
-import { writeFile } from 'jsonfile';
+import { PlaywrightData } from '../../../typings';
+import { writeFileSync } from 'jsonfile';
 import * as fs from 'fs';
 
-export const saveStoryFile = async (
+export const saveStoryFile = (
   fileInfo: StoryPlaywrightFileInfo,
-  data: StoryPlaywrightData,
+  data: PlaywrightData,
 ) => {
-  if (data.stories) {
+  if (data && data.stories) {
     Object.keys(data.stories).forEach((key) => {
       if (!Object.keys(data.stories[key]).length) {
         delete data.stories[key];
@@ -15,8 +15,8 @@ export const saveStoryFile = async (
     });
   }
 
-  if (data.stories && Object.keys(data.stories).length) {
-    await writeFile(fileInfo.path, data, {
+  if (data && data.stories && Object.keys(data.stories).length > 0) {
+    writeFileSync(fileInfo.path, data, {
       EOL: '\r\n',
       spaces: 2,
     });

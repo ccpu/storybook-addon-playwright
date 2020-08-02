@@ -19,8 +19,8 @@ describe('getStoryPlaywrightData', () => {
                     name: 'click',
                   },
                 ],
-                description: 'click',
                 id: 'action-set-id',
+                title: 'click',
               },
               {
                 actions: [
@@ -30,8 +30,8 @@ describe('getStoryPlaywrightData', () => {
                     name: 'click',
                   },
                 ],
-                description: 'click',
                 id: 'action-set-id-2',
+                title: 'click',
               },
             ],
             screenshots: [
@@ -65,8 +65,8 @@ describe('getStoryPlaywrightData', () => {
                     name: 'click',
                   },
                 ],
-                description: 'click',
                 id: 'action-set-id',
+                title: 'click',
               },
               {
                 actions: [
@@ -76,8 +76,8 @@ describe('getStoryPlaywrightData', () => {
                     name: 'click',
                   },
                 ],
-                description: 'click',
                 id: 'action-set-id-2',
+                title: 'click',
               },
             ],
             screenshots: [

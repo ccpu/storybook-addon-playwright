@@ -22,15 +22,15 @@ describe('changeScreenShotIndex', () => {
               actions: [
                 { args: { selector: 'html' }, id: 'action-id', name: 'click' },
               ],
-              description: 'click',
               id: 'action-set-id',
+              title: 'click',
             },
             {
               actions: [
                 { args: { selector: 'html' }, id: 'action-id', name: 'click' },
               ],
-              description: 'click',
               id: 'action-set-id-2',
+              title: 'click',
             },
           ],
           screenshots: [

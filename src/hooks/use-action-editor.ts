@@ -82,12 +82,12 @@ export const useActionEditor = (actionSet: ActionSet) => {
   }, []);
 
   const handleDescriptionChange = useCallback(
-    (description: string) => {
+    (title: string) => {
       dispatch({
         actionSetId: state.orgEditingActionSet.id,
-        description,
         storyId: storyData.id,
-        type: 'setActionSetDescription',
+        title,
+        type: 'setActionSetTitle',
       });
     },
     [dispatch, storyData, state.orgEditingActionSet],

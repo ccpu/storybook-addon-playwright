@@ -70,8 +70,8 @@ describe('deleteActionSet', () => {
         data.stories['story-id'].actionSets = [
           {
             actions: [],
-            description: '',
             id: 'action-set-id',
+            title: '',
           },
         ];
         resolve(data);

@@ -1,12 +1,12 @@
 import { setStoryOptions } from '../set-story-options';
-import { StoryPlaywrightData } from '../../../../../typings';
+import { PlaywrightData } from '../../../../../typings';
 
 jest.mock('nanoid', () => ({
   nanoid: () => 'some-id',
 }));
 
 describe('setStoryOptions', () => {
-  const storyData: StoryPlaywrightData = {};
+  const storyData: PlaywrightData = {};
   it('should set data and return id', () => {
     const data = { ...storyData };
     const id = setStoryOptions(data, 'browserOptions', { fullPage: true });

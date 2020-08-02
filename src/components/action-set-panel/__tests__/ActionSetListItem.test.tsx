@@ -16,7 +16,7 @@ describe('ActionSetListItem', () => {
   it('should render', () => {
     const wrapper = shallow(
       <ActionSetListItem
-        item={{ actions: [], description: 'desc', id: 'action-set-id' }}
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
         index={0}
@@ -30,7 +30,7 @@ describe('ActionSetListItem', () => {
   it('should handle edit', () => {
     const wrapper = shallow(
       <ActionSetListItem
-        item={{ actions: [], description: 'desc', id: 'action-set-id' }}
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
         index={0}
@@ -54,7 +54,7 @@ describe('ActionSetListItem', () => {
   it('should handle delete', () => {
     const wrapper = shallow(
       <ActionSetListItem
-        item={{ actions: [], description: 'desc', id: 'action-set-id' }}
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
         index={0}
@@ -72,7 +72,7 @@ describe('ActionSetListItem', () => {
   it('should handle checkbox', () => {
     const wrapper = shallow(
       <ActionSetListItem
-        item={{ actions: [], description: 'desc', id: 'action-set-id' }}
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
         onCheckBoxClick={onCheckMock}
@@ -91,7 +91,7 @@ describe('ActionSetListItem', () => {
   it('should handle render ActionSetEditor  when editing action-set', () => {
     const wrapper = shallow(
       <ActionSetListItem
-        item={{ actions: [], description: 'desc', id: 'action-set-id' }}
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
         onCheckBoxClick={onCheckMock}
@@ -106,7 +106,7 @@ describe('ActionSetListItem', () => {
   it('should hide icons except checkbox when editing other action-set', () => {
     const wrapper = shallow(
       <ActionSetListItem
-        item={{ actions: [], description: 'desc', id: 'action-set-id' }}
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
         onCheckBoxClick={onCheckMock}

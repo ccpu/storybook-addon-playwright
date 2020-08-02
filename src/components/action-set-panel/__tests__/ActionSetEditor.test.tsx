@@ -51,14 +51,14 @@ describe('ActionSetEditor', () => {
     expect(handleAddActionMock).toHaveBeenCalledWith('click actionSet');
   });
 
-  it('should handle actionSet  description', () => {
+  it('should handle actionSet  title', () => {
     const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);
 
     const listWrapperProps = wrapper.find(ListItemWrapper).props().icons;
 
     (listWrapperProps as {
       props: ActionSetEditorIconsProps;
-    }).props.onEditDescription();
+    }).props.onEditTitle();
 
     const inputDialog = wrapper.find(InputDialog);
     expect(inputDialog.exists()).toBeTruthy();

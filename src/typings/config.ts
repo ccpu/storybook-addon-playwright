@@ -25,4 +25,5 @@ export interface Config<T extends unknown = Page> {
   afterStoryImageDiff?: (result: ImageDiffResult[]) => Promise<void>;
   afterAppImageDiff?: (result: ImageDiffResult[]) => Promise<void>;
   diffDirection?: DiffDirection;
+  enableMigration?: boolean;
 }

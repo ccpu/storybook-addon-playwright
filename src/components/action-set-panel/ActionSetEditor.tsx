@@ -58,8 +58,8 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
 
   return (
     <ListItemWrapper
-      tooltip={actionSet.description}
-      title={actionSet.description}
+      tooltip={actionSet.title}
+      title={actionSet.title}
       draggable={true}
       selected={true}
       secondaryColor={true}
@@ -67,7 +67,7 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
         <ActionSetEditorIcons
           onAddAction={handleAddAction}
           onCancel={cancelEditActionSet}
-          onEditDescription={toggleEditDescription}
+          onEditTitle={toggleEditDescription}
           onSave={handleSave}
         />
       }
@@ -107,7 +107,7 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
         {editDescription && (
           <InputDialog
             title="Edit Description"
-            value={actionSet.description}
+            value={actionSet.title}
             open={true}
             onClose={toggleEditDescription}
             onSave={saveDescription}

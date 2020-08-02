@@ -29,9 +29,9 @@ export const useLoadScreenshotSettings = (): ReturnType => {
       dispatch({
         actionSet: {
           actions: screenshotData.actions,
-          description: screenshotData.title + '- actions',
           id: screenshotData.id,
           temp: true,
+          title: screenshotData.title + '- actions',
         },
         selected: true,
         storyId: storyData.id,

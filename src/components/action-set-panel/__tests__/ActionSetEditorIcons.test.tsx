@@ -12,7 +12,7 @@ describe('ActionSetEditorIcons', () => {
         onAddAction={jest.fn()}
         onCancel={jest.fn()}
         onSave={jest.fn()}
-        onEditDescription={jest.fn()}
+        onEditTitle={jest.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -25,7 +25,7 @@ describe('ActionSetEditorIcons', () => {
         onAddAction={onAddActionMock}
         onCancel={jest.fn()}
         onSave={jest.fn()}
-        onEditDescription={jest.fn()}
+        onEditTitle={jest.fn()}
       />,
     );
     wrapper

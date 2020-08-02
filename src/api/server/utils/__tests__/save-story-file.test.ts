@@ -1,6 +1,6 @@
 const writeFileMock = jest.fn();
 jest.mock('jsonfile', () => ({
-  writeFile: writeFileMock,
+  writeFileSync: writeFileMock,
 }));
 
 import { saveStoryFile } from '../save-story-file';
@@ -17,19 +17,19 @@ describe('saveStoryFile', () => {
 
   it('should save', async () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
-    await saveStoryFile(fileInfo, {
+    saveStoryFile(fileInfo, {
       stories: {
         'story-id': {
-          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+          actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
     });
 
-    expect(jsonfile.writeFile).toHaveBeenCalledTimes(1);
+    expect(jsonfile.writeFileSync).toHaveBeenCalledTimes(1);
     expect(writeFileMock.mock.calls[0][1]).toStrictEqual({
       stories: {
         'story-id': {
-          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+          actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
     });
@@ -37,29 +37,29 @@ describe('saveStoryFile', () => {
 
   it('should remove empty story', async () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
-    await saveStoryFile(fileInfo, {
+    saveStoryFile(fileInfo, {
       stories: {
         'story-id': {
-          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+          actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
         'story-id_2': {},
       },
     });
 
-    expect(jsonfile.writeFile).toHaveBeenCalledTimes(1);
+    expect(jsonfile.writeFileSync).toHaveBeenCalledTimes(1);
     expect(writeFileMock.mock.calls[0][1]).toStrictEqual({
       stories: {
         'story-id': {
-          actionSets: [{ actions: [], description: 'desc', id: 'id' }],
+          actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
     });
   });
   it('should remove file if received empty object', async () => {
     const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
-    await saveStoryFile(fileInfo, {});
+    saveStoryFile(fileInfo, {});
 
-    expect(jsonfile.writeFile).toHaveBeenCalledTimes(0);
+    expect(jsonfile.writeFileSync).toHaveBeenCalledTimes(0);
 
     expect(unlinkSync).toHaveBeenCalledTimes(1);
   });

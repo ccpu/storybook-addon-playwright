@@ -1,7 +1,7 @@
-import { StoryPlaywrightData } from '../../../../typings';
+import { PlaywrightData } from '../../../../typings';
 
 export const getStoryData = (
-  data: StoryPlaywrightData,
+  data: PlaywrightData,
   storyId: string,
   create = false,
 ) => {

@@ -1,11 +1,8 @@
-import { StoryPlaywrightData } from '../../../../typings';
+import { PlaywrightData } from '../../../../typings';
 
 import { getStoryData } from './get-story-data';
 
-export const deleteEmptyStory = (
-  data: StoryPlaywrightData,
-  storyId: string,
-) => {
+export const deleteEmptyStory = (data: PlaywrightData, storyId: string) => {
   const story = getStoryData(data, storyId);
   if (!story) return data;
   if (!Object.keys(story).length) {

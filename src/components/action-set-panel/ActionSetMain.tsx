@@ -27,8 +27,8 @@ const ActionSetMain: SFC = () => {
       const id = nanoid(12);
       const newActionSet: ActionSet = {
         actions: [],
-        description: desc,
         id,
+        title: desc,
       };
 
       dispatch({

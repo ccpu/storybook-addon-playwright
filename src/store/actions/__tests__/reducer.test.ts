@@ -1,5 +1,5 @@
 import { reducer as actionReducer, Action, ReducerState } from '../reducer';
-import { ActionSet, Stories } from '../../../typings';
+import { ActionSet, PlaywrightDataStories } from '../../../typings';
 
 type Dispatch = (
   state?: Partial<ReducerState>,
@@ -15,12 +15,12 @@ describe('action reducer', () => {
       { id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
     ],
-    description: 'desc',
     id: 'action-set-id',
+    title: 'desc',
     ...data,
   });
 
-  const getStoryData = (sId = storyId): Stories => ({
+  const getStoryData = (sId = storyId): PlaywrightDataStories => ({
     [sId]: {
       actionSets: [getActionSetData()],
     },
@@ -49,8 +49,8 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -72,8 +72,8 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -97,16 +97,16 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id-2',
+        title: 'desc',
       },
     ]);
   });
@@ -202,16 +202,16 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id-2',
+        title: 'desc',
       },
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -275,19 +275,17 @@ describe('action reducer', () => {
     });
   });
 
-  it('should setActionSetDescription', () => {
+  it('should setActionSetTitle', () => {
     const result = reducer(
       { stories: getStoryData() },
       {
         actionSetId: 'action-set-id',
-        description: 'desc-2',
         storyId,
-        type: 'setActionSetDescription',
+        title: 'desc-2',
+        type: 'setActionSetTitle',
       },
     );
-    expect(result.stories[storyId].actionSets[0].description).toStrictEqual(
-      'desc-2',
-    );
+    expect(result.stories[storyId].actionSets[0].title).toStrictEqual('desc-2');
   });
 
   it('should saveActionSet (add)', () => {
@@ -305,8 +303,8 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -326,8 +324,8 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -460,8 +458,8 @@ describe('action reducer', () => {
 
     const newActionSet: ActionSet = {
       actions: [],
-      description: 'action-set-desc',
       id: 'action-set-id-3',
+      title: 'action-set-desc',
     };
 
     const result = reducer(
@@ -493,7 +491,7 @@ describe('action reducer', () => {
           ...stories,
           [storyId]: {
             ...stories[storyId],
-            actionSets: [getActionSetData({ description: 'changed-desc' })],
+            actionSets: [getActionSetData({ title: 'changed-desc' })],
           },
         },
       },
@@ -508,8 +506,8 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -531,8 +529,8 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        description: 'desc',
         id: 'action-set-id',
+        title: 'desc',
       },
     ]);
   });
@@ -553,8 +551,8 @@ describe('action reducer', () => {
         { id: 'action-id', name: 'action-name' },
         { id: 'action-id-2', name: 'action-name-2' },
       ],
-      description: 'desc',
       id: 'action-set-id',
+      title: 'desc',
     });
     expect(result.currentActionSets).toStrictEqual(['action-set-id']);
   });

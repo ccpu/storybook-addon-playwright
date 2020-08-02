@@ -1,8 +1,8 @@
 import { loadStoryData } from './load-story-data';
-import { PlaywrightData } from '../../../typings';
+import { PlaywrightStoryData } from '../../../typings';
 
 export interface StoryPlaywrightData {
-  data: PlaywrightData;
+  data: PlaywrightStoryData;
   storyId: string;
 }
 

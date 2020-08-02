@@ -41,7 +41,6 @@ describe('saveScreenshot', () => {
       browserType: 'chromium',
       fileName: 'story.ts',
       id: 'screenshot-id',
-      props: [{ name: 'prop', value: 'value' }],
       screenshotOptions: { fullPage: true },
       storyId: 'story-id',
       title: 'screenshot-title',
@@ -141,7 +140,7 @@ describe('saveScreenshot', () => {
         actions: [],
         browserOptions: {} as BrowserContextOptions,
         id: 'screenshot-id-3',
-        props: [],
+        props: {},
         title: 'new title',
       }),
     );

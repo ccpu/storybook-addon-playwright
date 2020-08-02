@@ -7,6 +7,7 @@ describe('getScreenshots', () => {
   it('should return result', async () => {
     const result = await getScreenshots({
       playwrightJsonPath: 'localhost:3000',
+      requestId: 'request-id',
     });
     expect(result).toHaveLength(2);
   });
@@ -16,6 +17,7 @@ describe('getScreenshots', () => {
     await getScreenshots({
       onScreenshotReady: onScreenshotReadyMock,
       playwrightJsonPath: 'localhost:3000',
+      requestId: 'request-id',
     });
 
     expect(onScreenshotReadyMock).toHaveBeenCalledTimes(2);

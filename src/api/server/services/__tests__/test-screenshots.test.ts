@@ -27,6 +27,7 @@ describe('testScreenshots', () => {
     const result = await testScreenshots({
       fileName: 'story.ts',
       onComplete: onCompleteMock,
+      requestId: 'request-id',
     });
 
     const data = [

@@ -22,15 +22,9 @@ describe('findScreenshotWithSameSetting', () => {
             title: 'title',
           },
           {
-            browserType: 'chromium',
-            id: 'screenshot-id-3',
-            props: [{ name: 'prop-name' }],
-            title: 'title',
-          },
-          {
             actions: [{ id: 'action-id', name: 'action-name' }],
             browserType: 'chromium',
-            id: 'screenshot-id-4',
+            id: 'screenshot-id-3',
             title: 'title',
           },
         ],
@@ -103,7 +97,7 @@ describe('findScreenshotWithSameSetting', () => {
     expect(screenshot).toStrictEqual({
       actions: [{ id: 'action-id', name: 'action-name' }],
       browserType: 'chromium',
-      id: 'screenshot-id-4',
+      id: 'screenshot-id-3',
       title: 'title',
     });
   });

@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { SFC, useCallback, useMemo } from 'react';
 import CameraIcon from '@material-ui/icons/Camera';
 import { useScreenshotOptions } from '../../hooks';
 import { OptionPopover } from './OptionPopover';
@@ -14,11 +14,16 @@ const ScreenshotOptions: SFC = () => {
     [setScreenshotOptions],
   );
 
+  const isActive = useMemo(
+    () => screenshotOptions && Object.keys(screenshotOptions).length > 0,
+    [screenshotOptions],
+  );
+
   return (
     <OptionPopover
       title="Screenshot Options"
       Icon={CameraIcon}
-      active={screenshotOptions !== undefined}
+      active={isActive}
     >
       <MemoizedSchemaFormLoader
         onSave={handleSave}

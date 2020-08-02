@@ -24,6 +24,7 @@ describe('runImageDiff', () => {
     const onCompleteMock = jest.fn();
     await runImageDiff('test.playwright.json', {
       onComplete: onCompleteMock,
+      requestId: 'request-id',
     });
     expect(onCompleteMock).toHaveBeenCalledWith([{ pass: true }]);
   });

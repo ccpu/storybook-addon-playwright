@@ -10,6 +10,7 @@ describe('testScreenshot', () => {
   it('should have result', async () => {
     const result = await testScreenshotService({
       fileName: 'story.ts',
+      requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
@@ -25,6 +26,7 @@ describe('testScreenshot', () => {
     await expect(
       testScreenshotService({
         fileName: 'story.ts',
+        requestId: 'request-id',
         screenshotId: 'screenshot-id',
         storyId: 'story-id-2',
       }),
@@ -37,6 +39,7 @@ describe('testScreenshot', () => {
     });
     const result = await testScreenshotService({
       fileName: 'story.ts',
+      requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });

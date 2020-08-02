@@ -78,7 +78,11 @@ describe('makeScreenshot', () => {
     });
 
     await expect(
-      makeScreenshot({ browserType: 'chromium', storyId: 'story-id' }),
+      makeScreenshot({
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      }),
     ).rejects.toThrowError(
       'Make sure to return an instance of a page from getPage.',
     );
@@ -87,6 +91,7 @@ describe('makeScreenshot', () => {
   it('should make screenshot', async () => {
     const screenshot = await makeScreenshot({
       browserType: 'chromium',
+      requestId: 'request-id',
       storyId: 'story-id',
     });
     expect(screenshot.buffer).toBeDefined();
@@ -94,7 +99,7 @@ describe('makeScreenshot', () => {
 
   it('should convert to base64', async () => {
     const screenshot = await makeScreenshot(
-      { browserType: 'chromium', storyId: 'story-id' },
+      { browserType: 'chromium', requestId: 'request-id', storyId: 'story-id' },
       true,
     );
     expect(screenshot.base64).toBe('buffer-data');
@@ -110,6 +115,7 @@ describe('makeScreenshot', () => {
           },
         ],
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -130,6 +136,7 @@ describe('makeScreenshot', () => {
     await makeScreenshot(
       {
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -149,6 +156,7 @@ describe('makeScreenshot', () => {
     await makeScreenshot(
       {
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -163,6 +171,7 @@ describe('makeScreenshot', () => {
           cursor: true,
         },
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -184,6 +193,7 @@ describe('makeScreenshot', () => {
           },
         ],
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -216,6 +226,7 @@ describe('makeScreenshot', () => {
           },
         ],
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -253,6 +264,7 @@ describe('makeScreenshot', () => {
           },
         ],
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,
@@ -283,6 +295,7 @@ describe('makeScreenshot', () => {
           },
         ],
         browserType: 'chromium',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,

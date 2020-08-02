@@ -9,6 +9,7 @@ describe('getSnapShot', () => {
 
   const reqData: ScreenshotRequest = {
     browserType: 'chromium',
+    requestId: 'request-id',
     storyId: 'story-id',
   };
 

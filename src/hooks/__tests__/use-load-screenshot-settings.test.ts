@@ -74,7 +74,7 @@ describe('useLoadScreenshotSettings', () => {
 
     act(() => {
       const data = getData();
-      data.props = [{ name: 'prop', value: 'prop-val' }];
+      data.props = { prop: 'prop-val' };
       result.current.loadSetting(data);
     });
 

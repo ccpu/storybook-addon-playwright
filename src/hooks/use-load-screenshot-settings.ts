@@ -43,9 +43,9 @@ export const useLoadScreenshotSettings = (): ReturnType => {
   const loadSetting = useCallback(
     (screenshotData: ScreenshotData, force = false) => {
       api.emit(RESET);
-      if (screenshotData.props) {
-        screenshotData.props.forEach((prop) => {
-          api.emit(CHANGE, prop);
+      if (screenshotData.props && Object.keys(screenshotData.props).length) {
+        Object.keys(screenshotData.props).forEach((prop) => {
+          api.emit(CHANGE, { name: prop, value: screenshotData.props[prop] });
         });
       }
       dispatchActions(screenshotData);

@@ -86,7 +86,8 @@ export const saveScreenshot = async (
       browserType: data.browserType,
       id: data.id,
       index: index,
-      props: data.props && data.props.length > 0 ? data.props : undefined,
+      props:
+        data.props && Object.keys(data.props).length ? data.props : undefined,
       screenshotOptionsId: setStoryOptions(
         storyData,
         'screenshotOptions',

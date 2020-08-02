@@ -10,4 +10,5 @@ module.exports = {
     './setupTests.ts',
     './node_modules/jest-enzyme/lib/index.js',
   ],
+  testPathIgnorePatterns: ['./stories/*'],
 };

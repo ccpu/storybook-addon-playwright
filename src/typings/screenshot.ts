@@ -40,7 +40,8 @@ export interface ScreenshotClip {
 
 export interface ScreenshotSetting {
   browserType: BrowserTypes;
-  props?: ScreenshotProp[];
+  // props?: ScreenshotProp[];
+  props?: ScreenshotProp;
   actions?: StoryAction[];
   browserOptions?: BrowserContextOptions;
   browserOptionsId?: string;
@@ -54,8 +55,11 @@ export interface ScreenshotData extends ScreenshotSetting {
   index?: number;
 }
 
-export interface ScreenshotProp {
-  name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value?: any;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ScreenshotProp = { [prop: string]: any };
+
+// export interface ScreenshotProp {
+//   name: string;
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   value?: any;
+// }

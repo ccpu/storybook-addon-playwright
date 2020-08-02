@@ -8,7 +8,7 @@ import ip from 'ip';
 export const constructStoryUrl = (
   endpoint: string,
   id: string,
-  knobs?: ScreenshotProp[],
+  props?: ScreenshotProp,
 ) => {
   const parsedEndpoint = parse(endpoint);
 
@@ -19,8 +19,8 @@ export const constructStoryUrl = (
 
   let storyUrl = `${normalized}/iframe.html?id=${id}`;
 
-  if (knobs) {
-    storyUrl = `${storyUrl}&${knobsToQuerystring(knobs)}`;
+  if (props) {
+    storyUrl = `${storyUrl}&${knobsToQuerystring(props)}`;
   }
 
   return storyUrl.replace(/\\/g, '/');

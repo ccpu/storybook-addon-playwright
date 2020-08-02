@@ -1,9 +1,12 @@
 import { ScreenshotProp } from '../typings';
 
-export const knobsToQuerystring = (props?: ScreenshotProp[]) => {
+export const knobsToQuerystring = (props?: ScreenshotProp) => {
   if (!props) return '';
-  const propQuery = props.map((prop) => {
-    return `knob-${prop.name}=${prop.value}`;
+
+  const keys = Object.keys(props);
+
+  const propQuery = keys.map((prop) => {
+    return `knob-${prop}=${props[prop]}`;
   });
   return propQuery.join('&');
 };

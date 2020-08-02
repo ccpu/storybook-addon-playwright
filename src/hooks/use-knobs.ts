@@ -5,29 +5,24 @@ import { STORY_CHANGED } from '@storybook/core-events';
 import addons from '@storybook/addons';
 
 export const useKnobs = () => {
-  const [props, setProps] = useState<ScreenshotProp[]>();
+  const [props, setProps] = useState<ScreenshotProp>();
 
   useEffect(() => {
     setProps(undefined);
     const chanel = addons.getChannel();
     const setKnobStore = (knobStore) => {
-      const knobArr = Object.keys(knobStore.knobs)
+      const propObj = Object.keys(knobStore.knobs)
         .filter((knob) => {
           const knobData = knobStore.knobs[knob];
           return knobData.value !== knobData.defaultValue;
         })
-        .map(
-          (knob): ScreenshotProp => {
-            const knobData = knobStore.knobs[knob];
-            const props: ScreenshotProp = {
-              name: knobData.name,
-              value: knobData.value,
-            };
-            return props;
-          },
-        );
+        .reduce((obj, knob) => {
+          const knobData = knobStore.knobs[knob];
+          obj[knob] = knobData.value;
+          return obj;
+        }, {} as ScreenshotProp);
 
-      setProps(knobArr.length > 0 ? knobArr : undefined);
+      setProps(Object.keys(propObj).length ? propObj : undefined);
     };
 
     const storyChange = () => {

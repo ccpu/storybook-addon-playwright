@@ -6,7 +6,6 @@ export * from './is-valid-selector';
 export * from './construct-story-url';
 export * from './get-action-args';
 export * from './valid-action';
-export * from './get-screenshot-hash';
 export * from './combine-reducer';
 export * from './get-image-diff-messages';
 export * from './knobs-to-querystring';

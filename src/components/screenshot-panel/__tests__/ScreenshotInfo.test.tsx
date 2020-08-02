@@ -44,7 +44,7 @@ describe('ScreenshotInfo', () => {
       <ScreenshotInfo
         screenshotData={getScreenshotDate({
           actions: [{ id: 'id', name: 'action-name' }],
-          props: [{ name: 'prop', value: 'prop-val' }],
+          props: { prop: 'prop-val' },
         })}
       />,
     );

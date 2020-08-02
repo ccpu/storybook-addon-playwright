@@ -6,8 +6,6 @@ describe('knobsToQuerystring', () => {
   });
 
   it('should return querystring ', () => {
-    expect(knobsToQuerystring([{ name: 'prop1', value: 'val' }])).toBe(
-      'knob-prop1=val',
-    );
+    expect(knobsToQuerystring({ prop1: 'val' })).toBe('knob-prop1=val');
   });
 });

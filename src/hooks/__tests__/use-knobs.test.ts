@@ -36,12 +36,9 @@ describe('useKnobs', () => {
       (addons as any).__setEvent(SET, getKnobs());
     });
 
-    expect(result.current).toStrictEqual([
-      {
-        name: 'text',
-        value: 'knob-value 1',
-      },
-    ]);
+    expect(result.current).toStrictEqual({
+      text: 'knob-value 1',
+    });
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

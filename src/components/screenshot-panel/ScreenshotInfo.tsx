@@ -22,13 +22,6 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
   const getInfo = useCallback(() => {
     const data = { ...screenshotData };
 
-    if (data.props) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (data as any).props = data.props.reduce((obj, prop) => {
-        obj[prop.name] = prop.value;
-        return obj;
-      }, {});
-    }
     if (data.actions) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (data as any).actions = data.actions.reduce((obj, action) => {
@@ -36,6 +29,7 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
         return obj;
       }, {});
     }
+
     delete data.id;
     delete data.index;
 

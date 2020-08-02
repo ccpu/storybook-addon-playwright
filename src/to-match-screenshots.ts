@@ -2,6 +2,7 @@ import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { getScreenshots } from './get-screenshots';
 import path from 'path';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import { nanoid } from 'nanoid';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -36,6 +37,7 @@ export async function toMatchScreenshots(
       },
       playwrightJsonPath:
         playwrightJsonPath === '*' ? playwrightJsonPath : configRelative,
+      requestId: nanoid(),
     });
   } catch (error) {
     return {

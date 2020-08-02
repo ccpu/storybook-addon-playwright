@@ -17,13 +17,26 @@ export interface Config<T extends unknown = Page> {
   getPage: (
     browserType: BrowserTypes,
     options: BrowserContextOptions,
+    requestData: RequestData,
   ) => Promise<T>;
-  beforeScreenshot?: (page: T, data: ScreenshotRequest) => Promise<void>;
+  beforeScreenshot?: (
+    page: T,
+    data: ScreenshotRequest,
+    requestData: RequestData,
+  ) => Promise<void>;
   afterScreenshot?: (page: T, data: ScreenshotRequest) => Promise<void>;
-  beforeStoryImageDiff?: (data: StoryInfo & RequestData) => Promise<void>;
+  beforeStoryImageDiff?: (
+    requestData: StoryInfo & RequestData,
+  ) => Promise<void>;
   beforeAppImageDiff?: (data: RequestData) => Promise<void>;
-  afterStoryImageDiff?: (result: ImageDiffResult[]) => Promise<void>;
-  afterAppImageDiff?: (result: ImageDiffResult[]) => Promise<void>;
+  afterStoryImageDiff?: (
+    result: ImageDiffResult[],
+    requestData: StoryInfo & RequestData,
+  ) => Promise<void>;
+  afterAppImageDiff?: (
+    result: ImageDiffResult[],
+    requestData: RequestData,
+  ) => Promise<void>;
   diffDirection?: DiffDirection;
   enableMigration?: boolean;
 }

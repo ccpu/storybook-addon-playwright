@@ -40,7 +40,7 @@ export const testStoryScreenshots = async (
   }
 
   if (configs.afterStoryImageDiff && !disableEvent) {
-    await configs.afterStoryImageDiff(diffs);
+    await configs.afterStoryImageDiff(diffs, data);
   }
 
   return diffs;

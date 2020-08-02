@@ -41,20 +41,23 @@ describe('testAppScreenshot', () => {
 
   it('should call afterAppImageDiffMock with result', async () => {
     await testAppScreenshots({ requestId: 'request-id' });
-    expect(afterAppImageDiffMock).toHaveBeenCalledWith([
-      {
-        added: true,
-        newScreenshot: 'base64-image',
-        screenshotId: 'screenshot-id',
-        storyId: 'story-id',
-      },
-      {
-        added: true,
-        newScreenshot: 'base64-image',
-        screenshotId: 'screenshot-id-2',
-        storyId: 'story-id',
-      },
-    ]);
+    expect(afterAppImageDiffMock).toHaveBeenCalledWith(
+      [
+        {
+          added: true,
+          newScreenshot: 'base64-image',
+          screenshotId: 'screenshot-id',
+          storyId: 'story-id',
+        },
+        {
+          added: true,
+          newScreenshot: 'base64-image',
+          screenshotId: 'screenshot-id-2',
+          storyId: 'story-id',
+        },
+      ],
+      { requestId: 'request-id' },
+    );
   });
 
   it('should call beforeAppImageDiff with data', async () => {

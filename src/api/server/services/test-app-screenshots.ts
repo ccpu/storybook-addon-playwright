@@ -29,7 +29,7 @@ export const testAppScreenshots = async (
   }
 
   if (configs.afterAppImageDiff) {
-    await configs.afterAppImageDiff(results);
+    await configs.afterAppImageDiff(results, data);
   }
 
   return results.filter((x) => !x.pass);

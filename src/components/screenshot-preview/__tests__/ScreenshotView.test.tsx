@@ -6,7 +6,6 @@ import { ErrorPanel, Dialog, InputDialog, Loader } from '../../common';
 import { ScreenShotViewToolbar } from '../ScreenShotViewToolbar';
 import { useScreenshot } from '../../../hooks/use-screenshot';
 import { useSaveScreenshot } from '../../../hooks/use-save-screenshot';
-// import { useBrowserOptions } from '../../../hooks/use-browser-options';
 
 jest.mock('../../../hooks/use-save-screenshot');
 const useSaveScreenshotMock = useSaveScreenshot as jest.Mock;
@@ -30,7 +29,7 @@ jest.mock('../../../hooks/use-screenshot.ts');
 jest.mock('../../../hooks/use-browser-options.ts');
 jest.mock('../../../hooks/use-edit-screenshot.ts');
 
-const useScreenshotMock = useScreenshot as jest.Mock;
+const useScreenshotMock = useScreenshot as jest.Mock; 
 
 describe('ScreenshotView', () => {
   const useScreenshotMockData = () => ({
@@ -187,23 +186,4 @@ describe('ScreenshotView', () => {
 
     expect(onSaveCompleteMock).toHaveBeenCalledTimes(1);
   });
-
-  // it('should set device options', () => {
-  //   const setBrowserDeviceOptionsMock = jest.fn();
-  //   (useBrowserOptions as jest.Mock).mockImplementationOnce(() => ({
-  //     browserOptions: {},
-  //     getBrowserOptions: jest.fn(),
-  //     setBrowserDeviceOptions: setBrowserDeviceOptionsMock,
-  //     setBrowserOptions: jest.fn(),
-  //   }));
-  //   const wrapper = shallow(
-  //     <ScreenshotView browserType="chromium" height={200} />,
-  //   );
-
-  //   wrapper.find(ScreenShotViewToolbar).props().onDeviceSelect('iphone');
-  //   expect(setBrowserDeviceOptionsMock).toHaveBeenCalledWith(
-  //     'chromium',
-  //     'iphone',
-  //   );
-  // });
 });

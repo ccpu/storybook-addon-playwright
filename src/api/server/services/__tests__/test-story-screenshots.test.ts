@@ -24,6 +24,7 @@ describe('testStoryScreenshot', () => {
   it('should have diff', async () => {
     const result = await testStoryScreenshots({
       fileName: 'story.ts',
+      requestId: 'request-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual([
@@ -44,38 +45,49 @@ describe('testStoryScreenshot', () => {
 
   it('should throw if story not found', async () => {
     await expect(
-      testStoryScreenshots({ fileName: 'story.ts', storyId: 'story-id-2' }),
+      testStoryScreenshots({
+        fileName: 'story.ts',
+        requestId: 'request-id',
+        storyId: 'story-id-2',
+      }),
     ).rejects.toThrowError('Unable to find story screenshots');
   });
 
   it('should call afterAppImageDiff with result', async () => {
     await testStoryScreenshots({
       fileName: 'story.ts',
+      requestId: 'request-id',
       storyId: 'story-id',
     });
-    expect(afterStoryImageDiffMock).toHaveBeenCalledWith([
-      {
-        added: true,
-        newScreenshot: 'base64-image',
-        screenshotId: 'screenshot-id',
-        storyId: 'story-id',
-      },
-      {
-        added: true,
-        newScreenshot: 'base64-image',
-        screenshotId: 'screenshot-id-2',
-        storyId: 'story-id',
-      },
-    ]);
+    expect(afterStoryImageDiffMock).toHaveBeenCalledWith(
+      [
+        {
+          added: true,
+          newScreenshot: 'base64-image',
+          screenshotId: 'screenshot-id',
+          storyId: 'story-id',
+        },
+        {
+          added: true,
+          newScreenshot: 'base64-image',
+          screenshotId: 'screenshot-id-2',
+          storyId: 'story-id',
+        },
+      ],
+      { fileName: 'story.ts', requestId: 'request-id', storyId: 'story-id' },
+    );
   });
 
   it('should call beforeStoryImageDiff with request data', async () => {
     await testStoryScreenshots({
       fileName: 'story.ts',
+      requestId: 'request-id',
       storyId: 'story-id',
     });
     expect(beforeStoryImageDiffMock).toHaveBeenCalledWith({
       fileName: 'story.ts',
+
+      requestId: 'request-id',
       storyId: 'story-id',
     });
   });
@@ -84,6 +96,7 @@ describe('testStoryScreenshot', () => {
     await testStoryScreenshots(
       {
         fileName: 'story.ts',
+        requestId: 'request-id',
         storyId: 'story-id',
       },
       true,

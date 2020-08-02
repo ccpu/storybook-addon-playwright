@@ -27,7 +27,7 @@ async function takeScreenshot(
   configs: Config<Page>,
 ) {
   if (configs.beforeScreenshot) {
-    await configs.beforeScreenshot(page, data);
+    await configs.beforeScreenshot(page, data, data);
   }
   return await page.screenshot(data.screenshotOptions);
 }
@@ -46,7 +46,7 @@ export const makeScreenshot = async (
     data.props,
   );
 
-  const page = await configs.getPage(data.browserType, browserOptions);
+  const page = await configs.getPage(data.browserType, browserOptions, data);
 
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');

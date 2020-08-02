@@ -35,6 +35,7 @@ async function setupPlaywright() {
     afterScreenshot: async (page) => {
       await page.close();
     },
+    autoMigration: true,
     customActionSchema: {
       addBox: {
         type: 'promise',

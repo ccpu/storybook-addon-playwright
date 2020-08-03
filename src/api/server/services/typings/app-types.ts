@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { Page, BrowserContextOptions, ViewportSize } from 'playwright-core';
-import { NewPageFunc } from '@playwright-utils/page/src/typings/page';
+import { ExtendedPlaywrightPageFunctions } from '@playwright-utils/page/src/typings/page';
 
 export type MergeType = 'overlay' | 'stitch';
 export interface TakeScreenshotStitchOptions {
@@ -64,7 +64,7 @@ export interface TakeScreenshotOverlayOptions {
     | 'exclusion';
 }
 
-export interface PlaywrightPage extends Page, NewPageFunc {
+export interface PlaywrightPage extends Page, ExtendedPlaywrightPageFunctions {
   /**
    * This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions.
    * In the end the screenshots will be merged with the final screenshot.
@@ -84,7 +84,6 @@ export interface PlaywrightPage extends Page, NewPageFunc {
    * @param stitchOptions
    * @param overlayOptions
    */
-
   takeScreenshotOptions: (
     mergeType?: MergeType,
     stitchOptions?: TakeScreenshotStitchOptions,
@@ -106,6 +105,7 @@ export type TakeScreenshotOptionsParams = {
 export interface PlaywrightBrowserContextOptionSchema
   extends BrowserContextOptions {
   viewport?: ViewportSize;
+  cursor?: boolean;
 }
 
 export interface PlaywrightScreenshotOptionSchema {

@@ -235,11 +235,26 @@ Currently following methods are available:
 
 The following custom methods has been added to the playwright page:
 
+- clearInput,
+- mouseDownOnSelector
+- mouseMoveToSelector
 - setSelectorSize
 - scrollSelector
 - dragDropSelector
 - takeScreenshot
 - takeScreenshotOptions
+
+### clearInput
+
+This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.
+
+### mouseDownOnSelector
+
+This method fetches an element with `selector`, and perform mousedown on the center of selector.
+
+### mouseMoveToSelector
+
+This method fetches an element with `selector`, and move the mouse to center of selector.
 
 ### setSelectorSize
 

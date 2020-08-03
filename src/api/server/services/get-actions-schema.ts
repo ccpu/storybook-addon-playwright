@@ -21,6 +21,9 @@ const selectedPageKeys: PageMethodKeys[] = [
   'takeScreenshot',
   'takeScreenshotOptions',
   'setSelectorSize',
+  'clearInput',
+  'mouseDownOnSelector',
+  'mouseMoveToSelector',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [

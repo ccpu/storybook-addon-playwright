@@ -95,6 +95,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
 
   switch (schema.type) {
     case 'string':
+    case 'any':
       return (
         <Control
           label={name}

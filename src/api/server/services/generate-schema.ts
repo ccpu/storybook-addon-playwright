@@ -23,6 +23,7 @@ export const generateSchema = (options?: Partial<Config>) => {
   }
 
   const config: Config = {
+    allowArbitraryDataTypes: true,
     encodeRefs: false,
     expose: 'none',
     handleUnknownTypes: true,

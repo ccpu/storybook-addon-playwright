@@ -71,6 +71,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
         fullObjectPath={optionObjectPath}
         isRequired={isRequired}
         onSelectorChange={onSelectorChange}
+        defaultValue={schema.default}
       />
     );
   }
@@ -89,6 +90,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
         }
         appendValueToTitle={appendToTile}
         isRequired={isRequired}
+        defaultValue={schema.default}
       />
     );
   }
@@ -108,6 +110,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
           }
           appendValueToTitle={appendToTile}
           isRequired={isRequired}
+          defaultValue={schema.default}
         />
       );
     case 'number':
@@ -124,6 +127,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
           }
           appendValueToTitle={appendToTile}
           isRequired={isRequired}
+          defaultValue={schema.default}
         />
       );
     case 'boolean':
@@ -139,6 +143,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
           }
           appendValueToTitle={appendToTile}
           isRequired={isRequired}
+          defaultValue={schema.default}
         />
       );
     case 'array': {
@@ -159,6 +164,7 @@ const SchemaProp: SFC<SchemaPropProps> = ({
           }
           appendValueToTitle={appendToTile}
           isRequired={isRequired}
+          defaultValue={schema.default}
         />
       );
     }

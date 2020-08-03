@@ -12,4 +12,5 @@ export interface ControlProps {
   appendValueToTitle: boolean;
   onAppendValueToTitle: () => void;
   isRequired: boolean;
+  defaultValue?: unknown;
 }

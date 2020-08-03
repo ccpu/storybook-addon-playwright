@@ -44,7 +44,7 @@ const BrowserOptions: SFC<BrowserOptionsProps> = ({ browserType }) => {
       {!reset && (
         <MemoizedSchemaFormLoader
           onSave={handleSave}
-          type={'AddonPlaywrightBrowserContextOptions'}
+          type={'PlaywrightBrowserContextOptionSchema'}
           excludeProps={['extraHTTPHeaders', 'logger']}
           defaultData={browserOptions && browserOptions[browserType]}
           FooterComponent={

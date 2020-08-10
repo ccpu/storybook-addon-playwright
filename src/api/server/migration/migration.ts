@@ -4,6 +4,7 @@ import { readFileSync } from 'jsonfile';
 import { getStoryPlaywrightFileInfo, saveStoryFile } from '../utils';
 import { migrateToV1 } from './migration-v1';
 import { migrationV2 } from './migration-v2';
+import { getVersion } from '../utils';
 
 export const migrateFile = (file: string, version: string) => {
   let data = readFileSync(file);
@@ -17,16 +18,13 @@ export const migrateFile = (file: string, version: string) => {
   if (data.version === '1') {
     data = migrationV2(data, '2');
   }
+
   return data;
 };
 
 export const migration = () => {
-  const packagePath = path.resolve(__dirname, '../../../package.json');
-
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const version = (require(packagePath).version as string)
-    .split('.')[0]
-    .toString();
+  const version = getVersion();
 
   console.log('\nMigrating to v' + version + ' ...');
 

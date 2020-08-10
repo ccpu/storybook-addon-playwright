@@ -1,3 +1,3 @@
-export const useGlobalActionDispatch = jest.fn().mockImplementation(() => {
-  return [{}, jest.fn()];
-});
+export const useGlobalActionDispatch = jest.fn();
+
+useGlobalActionDispatch.mockImplementation((callBack) => callBack());

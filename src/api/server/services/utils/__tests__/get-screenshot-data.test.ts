@@ -19,7 +19,15 @@ describe('getScreenshotData', () => {
       storyId: 'story-id',
     });
     expect(data).toStrictEqual({
-      actions: [{ id: 'action-id', name: 'action-name' }],
+      actionSets: [
+        {
+          actions: [
+            { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+          ],
+          id: 'action-set-id',
+          title: 'click',
+        },
+      ],
       browserType: 'chromium',
       id: 'screenshot-id',
       index: 0,

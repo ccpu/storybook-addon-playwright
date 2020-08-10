@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { StoryAction } from '../typings';
+import { ActionSet } from '../typings';
 import { useGlobalState } from './use-global-state';
 import { useActionContext } from '../store';
 
 export const useCurrentActions = (storyId: string) => {
-  const [currentActions, setActions] = useGlobalState<StoryAction[]>(
+  const [currentActions, setActions] = useGlobalState<ActionSet[]>(
     'current-actions',
     [],
   );
@@ -22,12 +22,7 @@ export const useCurrentActions = (storyId: string) => {
           )
         : [];
 
-    const allActions = actionSetArr.reduce((arr, set) => {
-      arr = [...arr, ...set.actions];
-      return arr;
-    }, [] as StoryAction[]);
-
-    setActions(allActions);
+    setActions(actionSetArr);
   }, [
     setActions,
     state.currentActionSets,
@@ -36,5 +31,5 @@ export const useCurrentActions = (storyId: string) => {
     storyId,
   ]);
 
-  return { currentActions };
+  return { currentActions, state };
 };

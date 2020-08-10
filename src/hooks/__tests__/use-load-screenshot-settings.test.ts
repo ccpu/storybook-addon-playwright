@@ -27,7 +27,18 @@ describe('useLoadScreenshotSettings', () => {
 
   const getData = (opt?: Partial<ScreenshotData>) => {
     const data: ScreenshotData = {
-      actions: [{ id: 'action-id', name: 'action-name' }],
+      actionSets: [
+        {
+          actions: [
+            {
+              id: 'action-id',
+              name: 'action-name',
+            },
+          ],
+          id: 'action-set-id',
+          title: 'action-set-title',
+        },
+      ],
 
       browserType: 'chromium',
       id: 'screenshot-id',
@@ -45,15 +56,15 @@ describe('useLoadScreenshotSettings', () => {
       result.current.loadSetting(getData());
     });
     expect(dispatchMock).toHaveBeenCalledWith({
-      actionSet: {
-        actions: [{ id: 'action-id', name: 'action-name' }],
-        id: 'screenshot-id',
-        temp: true,
-        title: 'title- actions',
-      },
-      selected: true,
+      actionSets: [
+        {
+          actions: [{ id: 'action-id', name: 'action-name' }],
+          id: 'action-set-id',
+          title: 'action-set-title',
+        },
+      ],
       storyId: 'story-id',
-      type: 'addActionSet',
+      type: 'setScreenShotActionSets',
     });
   });
 
@@ -62,7 +73,7 @@ describe('useLoadScreenshotSettings', () => {
 
     act(() => {
       const data = getData();
-      delete data.actions;
+      delete data.actionSets;
       result.current.loadSetting(data);
     });
 
@@ -102,7 +113,7 @@ describe('useLoadScreenshotSettings', () => {
         browserOptions: { deviceName: 'iphone' },
         screenshotOptions: { fullPage: true },
       });
-      delete data.actions;
+      delete data.actionSets;
       result.current.loadSetting(data);
     });
 

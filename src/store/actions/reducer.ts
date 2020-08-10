@@ -7,6 +7,8 @@ import {
 import * as immutableObject from 'object-path-immutable';
 import arrayMove from 'array-move';
 import { combineReducers } from '../../utils';
+import { nanoid } from 'nanoid';
+import equal from 'fast-deep-equal';
 
 export interface ReducerState {
   actionSchema: ActionSchemaList;
@@ -43,6 +45,15 @@ export type Action =
       storyId: string;
     }
   | {
+      type: 'setScreenShotActionSets';
+      actionSets: ActionSet[];
+      storyId: string;
+    }
+  | {
+      type: 'setCurrentActionSets';
+      actionSetIds: string[];
+    }
+  | {
       type: 'addActionSet';
       actionSet: ActionSet;
       storyId: string;
@@ -53,7 +64,10 @@ export type Action =
       type: 'deleteActionSet';
       actionSetId: string;
       storyId: string;
-      clearCurrentActionSets?: boolean;
+    }
+  | {
+      type: 'deleteTempActionSets';
+      storyId: string;
     }
   | {
       type: 'clearCurrentActionSets';
@@ -119,7 +133,6 @@ const updateStoryActionSet = (
   storyId: string,
   actionSets: ActionSet[],
 ): ReducerState => {
-  // if (!state.stories[storyId]) state.stories[storyId] = { actionSets: [] };
   return {
     ...state,
     stories: {
@@ -158,21 +171,16 @@ const deleteActionSet = (
   state: ReducerState,
   storyId: string,
   actionSetId: string,
-  clearCurrentActionSets?: boolean,
 ): ReducerState => {
   const newState = updateStoryActionSet(
     state,
     storyId,
     state.stories[storyId].actionSets.filter((x) => x.id !== actionSetId),
   );
+
   return {
     ...state,
     ...newState,
-    currentActionSets:
-      state.currentActionSets &&
-      (clearCurrentActionSets
-        ? []
-        : state.currentActionSets.filter((x) => x !== actionSetId)),
     orgEditingActionSet: undefined,
   };
 };
@@ -184,6 +192,42 @@ export function mainReducer(
   switch (action.type) {
     case 'addActionSetList': {
       return updateStoryActionSet(state, action.storyId, action.actionSets);
+    }
+
+    case 'setScreenShotActionSets': {
+      const storyActionSets = state.stories[action.storyId].actionSets;
+      const actionSets = action.actionSets.reduce((arr, actionSet) => {
+        if (storyActionSets) {
+          const storyActionSet = storyActionSets.find((x) =>
+            equal(x.actions, actionSet.actions),
+          );
+          if (storyActionSet) {
+            arr.push(storyActionSet);
+          } else {
+            arr.push({
+              ...actionSet,
+              id: nanoid(12),
+              temp: true,
+            });
+          }
+        }
+        return arr;
+      }, [] as ActionSet[]);
+
+      const currentActionSets: string[] = actionSets.map((x) => x.id);
+
+      const newState = updateStoryActionSet(state, action.storyId, [
+        ...actionSets,
+        ...storyActionSets.filter(
+          (x) => currentActionSets.indexOf(x.id) === -1,
+        ),
+      ]);
+
+      return {
+        ...state,
+        ...newState,
+        currentActionSets,
+      };
     }
 
     case 'addActionSet': {
@@ -200,19 +244,22 @@ export function mainReducer(
         ...state,
         ...newState,
         currentActionSets: action.selected
-          ? action.actionSet.temp
-            ? [action.actionSet.id]
-            : [
-                ...(state.currentActionSets ? state.currentActionSets : []),
-                action.actionSet.id,
-              ]
+          ? [
+              ...(state.currentActionSets ? state.currentActionSets : []),
+              action.actionSet.id,
+            ]
           : state.currentActionSets,
         orgEditingActionSet: action.new
           ? { ...action.actionSet, isNew: true }
           : undefined,
       };
     }
-
+    case 'setCurrentActionSets': {
+      return {
+        ...state,
+        currentActionSets: action.actionSetIds,
+      };
+    }
     case 'clearCurrentActionSets': {
       return {
         ...state,
@@ -221,11 +268,14 @@ export function mainReducer(
     }
 
     case 'deleteActionSet': {
-      return deleteActionSet(
+      return deleteActionSet(state, action.storyId, action.actionSetId);
+    }
+
+    case 'deleteTempActionSets': {
+      return updateStoryActionSet(
         state,
         action.storyId,
-        action.actionSetId,
-        action.clearCurrentActionSets,
+        state.stories[action.storyId].actionSets.filter((x) => !x.temp),
       );
     }
 

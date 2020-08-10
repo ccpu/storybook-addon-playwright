@@ -21,8 +21,8 @@ export const findScreenshotWithSameSetting = (
 
   const removeActionId = (scrShot: ScreenshotData) => {
     const newAction =
-      scrShot.actions && scrShot.actions.length > 0
-        ? scrShot.actions.map((act) => {
+      scrShot.actionSets && scrShot.actionSets.length > 0
+        ? scrShot.actionSets.map((act) => {
             const { id, ...rest } = act;
             return rest;
           })

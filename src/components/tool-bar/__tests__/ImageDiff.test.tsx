@@ -8,10 +8,17 @@ import { useGlobalImageDiffResults } from '../../../hooks/use-global-imageDiff-r
 import { ImageDiffResult } from '../../../api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
+import { mocked } from 'ts-jest/utils';
+import { useGlobalScreenshotDispatch } from '../../../hooks';
 
 jest.mock('../../../hooks/use-global-imageDiff-results.ts');
-jest.mock('../../../hooks//use-global-action-dispatch.ts');
 jest.mock('../../../hooks/use-app-screenshot-imageDiff.ts');
+jest.mock('../../../hooks/use-global-screenshot-dispatch.ts');
+
+const screenshotDispatchMock = jest.fn();
+mocked(useGlobalScreenshotDispatch).mockImplementation(() => ({
+  dispatch: screenshotDispatchMock,
+}));
 
 describe('ImageDiff', () => {
   const testStoryScreenShotsMock = jest.fn();
@@ -88,13 +95,13 @@ describe('ImageDiff', () => {
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
 
-    const snackbar = wrapper.find(Snackbar);
+    const snackbar = wrapper.find(Snackbar).last();
 
     expect(snackbar.props().open).toBeTruthy();
 
     snackbar.props().onClose();
 
-    expect(wrapper.find(Snackbar).props().open).toBeFalsy();
+    expect(wrapper.find(Snackbar).last().props().open).toBeFalsy();
   });
 
   it('should show menu', () => {

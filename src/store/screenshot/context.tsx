@@ -31,14 +31,11 @@ const ScreenshotProvider: SFC = (props) => {
     'Screenshot',
   );
 
-  const { action } = useGlobalScreenshotDispatch();
+  useGlobalScreenshotDispatch((action) => {
+    dispatch(action);
+  });
 
   const { setImageDiffResult } = useGlobalImageDiffResults();
-
-  useEffect(() => {
-    if (!action) return;
-    dispatch(action);
-  }, [action]);
 
   useEffect(() => {
     setImageDiffResult(state.imageDiffResults.filter((x) => !x.pass));

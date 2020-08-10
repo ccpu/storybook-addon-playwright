@@ -25,7 +25,13 @@ describe('useCurrentActions', () => {
     const { result } = renderHook(() => useCurrentActions('story-id'));
 
     expect(result.current.currentActions).toStrictEqual([
-      { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+      {
+        actions: [
+          { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+        ],
+        id: 'action-set-id',
+        title: 'click',
+      },
     ]);
   });
 

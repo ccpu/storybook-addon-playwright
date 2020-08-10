@@ -4,7 +4,9 @@ import React from 'react';
 
 describe('ActionToolbar', () => {
   it('should render', () => {
-    const wrapper = shallow(<ActionToolbar onAddActionSet={jest.fn()} />);
+    const wrapper = shallow(
+      <ActionToolbar onAddActionSet={jest.fn()} onReset={jest.fn()} />,
+    );
     expect(wrapper.exists()).toBeTruthy();
   });
 });

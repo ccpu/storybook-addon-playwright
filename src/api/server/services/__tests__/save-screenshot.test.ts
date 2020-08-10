@@ -30,10 +30,16 @@ describe('saveScreenshot', () => {
     data?: Partial<SaveScreenshotRequest>,
   ): SaveScreenshotRequest => {
     return {
-      actions: [
+      actionSets: [
         {
-          id: 'action-id',
-          name: 'action-name',
+          actions: [
+            {
+              id: 'action-id',
+              name: 'action-name',
+            },
+          ],
+          id: 'action-set-id',
+          title: 'action-set-title',
         },
       ],
       base64: 'base64-image',
@@ -137,7 +143,7 @@ describe('saveScreenshot', () => {
   it('should not allow empty array/object', async () => {
     await saveScreenshot(
       getData({
-        actions: [],
+        actionSets: [],
         browserOptions: {} as BrowserContextOptions,
         id: 'screenshot-id-3',
         props: {},
@@ -149,7 +155,7 @@ describe('saveScreenshot', () => {
 
     const data = mockData.calls[0][1].stories['story-id'].screenshots[1];
 
-    expect(data.actions).toBe(undefined);
+    expect(data.actionSets).toBe(undefined);
     expect(data.props).toBe(undefined);
     expect(data.browserOptions).toBe(undefined);
   });
@@ -176,7 +182,18 @@ describe('saveScreenshot', () => {
 
   it('should change actions id to prevent react duplicated key when editing screenshot', async () => {
     const data = getData({
-      actions: [{ id: 'action-id', name: 'click' }],
+      actionSets: [
+        {
+          actions: [
+            {
+              id: 'action-id',
+              name: 'action-title',
+            },
+          ],
+          id: 'action-set-id',
+          title: 'action-set-title',
+        },
+      ],
       updateScreenshot: {
         browserType: 'chromium',
         id: 'screenshot-id',
@@ -189,7 +206,7 @@ describe('saveScreenshot', () => {
     const mockData = mocked(saveStoryFile).mock;
 
     const newId =
-      mockData.calls[0][1].stories['story-id'].screenshots[0].actions[0].id;
+      mockData.calls[0][1].stories['story-id'].screenshots[0].actionSets[0].id;
 
     expect(newId === 'action-id').toBeFalsy();
   });

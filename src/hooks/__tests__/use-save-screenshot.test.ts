@@ -53,10 +53,9 @@ describe('useSaveScreenshot', () => {
     ``;
     expect(globalDispatchMock).toHaveBeenCalledWith({
       screenshot: {
-        actions: [],
+        actionSets: [],
         browserOptions: undefined,
         browserType: 'chromium',
-        device: undefined,
         fileName: './stories/story.ts',
         id: 'some-id',
         index: undefined,

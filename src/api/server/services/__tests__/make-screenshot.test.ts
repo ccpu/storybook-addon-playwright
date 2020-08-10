@@ -108,10 +108,16 @@ describe('makeScreenshot', () => {
   it('should execute actions', async () => {
     await makeScreenshot(
       {
-        actions: [
+        actionSets: [
           {
-            id: 'action-id',
-            name: 'action-name',
+            actions: [
+              {
+                id: 'action-id',
+                name: 'action-name',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
         ],
         browserType: 'chromium',
@@ -182,14 +188,26 @@ describe('makeScreenshot', () => {
   it('should take 2 screenshots with overlay as default merge process', async () => {
     await makeScreenshot(
       {
-        actions: [
+        actionSets: [
           {
-            id: 'action-id',
-            name: 'action-name',
+            actions: [
+              {
+                id: 'action-id',
+                name: 'action-name',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
           {
-            id: 'takeScreenshot-id',
-            name: 'takeScreenshot',
+            actions: [
+              {
+                id: 'takeScreenshot-id',
+                name: 'takeScreenshot',
+              },
+            ],
+            id: 'action-set-id-2',
+            title: 'action-set-title-2',
           },
         ],
         browserType: 'chromium',
@@ -212,17 +230,29 @@ describe('makeScreenshot', () => {
   it('should take 2 screenshots with stitch for merge process', async () => {
     await makeScreenshot(
       {
-        actions: [
+        actionSets: [
           {
-            args: {
-              mergeType: 'stitch',
-            } as TakeScreenshotOptionsParams,
-            id: 'takeScreenshotOptions-id',
-            name: 'takeScreenshotOptions',
+            actions: [
+              {
+                args: {
+                  mergeType: 'stitch',
+                } as TakeScreenshotOptionsParams,
+                id: 'action-id',
+                name: 'takeScreenshotOptions',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
           {
-            id: 'takeScreenshot-id',
-            name: 'takeScreenshot',
+            actions: [
+              {
+                id: 'takeScreenshot-id',
+                name: 'takeScreenshot',
+              },
+            ],
+            id: 'action-set-id-2',
+            title: 'action-set-title-2',
           },
         ],
         browserType: 'chromium',
@@ -243,24 +273,36 @@ describe('makeScreenshot', () => {
   it('should overwrite takeScreenshotOptions options by takeScreenshot options when overlay merging', async () => {
     await makeScreenshot(
       {
-        actions: [
+        actionSets: [
           {
-            args: {
-              overlayOptions: {
-                blend: 'clear',
+            actions: [
+              {
+                args: {
+                  overlayOptions: {
+                    blend: 'clear',
+                  },
+                } as TakeScreenshotOptionsParams,
+                id: 'takeScreenshotOptions-id',
+                name: 'takeScreenshotOptions',
               },
-            } as TakeScreenshotOptionsParams,
-            id: 'takeScreenshotOptions-id',
-            name: 'takeScreenshotOptions',
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
           {
-            args: {
-              stitchOptions: {
-                blend: 'add',
+            actions: [
+              {
+                args: {
+                  stitchOptions: {
+                    blend: 'add',
+                  },
+                } as TakeScreenshotParams,
+                id: 'takeScreenshot-id',
+                name: 'takeScreenshot',
               },
-            } as TakeScreenshotParams,
-            id: 'takeScreenshot-id',
-            name: 'takeScreenshot',
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
         ],
         browserType: 'chromium',
@@ -278,20 +320,32 @@ describe('makeScreenshot', () => {
   it('should apply takeScreenshotOptions options to takeScreenshot options when stitch merging', async () => {
     await makeScreenshot(
       {
-        actions: [
+        actionSets: [
           {
-            args: {
-              mergeType: 'stitch',
-              stitchOptions: {
-                direction: 'horizontal',
+            actions: [
+              {
+                args: {
+                  mergeType: 'stitch',
+                  stitchOptions: {
+                    direction: 'horizontal',
+                  },
+                } as TakeScreenshotOptionsParams,
+                id: 'takeScreenshotOptions-id',
+                name: 'takeScreenshotOptions',
               },
-            } as TakeScreenshotOptionsParams,
-            id: 'takeScreenshotOptions-id',
-            name: 'takeScreenshotOptions',
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
           {
-            id: 'takeScreenshot-id',
-            name: 'takeScreenshot',
+            actions: [
+              {
+                id: 'takeScreenshot-id',
+                name: 'takeScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
           },
         ],
         browserType: 'chromium',

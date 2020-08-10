@@ -88,4 +88,19 @@ describe('ActionSetMain', () => {
     // should called on mount an story change
     expect(dispatchMock).toHaveBeenCalledTimes(2);
   });
+
+  it('should handle reset', () => {
+    const wrapper = shallow(<ActionSetMain />);
+
+    const toolbar = wrapper.find(ActionToolbar);
+
+    toolbar.props().onReset();
+
+    expect(dispatchMock).toHaveBeenCalledWith([
+      { type: 'clearCurrentActionSets' },
+    ]);
+    expect(dispatchMock).toHaveBeenCalledWith([
+      { storyId: 'story-id', type: 'deleteTempActionSets' },
+    ]);
+  });
 });

@@ -13,14 +13,30 @@ describe('getStoryScreenshots', () => {
     });
     expect(result).toStrictEqual([
       {
-        actions: [{ id: 'action-id', name: 'action-name' }],
+        actionSets: [
+          {
+            actions: [
+              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+            ],
+            id: 'action-set-id',
+            title: 'click',
+          },
+        ],
         browserType: 'chromium',
         id: 'screenshot-id',
         index: 0,
         title: 'title',
       },
       {
-        actions: [{ id: 'action-id', name: 'action-name' }],
+        actionSets: [
+          {
+            actions: [
+              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+            ],
+            id: 'action-set-id-2',
+            title: 'click',
+          },
+        ],
         browserType: 'chromium',
         id: 'screenshot-id-2',
         index: 1,
@@ -53,7 +69,18 @@ describe('getStoryScreenshots', () => {
       });
       data.stories['story-id'].screenshots = [
         {
-          actions: [{ id: 'action-id', name: 'action-name' }],
+          actionSets: [
+            {
+              actions: [
+                {
+                  id: 'action-id',
+                  name: 'action-name',
+                },
+              ],
+              id: 'action-set-id',
+              title: 'action-set-title',
+            },
+          ],
           browserOptionsId: 'browser-option-id',
           browserType: 'chromium',
           id: 'screenshot-id',
@@ -75,7 +102,13 @@ describe('getStoryScreenshots', () => {
 
     expect(result).toStrictEqual([
       {
-        actions: [{ id: 'action-id', name: 'action-name' }],
+        actionSets: [
+          {
+            actions: [{ id: 'action-id', name: 'action-name' }],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
         browserOptions: { cursor: true },
         browserOptionsId: 'browser-option-id',
         browserType: 'chromium',

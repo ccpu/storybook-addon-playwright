@@ -49,6 +49,16 @@ const ActionSetMain: SFC = () => {
     [dispatch, storyId, toggleDescriptionDialog],
   );
 
+  const handleReset = useCallback(() => {
+    dispatch({
+      type: 'clearCurrentActionSets',
+    });
+    dispatch({
+      storyId,
+      type: 'deleteTempActionSets',
+    });
+  }, [dispatch, storyId]);
+
   useEffect(() => {
     dispatch({ type: 'clearCurrentActionSets' });
   }, [dispatch, storyId]);
@@ -67,7 +77,10 @@ const ActionSetMain: SFC = () => {
 
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
-      <ActionToolbar onAddActionSet={toggleDescriptionDialog} />
+      <ActionToolbar
+        onAddActionSet={toggleDescriptionDialog}
+        onReset={handleReset}
+      />
       <ActionSetList onSortEnd={handleSortEnd} useDragHandle />
 
       <InputDialog

@@ -1,4 +1,4 @@
-import React, { SFC, createContext, useContext, useEffect } from 'react';
+import React, { SFC, createContext, useContext } from 'react';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
 import { useGlobalActionDispatch } from '../../hooks';
@@ -24,12 +24,9 @@ const ActionProvider: SFC = (props) => {
     'Actions',
   );
 
-  const { action } = useGlobalActionDispatch();
-
-  useEffect(() => {
-    if (!action) return;
+  useGlobalActionDispatch((action) => {
     dispatch(action);
-  }, [action]);
+  });
 
   return (
     <ActionContextProvider value={state}>

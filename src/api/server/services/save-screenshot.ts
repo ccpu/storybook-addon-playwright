@@ -3,7 +3,6 @@ import { loadStoryData, getStoryPlaywrightFileInfo } from '../utils';
 import { saveStoryFile } from '../utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { deleteScreenshot } from './delete-screenshot';
-import { nanoid } from 'nanoid';
 import { setStoryOptions } from './utils/set-story-options';
 import { getStoryData, findScreenshotWithSameSetting } from './utils';
 
@@ -71,11 +70,11 @@ export const saveScreenshot = async (
       ? data.updateScreenshot.index
       : story.screenshots.length;
     story.screenshots.push({
-      actions:
-        data.actions && data.actions.length > 0
-          ? data.actions.map((x) => {
-              x.id = nanoid(10);
-              return x;
+      actionSets:
+        data.actionSets && data.actionSets.length
+          ? data.actionSets.map((actionSet) => {
+              delete actionSet.id;
+              return actionSet;
             })
           : undefined,
       browserOptionsId: setStoryOptions(

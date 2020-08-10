@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useGlobalActionDispatch } from '../../hooks/use-global-action-dispatch';
 
 jest.mock('../../hooks/use-global-action-dispatch');
-
+jest.mock('../use-current-story-data');
 jest.unmock('@storybook/api');
 
 const emitMock = jest.fn();
@@ -24,7 +24,13 @@ describe('useResetSetting', () => {
 
     result.current();
 
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
     expect(emitMock).toHaveBeenCalledTimes(1);
+    expect(dispatchMock).toHaveBeenCalledWith({
+      type: 'clearCurrentActionSets',
+    });
+    expect(dispatchMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      type: 'deleteTempActionSets',
+    });
   });
 });

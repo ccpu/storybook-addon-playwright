@@ -63,7 +63,8 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
   const {
     testStoryScreenShots,
     imageDiffTestInProgress,
-    ErrorSnackbar,
+    storyImageDiffError,
+    clearImageDiffError,
   } = useAppScreenshotImageDiff();
 
   const handleImageDiffClick = useCallback(
@@ -135,7 +136,13 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
           />
         </IconButton>
       </ClickAwayListener>
-      <ErrorSnackbar />
+      <Snackbar
+        variant="error"
+        open={storyImageDiffError !== undefined}
+        onClose={clearImageDiffError}
+        autoHideDuration={null}
+        message={storyImageDiffError}
+      />
       <Snackbar
         variant="success"
         open={success}

@@ -89,11 +89,13 @@ describe('useEditScreenshot', () => {
 
     expect(result.current.editScreenshotState).toStrictEqual(undefined);
     expect(dispatchMock).toHaveBeenCalledWith({
-      actionSetId: 'screenshot-id',
-      clearCurrentActionSets: true,
       storyId: 'story-id',
-      type: 'deleteActionSet',
+      type: 'deleteTempActionSets',
     });
+    expect(dispatchMock).toHaveBeenCalledWith({
+      type: 'clearCurrentActionSets',
+    });
+
     expect(loadSettingMock).toHaveBeenNthCalledWith(
       3,
       {

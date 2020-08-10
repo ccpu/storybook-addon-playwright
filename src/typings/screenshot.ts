@@ -2,7 +2,7 @@ import {
   Page,
   BrowserContextOptions as PlaywrightBrowserContextOptions,
 } from 'playwright-core';
-import { StoryAction } from './story-action';
+import { ActionSet } from './story-action';
 import { StoryInfo } from './story-info';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
@@ -40,9 +40,8 @@ export interface ScreenshotClip {
 
 export interface ScreenshotSetting {
   browserType: BrowserTypes;
-  // props?: ScreenshotProp[];
   props?: ScreenshotProp;
-  actions?: StoryAction[];
+  actionSets?: ActionSet[];
   browserOptions?: BrowserContextOptions;
   browserOptionsId?: string;
   screenshotOptions?: ScreenshotOptions;
@@ -57,9 +56,3 @@ export interface ScreenshotData extends ScreenshotSetting {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ScreenshotProp = { [prop: string]: any };
-
-// export interface ScreenshotProp {
-//   name: string;
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   value?: any;
-// }

@@ -42,11 +42,14 @@ export const useEditScreenshot = () => {
 
   const clearScreenshotEdit = useCallback(() => {
     dispatch({
-      actionSetId: editScreenshotState.screenshotData.id,
-      clearCurrentActionSets: true,
       storyId: storyData.id,
-      type: 'deleteActionSet',
+      type: 'deleteTempActionSets',
     });
+
+    dispatch({
+      type: 'clearCurrentActionSets',
+    });
+
     api.emit(RESET);
 
     loadSetting(

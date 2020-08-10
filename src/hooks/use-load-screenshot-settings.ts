@@ -13,6 +13,7 @@ interface ReturnType {
   loadSetting: (screenshotData: ScreenshotData, force?: boolean) => void;
   screenshotOptions: ScreenshotOptions;
 }
+
 export const useLoadScreenshotSettings = (): ReturnType => {
   const { dispatch } = useGlobalActionDispatch();
 
@@ -25,17 +26,13 @@ export const useLoadScreenshotSettings = (): ReturnType => {
 
   const dispatchActions = useCallback(
     (screenshotData: ScreenshotData) => {
-      if (!screenshotData.actions || !screenshotData.actions.length) return;
+      if (!screenshotData.actionSets || !screenshotData.actionSets.length)
+        return;
+
       dispatch({
-        actionSet: {
-          actions: screenshotData.actions,
-          id: screenshotData.id,
-          temp: true,
-          title: screenshotData.title + '- actions',
-        },
-        selected: true,
+        actionSets: screenshotData.actionSets,
         storyId: storyData.id,
-        type: 'addActionSet',
+        type: 'setScreenShotActionSets',
       });
     },
     [dispatch, storyData],

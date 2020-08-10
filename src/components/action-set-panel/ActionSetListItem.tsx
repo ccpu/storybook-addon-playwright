@@ -46,8 +46,13 @@ export function ActionSetListItem({
 
   return (
     <ListItemWrapper
-      tooltip={title}
-      title={title}
+      tooltip={
+        title +
+        (item.temp
+          ? ' (This action loaded from screenshot actions, its temporary and will be removed)'
+          : '')
+      }
+      title={title + (item.temp ? ' *' : '')}
       draggable={true}
       selected={checked}
       icons={

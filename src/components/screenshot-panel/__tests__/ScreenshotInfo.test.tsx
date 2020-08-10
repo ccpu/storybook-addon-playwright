@@ -43,7 +43,18 @@ describe('ScreenshotInfo', () => {
     const wrapper = shallow(
       <ScreenshotInfo
         screenshotData={getScreenshotDate({
-          actions: [{ id: 'id', name: 'action-name' }],
+          actionSets: [
+            {
+              actions: [
+                {
+                  id: 'action-id',
+                  name: 'action-name',
+                },
+              ],
+              id: 'action-set-id',
+              title: 'action-set-title',
+            },
+          ],
           props: { prop: 'prop-val' },
         })}
       />,
@@ -65,7 +76,13 @@ describe('ScreenshotInfo', () => {
     expect(reactJsonComp).toHaveLength(1);
 
     expect(reactJsonComp.props().src).toStrictEqual({
-      actions: { 'action-name': undefined },
+      actionSets: [
+        {
+          actions: [{ id: 'action-id', name: 'action-name' }],
+          id: 'action-set-id',
+          title: 'action-set-title',
+        },
+      ],
       browserType: 'chromium',
       props: { prop: 'prop-val' },
       title: 'title',

@@ -1,6 +1,16 @@
 import { reducer as actionReducer, Action, ReducerState } from '../reducer';
 import { ActionSet, PlaywrightDataStories } from '../../../typings';
 
+jest.mock('nanoid', () => {
+  let id = 0;
+  return {
+    nanoid: () => {
+      id++;
+      return 'id-' + id;
+    },
+  };
+});
+
 type Dispatch = (
   state?: Partial<ReducerState>,
   action?: Action,
@@ -20,9 +30,12 @@ describe('action reducer', () => {
     ...data,
   });
 
-  const getStoryData = (sId = storyId): PlaywrightDataStories => ({
+  const getStoryData = (
+    sId = storyId,
+    data?: Partial<ActionSet>,
+  ): PlaywrightDataStories => ({
     [sId]: {
-      actionSets: [getActionSetData()],
+      actionSets: [getActionSetData(data)],
     },
   });
 
@@ -111,21 +124,6 @@ describe('action reducer', () => {
     ]);
   });
 
-  it('should add new temporary action-set addActionSet', () => {
-    const result = reducer(
-      { currentActionSets: ['action-set-id-5'], stories: getStoryData() },
-      {
-        actionSet: getActionSetData({ id: 'action-set-id-2', temp: true }),
-        new: true,
-        selected: true,
-        storyId: storyId,
-        type: 'addActionSet',
-      },
-    );
-    expect(result.stories[storyId].actionSets).toHaveLength(2);
-    expect(result.currentActionSets).toStrictEqual(['action-set-id-2']);
-  });
-
   it('should clearCurrentActionSets', () => {
     const result = reducer(
       { currentActionSets: ['1'] },
@@ -136,7 +134,7 @@ describe('action reducer', () => {
     expect(result.currentActionSets).toStrictEqual([]);
   });
 
-  it('should deleteActionSet and also remove from currentActionSets', () => {
+  it('should deleteActionSet', () => {
     const result = reducer(
       { stories: getStoryData() },
       {
@@ -146,35 +144,6 @@ describe('action reducer', () => {
       },
     );
     expect(result.stories[storyId].actionSets).toStrictEqual([]);
-
-    const result2 = reducer(
-      {
-        currentActionSets: ['action-set-id'],
-        stories: { [storyId]: { actionSets: [getActionSetData()] } },
-      },
-      {
-        actionSetId: 'action-set-id',
-        storyId: storyId,
-        type: 'deleteActionSet',
-      },
-    );
-    expect(result2.currentActionSets).toStrictEqual([]);
-  });
-
-  it('should deleteActionSet and clear currentActionSets', () => {
-    const result2 = reducer(
-      {
-        currentActionSets: ['action-set-id', 'action-set-id-2'],
-        stories: { [storyId]: { actionSets: [getActionSetData()] } },
-      },
-      {
-        actionSetId: 'action-set-id',
-        clearCurrentActionSets: true,
-        storyId: storyId,
-        type: 'deleteActionSet',
-      },
-    );
-    expect(result2.currentActionSets).toStrictEqual([]);
   });
 
   it('should sortActionSets', () => {
@@ -555,5 +524,91 @@ describe('action reducer', () => {
       title: 'desc',
     });
     expect(result.currentActionSets).toStrictEqual(['action-set-id']);
+  });
+
+  it('should deleteTempActionSets', () => {
+    const result = reducer(
+      {
+        stories: getStoryData(storyId, { temp: true }),
+      },
+      {
+        storyId: storyId,
+        type: 'deleteTempActionSets',
+      },
+    );
+
+    expect(result.stories[storyId].actionSets).toStrictEqual([]);
+  });
+
+  it('should setCurrentActionSets', () => {
+    const result = reducer(
+      {
+        stories: getStoryData(storyId, { temp: true }),
+      },
+      {
+        actionSetIds: ['id-1'],
+        type: 'setCurrentActionSets',
+      },
+    );
+
+    expect(result.currentActionSets).toStrictEqual(['id-1']);
+  });
+
+  it('should setScreenShotActionSets but use existing action set', () => {
+    const result = reducer(
+      {
+        stories: getStoryData(storyId),
+      },
+      {
+        actionSets: [getActionSetData()],
+        storyId,
+        type: 'setScreenShotActionSets',
+      },
+    );
+
+    expect(result.stories[storyId].actionSets).toStrictEqual([
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        id: 'action-set-id',
+        title: 'desc',
+      },
+    ]);
+  });
+
+  it('should setScreenShotActionSets but add new action set', () => {
+    const result = reducer(
+      {
+        stories: getStoryData(storyId),
+      },
+      {
+        actionSets: [
+          getActionSetData({
+            actions: [{ id: 'action-id-1', name: 'action-name' }],
+          }),
+        ],
+        storyId,
+        type: 'setScreenShotActionSets',
+      },
+    );
+
+    expect(result.stories[storyId].actionSets).toStrictEqual([
+      {
+        actions: [{ id: 'action-id-1', name: 'action-name' }],
+        id: 'id-1',
+        temp: true,
+        title: 'desc',
+      },
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        id: 'action-set-id',
+        title: 'desc',
+      },
+    ]);
   });
 });

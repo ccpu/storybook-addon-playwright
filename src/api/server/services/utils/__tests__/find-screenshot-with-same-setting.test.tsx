@@ -22,7 +22,18 @@ describe('findScreenshotWithSameSetting', () => {
             title: 'title',
           },
           {
-            actions: [{ id: 'action-id', name: 'action-name' }],
+            actionSets: [
+              {
+                actions: [
+                  {
+                    id: 'action-id',
+                    name: 'action-name',
+                  },
+                ],
+                id: 'action-set-id',
+                title: 'action-set-title',
+              },
+            ],
             browserType: 'chromium',
             id: 'screenshot-id-3',
             title: 'title',
@@ -88,14 +99,31 @@ describe('findScreenshotWithSameSetting', () => {
       data,
       data.stories['story-id'].screenshots,
       {
-        actions: [{ id: 'action-id', name: 'action-name' }],
+        actionSets: [
+          {
+            actions: [
+              {
+                id: 'action-id',
+                name: 'action-name',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
         browserType: 'chromium',
         id: 'test-screenshot-id',
         title: 'title',
       },
     );
     expect(screenshot).toStrictEqual({
-      actions: [{ id: 'action-id', name: 'action-name' }],
+      actionSets: [
+        {
+          actions: [{ id: 'action-id', name: 'action-name' }],
+          id: 'action-set-id',
+          title: 'action-set-title',
+        },
+      ],
       browserType: 'chromium',
       id: 'screenshot-id-3',
       title: 'title',

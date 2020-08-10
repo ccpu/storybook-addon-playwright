@@ -6,6 +6,7 @@ import {
   ScreenshotImageData,
   Config,
   BrowserContextOptions,
+  StoryAction,
 } from '../../../typings';
 import { extendPage } from '@playwright-utils/page';
 import { Page } from 'playwright-core';
@@ -62,9 +63,20 @@ export const makeScreenshot = async (
 
   const imageInfos: ImageInfo[] = [];
 
-  if (data.actions) {
-    for (let i = 0; i < data.actions.length; i++) {
-      const action = data.actions[i];
+  let screenshotOptionAction: StoryAction;
+
+  if (data.actionSets) {
+    const actions = data.actionSets.reduce((arr, actionSet) => {
+      arr = [...arr, ...actionSet.actions];
+      return arr;
+    }, [] as StoryAction[]);
+
+    screenshotOptionAction = actions.find(
+      (a) => a.name === 'takeScreenshotOptions',
+    );
+
+    for (let i = 0; i < actions.length; i++) {
+      const action = actions[i];
       if (action.name === 'takeScreenshot') {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
@@ -87,10 +99,6 @@ export const makeScreenshot = async (
       data && data.screenshotOptions && data.screenshotOptions.type
         ? data.screenshotOptions.type
         : 'png';
-
-    const screenshotOptionAction = data.actions.find(
-      (a) => a.name === 'takeScreenshotOptions',
-    );
 
     const options: TakeScreenshotOptionsParams =
       screenshotOptionAction && screenshotOptionAction.args

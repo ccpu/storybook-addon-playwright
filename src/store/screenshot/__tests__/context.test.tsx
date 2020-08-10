@@ -34,15 +34,16 @@ describe('ScreenshotProvider', () => {
 
   it('should handle global action call', () => {
     const dispatchMock = jest.fn();
-
+    let dispatchCallBack;
     useReducerMock.mockImplementationOnce(() => {
       return [{ imageDiffResults: [] }, dispatchMock];
     });
 
-    (useGlobalScreenshotDispatch as jest.Mock).mockImplementationOnce(() => ({
-      action: { type: 'foo' },
-    }));
+    (useGlobalScreenshotDispatch as jest.Mock).mockImplementation((cb) => {
+      dispatchCallBack = cb;
+    });
     shallow(<ScreenshotProvider />);
+    dispatchCallBack({ type: 'foo' });
     expect(dispatchMock).toHaveBeenCalledWith({ type: 'foo' });
   });
 

@@ -60,7 +60,7 @@ export const useSaveScreenshot = () => {
         : undefined;
 
       const data: SaveScreenshotRequest = {
-        actions: currentActions,
+        actionSets: currentActions,
         base64: base64String,
         browserOptions,
         browserType,

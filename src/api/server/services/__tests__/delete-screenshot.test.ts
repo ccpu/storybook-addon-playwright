@@ -28,7 +28,15 @@ describe('deleteScreenshot', () => {
       mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
     ).toStrictEqual([
       {
-        actions: [{ id: 'action-id', name: 'action-name' }],
+        actionSets: [
+          {
+            actions: [
+              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+            ],
+            id: 'action-set-id-2',
+            title: 'click',
+          },
+        ],
         browserType: 'chromium',
         id: 'screenshot-id-2',
         index: 1,

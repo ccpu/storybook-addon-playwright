@@ -22,14 +22,6 @@ const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
   const getInfo = useCallback(() => {
     const data = { ...screenshotData };
 
-    if (data.actions) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (data as any).actions = data.actions.reduce((obj, action) => {
-        obj[action.name] = action.args;
-        return obj;
-      }, {});
-    }
-
     delete data.id;
     delete data.index;
 

@@ -23,14 +23,15 @@ describe('ActionProvider', () => {
   it('should handle global action call', () => {
     const useReducerMock = useReducer as jest.Mock;
     const dispatchMock = jest.fn();
-
+    let dispatchCallBack;
     useReducerMock.mockImplementationOnce(() => {
       return [{}, dispatchMock];
     });
-    (useGlobalActionDispatch as jest.Mock).mockImplementationOnce(() => ({
-      action: { type: 'foo' },
-    }));
+    (useGlobalActionDispatch as jest.Mock).mockImplementation((cb) => {
+      dispatchCallBack = cb;
+    });
     shallow(<ActionProvider />);
+    dispatchCallBack({ type: 'foo' });
     expect(dispatchMock).toHaveBeenCalledWith({ type: 'foo' });
   });
 

@@ -32,7 +32,7 @@ export const useScreenshot = (
     if (browserType === 'storybook') return;
 
     makeCall({
-      actions: currentActions,
+      actionSets: currentActions,
       browserOptions,
       browserType,
       props: knobs,

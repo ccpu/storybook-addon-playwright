@@ -35,14 +35,38 @@ describe('changeScreenShotIndex', () => {
           ],
           screenshots: [
             {
-              actions: [{ id: 'action-id', name: 'action-name' }],
+              actionSets: [
+                {
+                  actions: [
+                    {
+                      args: { selector: 'html' },
+                      id: 'action-id',
+                      name: 'click',
+                    },
+                  ],
+                  id: 'action-set-id-2',
+                  title: 'click',
+                },
+              ],
               browserType: 'chromium',
               id: 'screenshot-id-2',
               index: 0,
               title: 'title-2',
             },
             {
-              actions: [{ id: 'action-id', name: 'action-name' }],
+              actionSets: [
+                {
+                  actions: [
+                    {
+                      args: { selector: 'html' },
+                      id: 'action-id',
+                      name: 'click',
+                    },
+                  ],
+                  id: 'action-set-id',
+                  title: 'click',
+                },
+              ],
               browserType: 'chromium',
               id: 'screenshot-id',
               index: 1,

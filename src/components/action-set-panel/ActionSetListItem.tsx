@@ -6,6 +6,7 @@ import { SortableElement, SortableElementProps } from 'react-sortable-hoc';
 import { ListItemWrapper, DeleteConfirmationButton, CheckBox } from '../common';
 import { ActionSet } from '../../typings';
 import { ActionSetEditor } from './ActionSetEditor';
+import { TEMP_ACTION_SET } from '../../constants';
 
 export interface ActionSetActionSetListItemProps extends SortableElementProps {
   onEdit: (item: ActionSet) => void;
@@ -46,12 +47,7 @@ export function ActionSetListItem({
 
   return (
     <ListItemWrapper
-      tooltip={
-        title +
-        (item.temp
-          ? ' (This action loaded from screenshot actions, its temporary and will be removed)'
-          : '')
-      }
+      tooltip={title + (item.temp ? TEMP_ACTION_SET : '')}
       title={title + (item.temp ? ' *' : '')}
       draggable={true}
       selected={checked}

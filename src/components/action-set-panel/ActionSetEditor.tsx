@@ -5,6 +5,7 @@ import { Snackbar, Loader, ListItemWrapper, InputDialog } from '../common';
 import { makeStyles, Divider } from '@material-ui/core';
 import { useActionSchemaLoader, useActionEditor } from '../../hooks';
 import { ActionSetEditorIcons } from './ActionSetEditorIcons';
+import { TEMP_ACTION_SET } from '../../constants';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -58,8 +59,10 @@ const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
 
   return (
     <ListItemWrapper
-      tooltip={actionSet.title}
-      title={actionSet.title}
+      tooltip={
+        actionSet.temp ? actionSet.title + TEMP_ACTION_SET : actionSet.title
+      }
+      title={actionSet.temp ? `${actionSet.title} *` : actionSet.title}
       draggable={true}
       selected={true}
       secondaryColor={true}

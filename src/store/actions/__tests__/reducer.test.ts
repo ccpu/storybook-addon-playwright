@@ -1,16 +1,6 @@
 import { reducer as actionReducer, Action, ReducerState } from '../reducer';
 import { ActionSet, PlaywrightDataStories } from '../../../typings';
 
-jest.mock('nanoid', () => {
-  let id = 0;
-  return {
-    nanoid: () => {
-      id++;
-      return 'id-' + id;
-    },
-  };
-});
-
 type Dispatch = (
   state?: Partial<ReducerState>,
   action?: Action,
@@ -555,12 +545,19 @@ describe('action reducer', () => {
   });
 
   it('should setScreenShotActionSets but use existing action set', () => {
+    const actionSet = getActionSetData();
+    delete actionSet.id;
+    actionSet.actions = actionSet.actions.map((action) => {
+      delete action.id;
+      return action;
+    });
+
     const result = reducer(
       {
         stories: getStoryData(storyId),
       },
       {
-        actionSets: [getActionSetData()],
+        actionSets: [actionSet],
         storyId,
         type: 'setScreenShotActionSets',
       },
@@ -568,10 +565,7 @@ describe('action reducer', () => {
 
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
-        actions: [
-          { id: 'action-id', name: 'action-name' },
-          { id: 'action-id-2', name: 'action-name-2' },
-        ],
+        actions: [{ name: 'action-name' }, { name: 'action-name-2' }],
         id: 'action-set-id',
         title: 'desc',
       },

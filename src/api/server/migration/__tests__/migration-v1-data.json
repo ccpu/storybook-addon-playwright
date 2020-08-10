@@ -1,0 +1,60 @@
+{
+  "version": "1",
+  "screenshotOptions": {
+    "jTfiAoRWN1vGRuthlPSRl": {
+      "clip": {
+        "height": 600,
+        "width": 600,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "browserOptions": {
+    "c99BcUTVviggy9H9vRFM8": {
+      "cursor": true
+    }
+  },
+  "stories": {
+    "with-defaults": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "id": "zdT5Box6Iq",
+              "name": "mouse.move",
+              "args": {
+                "x": 497,
+                "y": 113
+              }
+            }
+          ],
+          "id": "OSzX1CUEn71R",
+          "title": "vertical scroll down"
+        }
+      ],
+      "screenshots": [
+        {
+          "actions": [
+            {
+              "id": "eP93cYRmq8",
+              "name": "click",
+              "args": {
+                "selector": "html"
+              }
+            }
+          ],
+          "browserType": "chromium",
+          "index": 1,
+          "props": {
+            "showOnCreate": false
+          },
+          "title": "should show on click",
+          "screenshotOptionsId": "jTfiAoRWN1vGRuthlPSRl",
+          "browserOptionsId": "c99BcUTVviggy9H9vRFM8",
+          "id": "DFNYJhhPYuQHTDX"
+        }
+      ]
+    }
+  }
+}

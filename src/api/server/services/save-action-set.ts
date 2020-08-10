@@ -17,6 +17,10 @@ export const saveActionSet = async (
 
   story.actionSets = story.actionSets.filter((x) => x.id !== data.actionSet.id);
 
+  data.actionSet.actions.forEach((action) => {
+    delete action.id;
+  });
+
   story.actionSets.push(data.actionSet);
 
   await saveStoryFile(fileInfo, storyData);

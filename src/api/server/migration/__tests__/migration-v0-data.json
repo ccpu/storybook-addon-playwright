@@ -5,7 +5,7 @@
         "actions": [
           {
             "id": "yryt9qdYHQ",
-            "name": "mouse.down",
+            "name": "click",
             "args": {
               "options": {
                 "button": "middle"
@@ -27,15 +27,15 @@
         },
         "props": [
           {
-            "name": "arrowColor",
+            "name": "color",
             "value": "red"
           },
           {
-            "name": "arrowSize",
+            "name": "size",
             "value": 20
           }
         ],
-        "title": "should apply arrow styles"
+        "title": "should apply styles"
       }
     ]
   },

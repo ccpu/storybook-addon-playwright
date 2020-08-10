@@ -74,6 +74,9 @@ export const saveScreenshot = async (
         data.actionSets && data.actionSets.length
           ? data.actionSets.map((actionSet) => {
               delete actionSet.id;
+              actionSet.actions.forEach((action) => {
+                delete action.id;
+              });
               return actionSet;
             })
           : undefined,

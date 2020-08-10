@@ -29,7 +29,7 @@ describe('saveActionSet', () => {
     expect(data).toStrictEqual({
       actionSets: [
         {
-          actions: [{ id: 'action-id', name: 'action-name' }],
+          actions: [{ name: 'action-name' }],
           id: 'action-set-id',
           title: 'action-set-desc',
         },
@@ -58,7 +58,7 @@ describe('saveActionSet', () => {
         title: 'click',
       },
       {
-        actions: [{ id: 'action-id', name: 'dbClick' }],
+        actions: [{ name: 'dbClick' }],
         id: 'action-set-id',
         title: 'action-set-desc',
       },

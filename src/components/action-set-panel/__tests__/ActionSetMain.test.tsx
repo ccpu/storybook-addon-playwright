@@ -1,6 +1,5 @@
 import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import '../../../../__manual_mocks__/react-useEffect';
-import '../../../../__manual_mocks__/nanoid';
 import { ActionSetMain } from '../ActionSetMain';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -14,7 +13,7 @@ jest.mock('../../../hooks/use-current-story-data');
 
 describe('ActionSetMain', () => {
   beforeEach(() => {
-    dispatchMock.mockClear();
+    jest.clearAllMocks();
   });
 
   it('should render', () => {
@@ -65,7 +64,7 @@ describe('ActionSetMain', () => {
       {
         actionSet: {
           actions: [],
-          id: 'action-id',
+          id: 'id-1',
           title: 'new action set',
         },
         new: true,

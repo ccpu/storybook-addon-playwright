@@ -25,7 +25,7 @@ export const setStoryOptions = (
     return optionsKey;
   }
 
-  const id = nanoid();
+  const id = nanoid(12);
 
   storyData[optionProp][id] = options;
 

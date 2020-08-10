@@ -8,7 +8,7 @@ import * as immutableObject from 'object-path-immutable';
 import arrayMove from 'array-move';
 import { combineReducers } from '../../utils';
 import { nanoid } from 'nanoid';
-import equal from 'fast-deep-equal';
+import { isSameActions } from './utils';
 
 export interface ReducerState {
   actionSchema: ActionSchemaList;
@@ -198,9 +198,12 @@ export function mainReducer(
       const storyActionSets = state.stories[action.storyId].actionSets;
       const actionSets = action.actionSets.reduce((arr, actionSet) => {
         if (storyActionSets) {
-          const storyActionSet = storyActionSets.find((x) =>
-            equal(x.actions, actionSet.actions),
-          );
+          const storyActionSet = storyActionSets.find((x) => {
+            if (isSameActions(x.actions, actionSet.actions)) {
+              return true;
+            }
+            return false;
+          });
           if (storyActionSet) {
             arr.push(storyActionSet);
           } else {

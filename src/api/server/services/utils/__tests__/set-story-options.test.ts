@@ -1,27 +1,28 @@
 import { setStoryOptions } from '../set-story-options';
 import { PlaywrightData } from '../../../../../typings';
 
-jest.mock('nanoid', () => ({
-  nanoid: () => 'some-id',
-}));
-
 describe('setStoryOptions', () => {
   const storyData: PlaywrightData = {};
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should set data and return id', () => {
     const data = { ...storyData };
     const id = setStoryOptions(data, 'browserOptions', { fullPage: true });
-    expect(id).toBe('some-id');
+    expect(id).toBe('id-1');
     expect(data).toStrictEqual({
-      browserOptions: { 'some-id': { fullPage: true } },
+      browserOptions: { 'id-1': { fullPage: true } },
     });
   });
 
   it('should set data ', () => {
     const data = { ...storyData };
     const id = setStoryOptions(data, 'browserOptions', { fullPage: true });
-    expect(id).toBe('some-id');
+    expect(id).toBe('id-2');
     expect(data).toStrictEqual({
-      browserOptions: { 'some-id': { fullPage: true } },
+      browserOptions: { 'id-2': { fullPage: true } },
     });
   });
 
@@ -48,6 +49,6 @@ describe('setStoryOptions', () => {
       'browserOptions',
       { fullPage: true },
     );
-    expect(id).toBe('some-id');
+    expect(id).toBe('id-3');
   });
 });

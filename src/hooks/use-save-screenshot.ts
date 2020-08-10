@@ -65,7 +65,7 @@ export const useSaveScreenshot = () => {
         browserOptions,
         browserType,
         fileName: storyData.parameters.fileName,
-        id: nanoid(15),
+        id: nanoid(12),
         props: props,
         screenshotOptions:
           screenshotOptions && Object.keys(screenshotOptions).length

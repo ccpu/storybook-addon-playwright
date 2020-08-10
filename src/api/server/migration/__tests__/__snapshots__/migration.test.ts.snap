@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`migration should migrate from v0 to v1 1`] = `
+Object {
+  "browserOptions": Object {
+    "id-2": Object {
+      "cursor": true,
+    },
+  },
+  "screenshotOptions": Object {
+    "id-1": Object {
+      "clip": Object {
+        "height": 600,
+        "width": 600,
+        "x": 0,
+        "y": 0,
+      },
+    },
+  },
+  "stories": Object {
+    "with-actionSets": Object {
+      "actionSets": Array [
+        Object {
+          "actions": Array [
+            Object {
+              "args": Object {
+                "timeout": 500,
+              },
+              "id": "4ps_NuM6B2",
+              "name": "waitForTimeout",
+            },
+          ],
+          "id": "k71GTTcObZen",
+          "title": "delay 500",
+        },
+      ],
+    },
+    "with-defaults": Object {
+      "screenshots": Array [
+        Object {
+          "actions": Array [
+            Object {
+              "args": Object {
+                "options": Object {
+                  "button": "middle",
+                },
+              },
+              "id": "yryt9qdYHQ",
+              "name": "click",
+            },
+          ],
+          "browserOptionsId": "id-2",
+          "browserType": "chromium",
+          "id": "id-3",
+          "index": 4,
+          "props": Object {
+            "color": "red",
+            "size": 20,
+          },
+          "screenshotOptionsId": "id-1",
+          "title": "should apply styles",
+        },
+      ],
+    },
+  },
+  "version": "1",
+}
+`;
+
+exports[`migration should migrate from v0 to v2 1`] = `
+Object {
+  "browserOptions": Object {
+    "id-6": Object {
+      "cursor": true,
+    },
+  },
+  "screenshotOptions": Object {
+    "id-5": Object {
+      "clip": Object {
+        "height": 600,
+        "width": 600,
+        "x": 0,
+        "y": 0,
+      },
+    },
+  },
+  "stories": Object {
+    "with-actionSets": Object {
+      "actionSets": Array [
+        Object {
+          "actions": Array [
+            Object {
+              "args": Object {
+                "timeout": 500,
+              },
+              "name": "waitForTimeout",
+            },
+          ],
+          "id": "k71GTTcObZen",
+          "title": "delay 500",
+        },
+      ],
+    },
+    "with-defaults": Object {
+      "screenshots": Array [
+        Object {
+          "actionSets": Array [
+            Object {
+              "actions": Array [
+                Object {
+                  "args": Object {
+                    "options": Object {
+                      "button": "middle",
+                    },
+                  },
+                  "name": "click",
+                },
+              ],
+              "id": "id-8",
+              "title": "should apply styles actions",
+            },
+          ],
+          "browserOptionsId": "id-6",
+          "browserType": "chromium",
+          "id": "id-7",
+          "index": 4,
+          "props": Object {
+            "color": "red",
+            "size": 20,
+          },
+          "screenshotOptionsId": "id-5",
+          "title": "should apply styles",
+        },
+      ],
+    },
+  },
+  "version": "2",
+}
+`;
+
+exports[`migration should migrate from v1 to v2 1`] = `
+Object {
+  "browserOptions": Object {
+    "c99BcUTVviggy9H9vRFM8": Object {
+      "cursor": true,
+    },
+  },
+  "screenshotOptions": Object {
+    "jTfiAoRWN1vGRuthlPSRl": Object {
+      "clip": Object {
+        "height": 600,
+        "width": 600,
+        "x": 0,
+        "y": 0,
+      },
+    },
+  },
+  "stories": Object {
+    "with-defaults": Object {
+      "actionSets": Array [
+        Object {
+          "actions": Array [
+            Object {
+              "args": Object {
+                "x": 497,
+                "y": 113,
+              },
+              "name": "mouse.move",
+            },
+          ],
+          "id": "OSzX1CUEn71R",
+          "title": "vertical scroll down",
+        },
+      ],
+      "screenshots": Array [
+        Object {
+          "actionSets": Array [
+            Object {
+              "actions": Array [
+                Object {
+                  "args": Object {
+                    "selector": "html",
+                  },
+                  "name": "click",
+                },
+              ],
+              "id": "id-4",
+              "title": "should show on click actions",
+            },
+          ],
+          "browserOptionsId": "c99BcUTVviggy9H9vRFM8",
+          "browserType": "chromium",
+          "id": "DFNYJhhPYuQHTDX",
+          "index": 1,
+          "props": Object {
+            "showOnCreate": false,
+          },
+          "screenshotOptionsId": "jTfiAoRWN1vGRuthlPSRl",
+          "title": "should show on click",
+        },
+      ],
+    },
+  },
+  "version": "2",
+}
+`;

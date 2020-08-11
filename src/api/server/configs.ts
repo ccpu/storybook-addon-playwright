@@ -5,7 +5,11 @@ import { migration } from './migration';
 let configs: Config<Page>;
 
 export const setConfig = <T extends unknown = Page>(conf: Config<T>) => {
-  configs = (conf as unknown) as Config<Page>;
+  configs = {
+    fileConcurrencyLimit: 1,
+    storyConcurrencyLimit: 1,
+    ...((conf as unknown) as Config<Page>),
+  };
   if (configs.enableMigration) {
     migration();
   }

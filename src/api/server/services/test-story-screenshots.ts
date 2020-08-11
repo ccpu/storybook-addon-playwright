@@ -8,7 +8,6 @@ import { getStoryData } from './utils';
 
 export const testStoryScreenshots = async (
   data: StoryInfo & RequestData,
-  disableEvent = false,
 ): Promise<ImageDiffResult[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
@@ -23,7 +22,7 @@ export const testStoryScreenshots = async (
 
   const diffs: ImageDiffResult[] = [];
 
-  if (configs.beforeStoryImageDiff && !disableEvent) {
+  if (configs.beforeStoryImageDiff && data.requestType !== 'app') {
     await configs.beforeStoryImageDiff(data);
   }
 
@@ -33,13 +32,14 @@ export const testStoryScreenshots = async (
     const result = await testScreenshotService({
       fileName: data.fileName,
       requestId: data.requestId,
+      requestType: data.requestType,
       screenshotId: screenshot.id,
       storyId: data.storyId,
     });
     diffs.push(result);
   }
 
-  if (configs.afterStoryImageDiff && !disableEvent) {
+  if (configs.afterStoryImageDiff && data.requestType !== 'app') {
     await configs.afterStoryImageDiff(diffs, data);
   }
 

@@ -3,6 +3,7 @@ import { getPlaywrightConfigFiles } from '../../../utils/get-playwright-config-f
 import { testScreenshots } from './test-screenshots';
 import { getConfigs } from '../configs';
 import { RequestData } from '../../../typings/request';
+import pLimit from 'p-limit';
 
 export const testAppScreenshots = async (
   data: RequestData,
@@ -11,26 +12,34 @@ export const testAppScreenshots = async (
 
   const configs = getConfigs();
 
-  let results: ImageDiffResult[] = [];
+  const limit = pLimit(configs.fileConcurrencyLimit);
 
   if (configs.beforeAppImageDiff) {
     await configs.beforeAppImageDiff(data);
   }
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+  const promises = files.reduce((arr, file, i) => {
+    arr.push(
+      limit((index) => {
+        return testScreenshots({
+          disableEvans: true,
+          fileName: file,
+          requestId: data.requestId + '__' + index,
+          requestType: 'app',
+        });
+      }, i),
+    );
 
-    const result = await testScreenshots({
-      disableEvans: true,
-      fileName: file,
-      requestId: data.requestId,
-    });
-    results = [...results, ...result];
-  }
+    return arr;
+  }, []);
+
+  const res = await Promise.all(promises);
+
+  const results = res.map((d) => d[0]);
 
   if (configs.afterAppImageDiff) {
     await configs.afterAppImageDiff(results, data);
   }
 
-  return results.filter((x) => !x.pass);
+  return results.filter((x) => x && !x.pass);
 };

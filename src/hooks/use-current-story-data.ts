@@ -12,15 +12,19 @@ export const useCurrentStoryData = () => {
 
   useEffect(() => {
     if (!currentStory) return;
+    const version = api.getCurrentVersion().version.split('.')[0];
 
     const data = currentStory;
-    const fileName = getStoryFilePath(data.parameters.fileName, data.id);
+    const fileName =
+      +version > 5
+        ? data.parameters.fileName
+        : getStoryFilePath(data.parameters.fileName, data.id);
 
     setData({
       ...data,
       parameters: { ...data.parameters, fileName: fileName },
     });
-  }, [currentStory]);
+  }, [api, currentStory]);
 
   return storyData;
 };

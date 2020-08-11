@@ -2,6 +2,8 @@ import { ImageDiffResult } from '../../typings';
 import { testStoryScreenshots } from './test-story-screenshots';
 import { getStoryPlaywrightData } from '../utils';
 import { RequestData } from '../../../typings/request';
+import pLimit from 'p-limit';
+import { getConfigs } from '../configs';
 
 interface TestScreenshotsOptions extends RequestData {
   fileName: string;
@@ -13,26 +15,32 @@ export const testScreenshots = async (
   options: TestScreenshotsOptions,
 ): Promise<ImageDiffResult[]> => {
   const { fileName, onComplete } = options;
-
-  let results: ImageDiffResult[] = [];
+  const configs = getConfigs();
 
   const storiesData = await getStoryPlaywrightData(fileName);
 
-  for (let i = 0; i < storiesData.storyData.length; i++) {
-    const story = storiesData.storyData[i];
+  const limit = pLimit(configs.storyConcurrencyLimit);
 
+  const promisees = storiesData.storyData.reduce((arr, story, i) => {
     if (story.data.screenshots && story.data.screenshots.length) {
-      const result = await testStoryScreenshots(
-        {
-          fileName: fileName,
-          requestId: options.requestId,
-          storyId: story.storyId,
-        },
-        options.disableEvans,
+      arr.push(
+        limit(
+          (index) =>
+            testStoryScreenshots({
+              fileName: fileName,
+              requestId: options.requestId + '__' + index,
+              requestType: options.requestType,
+              storyId: story.storyId,
+            }),
+          i,
+        ),
       );
-      results = [...results, ...result];
     }
-  }
+    return arr;
+  }, []);
+
+  const data = await Promise.all(promisees);
+  const results = data.map((d) => d[0]);
 
   if (onComplete) onComplete(results);
 

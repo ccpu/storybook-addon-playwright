@@ -1,4 +1,4 @@
-import { getStoryScreenshots } from '../get-story-screenshots';
+import { getStoryScreenshotsData } from '../get-story-screenshots-data';
 import { storyFileInfo } from '../../../../../__test_data__/story-file-info';
 import { loadStoryData } from '../../utils/load-story-data';
 
@@ -7,7 +7,7 @@ jest.mock('../../utils/load-story-data');
 
 describe('getStoryScreenshots', () => {
   it('should have result', async () => {
-    const result = await getStoryScreenshots({
+    const result = await getStoryScreenshotsData({
       fileName: 'story.ts',
       storyId: 'story-id',
     });
@@ -46,7 +46,7 @@ describe('getStoryScreenshots', () => {
   });
 
   it('should not have result if story id not exist', async () => {
-    const result = await getStoryScreenshots({
+    const result = await getStoryScreenshotsData({
       fileName: 'story.ts',
       storyId: 'invalid-story-id',
     });
@@ -95,7 +95,7 @@ describe('getStoryScreenshots', () => {
       });
     });
 
-    const result = await getStoryScreenshots({
+    const result = await getStoryScreenshotsData({
       fileName: 'story.ts',
       storyId: 'story-id',
     });

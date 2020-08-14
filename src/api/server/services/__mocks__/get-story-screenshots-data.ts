@@ -1,8 +1,8 @@
 import { ScreenshotData, StoryInfo } from '../../../../typings';
 
-const getStoryScreenshots = jest.fn();
+const getStoryScreenshotsData = jest.fn();
 
-getStoryScreenshots.mockImplementation(
+getStoryScreenshotsData.mockImplementation(
   (data: StoryInfo): Promise<ScreenshotData[]> => {
     return new Promise((resolve) => {
       resolve([
@@ -16,4 +16,4 @@ getStoryScreenshots.mockImplementation(
   },
 );
 
-export { getStoryScreenshots };
+export { getStoryScreenshotsData };

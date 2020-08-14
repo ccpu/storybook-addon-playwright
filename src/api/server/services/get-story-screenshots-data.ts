@@ -3,7 +3,7 @@ import { StoryInfo } from '../../../typings';
 import { setStoryScreenshotOptions } from './utils/set-story-screenshot-options';
 import { getStoryData } from './utils';
 
-export const getStoryScreenshots = async (info: StoryInfo) => {
+export const getStoryScreenshotsData = async (info: StoryInfo) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 

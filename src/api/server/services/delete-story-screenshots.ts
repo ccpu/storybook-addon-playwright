@@ -1,11 +1,11 @@
 import { StoryInfo } from '../../../typings';
-import { getStoryScreenshots } from './get-story-screenshots';
+import { getStoryScreenshotsData } from './get-story-screenshots-data';
 import { deleteScreenshot } from './delete-screenshot';
 
 export const deleteStoryScreenshots = async (
   storyInfo: StoryInfo,
 ): Promise<void> => {
-  const screenshots = await getStoryScreenshots(storyInfo);
+  const screenshots = await getStoryScreenshotsData(storyInfo);
 
   for (let i = 0; i < screenshots.length; i++) {
     const screenshot = screenshots[i];

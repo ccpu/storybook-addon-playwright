@@ -1,4 +1,4 @@
-import { getStoryScreenshots as getStoryScreenshotsService } from '../services/get-story-screenshots';
+import { getStoryScreenshotsData as getStoryScreenshotsService } from '../services/get-story-screenshots-data';
 import { Request, Response } from 'express';
 import { StoryInfo } from '../../../typings';
 

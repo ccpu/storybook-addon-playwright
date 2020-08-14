@@ -1,9 +1,9 @@
 import { runImageDiff } from '../run-image-diff';
-import { testScreenshots } from '../api/server/services/test-screenshots';
+import { testFileScreenshots } from '../api/server/services/test-file-screenshots';
 import { ImageDiffResult } from '../api/typings';
 
-jest.mock('../api/server/services/test-screenshots.ts');
-const testScreenshotsMock = (testScreenshots as unknown) as jest.Mock<
+jest.mock('../api/server/services/test-file-screenshots');
+const testScreenshotsMock = (testFileScreenshots as unknown) as jest.Mock<
   ImageDiffResult[]
 >;
 testScreenshotsMock.mockImplementation(() => {

@@ -2,7 +2,7 @@ import { getStoryScreenshots } from '../get-story-screenshots';
 import { StoryInfo } from '../../../../typings';
 import { Request, Response } from 'express';
 
-jest.mock('../../services/get-story-screenshots.ts');
+jest.mock('../../services/get-story-screenshots-data.ts');
 
 describe('getStoryScreenshots', () => {
   it('should have result', async () => {

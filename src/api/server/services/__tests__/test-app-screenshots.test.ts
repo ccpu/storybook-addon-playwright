@@ -2,12 +2,12 @@ import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { testAppScreenshots } from '../test-app-screenshots';
 import { getConfigs } from '../../configs';
 import { mocked } from 'ts-jest/utils';
-import { testScreenshots } from '../test-screenshots';
+import { testFileScreenshots } from '../test-file-screenshots';
 
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
 jest.mock('../../configs');
-jest.mock('../test-screenshots');
+jest.mock('../test-file-screenshots');
 
 const afterAppImageDiffMock = jest.fn();
 const beforeAppImageDiffMock = jest.fn();
@@ -18,7 +18,7 @@ mocked(getConfigs).mockImplementation(() => ({
   ...defaultConfigs(),
 }));
 
-mocked(testScreenshots).mockImplementation(() => {
+mocked(testFileScreenshots).mockImplementation(() => {
   return new Promise((resolve) => {
     resolve([
       {
@@ -38,7 +38,7 @@ describe('testAppScreenshot', () => {
 
   it('should have result', async () => {
     const result = await testAppScreenshots({ requestId: 'request-id' });
-    expect(testScreenshots).toHaveBeenCalledWith({
+    expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: 'story.ts',
       requestId: 'request-id__0',

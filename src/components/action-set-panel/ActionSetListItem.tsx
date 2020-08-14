@@ -7,11 +7,13 @@ import { ListItemWrapper, DeleteConfirmationButton, CheckBox } from '../common';
 import { ActionSet } from '../../typings';
 import { ActionSetEditor } from './ActionSetEditor';
 import { TEMP_ACTION_SET } from '../../constants';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 
 export interface ActionSetActionSetListItemProps extends SortableElementProps {
   onEdit: (item: ActionSet) => void;
   onDelete: (item: ActionSet) => void;
   onCheckBoxClick?: (item: ActionSet) => void;
+  onCopy?: (item: ActionSet) => void;
   item: ActionSet;
   checked?: boolean;
   title: string;
@@ -28,6 +30,7 @@ export function ActionSetListItem({
   title,
   isEditing,
   hideIcons,
+  onCopy,
 }: ActionSetActionSetListItemProps) {
   const handleEdit = useCallback(() => {
     onEdit(item);
@@ -40,6 +43,10 @@ export function ActionSetListItem({
   const handleDeleteConfirmation = useCallback(() => {
     onDelete(item);
   }, [item, onDelete]);
+
+  const handleCopyActionSet = useCallback(() => {
+    onCopy(item);
+  }, [item, onCopy]);
 
   if (isEditing) {
     return <ActionSetEditor actionSet={item} />;
@@ -58,10 +65,19 @@ export function ActionSetListItem({
               className="edit-button"
               onClick={handleEdit}
               size="small"
+              title="Edit"
             >
               <EditIcon />
             </IconButton>
           )}
+          <IconButton
+            className="copy-button"
+            onClick={handleCopyActionSet}
+            size="small"
+            title="Copy"
+          >
+            <FileCopyOutlinedIcon />
+          </IconButton>
           <CheckBox onClick={handleCheckStateChanged} checked={checked} />
           {!hideIcons && (
             <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />

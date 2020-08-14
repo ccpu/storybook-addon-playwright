@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useStoryActionSetsLoader } from '../../hooks';
+import { useStoryActionSetsLoader, useCopyActionSet } from '../../hooks';
 import { useCurrentStoryData, useCurrentStoryActionSets } from '../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
 import { Loader, Snackbar, ListWrapper } from '../common';
@@ -26,6 +26,12 @@ const ActionSetList = SortableContainer(() => {
   const classes = useStyles();
 
   const storyData = useCurrentStoryData();
+
+  const {
+    copyActionSet,
+    inProgress: copyInProgress,
+    ErrorSnackbar,
+  } = useCopyActionSet(storyData);
 
   const [error, setError] = useState();
 
@@ -101,6 +107,7 @@ const ActionSetList = SortableContainer(() => {
             onCheckBoxClick={handleCheckBox}
             checked={currentActionSets.includes(actionSet.id)}
             title={actionSet.title}
+            onCopy={copyActionSet}
             isEditing={
               isEditing && state.orgEditingActionSet.id === actionSet.id
             }
@@ -114,7 +121,7 @@ const ActionSetList = SortableContainer(() => {
         </div>
       )}
 
-      <Loader open={loading} />
+      <Loader open={loading || copyInProgress} />
       {(error || actionSetLoaderError) && (
         <Snackbar variant="error" open={true} onClose={handleErrorClose}>
           <>
@@ -127,6 +134,7 @@ const ActionSetList = SortableContainer(() => {
           </>
         </Snackbar>
       )}
+      <ErrorSnackbar />
     </ListWrapper>
   );
 });

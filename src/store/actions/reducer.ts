@@ -238,14 +238,16 @@ export function mainReducer(
     }
 
     case 'addActionSet': {
-      const newState = updateStoryActionSet(state, action.storyId, [
+      const newAction = [
         ...(state.stories[action.storyId]
           ? state.stories[action.storyId].actionSets.filter(
               (x) => x.id !== action.actionSet.id,
             )
           : []),
         action.actionSet,
-      ]);
+      ];
+
+      const newState = updateStoryActionSet(state, action.storyId, newAction);
 
       return {
         ...state,

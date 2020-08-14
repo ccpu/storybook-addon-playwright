@@ -125,4 +125,31 @@ describe('ActionSetListItem', () => {
       listItemWrapperWrapper.find(DeleteConfirmationButton).exists(),
     ).toBeFalsy();
   });
+
+  it('should catt copy action set', () => {
+    const copyMock = jest.fn();
+    const wrapper = shallow(
+      <ActionSetListItem
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
+        onDelete={deleteMock}
+        onEdit={editMock}
+        onCopy={copyMock}
+        onCheckBoxClick={onCheckMock}
+        index={0}
+        title="title"
+      />,
+    );
+
+    const listItemWrapperWrapper = shallow(<div>{wrapper.props().icons}</div>);
+    listItemWrapperWrapper
+      .find('.copy-button')
+      .props()
+      .onClick({} as never);
+
+    expect(copyMock).toHaveBeenCalledWith({
+      actions: [],
+      id: 'action-set-id',
+      title: 'desc',
+    });
+  });
 });

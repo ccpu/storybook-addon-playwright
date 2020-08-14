@@ -3,6 +3,8 @@ import { toMatchScreenshots } from '../../dist/to-match-screenshots';
 
 expect.extend({ toMatchScreenshots });
 
+//! to run uncomment testPathIgnorePatterns: ['./stories/*'] in jest.config.js
+
 describe('should pass', () => {
   beforeAll(async () => {
     await setupPlaywright();

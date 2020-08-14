@@ -1,6 +1,6 @@
 import { ImageDiffResult } from '../../typings';
 import { getPlaywrightConfigFiles } from '../../../utils/get-playwright-config-files';
-import { testScreenshots } from './test-screenshots';
+import { testScreenshots } from './test-file-screenshots';
 import { getConfigs } from '../configs';
 import { RequestData } from '../../../typings/request';
 import pLimit from 'p-limit';

@@ -15,6 +15,7 @@ export const testScreenshotService = async (
   }
   let result: ImageDiffResult = {};
   let snapshotData: ScreenshotImageData;
+
   try {
     snapshotData = await makeScreenshot(
       {

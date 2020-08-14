@@ -1,5 +1,5 @@
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
-import { testScreenshots } from './api/server/services/test-screenshots';
+import { testScreenshots } from './api/server/services/test-file-screenshots';
 import { ImageDiffResult } from './api/typings';
 import { nanoid } from 'nanoid';
 import { RequestData } from './typings/request';

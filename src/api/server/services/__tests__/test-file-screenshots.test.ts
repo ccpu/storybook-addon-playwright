@@ -7,7 +7,7 @@ jest.mock('fast-glob', () => ({
   },
 }));
 
-import { testScreenshots } from '../test-screenshots';
+import { testScreenshots } from '../test-file-screenshots';
 import { testStoryScreenshots } from '../test-story-screenshots';
 import { mocked } from 'ts-jest/utils';
 

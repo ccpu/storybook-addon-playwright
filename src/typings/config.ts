@@ -39,6 +39,8 @@ export interface Config<T extends unknown = Page> {
   ) => Promise<void>;
   diffDirection?: DiffDirection;
   enableMigration?: boolean;
-  fileConcurrencyLimit?: number;
-  storyConcurrencyLimit?: number;
+  concurrencyLimit?: {
+    file?: number;
+    story?: number;
+  };
 }

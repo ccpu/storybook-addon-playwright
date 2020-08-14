@@ -5,7 +5,7 @@ export const getStoryData = (
   storyId: string,
   create = false,
 ) => {
-  if (!create && (!data.stories || !data.stories[storyId])) {
+  if (!create && (!data || !data.stories || !data.stories[storyId])) {
     return undefined;
   }
 

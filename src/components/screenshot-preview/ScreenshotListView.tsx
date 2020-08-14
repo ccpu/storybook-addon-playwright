@@ -87,7 +87,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
     setShowTitleDialog(!showTitleDialog);
   }, [showTitleDialog]);
 
-  const flex = `0 1 calc(${
+  const width = `calc(${
     100 / (column ? column : activeBrowsers.length)
   }% - 2px)`;
 
@@ -152,7 +152,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
             })}
           >
             {showStorybook && (
-              <div className={classes.listItem} style={{ flex }}>
+              <div className={classes.listItem} style={{ width }}>
                 <ScreenshotView
                   browserType="storybook"
                   url={storyUrl}
@@ -161,7 +161,7 @@ const ScreenshotListView: SFC<Props> = (props) => {
               </div>
             )}
             {activeBrowsers.map((browser) => (
-              <div key={browser} className={classes.listItem} style={{ flex }}>
+              <div key={browser} className={classes.listItem} style={{ width }}>
                 <ScreenshotView
                   browserType={browser}
                   height={itemHeight}

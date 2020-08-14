@@ -30,7 +30,7 @@ export const testScreenshotService = async (
       true,
     );
 
-    result = diffImageToScreenshot(
+    result = await diffImageToScreenshot(
       {
         browserType: screenshotData.browserType,
         fileName: data.fileName,

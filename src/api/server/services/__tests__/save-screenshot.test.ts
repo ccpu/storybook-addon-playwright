@@ -20,9 +20,11 @@ const mockDiffImageToScreenshot = diffImageToScreenshot as jest.Mocked<
   typeof diffImageToScreenshot
 >;
 mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementation(() => {
-  return {
-    added: true,
-  };
+  return new Promise((resolve) => {
+    resolve({
+      added: true,
+    });
+  });
 });
 
 describe('saveScreenshot', () => {
@@ -124,9 +126,11 @@ describe('saveScreenshot', () => {
   it('should not save if dealing with existing screenshot', async () => {
     mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementationOnce(
       () => {
-        return {
-          pass: true,
-        };
+        return new Promise((resolve) => {
+          resolve({
+            pass: true,
+          });
+        });
       },
     );
 

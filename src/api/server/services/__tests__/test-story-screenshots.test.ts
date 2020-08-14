@@ -57,6 +57,7 @@ describe('testStoryScreenshot', () => {
     await testStoryScreenshots({
       fileName: 'story.ts',
       requestId: 'request-id',
+      requestType: 'story',
       storyId: 'story-id',
     });
     expect(afterStoryImageDiffMock).toHaveBeenCalledWith(
@@ -74,7 +75,12 @@ describe('testStoryScreenshot', () => {
           storyId: 'story-id',
         },
       ],
-      { fileName: 'story.ts', requestId: 'request-id', storyId: 'story-id' },
+      {
+        fileName: 'story.ts',
+        requestId: 'request-id',
+        requestType: 'story',
+        storyId: 'story-id',
+      },
     );
   });
 
@@ -86,21 +92,19 @@ describe('testStoryScreenshot', () => {
     });
     expect(beforeStoryImageDiffMock).toHaveBeenCalledWith({
       fileName: 'story.ts',
-
       requestId: 'request-id',
+      requestType: 'story',
       storyId: 'story-id',
     });
   });
 
-  it('should not call events when disableEvent set to true', async () => {
-    await testStoryScreenshots(
-      {
-        fileName: 'story.ts',
-        requestId: 'request-id',
-        storyId: 'story-id',
-      },
-      true,
-    );
+  it('should not call events when requestType is not "story"', async () => {
+    await testStoryScreenshots({
+      fileName: 'story.ts',
+      requestId: 'request-id',
+      requestType: 'app',
+      storyId: 'story-id',
+    });
     expect(beforeStoryImageDiffMock).toHaveBeenCalledTimes(0);
     expect(afterStoryImageDiffMock).toHaveBeenCalledTimes(0);
   });

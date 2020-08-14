@@ -5,39 +5,50 @@ import { ImageDiffResult } from '../../typings';
 import * as fs from 'fs';
 import { getConfigs } from '../configs';
 import { getScreenshotPaths } from '../utils/get-screenshot-paths';
+// import { nanoid } from 'nanoid';
+import path from 'path';
 
 interface SnapshotOptions extends MatchImageSnapshotOptions {
   receivedImageBuffer: Buffer;
   updateSnapshot?: boolean;
 }
 
-export const diffImageToScreenshot = (
+export const diffImageToScreenshot = async (
   data: DiffImageToScreenShot,
   imageBuffer: Buffer,
   options?: Partial<SnapshotOptions>,
-): ImageDiffResult => {
-  const paths = getScreenshotPaths(data);
-  const config = getConfigs();
+): Promise<ImageDiffResult> => {
+  return new Promise((resolve, reject) => {
+    try {
+      const paths = getScreenshotPaths(data);
+      const config = getConfigs();
 
-  const result = runDiffImageToSnapshot({
-    blur: 0,
-    diffDir: paths.diffDir,
-    diffDirection: config.diffDirection ? config.diffDirection : 'horizontal',
-    failureThreshold: 0,
-    failureThresholdType: 'pixel',
-    receivedImageBuffer: imageBuffer,
-    snapshotIdentifier: paths.screenshotIdentifier,
-    snapshotsDir: paths.screenshotsDir,
-    updatePassedSnapshot: false,
-    updateSnapshot: false,
-    ...options,
-  } as SnapshotOptions) as ImageDiffResult;
+      const diffDir = path.resolve(__dirname, data.storyId, '__diff_output__');
 
-  if (!result.pass) {
-    fs.rmdirSync(paths.diffDir, { recursive: true });
-  }
+      const result = runDiffImageToSnapshot({
+        blur: 0,
+        diffDir,
+        diffDirection: config.diffDirection
+          ? config.diffDirection
+          : 'horizontal',
+        failureThreshold: 0,
+        failureThresholdType: 'pixel',
+        receivedImageBuffer: imageBuffer,
+        snapshotIdentifier: paths.screenshotIdentifier,
+        snapshotsDir: paths.screenshotsDir,
+        updatePassedSnapshot: false,
+        updateSnapshot: false,
+        ...options,
+      } as SnapshotOptions) as ImageDiffResult;
 
-  result.diffDirection = config.diffDirection;
+      if (!result.pass) {
+        fs.rmdirSync(diffDir, { recursive: true });
+      }
 
-  return result;
+      result.diffDirection = config.diffDirection;
+      resolve(result);
+    } catch (error) {
+      reject(error);
+    }
+  });
 };

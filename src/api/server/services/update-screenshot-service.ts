@@ -11,7 +11,7 @@ export const updateScreenshotService = async (
     throw new Error('Unable to find screenshot data.');
   }
 
-  const result = diffImageToScreenshot(
+  const result = await diffImageToScreenshot(
     {
       browserType: screenshotData.browserType,
       fileName: data.fileName,

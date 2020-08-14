@@ -9,14 +9,16 @@
       "request": "attach",
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     },
     {
       "type": "chrome",
       "request": "launch",
       "name": "Storybook Debug",
       "breakOnLoad": true,
-      "url": "http://localhost:6006",
+      "url": "http://localhost:9001",
       "sourceMaps": true,
       "webRoot": "${workspaceFolder}",
       "sourceMapPathOverrides": {

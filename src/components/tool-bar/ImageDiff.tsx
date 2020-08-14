@@ -1,11 +1,5 @@
 import React, { SFC, useCallback, useState } from 'react';
-import {
-  Menu,
-  makeStyles,
-  Badge,
-  MenuItem,
-  ClickAwayListener,
-} from '@material-ui/core';
+import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
 import Compare from '@material-ui/icons/Compare';
 import CheckCircle from '@material-ui/icons/CheckCircle';
@@ -94,48 +88,47 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
 
   return (
     <>
-      <ClickAwayListener onClickAway={handleClose}>
-        <IconButton
-          title="Run diff test for all stories"
-          className={classes.button}
-          onClick={handleImageDiffClick}
-          style={{ position: 'relative' }}
-          disabled={imageDiffTestInProgress}
-        >
-          <Badge
-            badgeContent={imageDiffResult.length}
-            color="secondary"
-            className={classes.imageDiffBadge}
-          />
-          {success && <CheckCircle className={classes.successIcon} />}
-          <Compare viewBox="1.5 -2 20 20" />
+      <IconButton
+        title="Run diff test for all stories"
+        className={classes.button}
+        onClick={handleImageDiffClick}
+        style={{ position: 'relative' }}
+        disabled={imageDiffTestInProgress}
+      >
+        <Badge
+          badgeContent={imageDiffResult.length}
+          color="secondary"
+          className={classes.imageDiffBadge}
+        />
+        {success && <CheckCircle className={classes.successIcon} />}
+        <Compare viewBox="1.5 -2 20 20" />
 
-          {imageDiffResult.length > 0 && (
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClearAllResults}>
-                Clear all results
-              </MenuItem>
-              {imageDiffResult.map((diff) => (
-                <ImageDiffMenuItem
-                  key={diff.storyId + diff.screenshotId}
-                  imageDiff={diff}
-                  onClick={handleClose}
-                />
-              ))}
-            </Menu>
-          )}
+        {imageDiffResult.length > 0 && (
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClearAllResults}>
+              Clear all results
+            </MenuItem>
+            {imageDiffResult.map((diff) => (
+              <ImageDiffMenuItem
+                key={diff.storyId + diff.screenshotId}
+                imageDiff={diff}
+                onClick={handleClose}
+              />
+            ))}
+          </Menu>
+        )}
 
-          <Loader
-            position="absolute"
-            open={imageDiffTestInProgress}
-            progressSize={15}
-          />
-        </IconButton>
-      </ClickAwayListener>
+        <Loader
+          position="absolute"
+          open={imageDiffTestInProgress}
+          progressSize={15}
+        />
+      </IconButton>
+
       <Snackbar
         variant="error"
         open={storyImageDiffError !== undefined}

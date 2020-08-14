@@ -14,27 +14,24 @@ export const saveScreenshot = async (
 
   const story = getStoryData(storyData, data.storyId, true);
 
-  if (!story.screenshots) {
-    story.screenshots = [];
-  }
-
   if (data.updateScreenshot) {
-    story.screenshots = story.screenshots.filter(
-      (x) => x.id !== data.updateScreenshot.id,
-    );
-    await deleteScreenshot({
+    story.screenshots = await deleteScreenshot({
       fileName: data.fileName,
       screenshotId: data.updateScreenshot.id,
       storyId: data.storyId,
     });
   }
 
-  const oldScreenshotData = story.screenshots.find((x) => x.id === data.id);
+  if (!story.screenshots) {
+    story.screenshots = [];
+  }
 
+  const oldScreenshotData = story.screenshots.find((x) => x.id === data.id);
   if (!oldScreenshotData) {
     const sameDesc = story.screenshots.find(
       (x) => x.title === data.title && x.browserType === data.browserType,
     );
+
     if (sameDesc) {
       throw new Error(
         'Found screenshot with the same title, title must be unique.\nTitle: ' +
@@ -60,7 +57,7 @@ export const saveScreenshot = async (
     }
   }
 
-  const result = diffImageToScreenshot(
+  const result = await diffImageToScreenshot(
     data,
     Buffer.from(data.base64, 'base64'),
   );

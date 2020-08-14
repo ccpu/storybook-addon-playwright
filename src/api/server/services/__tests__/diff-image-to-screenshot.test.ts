@@ -38,15 +38,15 @@ describe('diffImageToScreenshot', () => {
     spyOnRmdirSyncMock.mockRestore();
   });
 
-  it('should have diff result in vertical', () => {
-    const result = diffImageToScreenshot(diffData, new Buffer('image'));
+  it('should have diff result in vertical', async () => {
+    const result = await diffImageToScreenshot(diffData, new Buffer('image'));
 
     expect(result).toStrictEqual({ added: true, diffDirection: undefined });
     const data = runDiffImageToSnapshotMock.mock.calls[0][0];
     expect(data.diffDirection).toBe('horizontal');
   });
 
-  it('should have diff result in horizontal', () => {
+  it('should have diff result in horizontal', async () => {
     configsMock.getConfigs.mockImplementationOnce(() => ({
       diffDirection: 'horizontal',
       getPage: async () => {
@@ -55,21 +55,21 @@ describe('diffImageToScreenshot', () => {
       storybookEndpoint: 'localhost',
     }));
 
-    const result = diffImageToScreenshot(diffData, new Buffer('image'));
+    const result = await diffImageToScreenshot(diffData, new Buffer('image'));
 
     expect(result).toStrictEqual({ added: true, diffDirection: 'horizontal' });
     const data = runDiffImageToSnapshotMock.mock.calls[0][0];
     expect(data.diffDirection).toBe('horizontal');
   });
 
-  it('should delete diff file', () => {
+  it('should delete diff file', async () => {
     runDiffImageToSnapshotMock.mockImplementation(() => {
       return {
         pass: false,
       };
     });
 
-    const result = diffImageToScreenshot(diffData, new Buffer('image'));
+    const result = await diffImageToScreenshot(diffData, new Buffer('image'));
 
     expect(result).toStrictEqual({ diffDirection: undefined, pass: false });
 

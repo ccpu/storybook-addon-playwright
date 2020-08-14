@@ -52,16 +52,18 @@ export const useEditScreenshot = () => {
 
     api.emit(RESET);
 
-    loadSetting(
-      {
-        browserOptions: editScreenshotState.currentBrowserOptions,
-        browserType: editScreenshotState.screenshotData.browserType,
-        id: editScreenshotState.screenshotData.id,
-        screenshotOptions: editScreenshotState.currentScreenshotOptions,
-        title: editScreenshotState.screenshotData.title,
-      },
-      true,
-    );
+    if (editScreenshotState) {
+      loadSetting(
+        {
+          browserOptions: editScreenshotState.currentBrowserOptions,
+          browserType: editScreenshotState.screenshotData.browserType,
+          id: editScreenshotState.screenshotData.id,
+          screenshotOptions: editScreenshotState.currentScreenshotOptions,
+          title: editScreenshotState.screenshotData.title,
+        },
+        true,
+      );
+    }
     if (!unmounted.current) {
       setEditScreenshotState(undefined);
     }
@@ -76,9 +78,7 @@ export const useEditScreenshot = () => {
 
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
-      if (editScreenshotState) {
-        clearScreenshotEdit();
-      }
+      clearScreenshotEdit();
       setEditScreenshotState({
         currentBrowserOptions: browserOptions.all,
         currentScreenshotOptions: screenshotOptions,
@@ -98,7 +98,6 @@ export const useEditScreenshot = () => {
       addonState,
       browserOptions.all,
       clearScreenshotEdit,
-      editScreenshotState,
       loadSetting,
       screenshotOptions,
       setAddonState,

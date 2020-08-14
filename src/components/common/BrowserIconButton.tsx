@@ -2,7 +2,7 @@ import React, { SFC, useCallback } from 'react';
 import { BrowserTypes } from '../../typings';
 import { IconButton } from '@storybook/components';
 import { BrowserIcon } from '../common/BrowserIcon';
-import { Tooltip, capitalize } from '@material-ui/core';
+import { capitalize } from '@material-ui/core';
 
 export interface BrowserIconProps {
   browserType: BrowserTypes;
@@ -18,11 +18,13 @@ const BrowserIconButton: SFC<BrowserIconProps> = (props) => {
   }, [browserType, onClick]);
 
   return (
-    <Tooltip placement="top" title={capitalize(browserType)}>
-      <IconButton onClick={handleClick} active={active}>
-        <BrowserIcon browserType={browserType} />
-      </IconButton>
-    </Tooltip>
+    <IconButton
+      onClick={handleClick}
+      active={active}
+      title={capitalize(browserType)}
+    >
+      <BrowserIcon browserType={browserType} />
+    </IconButton>
   );
 };
 

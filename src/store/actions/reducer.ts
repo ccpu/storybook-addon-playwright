@@ -209,6 +209,10 @@ export function mainReducer(
           } else {
             arr.push({
               ...actionSet,
+              actions: actionSet.actions.map((action) => {
+                action.id = nanoid(12);
+                return action;
+              }),
               id: nanoid(12),
               temp: true,
             });

@@ -28,7 +28,6 @@ export const useLoadScreenshotSettings = (): ReturnType => {
     (screenshotData: ScreenshotData) => {
       if (!screenshotData.actionSets || !screenshotData.actionSets.length)
         return;
-
       dispatch({
         actionSets: screenshotData.actionSets,
         storyId: storyData.id,

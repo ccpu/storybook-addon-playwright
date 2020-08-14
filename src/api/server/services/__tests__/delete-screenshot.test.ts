@@ -18,6 +18,15 @@ describe('deleteScreenshot', () => {
     jest.restoreAllMocks();
   });
 
+  it('should do nothing if story not available', async () => {
+    const result = await deleteScreenshot({
+      fileName: 'story.ts',
+      screenshotId: 'screenshot-id',
+      storyId: 'invalid-story-id-2',
+    });
+    expect(result).toBeUndefined();
+  });
+
   it('should delete', async () => {
     await deleteScreenshot({
       fileName: 'story.ts',

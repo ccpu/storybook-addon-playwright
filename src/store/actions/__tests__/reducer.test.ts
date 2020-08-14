@@ -565,14 +565,17 @@ describe('action reducer', () => {
 
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
-        actions: [{ name: 'action-name' }, { name: 'action-name-2' }],
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
         id: 'action-set-id',
         title: 'desc',
       },
     ]);
   });
 
-  it('should setScreenShotActionSets but add new action set', () => {
+  it('should setScreenShotActionSets but add new action set with ids', () => {
     const result = reducer(
       {
         stories: getStoryData(storyId),
@@ -590,8 +593,8 @@ describe('action reducer', () => {
 
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
-        actions: [{ id: 'action-id-1', name: 'action-name' }],
-        id: 'id-1',
+        actions: [{ id: 'id-1', name: 'action-name' }],
+        id: 'id-2',
         temp: true,
         title: 'desc',
       },

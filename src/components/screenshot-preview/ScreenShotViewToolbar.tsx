@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => {
 
     root: {
       alignItems: 'center',
-      backgroundColor: theme.palette.divider,
+      backgroundColor: palette.divider,
       color: palette.text.secondary,
       display: 'flex',
       flexWrap: 'nowrap',
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => {
       height: 30,
       justifyContent: 'space-between',
       minHeight: 'auto',
+      paddingLeft: 10,
       paddingRight: 10,
       textAlign: 'right',
     },

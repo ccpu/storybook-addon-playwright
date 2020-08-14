@@ -8,18 +8,51 @@ jest.mock('fast-glob', () => ({
 }));
 
 import { testScreenshots } from '../test-screenshots';
+import { testStoryScreenshots } from '../test-story-screenshots';
+import { mocked } from 'ts-jest/utils';
 
 jest.mock('../../configs');
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
 jest.mock('../diff-image-to-screenshot');
+jest.mock('../test-story-screenshots.ts');
+
+mocked(testStoryScreenshots).mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve([
+      {
+        added: true,
+        newScreenshot: 'base64-image',
+        screenshotId: 'screenshot-id',
+        storyId: 'story-id',
+      },
+    ]);
+  });
+});
 
 describe('testScreenshots', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   afterAll(() => {
     jest.restoreAllMocks();
+  });
+
+  it('should have appropriate data', async () => {
+    await testScreenshots({
+      fileName: 'story.ts',
+      onComplete: jest.fn(),
+      requestId: 'request-id',
+      requestType: 'app',
+    });
+
+    expect(testStoryScreenshots).toHaveBeenCalledWith({
+      fileName: 'story.ts',
+      requestId: 'request-id__0',
+      requestType: 'app',
+      storyId: 'story-id',
+    });
   });
 
   it('should have result', async () => {
@@ -35,12 +68,6 @@ describe('testScreenshots', () => {
         added: true,
         newScreenshot: 'base64-image',
         screenshotId: 'screenshot-id',
-        storyId: 'story-id',
-      },
-      {
-        added: true,
-        newScreenshot: 'base64-image',
-        screenshotId: 'screenshot-id-2',
         storyId: 'story-id',
       },
     ];

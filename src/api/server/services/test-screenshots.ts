@@ -19,7 +19,7 @@ export const testScreenshots = async (
 
   const storiesData = await getStoryPlaywrightData(fileName);
 
-  const limit = pLimit(configs.storyConcurrencyLimit);
+  const limit = pLimit(configs.concurrencyLimit.story);
 
   const promisees = storiesData.storyData.reduce((arr, story, i) => {
     if (story.data.screenshots && story.data.screenshots.length) {
@@ -39,8 +39,11 @@ export const testScreenshots = async (
     return arr;
   }, []);
 
-  const data = await Promise.all(promisees);
-  const results = data.map((d) => d[0]);
+  const res = await Promise.all(promisees);
+  const results = res.reduce((arr, d) => {
+    arr = [...arr, ...d];
+    return arr;
+  }, []);
 
   if (onComplete) onComplete(results);
 

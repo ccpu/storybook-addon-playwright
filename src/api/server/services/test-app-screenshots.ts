@@ -12,7 +12,7 @@ export const testAppScreenshots = async (
 
   const configs = getConfigs();
 
-  const limit = pLimit(configs.fileConcurrencyLimit);
+  const limit = pLimit(configs.concurrencyLimit.file);
 
   if (configs.beforeAppImageDiff) {
     await configs.beforeAppImageDiff(data);
@@ -35,7 +35,10 @@ export const testAppScreenshots = async (
 
   const res = await Promise.all(promises);
 
-  const results = res.map((d) => d[0]);
+  const results = res.reduce((arr, d) => {
+    arr = [...arr, ...d];
+    return arr;
+  }, []);
 
   if (configs.afterAppImageDiff) {
     await configs.afterAppImageDiff(results, data);

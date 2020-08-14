@@ -51,10 +51,7 @@ describe('ImageDiff', () => {
     await wrapper
       .find(IconButton)
       .props()
-      .onClick({ currentTarget: { tagName: 'button' } } as React.MouseEvent<
-        HTMLButtonElement,
-        MouseEvent
-      >);
+      .onClick({ currentTarget: { tagName: 'button' } } as never);
   }
 
   it('should render', () => {

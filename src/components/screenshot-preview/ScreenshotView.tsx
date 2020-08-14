@@ -19,26 +19,34 @@ import {
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserOptions } from '../../hooks';
 import { lighten, darken } from '@material-ui/core/styles';
+import { getBorderColor } from './utils';
 
 const useStyles = makeStyles(
   (theme) => {
     const getBackgroundColor =
       theme.palette.type === 'light' ? lighten : darken;
     const { palette } = theme;
+    const { background } = palette;
+
     return {
       card: {
-        '& .simplebar-track': {
-          '&:after': {
-            backgroundColor: palette.divider,
-            content: '""',
-            display: 'block',
-            height: '100%',
-            width: '100%',
+        '& .os-scrollbar': {
+          opacity: 1,
+          visibility: 'visible !important',
+          zIndex: 10,
+        },
+        '& .os-scrollbar-track': {
+          '& .os-scrollbar-handle': {
+            backgroundColor: getBorderColor(
+              palette.type,
+              background.paper,
+              0.6,
+            ),
           },
-          backgroundColor: palette.background.paper,
+          backgroundColor: 'transparent',
           visibility: 'visible !important',
         },
-        borderLeft: '10px solid ' + palette.divider,
+
         overflow: 'hidden',
         position: 'relative',
         width: '100%',
@@ -54,15 +62,15 @@ const useStyles = makeStyles(
       },
 
       editMode: {
-        '& .simplebar-track': {
-          backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
+        '& $fakeBorder': {
+          borderColor: getBackgroundColor(theme.palette.warning.main, 0.5),
         },
         backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.6),
       },
 
       fakeBorder: {
-        border: '10px solid ' + palette.divider,
-        borderLeft: 0,
+        border:
+          '10px solid ' + getBorderColor(palette.type, background.paper, 0.1),
         borderTop: 0,
         bottom: 0,
         left: 0,
@@ -70,7 +78,7 @@ const useStyles = makeStyles(
         position: 'absolute',
         right: 0,
         top: 0,
-        zIndex: 1,
+        zIndex: 5,
       },
 
       iframe: {
@@ -78,6 +86,7 @@ const useStyles = makeStyles(
       },
 
       image: {
+        marginLeft: 10,
         marginRight: 12,
       },
       imageContainer: {

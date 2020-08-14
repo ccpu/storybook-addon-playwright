@@ -31,6 +31,15 @@ describe('loadStoryData', () => {
     jest.clearAllMocks();
   });
 
+  it('should not create object if story-id file not exist', async () => {
+    const data = await loadStoryData(
+      getStoryPlaywrightFileInfo('./stories/story-notExist.ts').path,
+      'story-id',
+      false,
+    );
+    expect(data).toBeUndefined();
+  });
+
   it('should return object with story-id file not exist', async () => {
     const data = await loadStoryData(
       getStoryPlaywrightFileInfo('./stories/story-notExist.ts').path,

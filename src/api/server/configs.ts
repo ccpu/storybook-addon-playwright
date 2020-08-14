@@ -6,9 +6,12 @@ let configs: Config<Page>;
 
 export const setConfig = <T extends unknown = Page>(conf: Config<T>) => {
   configs = {
-    fileConcurrencyLimit: 1,
-    storyConcurrencyLimit: 1,
     ...((conf as unknown) as Config<Page>),
+    concurrencyLimit: {
+      file: 1,
+      story: 1,
+      ...conf.concurrencyLimit,
+    },
   };
   if (configs.enableMigration) {
     migration();

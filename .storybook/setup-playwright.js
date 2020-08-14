@@ -26,7 +26,7 @@ async function setupPlaywright() {
     webkit: await playwright['webkit'].launch(),
   };
   setConfig({
-    storybookEndpoint: `http://localhost:6006/`,
+    storybookEndpoint: `http://localhost:9001/`,
     getPage: async (browserType, options) => {
       const page = await browser[browserType].newPage(options);
       page.addBox = addBox;

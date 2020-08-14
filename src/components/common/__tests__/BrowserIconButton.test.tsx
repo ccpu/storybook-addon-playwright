@@ -32,7 +32,7 @@ describe('BrowserIcon', () => {
     wrapper
       .find(IconButton)
       .props()
-      .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+      .onClick({} as never);
 
     expect(clickMock).toHaveBeenCalledWith('chromium');
   });

@@ -24,10 +24,7 @@ describe('PreviewPlacementMenu', () => {
 
     placementButton
       .props()
-      .onClick({ currentTarget: { nodeName: 'div' } } as React.MouseEvent<
-        HTMLButtonElement,
-        MouseEvent
-      >);
+      .onClick({ currentTarget: { nodeName: 'div' } } as never);
 
     expect(wrapper.find(Menu).props().anchorEl).not.toBe(null);
 
@@ -52,10 +49,7 @@ describe('PreviewPlacementMenu', () => {
 
     placementButton
       .props()
-      .onClick({ currentTarget: { nodeName: 'div' } } as React.MouseEvent<
-        HTMLButtonElement,
-        MouseEvent
-      >);
+      .onClick({ currentTarget: { nodeName: 'div' } } as never);
 
     const menuItem = wrapper.find(MenuItem);
 

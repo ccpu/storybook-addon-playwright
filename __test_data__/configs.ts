@@ -2,6 +2,10 @@ import { Config } from '../src/typings';
 
 export const defaultConfigs = (config?: Partial<Config>): Config => {
   return {
+    concurrencyLimit: {
+      file: 1,
+      story: 1,
+    },
     customActionSchema: {
       clickSelector: {
         properties: {

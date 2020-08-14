@@ -12,6 +12,8 @@ export const testStoryScreenshots = async (
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
+  data.requestType = data.requestType || 'story';
+
   const configs = getConfigs();
 
   const story = getStoryData(storyData, data.storyId);
@@ -22,7 +24,7 @@ export const testStoryScreenshots = async (
 
   const diffs: ImageDiffResult[] = [];
 
-  if (configs.beforeStoryImageDiff && data.requestType !== 'app') {
+  if (configs.beforeStoryImageDiff && data.requestType === 'story') {
     await configs.beforeStoryImageDiff(data);
   }
 
@@ -39,7 +41,7 @@ export const testStoryScreenshots = async (
     diffs.push(result);
   }
 
-  if (configs.afterStoryImageDiff && data.requestType !== 'app') {
+  if (configs.afterStoryImageDiff && data.requestType === 'story') {
     await configs.afterStoryImageDiff(diffs, data);
   }
 

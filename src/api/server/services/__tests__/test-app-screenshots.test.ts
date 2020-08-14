@@ -2,19 +2,34 @@ import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { testAppScreenshots } from '../test-app-screenshots';
 import { getConfigs } from '../../configs';
 import { mocked } from 'ts-jest/utils';
+import { testScreenshots } from '../test-screenshots';
 
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
-jest.mock('../diff-image-to-screenshot');
 jest.mock('../../configs');
+jest.mock('../test-screenshots');
 
 const afterAppImageDiffMock = jest.fn();
 const beforeAppImageDiffMock = jest.fn();
+
 mocked(getConfigs).mockImplementation(() => ({
   afterAppImageDiff: afterAppImageDiffMock,
   beforeAppImageDiff: beforeAppImageDiffMock,
   ...defaultConfigs(),
 }));
+
+mocked(testScreenshots).mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve([
+      {
+        added: true,
+        newScreenshot: 'base64-image',
+        screenshotId: 'screenshot-id',
+        storyId: 'story-id',
+      },
+    ]);
+  });
+});
 
 describe('testAppScreenshot', () => {
   beforeEach(() => {
@@ -23,17 +38,17 @@ describe('testAppScreenshot', () => {
 
   it('should have result', async () => {
     const result = await testAppScreenshots({ requestId: 'request-id' });
+    expect(testScreenshots).toHaveBeenCalledWith({
+      disableEvans: true,
+      fileName: 'story.ts',
+      requestId: 'request-id__0',
+      requestType: 'app',
+    });
     expect(result).toStrictEqual([
       {
         added: true,
         newScreenshot: 'base64-image',
         screenshotId: 'screenshot-id',
-        storyId: 'story-id',
-      },
-      {
-        added: true,
-        newScreenshot: 'base64-image',
-        screenshotId: 'screenshot-id-2',
         storyId: 'story-id',
       },
     ]);
@@ -47,12 +62,6 @@ describe('testAppScreenshot', () => {
           added: true,
           newScreenshot: 'base64-image',
           screenshotId: 'screenshot-id',
-          storyId: 'story-id',
-        },
-        {
-          added: true,
-          newScreenshot: 'base64-image',
-          screenshotId: 'screenshot-id-2',
           storyId: 'story-id',
         },
       ],

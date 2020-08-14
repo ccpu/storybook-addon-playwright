@@ -3,18 +3,20 @@ import {
   loadStoryData,
   saveStoryFile,
 } from '../utils';
-import { ScreenshotInfo } from '../../../typings';
+import { ScreenshotInfo, ScreenshotData } from '../../../typings';
 import * as fs from 'fs';
 import { getScreenshotPaths } from '../utils/get-screenshot-paths';
 import { deleteStoryOptions, getStoryData } from './utils';
 
-export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
+export const deleteScreenshot = async (
+  data: ScreenshotInfo,
+): Promise<ScreenshotData[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const storyData = await loadStoryData(fileInfo.path, data.storyId);
+  const storyData = await loadStoryData(fileInfo.path, data.storyId, false);
 
   const story = getStoryData(storyData, data.storyId);
 
-  if (!story) return;
+  if (!story) return undefined;
 
   const screenshotInfo = story.screenshots.find(
     (x) => x.id === data.screenshotId,
@@ -51,4 +53,6 @@ export const deleteScreenshot = async (data: ScreenshotInfo): Promise<void> => {
   );
 
   await saveStoryFile(fileInfo, storyData);
+
+  return story.screenshots;
 };

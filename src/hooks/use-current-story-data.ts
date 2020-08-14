@@ -9,10 +9,14 @@ export const useCurrentStoryData = () => {
   const api = useStorybookApi();
 
   const currentStory = (api.getCurrentStoryData() as unknown) as StoryData;
+  let version: string;
+
+  if (!version) {
+    version = api.getCurrentVersion().version.split('.')[0];
+  }
 
   useEffect(() => {
     if (!currentStory) return;
-    const version = api.getCurrentVersion().version.split('.')[0];
 
     const data = currentStory;
     const fileName =
@@ -24,7 +28,7 @@ export const useCurrentStoryData = () => {
       ...data,
       parameters: { ...data.parameters, fileName: fileName },
     });
-  }, [api, currentStory]);
+  }, [currentStory, version]);
 
   return storyData;
 };

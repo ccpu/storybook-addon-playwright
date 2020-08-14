@@ -49,6 +49,9 @@ export const useStorybookApi = jest.fn().mockImplementation(() => ({
   getCurrentStoryData: () => {
     return getStoryData();
   },
+  getCurrentVersion: () => ({
+    version: '6.0.0',
+  }),
   getData: () => {
     return getStoryData();
   },

@@ -54,6 +54,7 @@ export const useScreenshot = (
 
   const latHotReload =
     iframe &&
+    iframe.contentWindow &&
     ((iframe.contentWindow as unknown) as {
       __playwright_addon_hot_reload_time__: number;
     }).__playwright_addon_hot_reload_time__;

@@ -7,7 +7,7 @@ jest.mock('fast-glob', () => ({
   },
 }));
 
-import { testScreenshots } from '../test-file-screenshots';
+import { testFileScreenshots } from '../test-file-screenshots';
 import { testStoryScreenshots } from '../test-story-screenshots';
 import { mocked } from 'ts-jest/utils';
 
@@ -40,7 +40,7 @@ describe('testScreenshots', () => {
   });
 
   it('should have appropriate data', async () => {
-    await testScreenshots({
+    await testFileScreenshots({
       fileName: 'story.ts',
       onComplete: jest.fn(),
       requestId: 'request-id',
@@ -57,7 +57,7 @@ describe('testScreenshots', () => {
 
   it('should have result', async () => {
     const onCompleteMock = jest.fn();
-    const result = await testScreenshots({
+    const result = await testFileScreenshots({
       fileName: 'story.ts',
       onComplete: onCompleteMock,
       requestId: 'request-id',

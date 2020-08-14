@@ -1,5 +1,5 @@
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
-import { testScreenshots } from './api/server/services/test-file-screenshots';
+import { testFileScreenshots } from './api/server/services/test-file-screenshots';
 import { ImageDiffResult } from './api/typings';
 import { nanoid } from 'nanoid';
 import { RequestData } from './typings/request';
@@ -19,7 +19,7 @@ export const runImageDiff = async (
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
 
-    const result = await testScreenshots({
+    const result = await testFileScreenshots({
       fileName: file,
       requestId: options && options.requestId ? options.requestId : nanoid(),
     });

@@ -11,7 +11,7 @@ interface TestScreenshotsOptions extends RequestData {
   disableEvans?: boolean;
 }
 
-export const testScreenshots = async (
+export const testFileScreenshots = async (
   options: TestScreenshotsOptions,
 ): Promise<ImageDiffResult[]> => {
   const { fileName, onComplete } = options;

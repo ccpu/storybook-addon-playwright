@@ -1,6 +1,6 @@
 import { ImageDiffResult } from '../../typings';
 import { getPlaywrightConfigFiles } from '../../../utils/get-playwright-config-files';
-import { testScreenshots } from './test-file-screenshots';
+import { testFileScreenshots } from './test-file-screenshots';
 import { getConfigs } from '../configs';
 import { RequestData } from '../../../typings/request';
 import pLimit from 'p-limit';
@@ -21,7 +21,7 @@ export const testAppScreenshots = async (
   const promises = files.reduce((arr, file, i) => {
     arr.push(
       limit((index) => {
-        return testScreenshots({
+        return testFileScreenshots({
           disableEvans: true,
           fileName: file,
           requestId: data.requestId + '__' + index,

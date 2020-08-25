@@ -90,7 +90,7 @@ describe('useActionSetEditor', () => {
         id: 'action-set-id',
         title: 'action-set-desc',
       },
-      fileName: './story.ts',
+      fileName: './test.stories.tsx',
       storyId: 'story-id',
     });
   });

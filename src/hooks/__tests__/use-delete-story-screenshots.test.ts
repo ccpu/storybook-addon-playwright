@@ -17,17 +17,16 @@ describe('useDeleteStoryScreenshot', () => {
       await result.current.deleteStoryScreenshots();
     });
 
-    expect(mockReq).toHaveBeenCalledWith(
-      'http://localhost/screenshot/deleteStory',
-      {
-        body: '{"fileName":"./story.ts","storyId":"story-id"}',
-        headers: {
-          Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-        },
-        method: 'post',
+    expect(
+      mockReq,
+    ).toHaveBeenCalledWith('http://localhost/screenshot/deleteStory', {
+      body: '{"fileName":"./test.stories.tsx","storyId":"story-id"}',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
       },
-    );
+      method: 'post',
+    });
 
     expect(dispatchMock).toHaveBeenCalledWith([
       { type: 'removeStoryScreenshots' },

@@ -22,7 +22,7 @@ export const testAppScreenshots = async (
     if (data.fileName && !isStoryJsonFile(file, data.fileName)) {
       return arr;
     }
-    console.log(file);
+
     arr.push(
       limit((index) => {
         return testFileScreenshots({

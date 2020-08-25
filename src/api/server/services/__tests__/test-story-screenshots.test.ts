@@ -30,12 +30,14 @@ describe('testStoryScreenshot', () => {
     expect(result).toStrictEqual([
       {
         added: true,
+        fileName: 'story.ts',
         newScreenshot: 'base64-image',
         screenshotId: 'screenshot-id',
         storyId: 'story-id',
       },
       {
         added: true,
+        fileName: 'story.ts',
         newScreenshot: 'base64-image',
         screenshotId: 'screenshot-id-2',
         storyId: 'story-id',
@@ -64,12 +66,14 @@ describe('testStoryScreenshot', () => {
       [
         {
           added: true,
+          fileName: 'story.ts',
           newScreenshot: 'base64-image',
           screenshotId: 'screenshot-id',
           storyId: 'story-id',
         },
         {
           added: true,
+          fileName: 'story.ts',
           newScreenshot: 'base64-image',
           screenshotId: 'screenshot-id-2',
           storyId: 'story-id',

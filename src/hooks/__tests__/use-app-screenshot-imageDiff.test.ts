@@ -23,6 +23,20 @@ describe('useAppScreenshotImageDiff', () => {
     });
   });
 
+  it('should add story file results only', async () => {
+    fetch.mockResponseOnce(
+      JSON.stringify([{ pass: true }] as ImageDiffResult[]),
+    );
+    const { result } = renderHook(() => useAppScreenshotImageDiff());
+    await act(async () => {
+      await result.current.testStoryScreenShots('./test.stories.tsx');
+    });
+    expect(globalDispatchMock).toHaveBeenCalledWith({
+      imageDiffResult: { pass: true },
+      type: 'addImageDiffResult',
+    });
+  });
+
   it('should not have result if ', async () => {
     fetch.mockRejectOnce(new Error('foo'));
     const { result } = renderHook(() => useAppScreenshotImageDiff());

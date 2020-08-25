@@ -15,16 +15,31 @@ export const useAppScreenshotImageDiff = () => {
     ErrorSnackbar,
   } = useAsyncApiCall(testAppScreenshots, false);
 
-  const testStoryScreenShots = useCallback(async () => {
-    const results = await makeCall({ requestId: nanoid() });
-    if (!(results instanceof Error)) {
-      dispatch({
-        imageDiffResults: results,
-        type: 'setImageDiffResults',
+  const testStoryScreenShots = useCallback(
+    async (storyFileName?: string) => {
+      const results = await makeCall({
+        fileName: storyFileName,
+        requestId: nanoid(),
       });
-    }
-    return results;
-  }, [dispatch, makeCall]);
+      if (!(results instanceof Error)) {
+        if (storyFileName) {
+          results.forEach((result) => {
+            dispatch({
+              imageDiffResult: result,
+              type: 'addImageDiffResult',
+            });
+          });
+        } else {
+          dispatch({
+            imageDiffResults: results,
+            type: 'setImageDiffResults',
+          });
+        }
+      }
+      return results;
+    },
+    [dispatch, makeCall],
+  );
 
   return {
     ErrorSnackbar,

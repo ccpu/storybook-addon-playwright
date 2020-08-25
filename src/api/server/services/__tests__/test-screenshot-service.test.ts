@@ -16,6 +16,7 @@ describe('testScreenshot', () => {
     });
     expect(result).toStrictEqual({
       added: true,
+      fileName: 'story.ts',
       newScreenshot: 'base64-image',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
@@ -45,6 +46,7 @@ describe('testScreenshot', () => {
     });
     expect(result).toStrictEqual({
       error: 'ops',
+      fileName: 'story.ts',
       pass: false,
       screenshotId: 'screenshot-id',
       storyId: 'story-id',

@@ -1,9 +1,8 @@
 import { getEndpoint, responseHandler } from './utils';
-import { ImageDiffResult } from '../typings';
-import { RequestData } from '../../typings/request';
+import { ImageDiffResult, AppScreenshotTest } from '../typings';
 
 export const testAppScreenshots = async (
-  data: RequestData,
+  data: AppScreenshotTest,
 ): Promise<ImageDiffResult[]> => {
   const restEndpoint = getEndpoint('TEST_APP_SCREENSHOT');
 

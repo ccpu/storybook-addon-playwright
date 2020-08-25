@@ -48,6 +48,7 @@ export const testScreenshotService = async (
 
   result.screenshotId = data.screenshotId;
   result.storyId = data.storyId;
+  result.fileName = data.fileName;
 
   return result;
 };

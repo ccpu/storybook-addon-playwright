@@ -14,6 +14,7 @@ import { useGlobalScreenshotDispatch } from '../../../hooks';
 jest.mock('../../../hooks/use-global-imageDiff-results.ts');
 jest.mock('../../../hooks/use-app-screenshot-imageDiff.ts');
 jest.mock('../../../hooks/use-global-screenshot-dispatch.ts');
+jest.mock('../../../hooks/use-current-story-data');
 
 const screenshotDispatchMock = jest.fn();
 mocked(useGlobalScreenshotDispatch).mockImplementation(() => ({
@@ -24,7 +25,11 @@ describe('ImageDiff', () => {
   const testStoryScreenShotsMock = jest.fn();
 
   const imageDiffResult = [
-    { pass: true, screenshotId: 'screenshot-id' },
+    {
+      fileName: 'test.stories.playwright.json',
+      pass: true,
+      screenshotId: 'screenshot-id',
+    },
   ] as ImageDiffResult[];
 
   (useAppScreenshotImageDiff as jest.Mock).mockImplementation(() => {
@@ -104,7 +109,11 @@ describe('ImageDiff', () => {
   it('should show menu', () => {
     (useGlobalImageDiffResults as jest.Mock).mockImplementationOnce(() => ({
       imageDiffResult: [
-        { pass: true, screenshotId: 'screenshot-id' },
+        {
+          fileName: 'test.stories.playwright.json',
+          pass: true,
+          screenshotId: 'screenshot-id',
+        },
       ] as ImageDiffResult[],
     }));
     const wrapper = shallow(<ImageDiff />);
@@ -128,7 +137,7 @@ describe('ImageDiff', () => {
 
     const clearItem = wrapper.find(MenuItem).first();
 
-    expect(clearItem.text()).toBe('Clear all results');
+    expect(clearItem.text()).toBe('Clear results');
 
     clearItem
       .props()
@@ -158,5 +167,42 @@ describe('ImageDiff', () => {
     wrapper.find(ImageDiffMenuItem).last().props().onClick();
 
     expect(wrapper.find(Menu).props().anchorEl).toBe(null);
+  });
+
+  it('should test story file', () => {
+    const wrapper = shallow(<ImageDiff testCurrentStory={true} />);
+
+    clickOnIconButton(wrapper);
+
+    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('./test.stories.tsx');
+  });
+
+  it('should remove only story file image diff', () => {
+    (useGlobalImageDiffResults as jest.Mock)
+      .mockImplementationOnce(() => {
+        return { imageDiffResult };
+      })
+      .mockImplementationOnce(() => {
+        return { imageDiffResult };
+      });
+
+    const wrapper = shallow(<ImageDiff testCurrentStory={true} />);
+
+    clickOnIconButton(wrapper);
+
+    expect(wrapper.find(Menu)).toHaveLength(1);
+
+    const clearItem = wrapper.find(MenuItem).first();
+
+    expect(clearItem.text()).toBe('Clear results');
+
+    clearItem
+      .props()
+      .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+
+    expect(screenshotDispatchMock).toHaveBeenCalledWith({
+      screenshotId: 'screenshot-id',
+      type: 'removeImageDiffResult',
+    });
   });
 });

@@ -1,13 +1,10 @@
 import { useCallback } from 'react';
-import { useScreenshotDispatch } from '../store/screenshot';
 import { useAsyncApiCall } from './use-async-api-call';
 import { testStoryScreenshots } from '../api/client';
 import { StoryData } from '../typings';
 import { nanoid } from 'nanoid';
 
 export const useStoryScreenshotImageDiff = (storyData: StoryData) => {
-  const dispatch = useScreenshotDispatch();
-
   const {
     inProgress: imageDiffTestInProgress,
     makeCall,
@@ -21,16 +18,8 @@ export const useStoryScreenshotImageDiff = (storyData: StoryData) => {
       requestId: nanoid(),
       storyId: storyData.id,
     });
-
-    if (!(results instanceof Error)) {
-      dispatch({
-        imageDiffResults: results,
-        type: 'setImageDiffResults',
-      });
-    }
-
     return results;
-  }, [dispatch, makeCall, storyData]);
+  }, [makeCall, storyData]);
 
   return {
     clearImageDiffError,

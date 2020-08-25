@@ -24,6 +24,7 @@ const selectedPageKeys: PageMethodKeys[] = [
   'clearInput',
   'mouseDownOnSelector',
   'mouseMoveToSelector',
+  'selectorMouseWheel',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [

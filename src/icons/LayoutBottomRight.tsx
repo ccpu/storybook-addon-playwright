@@ -5,7 +5,7 @@ const LayoutBottomRight: SFC<React.SVGProps<SVGSVGElement>> = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      viewBox="2 6 20 20"
+      viewBox="2 3 20 20"
       enableBackground="new 0 0 129 129"
       height={22}
       fill="currentColor"

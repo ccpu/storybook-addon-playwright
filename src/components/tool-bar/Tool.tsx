@@ -69,7 +69,7 @@ const Tool: SFC = () => {
         title="Multi view"
         className={classes.button}
       >
-        <WebOutlined viewBox="1.5 -2 20 20" />
+        <WebOutlined viewBox="1.5 1 20 20" />
       </IconButton>
       <IconButton
         onClick={handleBowserClose}
@@ -78,18 +78,19 @@ const Tool: SFC = () => {
         active={isEnablePreviewPanelEnabled}
       >
         {isHorizontal ? (
-          <LayoutBottom viewBox="1.5 -2 20 20" />
+          <LayoutBottom viewBox="1.5 1 20 20" />
         ) : (
-          <LayoutRight viewBox="1.5 -2 20 20" />
+          <LayoutRight viewBox="1.5 1 20 20" />
         )}
       </IconButton>
       <ImageDiff classes={{ button: classes.button }} />
+      <ImageDiff classes={{ button: classes.button }} testCurrentStory={true} />
       <IconButton
         onClick={resetSetting}
         title="Reset settings"
         className={classes.button}
       >
-        <RefreshIcon viewBox="1.5 -2 20 20" />
+        <RefreshIcon viewBox="1.5 1 20 20" />
       </IconButton>
       <Separator />
       <PreviewDialog open={open} onClose={handleClose} />

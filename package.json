@@ -97,7 +97,7 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@playwright-utils/page": "^0.3.4",
+    "@playwright-utils/page": "^0.4.0",
     "@storybook/addons": "^6.0.5",
     "@storybook/api": "^6.0.5",
     "@storybook/components": "^6.0.5",

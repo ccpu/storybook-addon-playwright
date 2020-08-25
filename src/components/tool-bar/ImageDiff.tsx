@@ -10,10 +10,16 @@ import {
 } from '../../hooks';
 import { Loader, Snackbar } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
+import { useCurrentStoryData } from '../../hooks/use-current-story-data';
+import { isStoryJsonFile } from '../../utils/is-story-json-file';
 
 const useStyles = makeStyles(
   (theme) => {
     return {
+      asterisk: {
+        marginRight: -6,
+        marginTop: -12,
+      },
       button: {},
       imageDiffBadge: {
         '& span': {
@@ -41,9 +47,12 @@ interface ImageDiffStyleProps {
   classes?: {
     button?: string;
   };
+  testCurrentStory?: boolean;
 }
 
 const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
+  const { testCurrentStory } = props;
+
   const classes = useStyles({ classes: props.classes });
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -51,6 +60,8 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
   const [success, setSuccess] = useState(false);
 
   const { imageDiffResult } = useGlobalImageDiffResults();
+
+  const storyInfo = useCurrentStoryData();
 
   const { dispatch } = useGlobalScreenshotDispatch();
 
@@ -61,18 +72,37 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     clearImageDiffError,
   } = useAppScreenshotImageDiff();
 
+  const storyFileImageDiffResult = imageDiffResult.filter((x) =>
+    isStoryJsonFile(x.fileName, storyInfo.parameters.fileName),
+  );
+
+  const shouldRunTest =
+    !testCurrentStory ||
+    (testCurrentStory && storyInfo && storyFileImageDiffResult.length > 0);
+
   const handleImageDiffClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
       //fixes menu close
       if (anchorEl) return;
-      if (imageDiffResult.length > 0) {
+      if (shouldRunTest && imageDiffResult.length > 0) {
         setAnchorEl(event.currentTarget);
       } else {
-        const result = await testStoryScreenShots();
-        if (!(result instanceof Error)) setSuccess(result.length === 0);
+        const result = await testStoryScreenShots(
+          testCurrentStory ? storyInfo.parameters.fileName : undefined,
+        );
+
+        if (!(result instanceof Error))
+          setSuccess(result && result.length === 0);
       }
     },
-    [anchorEl, imageDiffResult.length, testStoryScreenShots],
+    [
+      anchorEl,
+      imageDiffResult,
+      shouldRunTest,
+      storyInfo,
+      testCurrentStory,
+      testStoryScreenShots,
+    ],
   );
 
   const handleClose = useCallback(() => {
@@ -81,37 +111,57 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
 
   const handleClearAllResults = useCallback(() => {
     setAnchorEl(null);
-    dispatch({ imageDiffResults: [], type: 'setImageDiffResults' });
-  }, [dispatch]);
+    if (testCurrentStory) {
+      storyFileImageDiffResult.forEach((sc) => {
+        dispatch({
+          screenshotId: sc.screenshotId,
+          type: 'removeImageDiffResult',
+        });
+      });
+    } else {
+      dispatch({ imageDiffResults: [], type: 'setImageDiffResults' });
+    }
+  }, [dispatch, storyFileImageDiffResult, testCurrentStory]);
 
   const handleSuccessHide = useCallback(() => setSuccess(false), []);
+
+  if (!storyInfo) return null;
+
+  const title = testCurrentStory
+    ? `Run diff test for all stories in '${storyInfo.parameters.fileName}' file.`
+    : 'Run diff test for all stories';
 
   return (
     <>
       <IconButton
-        title="Run diff test for all stories"
+        title={title}
         className={classes.button}
         onClick={handleImageDiffClick}
         style={{ position: 'relative' }}
         disabled={imageDiffTestInProgress}
       >
-        <Badge
-          badgeContent={imageDiffResult.length}
-          color="secondary"
-          className={classes.imageDiffBadge}
-        />
-        {success && <CheckCircle className={classes.successIcon} />}
-        <Compare viewBox="1.5 -2 20 20" />
+        {shouldRunTest && (
+          <Badge
+            badgeContent={
+              testCurrentStory
+                ? storyFileImageDiffResult.length
+                : imageDiffResult.length
+            }
+            color="secondary"
+            className={classes.imageDiffBadge}
+          />
+        )}
 
-        {imageDiffResult.length > 0 && (
+        {success && <CheckCircle className={classes.successIcon} />}
+        <Compare viewBox="1.5 1 20 20" />
+        {!testCurrentStory && <span className={classes.asterisk}>*</span>}
+        {shouldRunTest && imageDiffResult.length > 0 && (
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClearAllResults}>
-              Clear all results
-            </MenuItem>
+            <MenuItem onClick={handleClearAllResults}>Clear results</MenuItem>
             {imageDiffResult.map((diff) => (
               <ImageDiffMenuItem
                 key={diff.storyId + diff.screenshotId}

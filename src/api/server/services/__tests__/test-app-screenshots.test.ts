@@ -8,6 +8,7 @@ jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
 jest.mock('../../configs');
 jest.mock('../test-file-screenshots');
+jest.mock('../../../../utils/get-playwright-config-files');
 
 const afterAppImageDiffMock = jest.fn();
 const beforeAppImageDiffMock = jest.fn();
@@ -40,11 +41,24 @@ describe('testAppScreenshot', () => {
     const result = await testAppScreenshots({ requestId: 'request-id' });
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
-      fileName: 'story.ts',
+      fileName: './stories/test.stories.playwright.json',
       requestId: 'request-id__0',
       requestType: 'app',
     });
+    expect(testFileScreenshots).toHaveBeenCalledWith({
+      disableEvans: true,
+      fileName: './stories/test-2.stories.playwright.json',
+      requestId: 'request-id__1',
+      requestType: 'app',
+    });
+
     expect(result).toStrictEqual([
+      {
+        added: true,
+        newScreenshot: 'base64-image',
+        screenshotId: 'screenshot-id',
+        storyId: 'story-id',
+      },
       {
         added: true,
         newScreenshot: 'base64-image',
@@ -64,6 +78,12 @@ describe('testAppScreenshot', () => {
           screenshotId: 'screenshot-id',
           storyId: 'story-id',
         },
+        {
+          added: true,
+          newScreenshot: 'base64-image',
+          screenshotId: 'screenshot-id',
+          storyId: 'story-id',
+        },
       ],
       { requestId: 'request-id' },
     );
@@ -73,6 +93,20 @@ describe('testAppScreenshot', () => {
     await testAppScreenshots({ requestId: 'request-id' });
     expect(beforeAppImageDiffMock).toHaveBeenCalledWith({
       requestId: 'request-id',
+    });
+  });
+
+  it('should test matched storyFile if provided', async () => {
+    await testAppScreenshots({
+      fileName: './stories/test.stories.tsx',
+      requestId: 'request-id',
+    });
+    expect(testFileScreenshots).toHaveBeenCalledTimes(1);
+    expect(testFileScreenshots).toHaveBeenCalledWith({
+      disableEvans: true,
+      fileName: './stories/test.stories.playwright.json',
+      requestId: 'request-id__0',
+      requestType: 'app',
     });
   });
 });

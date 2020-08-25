@@ -243,6 +243,7 @@ The following custom methods has been added to the playwright page:
 - dragDropSelector
 - takeScreenshot
 - takeScreenshotOptions
+- selectorMouseWheel
 
 ### clearInput
 
@@ -278,6 +279,10 @@ In the end the screenshots will be merged with the final screenshot.
 The purpose of this action is to have centralized options for all screenshots.
 This action can be used in conjunction with takeScreenshot action only.
 Only one instance can be used.
+
+### selectorMouseWheel
+
+This method fetches an element with `selector`, and dispatch WheelEvent.
 
 ## Testing
 

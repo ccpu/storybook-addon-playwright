@@ -1558,10 +1558,10 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@playwright-utils/page@^0.3.4":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@playwright-utils/page/-/page-0.3.4.tgz#4ff9051bdd77b8ff7338e4851b6b92ef8d16b046"
-  integrity sha512-Ml8VP35wcttjOvSymkCpD/Afnnyz+4xFPwMjeB0TslCBA6ePzxYi7DuCdxw3gon2Tur6dzc5OueOomK3X2JZHw==
+"@playwright-utils/page@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@playwright-utils/page/-/page-0.4.0.tgz#0f3b5d5e20966f60a32ee83bb3c6f6302af86a77"
+  integrity sha512-kpE0G+M3rGtt9CIa3Ur+yyY/LZKUe3FVo8di6nF0yCBSanw0lOyNfhQKMHffAsZ5O7ZSaOY57ajCCzliP7BAFA==
   dependencies:
     playwright-core "^1.3.0"
 

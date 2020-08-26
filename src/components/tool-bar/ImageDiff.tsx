@@ -72,19 +72,17 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     clearImageDiffError,
   } = useAppScreenshotImageDiff();
 
-  const storyFileImageDiffResult = imageDiffResult.filter((x) =>
-    isStoryJsonFile(x.fileName, storyInfo.parameters.fileName),
-  );
-
-  const shouldRunTest =
-    !testCurrentStory ||
-    (testCurrentStory && storyInfo && storyFileImageDiffResult.length > 0);
+  const diffResults = testCurrentStory
+    ? imageDiffResult.filter((x) =>
+        isStoryJsonFile(x.fileName, storyInfo.parameters.fileName),
+      )
+    : imageDiffResult;
 
   const handleImageDiffClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
       //fixes menu close
       if (anchorEl) return;
-      if (shouldRunTest && imageDiffResult.length > 0) {
+      if (diffResults.length > 0) {
         setAnchorEl(event.currentTarget);
       } else {
         const result = await testStoryScreenShots(
@@ -95,14 +93,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
           setSuccess(result && result.length === 0);
       }
     },
-    [
-      anchorEl,
-      imageDiffResult,
-      shouldRunTest,
-      storyInfo,
-      testCurrentStory,
-      testStoryScreenShots,
-    ],
+    [anchorEl, diffResults, storyInfo, testCurrentStory, testStoryScreenShots],
   );
 
   const handleClose = useCallback(() => {
@@ -112,7 +103,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
   const handleClearAllResults = useCallback(() => {
     setAnchorEl(null);
     if (testCurrentStory) {
-      storyFileImageDiffResult.forEach((sc) => {
+      diffResults.forEach((sc) => {
         dispatch({
           screenshotId: sc.screenshotId,
           type: 'removeImageDiffResult',
@@ -121,7 +112,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     } else {
       dispatch({ imageDiffResults: [], type: 'setImageDiffResults' });
     }
-  }, [dispatch, storyFileImageDiffResult, testCurrentStory]);
+  }, [dispatch, diffResults, testCurrentStory]);
 
   const handleSuccessHide = useCallback(() => setSuccess(false), []);
 
@@ -140,29 +131,23 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
         style={{ position: 'relative' }}
         disabled={imageDiffTestInProgress}
       >
-        {shouldRunTest && (
-          <Badge
-            badgeContent={
-              testCurrentStory
-                ? storyFileImageDiffResult.length
-                : imageDiffResult.length
-            }
-            color="secondary"
-            className={classes.imageDiffBadge}
-          />
-        )}
+        <Badge
+          badgeContent={diffResults.length}
+          color="secondary"
+          className={classes.imageDiffBadge}
+        />
 
         {success && <CheckCircle className={classes.successIcon} />}
         <Compare viewBox="1.5 1 20 20" />
         {!testCurrentStory && <span className={classes.asterisk}>*</span>}
-        {shouldRunTest && imageDiffResult.length > 0 && (
+        {diffResults.length > 0 && (
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
             <MenuItem onClick={handleClearAllResults}>Clear results</MenuItem>
-            {imageDiffResult.map((diff) => (
+            {diffResults.map((diff) => (
               <ImageDiffMenuItem
                 key={diff.storyId + diff.screenshotId}
                 imageDiff={diff}

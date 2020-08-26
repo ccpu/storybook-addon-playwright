@@ -69,7 +69,20 @@ describe('screenshot reducer', () => {
         type: 'removeScreenshot',
       },
     );
-    expect(result).toStrictEqual({ screenshots: [] });
+    expect(result).toStrictEqual({ imageDiffResults: [], screenshots: [] });
+  });
+  it('should removeScreenshot and remove from imageDiffResults', () => {
+    const result = reducer(
+      {
+        imageDiffResults: [{ screenshotId: 'screenshot-id' }],
+        screenshots: [getScreenshotData()],
+      },
+      {
+        screenshotId: 'screenshot-id',
+        type: 'removeScreenshot',
+      },
+    );
+    expect(result).toStrictEqual({ imageDiffResults: [], screenshots: [] });
   });
   it('should changeIndex', () => {
     const result = reducer(

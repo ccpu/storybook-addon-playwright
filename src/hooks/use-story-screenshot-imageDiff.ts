@@ -3,8 +3,11 @@ import { useAsyncApiCall } from './use-async-api-call';
 import { testStoryScreenshots } from '../api/client';
 import { StoryData } from '../typings';
 import { nanoid } from 'nanoid';
+import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 
 export const useStoryScreenshotImageDiff = (storyData: StoryData) => {
+  const { dispatch } = useGlobalScreenshotDispatch();
+
   const {
     inProgress: imageDiffTestInProgress,
     makeCall,
@@ -18,8 +21,19 @@ export const useStoryScreenshotImageDiff = (storyData: StoryData) => {
       requestId: nanoid(),
       storyId: storyData.id,
     });
+    if (!(results instanceof Error)) {
+      console.log(results);
+      if (results) {
+        results.forEach((result) => {
+          dispatch({
+            imageDiffResult: result,
+            type: 'addImageDiffResult',
+          });
+        });
+      }
+    }
     return results;
-  }, [makeCall, storyData]);
+  }, [dispatch, makeCall, storyData]);
 
   return {
     clearImageDiffError,

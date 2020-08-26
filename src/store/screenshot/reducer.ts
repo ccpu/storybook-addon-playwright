@@ -75,6 +75,11 @@ export function reducer(
     case 'removeScreenshot': {
       return {
         ...state,
+        imageDiffResults: state.imageDiffResults
+          ? state.imageDiffResults.filter(
+              (x) => x.screenshotId !== action.screenshotId,
+            )
+          : [],
         screenshots: state.screenshots.filter(
           (x) => x.id !== action.screenshotId,
         ),

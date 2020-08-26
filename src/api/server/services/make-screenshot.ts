@@ -55,7 +55,7 @@ export const makeScreenshot = async (
 
   extendPage(page);
 
-  await page.goto(url);
+  await page.goto(url, configs.pageGotoOptions);
 
   if (browserOptions && browserOptions.cursor) {
     await installMouseHelper(page);

@@ -82,6 +82,7 @@ module.exports = middleware;
 - afterScreenshot
 - afterStoryImageDiff
 - afterAppImageDiff
+- pageGotoOptions
 
 ### enableMigration
 
@@ -102,6 +103,10 @@ Will be called after imageDiff process of story screenshots complete.
 ### afterAppImageDiff
 
 Will be called after imageDiff process of all stories screenshots complete.
+
+### pageGotoOptions
+
+please refer top [Playwright API page.goto option](https://github.com/microsoft/playwright/blob/master/docs/api.md#pagegotourl-options)
 
 ## How it works
 

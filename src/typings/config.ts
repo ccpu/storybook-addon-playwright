@@ -10,10 +10,13 @@ import {
 import { RequestData } from './request';
 import { StoryInfo } from './story-info';
 
+type PageGotoOptions = Parameters<Page['goto']>[1];
+
 export interface Config<T extends unknown = Page> {
   storybookEndpoint: string;
   customActionSchema?: ActionSchemaList;
   pageMethods?: PageMethodKeys[];
+  pageGotoOptions?: PageGotoOptions;
   getPage: (
     browserType: BrowserTypes,
     options: BrowserContextOptions,

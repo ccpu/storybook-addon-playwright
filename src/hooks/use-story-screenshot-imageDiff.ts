@@ -22,7 +22,6 @@ export const useStoryScreenshotImageDiff = (storyData: StoryData) => {
       storyId: storyData.id,
     });
     if (!(results instanceof Error)) {
-      console.log(results);
       if (results) {
         results.forEach((result) => {
           dispatch({

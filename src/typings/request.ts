@@ -1,4 +1,4 @@
 export interface RequestData {
   requestId: string;
-  requestType?: 'story' | 'app';
+  requestType?: 'file' | 'story' | 'all';
 }

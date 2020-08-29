@@ -5,7 +5,7 @@ import Compare from '@material-ui/icons/Compare';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import {
   useGlobalImageDiffResults,
-  useAppScreenshotImageDiff,
+  useScreenshotImageDiffResults,
   useGlobalScreenshotDispatch,
 } from '../../hooks';
 import { Loader, Snackbar } from '../common';
@@ -70,7 +70,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     imageDiffTestInProgress,
     storyImageDiffError,
     clearImageDiffError,
-  } = useAppScreenshotImageDiff();
+  } = useScreenshotImageDiffResults();
 
   const diffResults = testCurrentStory
     ? imageDiffResult.filter((x) =>

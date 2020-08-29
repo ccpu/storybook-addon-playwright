@@ -1,6 +1,6 @@
-const useAppScreenshotImageDiff = jest.fn();
+const useScreenshotImageDiffResults = jest.fn();
 
-useAppScreenshotImageDiff.mockImplementation(() => {
+useScreenshotImageDiffResults.mockImplementation(() => {
   return {
     clearImageDiffError: jest.fn(),
     imageDiffTestInProgress: false,
@@ -9,4 +9,4 @@ useAppScreenshotImageDiff.mockImplementation(() => {
   };
 });
 
-export { useAppScreenshotImageDiff };
+export { useScreenshotImageDiffResults };

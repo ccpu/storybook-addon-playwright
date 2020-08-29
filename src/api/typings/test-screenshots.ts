@@ -1,5 +1,6 @@
 import { RequestData } from '../../typings/request';
 
-export interface AppScreenshotTest extends RequestData {
+export interface TestScreenShots extends RequestData {
   fileName?: string;
+  storyId?: string;
 }

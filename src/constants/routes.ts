@@ -10,8 +10,8 @@ export const ROUTE = {
   SAVE_ACTION_SET: '/actionSet/save',
   SAVE_SCREENSHOT: '/screenshot/save',
   TAKE_SCREENSHOT: '/screenshot/get',
-  TEST_APP_SCREENSHOT: '/screenshot/testAll',
   TEST_SCREENSHOT: '/screenshot/test',
+  TEST_SCREENSHOTS: '/screenshot/testScreenshots',
   TEST_STORY_SCREENSHOT: '/screenshot/testStory',
   UPDATE_SCREENSHOT: '/screenshot/update',
 };

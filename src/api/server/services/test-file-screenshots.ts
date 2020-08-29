@@ -9,12 +9,13 @@ interface TestScreenshotsOptions extends RequestData {
   fileName: string;
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
   disableEvans?: boolean;
+  storyId?: string;
 }
 
 export const testFileScreenshots = async (
   options: TestScreenshotsOptions,
 ): Promise<ImageDiffResult[]> => {
-  const { fileName, onComplete } = options;
+  const { fileName, onComplete, storyId } = options;
   const configs = getConfigs();
 
   const storiesData = await getStoryPlaywrightData(fileName);
@@ -22,6 +23,7 @@ export const testFileScreenshots = async (
   const limit = pLimit(configs.concurrencyLimit.story);
 
   const promisees = storiesData.storyData.reduce((arr, story, i) => {
+    if (storyId && story.storyId !== storyId) return arr;
     if (story.data.screenshots && story.data.screenshots.length) {
       arr.push(
         limit(
@@ -29,7 +31,11 @@ export const testFileScreenshots = async (
             testStoryScreenshots({
               fileName: fileName,
               requestId: options.requestId + '__' + index,
-              requestType: options.requestType,
+              requestType: options.requestType
+                ? options.requestType
+                : storyId
+                ? 'story'
+                : 'file',
               storyId: story.storyId,
             }),
           i,

@@ -30,7 +30,7 @@ mocked(testStoryScreenshots).mockImplementation(() => {
   });
 });
 
-describe('testScreenshots', () => {
+describe('testFileScreenshots', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -44,13 +44,13 @@ describe('testScreenshots', () => {
       fileName: 'story.ts',
       onComplete: jest.fn(),
       requestId: 'request-id',
-      requestType: 'app',
+      requestType: 'all',
     });
 
     expect(testStoryScreenshots).toHaveBeenCalledWith({
       fileName: 'story.ts',
       requestId: 'request-id__0',
-      requestType: 'app',
+      requestType: 'all',
       storyId: 'story-id',
     });
   });
@@ -75,5 +75,51 @@ describe('testScreenshots', () => {
     expect(result).toStrictEqual(data);
 
     expect(onCompleteMock).toHaveBeenCalledWith(data);
+  });
+
+  it('should test story within file', async () => {
+    const onCompleteMock = jest.fn();
+    const result = await testFileScreenshots({
+      fileName: 'story.ts',
+      onComplete: onCompleteMock,
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    const data = [
+      {
+        added: true,
+        newScreenshot: 'base64-image',
+        screenshotId: 'screenshot-id',
+        storyId: 'story-id',
+      },
+    ];
+
+    expect(result).toStrictEqual(data);
+
+    expect(onCompleteMock).toHaveBeenCalledWith(data);
+
+    expect(testStoryScreenshots).toHaveBeenCalledWith({
+      fileName: 'story.ts',
+      requestId: 'request-id__0',
+      requestType: 'story',
+      storyId: 'story-id',
+    });
+  });
+
+  it('should not test if not found story within file', async () => {
+    const onCompleteMock = jest.fn();
+    const result = await testFileScreenshots({
+      fileName: 'story.ts',
+      onComplete: onCompleteMock,
+      requestId: 'request-id',
+      storyId: 'story-id-2',
+    });
+
+    expect(result).toStrictEqual([]);
+
+    expect(onCompleteMock).toHaveBeenCalledWith([]);
+
+    expect(testStoryScreenshots).toHaveBeenCalledTimes(0);
   });
 });

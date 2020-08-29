@@ -8,7 +8,7 @@ export * from './get-story-screenshots';
 export * from './delete-screenshot';
 export * from './test-screenshot';
 export * from './test-story-screenshots';
-export * from './test-app-screenshots';
+export * from './test-screenshots';
 export * from './update-screenshot';
 export * from './delete-story-screenshots';
 export * from './change-screenshot-index';

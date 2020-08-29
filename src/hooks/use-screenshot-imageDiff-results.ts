@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { useAsyncApiCall } from './use-async-api-call';
-import { testAppScreenshots } from '../api/client';
+import { testScreenshots } from '../api/client';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { nanoid } from 'nanoid';
 
-export const useAppScreenshotImageDiff = () => {
+export const useScreenshotImageDiffResults = () => {
   const { dispatch } = useGlobalScreenshotDispatch();
 
   const {
@@ -13,7 +13,7 @@ export const useAppScreenshotImageDiff = () => {
     clearError: clearImageDiffError,
     error: storyImageDiffError,
     ErrorSnackbar,
-  } = useAsyncApiCall(testAppScreenshots, false);
+  } = useAsyncApiCall(testScreenshots, false);
 
   const testStoryScreenShots = useCallback(
     async (storyFileName?: string) => {

@@ -11,7 +11,7 @@ import {
   deleteScreenshot,
   testScreenshot,
   testStoryScreenshots,
-  testAppScreenshots,
+  testScreenshots,
   updateScreenshot,
   deleteStoryScreenshot,
   changeScreenShotIndex,
@@ -56,7 +56,7 @@ const expressMiddleWare = (router: Partial<Router>) => {
   router.post(ROUTE.DELETE_SCREENSHOT, asyncCatch(deleteScreenshot));
   router.post(ROUTE.TEST_SCREENSHOT, asyncCatch(testScreenshot));
   router.post(ROUTE.TEST_STORY_SCREENSHOT, asyncCatch(testStoryScreenshots));
-  router.post(ROUTE.TEST_APP_SCREENSHOT, asyncCatch(testAppScreenshots));
+  router.post(ROUTE.TEST_SCREENSHOTS, asyncCatch(testScreenshots));
   router.post(ROUTE.UPDATE_SCREENSHOT, asyncCatch(updateScreenshot));
   router.post(ROUTE.DELETE_STORY_SCREENSHOT, asyncCatch(deleteStoryScreenshot));
   router.post(ROUTE.CHANGE_SCREENSHOT_INDEX, asyncCatch(changeScreenShotIndex));

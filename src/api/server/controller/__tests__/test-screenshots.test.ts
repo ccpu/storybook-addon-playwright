@@ -1,13 +1,13 @@
-import { testAppScreenshots } from '../test-app-screenshots';
+import { testScreenshots } from '../test-screenshots';
 import { Request, Response } from 'express';
 
-jest.mock('../../services/test-app-screenshots.ts');
+jest.mock('../../services/test-screenshots.ts');
 
-describe('testAppScreenshots', () => {
+describe('testScreenshots', () => {
   it('should return result', async () => {
     const jsonMock = jest.fn();
 
-    await testAppScreenshots(
+    await testScreenshots(
       ({ headers: { host: 'localhost' } } as unknown) as Request,
       ({ json: jsonMock } as unknown) as Response,
     );

@@ -2,7 +2,7 @@ import { ImageDiff } from '../ImageDiff';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { useAppScreenshotImageDiff } from '../../../hooks/use-app-screenshot-imageDiff';
+import { useScreenshotImageDiffResults } from '../../../hooks/use-screenshot-imageDiff-results';
 import { Snackbar } from '../../common';
 import { useGlobalImageDiffResults } from '../../../hooks/use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
@@ -12,7 +12,7 @@ import { mocked } from 'ts-jest/utils';
 import { useGlobalScreenshotDispatch } from '../../../hooks';
 
 jest.mock('../../../hooks/use-global-imageDiff-results.ts');
-jest.mock('../../../hooks/use-app-screenshot-imageDiff.ts');
+jest.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
 jest.mock('../../../hooks/use-global-screenshot-dispatch.ts');
 jest.mock('../../../hooks/use-current-story-data');
 
@@ -32,7 +32,7 @@ describe('ImageDiff', () => {
     },
   ] as ImageDiffResult[];
 
-  (useAppScreenshotImageDiff as jest.Mock).mockImplementation(() => {
+  (useScreenshotImageDiffResults as jest.Mock).mockImplementation(() => {
     return {
       testStoryScreenShots: testStoryScreenShotsMock,
     };

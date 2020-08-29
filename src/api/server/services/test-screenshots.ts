@@ -1,12 +1,12 @@
-import { ImageDiffResult, AppScreenshotTest } from '../../typings';
+import { ImageDiffResult, TestScreenShots } from '../../typings';
 import { getPlaywrightConfigFiles } from '../../../utils/get-playwright-config-files';
 import { testFileScreenshots } from './test-file-screenshots';
 import { getConfigs } from '../configs';
 import pLimit from 'p-limit';
 import { isStoryJsonFile } from '../../../utils/is-story-json-file';
 
-export const testAppScreenshots = async (
-  data: AppScreenshotTest,
+export const testScreenshots = async (
+  data: TestScreenShots,
 ): Promise<ImageDiffResult[]> => {
   const files = await getPlaywrightConfigFiles();
 
@@ -29,7 +29,8 @@ export const testAppScreenshots = async (
           disableEvans: true,
           fileName: file,
           requestId: data.requestId + '__' + index,
-          requestType: 'app',
+          requestType: data.storyId ? 'story' : data.fileName ? 'file' : 'all',
+          storyId: data.storyId,
         });
       }, i),
     );

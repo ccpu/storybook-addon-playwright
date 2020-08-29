@@ -1,5 +1,5 @@
 import { defaultConfigs } from '../../../../../__test_data__/configs';
-import { testAppScreenshots } from '../test-app-screenshots';
+import { testScreenshots } from '../test-screenshots';
 import { getConfigs } from '../../configs';
 import { mocked } from 'ts-jest/utils';
 import { testFileScreenshots } from '../test-file-screenshots';
@@ -38,18 +38,20 @@ describe('testAppScreenshot', () => {
   });
 
   it('should have result', async () => {
-    const result = await testAppScreenshots({ requestId: 'request-id' });
+    const result = await testScreenshots({ requestId: 'request-id' });
+
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test.stories.playwright.json',
       requestId: 'request-id__0',
-      requestType: 'app',
+      requestType: 'all',
     });
+
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test-2.stories.playwright.json',
       requestId: 'request-id__1',
-      requestType: 'app',
+      requestType: 'all',
     });
 
     expect(result).toStrictEqual([
@@ -69,7 +71,8 @@ describe('testAppScreenshot', () => {
   });
 
   it('should call afterAppImageDiffMock with result', async () => {
-    await testAppScreenshots({ requestId: 'request-id' });
+    await testScreenshots({ requestId: 'request-id' });
+
     expect(afterAppImageDiffMock).toHaveBeenCalledWith(
       [
         {
@@ -90,23 +93,42 @@ describe('testAppScreenshot', () => {
   });
 
   it('should call beforeAppImageDiff with data', async () => {
-    await testAppScreenshots({ requestId: 'request-id' });
+    await testScreenshots({ requestId: 'request-id' });
     expect(beforeAppImageDiffMock).toHaveBeenCalledWith({
       requestId: 'request-id',
     });
   });
 
   it('should test matched storyFile if provided', async () => {
-    await testAppScreenshots({
+    await testScreenshots({
       fileName: './stories/test.stories.tsx',
       requestId: 'request-id',
     });
+
     expect(testFileScreenshots).toHaveBeenCalledTimes(1);
+
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test.stories.playwright.json',
       requestId: 'request-id__0',
-      requestType: 'app',
+      requestType: 'file',
+    });
+  });
+
+  it('should test story within file only', async () => {
+    await testScreenshots({
+      fileName: './stories/test.stories.tsx',
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+    expect(testFileScreenshots).toHaveBeenCalledTimes(1);
+
+    expect(testFileScreenshots).toHaveBeenCalledWith({
+      disableEvans: true,
+      fileName: './stories/test.stories.playwright.json',
+      requestId: 'request-id__0',
+      requestType: 'story',
+      storyId: 'story-id',
     });
   });
 });

@@ -20,7 +20,7 @@ export * from './use-async-api-call';
 export * from './use-key-press';
 export * from './use-story-screenshot-imageDiff';
 export * from './use-screenshot-imageDiff';
-export * from './use-app-screenshot-imageDiff';
+export * from './use-screenshot-imageDiff-results';
 export * from './use-global-imageDiff-results';
 export * from './use-story-screenshots-diff';
 export * from './use-screenshot-update';

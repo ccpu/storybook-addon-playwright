@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { StoryData } from '../typings';
 import { useStoryScreenshotImageDiff } from './use-story-screenshot-imageDiff';
+// import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-results';
 
 export const useStoryScreenshotsDiff = (storyData: StoryData) => {
   const {
@@ -8,6 +9,13 @@ export const useStoryScreenshotsDiff = (storyData: StoryData) => {
     testStoryScreenShots,
     clearImageDiffError,
   } = useStoryScreenshotImageDiff(storyData);
+
+  // const {
+  //   testStoryScreenShots,
+  //   imageDiffTestInProgress,
+  //   storyImageDiffError,
+  //   clearImageDiffError,
+  // } = useScreenshotImageDiffResults();
 
   useEffect(() => {
     testStoryScreenShots();

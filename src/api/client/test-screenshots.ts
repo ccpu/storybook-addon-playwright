@@ -4,7 +4,7 @@ import { ImageDiffResult, TestScreenShots } from '../typings';
 export const testScreenshots = async (
   data: TestScreenShots,
 ): Promise<ImageDiffResult[]> => {
-  const restEndpoint = getEndpoint('TEST_APP_SCREENSHOT');
+  const restEndpoint = getEndpoint('TEST_SCREENSHOTS');
 
   const resp = await fetch(restEndpoint, {
     body: JSON.stringify(data),

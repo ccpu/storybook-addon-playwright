@@ -1,25 +1,20 @@
 import { useEffect } from 'react';
-import { StoryData } from '../typings';
-import { useStoryScreenshotImageDiff } from './use-story-screenshot-imageDiff';
-// import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-results';
+import { ScreenshotTestType } from '../typings';
+import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-results';
+// import useMount from 'react-use/lib/useMount';
 
-export const useStoryScreenshotsDiff = (storyData: StoryData) => {
+export const useStoryScreenshotsDiff = (testType: ScreenshotTestType) => {
   const {
+    clearImageDiffError,
     imageDiffTestInProgress,
     testStoryScreenShots,
-    clearImageDiffError,
-  } = useStoryScreenshotImageDiff(storyData);
-
-  // const {
-  //   testStoryScreenShots,
-  //   imageDiffTestInProgress,
-  //   storyImageDiffError,
-  //   clearImageDiffError,
-  // } = useScreenshotImageDiffResults();
+    storyInfo,
+  } = useScreenshotImageDiffResults();
 
   useEffect(() => {
-    testStoryScreenShots();
-  }, [clearImageDiffError, testStoryScreenShots]);
+    if (!storyInfo) return;
+    testStoryScreenShots(testType);
+  }, [clearImageDiffError, storyInfo, testStoryScreenShots, testType]);
 
   return { loading: imageDiffTestInProgress };
 };

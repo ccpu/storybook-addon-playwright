@@ -1,5 +1,8 @@
 import React, { SFC } from 'react';
-import { useStoryScreenshotImageDiff, useCurrentStoryData } from '../../hooks';
+import {
+  useScreenshotImageDiffResults,
+  useCurrentStoryData,
+} from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
 import { Loader, Snackbar } from '../common';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
@@ -16,9 +19,13 @@ const ScreenshotList: SFC = ({ children }) => {
     clearImageDiffError,
     imageDiffTestInProgress,
     storyImageDiffError,
-  } = useStoryScreenshotImageDiff(storyData);
+  } = useScreenshotImageDiffResults();
 
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
+
+  const handleClick = React.useCallback(() => {
+    testStoryScreenShots('story');
+  }, [testStoryScreenShots]);
 
   return (
     <>
@@ -61,7 +68,7 @@ const ScreenshotList: SFC = ({ children }) => {
         <Snackbar
           open={true}
           action={
-            <Button color="inherit" onClick={testStoryScreenShots}>
+            <Button color="inherit" onClick={handleClick}>
               Retry
             </Button>
           }

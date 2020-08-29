@@ -8,6 +8,8 @@ import { isStoryJsonFile } from '../../../utils/is-story-json-file';
 export const testScreenshots = async (
   data: TestScreenShots,
 ): Promise<ImageDiffResult[]> => {
+  const { requestType } = data;
+
   const files = await getPlaywrightConfigFiles();
 
   const configs = getConfigs();
@@ -19,7 +21,11 @@ export const testScreenshots = async (
   }
 
   const promises = files.reduce((arr, file, i) => {
-    if (data.fileName && !isStoryJsonFile(file, data.fileName)) {
+    if (
+      requestType !== 'all' &&
+      data.fileName &&
+      !isStoryJsonFile(file, data.fileName)
+    ) {
       return arr;
     }
 
@@ -29,7 +35,7 @@ export const testScreenshots = async (
           disableEvans: true,
           fileName: file,
           requestId: data.requestId + '__' + index,
-          requestType: data.storyId ? 'story' : data.fileName ? 'file' : 'all',
+          requestType,
           storyId: data.storyId,
         });
       }, i),
@@ -43,11 +49,11 @@ export const testScreenshots = async (
   const results = res.reduce((arr, d) => {
     arr = [...arr, ...d];
     return arr;
-  }, []);
+  }, []) as ImageDiffResult[];
 
   if (configs.afterAppImageDiff) {
     await configs.afterAppImageDiff(results, data);
   }
 
-  return results.filter((x) => x && !x.pass);
+  return results;
 };

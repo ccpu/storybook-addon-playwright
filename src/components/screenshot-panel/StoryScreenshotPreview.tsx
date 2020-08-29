@@ -16,7 +16,7 @@ export interface StoryScreenshotPreviewProps {
 const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
   const { screenshotsData, storyData, onFinish, updating } = props;
 
-  const { loading } = useStoryScreenshotsDiff(storyData);
+  const { loading } = useStoryScreenshotsDiff('story');
 
   const [updateInProgress, setUpdateInProgress] = useState(false);
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import {
   useStoryScreenshotLoader,
-  useStoryScreenshotImageDiff,
+  useScreenshotImageDiffResults,
   useDeleteStoryScreenshot,
 } from '../../hooks';
 import {
@@ -42,7 +42,7 @@ const ScreenshotPanel = () => {
     clearImageDiffError,
     imageDiffTestInProgress,
     storyImageDiffError,
-  } = useStoryScreenshotImageDiff(storyData);
+  } = useScreenshotImageDiffResults();
 
   const toggleShowPreview = useCallback(() => {
     setShowPreview(!showPreview);
@@ -61,12 +61,16 @@ const ScreenshotPanel = () => {
     });
   }, [dispatch, showPreview, updateStoryScreenshots]);
 
+  const handleStoryImgDiff = React.useCallback(() => {
+    testStoryScreenShots('story');
+  }, [testStoryScreenShots]);
+
   return (
     <>
       <ScreenshotListToolbar
         onUpdateClick={toggleStoryUpdateClick}
         title="Story Screenshots"
-        onTestClick={testStoryScreenShots}
+        onTestClick={handleStoryImgDiff}
         onPreviewClick={toggleShowPreview}
         hasScreenShot={hasScreenshot}
         onDelete={deleteStoryScreenshots}
@@ -87,7 +91,7 @@ const ScreenshotPanel = () => {
         <Snackbar
           open={true}
           action={
-            <Button color="inherit" onClick={testStoryScreenShots}>
+            <Button color="inherit" onClick={handleStoryImgDiff}>
               Retry
             </Button>
           }

@@ -34,8 +34,8 @@ export const asyncCatch = function (func) {
 };
 
 const expressMiddleWare = (router: Partial<Router>) => {
-  router.use(bodyParser.json({ limit: '500mb' }));
-  router.use(bodyParser.urlencoded({ extended: true, limit: '500mb' }));
+  router.use(bodyParser.json({ limit: '5000mb' }));
+  router.use(bodyParser.urlencoded({ extended: true, limit: '5000mb' }));
 
   router.use((req, res, next) => {
     // Set the timeout for all HTTP requests

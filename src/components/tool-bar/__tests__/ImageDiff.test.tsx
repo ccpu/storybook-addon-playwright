@@ -174,7 +174,7 @@ describe('ImageDiff', () => {
 
     clickOnIconButton(wrapper);
 
-    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('./test.stories.tsx');
+    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('story');
   });
 
   it('should remove only story file image diff', () => {

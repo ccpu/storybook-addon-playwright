@@ -85,15 +85,13 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
       if (diffResults.length > 0) {
         setAnchorEl(event.currentTarget);
       } else {
-        const result = await testStoryScreenShots(
-          testCurrentStory ? storyInfo.parameters.fileName : undefined,
-        );
+        const result = await testStoryScreenShots('story');
 
         if (!(result instanceof Error))
           setSuccess(result && result.length === 0);
       }
     },
-    [anchorEl, diffResults, storyInfo, testCurrentStory, testStoryScreenShots],
+    [anchorEl, diffResults, testStoryScreenShots],
   );
 
   const handleClose = useCallback(() => {

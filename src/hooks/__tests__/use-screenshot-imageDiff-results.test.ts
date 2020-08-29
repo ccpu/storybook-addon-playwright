@@ -1,8 +1,10 @@
 import { globalDispatchMock } from '../../../__manual_mocks__/hooks/use-global-screenshot-dispatch';
 import { useScreenshotImageDiffResults } from '../use-screenshot-imageDiff-results';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
-import { ImageDiffResult } from '../../api/typings';
+import { testScreenshots } from '../../api/client/test-screenshots';
+
+jest.mock('../use-current-story-data');
+jest.mock('../../api/client/test-screenshots');
 
 describe('useScreenshotImageDiffResults', () => {
   beforeEach(() => {
@@ -10,40 +12,54 @@ describe('useScreenshotImageDiffResults', () => {
   });
 
   it('should have result', async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify([{ pass: true }] as ImageDiffResult[]),
-    );
     const { result } = renderHook(() => useScreenshotImageDiffResults());
     await act(async () => {
-      await result.current.testStoryScreenShots();
+      await result.current.testStoryScreenShots('all');
     });
     expect(globalDispatchMock).toHaveBeenCalledWith({
       imageDiffResults: [{ pass: true }],
       type: 'setImageDiffResults',
     });
+    expect(testScreenshots).toHaveBeenCalledWith({
+      fileName: './test.stories.tsx',
+      requestId: 'id-1',
+      requestType: 'all',
+      storyId: 'story-id',
+    });
   });
 
   it('should add story file results only', async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify([{ pass: true }] as ImageDiffResult[]),
-    );
     const { result } = renderHook(() => useScreenshotImageDiffResults());
     await act(async () => {
-      await result.current.testStoryScreenShots('./test.stories.tsx');
+      await result.current.testStoryScreenShots('file');
     });
     expect(globalDispatchMock).toHaveBeenCalledWith({
       imageDiffResult: { pass: true },
       type: 'addImageDiffResult',
     });
+
+    expect(testScreenshots).toHaveBeenCalledWith({
+      fileName: './test.stories.tsx',
+      requestId: 'id-2',
+      requestType: 'file',
+      storyId: 'story-id',
+    });
   });
 
-  it('should not have result if ', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
+  it('should  story within story file results only', async () => {
     const { result } = renderHook(() => useScreenshotImageDiffResults());
     await act(async () => {
-      await result.current.testStoryScreenShots();
+      await result.current.testStoryScreenShots('story');
     });
-    expect(globalDispatchMock).toHaveBeenCalledTimes(0);
-    expect(result.current.storyImageDiffError).toBe('foo');
+    expect(globalDispatchMock).toHaveBeenCalledWith({
+      imageDiffResult: { pass: true },
+      type: 'addImageDiffResult',
+    });
+    expect(testScreenshots).toHaveBeenCalledWith({
+      fileName: './test.stories.tsx',
+      requestId: 'id-3',
+      requestType: 'story',
+      storyId: 'story-id',
+    });
   });
 });

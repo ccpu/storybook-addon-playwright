@@ -56,3 +56,5 @@ export interface ScreenshotData extends ScreenshotSetting {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ScreenshotProp = { [prop: string]: any };
+
+export type ScreenshotTestType = 'file' | 'story' | 'all';

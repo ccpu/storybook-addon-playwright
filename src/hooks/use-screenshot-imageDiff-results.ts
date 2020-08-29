@@ -3,9 +3,13 @@ import { useAsyncApiCall } from './use-async-api-call';
 import { testScreenshots } from '../api/client';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { nanoid } from 'nanoid';
+import { ScreenshotTestType } from '../typings';
+import { useCurrentStoryData } from './use-current-story-data';
 
 export const useScreenshotImageDiffResults = () => {
   const { dispatch } = useGlobalScreenshotDispatch();
+
+  const storyInfo = useCurrentStoryData();
 
   const {
     inProgress: imageDiffTestInProgress,
@@ -16,13 +20,16 @@ export const useScreenshotImageDiffResults = () => {
   } = useAsyncApiCall(testScreenshots, false);
 
   const testStoryScreenShots = useCallback(
-    async (storyFileName?: string) => {
+    async (type: ScreenshotTestType) => {
       const results = await makeCall({
-        fileName: storyFileName,
+        fileName: storyInfo.parameters.fileName,
         requestId: nanoid(),
+        requestType: type,
+        storyId: storyInfo.id,
       });
+
       if (!(results instanceof Error)) {
-        if (storyFileName) {
+        if (type === 'file' || type === 'story') {
           results.forEach((result) => {
             dispatch({
               imageDiffResult: result,
@@ -38,7 +45,7 @@ export const useScreenshotImageDiffResults = () => {
       }
       return results;
     },
-    [dispatch, makeCall],
+    [dispatch, makeCall, storyInfo],
   );
 
   return {
@@ -46,6 +53,7 @@ export const useScreenshotImageDiffResults = () => {
     clearImageDiffError,
     imageDiffTestInProgress,
     storyImageDiffError,
+    storyInfo,
     testStoryScreenShots,
   };
 };

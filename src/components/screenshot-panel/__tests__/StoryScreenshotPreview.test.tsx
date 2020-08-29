@@ -25,7 +25,7 @@ describe('StoryScreenshotPreview', () => {
       <StoryScreenshotPreview
         screenshotsData={[getScreenshotDate()]}
         storyData={storyData}
-        onFinish={jest.fn()}
+        onClose={jest.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -41,7 +41,7 @@ describe('StoryScreenshotPreview', () => {
       <StoryScreenshotPreview
         screenshotsData={[getScreenshotDate()]}
         storyData={storyData}
-        onFinish={jest.fn()}
+        onClose={jest.fn()}
         updating
       />,
     );
@@ -71,7 +71,7 @@ describe('StoryScreenshotPreview', () => {
       <StoryScreenshotPreview
         screenshotsData={[getScreenshotDate({ id: 'invalid-id' })]}
         storyData={storyData}
-        onFinish={jest.fn()}
+        onClose={jest.fn()}
         updating
       />,
     );

@@ -34,3 +34,4 @@ export * from './use-screenshot-options';
 export * from './use-iframe';
 export * from './use-action-editor';
 export * from './use-copy-action-set';
+export * from './use-screenshot-list-update-dialog';

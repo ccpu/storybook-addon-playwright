@@ -3,6 +3,7 @@ import {
   useStoryScreenshotLoader,
   useScreenshotImageDiffResults,
   useDeleteStoryScreenshot,
+  useScreenshotListUpdateDialog,
 } from '../../hooks';
 import {
   useScreenshotContext,
@@ -17,7 +18,11 @@ import { Button } from '@material-ui/core';
 const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
 
-  const [updateStoryScreenshots, setUpdateStoryScreenshots] = useState(false);
+  const reqBy = 'screenshot-panel';
+  const { runDiffTest, updateInf } = useScreenshotListUpdateDialog(
+    reqBy,
+    'story',
+  );
 
   const dispatch = useScreenshotDispatch();
 
@@ -25,7 +30,6 @@ const ScreenshotPanel = () => {
     ScreenshotLoaderErrorSnackbar,
     loadScreenShots,
     screenshotLoaderInProgress,
-    storyData,
   } = useStoryScreenshotLoader();
 
   const {
@@ -48,18 +52,14 @@ const ScreenshotPanel = () => {
     setShowPreview(!showPreview);
   }, [showPreview]);
 
-  const toggleStoryUpdateClick = useCallback(() => {
-    setUpdateStoryScreenshots(!updateStoryScreenshots);
-  }, [updateStoryScreenshots]);
-
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
 
   useEffect(() => {
     dispatch({
-      state: showPreview || updateStoryScreenshots,
+      state: showPreview,
       type: 'pauseDeleteImageDiffResult',
     });
-  }, [dispatch, showPreview, updateStoryScreenshots]);
+  }, [dispatch, showPreview]);
 
   const handleStoryImgDiff = React.useCallback(() => {
     testStoryScreenShots('story');
@@ -68,7 +68,7 @@ const ScreenshotPanel = () => {
   return (
     <>
       <ScreenshotListToolbar
-        onUpdateClick={toggleStoryUpdateClick}
+        onUpdateClick={runDiffTest}
         title="Story Screenshots"
         onTestClick={handleStoryImgDiff}
         onPreviewClick={toggleShowPreview}
@@ -80,7 +80,8 @@ const ScreenshotPanel = () => {
           open={
             screenshotLoaderInProgress ||
             imageDiffTestInProgress ||
-            deleteInProgress
+            deleteInProgress ||
+            updateInf.reqBy !== undefined
           }
         />
       </ScreenshotList>
@@ -100,13 +101,8 @@ const ScreenshotPanel = () => {
           onClose={clearImageDiffError}
         />
       )}
-      {(updateStoryScreenshots || showPreview) && (
-        <StoryScreenshotPreview
-          storyData={storyData}
-          screenshotsData={state.screenshots}
-          onFinish={showPreview ? toggleShowPreview : toggleStoryUpdateClick}
-          updating={updateStoryScreenshots}
-        />
+      {showPreview && (
+        <StoryScreenshotPreview onClose={toggleShowPreview} target="story" />
       )}
 
       <DeleteScreenshotsErrorSnackbar />

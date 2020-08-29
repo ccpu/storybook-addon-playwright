@@ -26,6 +26,9 @@ export type Action =
       screenshotId: string;
     }
   | {
+      type: 'removePassedImageDiffResult';
+    }
+  | {
       type: 'updateImageDiffResult';
       imageDiffResult: ImageDiffResult;
     }
@@ -154,6 +157,12 @@ export function reducer(
         imageDiffResults: state.imageDiffResults.filter(
           (x) => x.screenshotId !== action.screenshotId,
         ),
+      };
+    }
+    case 'removePassedImageDiffResult': {
+      return {
+        ...state,
+        imageDiffResults: state.imageDiffResults.filter((x) => !x.pass),
       };
     }
     case 'deleteScreenshot': {

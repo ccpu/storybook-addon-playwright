@@ -1,7 +1,6 @@
 import { updateScreenshot as updateScreenshotClient } from '../api/client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCallback } from 'react';
-import { useCurrentStoryData } from './use-current-story-data';
 import { useScreenshotDispatch } from '../store/screenshot';
 import { ImageDiffResult } from '../api/typings';
 
@@ -14,17 +13,15 @@ export const useScreenshotUpdate = () => {
     SuccessSnackbar: UpdateScreenshotSuccessSnackbar,
   } = useAsyncApiCall(updateScreenshotClient, false);
 
-  const storyData = useCurrentStoryData();
-
   const dispatch = useScreenshotDispatch();
 
   const updateScreenshot = useCallback(
     async (imageDiffResult: ImageDiffResult) => {
       const result = await makeCall({
         base64: imageDiffResult.newScreenshot,
-        fileName: storyData.parameters.fileName,
+        fileName: imageDiffResult.fileName,
         screenshotId: imageDiffResult.screenshotId,
-        storyId: storyData.id,
+        storyId: imageDiffResult.storyId,
       });
 
       if (result instanceof Error) return;
@@ -43,7 +40,7 @@ export const useScreenshotUpdate = () => {
         type: 'updateImageDiffResult',
       });
     },
-    [dispatch, storyData, makeCall],
+    [dispatch, makeCall],
   );
 
   return {

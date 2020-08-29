@@ -1,22 +1,27 @@
 import React, { SFC, useCallback, useState } from 'react';
-import { ScreenshotData, StoryData } from '../../typings';
+import { ScreenshotTestTargetType } from '../../typings';
 import { useStoryScreenshotsDiff, useScreenshotUpdate } from '../../hooks';
 import { Loader, Snackbar } from '../common';
 import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
 import { Button } from '@material-ui/core';
-import { useScreenshotContext } from '../../store/screenshot';
+import {
+  useScreenshotContext,
+  useScreenshotDispatch,
+} from '../../store/screenshot';
 
 export interface StoryScreenshotPreviewProps {
-  screenshotsData: ScreenshotData[];
-  onFinish: () => void;
-  storyData: StoryData;
+  onClose: () => void;
   updating?: boolean;
+  target: ScreenshotTestTargetType;
+  onLoad?: () => void;
 }
 
 const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
-  const { screenshotsData, storyData, onFinish, updating } = props;
+  const { onClose, updating, target, onLoad } = props;
 
-  const { loading } = useStoryScreenshotsDiff('story');
+  const { loading, storyData, loaded } = useStoryScreenshotsDiff(target);
+
+  const dispatch = useScreenshotDispatch();
 
   const [updateInProgress, setUpdateInProgress] = useState(false);
 
@@ -31,7 +36,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
   const handleSave = useCallback(async () => {
     setUpdateInProgress(true);
     try {
-      const promises = screenshotsData.map((s) => {
+      const promises = state.screenshots.map((s) => {
         const imageDiffResult = state.imageDiffResults.find(
           (x) => x.screenshotId === s.id,
         );
@@ -50,11 +55,31 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
       setError(error.message);
     }
     setUpdateInProgress(false);
-  }, [screenshotsData, state.imageDiffResults, updateScreenshot]);
+  }, [state.imageDiffResults, state.screenshots, updateScreenshot]);
 
   const handleErrorClose = useCallback(() => {
     setError(undefined);
   }, []);
+
+  React.useEffect(() => {
+    if (openDialog) {
+      dispatch({
+        state: true,
+        type: 'pauseDeleteImageDiffResult',
+      });
+    }
+  }, [dispatch, openDialog]);
+
+  const handleClose = React.useCallback(() => {
+    dispatch({
+      type: 'removePassedImageDiffResult',
+    });
+    onClose();
+  }, [dispatch, onClose]);
+
+  React.useEffect(() => {
+    if (loaded && onLoad) onLoad();
+  }, [loaded, onLoad]);
 
   return (
     <>
@@ -65,15 +90,16 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
             updating &&
             'Following screenshots will be saved, would you like to continue?'
           }
-          screenshots={screenshotsData}
-          onClose={onFinish}
+          screenshots={state.screenshots}
+          onClose={handleClose}
           open={openDialog}
           storyData={storyData}
+          draggable={target === 'story'}
           footerActions={
             updating &&
             (() => (
               <>
-                <Button onClick={onFinish} color="primary">
+                <Button onClick={handleClose} color="primary">
                   No
                 </Button>
                 <Button onClick={handleSave} color="primary" autoFocus>
@@ -90,7 +116,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
         variant="success"
         message="Story screenshots updates successfully."
         open={success}
-        onClose={onFinish}
+        onClose={handleClose}
         autoHideDuration={4000}
       />
 
@@ -106,5 +132,6 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
 };
 
 StoryScreenshotPreview.displayName = 'StoryScreenshotPreview';
+const MemoizedStoryScreenshotPreview = React.memo(StoryScreenshotPreview);
 
-export { StoryScreenshotPreview };
+export { StoryScreenshotPreview, MemoizedStoryScreenshotPreview };

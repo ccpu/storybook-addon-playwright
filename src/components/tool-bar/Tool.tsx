@@ -12,12 +12,20 @@ import { isHorizontalPanel } from '../preview/utils';
 import { ImageDiff } from './ImageDiff';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { useResetSetting } from '../../hooks/use-reset-setting';
+import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
 
 const useStyles = makeStyles(() => ({
+  asterisk: {
+    left: 6,
+    margin: 0,
+    position: 'relative',
+    top: 4,
+    width: 1,
+  },
+
   button: {
     position: 'relative',
   },
-
   progress: {
     left: -3,
     pointerEvents: 'none',
@@ -83,8 +91,6 @@ const Tool: SFC = () => {
           <LayoutRight viewBox="1.5 1 20 20" />
         )}
       </IconButton>
-      <ImageDiff classes={{ button: classes.button }} />
-      <ImageDiff classes={{ button: classes.button }} testCurrentStory={true} />
       <IconButton
         onClick={resetSetting}
         title="Reset settings"
@@ -92,6 +98,17 @@ const Tool: SFC = () => {
       >
         <RefreshIcon viewBox="1.5 1 20 20" />
       </IconButton>
+
+      <Separator />
+
+      <ImageDiff classes={{ button: classes.button }} target="all" />
+      <ScreenshotUpdateIcon target="all" />
+      <span className={classes.asterisk}>*</span>
+      <Separator />
+
+      <ImageDiff classes={{ button: classes.button }} target="file" />
+      <ScreenshotUpdateIcon target="file" />
+
       <Separator />
       <PreviewDialog open={open} onClose={handleClose} />
     </CommonProvider>

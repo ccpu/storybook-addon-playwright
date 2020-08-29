@@ -5,5 +5,6 @@ export const getPlaywrightConfigFiles = async (configPath?: string | '*') => {
     configPath && configPath !== '*' ? configPath : '**/*.playwright.json',
     '!node_modules/**',
   ]);
+
   return files;
 };

@@ -12,14 +12,11 @@ import { Loader, Snackbar } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 import { useCurrentStoryData } from '../../hooks/use-current-story-data';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
+import { ScreenshotTestTargetType } from '../../typings';
 
 const useStyles = makeStyles(
   (theme) => {
     return {
-      asterisk: {
-        marginRight: -6,
-        marginTop: -12,
-      },
       button: {},
       imageDiffBadge: {
         '& span': {
@@ -47,11 +44,11 @@ interface ImageDiffStyleProps {
   classes?: {
     button?: string;
   };
-  testCurrentStory?: boolean;
+  target: ScreenshotTestTargetType;
 }
 
 const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
-  const { testCurrentStory } = props;
+  const { target } = props;
 
   const classes = useStyles({ classes: props.classes });
 
@@ -72,11 +69,12 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     clearImageDiffError,
   } = useScreenshotImageDiffResults();
 
-  const diffResults = testCurrentStory
-    ? imageDiffResult.filter((x) =>
-        isStoryJsonFile(x.fileName, storyInfo.parameters.fileName),
-      )
-    : imageDiffResult;
+  const diffResults =
+    target === 'file'
+      ? imageDiffResult.filter((x) =>
+          isStoryJsonFile(x.fileName, storyInfo.parameters.fileName),
+        )
+      : imageDiffResult;
 
   const handleImageDiffClick = useCallback(
     async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -85,13 +83,13 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
       if (diffResults.length > 0) {
         setAnchorEl(event.currentTarget);
       } else {
-        const result = await testStoryScreenShots('story');
+        const result = await testStoryScreenShots(target);
 
         if (!(result instanceof Error))
           setSuccess(result && result.length === 0);
       }
     },
-    [anchorEl, diffResults, testStoryScreenShots],
+    [anchorEl, diffResults.length, target, testStoryScreenShots],
   );
 
   const handleClose = useCallback(() => {
@@ -100,7 +98,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
 
   const handleClearAllResults = useCallback(() => {
     setAnchorEl(null);
-    if (testCurrentStory) {
+    if (target === 'file') {
       diffResults.forEach((sc) => {
         dispatch({
           screenshotId: sc.screenshotId,
@@ -110,15 +108,16 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     } else {
       dispatch({ imageDiffResults: [], type: 'setImageDiffResults' });
     }
-  }, [dispatch, diffResults, testCurrentStory]);
+  }, [dispatch, diffResults, target]);
 
   const handleSuccessHide = useCallback(() => setSuccess(false), []);
 
   if (!storyInfo) return null;
 
-  const title = testCurrentStory
-    ? `Run diff test for all stories in '${storyInfo.parameters.fileName}' file.`
-    : 'Run diff test for all stories';
+  const title =
+    target === 'file'
+      ? `Run diff test for all stories in '${storyInfo.parameters.fileName}' file.`
+      : 'Run diff test for all stories';
 
   return (
     <>
@@ -137,7 +136,7 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
 
         {success && <CheckCircle className={classes.successIcon} />}
         <Compare viewBox="1.5 1 20 20" />
-        {!testCurrentStory && <span className={classes.asterisk}>*</span>}
+
         {diffResults.length > 0 && (
           <Menu
             anchorEl={anchorEl}
@@ -145,13 +144,18 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClearAllResults}>Clear results</MenuItem>
-            {diffResults.map((diff) => (
-              <ImageDiffMenuItem
-                key={diff.storyId + diff.screenshotId}
-                imageDiff={diff}
-                onClick={handleClose}
-              />
-            ))}
+            {diffResults
+              .filter(
+                (x, index, self) =>
+                  index === self.findIndex((t) => t.storyId === x.storyId),
+              )
+              .map((diff) => (
+                <ImageDiffMenuItem
+                  key={diff.storyId + diff.screenshotId}
+                  imageDiff={diff}
+                  onClick={handleClose}
+                />
+              ))}
           </Menu>
         )}
 

@@ -13,6 +13,7 @@ export const testScreenshotService = async (
   if (!screenshotData) {
     throw new Error('Unable to find screenshot data.');
   }
+
   let result: ImageDiffResult = {};
   let snapshotData: ScreenshotImageData;
 
@@ -49,6 +50,7 @@ export const testScreenshotService = async (
   result.screenshotId = data.screenshotId;
   result.storyId = data.storyId;
   result.fileName = data.fileName;
+  result.screenshotData = screenshotData;
 
   return result;
 };

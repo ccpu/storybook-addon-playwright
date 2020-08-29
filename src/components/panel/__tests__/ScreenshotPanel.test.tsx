@@ -1,5 +1,5 @@
 import { ScreenshotPanel } from '../ScreenshotPanel';
-import { ScreenshotPanel as ScreenshotPanelComponent } from '../../screenshot-panel';
+import { ScreenshotMain } from '../../screenshot-panel/ScreenshotMain';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useStorybookState } from '@storybook/api';
@@ -9,16 +9,13 @@ describe('ScreenshotPanel', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it('should not render panel', () => {
-    const wrapper = shallow(<ScreenshotPanel />);
-    expect(wrapper.exists()).toBeTruthy();
-    expect(wrapper.find(ScreenshotPanelComponent)).toHaveLength(0);
-  });
-  it('should render ScreenshotPanelComponent  if screenshot panel is current panel', () => {
+
+  it('should render ', () => {
     (useStorybookState as jest.Mock).mockImplementation(() => ({
       selectedPanel: SCREENSHOT_PANEL_ID,
     }));
     const wrapper = shallow(<ScreenshotPanel />);
-    expect(wrapper.find(ScreenshotPanelComponent)).toHaveLength(1);
+
+    expect(wrapper.find(ScreenshotMain)).toHaveLength(1);
   });
 });

@@ -1,4 +1,4 @@
-import { StoryInfo, BrowserTypes } from '../../typings';
+import { StoryInfo, BrowserTypes, ScreenshotData } from '../../typings';
 
 export type DiffDirection = 'horizontal' | 'vertical';
 
@@ -24,6 +24,7 @@ export interface ImageDiffResult {
   selected?: boolean;
   error?: string;
   diffDirection?: DiffDirection;
+  screenshotData?: ScreenshotData;
 }
 
 export interface DiffImageToScreenShot extends StoryInfo {

@@ -246,7 +246,10 @@ function ScreenshotListItem({
     </ScreenshotListItemWrapper>
   );
 }
-const SortableScreenshotListItem = SortableElement(ScreenshotListItem);
+
+const MemoizedScreenshotListItem = React.memo(ScreenshotListItem);
+
+const SortableScreenshotListItem = SortableElement(MemoizedScreenshotListItem);
 
 ScreenshotListItem.displayName = 'ScreenshotListItem';
 

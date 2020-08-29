@@ -15,7 +15,7 @@ interface TestScreenshotsOptions extends RequestData {
 export const testFileScreenshots = async (
   options: TestScreenshotsOptions,
 ): Promise<ImageDiffResult[]> => {
-  const { fileName, onComplete, storyId } = options;
+  const { fileName, onComplete, storyId, requestType } = options;
   const configs = getConfigs();
 
   const storiesData = await getStoryPlaywrightData(fileName);
@@ -23,7 +23,9 @@ export const testFileScreenshots = async (
   const limit = pLimit(configs.concurrencyLimit.story);
 
   const promisees = storiesData.storyData.reduce((arr, story, i) => {
-    if (storyId && story.storyId !== storyId) return arr;
+    if (requestType === 'story' && storyId && story.storyId !== storyId)
+      return arr;
+
     if (story.data.screenshots && story.data.screenshots.length) {
       arr.push(
         limit(

@@ -18,6 +18,21 @@ describe('testScreenshot', () => {
       added: true,
       fileName: 'story.ts',
       newScreenshot: 'base64-image',
+      screenshotData: {
+        actionSets: [
+          {
+            actions: [
+              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+            ],
+            id: 'action-set-id',
+            title: 'click',
+          },
+        ],
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        index: 0,
+        title: 'title',
+      },
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
@@ -48,6 +63,21 @@ describe('testScreenshot', () => {
       error: 'ops',
       fileName: 'story.ts',
       pass: false,
+      screenshotData: {
+        actionSets: [
+          {
+            actions: [
+              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+            ],
+            id: 'action-set-id',
+            title: 'click',
+          },
+        ],
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        index: 0,
+        title: 'title',
+      },
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });

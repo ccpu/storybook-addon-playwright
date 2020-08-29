@@ -113,6 +113,7 @@ describe('testFileScreenshots', () => {
       fileName: 'story.ts',
       onComplete: onCompleteMock,
       requestId: 'request-id',
+      requestType: 'story',
       storyId: 'story-id-2',
     });
 

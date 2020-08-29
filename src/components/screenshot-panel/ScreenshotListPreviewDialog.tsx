@@ -37,20 +37,20 @@ export interface ScreenshotListPreviewDialogProps {
   storyData: StoryData;
   selectedItem?: string;
   title?: string;
+  draggable?: boolean;
 }
 
 const ScreenshotListPreviewDialog: SFC<
   ScreenshotListPreviewDialogProps & DialogProps
-> = (props) => {
-  const {
-    screenshots,
-    storyData,
-    selectedItem,
-    title,
-    children,
-    ...rest
-  } = props;
-
+> = ({
+  screenshots,
+  storyData,
+  selectedItem,
+  title,
+  children,
+  draggable = true,
+  ...rest
+}) => {
   const [currentItem, setCurrentItem] = useState<ScreenshotData>();
 
   const state = useScreenshotContext();
@@ -113,15 +113,13 @@ const ScreenshotListPreviewDialog: SFC<
                   screenshot={screenshot}
                   forceShowMenu={true}
                   enableUpdate={true}
-                  draggable={true}
+                  draggable={draggable}
                   storyData={storyData}
                   pauseDeleteImageDiffResult={state.pauseDeleteImageDiffResult}
                   onClick={handleItemClick}
                   selected={currentItem.id === screenshot.id}
                   imageDiffResult={state.imageDiffResults.find(
-                    (x) =>
-                      x.storyId === storyData.id &&
-                      x.screenshotId === screenshot.id,
+                    (x) => x.screenshotId === screenshot.id,
                   )}
                 />
               ))}

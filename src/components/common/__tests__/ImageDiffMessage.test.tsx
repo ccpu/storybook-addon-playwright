@@ -1,31 +1,53 @@
 import { ImageDiffMessage } from '../ImageDiffMessage';
+import '../../../../__manual_mocks__/react-useEffect';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Snackbar } from '../Snackbar';
 import { ImageDiffPreviewDialog } from '../ImageDiffPreviewDialog';
+import { mocked } from 'ts-jest/utils';
+import { useSnackbar } from '../../../hooks/use-snackbar';
+
+jest.mock('../../../hooks/use-snackbar');
+
+const openSnackbarMock = jest.fn();
+
+mocked(useSnackbar).mockImplementation(() => ({
+  openSnackbar: openSnackbarMock,
+}));
 
 describe('ImageDiffMessage', () => {
-  it('should render nothing if screenshot just added', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should do nothing if result undefined', () => {
+    const wrapper = shallow(
+      <ImageDiffMessage result={undefined} onClose={jest.fn()} />,
+    );
+    expect(wrapper.exists()).toBeTruthy();
+    expect(openSnackbarMock).toHaveBeenCalledTimes(0);
+    expect(wrapper.find(ImageDiffPreviewDialog)).toHaveLength(0);
+  });
+
+  it('should show message for added screenshot', () => {
     const wrapper = shallow(
       <ImageDiffMessage result={{ added: true }} onClose={jest.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
+    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+      'Screenshot  saved successfully.',
+    );
   });
 
   it('should screenshot image diff successfully passed snackbar', () => {
-    const wrapper = shallow(
-      <ImageDiffMessage result={{ pass: true }} onClose={jest.fn()} />,
+    shallow(<ImageDiffMessage result={{ pass: true }} onClose={jest.fn()} />);
+
+    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+      'Testing existing screenshot were successful, no change has been detected.',
     );
-    expect(
-      wrapper
-        .find(Snackbar)
-        .props()
-        .message.startsWith('Testing existing screenshot were successful'),
-    ).toBe(true);
   });
 
   it('should show error message if found image size difference', () => {
-    const wrapper = shallow(
+    shallow(
       <ImageDiffMessage
         result={{
           diffSize: true,
@@ -41,7 +63,7 @@ describe('ImageDiffMessage', () => {
       />,
     );
 
-    expect(wrapper.find(Snackbar).props().message).toBe(
+    expect(openSnackbarMock.mock.calls[0][0]).toBe(
       'Expected image to be the same size as the snapshot (20x20), but was different (10x10).',
     );
   });

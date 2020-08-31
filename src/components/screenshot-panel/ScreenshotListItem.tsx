@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { BrowserIcon, ImageDiffMessage, Loader } from '../common';
+import { BrowserIcon, MemoizedImageDiffMessage, Loader } from '../common';
 import { ScreenshotData, StoryData } from '../../typings';
 import { useScreenshotDispatch } from '../../store/screenshot';
 import { SortableElement } from 'react-sortable-hoc';
@@ -204,7 +204,7 @@ function ScreenshotListItem({
         />
 
         {showImageDiffResult && showImageDiffResultDialog && (
-          <ImageDiffMessage
+          <MemoizedImageDiffMessage
             result={imageDiffResult}
             onClose={handleRemoveScreenShotResult}
             title={screenshot.title}

@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, SFC, useEffect } from 'react';
 import { Snackbar, SnackbarProps } from '../components';
 import React from 'react';
 import { Button } from '@material-ui/core';
+import { useSnackbar } from './use-snackbar';
 
 type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
 
@@ -12,15 +13,25 @@ type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 // eslint-disable-next-line @typescript-eslint/ban-types
 type AsyncApiCallReturnType<T extends Function> = ThenArg<ReturnType<T>>;
 
+interface Options {
+  successMessage?: string;
+  clearResultOnSuccess?: boolean;
+  retryButton?: boolean;
+}
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const useAsyncApiCall = <T extends Function>(
   func: T,
   setResponseResult = true,
+  options: Options = {},
 ) => {
   const [inProgress, setInProgress] = useState(false);
   const [error, setError] = useState<string>();
   const funcArgs = useRef<ArgsType<T>>(null);
-  const [success, setSuccess] = useState(false);
+
+  const { openSnackbar } = useSnackbar();
+
+  const { successMessage, clearResultOnSuccess } = options;
 
   const [result, setResult] = useState<AsyncApiCallReturnType<T>>();
 
@@ -37,7 +48,14 @@ export const useAsyncApiCall = <T extends Function>(
         data = await func(...args);
         if (setResponseResult) setResult(data);
         setInProgress(false);
-        setSuccess(true);
+
+        if (successMessage) {
+          openSnackbar(successMessage, {
+            onClose: clearResultOnSuccess
+              ? () => setResult(undefined)
+              : undefined,
+          });
+        }
       } catch (error) {
         setInProgress(false);
         setError(error.message);
@@ -45,7 +63,13 @@ export const useAsyncApiCall = <T extends Function>(
       }
       return data;
     },
-    [func, setResponseResult],
+    [
+      clearResultOnSuccess,
+      func,
+      openSnackbar,
+      setResponseResult,
+      successMessage,
+    ],
   );
 
   const clearResult = useCallback(() => {
@@ -80,32 +104,6 @@ export const useAsyncApiCall = <T extends Function>(
     [clearError, error],
   );
 
-  const SuccessSnackbar: SFC<
-    SnackbarProps & {
-      clearResultOnClose?: boolean;
-    }
-  > = useCallback(
-    ({ message, clearResultOnClose }) => {
-      if (!success) return null;
-      const handleClose = () => {
-        setSuccess(false);
-        if (clearResultOnClose) {
-          clearResult();
-        }
-      };
-      return (
-        <Snackbar
-          variant="success"
-          open={true}
-          onClose={handleClose}
-          message={message}
-          autoHideDuration={4000}
-        />
-      );
-    },
-    [clearResult, success],
-  );
-
   useEffect(() => {
     return () => {
       clearResult();
@@ -115,7 +113,6 @@ export const useAsyncApiCall = <T extends Function>(
 
   return {
     ErrorSnackbar,
-    SuccessSnackbar,
     clearError,
     clearResult,
     error,

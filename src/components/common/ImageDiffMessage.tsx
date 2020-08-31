@@ -1,5 +1,4 @@
 import React, { SFC } from 'react';
-import { Snackbar } from '../common';
 import { ImageDiffResult } from '../../api/typings';
 import { getImageDiffMessages } from '../../utils';
 import {
@@ -7,6 +6,7 @@ import {
   ImageDiffPreviewDialogProps,
 } from './ImageDiffPreviewDialog';
 import { BrowserTypes } from '../../typings';
+import { useSnackbar } from '../../hooks/use-snackbar';
 
 export interface ImageDiffMessageProps
   extends Partial<ImageDiffPreviewDialogProps> {
@@ -19,47 +19,45 @@ export interface ImageDiffMessageProps
 const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
   const { title, result, onClose, browserType, ...rest } = props;
 
-  if (!result) return null;
+  const { openSnackbar } = useSnackbar();
 
-  const titleMsg = title || result.oldScreenShotTitle;
-  if (result.added) {
-    return (
-      <Snackbar
-        variant="success"
+  const titleMsg = title || (result && result.oldScreenShotTitle);
+
+  React.useEffect(() => {
+    if (!result) return;
+
+    if (result.added) {
+      openSnackbar(
         // prettier-ignore
-        message={`Screenshot ${(titleMsg? `'${titleMsg}'`:'') + `${(browserType ? ` for '${browserType}'` : '')}`} saved successfully.`}
-        open={true}
-        onClose={onClose}
-        autoHideDuration={5000}
-      />
-    );
-  }
+        `Screenshot ${ `${browserType ? ` for '${browserType}'` : ''}` } saved successfully.`,
+        { autoHideDuration: 5000, onClose },
+      );
+    }
+  }, [browserType, onClose, openSnackbar, result]);
 
-  if (result.pass) {
-    return (
-      <Snackbar
-        open={true}
-        autoHideDuration={5000}
-        onClose={onClose}
-        variant="success"
-        message={`Testing existing screenshot were successful,
-        no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${
-          browserType ? `\nBrowser: ` + browserType : ''
-        }`}
-      />
-    );
-  }
+  React.useEffect(() => {
+    if (!result) return;
 
-  if (result.diffSize || result.error) {
-    return (
-      <Snackbar
-        message={getImageDiffMessages(result)}
-        open={true}
-        onClose={onClose}
-        variant="error"
-      />
-    );
-  }
+    if (result.pass) {
+      openSnackbar(
+        // prettier-ignore
+        `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`,
+        { autoHideDuration: 5000, onClose },
+      );
+      return;
+    }
+
+    if (result.diffSize || result.error) {
+      openSnackbar(getImageDiffMessages(result), {
+        autoHideDuration: 0,
+        onClose,
+      });
+      return;
+    }
+  }, [browserType, onClose, openSnackbar, result, titleMsg]);
+
+  if (!result || result.pass || result.added || result.diffSize || result.error)
+    return null;
 
   return (
     <ImageDiffPreviewDialog
@@ -75,4 +73,5 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
 
 ImageDiffMessage.displayName = 'ImageDiffMessage';
 
-export { ImageDiffMessage };
+const MemoizedImageDiffMessage = React.memo(ImageDiffMessage);
+export { ImageDiffMessage, MemoizedImageDiffMessage };

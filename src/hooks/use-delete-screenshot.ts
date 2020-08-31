@@ -15,8 +15,9 @@ export const useDeleteScreenshot = () => {
     inProgress,
     makeCall,
     ErrorSnackbar,
-    SuccessSnackbar,
-  } = useAsyncApiCall(deleteScreenshotService, false);
+  } = useAsyncApiCall(deleteScreenshotService, false, {
+    successMessage: 'Screenshot deleted successfully.',
+  });
 
   const deleteScreenshot = useCallback(
     async (id: string) => {
@@ -34,7 +35,6 @@ export const useDeleteScreenshot = () => {
 
   return {
     ErrorSnackbar,
-    SuccessSnackbar,
     clearError,
     deleteScreenshot,
     error,

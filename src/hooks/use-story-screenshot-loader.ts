@@ -16,7 +16,6 @@ export const useStoryScreenshotLoader = () => {
     error,
     inProgress: screenshotLoaderInProgress,
     ErrorSnackbar: ScreenshotLoaderErrorSnackbar,
-    SuccessSnackbar: ScreenshotLoaderSuccessSnackbar,
   } = useAsyncApiCall(getStoryScreenshots, false);
 
   const loadScreenShots = useCallback(async () => {
@@ -45,7 +44,6 @@ export const useStoryScreenshotLoader = () => {
 
   return {
     ScreenshotLoaderErrorSnackbar,
-    ScreenshotLoaderSuccessSnackbar,
     error,
     loadScreenShots,
     screenshotLoaderInProgress,

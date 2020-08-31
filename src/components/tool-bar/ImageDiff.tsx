@@ -1,18 +1,17 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { SFC, useCallback } from 'react';
 import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
 import Compare from '@material-ui/icons/Compare';
-import CheckCircle from '@material-ui/icons/CheckCircle';
 import {
   useGlobalImageDiffResults,
   useScreenshotImageDiffResults,
+  useSnackbar,
   useGlobalScreenshotDispatch,
 } from '../../hooks';
-import { Loader, Snackbar } from '../common';
+import { Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
-import { useCurrentStoryData } from '../../hooks/use-current-story-data';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
-import { ScreenshotTestTargetType } from '../../typings';
+import { ScreenshotTestTargetType, StoryData } from '../../typings';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -45,34 +44,32 @@ interface ImageDiffStyleProps {
     button?: string;
   };
   target: ScreenshotTestTargetType;
+  storyData: StoryData;
 }
 
 const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
-  const { target } = props;
+  const { target, storyData } = props;
 
   const classes = useStyles({ classes: props.classes });
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const [success, setSuccess] = useState(false);
-
   const { imageDiffResult } = useGlobalImageDiffResults();
 
-  const storyInfo = useCurrentStoryData();
-
   const { dispatch } = useGlobalScreenshotDispatch();
+
+  const { openSnackbar } = useSnackbar();
 
   const {
     testStoryScreenShots,
     imageDiffTestInProgress,
-    storyImageDiffError,
     clearImageDiffError,
   } = useScreenshotImageDiffResults();
 
   const diffResults =
     target === 'file'
       ? imageDiffResult.filter((x) =>
-          isStoryJsonFile(x.fileName, storyInfo.parameters.fileName),
+          isStoryJsonFile(x.fileName, storyData.parameters.fileName),
         )
       : imageDiffResult;
 
@@ -84,12 +81,30 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
         setAnchorEl(event.currentTarget);
       } else {
         const result = await testStoryScreenShots(target);
+        if (result instanceof Error) {
+          openSnackbar(result.message, {
+            autoHideDuration: null,
+            variant: 'error',
+          });
+          return;
+        }
 
-        if (!(result instanceof Error))
-          setSuccess(result && result.length === 0);
+        if (result && !result.find((x) => !x.pass)) {
+          openSnackbar('All screenshot tests are passed successfully.', {
+            autoHideDuration: null,
+            onClose: clearImageDiffError,
+          });
+        }
       }
     },
-    [anchorEl, diffResults.length, target, testStoryScreenShots],
+    [
+      anchorEl,
+      clearImageDiffError,
+      diffResults.length,
+      openSnackbar,
+      target,
+      testStoryScreenShots,
+    ],
   );
 
   const handleClose = useCallback(() => {
@@ -110,13 +125,9 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
     }
   }, [dispatch, diffResults, target]);
 
-  const handleSuccessHide = useCallback(() => setSuccess(false), []);
-
-  if (!storyInfo) return null;
-
   const title =
     target === 'file'
-      ? `Run diff test for all stories in '${storyInfo.parameters.fileName}' file.`
+      ? `Run diff test for all stories in '${storyData.parameters.fileName}' file.`
       : 'Run diff test for all stories';
 
   return (
@@ -134,7 +145,6 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
           className={classes.imageDiffBadge}
         />
 
-        {success && <CheckCircle className={classes.successIcon} />}
         <Compare viewBox="1.5 1 20 20" />
 
         {diffResults.length > 0 && (
@@ -165,21 +175,6 @@ const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
           progressSize={15}
         />
       </IconButton>
-
-      <Snackbar
-        variant="error"
-        open={storyImageDiffError !== undefined}
-        onClose={clearImageDiffError}
-        autoHideDuration={null}
-        message={storyImageDiffError}
-      />
-      <Snackbar
-        variant="success"
-        open={success}
-        onClose={handleSuccessHide}
-        autoHideDuration={null}
-        message="All screen shot tests are passed successfully."
-      />
     </>
   );
 };

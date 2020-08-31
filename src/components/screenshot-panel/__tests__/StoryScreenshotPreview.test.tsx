@@ -4,15 +4,24 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useScreenshotUpdate } from '../../../hooks/use-screenshot-update';
 import { ScreenshotListPreviewDialog } from '../ScreenshotListPreviewDialog';
-import { Snackbar } from '../../common';
 import { useStoryScreenshotsDiff } from '../../../hooks/use-story-screenshots-diff';
 import { mocked } from 'ts-jest/utils';
-// import { mocked } from 'ts-jest/utils';
+
 import { StoryData, ScreenshotData } from '../../../typings';
 import {
   useScreenshotContext,
   useScreenshotDispatch,
 } from '../../../store/screenshot/context';
+
+import { useSnackbar } from '../../../hooks/use-snackbar';
+
+jest.mock('../../../hooks/use-snackbar');
+
+const openSnackbarMock = jest.fn();
+
+mocked(useSnackbar).mockImplementation(() => ({
+  openSnackbar: openSnackbarMock,
+}));
 
 jest.mock('../../../hooks/use-screenshot-update');
 jest.mock('../../../hooks/use-story-screenshots-diff');
@@ -114,16 +123,8 @@ describe('StoryScreenshotPreview', () => {
 
     await footerActions[1].props.onClick();
 
-    const errorSnackbar = wrapper.find(Snackbar).last();
-
-    expect(errorSnackbar.props().message).toBe(
+    expect(openSnackbarMock.mock.calls[0][0]).toBe(
       `Unable to find image diff result for 'title' screenshot.`,
     );
-
-    errorSnackbar.props().onClose();
-
-    await new Promise((resolve) => setImmediate(resolve));
-
-    expect(wrapper.find(Snackbar).last().props().message).toBe(undefined);
   });
 });

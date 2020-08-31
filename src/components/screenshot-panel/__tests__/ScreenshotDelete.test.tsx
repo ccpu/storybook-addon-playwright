@@ -28,7 +28,6 @@ describe('ScreenshotDelete', () => {
     useDeleteScreenshotMock.mockImplementationOnce(() => {
       return {
         ErrorSnackbar: () => undefined,
-        SuccessSnackbar: () => undefined,
         deleteScreenshot: deleteMock,
       };
     });

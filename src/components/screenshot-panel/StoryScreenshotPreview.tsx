@@ -5,7 +5,7 @@ import {
   useScreenshotUpdate,
   useSnackbar,
 } from '../../hooks';
-import { Loader, Snackbar } from '../common';
+import { Loader } from '../common';
 import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
 import { Button } from '@material-ui/core';
 import {
@@ -30,8 +30,6 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
   const [updateInProgress, setUpdateInProgress] = useState(false);
 
   const { openSnackbar } = useSnackbar();
-
-  const [error, setError] = useState<string>();
 
   const state = useScreenshotContext();
 
@@ -58,14 +56,12 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
         variant: 'success',
       });
     } catch (error) {
-      setError(error.message);
+      openSnackbar(error.message, {
+        variant: 'error',
+      });
     }
     setUpdateInProgress(false);
   }, [openSnackbar, state, updateScreenshot]);
-
-  const handleErrorClose = useCallback(() => {
-    setError(undefined);
-  }, []);
 
   React.useEffect(() => {
     dispatch({
@@ -115,14 +111,6 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
           <Loader open={updateInProgress} />
         </ScreenshotListPreviewDialog>
       )}
-
-      <Snackbar
-        variant="error"
-        title="Error"
-        message={error}
-        open={Boolean(error)}
-        onClose={handleErrorClose}
-      />
     </>
   );
 };

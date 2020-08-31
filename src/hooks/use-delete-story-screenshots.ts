@@ -8,9 +8,10 @@ export const useDeleteStoryScreenshot = () => {
   const {
     makeCall,
     ErrorSnackbar: DeleteScreenshotsErrorSnackbar,
-    SuccessSnackbar: SuccessSnackbarDeleteScreenshots,
     inProgress: deleteInProgress,
-  } = useAsyncApiCall(deleteStoryScreenshotsClient, false);
+  } = useAsyncApiCall(deleteStoryScreenshotsClient, false, {
+    successMessage: 'Story screenshots deleted successfully.',
+  });
 
   const data = useCurrentStoryData();
   const dispatch = useScreenshotDispatch();
@@ -27,7 +28,6 @@ export const useDeleteStoryScreenshot = () => {
 
   return {
     DeleteScreenshotsErrorSnackbar,
-    SuccessSnackbarDeleteScreenshots,
     deleteInProgress,
     deleteStoryScreenshots,
   };

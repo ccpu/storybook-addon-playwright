@@ -8,7 +8,6 @@ import { useScreenshotDispatch } from '../store/screenshot';
 export const useScreenshotIndexChange = () => {
   const {
     ErrorSnackbar: ChangeIndexErrorSnackbar,
-    SuccessSnackbar: ChangeIndexSuccessSnackbar,
     makeCall,
     inProgress: ChangeIndexInProgress,
   } = useAsyncApiCall(changeScreenShotIndex, false);
@@ -43,7 +42,6 @@ export const useScreenshotIndexChange = () => {
   return {
     ChangeIndexErrorSnackbar,
     ChangeIndexInProgress,
-    ChangeIndexSuccessSnackbar,
     changeIndex,
   };
 };

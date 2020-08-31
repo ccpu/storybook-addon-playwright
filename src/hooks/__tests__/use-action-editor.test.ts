@@ -25,7 +25,6 @@ const onSaveMock = jest.fn();
 
 mocked(useAsyncApiCall).mockImplementation(() => ({
   ErrorSnackbar: jest.fn(),
-  SuccessSnackbar: jest.fn(),
   clearError: jest.fn(),
   clearResult: jest.fn(),
   error: undefined,

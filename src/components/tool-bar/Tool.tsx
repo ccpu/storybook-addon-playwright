@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import { CommonProvider } from '../common';
 import { PreviewDialog } from '../screenshot-preview';
 import WebOutlined from '@material-ui/icons/Launch';
-import { useAddonState } from '../../hooks';
+import { useAddonState, useCurrentStoryData } from '../../hooks';
 import { LayoutRight, LayoutBottom } from '../../icons';
 import { PreviewPlacementMenu } from './PreviewPlacementMenu';
 import { useStorybookState } from '@storybook/api';
@@ -40,6 +40,8 @@ const Tool: SFC = () => {
 
   const { setAddonState, addonState } = useAddonState();
 
+  const storyData = useCurrentStoryData();
+
   const state = useStorybookState();
 
   const resetSetting = useResetSetting();
@@ -68,6 +70,7 @@ const Tool: SFC = () => {
   }, [addonState, isEnablePreviewPanelEnabled, setAddonState]);
 
   const classes = useStyles();
+
   return (
     <CommonProvider>
       <Separator />
@@ -99,15 +102,25 @@ const Tool: SFC = () => {
         <RefreshIcon viewBox="1.5 1 20 20" />
       </IconButton>
 
-      <Separator />
-
-      <ImageDiff classes={{ button: classes.button }} target="all" />
-      <ScreenshotUpdateIcon target="all" />
-      <span className={classes.asterisk}>*</span>
-      <Separator />
-
-      <ImageDiff classes={{ button: classes.button }} target="file" />
-      <ScreenshotUpdateIcon target="file" />
+      {storyData && (
+        <>
+          <Separator />
+          <ImageDiff
+            classes={{ button: classes.button }}
+            storyData={storyData}
+            target="all"
+          />
+          <ScreenshotUpdateIcon target="all" />
+          <span className={classes.asterisk}>*</span>
+          <Separator />
+          <ImageDiff
+            classes={{ button: classes.button }}
+            storyData={storyData}
+            target="file"
+          />
+          <ScreenshotUpdateIcon target="file" />
+        </>
+      )}
 
       <Separator />
       <PreviewDialog open={open} onClose={handleClose} />

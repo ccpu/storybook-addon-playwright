@@ -2,16 +2,23 @@ import React from 'react';
 import { useSnackbar as notistackUseSnackbar, OptionsObject } from 'notistack';
 import { SnackbarContent, SnackbarContentProps } from '../components/common';
 
+type Options = OptionsObject &
+  Pick<SnackbarContentProps, 'title' | 'closeIcon' | 'onRetry'>;
+
+const defaultOptions: Options = {
+  preventDuplicate: true,
+  variant: 'success',
+};
+
 export const useSnackbar = () => {
   const { closeSnackbar, enqueueSnackbar } = notistackUseSnackbar();
 
   const openSnackbar = React.useCallback(
-    (
-      message: string,
-      options: OptionsObject &
-        Pick<SnackbarContentProps, 'title' | 'closeIcon' | 'onRetry'> = {},
-    ) => {
-      const { closeIcon, title, onRetry, ...rest } = options;
+    (message: string, options: Options = {}) => {
+      const { closeIcon, title, onRetry, ...rest } = {
+        ...options,
+        ...defaultOptions,
+      };
 
       // eslint-disable-next-line prefer-const
       let key: React.ReactText;

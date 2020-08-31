@@ -10,12 +10,10 @@ import { useCurrentStoryData } from './use-current-story-data';
 export const useActionEditor = (actionSet: ActionSet) => {
   const dispatch = useActionDispatchContext();
 
-  const {
-    makeCall,
-    ErrorSnackbar,
-    SuccessSnackbar,
-    inProgress,
-  } = useAsyncApiCall(saveActionSet, false);
+  const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(
+    saveActionSet,
+    false,
+  );
 
   const state = useActionContext();
 
@@ -102,7 +100,6 @@ export const useActionEditor = (actionSet: ActionSet) => {
 
   return {
     ErrorSnackbar,
-    SuccessSnackbar,
     cancelEditActionSet,
     clearValidationResult,
     handleAddAction,

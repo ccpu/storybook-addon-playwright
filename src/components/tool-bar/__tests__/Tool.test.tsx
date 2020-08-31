@@ -8,6 +8,7 @@ import { useAddonState } from '../../../hooks//use-addon-state';
 import { useStorybookState } from '@storybook/api';
 
 jest.mock('../../../hooks/use-addon-state.ts');
+jest.mock('../../../hooks/use-current-story-data.ts');
 
 describe('Tool', () => {
   beforeAll(() => {

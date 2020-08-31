@@ -10,7 +10,6 @@ export const useScreenshotUpdate = () => {
     inProgress: updateScreenshotInProgress,
     clearResult: updateScreenshotClearResult,
     ErrorSnackbar: UpdateScreenshotErrorSnackbar,
-    SuccessSnackbar: UpdateScreenshotSuccessSnackbar,
   } = useAsyncApiCall(updateScreenshotClient, false);
 
   const dispatch = useScreenshotDispatch();
@@ -45,7 +44,6 @@ export const useScreenshotUpdate = () => {
 
   return {
     UpdateScreenshotErrorSnackbar,
-    UpdateScreenshotSuccessSnackbar,
     updateScreenshot,
     updateScreenshotClearResult,
     updateScreenshotInProgress,

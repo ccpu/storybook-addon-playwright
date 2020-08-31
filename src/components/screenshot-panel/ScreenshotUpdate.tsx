@@ -27,7 +27,6 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     UpdateScreenshotErrorSnackbar,
     updateScreenshot,
     updateScreenshotInProgress,
-    UpdateScreenshotSuccessSnackbar,
   } = useScreenshotUpdate();
 
   const {
@@ -35,7 +34,9 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     inProgress: testScreenshotInProgress,
     clearResult: testScreenshotClearResult,
     result: testScreenshotResult,
-  } = useAsyncApiCall(testScreenshotClient);
+  } = useAsyncApiCall(testScreenshotClient, true, {
+    successMessage: 'Screenshot saved Successfully.',
+  });
 
   const handleUpdate = useCallback(async () => {
     if (imageDiffResult) {
@@ -101,7 +102,6 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
       )}
       <Loader open={updateScreenshotInProgress} />
       <UpdateScreenshotErrorSnackbar />
-      <UpdateScreenshotSuccessSnackbar message="Screenshot saved Successfully." />
     </>
   );
 };

@@ -6,12 +6,10 @@ import { saveActionSet } from '../api/client';
 import { useActionDispatchContext } from '../store';
 
 export const useCopyActionSet = (storyData: StoryData) => {
-  const {
-    makeCall,
-    ErrorSnackbar,
-    SuccessSnackbar,
-    inProgress,
-  } = useAsyncApiCall(saveActionSet, false);
+  const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(
+    saveActionSet,
+    false,
+  );
 
   const dispatch = useActionDispatchContext();
 
@@ -37,5 +35,5 @@ export const useCopyActionSet = (storyData: StoryData) => {
     [storyData, dispatch, makeCall],
   );
 
-  return { ErrorSnackbar, SuccessSnackbar, copyActionSet, inProgress };
+  return { ErrorSnackbar, copyActionSet, inProgress };
 };

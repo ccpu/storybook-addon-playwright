@@ -1,15 +1,26 @@
+import '../../../../__manual_mocks__/react-useEffect';
+import { storyData } from '../../../../__test_data__/story-data';
 import { ImageDiff } from '../ImageDiff';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
 import { useScreenshotImageDiffResults } from '../../../hooks/use-screenshot-imageDiff-results';
-import { Snackbar } from '../../common';
 import { useGlobalImageDiffResults } from '../../../hooks/use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
 import { mocked } from 'ts-jest/utils';
 import { useGlobalScreenshotDispatch } from '../../../hooks';
+import { useSnackbar } from '../../../hooks/use-snackbar';
+import { StoryData } from '../../../typings';
+
+jest.mock('../../../hooks/use-snackbar');
+
+const openSnackbarMock = jest.fn();
+
+mocked(useSnackbar).mockImplementation(() => ({
+  openSnackbar: openSnackbarMock,
+}));
 
 jest.mock('../../../hooks/use-global-imageDiff-results.ts');
 jest.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
@@ -21,9 +32,22 @@ mocked(useGlobalScreenshotDispatch).mockImplementation(() => ({
   dispatch: screenshotDispatchMock,
 }));
 
-describe('ImageDiff', () => {
-  const testStoryScreenShotsMock = jest.fn();
+const testStoryScreenShotsMock = jest.fn();
+mocked(useScreenshotImageDiffResults).mockImplementation(() => {
+  return {
+    ErrorSnackbar: () => React.createElement('div'),
+    clearImageDiffError: jest.fn(),
+    imageDiffTestInProgress: false,
+    storyData: {
+      id: 'story-id',
+      parameters: { fileName: 'story.ts' },
+    } as StoryData,
+    storyImageDiffError: 'error',
+    testStoryScreenShots: testStoryScreenShotsMock,
+  };
+});
 
+describe('ImageDiff', () => {
   const imageDiffResult = [
     {
       fileName: 'test.stories.playwright.json',
@@ -31,12 +55,6 @@ describe('ImageDiff', () => {
       screenshotId: 'screenshot-id',
     },
   ] as ImageDiffResult[];
-
-  (useScreenshotImageDiffResults as jest.Mock).mockImplementation(() => {
-    return {
-      testStoryScreenShots: testStoryScreenShotsMock,
-    };
-  });
 
   beforeEach(() => {
     (useGlobalImageDiffResults as jest.Mock).mockImplementation(() => {
@@ -60,7 +78,7 @@ describe('ImageDiff', () => {
   }
 
   it('should render', () => {
-    const wrapper = shallow(<ImageDiff target="story" />);
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
@@ -73,7 +91,7 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff target="story" />);
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
     clickOnIconButton(wrapper);
 
@@ -86,8 +104,8 @@ describe('ImageDiff', () => {
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(0);
   });
 
-  it('should run image diff and show/hide success if no image diff result returned', async () => {
-    const wrapper = shallow(<ImageDiff target="story" />);
+  it('should run image diff and show/hide success msg', async () => {
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
     testStoryScreenShotsMock.mockImplementationOnce((): ImageDiffResult[] => {
       return [];
@@ -97,13 +115,21 @@ describe('ImageDiff', () => {
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
 
-    const snackbar = wrapper.find(Snackbar).last();
+    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+      'All screenshot tests are passed successfully.',
+    );
+  });
 
-    expect(snackbar.props().open).toBeTruthy();
+  it('should not show success if has a result with pass=false', async () => {
+    testStoryScreenShotsMock.mockImplementationOnce(
+      () => [{ pass: false }] as ImageDiffResult[],
+    );
 
-    snackbar.props().onClose();
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
-    expect(wrapper.find(Snackbar).last().props().open).toBeFalsy();
+    await clickOnIconButton(wrapper);
+
+    expect(openSnackbarMock).toHaveBeenCalledTimes(0);
   });
 
   it('should show menu', () => {
@@ -116,11 +142,11 @@ describe('ImageDiff', () => {
         },
       ] as ImageDiffResult[],
     }));
-    const wrapper = shallow(<ImageDiff target="story" />);
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
     expect(wrapper.find(Menu)).toHaveLength(1);
   });
 
-  it('should clear result', () => {
+  it('should clear result', async () => {
     (useGlobalImageDiffResults as jest.Mock)
       .mockImplementationOnce(() => {
         return { imageDiffResult };
@@ -129,9 +155,9 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff target="story" />);
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
-    clickOnIconButton(wrapper);
+    await clickOnIconButton(wrapper);
 
     expect(wrapper.find(Menu)).toHaveLength(1);
 
@@ -146,7 +172,7 @@ describe('ImageDiff', () => {
     expect(wrapper.find(Menu)).toHaveLength(0);
   });
 
-  it('should hide menu on item click', () => {
+  it('should hide menu on item click', async () => {
     (useGlobalImageDiffResults as jest.Mock)
       .mockImplementationOnce(() => {
         return { imageDiffResult };
@@ -158,9 +184,9 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff target="story" />);
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
-    clickOnIconButton(wrapper);
+    await clickOnIconButton(wrapper);
 
     expect(wrapper.find(Menu).props().anchorEl).not.toBe(null);
 
@@ -170,14 +196,14 @@ describe('ImageDiff', () => {
   });
 
   it('should test story file', () => {
-    const wrapper = shallow(<ImageDiff target="story" />);
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
     clickOnIconButton(wrapper);
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledWith('story');
   });
 
-  it('should remove only story file image diff', () => {
+  it('should remove only story file image diff', async () => {
     (useGlobalImageDiffResults as jest.Mock)
       .mockImplementation(() => {
         return { imageDiffResult };
@@ -186,9 +212,9 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff target="file" />);
+    const wrapper = shallow(<ImageDiff target="file" storyData={storyData} />);
 
-    clickOnIconButton(wrapper);
+    await clickOnIconButton(wrapper);
 
     expect(wrapper.find(Menu)).toHaveLength(1);
 
@@ -204,5 +230,15 @@ describe('ImageDiff', () => {
       screenshotId: 'screenshot-id',
       type: 'removeImageDiffResult',
     });
+  });
+
+  it('should show error server throw error', async () => {
+    testStoryScreenShotsMock.mockImplementationOnce(() => new Error('ops'));
+
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
+
+    await clickOnIconButton(wrapper);
+
+    expect(openSnackbarMock.mock.calls[0][0]).toBe('ops');
   });
 });

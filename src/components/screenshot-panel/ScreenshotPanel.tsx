@@ -34,7 +34,6 @@ const ScreenshotPanel = () => {
 
   const {
     DeleteScreenshotsErrorSnackbar,
-    SuccessSnackbarDeleteScreenshots,
     deleteInProgress,
     deleteStoryScreenshots,
   } = useDeleteStoryScreenshot();
@@ -106,7 +105,6 @@ const ScreenshotPanel = () => {
       )}
 
       <DeleteScreenshotsErrorSnackbar />
-      <SuccessSnackbarDeleteScreenshots message="Story screenshots deleted successfully." />
     </>
   );
 };

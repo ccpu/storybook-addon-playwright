@@ -17,13 +17,27 @@ export const useScreenshotListUpdateDialog = (
     {},
   );
 
+  // to prevent rendering loop
+  const [isLoadingFinish, setIsLoadingFinish] = React.useState<boolean>(false);
+
   const runDiffTest = React.useCallback(() => {
     setUpdateInf({ inProgress: true, reqBy, target });
   }, [reqBy, setUpdateInf, target]);
 
   const handleClose = React.useCallback(() => {
     setUpdateInf({});
+    setIsLoadingFinish(false);
   }, [setUpdateInf]);
 
-  return { handleClose, runDiffTest, updateInf };
+  React.useEffect(() => {
+    if (updateInf && updateInf.inProgress && isLoadingFinish)
+      setUpdateInf({ ...updateInf, inProgress: false });
+  }, [isLoadingFinish, setUpdateInf, updateInf]);
+
+  return {
+    handleClose,
+    runDiffTest,
+    setIsLoadingFinish,
+    updateInf,
+  };
 };

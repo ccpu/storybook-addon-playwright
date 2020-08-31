@@ -21,13 +21,16 @@ describe('ImagePreview', () => {
     expect(wrapper.type()).toBe(null);
   });
 
-  it('should render nothing for when imgSrcString prop value changed, to refresh MapInteraction', () => {
+  it('should render nothing when imgSrcString prop value changed, to refresh MapInteraction', () => {
     jest.useFakeTimers();
     const wrapper = shallow(<ImagePreview imgSrcString="base64-mage" />);
+
+    const oldProps = wrapper.find(MapInteraction).props();
+
     wrapper.setProps({ imgSrcString: 'base64-mage-2' });
-    expect(wrapper.exists()).toBeTruthy();
-    expect(wrapper.type()).toBe(null);
-    jest.runTimersToTime(2);
-    expect(wrapper.type()).toBe(MapInteraction);
+
+    const newProps = wrapper.find(MapInteraction).props();
+
+    expect(oldProps === newProps).toBeFalsy();
   });
 });

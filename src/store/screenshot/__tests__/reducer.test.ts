@@ -256,4 +256,17 @@ describe('screenshot reducer', () => {
     expect(result.screenshots).toStrictEqual([]);
     expect(result.imageDiffResults).toStrictEqual([]);
   });
+
+  it('should removePassedImageDiffResult', () => {
+    const result = reducer(
+      {
+        imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
+        screenshots: [getScreenshotData()],
+      },
+      {
+        type: 'removePassedImageDiffResult',
+      },
+    );
+    expect(result.imageDiffResults).toStrictEqual([]);
+  });
 });

@@ -18,7 +18,7 @@ export * from './use-global-screenshot-dispatch';
 export * from './use-browser-options';
 export * from './use-async-api-call';
 export * from './use-key-press';
-// export * from './use-story-screenshot-imageDiff';
+export * from './use-snackbar';
 export * from './use-screenshot-imageDiff';
 export * from './use-screenshot-imageDiff-results';
 export * from './use-global-imageDiff-results';

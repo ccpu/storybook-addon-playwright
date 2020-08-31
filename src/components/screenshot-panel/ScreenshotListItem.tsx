@@ -113,7 +113,7 @@ function ScreenshotListItem({
         handleRemoveScreenShotResult();
       }, 10000);
     }
-    () => {
+    return () => {
       window.clearTimeout(timer.current);
     };
   }, [

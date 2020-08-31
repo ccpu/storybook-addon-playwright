@@ -4,7 +4,6 @@ import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-result
 import { ImageDiffResult } from '../api/typings';
 import { isStoryJsonFile } from '../utils';
 import { useScreenshotDispatch } from '../store/screenshot';
-// import useMount from 'react-use/lib/useMount';
 
 const getScreenshotDataFromDiffResult = (
   results: ImageDiffResult[],
@@ -24,9 +23,11 @@ const getScreenshotDataFromDiffResult = (
     .map((x) => x.screenshotData);
 };
 
-export const useStoryScreenshotsDiff = (target: ScreenshotTestTargetType) => {
+export const useStoryScreenshotsDiff = (
+  target: ScreenshotTestTargetType,
+  onLoaded: () => void,
+) => {
   const {
-    clearImageDiffError,
     imageDiffTestInProgress,
     testStoryScreenShots,
     storyData,
@@ -47,13 +48,14 @@ export const useStoryScreenshotsDiff = (target: ScreenshotTestTargetType) => {
         ),
         type: 'setScreenshots',
       });
+    onLoaded();
     setLoaded(true);
-  }, [testStoryScreenShots, dispatch, target, storyData]);
+  }, [testStoryScreenShots, target, dispatch, storyData, onLoaded]);
 
   useEffect(() => {
-    if (!storyData) return;
+    if (!storyData || loaded) return;
     loadData();
-  }, [clearImageDiffError, loadData, storyData, testStoryScreenShots, target]);
+  }, [loadData, loaded, storyData]);
 
-  return { loaded, loading: imageDiffTestInProgress, storyData };
+  return { loading: imageDiffTestInProgress, storyData };
 };

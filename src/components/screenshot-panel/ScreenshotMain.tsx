@@ -12,11 +12,16 @@ export interface ScreenshotMainProps {
 const ScreenshotMain: SFC<ScreenshotMainProps> = ({ showPanel }) => {
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
-  const { updateInf, handleClose } = useScreenshotListUpdateDialog('');
+  const {
+    updateInf,
+    handleClose,
+    setIsLoadingFinish,
+  } = useScreenshotListUpdateDialog('');
 
   const handleOnLoad = React.useCallback(() => {
     setDialogOpen(true);
-  }, []);
+    setIsLoadingFinish(true);
+  }, [setIsLoadingFinish]);
 
   const handleOnClose = React.useCallback(() => {
     handleClose();

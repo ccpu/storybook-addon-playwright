@@ -7,6 +7,8 @@ import { mocked } from 'ts-jest/utils';
 
 jest.mock('../../../store/screenshot/context');
 jest.mock('../../../hooks/use-current-story-data');
+jest.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
+
 const useScreenshotContextMock = mocked(useScreenshotContext);
 
 describe('ScreenshotList', () => {

@@ -140,7 +140,7 @@ export function reducer(
         imageDiffResults: state.imageDiffResults.map((result) => {
           if (result.screenshotId !== action.imageDiffResult.screenshotId)
             return result;
-          return { ...action.imageDiffResult };
+          return { ...result, ...action.imageDiffResult };
         }),
       };
     }

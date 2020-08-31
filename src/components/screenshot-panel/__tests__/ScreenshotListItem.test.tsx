@@ -1,5 +1,5 @@
 import { dispatchMock } from '../../../../__manual_mocks__/store/screenshot/context';
-import '../../../../__manual_mocks__/react-useEffect';
+import { useEffectCleanup } from '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotListItem } from '../ScreenshotListItem';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -243,5 +243,20 @@ describe('ScreenshotListItem', () => {
       id: 'screenshot-id',
       title: 'title',
     });
+  });
+
+  it('should clearTimeout', () => {
+    const spyOnClearTimeout = jest.spyOn(window, 'clearTimeout');
+    shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
+        showPreviewOnClick
+        pauseDeleteImageDiffResult={false}
+      />,
+    );
+    useEffectCleanup();
+    expect(spyOnClearTimeout).toHaveBeenCalledTimes(1);
   });
 });

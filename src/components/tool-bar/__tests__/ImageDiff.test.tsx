@@ -60,7 +60,7 @@ describe('ImageDiff', () => {
   }
 
   it('should render', () => {
-    const wrapper = shallow(<ImageDiff />);
+    const wrapper = shallow(<ImageDiff target="story" />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
@@ -73,7 +73,7 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff />);
+    const wrapper = shallow(<ImageDiff target="story" />);
 
     clickOnIconButton(wrapper);
 
@@ -87,7 +87,7 @@ describe('ImageDiff', () => {
   });
 
   it('should run image diff and show/hide success if no image diff result returned', async () => {
-    const wrapper = shallow(<ImageDiff />);
+    const wrapper = shallow(<ImageDiff target="story" />);
 
     testStoryScreenShotsMock.mockImplementationOnce((): ImageDiffResult[] => {
       return [];
@@ -116,7 +116,7 @@ describe('ImageDiff', () => {
         },
       ] as ImageDiffResult[],
     }));
-    const wrapper = shallow(<ImageDiff />);
+    const wrapper = shallow(<ImageDiff target="story" />);
     expect(wrapper.find(Menu)).toHaveLength(1);
   });
 
@@ -129,7 +129,7 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff />);
+    const wrapper = shallow(<ImageDiff target="story" />);
 
     clickOnIconButton(wrapper);
 
@@ -158,7 +158,7 @@ describe('ImageDiff', () => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff />);
+    const wrapper = shallow(<ImageDiff target="story" />);
 
     clickOnIconButton(wrapper);
 
@@ -170,7 +170,7 @@ describe('ImageDiff', () => {
   });
 
   it('should test story file', () => {
-    const wrapper = shallow(<ImageDiff testCurrentStory={true} />);
+    const wrapper = shallow(<ImageDiff target="story" />);
 
     clickOnIconButton(wrapper);
 
@@ -179,14 +179,14 @@ describe('ImageDiff', () => {
 
   it('should remove only story file image diff', () => {
     (useGlobalImageDiffResults as jest.Mock)
-      .mockImplementationOnce(() => {
+      .mockImplementation(() => {
         return { imageDiffResult };
       })
       .mockImplementationOnce(() => {
         return { imageDiffResult };
       });
 
-    const wrapper = shallow(<ImageDiff testCurrentStory={true} />);
+    const wrapper = shallow(<ImageDiff target="file" />);
 
     clickOnIconButton(wrapper);
 

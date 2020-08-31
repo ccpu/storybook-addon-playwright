@@ -19,6 +19,7 @@ describe('ScreenshotMain', () => {
       handleClose: jest.fn(),
       handleLoadingDone: jest.fn(),
       runDiffTest: jest.fn(),
+      setIsLoadingFinish: jest.fn(),
       updateInf: {
         reqBy: 'req-id',
       },

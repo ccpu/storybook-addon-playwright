@@ -74,7 +74,7 @@ describe('ScreenshotUpdate', () => {
       // @ts-ignore
       .footerActions().props.children as { props: { onClick: () => void } }[];
 
-    footerButtons[1].props.onClick();
+    await footerButtons[1].props.onClick();
 
     expect(footerButtons).toHaveLength(2);
 
@@ -92,15 +92,17 @@ describe('ScreenshotUpdate', () => {
         screenshot={getScreenshotDate()}
         onStateChange={jest.fn()}
         imageDiffResult={{
+          fileName: './test.stories.tsx',
           newScreenshot: 'base64-image',
           pass: true,
           screenshotId: 'screenshot-id',
+          storyId: 'story-id',
         }}
       />,
     );
     const iconButton = wrapper.find(IconButton).first();
 
-    iconButton
+    await iconButton
       .props()
       .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 

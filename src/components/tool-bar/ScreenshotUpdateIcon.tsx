@@ -32,7 +32,7 @@ const ScreenshotUpdateIcon: SFC<ScreenshotUpdateIconProps> = ({ target }) => {
       <Update viewBox="1.5 1 20 20" />
       <Loader
         position="absolute"
-        open={updateInf.reqBy === reqBy}
+        open={updateInf.reqBy === reqBy && updateInf.inProgress}
         progressSize={15}
       />
     </IconButton>

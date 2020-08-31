@@ -12,19 +12,19 @@ const ImagePreview: SFC<ImagePreviewProps> = (props) => {
   const { imgSrcString, diffDirection } = props;
   const isPressed = useKeyPress('Control');
   const prevImage = useRef<string>();
-  const timer = useRef<number>(0);
+
   const [reset, setReset] = useState(false);
 
   useEffect(() => {
     if (prevImage.current !== imgSrcString) {
       setReset(true);
-      timer.current = window.setTimeout(() => {
-        setReset(false);
-      }, 2);
     }
     prevImage.current === imgSrcString;
-    () => window.clearTimeout(timer.current);
   }, [imgSrcString]);
+
+  React.useEffect(() => {
+    if (reset) setReset(false);
+  }, [reset]);
 
   if (!imgSrcString || reset) return null;
 

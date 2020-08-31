@@ -1,6 +1,10 @@
 import React, { SFC, useCallback, useState } from 'react';
 import { ScreenshotTestTargetType } from '../../typings';
-import { useStoryScreenshotsDiff, useScreenshotUpdate } from '../../hooks';
+import {
+  useStoryScreenshotsDiff,
+  useScreenshotUpdate,
+  useSnackbar,
+} from '../../hooks';
 import { Loader, Snackbar } from '../common';
 import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
 import { Button } from '@material-ui/core';
@@ -19,15 +23,15 @@ export interface StoryScreenshotPreviewProps {
 const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
   const { onClose, updating, target, onLoad } = props;
 
-  const { loading, storyData, loaded } = useStoryScreenshotsDiff(target);
+  const { loading, storyData } = useStoryScreenshotsDiff(target, onLoad);
 
   const dispatch = useScreenshotDispatch();
 
   const [updateInProgress, setUpdateInProgress] = useState(false);
 
+  const { openSnackbar } = useSnackbar();
+
   const [error, setError] = useState<string>();
-  const [success, setSuccess] = useState(false);
-  const [openDialog, setOpenDialog] = useState(true);
 
   const state = useScreenshotContext();
 
@@ -36,7 +40,7 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
   const handleSave = useCallback(async () => {
     setUpdateInProgress(true);
     try {
-      const promises = state.screenshots.map((s) => {
+      const promises = state.screenshots.reduce((arr, s) => {
         const imageDiffResult = state.imageDiffResults.find(
           (x) => x.screenshotId === s.id,
         );
@@ -45,45 +49,44 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
             `Unable to find image diff result for '${s.title}' screenshot.`,
           );
         }
-        updateScreenshot(imageDiffResult);
-      });
+        arr.push(updateScreenshot(imageDiffResult));
+        return arr;
+      }, []);
 
       await Promise.all(promises);
-      setSuccess(true);
-      setOpenDialog(false);
+      openSnackbar('Story screenshots updates successfully.', {
+        variant: 'success',
+      });
     } catch (error) {
       setError(error.message);
     }
     setUpdateInProgress(false);
-  }, [state.imageDiffResults, state.screenshots, updateScreenshot]);
+  }, [openSnackbar, state, updateScreenshot]);
 
   const handleErrorClose = useCallback(() => {
     setError(undefined);
   }, []);
 
   React.useEffect(() => {
-    if (openDialog) {
+    dispatch({
+      state: true,
+      type: 'pauseDeleteImageDiffResult',
+    });
+
+    return () => {
       dispatch({
-        state: true,
+        state: false,
         type: 'pauseDeleteImageDiffResult',
       });
-    }
-  }, [dispatch, openDialog]);
-
-  const handleClose = React.useCallback(() => {
-    dispatch({
-      type: 'removePassedImageDiffResult',
-    });
-    onClose();
-  }, [dispatch, onClose]);
-
-  React.useEffect(() => {
-    if (loaded && onLoad) onLoad();
-  }, [loaded, onLoad]);
+      dispatch({
+        type: 'removePassedImageDiffResult',
+      });
+    };
+  }, [dispatch]);
 
   return (
     <>
-      <Loader open={loading} />
+      <Loader open={loading || updateInProgress} />
       {!loading && (
         <ScreenshotListPreviewDialog
           title={
@@ -91,15 +94,15 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
             'Following screenshots will be saved, would you like to continue?'
           }
           screenshots={state.screenshots}
-          onClose={handleClose}
-          open={openDialog}
+          onClose={onClose}
+          open={true}
           storyData={storyData}
-          draggable={target === 'story'}
+          draggable={target === 'story' && !updateInProgress}
           footerActions={
             updating &&
             (() => (
               <>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={onClose} color="primary">
                   No
                 </Button>
                 <Button onClick={handleSave} color="primary" autoFocus>
@@ -112,13 +115,6 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
           <Loader open={updateInProgress} />
         </ScreenshotListPreviewDialog>
       )}
-      <Snackbar
-        variant="success"
-        message="Story screenshots updates successfully."
-        open={success}
-        onClose={handleClose}
-        autoHideDuration={4000}
-      />
 
       <Snackbar
         variant="error"

@@ -1,3 +1,4 @@
+import { useEffectCleanup } from '../../../../__manual_mocks__/react-useEffect';
 import { SelectorOverlay } from '../SelectorOverlay';
 import { shallow } from 'enzyme';
 import React, { createElement } from 'react';
@@ -12,9 +13,6 @@ const events = {};
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
-  useEffect: (cb: () => void) => {
-    cb();
-  },
   useRef: () => ({
     current: {
       addEventListener: (name: string, callback: () => void) => {
@@ -199,5 +197,12 @@ describe('SelectorOverlay', () => {
       x: 10,
       y: 10,
     });
+  });
+
+  it('should remove style', () => {
+    const spyOnRemoveChild = jest.spyOn(document.head, 'removeChild');
+    shallow(<SelectorOverlay iframe={getIframe()} />);
+    useEffectCleanup();
+    expect(spyOnRemoveChild).toHaveBeenCalledTimes(1);
   });
 });

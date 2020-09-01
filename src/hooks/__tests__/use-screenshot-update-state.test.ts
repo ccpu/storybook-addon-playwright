@@ -1,15 +1,15 @@
-import { useScreenshotListUpdateDialog } from '../use-screenshot-list-update-dialog';
+import { useScreenshotUpdateState } from '../use-screenshot-update-state';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 describe('useScreenshotListUpdateDialog', () => {
   it('should have defaults', () => {
-    const { result } = renderHook(() => useScreenshotListUpdateDialog(''));
+    const { result } = renderHook(() => useScreenshotUpdateState(''));
     expect(result.current.updateInf).toStrictEqual({});
   });
 
   it('should run test', () => {
     const { result } = renderHook(() =>
-      useScreenshotListUpdateDialog('req-id', 'all'),
+      useScreenshotUpdateState('req-id', 'all'),
     );
 
     act(() => {
@@ -25,7 +25,7 @@ describe('useScreenshotListUpdateDialog', () => {
 
   it('should change state of in progress', () => {
     const { result } = renderHook(() =>
-      useScreenshotListUpdateDialog('req-id', 'all'),
+      useScreenshotUpdateState('req-id', 'all'),
     );
 
     act(() => {
@@ -45,7 +45,7 @@ describe('useScreenshotListUpdateDialog', () => {
 
   it('should clear all', () => {
     const { result } = renderHook(() =>
-      useScreenshotListUpdateDialog('req-id', 'all'),
+      useScreenshotUpdateState('req-id', 'all'),
     );
 
     act(() => {

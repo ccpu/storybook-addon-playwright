@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useScreenshotUpdate } from '../../../hooks/use-screenshot-update';
 import { ScreenshotListPreviewDialog } from '../ScreenshotListPreviewDialog';
-import { useStoryScreenshotsDiff } from '../../../hooks/use-story-screenshots-diff';
+import { useImageDiffScreenshots } from '../../../hooks/use-imagediff-screenshots';
 import { mocked } from 'ts-jest/utils';
 
 import { StoryData, ScreenshotData } from '../../../typings';
@@ -24,7 +24,7 @@ mocked(useSnackbar).mockImplementation(() => ({
 }));
 
 jest.mock('../../../hooks/use-screenshot-update');
-jest.mock('../../../hooks/use-story-screenshots-diff');
+jest.mock('../../../hooks/use-imagediff-screenshots');
 jest.mock('../../../store/screenshot/context');
 
 mocked(useScreenshotContext).mockImplementation(() => ({
@@ -40,7 +40,7 @@ mocked(useScreenshotDispatch).mockImplementation(() => {
   };
 });
 
-mocked(useStoryScreenshotsDiff).mockImplementationOnce(() => ({
+mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
   loaded: true,
   loading: false,
   storyData: {} as StoryData,

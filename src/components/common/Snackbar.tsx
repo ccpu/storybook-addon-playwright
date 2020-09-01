@@ -1,8 +1,7 @@
 import React, { SFC, memo, useEffect, useRef, useCallback } from 'react';
 import { useSnackbar, SnackbarKey, OptionsObject } from 'notistack';
-import { AlertTitle } from '@material-ui/lab';
-import CloseSharp from '@material-ui/icons/CloseSharp';
 import objectHash from 'object-hash';
+import { SnackbarContent } from './SnackbarContent';
 
 export interface SnackbarProps extends Omit<OptionsObject, 'onClose'> {
   title?: string;
@@ -62,26 +61,14 @@ const Snackbar: SFC<SnackbarProps> = memo(
       }
 
       key.current = enqueueSnackbar(
-        <div style={{ position: 'relative' }}>
-          {closeIcon && (
-            <CloseSharp
-              style={{
-                cursor: 'pointer',
-                fontSize: 16,
-                position: 'absolute',
-                right: -15,
-                top: -13,
-              }}
-              onClick={() => closeSnackbar(key.current)}
-            />
-          )}
-          {title && <AlertTitle>{title}</AlertTitle>}
-          {message
-            ? message.split('\n').map((x, i) => {
-                return <div key={i}>{x}</div>;
-              })
-            : children}
-        </div>,
+        <SnackbarContent
+          closeIcon={closeIcon}
+          message={message}
+          onClose={() => closeSnackbar(key.current)}
+          title={title}
+        >
+          {children}
+        </SnackbarContent>,
         {
           onClose: handleClose,
           preventDuplicate,

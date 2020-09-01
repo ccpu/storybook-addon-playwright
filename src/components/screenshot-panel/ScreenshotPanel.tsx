@@ -3,7 +3,7 @@ import {
   useStoryScreenshotLoader,
   useScreenshotImageDiffResults,
   useDeleteStoryScreenshot,
-  useScreenshotListUpdateDialog,
+  useScreenshotUpdateState,
 } from '../../hooks';
 import {
   useScreenshotContext,
@@ -19,10 +19,7 @@ const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
 
   const reqBy = 'screenshot-panel';
-  const { runDiffTest, updateInf } = useScreenshotListUpdateDialog(
-    reqBy,
-    'story',
-  );
+  const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, 'story');
 
   const dispatch = useScreenshotDispatch();
 

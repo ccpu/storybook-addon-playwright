@@ -8,7 +8,7 @@ interface Options {
   reqBy?: string;
 }
 
-export const useScreenshotListUpdateDialog = (
+export const useScreenshotUpdateState = (
   reqBy: string,
   target?: ScreenshotTestTargetType,
 ) => {

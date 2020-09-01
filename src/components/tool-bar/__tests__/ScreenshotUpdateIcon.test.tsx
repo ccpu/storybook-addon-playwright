@@ -2,11 +2,11 @@ import { ScreenshotUpdateIcon } from '../ScreenshotUpdateIcon';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { useScreenshotListUpdateDialog } from '../../../hooks/use-screenshot-list-update-dialog';
+import { useScreenshotUpdateState } from '../../../hooks/use-screenshot-update-state';
 import { mocked } from 'ts-jest/utils';
 import { Loader } from '../../common';
 
-jest.mock('../../../hooks/use-screenshot-list-update-dialog.ts');
+jest.mock('../../../hooks/use-screenshot-update-state.ts');
 
 describe('ScreenshotUpdateIcon', () => {
   it('should render', () => {
@@ -16,7 +16,7 @@ describe('ScreenshotUpdateIcon', () => {
   });
 
   it('should have loader', () => {
-    mocked(useScreenshotListUpdateDialog).mockImplementationOnce(() => ({
+    mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
       handleClose: jest.fn(),
       handleLoadingDone: jest.fn(),
       runDiffTest: jest.fn(),

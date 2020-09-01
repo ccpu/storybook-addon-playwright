@@ -1,6 +1,6 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { createElement } from 'react';
-import { useStoryScreenshotsDiff } from '../use-story-screenshots-diff';
+import { useImageDiffScreenshots } from '../use-imagediff-screenshots';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useScreenshotImageDiffResults } from '../use-screenshot-imageDiff-results';
 import { mocked } from 'ts-jest/utils';
@@ -47,7 +47,7 @@ describe('useStoryScreenshotsDiff', () => {
 
   it('should load story diffs', async () => {
     const onLoadMock = jest.fn();
-    renderHook(() => useStoryScreenshotsDiff('story', onLoadMock));
+    renderHook(() => useImageDiffScreenshots('story', onLoadMock));
 
     await act(async () => {
       await new Promise((resolve) => setImmediate(resolve));
@@ -61,7 +61,7 @@ describe('useStoryScreenshotsDiff', () => {
   });
 
   it('should load file diffs', async () => {
-    renderHook(() => useStoryScreenshotsDiff('file', jest.fn()));
+    renderHook(() => useImageDiffScreenshots('file', jest.fn()));
 
     await act(async () => {
       await new Promise((resolve) => setImmediate(resolve));
@@ -73,7 +73,7 @@ describe('useStoryScreenshotsDiff', () => {
   });
 
   it('should load all diffs', async () => {
-    renderHook(() => useStoryScreenshotsDiff('all', jest.fn()));
+    renderHook(() => useImageDiffScreenshots('all', jest.fn()));
 
     await act(async () => {
       await new Promise((resolve) => setImmediate(resolve));
@@ -90,7 +90,7 @@ describe('useStoryScreenshotsDiff', () => {
       testStoryScreenShots: testStoryScreenShotsMock,
     }));
 
-    renderHook(() => useStoryScreenshotsDiff('story', jest.fn()));
+    renderHook(() => useImageDiffScreenshots('story', jest.fn()));
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(0);
   });

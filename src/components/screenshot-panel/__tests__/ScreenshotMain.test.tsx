@@ -2,11 +2,11 @@ import React from 'react';
 import { ScreenshotMain } from '../ScreenshotMain';
 import { shallow } from 'enzyme';
 import { ScreenshotPanel } from '../ScreenshotPanel';
-import { useScreenshotListUpdateDialog } from '../../../hooks/use-screenshot-list-update-dialog';
+import { useScreenshotUpdateState } from '../../../hooks/use-screenshot-update-state';
 import { mocked } from 'ts-jest/utils';
 import { MemoizedStoryScreenshotPreview } from '../StoryScreenshotPreview';
 
-jest.mock('../../../hooks/use-screenshot-list-update-dialog.ts');
+jest.mock('../../../hooks/use-screenshot-update-state.ts');
 
 describe('ScreenshotMain', () => {
   it('should render', () => {
@@ -15,7 +15,7 @@ describe('ScreenshotMain', () => {
   });
 
   it('should render screenshot list preview', () => {
-    mocked(useScreenshotListUpdateDialog).mockImplementationOnce(() => ({
+    mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
       handleClose: jest.fn(),
       handleLoadingDone: jest.fn(),
       runDiffTest: jest.fn(),

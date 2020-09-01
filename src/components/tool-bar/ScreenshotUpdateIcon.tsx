@@ -3,7 +3,7 @@ import { ScreenshotTestTargetType } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton } from '@storybook/components';
 import { Loader } from '../common';
-import { useScreenshotListUpdateDialog } from '../../hooks/use-screenshot-list-update-dialog';
+import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
 
 export interface ScreenshotUpdateIconProps {
   target: ScreenshotTestTargetType;
@@ -12,10 +12,7 @@ export interface ScreenshotUpdateIconProps {
 const ScreenshotUpdateIcon: SFC<ScreenshotUpdateIconProps> = ({ target }) => {
   const reqBy = 'tool-' + target;
 
-  const { runDiffTest, updateInf } = useScreenshotListUpdateDialog(
-    reqBy,
-    target,
-  );
+  const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, target);
 
   const title =
     target == 'file'

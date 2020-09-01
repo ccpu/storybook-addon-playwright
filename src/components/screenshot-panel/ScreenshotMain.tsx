@@ -3,7 +3,7 @@ import { ScreenshotPanel } from './ScreenshotPanel';
 import { ScreenshotProvider } from '../../store/screenshot';
 import { CommonProvider } from '../common';
 import { MemoizedStoryScreenshotPreview } from './StoryScreenshotPreview';
-import { useScreenshotListUpdateDialog } from '../../hooks';
+import { useScreenshotUpdateState } from '../../hooks';
 
 export interface ScreenshotMainProps {
   showPanel: boolean;
@@ -16,7 +16,7 @@ const ScreenshotMain: SFC<ScreenshotMainProps> = ({ showPanel }) => {
     updateInf,
     handleClose,
     setIsLoadingFinish,
-  } = useScreenshotListUpdateDialog('');
+  } = useScreenshotUpdateState('');
 
   const handleOnLoad = React.useCallback(() => {
     setDialogOpen(true);

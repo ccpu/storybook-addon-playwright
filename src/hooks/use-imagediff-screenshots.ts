@@ -23,7 +23,7 @@ const getScreenshotDataFromDiffResult = (
     .map((x) => x.screenshotData);
 };
 
-export const useStoryScreenshotsDiff = (
+export const useImageDiffScreenshots = (
   target: ScreenshotTestTargetType,
   onLoaded: () => void,
 ) => {

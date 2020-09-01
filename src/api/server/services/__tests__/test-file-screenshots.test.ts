@@ -10,12 +10,22 @@ jest.mock('fast-glob', () => ({
 import { testFileScreenshots } from '../test-file-screenshots';
 import { testStoryScreenshots } from '../test-story-screenshots';
 import { mocked } from 'ts-jest/utils';
+import { defaultConfigs } from '../../../../../__test_data__/configs';
+import { getConfigs } from '../../configs';
 
 jest.mock('../../configs');
 jest.mock('../make-screenshot');
 jest.mock('../../utils/load-story-data');
 jest.mock('../diff-image-to-screenshot');
 jest.mock('../test-story-screenshots.ts');
+
+const beforeFileImageDiffMock = jest.fn();
+const afterFileImageDiffMock = jest.fn();
+mocked(getConfigs).mockImplementation(() => ({
+  afterFileImageDiff: afterFileImageDiffMock,
+  beforeFileImageDiff: beforeFileImageDiffMock,
+  ...defaultConfigs(),
+}));
 
 mocked(testStoryScreenshots).mockImplementation(() => {
   return new Promise((resolve) => {
@@ -53,6 +63,31 @@ describe('testFileScreenshots', () => {
       requestType: 'all',
       storyId: 'story-id',
     });
+  });
+
+  it('should call callbacks', async () => {
+    await testFileScreenshots({
+      fileName: 'story.ts',
+      requestId: 'request-id',
+      requestType: 'all',
+    });
+
+    expect(beforeFileImageDiffMock).toHaveBeenCalledWith({
+      fileName: 'story.ts',
+      requestId: 'request-id',
+      requestType: 'all',
+    });
+    expect(afterFileImageDiffMock).toHaveBeenCalledWith(
+      [
+        {
+          added: true,
+          newScreenshot: 'base64-image',
+          screenshotId: 'screenshot-id',
+          storyId: 'story-id',
+        },
+      ],
+      { fileName: 'story.ts', requestId: 'request-id', requestType: 'all' },
+    );
   });
 
   it('should have result', async () => {

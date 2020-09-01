@@ -24,7 +24,7 @@ export const testStoryScreenshots = async (
 
   const diffs: ImageDiffResult[] = [];
 
-  if (configs.beforeStoryImageDiff && data.requestType === 'story') {
+  if (configs.beforeStoryImageDiff) {
     await configs.beforeStoryImageDiff(data);
   }
 
@@ -41,7 +41,7 @@ export const testStoryScreenshots = async (
     diffs.push(result);
   }
 
-  if (configs.afterStoryImageDiff && data.requestType === 'story') {
+  if (configs.afterStoryImageDiff) {
     await configs.afterStoryImageDiff(diffs, data);
   }
 

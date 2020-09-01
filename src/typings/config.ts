@@ -9,6 +9,7 @@ import {
 } from '../api/typings';
 import { RequestData } from './request';
 import { StoryInfo } from './story-info';
+import { TestFileScreenshots } from '../api/server/services/test-file-screenshots';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 
@@ -32,6 +33,11 @@ export interface Config<T extends unknown = Page> {
     requestData: StoryInfo & RequestData,
   ) => Promise<void>;
   beforeAppImageDiff?: (data: RequestData) => Promise<void>;
+  beforeFileImageDiff?: (data: TestFileScreenshots) => Promise<void>;
+  afterFileImageDiff?: (
+    result: ImageDiffResult[],
+    requestData: TestFileScreenshots,
+  ) => Promise<void>;
   afterStoryImageDiff?: (
     result: ImageDiffResult[],
     requestData: StoryInfo & RequestData,

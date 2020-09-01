@@ -80,7 +80,11 @@ module.exports = middleware;
 - enableMigration
 - beforeScreenshot
 - afterScreenshot
+- beforeStoryImageDiff
 - afterStoryImageDiff
+- beforeFileImageDiff
+- afterFileImageDiff
+- beforeAppImageDiff
 - afterAppImageDiff
 - pageGotoOptions
 
@@ -98,9 +102,17 @@ Will be called after a screenshot taken.
 
 ### afterStoryImageDiff
 
-Will be called after imageDiff process of story screenshots complete.
+Will be called before/after running image diff test on whole application screenshot.
 
-### afterAppImageDiff
+### beforeStoryImageDiff/afterStoryImageDiff
+
+Will be called before/after running image diff on particular story.
+
+### beforeFileImageDiff/afterFileImageDiff
+
+Will be called before/after running image diff on particular file.
+
+### beforeAppImageDiff/afterAppImageDiff
 
 Will be called after imageDiff process of all stories screenshots complete.
 

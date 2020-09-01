@@ -5,7 +5,7 @@ import { RequestData } from '../../../typings/request';
 import pLimit from 'p-limit';
 import { getConfigs } from '../configs';
 
-interface TestScreenshotsOptions extends RequestData {
+export interface TestFileScreenshots extends RequestData {
   fileName: string;
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
   disableEvans?: boolean;
@@ -13,7 +13,7 @@ interface TestScreenshotsOptions extends RequestData {
 }
 
 export const testFileScreenshots = async (
-  options: TestScreenshotsOptions,
+  options: TestFileScreenshots,
 ): Promise<ImageDiffResult[]> => {
   const { fileName, onComplete, storyId, requestType } = options;
   const configs = getConfigs();
@@ -21,6 +21,10 @@ export const testFileScreenshots = async (
   const storiesData = await getStoryPlaywrightData(fileName);
 
   const limit = pLimit(configs.concurrencyLimit.story);
+
+  if (configs.beforeFileImageDiff) {
+    configs.beforeFileImageDiff(options);
+  }
 
   const promisees = storiesData.storyData.reduce((arr, story, i) => {
     if (requestType === 'story' && storyId && story.storyId !== storyId)
@@ -52,6 +56,10 @@ export const testFileScreenshots = async (
     arr = [...arr, ...d];
     return arr;
   }, []);
+
+  if (configs.afterFileImageDiff) {
+    configs.afterFileImageDiff(results, options);
+  }
 
   if (onComplete) onComplete(results);
 

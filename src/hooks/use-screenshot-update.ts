@@ -4,13 +4,15 @@ import { useCallback } from 'react';
 import { useScreenshotDispatch } from '../store/screenshot';
 import { ImageDiffResult } from '../api/typings';
 
-export const useScreenshotUpdate = () => {
+export const useScreenshotUpdate = (successMessage?: string) => {
   const {
     makeCall,
     inProgress: updateScreenshotInProgress,
     clearResult: updateScreenshotClearResult,
     ErrorSnackbar: UpdateScreenshotErrorSnackbar,
-  } = useAsyncApiCall(updateScreenshotClient, false);
+  } = useAsyncApiCall(updateScreenshotClient, false, {
+    successMessage,
+  });
 
   const dispatch = useScreenshotDispatch();
 

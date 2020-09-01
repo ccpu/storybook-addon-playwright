@@ -52,7 +52,8 @@ const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
       }, []);
 
       await Promise.all(promises);
-      openSnackbar('Story screenshots updates successfully.', {
+      openSnackbar('Successfully updated.', {
+        autoHideDuration: null,
         variant: 'success',
       });
     } catch (error) {

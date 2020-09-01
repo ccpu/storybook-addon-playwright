@@ -20,31 +20,33 @@ const SnackbarContent: SFC<SnackbarContentProps> = ({
   onRetry,
 }) => {
   return (
-    <div style={{ position: 'relative' }}>
+    <>
       {closeIcon && (
         <CloseSharp
           style={{
             cursor: 'pointer',
             fontSize: 16,
             position: 'absolute',
-            right: -15,
-            top: -13,
+            right: 4,
+            top: 4,
           }}
           onClick={onClose}
         />
       )}
-      {title && <AlertTitle>{title}</AlertTitle>}
-      {message
-        ? message.split('\n').map((x, i) => {
-            return <div key={i}>{x}</div>;
-          })
-        : children}
-      {onRetry && (
-        <Button color="inherit" onClick={onRetry}>
-          Retry
-        </Button>
-      )}
-    </div>
+      <div style={{ position: 'relative' }}>
+        {title && <AlertTitle>{title}</AlertTitle>}
+        {message
+          ? message.split('\n').map((x, i) => {
+              return <div key={i}>{x}</div>;
+            })
+          : children}
+        {onRetry && (
+          <Button color="inherit" onClick={onRetry}>
+            Retry
+          </Button>
+        )}
+      </div>
+    </>
   );
 };
 

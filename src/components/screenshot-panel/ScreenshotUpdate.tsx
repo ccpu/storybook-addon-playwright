@@ -27,16 +27,14 @@ const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
     UpdateScreenshotErrorSnackbar,
     updateScreenshot,
     updateScreenshotInProgress,
-  } = useScreenshotUpdate();
+  } = useScreenshotUpdate('Successfully updated.');
 
   const {
     makeCall: testScreenshot,
     inProgress: testScreenshotInProgress,
     clearResult: testScreenshotClearResult,
     result: testScreenshotResult,
-  } = useAsyncApiCall(testScreenshotClient, true, {
-    successMessage: 'Screenshot saved Successfully.',
-  });
+  } = useAsyncApiCall(testScreenshotClient, true);
 
   const handleUpdate = useCallback(async () => {
     if (imageDiffResult) {

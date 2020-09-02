@@ -49,8 +49,9 @@ const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
 
     if (result.diffSize || result.error) {
       openSnackbar(getImageDiffMessages(result), {
-        autoHideDuration: 0,
+        autoHideDuration: null,
         onClose,
+        variant: 'error',
       });
       return;
     }

@@ -16,8 +16,8 @@ export const useSnackbar = () => {
   const openSnackbar = React.useCallback(
     (message: string, options: Options = {}) => {
       const { closeIcon, title, onRetry, ...rest } = {
-        ...options,
         ...defaultOptions,
+        ...options,
       };
 
       // eslint-disable-next-line prefer-const

@@ -20,42 +20,53 @@ async function addBox(position) {
 }
 
 async function setupPlaywright() {
-  let browser = {
-    chromium: await playwright['chromium'].launch(),
-    firefox: await playwright['firefox'].launch(),
-    webkit: await playwright['webkit'].launch(),
-  };
-  setConfig({
-    storybookEndpoint: `http://localhost:9001/`,
-    getPage: async (browserType, options) => {
-      const page = await browser[browserType].newPage(options);
-      page.addBox = addBox;
-      return page;
-    },
-    afterScreenshot: async (page) => {
-      await page.close();
-    },
-    autoMigration: true,
-    customActionSchema: {
-      addBox: {
-        type: 'promise',
-        parameters: {
-          position: {
-            type: 'object',
-            properties: {
-              x: {
-                type: 'number',
+  try {
+    let browser;
+    setConfig({
+      storybookEndpoint: `http://localhost:9001/`,
+      getPage: async (browserType, options) => {
+        if (!browser) {
+          browser = {
+            chromium: await playwright['chromium'].launch(),
+            firefox: await playwright['firefox'].launch(),
+            webkit: await playwright['webkit'].launch(),
+          };
+        }
+
+        const page = await browser[browserType].newPage(options);
+        page.addBox = addBox;
+        return page;
+      },
+      afterScreenshot: async (page) => {
+        await page.close();
+      },
+      autoMigration: true,
+      customActionSchema: {
+        addBox: {
+          type: 'promise',
+          parameters: {
+            position: {
+              type: 'object',
+              properties: {
+                x: {
+                  type: 'number',
+                },
+                y: {
+                  type: 'number',
+                },
               },
-              y: {
-                type: 'number',
-              },
+              required: ['x', 'y'],
             },
-            required: ['x', 'y'],
           },
         },
       },
-    },
-  });
+      pageGotoOptions: {
+        timeout: 5000,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 module.exports = { setupPlaywright };

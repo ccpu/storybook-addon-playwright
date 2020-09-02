@@ -205,7 +205,7 @@ describe('makeScreenshot', () => {
     expect(installMouseHelper).toBeCalledTimes(1);
   });
 
-  it('should take 2 screenshots with overlay as default merge process', async () => {
+  it('should take 2 screenshots with stitch as default merge process', async () => {
     await makeScreenshot(
       {
         actionSets: [
@@ -237,13 +237,7 @@ describe('makeScreenshot', () => {
       true,
     );
 
-    expect(sharpMock).toHaveBeenCalledTimes(1);
-    expect(compositeMock).toHaveBeenCalledWith([
-      {
-        blend: 'multiply',
-        input: 'buffer-data',
-      },
-    ]);
+    expect(joinImagesMock).toHaveBeenCalledTimes(1);
     expect(screenshotMock).toBeCalledTimes(2);
   });
 

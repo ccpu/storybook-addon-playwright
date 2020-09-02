@@ -107,7 +107,7 @@ export const makeScreenshot = async (
     const options: TakeScreenshotOptionsParams =
       screenshotOptionAction && screenshotOptionAction.args
         ? ((screenshotOptionAction.args as unknown) as TakeScreenshotOptionsParams)
-        : { mergeType: 'overlay' };
+        : { mergeType: 'stitch' };
 
     if (options.mergeType === 'stitch') {
       buffer = await (

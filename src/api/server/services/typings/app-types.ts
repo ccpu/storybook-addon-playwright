@@ -2,7 +2,7 @@
 import { Page, BrowserContextOptions, ViewportSize } from 'playwright-core';
 import { ExtendedPlaywrightPageFunctions } from '@playwright-utils/page/lib/typings/page';
 
-export type MergeType = 'overlay' | 'stitch';
+export type MergeType = 'stitch' | 'overlay';
 export interface TakeScreenshotStitchOptions {
   /**
    * Direction of the merged image.

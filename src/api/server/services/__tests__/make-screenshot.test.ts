@@ -170,6 +170,26 @@ describe('makeScreenshot', () => {
     expect(afterSnapshotMock).toBeCalledTimes(1);
   });
 
+  it('should call afterUrlConstruction', async () => {
+    const afterUrlConstructionMock = jest.fn();
+    getConfigsMock.mockImplementationOnce(() => {
+      return defaultConfigs({
+        afterUrlConstruction: afterUrlConstructionMock,
+        getPage: getPageMock,
+      });
+    });
+
+    await makeScreenshot(
+      {
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+    expect(afterUrlConstructionMock).toBeCalledTimes(1);
+  });
+
   it('should install mouse helper', async () => {
     await makeScreenshot(
       {

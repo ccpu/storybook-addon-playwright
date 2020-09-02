@@ -41,12 +41,6 @@ export const makeScreenshot = async (
 
   const browserOptions = data.browserOptions as BrowserContextOptions;
 
-  const url = constructStoryUrl(
-    configs.storybookEndpoint,
-    data.storyId,
-    data.props,
-  );
-
   const page = await configs.getPage(data.browserType, browserOptions, data);
 
   if (!page) {
@@ -54,6 +48,16 @@ export const makeScreenshot = async (
   }
 
   extendPage(page);
+
+  let url = constructStoryUrl(
+    configs.storybookEndpoint,
+    data.storyId,
+    data.props,
+  );
+
+  if (configs.afterUrlConstruction) {
+    url = configs.afterUrlConstruction(url, data);
+  }
 
   await page.goto(url, configs.pageGotoOptions);
 

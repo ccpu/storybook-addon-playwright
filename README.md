@@ -87,6 +87,7 @@ module.exports = middleware;
 - beforeAppImageDiff
 - afterAppImageDiff
 - pageGotoOptions
+- afterUrlConstruction
 
 ### enableMigration
 
@@ -115,6 +116,10 @@ Will be called before/after running image diff on particular file.
 ### beforeAppImageDiff/afterAppImageDiff
 
 Will be called after imageDiff process of all stories screenshots complete.
+
+### afterUrlConstruction
+
+Will be called before page.goto, can be used to manipulate url.
 
 ### pageGotoOptions
 

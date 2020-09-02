@@ -48,6 +48,7 @@ export interface Config<T extends unknown = Page> {
   ) => Promise<void>;
   diffDirection?: DiffDirection;
   enableMigration?: boolean;
+  afterUrlConstruction?: (url: string, data: ScreenshotRequest) => string;
   concurrencyLimit?: {
     file?: number;
     story?: number;

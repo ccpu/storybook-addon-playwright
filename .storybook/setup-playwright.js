@@ -60,9 +60,9 @@ async function setupPlaywright() {
           },
         },
       },
-      pageGotoOptions: {
-        timeout: 5000,
-      },
+      // pageGotoOptions: {
+      //   timeout: 5000,
+      // },
     });
   } catch (error) {
     console.error(error);

@@ -196,14 +196,22 @@ export function mainReducer(
 
     case 'setScreenShotActionSets': {
       const storyActionSets = state.stories[action.storyId].actionSets;
+
       const actionSets = action.actionSets.reduce((arr, actionSet) => {
         if (storyActionSets) {
-          const storyActionSet = storyActionSets.find((x) => {
-            if (isSameActions(x.actions, actionSet.actions)) {
-              return true;
+          let storyActionSet: ActionSet = undefined;
+
+          for (let i = 0; i < storyActionSets.length; i++) {
+            const act = storyActionSets[i];
+
+            if (arr.find((x) => x.id === act.id)) continue;
+
+            if (isSameActions(act.actions, actionSet.actions)) {
+              storyActionSet = act;
+              break;
             }
-            return false;
-          });
+          }
+
           if (storyActionSet) {
             arr.push(storyActionSet);
           } else {

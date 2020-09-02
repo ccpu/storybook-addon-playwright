@@ -575,15 +575,62 @@ describe('action reducer', () => {
     ]);
   });
 
-  it('should setScreenShotActionSets but add new action set with ids', () => {
+  it('should setScreenShotActionSets copy action sets', () => {
     const result = reducer(
       {
-        stories: getStoryData(storyId),
+        stories: {
+          [storyId]: {
+            actionSets: [
+              getActionSetData({ id: '1' }),
+              getActionSetData({ id: '2' }),
+            ],
+          },
+        },
+      },
+      {
+        actionSets: [
+          getActionSetData({ id: '1' }),
+          getActionSetData({ id: '2' }),
+        ],
+        storyId,
+        type: 'setScreenShotActionSets',
+      },
+    );
+
+    expect(result.stories[storyId].actionSets).toStrictEqual([
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        id: '1',
+        title: 'desc',
+      },
+      {
+        actions: [
+          { id: 'action-id', name: 'action-name' },
+          { id: 'action-id-2', name: 'action-name-2' },
+        ],
+        id: '2',
+        title: 'desc',
+      },
+    ]);
+  });
+
+  it('should setScreenShotActionSets create new actionSet', () => {
+    const result = reducer(
+      {
+        stories: {
+          [storyId]: {
+            actionSets: [getActionSetData({ id: '1' })],
+          },
+        },
       },
       {
         actionSets: [
           getActionSetData({
-            actions: [{ id: 'action-id-1', name: 'action-name' }],
+            actions: [{ id: 'action-id', name: 'dbClick' }],
+            id: '2',
           }),
         ],
         storyId,
@@ -593,7 +640,7 @@ describe('action reducer', () => {
 
     expect(result.stories[storyId].actionSets).toStrictEqual([
       {
-        actions: [{ id: 'id-1', name: 'action-name' }],
+        actions: [{ id: 'id-1', name: 'dbClick' }],
         id: 'id-2',
         temp: true,
         title: 'desc',
@@ -603,7 +650,7 @@ describe('action reducer', () => {
           { id: 'action-id', name: 'action-name' },
           { id: 'action-id-2', name: 'action-name-2' },
         ],
-        id: 'action-set-id',
+        id: '1',
         title: 'desc',
       },
     ]);

@@ -88,6 +88,7 @@ module.exports = middleware;
 - afterAllImageDiff
 - pageGotoOptions
 - afterUrlConstruction
+- afterNavigation
 
 ### enableMigration
 
@@ -117,13 +118,17 @@ Will be called before/after running image diff on particular file.
 
 Will be called after imageDiff process of all stories screenshots complete.
 
+### pageGotoOptions
+
+please refer top [Playwright API page.goto option](https://github.com/microsoft/playwright/blob/master/docs/api.md#pagegotourl-options)
+
 ### afterUrlConstruction
 
 Will be called before page.goto, can be used to manipulate url.
 
-### pageGotoOptions
+### afterNavigation
 
-please refer top [Playwright API page.goto option](https://github.com/microsoft/playwright/blob/master/docs/api.md#pagegotourl-options)
+Will be called when page navigated to story.
 
 ## How it works
 

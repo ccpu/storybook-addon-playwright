@@ -40,6 +40,8 @@ const getPageMock = jest.fn();
 
 const screenshotMock = jest.fn();
 
+const waitForNavigationMock = jest.fn();
+
 screenshotMock.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve(('buffer-data' as unknown) as Buffer);
@@ -51,6 +53,7 @@ getPageMock.mockImplementation(() => {
     resolve(({
       goto: jest.fn(),
       screenshot: screenshotMock,
+      waitForNavigation: waitForNavigationMock,
     } as unknown) as Page);
   });
 });
@@ -188,6 +191,27 @@ describe('makeScreenshot', () => {
       true,
     );
     expect(afterUrlConstructionMock).toBeCalledTimes(1);
+  });
+
+  it('should call afterNavigation', async () => {
+    const afterNavigation = jest.fn();
+    getConfigsMock.mockImplementationOnce(() => {
+      return defaultConfigs({
+        afterNavigation: afterNavigation,
+        getPage: getPageMock,
+      });
+    });
+
+    await makeScreenshot(
+      {
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+    expect(afterNavigation).toBeCalledTimes(1);
+    expect(waitForNavigationMock).toHaveBeenCalledTimes(1);
   });
 
   it('should install mouse helper', async () => {

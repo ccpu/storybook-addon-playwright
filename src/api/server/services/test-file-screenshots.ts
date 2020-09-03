@@ -26,25 +26,23 @@ export const testFileScreenshots = async (
     configs.beforeFileImageDiff(options);
   }
 
-  const promisees = storiesData.storyData.reduce((arr, story, i) => {
+  const promisees = storiesData.storyData.reduce((arr, story) => {
     if (requestType === 'story' && storyId && story.storyId !== storyId)
       return arr;
 
     if (story.data.screenshots && story.data.screenshots.length) {
       arr.push(
-        limit(
-          (index) =>
-            testStoryScreenshots({
-              fileName: fileName,
-              requestId: options.requestId + '__' + index,
-              requestType: options.requestType
-                ? options.requestType
-                : storyId
-                ? 'story'
-                : 'file',
-              storyId: story.storyId,
-            }),
-          i,
+        limit(() =>
+          testStoryScreenshots({
+            fileName: fileName,
+            requestId: options.requestId,
+            requestType: options.requestType
+              ? options.requestType
+              : storyId
+              ? 'story'
+              : 'file',
+            storyId: story.storyId,
+          }),
         ),
       );
     }

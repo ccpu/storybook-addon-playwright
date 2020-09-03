@@ -10,12 +10,12 @@ jest.mock('../../configs');
 jest.mock('../test-file-screenshots');
 jest.mock('../../../../utils/get-playwright-config-files');
 
-const afterAppImageDiffMock = jest.fn();
-const beforeAppImageDiffMock = jest.fn();
+const afterAllImageDiffMock = jest.fn();
+const beforeAllImageDiffMock = jest.fn();
 
 mocked(getConfigs).mockImplementation(() => ({
-  afterAppImageDiff: afterAppImageDiffMock,
-  beforeAppImageDiff: beforeAppImageDiffMock,
+  afterAllImageDiff: afterAllImageDiffMock,
+  beforeAllImageDiff: beforeAllImageDiffMock,
   ...defaultConfigs(),
 }));
 
@@ -47,7 +47,7 @@ describe('testAppScreenshot', () => {
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test.stories.playwright.json',
-      requestId: 'request-id__0',
+      requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
     });
@@ -55,7 +55,7 @@ describe('testAppScreenshot', () => {
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test-2.stories.playwright.json',
-      requestId: 'request-id__1',
+      requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
     });
@@ -76,14 +76,14 @@ describe('testAppScreenshot', () => {
     ]);
   });
 
-  it('should call afterAppImageDiffMock with result', async () => {
+  it('should call afterAllImageDiffMock with result', async () => {
     await testScreenshots({
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
     });
 
-    expect(afterAppImageDiffMock).toHaveBeenCalledWith(
+    expect(afterAllImageDiffMock).toHaveBeenCalledWith(
       [
         {
           added: true,
@@ -102,14 +102,14 @@ describe('testAppScreenshot', () => {
     );
   });
 
-  it('should call beforeAppImageDiff with data', async () => {
+  it('should call beforeAllImageDiff with data', async () => {
     await testScreenshots({
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
     });
 
-    expect(beforeAppImageDiffMock).toHaveBeenCalledWith({
+    expect(beforeAllImageDiffMock).toHaveBeenCalledWith({
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -129,7 +129,7 @@ describe('testAppScreenshot', () => {
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test.stories.playwright.json',
-      requestId: 'request-id__0',
+      requestId: 'request-id',
       requestType: 'file',
       storyId: 'story-id',
     });
@@ -147,7 +147,7 @@ describe('testAppScreenshot', () => {
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
       fileName: './stories/test.stories.playwright.json',
-      requestId: 'request-id__0',
+      requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',
     });

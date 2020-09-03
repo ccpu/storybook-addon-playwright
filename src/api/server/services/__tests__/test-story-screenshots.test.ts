@@ -85,7 +85,7 @@ describe('testStoryScreenshot', () => {
     ).rejects.toThrowError('Unable to find story screenshots');
   });
 
-  it('should call afterAppImageDiff with result', async () => {
+  it('should call afterAllImageDiff with result', async () => {
     await testStoryScreenshots({
       fileName: 'story.ts',
       requestId: 'request-id',

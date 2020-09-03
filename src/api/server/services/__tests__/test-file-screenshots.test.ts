@@ -59,7 +59,7 @@ describe('testFileScreenshots', () => {
 
     expect(testStoryScreenshots).toHaveBeenCalledWith({
       fileName: 'story.ts',
-      requestId: 'request-id__0',
+      requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
     });
@@ -136,7 +136,7 @@ describe('testFileScreenshots', () => {
 
     expect(testStoryScreenshots).toHaveBeenCalledWith({
       fileName: 'story.ts',
-      requestId: 'request-id__0',
+      requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',
     });

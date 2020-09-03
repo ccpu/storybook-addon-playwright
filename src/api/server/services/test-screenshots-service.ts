@@ -16,11 +16,11 @@ export const testScreenshots = async (
 
   const limit = pLimit(configs.concurrencyLimit.file);
 
-  if (configs.beforeAppImageDiff) {
-    await configs.beforeAppImageDiff(data);
+  if (configs.beforeAllImageDiff) {
+    await configs.beforeAllImageDiff(data);
   }
 
-  const promises = files.reduce((arr, file, i) => {
+  const promises = files.reduce((arr, file) => {
     if (
       requestType !== 'all' &&
       data.fileName &&
@@ -30,15 +30,15 @@ export const testScreenshots = async (
     }
 
     arr.push(
-      limit((index) => {
+      limit(() => {
         return testFileScreenshots({
           disableEvans: true,
           fileName: file,
-          requestId: data.requestId + '__' + index,
+          requestId: data.requestId,
           requestType,
           storyId: data.storyId,
         });
-      }, i),
+      }),
     );
 
     return arr;
@@ -51,8 +51,8 @@ export const testScreenshots = async (
     return arr;
   }, []) as ImageDiffResult[];
 
-  if (configs.afterAppImageDiff) {
-    await configs.afterAppImageDiff(results, data);
+  if (configs.afterAllImageDiff) {
+    await configs.afterAllImageDiff(results, data);
   }
 
   return results;

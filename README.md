@@ -84,8 +84,8 @@ module.exports = middleware;
 - afterStoryImageDiff
 - beforeFileImageDiff
 - afterFileImageDiff
-- beforeAppImageDiff
-- afterAppImageDiff
+- beforeAllImageDiff
+- afterAllImageDiff
 - pageGotoOptions
 - afterUrlConstruction
 
@@ -113,7 +113,7 @@ Will be called before/after running image diff on particular story.
 
 Will be called before/after running image diff on particular file.
 
-### beforeAppImageDiff/afterAppImageDiff
+### beforeAllImageDiff/afterAllImageDiff
 
 Will be called after imageDiff process of all stories screenshots complete.
 

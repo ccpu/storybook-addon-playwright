@@ -32,7 +32,7 @@ export interface Config<T extends unknown = Page> {
   beforeStoryImageDiff?: (
     requestData: StoryInfo & RequestData,
   ) => Promise<void>;
-  beforeAppImageDiff?: (data: RequestData) => Promise<void>;
+  beforeAllImageDiff?: (data: RequestData) => Promise<void>;
   beforeFileImageDiff?: (data: TestFileScreenshots) => Promise<void>;
   afterFileImageDiff?: (
     result: ImageDiffResult[],
@@ -42,7 +42,7 @@ export interface Config<T extends unknown = Page> {
     result: ImageDiffResult[],
     requestData: StoryInfo & RequestData,
   ) => Promise<void>;
-  afterAppImageDiff?: (
+  afterAllImageDiff?: (
     result: ImageDiffResult[],
     requestData: RequestData,
   ) => Promise<void>;

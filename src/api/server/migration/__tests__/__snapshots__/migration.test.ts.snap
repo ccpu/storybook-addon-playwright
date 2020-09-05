@@ -204,3 +204,70 @@ Object {
   "version": "2",
 }
 `;
+
+exports[`migration should migrate from v1 to v3 1`] = `
+Object {
+  "browserOptions": Object {
+    "c99BcUTVviggy9H9vRFM8": Object {
+      "cursor": true,
+    },
+  },
+  "screenshotOptions": Object {
+    "jTfiAoRWN1vGRuthlPSRl": Object {
+      "clip": Object {
+        "height": 600,
+        "width": 600,
+        "x": 0,
+        "y": 0,
+      },
+    },
+  },
+  "stories": Object {
+    "with-defaults": Object {
+      "actionSets": Array [
+        Object {
+          "actions": Array [
+            Object {
+              "args": Object {
+                "x": 497,
+                "y": 113,
+              },
+              "name": "mouse.move",
+            },
+          ],
+          "id": "OSzX1CUEn71R",
+          "title": "vertical scroll down",
+        },
+      ],
+      "screenshots": Array [
+        Object {
+          "actionSets": Array [
+            Object {
+              "actions": Array [
+                Object {
+                  "args": Object {
+                    "selector": "html",
+                  },
+                  "name": "click",
+                },
+              ],
+              "id": "id-9",
+              "title": "should show on click actions",
+            },
+          ],
+          "browserOptionsId": "c99BcUTVviggy9H9vRFM8",
+          "browserType": "chromium",
+          "id": "DFNYJhhPYuQHTDX",
+          "index": 1,
+          "props": Object {
+            "showOnCreate": false,
+          },
+          "screenshotOptionsId": "jTfiAoRWN1vGRuthlPSRl",
+          "title": "should show on click",
+        },
+      ],
+    },
+  },
+  "version": "3",
+}
+`;

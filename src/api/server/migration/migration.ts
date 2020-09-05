@@ -4,6 +4,7 @@ import { readFileSync } from 'jsonfile';
 import { getStoryPlaywrightFileInfo, saveStoryFile } from '../utils';
 import { migrateToV1 } from './migration-v1';
 import { migrationV2 } from './migration-v2';
+import { migrationV3 } from './migration-v3';
 import { getVersion } from '../utils';
 
 export const migrateFile = (file: string, version: string) => {
@@ -11,12 +12,16 @@ export const migrateFile = (file: string, version: string) => {
 
   console.log(`\nMigrating ${path.parse(file).name} to v${version}...`);
 
-  if (!data.version) {
+  if (!data.version && +version >= 1) {
     data = migrateToV1(data, '1');
   }
 
-  if (data.version === '1') {
+  if (data.version === '1' && +version >= 2) {
     data = migrationV2(data, '2');
+  }
+
+  if (data.version === '2' && +version >= 3) {
+    data = migrationV3(data, version);
   }
 
   return data;

@@ -28,4 +28,10 @@ describe('migration', () => {
     const newData = migrateFile(v0FilePath, '2');
     expect(newData).toMatchSnapshot();
   });
+
+  it('should migrate from v1 to v3', () => {
+    const v1FilePath = path.resolve(__dirname, './migration-v1-data.json');
+    const newData = migrateFile(v1FilePath, '3');
+    expect(newData).toMatchSnapshot();
+  });
 });

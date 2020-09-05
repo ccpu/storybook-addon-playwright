@@ -32,7 +32,7 @@ describe('saveStoryFile', () => {
           actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
-      version: '2',
+      version: '3',
     });
   });
 
@@ -54,7 +54,7 @@ describe('saveStoryFile', () => {
           actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
-      version: '2',
+      version: '3',
     });
   });
   it('should remove file if received empty object', async () => {

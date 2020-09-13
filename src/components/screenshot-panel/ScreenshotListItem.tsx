@@ -172,7 +172,7 @@ function ScreenshotListItem({
         (editScreenshotState &&
           editScreenshotState.screenshotData.id === screenshot.id)
       }
-      tooltip={screenshot.title + ' - ' + storyData.id}
+      tooltip={screenshot.title + (storyData && ` - ${storyData.id}`)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{

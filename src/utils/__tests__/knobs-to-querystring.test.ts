@@ -11,7 +11,7 @@ describe('knobsToQuerystring', () => {
 
   it('should handle object', () => {
     expect(knobsToQuerystring({ prop1: { prop2: 'val-2' } })).toBe(
-      'knob-prop1={"prop2":"val-2"}',
+      'knob-prop1=%7B%22prop2%22:%22val-2%22%7D',
     );
   });
 });

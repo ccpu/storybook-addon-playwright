@@ -11,5 +11,5 @@ export const knobsToQuerystring = (props?: ScreenshotProp) => {
     }
     return `knob-${prop}=${props[prop]}`;
   });
-  return propQuery.join('&');
+  return encodeURI(propQuery.join('&'));
 };

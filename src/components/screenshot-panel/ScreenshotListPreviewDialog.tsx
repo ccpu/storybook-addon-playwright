@@ -96,7 +96,10 @@ const ScreenshotListPreviewDialog: SFC<
           ? capitalize(currentItem.title)
           : 'Loading ...'
       }
-      subtitle={title && currentItem && currentItem.title}
+      subtitle={
+        (title && currentItem && currentItem.title) +
+        (storyData && ` (${storyData.id})`)
+      }
       height="100%"
       {...rest}
     >

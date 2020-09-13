@@ -23,6 +23,10 @@ const ImageDiffMenuItem: SFC<ImageDiffMenuItemProps> = forwardRef(
       api.setSelectedPanel(SCREENSHOT_PANEL_ID);
     }, [api, imageDiff.storyId, onClick]);
 
+    if (!data) {
+      return null;
+    }
+
     return (
       <MenuItem onClick={handleLoadStory} ref={ref}>
         {data.parent + '--' + data.name}

@@ -15,6 +15,8 @@ const selectedPageKeys: PageMethodKeys[] = [
   'hover',
   'press',
   'type',
+  'check',
+  'uncheck',
   'scrollSelector',
   'waitForSelector',
   'waitForTimeout',

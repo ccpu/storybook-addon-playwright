@@ -17,7 +17,7 @@ describe('deleteActionSet', () => {
     jest.restoreAllMocks();
   });
 
-  it('should throw error if story id missing ', async () => {
+  it('should throw error if story id missing', async () => {
     await expect(
       deleteActionSet({
         actionSetId: '',

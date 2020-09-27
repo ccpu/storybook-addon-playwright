@@ -52,7 +52,7 @@ describe('Preview', () => {
     expect(wrapper.find(ScreenshotListView).props().column).toBe(1);
   });
 
-  it('should be notInteractive when split pane drag ', () => {
+  it('should be notInteractive when split pane drag', () => {
     const wrapper = shallow(<Preview />);
 
     expect(

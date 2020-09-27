@@ -12,7 +12,7 @@ describe('useCurrentStoryData', () => {
     jest.clearAllMocks();
   });
 
-  it('should return story data ', () => {
+  it('should return story data', () => {
     const { result } = renderHook(() => useCurrentStoryData());
 
     expect(result.current.id).toBe('story-id');

@@ -1,7 +1,7 @@
 import { deleteStoryScreenshots } from '../delete-story-screenshots';
 import fetch from 'jest-fetch-mock';
 describe('deleteStoryScreenshots', () => {
-  it('should ', async () => {
+  it('should delete', async () => {
     const fetchMock = fetch.mockResponseOnce('');
 
     await deleteStoryScreenshots({

@@ -5,7 +5,7 @@ import { getActionSchemaData } from '../../../__test_data__';
 import * as context from '../../store/actions/ActionContext';
 
 describe('useActionSchemaLoader', () => {
-  it('should ', async () => {
+  it('should test useActionSchemaLoader', async () => {
     fetch.mockResponseOnce(JSON.stringify(getActionSchemaData()));
     const { waitForNextUpdate, result } = renderHook(
       () => useActionSchemaLoader(),

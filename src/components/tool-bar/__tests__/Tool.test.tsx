@@ -52,7 +52,7 @@ describe('Tool', () => {
     });
   });
 
-  it('should show LayoutRight ', () => {
+  it('should show LayoutRight', () => {
     (useStorybookState as jest.Mock).mockImplementationOnce(() => ({
       layout: { panelPosition: 'bottom' },
     }));

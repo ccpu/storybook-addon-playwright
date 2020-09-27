@@ -58,7 +58,7 @@ describe('ScreenshotListItem', () => {
         imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
       />,
     );
-    jest.runTimersToTime(10000);
+    jest.advanceTimersByTime(10000);
     expect(dispatchMock).toHaveBeenCalledWith([
       { screenshotId: 'screenshot-id', type: 'removeImageDiffResult' },
     ]);
@@ -83,7 +83,7 @@ describe('ScreenshotListItem', () => {
     ]);
   });
 
-  it('should not remove result if pauseDeleteImageDiffResult=true ', () => {
+  it('should not remove result if pauseDeleteImageDiffResult=true', () => {
     const clearTimeoutMock = jest.fn();
     window.clearTimeout = clearTimeoutMock;
     const wrapper = shallow(

@@ -19,7 +19,7 @@ describe('getSnapShot', () => {
     id: 'screenshot-id',
   };
 
-  it('should ', async () => {
+  it('should getScreenshot', async () => {
     fetch.mockResponseOnce(JSON.stringify(respData));
 
     const data = await getScreenshot(reqData);

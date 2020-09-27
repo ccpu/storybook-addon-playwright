@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-try-expect */
 import { useGlobalDispatch, _dispatchFuncs } from '../use-global-dispatch';
 import { renderHook } from '@testing-library/react-hooks';
 
@@ -32,9 +33,10 @@ describe('useGlobalDispatch', () => {
 
     try {
       result.current.dispatch({ type: 'action2' });
+       // eslint-disable-next-line jest/no-conditional-expect
       expect(true).toBe(false);
     } catch (error) {
-      // eslint-disable-next-line jest/no-try-expect
+
       expect(error.message).toBe('Dispatch id not registered yet!');
     }
   });

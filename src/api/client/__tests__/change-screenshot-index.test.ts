@@ -2,7 +2,7 @@ import { changeScreenShotIndex } from '../change-screenshot-index';
 import fetch from 'jest-fetch-mock';
 
 describe('changeScreenShotIndex', () => {
-  it('should ', async () => {
+  it('should change index', async () => {
     const fetchMock = fetch.mockResponseOnce('');
 
     await changeScreenShotIndex({

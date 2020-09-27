@@ -35,5 +35,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'jest/no-conditional-expect':'off'
   },
 };

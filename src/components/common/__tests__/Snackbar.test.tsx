@@ -59,7 +59,7 @@ describe('Snackbar', () => {
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should replace "\n" with div ', () => {
+  it('should replace "\n" with div', () => {
     const enqueueSnackbarMock = jest.fn();
     (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
       enqueueSnackbar: enqueueSnackbarMock,

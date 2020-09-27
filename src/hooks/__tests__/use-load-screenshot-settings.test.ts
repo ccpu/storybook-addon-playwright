@@ -68,7 +68,7 @@ describe('useLoadScreenshotSettings', () => {
     });
   });
 
-  it('should not load actions ', () => {
+  it('should not load actions', () => {
     const { result } = renderHook(() => useLoadScreenshotSettings());
 
     act(() => {

@@ -268,7 +268,7 @@ describe('SchemaProp', () => {
     expect(wrapper.type()).toBe(null);
   });
 
-  it('should handle handleAppendToTile ', () => {
+  it('should handle handleAppendToTile', () => {
     const onAppendValueToTitleMock = jest.fn();
     const wrapper = shallow(
       <SchemaProp
@@ -286,7 +286,7 @@ describe('SchemaProp', () => {
     expect(onAppendValueToTitleMock).toHaveBeenCalledWith('string');
   });
 
-  it('should handle change ', () => {
+  it('should handle change', () => {
     const wrapper = shallow(
       <SchemaProp
         name="string"

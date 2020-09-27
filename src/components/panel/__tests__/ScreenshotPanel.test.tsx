@@ -10,7 +10,7 @@ describe('ScreenshotPanel', () => {
     jest.clearAllMocks();
   });
 
-  it('should render ', () => {
+  it('should render', () => {
     (useStorybookState as jest.Mock).mockImplementation(() => ({
       selectedPanel: SCREENSHOT_PANEL_ID,
     }));

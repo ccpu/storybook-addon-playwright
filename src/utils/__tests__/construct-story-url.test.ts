@@ -9,7 +9,7 @@ describe('constructStoryUrl', () => {
     ).toBe('http://localhost:3000/iframe.html?id=story-id&knob-prop=val');
   });
 
-  it('should construct file ', () => {
+  it('should construct file', () => {
     expect(
       parse(
         constructStoryUrl('./storybook-static', 'story-id', { prop: 'val' }),

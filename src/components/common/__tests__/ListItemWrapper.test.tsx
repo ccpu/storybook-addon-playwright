@@ -17,7 +17,7 @@ describe('ListItemWrapper', () => {
     expect(wrapper.find(DragHandle)).toHaveLength(1);
   });
 
-  it('should click on elements with clickable class name ', () => {
+  it('should click on elements with clickable class name', () => {
     const onClickMock = jest.fn();
     const wrapper = shallow(
       <ListItemWrapper

@@ -22,7 +22,7 @@ describe('isSameActions', () => {
     expect(result).toBeFalsy();
   });
 
-  it('should be valid if have same object ', () => {
+  it('should be valid if have same object', () => {
     const result = isSameActions(
       [{ args: { selector: 'html' } }],
       [{ args: { selector: 'html' } }],
@@ -30,7 +30,7 @@ describe('isSameActions', () => {
     expect(result).toBeTruthy();
   });
 
-  it('should not be valid if have no same object ', () => {
+  it('should not be valid if have no same object', () => {
     const result = isSameActions(
       [{ args: { selector: 'html' } }],
       [{ args: { selector: 'html?div' } }],

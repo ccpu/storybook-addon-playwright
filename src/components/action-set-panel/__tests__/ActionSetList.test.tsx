@@ -63,7 +63,7 @@ describe('ActionSetList', () => {
     );
   });
 
-  it('should show list of action sets ', () => {
+  it('should show list of action sets', () => {
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })
@@ -75,7 +75,7 @@ describe('ActionSetList', () => {
     expect(list.type()).toBe(SortableActionSetListItem);
   });
 
-  it('should delete action set ', async () => {
+  it('should delete action set', async () => {
     fetch.mockResponseOnce(JSON.stringify('{success:true}'));
 
     const wrapper = shallow(<ActionSetList />, {
@@ -134,7 +134,7 @@ describe('ActionSetList', () => {
     expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should toggle story current action sets ', () => {
+  it('should toggle story current action sets', () => {
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })

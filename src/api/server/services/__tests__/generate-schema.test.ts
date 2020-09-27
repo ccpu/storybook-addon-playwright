@@ -16,7 +16,7 @@ describe('generateSchema', () => {
     });
   });
 
-  it('should use cache ', () => {
+  it('should use cache', () => {
     expect(generateSchema({ path, type: 'MyType' })).toStrictEqual({
       props: true,
     });

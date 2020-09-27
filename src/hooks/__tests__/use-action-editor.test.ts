@@ -44,7 +44,7 @@ describe('useActionSetEditor', () => {
     title: 'action-set-desc',
   };
 
-  it('should clearActionExpansion on unmount ', () => {
+  it('should clearActionExpansion on unmount', () => {
     const { unmount } = renderHook(() => useActionEditor(actionSet));
     unmount();
     expect(dispatchMock).toHaveBeenCalledWith([

@@ -71,7 +71,7 @@ describe('ScreenshotList', () => {
     expect(screenshotView.first().props().refresh).toBeFalsy();
   });
 
-  it('should show save screenshot title dialog ', () => {
+  it('should show save screenshot title dialog', () => {
     const wrapper = shallow(
       <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
     );

@@ -2,7 +2,7 @@ import { updateScreenshot } from '../update-screenshot';
 import fetch from 'jest-fetch-mock';
 
 describe('deleteStoryScreenshots', () => {
-  it('should ', async () => {
+  it('should deleteStoryScreenshots', async () => {
     const fetchMock = fetch.mockResponseOnce('');
 
     await updateScreenshot({

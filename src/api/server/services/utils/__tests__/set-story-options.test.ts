@@ -17,7 +17,7 @@ describe('setStoryOptions', () => {
     });
   });
 
-  it('should set data ', () => {
+  it('should set data', () => {
     const data = { ...storyData };
     const id = setStoryOptions(data, 'browserOptions', { fullPage: true });
     expect(id).toBe('id-2');

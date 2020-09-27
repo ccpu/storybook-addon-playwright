@@ -78,6 +78,7 @@ module.exports = middleware;
 
 ## setConfig Options
 
+- storybookEndpoint
 - enableMigration
 - beforeScreenshot
 - afterScreenshot
@@ -90,6 +91,12 @@ module.exports = middleware;
 - pageGotoOptions
 - afterUrlConstruction
 - afterNavigation
+
+### storybookEndpoint
+
+`storybookEndpoint` must match the ip/port of storybook.
+
+> For docker and none locale browsers, the public ip address of storybook required.
 
 ### enableMigration
 

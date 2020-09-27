@@ -1,4 +1,4 @@
-import { Mouse } from 'playwright-core';
+import { Mouse } from 'playwright';
 import { ActionSchemaList } from '../../../typings';
 import { getConfigs } from '../configs';
 import { PageMethodKeys } from './typings/app-types';

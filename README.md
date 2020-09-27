@@ -16,18 +16,9 @@ Being able to make components that feel and look same in all browser were always
 
 ## Getting Started
 
-Required packages:
-
-- storybook-addon-playwright
-- playwright-core
-- @storybook/addon-knobs
-
 ```js
-yarn add playwright playwright-core storybook-addon-playwright @storybook/addon-knobs --dev
+yarn add storybook-addon-playwright --dev
 ```
-
-The `playwright` package is not required if [docker](https://github.com/ccpu/playwright-docker-server) has been configured to communicate with the playwright browsers.
-
 ## Configuration
 
 within `.storybook/main.js`

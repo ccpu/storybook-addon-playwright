@@ -1,5 +1,5 @@
 import React, { forwardRef, Ref, SFC, useCallback, memo } from 'react';
-import { ViewportSize } from 'playwright-core/types/types';
+import { ViewportSize } from 'playwright/types/types';
 import { MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 

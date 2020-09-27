@@ -1,4 +1,4 @@
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import { ActionSchemaList } from './action-schema';
 import { BrowserTypes, BrowserContextOptions } from './screenshot';
 import { PageMethodKeys } from '../api/server/services/typings/app-types';

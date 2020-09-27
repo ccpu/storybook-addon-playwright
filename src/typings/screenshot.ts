@@ -1,7 +1,7 @@
 import {
   Page,
   BrowserContextOptions as PlaywrightBrowserContextOptions,
-} from 'playwright-core';
+} from 'playwright';
 import { ActionSet } from './story-action';
 import { StoryInfo } from './story-info';
 

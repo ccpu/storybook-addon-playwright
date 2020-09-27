@@ -5,7 +5,7 @@ jest.mock('fs', () => ({
 import { runDiffImageToSnapshotMock } from '../../../../../__manual_mocks__/jest-image-snapshot';
 import { diffImageToScreenshot } from '../diff-image-to-screenshot';
 import * as configs from '../../configs';
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import { DiffImageToScreenShot } from '../../../typings';
 
 jest.mock('../../configs');

@@ -6,7 +6,7 @@ import { RESET, CHANGE } from '@storybook/addon-knobs/dist/shared';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useBrowserOptions, BrowsersOption } from './use-browser-options';
 import { useScreenshotOptions } from './use-screenshot-options';
-import { BrowserContextOptions } from 'playwright-core';
+import { BrowserContextOptions } from 'playwright';
 
 interface ReturnType {
   browserOptions: BrowsersOption;

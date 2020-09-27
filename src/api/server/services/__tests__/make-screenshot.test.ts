@@ -24,7 +24,7 @@ import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { mocked } from 'ts-jest/utils';
 import { executeAction } from '../../utils/execute-action';
 import { installMouseHelper } from '../../utils/install-mouse-helper';
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import {
   TakeScreenshotOptionsParams,
   TakeScreenshotParams,

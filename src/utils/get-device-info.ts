@@ -1,4 +1,4 @@
-import { DeviceDescriptors } from 'playwright-core/lib/deviceDescriptors';
+import { DeviceDescriptors } from 'playwright/lib/server/deviceDescriptors';
 import { BrowserContextOptions } from '../typings';
 
 export const getDeviceInfo = (

@@ -1,5 +1,5 @@
 import { executeAction } from '../execute-action';
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import { StoryAction } from '../../../../typings';
 import { getActionSchemaData } from '../../../../../__test_data__';
 

@@ -9,7 +9,7 @@ import {
   StoryAction,
 } from '../../../typings';
 import { extendPage } from '@playwright-utils/page';
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import joinImage from 'join-images';
 import sharp from 'sharp';
 import {

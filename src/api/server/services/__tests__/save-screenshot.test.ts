@@ -2,7 +2,7 @@ import { loadStoryData } from '../../utils';
 import { saveScreenshot } from '../save-screenshot';
 import { SaveScreenshotRequest } from '../../../typings';
 import { setConfig } from '../../configs';
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import * as diffImageToScreenshot from '../diff-image-to-screenshot';
 import { mocked } from 'ts-jest/utils';
 import { deleteScreenshot } from '../delete-screenshot';

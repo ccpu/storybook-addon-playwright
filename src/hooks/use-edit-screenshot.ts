@@ -8,7 +8,7 @@ import { RESET } from '@storybook/addon-knobs/dist/shared';
 import { useActiveBrowsers } from './use-active-browser';
 import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 import { useAddonState } from './use-addon-state';
-import { BrowserContextOptions } from 'playwright-core';
+import { BrowserContextOptions } from 'playwright';
 
 interface EditScreenshotState {
   storyId: string;

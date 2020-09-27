@@ -1,5 +1,5 @@
 import { Config } from '../../typings';
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import { migration } from './migration';
 
 let configs: Config<Page>;

@@ -1,4 +1,4 @@
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 import { KnobType } from '@storybook/addon-knobs/dist/components/types';
 export type StoryActionPosition = { x: number; y: number };
 

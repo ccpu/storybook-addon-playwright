@@ -4,7 +4,7 @@ import {
   PlaywrightData,
   ScreenshotOptions,
 } from '../../../../typings';
-import { BrowserContextOptions } from 'playwright-core';
+import { BrowserContextOptions } from 'playwright';
 
 export const getOptionsKey = (
   storyData: PlaywrightData,

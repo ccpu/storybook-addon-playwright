@@ -2,7 +2,7 @@
 // This injects a box into the page that moves with the mouse;
 // Useful for debugging
 
-import { Page } from 'playwright-core';
+import { Page } from 'playwright';
 
 async function installMouseHelper(page: Page) {
   await page.waitForLoadState('load');

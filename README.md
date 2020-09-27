@@ -16,9 +16,15 @@ Being able to make components that feel and look same in all browser were always
 
 ## Getting Started
 
+Required packages:
+
+- storybook-addon-playwright
+- @storybook/addon-knobs
+
 ```js
-yarn add storybook-addon-playwright --dev
+yarn add storybook-addon-playwright @storybook/addon-knobs --dev
 ```
+
 ## Configuration
 
 within `.storybook/main.js`

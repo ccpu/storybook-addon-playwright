@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { EventEmitter } from 'events';
 import { types as addonsTypes } from '@storybook/addons';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const addonsMock = jest.genMockFromModule('@storybook/addons') as any;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const addonsMock = jest.createMockFromModule('@storybook/addons') as any;
 export const types = addonsTypes;
 
 const ee = new EventEmitter();

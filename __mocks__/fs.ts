@@ -6,7 +6,9 @@ interface FsProp extends Fs {
   __setMockFiles: (newMockFiles) => void;
 }
 
-const fs = jest.genMockFromModule('fs') as FsProp;
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const fs = jest.createMockFromModule('fs') as FsProp;
 
 // This is a custom function that our tests can use during setup to specify
 // what the files on the "mock" filesystem should look like when any of the

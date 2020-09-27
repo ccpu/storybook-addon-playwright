@@ -14,6 +14,10 @@ An addon to visually test the stories in the multiple browsers within storybook 
 
 Being able to make components that feel and look same in all browser were always a challenge, it's required that developer keep switching between browsers and visually checking the components. It's also important to keep track of the changes and be able to detect changes as quickly as possible. That's why this add-on has been created. With the help of playwright and storybook now it's possible to visually check components and be notified of changes all in one place.
 
+## Example
+
+[storybook-addon-playwright-example](https://github.com/ccpu/storybook-addon-playwright-example)
+
 ## Getting Started
 
 Required packages:

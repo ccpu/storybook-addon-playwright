@@ -13,6 +13,18 @@ describe('getActionsSchema', () => {
     jest.clearAllMocks();
   });
 
+  it('should generate schema', () => {
+    const schema = getActionsSchema(file);
+
+    const filteredSchema = Object.keys(schema).reduce((obj, key) => {
+      obj[key] = schema[key];
+      delete obj[key].description;
+      return obj;
+    }, {});
+
+    expect(filteredSchema).toMatchSnapshot();
+  });
+
   it('should return action schema', async () => {
     const schema = getActionsSchema(file);
     expect(schema).toBeDefined();

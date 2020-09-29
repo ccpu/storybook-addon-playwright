@@ -1,5 +1,9 @@
 /* istanbul ignore file */
-import { Page, BrowserContextOptions, ViewportSize } from 'playwright';
+import {
+  Page,
+  BrowserContextOptions,
+  ViewportSize,
+} from 'playwright/types/types';
 import { ExtendedPlaywrightPageFunctions } from '@playwright-utils/page/lib/typings/page';
 
 export type MergeType = 'stitch' | 'overlay';

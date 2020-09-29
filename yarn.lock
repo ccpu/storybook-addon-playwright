@@ -5335,9 +5335,9 @@ enzyme-shallow-equal@^1.0.1, enzyme-shallow-equal@^1.0.4:
     object-is "^1.1.2"
 
 enzyme-to-json@^3.3.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.5.0.tgz#3d536f1e8fb50d972360014fe2bd64e6a672f7dd"
-  integrity sha512-clusXRsiaQhG7+wtyc4t7MU8N3zCOgf4eY9+CeSenYzKlFST4lxerfOvnWd4SNaToKhkuba+w6m242YpQOS7eA==
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.6.0.tgz#574b504499b2aa682d20aa23e533312c26b0f9e3"
+  integrity sha512-kr/tgEDNd9qp0vH8oTUt/1pOo4pOiERYEtofr4YENAxTrL38QU6o2jXl1RQYHRoRjc4yDN+Y0JOxyblgcNWzhA==
   dependencies:
     lodash "^4.17.15"
     react-is "^16.12.0"
@@ -12173,10 +12173,10 @@ ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-ts-to-json@^0.66.1:
-  version "0.66.1"
-  resolved "https://registry.yarnpkg.com/ts-to-json/-/ts-to-json-0.66.1.tgz#d4203d71aa74fa44bc94083da9c99e52e14468ef"
-  integrity sha512-OWm75P+7qehR7BuAfE5drpEUrkId3HjTjwnv7zUS9TsLREHzPE9GXD2nWoOJqdE1yvpkCRZTm1tloZV3lofSbQ==
+ts-to-json@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ts-to-json/-/ts-to-json-1.0.0.tgz#8d555fdb6e8db66956e2814dd62ef07c5a27e61e"
+  integrity sha512-3ov4fCnN9FelTkTujQTyR9fN8vCD7rxTPGlPULd9WqJnvpMFhCRH+iKzGcxk5i5cFgAPhZacIsTAiX0K+nSgOQ==
   dependencies:
     "@types/json-schema" "^7.0.4"
     commander "~5.1.0"
@@ -12287,11 +12287,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typescript@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
-  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
 typescript@~3.8.3:
   version "3.8.3"

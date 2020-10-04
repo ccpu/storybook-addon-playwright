@@ -127,7 +127,7 @@
     "reinspect": "^1.1.0",
     "sharp": "^0.26.1",
     "tinycolor2": "^1.4.2",
-    "ts-to-json": "^1.0.0",
+    "ts-to-json": "^1.1.1",
     "webpack-virtual-modules": "^0.3.1"
   }
 }

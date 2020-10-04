@@ -21,11 +21,11 @@ describe('SchemaFormLoader', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <SchemaFormLoader type="MyType" onSave={jest.fn()} />,
+      <SchemaFormLoader schemaName="MyType" onSave={jest.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
     expect(fetch).toHaveBeenCalledWith('http://localhost/getSchema', {
-      body: '{"type":"MyType"}',
+      body: 'MyType',
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ describe('SchemaFormLoader', () => {
   it('should change value and save', async () => {
     const onSaveMock = jest.fn();
     const wrapper = shallow(
-      <SchemaFormLoader type="MyType" onSave={onSaveMock} />,
+      <SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />,
     );
 
     await new Promise((resolve) => setImmediate(resolve));
@@ -56,7 +56,7 @@ describe('SchemaFormLoader', () => {
   it('should get value', async () => {
     const onSaveMock = jest.fn();
     const wrapper = shallow(
-      <SchemaFormLoader type="MyType" onSave={onSaveMock} />,
+      <SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />,
     );
 
     await new Promise((resolve) => setImmediate(resolve));
@@ -72,7 +72,7 @@ describe('SchemaFormLoader', () => {
   it('should handle clear', async () => {
     const onSaveMock = jest.fn();
     const wrapper = shallow(
-      <SchemaFormLoader type="MyType" onSave={onSaveMock} />,
+      <SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />,
     );
 
     await new Promise((resolve) => setImmediate(resolve));

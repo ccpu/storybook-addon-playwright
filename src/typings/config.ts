@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 import { ActionSchemaList } from './action-schema';
 import { BrowserTypes, BrowserContextOptions } from './screenshot';
-import { PageMethodKeys } from '../api/server/services/typings/app-types';
+// import { PageMethodKeys } from '../api/server/services/typings/app-types';
 import {
   DiffDirection,
   ImageDiffResult,
@@ -16,7 +16,7 @@ type PageGotoOptions = Parameters<Page['goto']>[1];
 export interface Config<T extends unknown = Page> {
   storybookEndpoint: string;
   customActionSchema?: ActionSchemaList;
-  pageMethods?: PageMethodKeys[];
+  // pageMethods?: PageMethodKeys[];
   pageGotoOptions?: PageGotoOptions;
   getPage: (
     browserType: BrowserTypes,

@@ -1,9 +1,4 @@
 import { getSchemaService } from '../get-schema-service';
-import path from 'path';
-
-jest.mock('../../configs');
-
-const file = path.resolve('./src/api/server/services/typings/app-types.ts');
 
 describe('getSchemaService', () => {
   beforeEach(() => {
@@ -11,18 +6,18 @@ describe('getSchemaService', () => {
   });
 
   it('should generate PlaywrightScreenshotOptionSchema schema', () => {
-    const schema = getSchemaService({
-      path: file,
-      type: 'PlaywrightScreenshotOptionSchema',
-    });
-    expect(schema).toMatchSnapshot();
+    const schema = getSchemaService('browser-options');
+    expect(schema).toBeDefined();
   });
 
   it('should generate PlaywrightBrowserContextOptionSchema schema', () => {
-    const schema = getSchemaService({
-      path: file,
-      type: 'PlaywrightBrowserContextOptionSchema',
-    });
-    expect(schema).toMatchSnapshot();
+    const schema = getSchemaService('screenshot-options');
+    expect(schema).toBeDefined();
+  });
+
+  it('should return nothing', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const schema = getSchemaService('invalid' as any);
+    expect(schema).not.toBeDefined();
   });
 });

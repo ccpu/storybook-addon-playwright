@@ -6,17 +6,12 @@ import {
   Config,
   Definition,
 } from 'ts-to-json';
-import { join } from 'path';
 import objHash from 'object-hash';
 
 export const cachedSchema = {};
 
 export const generateSchema = (options?: Partial<Config>) => {
   const hash = objHash(options);
-
-  if (!options.path) {
-    options.path = join(__dirname, '/typings/app-types.d.ts');
-  }
 
   if (cachedSchema[hash]) {
     return cachedSchema[hash];

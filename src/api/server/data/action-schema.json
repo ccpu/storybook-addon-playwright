@@ -1,0 +1,952 @@
+{
+  "clearInput": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "blur": {
+            "type": "boolean"
+          },
+          "timeout": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.\r\nIf the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error."
+  },
+  "dragDropSelector": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "to": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "mouseDownRelativeToSelector": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "to"
+    ],
+    "description": "This method fetches an element with `selector`, and move it to the position given by user.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "scrollSelector": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "scrollProperty": {
+        "type": "object",
+        "properties": {
+          "top": {
+            "type": "number"
+          },
+          "left": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "scrollProperty"
+    ],
+    "description": "This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "mouseDownOnSelector": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "point": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and perform mousedown on the center of selector.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "mouseMoveToSelector": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "point": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and move the mouse to center of selector.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "setSelectorSize": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "width": {
+        "type": "string"
+      },
+      "height": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, set the height and with.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "selectorMouseWheel": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "eventInitDict": {
+        "type": "object",
+        "properties": {
+          "deltaMode": {
+            "type": "number"
+          },
+          "deltaX": {
+            "type": "number"
+          },
+          "deltaY": {
+            "type": "number"
+          },
+          "deltaZ": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and dispatch WheelEvent.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "waitForSelector": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "attached",
+              "detached",
+              "hidden",
+              "visible"
+            ],
+            "description": "Defaults to `'visible'`. Can be either:\n  - `'attached'` - wait for element to be present in DOM.\n  - `'detached'` - wait for element to not be present in DOM.\n  - `'visible'` - wait for element to have non-empty bounding box and no `visibility:hidden`. Note that element without any content or with `display:none` has an empty bounding box and is not considered visible.\n  - `'hidden'` - wait for element to be either detached from DOM, or have an empty bounding box or `visibility:hidden`. This is opposite to the `'visible'` option."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "options"
+    ],
+    "description": "Wait for the `selector` to satisfy `state` option (either appear/disappear from dom, or become visible/hidden). If at the moment of calling the method `selector` already satisfies the condition, the method will return immediately. If the selector doesn't satisfy the condition for the `timeout` milliseconds, the function will throw.\nThis method works across navigations:\n```js\nconst { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.\n\n(async () => {\n   const browser = await chromium.launch();\n   const page = await browser.newPage();\n   let currentURL;\n   page\n     .waitForSelector('img')\n     .then(() => console.log('First URL with image: ' + currentURL));\n   for (currentURL of ['https://example.com', 'https://google.com', 'https://bbc.com']) {\n     await page.goto(currentURL);\n   }\n   await browser.close();\n})();\n```\nShortcut for page.mainFrame().waitForSelector(selector[, options])."
+  },
+  "check": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for checkbox or radio button to check. If there are multiple elements satisfying the selector, the first will be checked. See working with selectors for more details."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "force": {
+            "type": "boolean",
+            "description": "Whether to bypass the actionability checks. Defaults to `false`."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method checks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nEnsure that matched element is a checkbox or a radio input. If not, this method rejects. If the element is already checked, this method returns immediately.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to click in the center of the element.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\nEnsure that the element is now checked. If not, this method rejects.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().check(selector[, options])."
+  },
+  "click": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for element to click. If there are multiple elements satisfying the selector, the first will be clicked. See working with selectors for more details."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "button": {
+            "type": "string",
+            "enum": [
+              "left",
+              "middle",
+              "right"
+            ],
+            "description": "Defaults to `left`."
+          },
+          "clickCount": {
+            "type": "number",
+            "description": "defaults to 1. See UIEvent.detail."
+          },
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0."
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false,
+            "description": "A point to click relative to the top-left corner of element padding box. If not specified, clicks to some visible point of the element."
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Alt",
+                "Control",
+                "Meta",
+                "Shift"
+              ]
+            },
+            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the click, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
+          },
+          "force": {
+            "type": "boolean",
+            "description": "Whether to bypass the actionability checks. Defaults to `false`."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method clicks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to click in the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().click(selector[, options])."
+  },
+  "dblclick": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for element to double click. If there are multiple elements satisfying the selector, the first will be double clicked. See working with selectors for more details."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "button": {
+            "type": "string",
+            "enum": [
+              "left",
+              "middle",
+              "right"
+            ],
+            "description": "Defaults to `left`."
+          },
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0."
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false,
+            "description": "A point to double click relative to the top-left corner of element padding box. If not specified, double clicks to some visible point of the element."
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Alt",
+                "Control",
+                "Meta",
+                "Shift"
+              ]
+            },
+            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the double click, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
+          },
+          "force": {
+            "type": "boolean",
+            "description": "Whether to bypass the actionability checks. Defaults to `false`."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method double clicks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to double click in the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. Note that if the first click of the `dblclick()` triggers a navigation event, this method will reject.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\n\n**NOTE** `page.dblclick()` dispatches two `click` events and a single `dblclick` event.\n\nShortcut for page.mainFrame().dblclick(selector[, options])."
+  },
+  "fill": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to query page for. See working with selectors for more details."
+      },
+      "value": {
+        "type": "string",
+        "description": "Value to fill for the `<input>`, `<textarea>` or `[contenteditable]` element."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "value"
+    ],
+    "description": "This method waits for an element matching `selector`, waits for actionability checks, focuses the element, fills it and triggers an `input` event after filling.\nIf the element matching `selector` is not an `<input>`, `<textarea>` or `[contenteditable]` element, this method throws an error.\nNote that you can pass an empty string to clear the input field.\nTo send fine-grained keyboard events, use `page.type`.\nShortcut for page.mainFrame().fill()"
+  },
+  "focus": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector of an element to focus. If there are multiple elements satisfying the selector, the first will be focused. See working with selectors for more details."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector` and focuses it.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM.\nShortcut for page.mainFrame().focus(selector)."
+  },
+  "hover": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for element to hover. If there are multiple elements satisfying the selector, the first will be hovered. See working with selectors for more details."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "x",
+              "y"
+            ],
+            "additionalProperties": false,
+            "description": "A point to hover relative to the top-left corner of element padding box. If not specified, hovers over some visible point of the element."
+          },
+          "modifiers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Alt",
+                "Control",
+                "Meta",
+                "Shift"
+              ]
+            },
+            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the hover, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
+          },
+          "force": {
+            "type": "boolean",
+            "description": "Whether to bypass the actionability checks. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method hovers over an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to hover over the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().hover(selector[, options])."
+  },
+  "mouse": {
+    "type": "object",
+    "properties": {
+      "click": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "button": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "middle",
+                  "right"
+                ],
+                "description": "Defaults to `left`."
+              },
+              "clickCount": {
+                "type": "number",
+                "description": "defaults to 1. See UIEvent.detail."
+              },
+              "delay": {
+                "type": "number",
+                "description": "Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "description": "Shortcut for `mouse.move`, `mouse.down` and `mouse.up`."
+      },
+      "dblclick": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "button": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "middle",
+                  "right"
+                ],
+                "description": "Defaults to `left`."
+              },
+              "delay": {
+                "type": "number",
+                "description": "Time to wait between `mousedown` and `mouseup` in milliseconds. Defaults to 0."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "description": "Shortcut for `mouse.move`, `mouse.down`, `mouse.up`, `mouse.down` and `mouse.up`."
+      },
+      "down": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "options": {
+            "type": "object",
+            "properties": {
+              "button": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "middle",
+                  "right"
+                ],
+                "description": "Defaults to `left`."
+              },
+              "clickCount": {
+                "type": "number",
+                "description": "defaults to 1. See UIEvent.detail."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [],
+        "description": "Dispatches a `mousedown` event."
+      },
+      "move": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "steps": {
+                "type": "number",
+                "description": "defaults to 1. Sends intermediate `mousemove` events."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "description": "Dispatches a `mousemove` event."
+      },
+      "up": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "options": {
+            "type": "object",
+            "properties": {
+              "button": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "middle",
+                  "right"
+                ],
+                "description": "Defaults to `left`."
+              },
+              "clickCount": {
+                "type": "number",
+                "description": "defaults to 1. See UIEvent.detail."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [],
+        "description": "Dispatches a `mouseup` event."
+      }
+    },
+    "required": [
+      "click",
+      "dblclick",
+      "down",
+      "move",
+      "up"
+    ],
+    "additionalProperties": false,
+    "description": "The Mouse class operates in main-frame CSS pixels relative to the top-left corner of the viewport.\nEvery `page` object has its own Mouse, accessible with `page.mouse`.\n```js\n// Using ‘page.mouse’ to trace a 100x100 square.\nawait page.mouse.move(0, 0);\nawait page.mouse.down();\nawait page.mouse.move(0, 100);\nawait page.mouse.move(100, 100);\nawait page.mouse.move(100, 0);\nawait page.mouse.move(0, 0);\nawait page.mouse.up();\n```"
+  },
+  "press": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector of an element to type into. If there are multiple elements satisfying the selector, the first will be used. See working with selectors for more details."
+      },
+      "key": {
+        "type": "string",
+        "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between `keydown` and `keyup` in milliseconds. Defaults to 0."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "key"
+    ],
+    "description": "Focuses the element, and then uses `keyboard.down` and `keyboard.up`.\n`key` can specify the intended keyboardEvent.key value or a single character to generate the text for. A superset of the `key` values can be found here. Examples of the keys are:\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\nFollowing modification shortcuts are also suported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When speficied with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n```js\nconst page = await browser.newPage();\nawait page.goto('https://keycode.info');\nawait page.press('body', 'A');\nawait page.screenshot({ path: 'A.png' });\nawait page.press('body', 'ArrowLeft');\nawait page.screenshot({ path: 'ArrowLeft.png' });\nawait page.press('body', 'Shift+O');\nawait page.screenshot({ path: 'O.png' });\nawait browser.close();\n```"
+  },
+  "type": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector of an element to type into. If there are multiple elements satisfying the selector, the first will be used. See working with selectors for more details."
+      },
+      "text": {
+        "type": "string",
+        "description": "A text to type into a focused element."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between key presses in milliseconds. Defaults to 0."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "text"
+    ],
+    "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text. `page.type` can be used to send fine-grained keyboard events. To fill values in form fields, use `page.fill`.\nTo press a special key, like `Control` or `ArrowDown`, use `keyboard.press`.\n```js\nawait page.type('#mytextarea', 'Hello'); // Types instantly\nawait page.type('#mytextarea', 'World', {delay: 100}); // Types slower, like a user\n```\nShortcut for page.mainFrame().type(selector, text[, options])."
+  },
+  "uncheck": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for uncheckbox to check. If there are multiple elements satisfying the selector, the first will be checked. See working with selectors for more details."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "force": {
+            "type": "boolean",
+            "description": "Whether to bypass the actionability checks. Defaults to `false`."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the browserContext.setDefaultTimeout(timeout) or page.setDefaultTimeout(timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method unchecks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nEnsure that matched element is a checkbox or a radio input. If not, this method rejects. If the element is already unchecked, this method returns immediately.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to click in the center of the element.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\nEnsure that the element is now unchecked. If not, this method rejects.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().uncheck(selector[, options])."
+  },
+  "waitForTimeout": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "timeout": {
+        "type": "number",
+        "description": "A timeout to wait for"
+      }
+    },
+    "required": [
+      "timeout"
+    ],
+    "description": "Returns a promise that resolves after the timeout.\nNote that `page.waitForTimeout()` should only be used for debugging. Tests using the timer in production are going to be flaky. Use signals such as network events, selectors becoming visible and others instead.\n```js\n// wait for 1 second\nawait page.waitForTimeout(1000);\n```\nShortcut for page.mainFrame().waitForTimeout(timeout)."
+  },
+  "takeScreenshot": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "stitchOptions": {
+        "type": "object",
+        "properties": {
+          "blend": {
+            "type": "string",
+            "enum": [
+              "clear",
+              "source",
+              "over",
+              "in",
+              "out",
+              "atop",
+              "dest",
+              "dest-over",
+              "dest-in",
+              "dest-out",
+              "dest-atop",
+              "xor",
+              "add",
+              "saturate",
+              "multiply",
+              "screen",
+              "overlay",
+              "darken",
+              "lighten",
+              "colour-dodge",
+              "colour-burn",
+              "hard-light",
+              "soft-light",
+              "difference",
+              "exclusion"
+            ],
+            "description": "How to blend this image with the image below. (optional)",
+            "default": "multiply"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [],
+    "description": "This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions.\nIn the end the screenshots will be merged with the final screenshot."
+  },
+  "takeScreenshotOptions": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "mergeType": {
+        "type": "string",
+        "enum": [
+          "stitch",
+          "overlay"
+        ]
+      },
+      "stitchOptions": {
+        "type": "object",
+        "properties": {
+          "direction": {
+            "type": "string",
+            "enum": [
+              "vertical",
+              "horizontal"
+            ],
+            "description": "Direction of the merged image."
+          },
+          "align": {
+            "type": "string",
+            "enum": [
+              "start",
+              "center",
+              "end"
+            ],
+            "description": "Aligning of given images. If the images are not all the same size, images will be sorted to largest image. Possible values are `start`, `center` and `end`. Default is `start`."
+          },
+          "offset": {
+            "type": "number",
+            "description": "Offset in pixels between each image. Default is `0`"
+          },
+          "margin": {
+            "type": "string",
+            "description": "Set the margin of image, considered as standard css shorthand properties (e.g. '40 40 0 10')",
+            "default": "0 0 0 0"
+          },
+          "color": {
+            "type": "string",
+            "description": "Set the background color of image."
+          }
+        },
+        "additionalProperties": false
+      },
+      "overlayOptions": {
+        "type": "object",
+        "properties": {
+          "blend": {
+            "type": "string",
+            "enum": [
+              "clear",
+              "source",
+              "over",
+              "in",
+              "out",
+              "atop",
+              "dest",
+              "dest-over",
+              "dest-in",
+              "dest-out",
+              "dest-atop",
+              "xor",
+              "add",
+              "saturate",
+              "multiply",
+              "screen",
+              "overlay",
+              "darken",
+              "lighten",
+              "colour-dodge",
+              "colour-burn",
+              "hard-light",
+              "soft-light",
+              "difference",
+              "exclusion"
+            ],
+            "description": "How to blend this image with the image below. (optional)",
+            "default": "multiply"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [],
+    "description": "The purpose of this action is to have centralized options for all screenshots.\nThis action can be used in conjunction with takeScreenshot action only.\nOnly one instance can be used."
+  }
+}

@@ -1,12 +1,11 @@
-import { getSchemaService } from '../services/get-schema-service';
+import { getSchemaService, SchemaName } from '../services/get-schema-service';
 import { Request, Response } from 'express';
-import { Config } from 'ts-to-json';
 
 export const getSchemaController = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  const reqData = req.body as Config;
+  const reqData = req.body.type as SchemaName;
 
   const result = getSchemaService(reqData);
 

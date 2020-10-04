@@ -25,7 +25,8 @@
     "noUnusedParameters": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*",
@@ -37,9 +38,10 @@
     "__manual_mocks__/**/*",
     "middleware.d.ts",
     "configs.d.ts",
-    "stories/**/*"
+    "stories/**/*",
   ],
   "exclude": [
+    "**/.storybook/**/*",
     "node_modules",
     "**/node_modules/*",
   ]

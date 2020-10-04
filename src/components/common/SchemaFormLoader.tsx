@@ -30,7 +30,7 @@ const useStyles = makeStyles(
 );
 
 export interface SchemaFormProps extends Partial<Config> {
-  type: string;
+  schemaName: string;
   defaultData?: unknown;
   onSave: (data: unknown) => void;
   active?: boolean;
@@ -41,7 +41,7 @@ const SchemaFormLoader: SFC<SchemaFormProps> = ({
   defaultData,
   onSave,
   FooterComponent,
-  ...rest
+  schemaName,
 }) => {
   const classes = useStyles();
 
@@ -55,8 +55,8 @@ const SchemaFormLoader: SFC<SchemaFormProps> = ({
 
   useEffect(() => {
     if (schema || inProgress) return;
-    makeCall(rest);
-  }, [inProgress, makeCall, rest, schema]);
+    makeCall(schemaName);
+  }, [inProgress, makeCall, schema, schemaName]);
 
   const handleSave = useCallback(() => {
     onSave(tempOptions);

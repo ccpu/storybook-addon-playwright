@@ -27,7 +27,7 @@ const ScreenshotOptions: SFC = () => {
     >
       <MemoizedSchemaFormLoader
         onSave={handleSave}
-        type={'PlaywrightScreenshotOptionSchema'}
+        schemaName={'screenshot-options'}
         defaultData={screenshotOptions}
         excludeProps={['path']}
       />

@@ -1,0 +1,142 @@
+{
+  "acceptDownloads": {
+    "type": "boolean",
+    "description": "Whether to automatically download all the attachments. Defaults to `false` where all the downloads are canceled."
+  },
+  "ignoreHTTPSErrors": {
+    "type": "boolean",
+    "description": "Whether to ignore HTTPS errors during navigation. Defaults to `false`."
+  },
+  "bypassCSP": {
+    "type": "boolean",
+    "description": "Toggles bypassing page's Content-Security-Policy."
+  },
+  "viewport": {
+    "type": "object",
+    "properties": {
+      "width": {
+        "type": "number",
+        "description": "page width in pixels."
+      },
+      "height": {
+        "type": "number",
+        "description": "page height in pixels."
+      }
+    },
+    "required": [
+      "width",
+      "height"
+    ],
+    "additionalProperties": false,
+    "description": "Sets a consistent viewport for each page. Defaults to an 1280x720 viewport. `null` disables the default viewport."
+  },
+  "userAgent": {
+    "type": "string",
+    "description": "Specific user agent to use in this context."
+  },
+  "deviceScaleFactor": {
+    "type": "number",
+    "description": "Specify device scale factor (can be thought of as dpr). Defaults to `1`."
+  },
+  "isMobile": {
+    "type": "boolean",
+    "description": "Whether the `meta viewport` tag is taken into account and touch events are enabled. Defaults to `false`. Not supported in Firefox."
+  },
+  "hasTouch": {
+    "type": "boolean",
+    "description": "Specifies if viewport supports touch events. Defaults to false."
+  },
+  "javaScriptEnabled": {
+    "type": "boolean",
+    "description": "Whether or not to enable JavaScript in the context. Defaults to true."
+  },
+  "timezoneId": {
+    "type": "string",
+    "description": "Changes the timezone of the context. See ICU’s `metaZones.txt` for a list of supported timezone IDs."
+  },
+  "geolocation": {
+    "type": "object",
+    "properties": {
+      "latitude": {
+        "type": "number",
+        "description": "Latitude between -90 and 90."
+      },
+      "longitude": {
+        "type": "number",
+        "description": "Longitude between -180 and 180."
+      },
+      "accuracy": {
+        "type": "number",
+        "description": "Non-negative accuracy value. Defaults to `0`."
+      }
+    },
+    "required": [
+      "latitude",
+      "longitude"
+    ],
+    "additionalProperties": false
+  },
+  "locale": {
+    "type": "string",
+    "description": "Specify user locale, for example `en-GB`, `de-DE`, etc. Locale will affect `navigator.language` value, `Accept-Language` request header value as well as number and date formatting rules."
+  },
+  "permissions": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "description": "A list of permissions to grant to all pages in this context. See browserContext.grantPermissions for more details."
+  },
+  "offline": {
+    "type": "boolean",
+    "description": "Whether to emulate network being offline. Defaults to `false`."
+  },
+  "httpCredentials": {
+    "type": "object",
+    "properties": {
+      "username": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "username",
+      "password"
+    ],
+    "additionalProperties": false,
+    "description": "Credentials for HTTP authentication."
+  },
+  "colorScheme": {
+    "type": "string",
+    "enum": [
+      "dark",
+      "light",
+      "no-preference"
+    ],
+    "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See page.emulateMedia(options) for more details. Defaults to '`light`'."
+  },
+  "_recordVideos": {
+    "type": "object",
+    "properties": {
+      "width": {
+        "type": "number",
+        "description": "Video frame width."
+      },
+      "height": {
+        "type": "number",
+        "description": "Video frame height."
+      }
+    },
+    "required": [
+      "width",
+      "height"
+    ],
+    "additionalProperties": false,
+    "description": "**experimental** Enables automatic video recording for new pages. The video will have frames with the provided dimensions. Actual picture of the page will be scaled down if necessary to fit specified size."
+  },
+  "cursor": {
+    "type": "boolean"
+  }
+}

@@ -28,7 +28,7 @@ import { Page } from 'playwright';
 import {
   TakeScreenshotOptionsParams,
   TakeScreenshotParams,
-} from '../typings/app-types';
+} from '../../../typings/';
 
 jest.mock('../../configs');
 jest.mock('../../utils/execute-action');

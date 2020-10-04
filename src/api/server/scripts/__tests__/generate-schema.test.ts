@@ -37,9 +37,4 @@ describe('generateSchema', () => {
     generateSchema({ path, type: 'MyType' });
     expect(createProgramMock.mock.calls[0][0].path).toBe(path);
   });
-
-  it('should have default path', () => {
-    generateSchema({ type: 'MyType' });
-    expect(createProgramMock.mock.calls[0][0].path).toBeDefined();
-  });
 });

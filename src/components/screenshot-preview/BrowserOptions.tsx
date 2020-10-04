@@ -44,8 +44,7 @@ const BrowserOptions: SFC<BrowserOptionsProps> = ({ browserType }) => {
       {!reset && (
         <MemoizedSchemaFormLoader
           onSave={handleSave}
-          type={'PlaywrightBrowserContextOptionSchema'}
-          excludeProps={['extraHTTPHeaders', 'logger']}
+          schemaName={'browser-options'}
           defaultData={browserOptions && browserOptions[browserType]}
           FooterComponent={
             <DeviceList onDeviceSelect={handleDeviceSelection} />

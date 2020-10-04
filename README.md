@@ -176,7 +176,6 @@ The screenshots are saved in the folder named `__screenshots__` under the story 
 To add or extend the playwright method, the following properties are available in the `setConfig` method:
 
 - customActionSchema
-- pageMethods
 
 ### customActionSchema
 
@@ -240,31 +239,6 @@ async function addBox(position) {
   });
 })();
 ```
-
-### pageMethods
-
-The `pageMethods` property enables developer to add existing playwright methods to the 'Add Actions' menu under the `Actions` panel.
-
-Currently following methods are available:
-
-```js
-  'click',
-  'dblclick',
-  'fill',
-  'focus',
-  'hover',
-  'hover',
-  'press',
-  'waitForSelector',
-  'waitForTimeout',
-  'mouse.click',
-  'mouse.dblclick',
-  'mouse.down',
-  'mouse.move',
-  'mouse.up',
-```
-
-> Note that the method must have interactive characteristic, for example `evaluate` method can not be used with this addon because its not directly interacting with the page like above methods do.
 
 ## Additional Page Methods
 

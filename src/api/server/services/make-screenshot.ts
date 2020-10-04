@@ -15,7 +15,7 @@ import sharp from 'sharp';
 import {
   TakeScreenshotParams,
   TakeScreenshotOptionsParams,
-} from './typings/app-types';
+} from '../../typings';
 
 interface ImageInfo {
   buffer: Buffer;

@@ -6,17 +6,8 @@ import {
   Config,
   Definition,
 } from 'ts-to-json';
-import objHash from 'object-hash';
-
-export const cachedSchema = {};
 
 export const generateSchema = (options?: Partial<Config>) => {
-  const hash = objHash(options);
-
-  if (cachedSchema[hash]) {
-    return cachedSchema[hash];
-  }
-
   const config: Config = {
     allowArbitraryDataTypes: true,
     encodeRefs: false,
@@ -44,8 +35,6 @@ export const generateSchema = (options?: Partial<Config>) => {
 
   const props = (result.definitions[config.type] as Definition)
     .properties as Definition;
-
-  cachedSchema[hash] = props;
 
   return props;
 };

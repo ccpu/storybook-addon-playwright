@@ -111,30 +111,11 @@
   "colorScheme": {
     "type": "string",
     "enum": [
-      "dark",
       "light",
+      "dark",
       "no-preference"
     ],
     "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See page.emulateMedia(options) for more details. Defaults to '`light`'."
-  },
-  "_recordVideos": {
-    "type": "object",
-    "properties": {
-      "width": {
-        "type": "number",
-        "description": "Video frame width."
-      },
-      "height": {
-        "type": "number",
-        "description": "Video frame height."
-      }
-    },
-    "required": [
-      "width",
-      "height"
-    ],
-    "additionalProperties": false,
-    "description": "**experimental** Enables automatic video recording for new pages. The video will have frames with the provided dimensions. Actual picture of the page will be scaled down if necessary to fit specified size."
   },
   "cursor": {
     "type": "boolean"

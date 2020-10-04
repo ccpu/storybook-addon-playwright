@@ -1,9 +1,4 @@
-import {
-  PlaywrightData,
-  BrowserContextOptions,
-  ScreenshotOptions,
-  StoryOptions,
-} from '../../../../typings';
+import { PlaywrightData, StoryOptions } from '../../../../typings';
 
 import { nanoid } from 'nanoid';
 import { getOptionsKey } from './get-options-key';
@@ -11,7 +6,8 @@ import { getOptionsKey } from './get-options-key';
 export const setStoryOptions = (
   storyData: PlaywrightData,
   optionProp: keyof StoryOptions,
-  options?: BrowserContextOptions | ScreenshotOptions,
+  // options?: BrowserContextOptions | ScreenshotOptions,
+  options?: unknown,
 ) => {
   if (!options || !Object.keys(options).length) return undefined;
 

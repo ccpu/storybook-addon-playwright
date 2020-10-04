@@ -1,15 +1,11 @@
 import equal from 'fast-deep-equal';
-import {
-  StoryOptions,
-  PlaywrightData,
-  ScreenshotOptions,
-} from '../../../../typings';
-import { BrowserContextOptions } from 'playwright';
+import { StoryOptions, PlaywrightData } from '../../../../typings';
 
 export const getOptionsKey = (
   storyData: PlaywrightData,
   optionProp: keyof StoryOptions,
-  options?: BrowserContextOptions | ScreenshotOptions,
+  // options?: BrowserContextOptions | ScreenshotOptions,
+  options?: unknown,
 ) => {
   if (!options || !storyData[optionProp]) return undefined;
 

@@ -8,7 +8,7 @@ describe('getSchemaController', () => {
     const jsonMock = jest.fn();
     const spy = jest.spyOn(getSchema, 'getSchemaService');
     await getSchemaController(
-      { body: { type: 'MyType' } } as Request,
+      { body: { schemaName: 'MyType' } } as Request,
       ({
         json: jsonMock,
       } as unknown) as Response,

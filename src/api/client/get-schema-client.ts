@@ -7,7 +7,7 @@ export const getSchemaClient = async (
   const restEndpoint = getEndpoint('GET_SCHEMA');
 
   const data = await fetch(restEndpoint, {
-    body: schemaName,
+    body: JSON.stringify({ schemaName: schemaName }),
     headers: {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',

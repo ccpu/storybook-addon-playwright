@@ -25,7 +25,7 @@ describe('SchemaFormLoader', () => {
     );
     expect(wrapper.exists()).toBeTruthy();
     expect(fetch).toHaveBeenCalledWith('http://localhost/getSchema', {
-      body: 'MyType',
+      body: '{"schemaName":"MyType"}',
       headers: {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',

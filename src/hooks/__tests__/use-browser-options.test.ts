@@ -45,6 +45,7 @@ describe('useBrowserDevice', () => {
     expect(result.current.browserOptions).toStrictEqual({
       all: { cursor: true },
       chromium: {
+        defaultBrowserType: 'webkit',
         deviceName: 'iPhone 6',
         deviceScaleFactor: 2,
         hasTouch: true,

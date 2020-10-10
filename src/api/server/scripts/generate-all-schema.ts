@@ -23,6 +23,7 @@ export const generateAllSchema = (
 
   const browserOptionSchema = generateSchema({
     excludeProps: ['extraHTTPHeaders', 'logger'],
+    excludeRootProps: ['_recordVideos'],
     path: typePath,
     type: 'PlaywrightBrowserContextOptionSchema',
   });

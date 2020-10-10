@@ -111,8 +111,8 @@
   "colorScheme": {
     "type": "string",
     "enum": [
-      "light",
       "dark",
+      "light",
       "no-preference"
     ],
     "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See page.emulateMedia(options) for more details. Defaults to '`light`'."

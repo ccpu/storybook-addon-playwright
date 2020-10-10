@@ -203,8 +203,8 @@
             "enum": [
               "attached",
               "detached",
-              "visible",
-              "hidden"
+              "hidden",
+              "visible"
             ],
             "description": "Defaults to `'visible'`. Can be either:\n  - `'attached'` - wait for element to be present in DOM.\n  - `'detached'` - wait for element to not be present in DOM.\n  - `'visible'` - wait for element to have non-empty bounding box and no `visibility:hidden`. Note that element without any content or with `display:none` has an empty bounding box and is not considered visible.\n  - `'hidden'` - wait for element to be either detached from DOM, or have an empty bounding box or `visibility:hidden`. This is opposite to the `'visible'` option."
           },
@@ -252,7 +252,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method waits for an element matching `selector`, waits for actionability checks. Then, if the element is not already checked, this method scrolls the element into view and uses elementHandle.click to click in the center of the element.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM. If the element is detached during the actionability checks, the action is retried.\nShortcut for page.mainFrame().check(selector[, options])."
+    "description": "This method checks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nEnsure that matched element is a checkbox or a radio input. If not, this method rejects. If the element is already checked, this method returns immediately.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to click in the center of the element.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\nEnsure that the element is now checked. If not, this method rejects.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().check(selector[, options])."
   },
   "click": {
     "kind": "function",
@@ -269,8 +269,8 @@
             "type": "string",
             "enum": [
               "left",
-              "right",
-              "middle"
+              "middle",
+              "right"
             ],
             "description": "Defaults to `left`."
           },
@@ -331,7 +331,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method waits for an element matching `selector`, waits for actionability checks, then scrolls the element into view if needed and uses page.mouse to click in the center of the element.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM. If the element is detached during the actionability checks, the action is retried.\nShortcut for page.mainFrame().click(selector[, options])."
+    "description": "This method clicks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to click in the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().click(selector[, options])."
   },
   "dblclick": {
     "kind": "function",
@@ -348,8 +348,8 @@
             "type": "string",
             "enum": [
               "left",
-              "right",
-              "middle"
+              "middle",
+              "right"
             ],
             "description": "Defaults to `left`."
           },
@@ -406,7 +406,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method waits for an element matching `selector`, waits for actionability checks, then scrolls the element into view if needed and uses page.mouse to double click in the center of the element.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM. If the element is detached during the actionability checks, the action is retried.\nBear in mind that if the first click of the `dblclick()` triggers a navigation event, there will be an exception.\n\n**NOTE** `page.dblclick()` dispatches two `click` events and a single `dblclick` event.\n\nShortcut for page.mainFrame().dblclick(selector[, options])."
+    "description": "This method double clicks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to double click in the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. Note that if the first click of the `dblclick()` triggers a navigation event, this method will reject.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\n\n**NOTE** `page.dblclick()` dispatches two `click` events and a single `dblclick` event.\n\nShortcut for page.mainFrame().dblclick(selector[, options])."
   },
   "fill": {
     "kind": "function",
@@ -521,7 +521,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method waits for an element matching `selector`, waits for actionability checks, then scrolls the element into view if needed and uses page.mouse to hover over the center of the element.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM. If the element is detached during the actionability checks, the action is retried.\nShortcut for page.mainFrame().hover(selector[, options])."
+    "description": "This method hovers over an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to hover over the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().hover(selector[, options])."
   },
   "mouse": {
     "type": "object",
@@ -543,8 +543,8 @@
                 "type": "string",
                 "enum": [
                   "left",
-                  "right",
-                  "middle"
+                  "middle",
+                  "right"
                 ],
                 "description": "Defaults to `left`."
               },
@@ -583,8 +583,8 @@
                 "type": "string",
                 "enum": [
                   "left",
-                  "right",
-                  "middle"
+                  "middle",
+                  "right"
                 ],
                 "description": "Defaults to `left`."
               },
@@ -613,8 +613,8 @@
                 "type": "string",
                 "enum": [
                   "left",
-                  "right",
-                  "middle"
+                  "middle",
+                  "right"
                 ],
                 "description": "Defaults to `left`."
               },
@@ -667,8 +667,8 @@
                 "type": "string",
                 "enum": [
                   "left",
-                  "right",
-                  "middle"
+                  "middle",
+                  "right"
                 ],
                 "description": "Defaults to `left`."
               },
@@ -798,7 +798,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method waits for an element matching `selector`, waits for actionability checks. Then, if the element is not already unchecked, this method scrolls the element into view and uses elementHandle.click to click in the center of the element.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM. If the element is detached during the actionability checks, the action is retried.\nShortcut for page.mainFrame().uncheck(selector[, options])."
+    "description": "This method unchecks an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nEnsure that matched element is a checkbox or a radio input. If not, this method rejects. If the element is already unchecked, this method returns immediately.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to click in the center of the element.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\nEnsure that the element is now unchecked. If not, this method rejects.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().uncheck(selector[, options])."
   },
   "waitForTimeout": {
     "kind": "function",

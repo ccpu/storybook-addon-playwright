@@ -70,8 +70,7 @@ export interface TakeScreenshotOverlayOptions {
 
 export interface PlaywrightPage extends Page, ExtendedPlaywrightPageFunctions {
   /**
-   * This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions.
-   * In the end the screenshots will be merged with the final screenshot.
+   * This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions. In the end the screenshots will be merged with the final screenshot.
    *
    * @param stitchOptions
    */
@@ -80,8 +79,7 @@ export interface PlaywrightPage extends Page, ExtendedPlaywrightPageFunctions {
   ) => Promise<void>;
 
   /**
-   * The purpose of this action is to have centralized options for all screenshots.
-   * This action can be used in conjunction with takeScreenshot action only.
+   * The purpose of this action is to have centralized options for all screenshots. This action can be used in conjunction with takeScreenshot action only.
    * Only one instance can be used.
    *
    * @param mergeType

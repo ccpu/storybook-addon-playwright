@@ -16,7 +16,7 @@ describe('generate-action-schema', () => {
         'utf8',
       ),
     );
-    expect(allSchema.actionSchema).toMatchObject(actionSchemaExpected);
+    expect(allSchema.actionSchema).toStrictEqual(actionSchemaExpected);
 
     const screenshotOptionsSchemaExpected = JSON.parse(
       fs.readFileSync(
@@ -24,7 +24,7 @@ describe('generate-action-schema', () => {
         'utf8',
       ),
     );
-    expect(allSchema.screenshotOptionSchema).toMatchObject(
+    expect(allSchema.screenshotOptionSchema).toStrictEqual(
       screenshotOptionsSchemaExpected,
     );
 
@@ -34,7 +34,7 @@ describe('generate-action-schema', () => {
         'utf8',
       ),
     );
-    expect(allSchema.browserOptionSchema).toMatchObject(
+    expect(allSchema.browserOptionSchema).toStrictEqual(
       browserOptionsSchemaExpected,
     );
   });

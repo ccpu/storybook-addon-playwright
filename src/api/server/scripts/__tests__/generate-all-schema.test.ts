@@ -10,6 +10,16 @@ describe('generate-action-schema', () => {
       resolve(`${basePath}/typings/schema-types.ts`),
     );
 
+    const browserOptionsSchemaExpected = JSON.parse(
+      fs.readFileSync(
+        resolve(`${basePath}/server/data/browser-option-schema.json`),
+        'utf8',
+      ),
+    );
+    expect(allSchema.browserOptionSchema).toStrictEqual(
+      browserOptionsSchemaExpected,
+    );
+
     const actionSchemaExpected = JSON.parse(
       fs.readFileSync(
         resolve(`${basePath}/server/data/action-schema.json`),
@@ -26,16 +36,6 @@ describe('generate-action-schema', () => {
     );
     expect(allSchema.screenshotOptionSchema).toStrictEqual(
       screenshotOptionsSchemaExpected,
-    );
-
-    const browserOptionsSchemaExpected = JSON.parse(
-      fs.readFileSync(
-        resolve(`${basePath}/server/data/browser-option-schema.json`),
-        'utf8',
-      ),
-    );
-    expect(allSchema.browserOptionSchema).toStrictEqual(
-      browserOptionsSchemaExpected,
     );
   });
 });

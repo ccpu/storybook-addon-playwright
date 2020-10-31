@@ -314,10 +314,10 @@ const { toMatchScreenshots } = require('storybook-addon-playwright');
 
 expect.extend({ toMatchScreenshots });
 
-let browsers = {};
+let browser = {};
 
 beforeAll(async () => {
-  browsers = {
+  browser = {
     chromium: await playwright['chromium'].launch(),
     firefox: await playwright['firefox'].launch(),
     webkit: await playwright['webkit'].launch(),
@@ -335,8 +335,8 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  const promises = Object.keys(browsers).map((browser) =>
-    browsers[browser].close(),
+  const promises = Object.keys(browser).map((browserType) =>
+    browser[browserType].close(),
   );
   await Promise.resolve(promises);
 });

@@ -523,6 +523,110 @@
     ],
     "description": "This method hovers over an element matching `selector` by performing the following steps:\n\nFind an element match matching `selector`. If there is none, wait until a matching element is attached to the DOM.\nWait for actionability checks on the matched element, unless `force` option is set. If the element is detached during the checks, the whole action is retried.\nScroll the element into view if needed.\nUse page.mouse to hover over the center of the element, or the specified `position`.\nWait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method rejects with a TimeoutError. Passing zero timeout disables this.\nShortcut for page.mainFrame().hover(selector[, options])."
   },
+  "keyboard": {
+    "type": "object",
+    "properties": {
+      "down": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "key": {
+            "type": "string",
+            "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "description": "Dispatches a `keydown` event.\n`key` can specify the intended keyboardEvent.key value or a single character to generate the text for. A superset of the `key` values can be found here. Examples of the keys are:\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\nFollowing modification shortcuts are also suported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\nIf `key` is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key presses will be sent with that modifier active. To release the modifier key, use `keyboard.up`.\nAfter the key is pressed once, subsequent calls to `keyboard.down` will have repeat set to true. To release the key, use `keyboard.up`.\n\n**NOTE** Modifier keys DO influence `keyboard.down`. Holding down `Shift` will type the text in upper case."
+      },
+      "insertText": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "text": {
+            "type": "string",
+            "description": "Sets input to the specified text value."
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "description": "Dispatches only `input` event, does not emit the `keydown`, `keyup` or `keypress` events.\n```js\npage.keyboard.insertText('嗨');\n```\n\n**NOTE** Modifier keys DO NOT effect `keyboard.insertText`. Holding down `Shift` will not type the text in upper case."
+      },
+      "press": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "key": {
+            "type": "string",
+            "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "delay": {
+                "type": "number",
+                "description": "Time to wait between `keydown` and `keyup` in milliseconds. Defaults to 0."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "description": "`key` can specify the intended keyboardEvent.key value or a single character to generate the text for. A superset of the `key` values can be found here. Examples of the keys are:\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\nFollowing modification shortcuts are also suported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When speficied with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n```js\nconst page = await browser.newPage();\nawait page.goto('https://keycode.info');\nawait page.keyboard.press('A');\nawait page.screenshot({ path: 'A.png' });\nawait page.keyboard.press('ArrowLeft');\nawait page.screenshot({ path: 'ArrowLeft.png' });\nawait page.keyboard.press('Shift+O');\nawait page.screenshot({ path: 'O.png' });\nawait browser.close();\n```\nShortcut for `keyboard.down` and `keyboard.up`."
+      },
+      "type": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "text": {
+            "type": "string",
+            "description": "A text to type into a focused element."
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "delay": {
+                "type": "number",
+                "description": "Time to wait between key presses in milliseconds. Defaults to 0."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text.\nTo press a special key, like `Control` or `ArrowDown`, use `keyboard.press`.\n```js\nawait page.keyboard.type('Hello'); // Types instantly\nawait page.keyboard.type('World', {delay: 100}); // Types slower, like a user\n```\n\n**NOTE** Modifier keys DO NOT effect `keyboard.type`. Holding down `Shift` will not type the text in upper case."
+      },
+      "up": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "key": {
+            "type": "string",
+            "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "description": "Dispatches a `keyup` event."
+      }
+    },
+    "required": [
+      "down",
+      "insertText",
+      "press",
+      "type",
+      "up"
+    ],
+    "additionalProperties": false,
+    "description": "Keyboard provides an api for managing a virtual keyboard. The high level api is `keyboard.type`, which takes raw characters and generates proper keydown, keypress/input, and keyup events on your page.\nFor finer control, you can use `keyboard.down`, `keyboard.up`, and `keyboard.insertText` to manually fire events as if they were generated from a real keyboard.\nAn example of holding down `Shift` in order to select and delete some text:\n```js\nawait page.keyboard.type('Hello World!');\nawait page.keyboard.press('ArrowLeft');\n\nawait page.keyboard.down('Shift');\nfor (let i = 0; i < ' World'.length; i++)\n   await page.keyboard.press('ArrowLeft');\nawait page.keyboard.up('Shift');\n\nawait page.keyboard.press('Backspace');\n// Result text will end up saying 'Hello!'\n```\nAn example of pressing uppercase `A`\n```js\nawait page.keyboard.press('Shift+KeyA');\n// or\nawait page.keyboard.press('Shift+A');\n```\nAn example to trigger select-all with the keyboard\n```js\n// on Windows and Linux\nawait page.keyboard.press('Control+A');\n// on macOS\nawait page.keyboard.press('Meta+A');\n```"
+  },
   "mouse": {
     "type": "object",
     "properties": {

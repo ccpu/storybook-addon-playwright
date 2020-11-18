@@ -117,6 +117,106 @@
     ],
     "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See page.emulateMedia(options) for more details. Defaults to '`light`'."
   },
+  "proxy": {
+    "type": "object",
+    "properties": {
+      "server": {
+        "type": "string",
+        "description": "Proxy to be used for all requests. HTTP and SOCKS proxies are supported, for example `http://myproxy.com:3128` or `socks5://myproxy.com:3128`. Short form `myproxy.com:3128` is considered an HTTP proxy."
+      },
+      "bypass": {
+        "type": "string",
+        "description": "Optional coma-separated domains to bypass proxy, for example `\".com, chromium.org, .domain.com\"`."
+      },
+      "username": {
+        "type": "string",
+        "description": "Optional username to use if HTTP proxy requires authentication."
+      },
+      "password": {
+        "type": "string",
+        "description": "Optional password to use if HTTP proxy requires authentication."
+      }
+    },
+    "required": [
+      "server"
+    ],
+    "additionalProperties": false,
+    "description": "Network proxy settings to use with this context. Note that browser needs to be launched with the global proxy for this option to work. If all contexts override the proxy, global proxy will be never used and can be any string, for example `launch({ proxy: { server: 'per-context' } })`."
+  },
+  "videosPath": {
+    "type": "string",
+    "description": "**NOTE** Use `recordVideo` instead, it takes precedence over `videosPath`. Enables video recording for all pages to `videosPath` directory. If not specified, videos are not recorded. Make sure to await `browserContext.close` for videos to be saved."
+  },
+  "videoSize": {
+    "type": "object",
+    "properties": {
+      "width": {
+        "type": "number",
+        "description": "Video frame width."
+      },
+      "height": {
+        "type": "number",
+        "description": "Video frame height."
+      }
+    },
+    "required": [
+      "width",
+      "height"
+    ],
+    "additionalProperties": false,
+    "description": "**NOTE** Use `recordVideo` instead, it takes precedence over `videoSize`. Specifies dimensions of the automatically recorded video. Can only be used if `videosPath` is set. If not specified the size will be equal to `viewport`. If `viewport` is not configured explicitly the video size defaults to 1280x720. Actual picture of the page will be scaled down if necessary to fit specified size."
+  },
+  "recordHar": {
+    "type": "object",
+    "properties": {
+      "omitContent": {
+        "type": "boolean",
+        "description": "Optional setting to control whether to omit request content from the HAR. Defaults to `false`."
+      },
+      "path": {
+        "type": "string",
+        "description": "Path on the filesystem to write the HAR file to."
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "additionalProperties": false,
+    "description": "Enables HAR recording for all pages into `recordHar.path` file. If not specified, the HAR is not recorded. Make sure to await `browserContext.close` for the HAR to be saved."
+  },
+  "recordVideo": {
+    "type": "object",
+    "properties": {
+      "dir": {
+        "type": "string",
+        "description": "Path to the directory to put videos into."
+      },
+      "size": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "number",
+            "description": "Video frame width."
+          },
+          "height": {
+            "type": "number",
+            "description": "Video frame height."
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ],
+        "additionalProperties": false,
+        "description": "Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport`. If `viewport` is not configured explicitly the video size defaults to 1280x720. Actual picture of each page will be scaled down if necessary to fit the specified size."
+      }
+    },
+    "required": [
+      "dir"
+    ],
+    "additionalProperties": false,
+    "description": "Enables video recording for all pages into `recordVideo.dir` directory. If not specified videos are not recorded. Make sure to await `browserContext.close` for videos to be saved."
+  },
   "cursor": {
     "type": "boolean"
   }

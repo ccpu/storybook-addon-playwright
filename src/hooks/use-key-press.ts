@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import { useKeyPressFn } from './use-key-press-fn';
 
 export function useKeyPress(targetKey, disable = false) {
   // State for keeping track of whether key is pressed
@@ -23,18 +24,7 @@ export function useKeyPress(targetKey, disable = false) {
     [targetKey],
   );
 
-  // Add event listeners
-  useEffect(() => {
-    if (disable) return undefined;
-
-    window.addEventListener('keydown', downHandler);
-    window.addEventListener('keyup', upHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener('keydown', downHandler);
-      window.removeEventListener('keyup', upHandler);
-    };
-  }, [disable, downHandler, upHandler]); // Empty array ensures that effect is only run on mount and unmount
+  useKeyPressFn(downHandler, upHandler, disable);
 
   return keyPressed;
 }

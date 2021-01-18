@@ -5,6 +5,7 @@ import { makeStyles, capitalize } from '@material-ui/core';
 import { useScreenshotContext } from '../../store/screenshot';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
+import { useKeyPressFn } from '../../hooks';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -60,6 +61,32 @@ const ScreenshotListPreviewDialog: SFC<
   const handleItemClick = useCallback(async (screenshot: ScreenshotData) => {
     setCurrentItem(screenshot);
   }, []);
+
+  const handleKeyUp = useCallback(
+    (ev: KeyboardEvent) => {
+      if (!currentItem) return;
+      const index = screenshots.findIndex((x) => x.id === currentItem.id);
+      switch (ev.key) {
+        case 'ArrowDown': {
+          if (screenshots[index + 1]) {
+            setCurrentItem(screenshots[index + 1]);
+          }
+          break;
+        }
+        case 'ArrowUp': {
+          if (screenshots[index - 1]) {
+            setCurrentItem(screenshots[index - 1]);
+          }
+          break;
+        }
+        default:
+          break;
+      }
+    },
+    [currentItem, screenshots],
+  );
+
+  useKeyPressFn(undefined, handleKeyUp);
 
   useEffect(() => {
     if (

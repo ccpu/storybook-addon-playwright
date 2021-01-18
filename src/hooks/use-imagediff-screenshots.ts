@@ -48,7 +48,7 @@ export const useImageDiffScreenshots = (
         ),
         type: 'setScreenshots',
       });
-    onLoaded();
+    if (onLoaded) onLoaded();
     setLoaded(true);
   }, [testStoryScreenShots, target, dispatch, storyData, onLoaded]);
 

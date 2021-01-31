@@ -40,6 +40,7 @@ async function installMouseHelper(page: Page) {
             margin: -8px 0 0 -8px;
             padding: 0;
             pointer-events: none;
+            box-sizing: content-box;
           }
           playwright-mouse-pointer.button-mousedown {
             background: rgba(243, 169, 4, 0.87);

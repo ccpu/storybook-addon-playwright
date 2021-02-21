@@ -71,6 +71,8 @@ describe('makeScreenshot', () => {
       return defaultConfigs({
         getPage: async () => {
           return new Promise((resolve) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             resolve();
           });
         },
@@ -393,5 +395,78 @@ describe('makeScreenshot', () => {
       ['buffer-data', 'buffer-data'],
       { direction: 'horizontal' },
     );
+  });
+
+  it('should take 3 screenshot for all actions', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                id: 'action-id',
+                name: 'click',
+              },
+              {
+                id: 'action-id',
+                name: 'hover',
+              },
+              {
+                id: 'action-id',
+                name: 'takeScreenshotAll',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    // 1: after page load
+    // 2: click
+    // 3: hover
+
+    expect(joinImagesMock).toHaveBeenCalledWith(
+      ['buffer-data', 'buffer-data', 'buffer-data'],
+      undefined,
+    );
+  });
+
+  it('should take no screenshot when takeScreenshotAll is enable but no proper action provided', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                id: 'action-id',
+                name: 'waitForSelector',
+              },
+              {
+                id: 'action-id',
+                name: 'waitForTimeout',
+              },
+              {
+                id: 'action-id',
+                name: 'takeScreenshotAll',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(joinImagesMock).toHaveBeenCalledTimes(0);
   });
 });

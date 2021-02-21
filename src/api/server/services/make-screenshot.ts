@@ -16,6 +16,7 @@ import {
   TakeScreenshotParams,
   TakeScreenshotOptionsParams,
 } from '../../typings';
+import { shouldTakeScreenshot } from './utils';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -79,19 +80,51 @@ export const makeScreenshot = async (
       return arr;
     }, [] as StoryAction[]);
 
+    const takeScreenshotAll = actions.find(
+      (x) => x.name === 'takeScreenshotAll',
+    );
+
     screenshotOptionAction = actions.find(
       (a) => a.name === 'takeScreenshotOptions',
     );
 
-    for (let i = 0; i < actions.length; i++) {
-      const action = actions[i];
+    const filterActions = actions.filter(
+      (a) => !['takeScreenshotAll', 'takeScreenshotOptions'].includes(a.name),
+    );
+
+    if (
+      takeScreenshotAll &&
+      filterActions.filter(
+        (a) =>
+          !['takeScreenshot', 'waitForSelector', 'waitForTimeout'].includes(
+            a.name,
+          ),
+      ).length > 1
+    ) {
+      imageInfos.push({
+        buffer: await takeScreenshot(page, data, configs),
+        options: (takeScreenshotAll.args as unknown) as TakeScreenshotParams,
+      });
+    }
+
+    for (let i = 0; i < filterActions.length; i++) {
+      const action = filterActions[i];
+
       if (action.name === 'takeScreenshot') {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
           options: (action.args as unknown) as TakeScreenshotParams,
         });
-      } else {
-        await executeAction(page, action);
+        continue;
+      }
+
+      await executeAction(page, action);
+
+      if (shouldTakeScreenshot(filterActions, i, Boolean(takeScreenshotAll))) {
+        imageInfos.push({
+          buffer: await takeScreenshot(page, data, configs),
+          options: (takeScreenshotAll.args as unknown) as TakeScreenshotParams,
+        });
       }
     }
   }

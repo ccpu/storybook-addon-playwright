@@ -962,7 +962,53 @@
       }
     },
     "required": [],
-    "description": "This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions. In the end the screenshots will be merged with the final screenshot."
+    "description": "This method will take a screenshot at the position that it activated, its useful for taking a screenshot in sequence for events/actions. In the end the screenshots will be merged with the final screenshot."
+  },
+  "takeScreenshotAll": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "stitchOptions": {
+        "type": "object",
+        "properties": {
+          "blend": {
+            "type": "string",
+            "enum": [
+              "clear",
+              "source",
+              "over",
+              "in",
+              "out",
+              "atop",
+              "dest",
+              "dest-over",
+              "dest-in",
+              "dest-out",
+              "dest-atop",
+              "xor",
+              "add",
+              "saturate",
+              "multiply",
+              "screen",
+              "overlay",
+              "darken",
+              "lighten",
+              "colour-dodge",
+              "colour-burn",
+              "hard-light",
+              "soft-light",
+              "difference",
+              "exclusion"
+            ],
+            "description": "How to blend this image with the image below. (optional)",
+            "default": "multiply"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [],
+    "description": "This method will take a screenshot after each action, its useful for looking at over all action execution. In the end the screenshots will be merged."
   },
   "takeScreenshotOptions": {
     "kind": "function",

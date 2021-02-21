@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { IconButton } from '@storybook/components';
 import { BrowserTypes } from '../../typings';
 import CloseOutlined from '@material-ui/icons/CloseOutlined';
@@ -22,7 +22,7 @@ export interface ToolbarProps {
   isVertical?: boolean;
 }
 
-const Toolbar: SFC<ToolbarProps> = (props) => {
+const Toolbar: React.FC<ToolbarProps> = (props) => {
   const {
     browserTypes,
     toggleBrowser,

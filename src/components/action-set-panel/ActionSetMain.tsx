@@ -1,4 +1,4 @@
-import React, { SFC, useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../common';
 import { useActionDispatchContext } from '../../store';
@@ -9,7 +9,7 @@ import { useCurrentActions } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/api';
 
-const ActionSetMain: SFC = () => {
+const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
 
   const { storyId } = useStorybookState();

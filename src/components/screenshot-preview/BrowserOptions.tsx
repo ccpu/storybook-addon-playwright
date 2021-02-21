@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useBrowserOptions, BrowsersOption } from '../../hooks/';
 import { OptionPopover } from './OptionPopover';
 import SettingIcon from '@material-ui/icons/Settings';
@@ -8,7 +8,7 @@ export interface BrowserOptionsProps {
   browserType: keyof BrowsersOption;
 }
 
-const BrowserOptions: SFC<BrowserOptionsProps> = ({ browserType }) => {
+const BrowserOptions: React.FC<BrowserOptionsProps> = ({ browserType }) => {
   const {
     setBrowserOptions,
     browserOptions,

@@ -1,6 +1,6 @@
-import React, { SFC } from 'react';
+import React from 'react';
 
-const InputWheel: SFC = () => {
+const InputWheel: React.FC = () => {
   const [delta, setDelta] = React.useState<{
     deltaY: number;
     deltaX: number;

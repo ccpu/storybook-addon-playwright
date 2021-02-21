@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 import RestoreIcon from '@material-ui/icons/Restore';
@@ -9,7 +9,7 @@ export interface ActionToolbarProps {
   onReset: () => void;
 }
 
-const ActionToolbar: SFC<ActionToolbarProps> = (props) => {
+const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
   const { onAddActionSet, onReset } = props;
 
   return (

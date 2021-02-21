@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ScreenshotTestTargetType } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton } from '@storybook/components';
@@ -9,7 +9,9 @@ export interface ScreenshotUpdateIconProps {
   target: ScreenshotTestTargetType;
 }
 
-const ScreenshotUpdateIcon: SFC<ScreenshotUpdateIconProps> = ({ target }) => {
+const ScreenshotUpdateIcon: React.FC<ScreenshotUpdateIconProps> = ({
+  target,
+}) => {
   const reqBy = 'tool-' + target;
 
   const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, target);

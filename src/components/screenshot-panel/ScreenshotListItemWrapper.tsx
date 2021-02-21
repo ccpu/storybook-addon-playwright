@@ -1,7 +1,7 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ListItemWrapperProps, ListItemWrapper } from '../common';
 
-const ScreenshotListItemWrapper: SFC<ListItemWrapperProps> = ({
+const ScreenshotListItemWrapper: React.FC<ListItemWrapperProps> = ({
   children,
   ...rest
 }) => {

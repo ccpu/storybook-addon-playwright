@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ScreenshotPanel } from './ScreenshotPanel';
 import { ScreenshotProvider } from '../../store/screenshot';
 import { CommonProvider } from '../common';
@@ -9,7 +9,7 @@ export interface ScreenshotMainProps {
   showPanel: boolean;
 }
 
-const ScreenshotMain: SFC<ScreenshotMainProps> = ({ showPanel }) => {
+const ScreenshotMain: React.FC<ScreenshotMainProps> = ({ showPanel }) => {
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
   const {

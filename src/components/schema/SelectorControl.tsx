@@ -1,4 +1,4 @@
-import React, { SFC, memo, useCallback, useState, useEffect } from 'react';
+import React, { memo, useCallback, useState, useEffect } from 'react';
 import { makeStyles, IconButton } from '@material-ui/core';
 import { ControlProps } from '../../typings';
 import { useControl, useSelectorManager, SelectorType } from '../../hooks';
@@ -46,7 +46,7 @@ export interface SelectorControlProps extends ControlProps {
   onSelectorChange: (objPath: string, val: unknown) => void;
 }
 
-const SelectorControl: SFC<SelectorControlProps> = memo((props) => {
+const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
   const {
     selectorType,
     label,

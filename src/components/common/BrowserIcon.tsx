@@ -1,4 +1,4 @@
-import React, { SFC, memo } from 'react';
+import React, { memo } from 'react';
 import { BrowserTypes } from '../../typings';
 import { Firefox, Browser, Chrome, Webkit } from '../../icons';
 import { SvgIconProps } from '@material-ui/core';
@@ -7,7 +7,7 @@ export interface BrowserIconProps extends SvgIconProps {
   browserType: BrowserTypes;
 }
 
-const BrowserIcon: SFC<BrowserIconProps> = memo((props) => {
+const BrowserIcon: React.FC<BrowserIconProps> = memo((props) => {
   const { browserType, ...rest } = props;
 
   switch (browserType) {

@@ -1,9 +1,9 @@
-import React, { useCallback, SFC } from 'react';
+import React, { useCallback } from 'react';
 import { useScreenshotIndexChange, useDragStart } from '../../hooks';
 import { Loader, ListWrapperSortableContainer } from '../common';
 import { SortEnd } from 'react-sortable-hoc';
 
-const ScreenshotListSortable: SFC = ({ children }) => {
+const ScreenshotListSortable: React.FC = ({ children }) => {
   const { setDragStart } = useDragStart();
 
   const {

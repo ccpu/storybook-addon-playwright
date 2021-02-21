@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Settings from '@material-ui/icons/Settings';
 import { IconButton, Popover } from '@material-ui/core';
 import { ScreenshotData } from '../../typings';
@@ -11,7 +11,7 @@ export interface ScreenshotInfoProps {
   onClose?: () => void;
 }
 
-const ScreenshotInfo: SFC<ScreenshotInfoProps> = ({
+const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
   screenshotData,
   size = 'small',
   color,

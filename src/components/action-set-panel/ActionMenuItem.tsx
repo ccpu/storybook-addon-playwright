@@ -1,4 +1,4 @@
-import React, { memo, SFC, useCallback, forwardRef, Ref } from 'react';
+import React, { memo, useCallback, forwardRef, Ref } from 'react';
 import { MenuItem } from '@material-ui/core';
 
 export interface ActionMenuItemBase {
@@ -10,7 +10,7 @@ export interface ActionMenuItemProps extends ActionMenuItemBase {
   onChange: (key: string) => void;
 }
 
-const ActionMenuItem: SFC<ActionMenuItemProps> = memo(
+const ActionMenuItem: React.FC<ActionMenuItemProps> = memo(
   forwardRef((props, ref: Ref<HTMLLIElement>) => {
     const { onChange, label, name } = props;
 

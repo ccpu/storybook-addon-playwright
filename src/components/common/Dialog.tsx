@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import {
   makeStyles,
   Dialog as MuDialog,
@@ -62,7 +62,7 @@ export interface DialogProps extends MuDialogProps, StyleProps {
   enableCloseButton?: boolean;
 }
 
-const Dialog: SFC<DialogProps> = ({
+const Dialog: React.FC<DialogProps> = ({
   children,
   width = '80%',
   height = 'auto',

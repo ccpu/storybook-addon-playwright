@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { IconButton as MuIconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 import { ConfirmationPopover } from '../common';
@@ -9,7 +9,7 @@ export interface DeleteConfirmationButtonProps {
   onClose?: () => void;
 }
 
-const DeleteConfirmationButton: SFC<DeleteConfirmationButtonProps> = ({
+const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
   onDelete,
   IconButton = MuIconButton,
   onClose,

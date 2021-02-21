@@ -1,4 +1,4 @@
-import React, { SFC, memo, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { ActionPopoverProps, ActionPopover } from './ActionPopover';
 import { Typography } from '@material-ui/core';
 
@@ -8,7 +8,7 @@ export interface ConfirmationPopoverProps extends ActionPopoverProps {
   message?: string;
 }
 
-const ConfirmationPopover: SFC<ConfirmationPopoverProps> = memo(
+const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = memo(
   ({
     message = 'Are you sure you want to continue?',
     title = 'Confirmation',

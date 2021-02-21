@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
@@ -54,7 +54,7 @@ interface Props {
   viewPanel: ScreenShotViewPanel;
 }
 
-const ScreenshotListView: SFC<Props> = (props) => {
+const ScreenshotListView: React.FC<Props> = (props) => {
   const { showStorybook, column, onClose, viewPanel } = props;
 
   const [showTitleDialog, setShowTitleDialog] = useState(false);

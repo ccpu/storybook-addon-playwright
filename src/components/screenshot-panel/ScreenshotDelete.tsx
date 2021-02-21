@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { SFC, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../typings';
 import { useDeleteScreenshot } from '../../hooks';
 import { DeleteConfirmationButton } from '../common';
@@ -10,7 +10,7 @@ export interface ScreenshotDeleteProps {
   onStateChange: (working: boolean) => void;
 }
 
-const ScreenshotDelete: SFC<ScreenshotDeleteProps> = (props) => {
+const ScreenshotDelete: React.FC<ScreenshotDeleteProps> = (props) => {
   const { onStateChange, screenshot, onClose } = props;
 
   const {

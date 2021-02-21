@@ -1,4 +1,4 @@
-import React, { forwardRef, SFC, Ref, useCallback } from 'react';
+import React, { forwardRef, Ref, useCallback } from 'react';
 import { ImageDiffResult } from '../../api/typings';
 import { MenuItem } from '@material-ui/core';
 import { useStorybookApi } from '@storybook/api';
@@ -9,7 +9,7 @@ export interface ImageDiffMenuItemProps {
   onClick: () => void;
 }
 
-const ImageDiffMenuItem: SFC<ImageDiffMenuItemProps> = forwardRef(
+const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = forwardRef(
   (props, ref: Ref<HTMLLIElement>) => {
     const { imageDiff, onClick } = props;
 

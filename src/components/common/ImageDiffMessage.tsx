@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ImageDiffResult } from '../../api/typings';
 import { getImageDiffMessages } from '../../utils';
 import {
@@ -16,7 +16,7 @@ export interface ImageDiffMessageProps
   browserType?: BrowserTypes;
 }
 
-const ImageDiffMessage: SFC<ImageDiffMessageProps> = (props) => {
+const ImageDiffMessage: React.FC<ImageDiffMessageProps> = (props) => {
   const { title, result, onClose, browserType, ...rest } = props;
 
   const { openSnackbar } = useSnackbar();

@@ -1,4 +1,4 @@
-import React, { SFC, memo, useEffect, useRef, useCallback } from 'react';
+import React, { memo, useEffect, useRef, useCallback } from 'react';
 import { useSnackbar, SnackbarKey, OptionsObject } from 'notistack';
 import objectHash from 'object-hash';
 import { SnackbarContent } from './SnackbarContent';
@@ -15,7 +15,7 @@ if (!window.__visible_snackbar_messages__) {
   window.__visible_snackbar_messages__ = {};
 }
 
-const Snackbar: SFC<SnackbarProps> = memo(
+const Snackbar: React.FC<SnackbarProps> = memo(
   ({
     title,
     message,

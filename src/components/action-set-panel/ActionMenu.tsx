@@ -1,4 +1,4 @@
-import React, { memo, SFC, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import { Menu, makeStyles } from '@material-ui/core';
 import { ActionMenuItem, ActionMenuItemBase } from './ActionMenuItem';
 import { useActionContext } from '../../store/actions';
@@ -21,7 +21,7 @@ export interface ActionMenuProps {
   onClose: () => void;
 }
 
-const ActionMenu: SFC<ActionMenuProps> = memo((props) => {
+const ActionMenu: React.FC<ActionMenuProps> = memo((props) => {
   const { onChange, onClose, anchorEl } = props;
 
   const state = useActionContext();

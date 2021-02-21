@@ -1,4 +1,4 @@
-import React, { SFC, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useStorybookState } from '@storybook/api';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
@@ -71,7 +71,7 @@ const useStyles = makeStyles(
   { name: 'Preview' },
 );
 
-const Preview: SFC = (props) => {
+const Preview: React.FC = (props) => {
   const { children } = props;
 
   const [isDragging, setIsDragging] = useState(false);

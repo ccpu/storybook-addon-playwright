@@ -1,4 +1,4 @@
-import React, { SFC, memo, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Dialog, DialogProps } from './Dialog';
 import { ActionPanel, ActionPanelProps } from './ActionPanel';
 
@@ -16,7 +16,7 @@ export interface ActionDialogDialogProps
   onCancel?: () => void;
 }
 
-const ActionDialog: SFC<ActionDialogDialogProps> = memo(
+const ActionDialog: React.FC<ActionDialogDialogProps> = memo(
   ({
     onPositiveAction,
     title,

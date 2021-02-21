@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { ImageDiffResult } from '../../api/typings';
 import { makeStyles, Tabs, Tab, Divider } from '@material-ui/core';
 import { ImagePreview } from './ImagePreview';
@@ -32,7 +32,7 @@ export interface ImageDiffPreviewProps {
   activeTab?: 'newScreenshot' | 'imageDiff';
 }
 
-const ImageDiffPreview: SFC<ImageDiffPreviewProps> = (props) => {
+const ImageDiffPreview: React.FC<ImageDiffPreviewProps> = (props) => {
   const { imageDiffResult, activeTab } = props;
 
   const shouldShowDiff =

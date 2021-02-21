@@ -1,5 +1,5 @@
 import { TextField, makeStyles, Snackbar } from '@material-ui/core';
-import React, { SFC, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { ActionDialog, ActionDialogDialogProps } from './ActionDialog';
 import Alert from '@material-ui/lab/Alert';
 
@@ -37,7 +37,7 @@ export interface InputDialogProps
   label?: string;
 }
 
-const InputDialog: SFC<InputDialogProps> = ({
+const InputDialog: React.FC<InputDialogProps> = ({
   value = '',
   onSave,
   requiredMessage = 'Field is required',

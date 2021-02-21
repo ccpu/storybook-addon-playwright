@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { DeviceDescriptors } from 'playwright/lib/server/deviceDescriptors';
 import { Menu } from '@material-ui/core';
 import { DeviceListItem } from './DeviceListItem';
@@ -10,7 +10,7 @@ export interface DeviceListProps {
   selectedDevice?: BrowserContextOptions;
 }
 
-const DeviceList: SFC<DeviceListProps> = (props) => {
+const DeviceList: React.FC<DeviceListProps> = (props) => {
   const { onDeviceSelect, selectedDevice } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLButtonElement>(
     null,

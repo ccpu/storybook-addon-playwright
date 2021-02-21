@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { ActionSchema } from '../../typings';
 import { Definition } from 'ts-to-json';
 import { MemoizedSchemaRenderer } from '../schema';
@@ -12,7 +12,7 @@ export interface ActionSchemaRendererProps {
   actionSetId: string;
 }
 
-const ActionSchemaRenderer: SFC<ActionSchemaRendererProps> = (props) => {
+const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
   const { schema, actionId, actionSetId } = props;
   const dispatch = useActionDispatchContext();
 

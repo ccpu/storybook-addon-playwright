@@ -1,4 +1,4 @@
-import React, { SFC, memo } from 'react';
+import React, { memo } from 'react';
 import { Popover, PopoverProps } from '@material-ui/core';
 import { ActionPanelProps, ActionPanel } from './ActionPanel';
 
@@ -8,7 +8,7 @@ export interface ActionPopoverProps
   onClose: (event?: never) => void;
 }
 
-const ActionPopover: SFC<ActionPopoverProps> = memo(
+const ActionPopover: React.FC<ActionPopoverProps> = memo(
   ({
     onPositiveAction,
     title,

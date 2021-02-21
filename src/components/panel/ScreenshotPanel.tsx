@@ -1,9 +1,9 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { useStorybookState } from '@storybook/api';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
 import { ScreenshotMain } from '../screenshot-panel/ScreenshotMain';
 
-const ScreenshotPanel: SFC = () => {
+const ScreenshotPanel: React.FC = () => {
   const state = useStorybookState();
 
   return (

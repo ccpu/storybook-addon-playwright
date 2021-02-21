@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 
@@ -61,7 +61,7 @@ export interface ToolbarProps {
   border?: Border[];
 }
 
-const Toolbar: SFC<ToolbarProps> = (props) => {
+const Toolbar: React.FC<ToolbarProps> = (props) => {
   const { children, border } = props;
 
   const classes = useStyles();

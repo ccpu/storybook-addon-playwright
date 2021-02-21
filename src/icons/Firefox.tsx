@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Firefox: React.SFC<React.SVGProps<SVGSVGElement>> = (props) => (
+const Firefox: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"

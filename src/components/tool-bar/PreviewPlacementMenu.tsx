@@ -1,10 +1,10 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { IconButton } from '@storybook/components';
 import { Menu, MenuItem } from '@material-ui/core';
 import { useAddonState } from '../../hooks/use-addon-state';
 import { LayoutBottomRight } from '../../icons';
 
-const PreviewPlacementMenu: SFC = () => {
+const PreviewPlacementMenu: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const { setAddonState, addonState } = useAddonState();

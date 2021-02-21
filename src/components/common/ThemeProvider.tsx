@@ -1,4 +1,4 @@
-import React, { SFC, memo } from 'react';
+import React, { memo } from 'react';
 import {
   createMuiTheme,
   ThemeProvider as MuThemeProvider,
@@ -6,7 +6,7 @@ import {
 import { useStorybookState } from '@storybook/api';
 // import global from 'jss-plugin-global';
 
-const ThemeProvider: SFC = memo((props) => {
+const ThemeProvider: React.FC = memo((props) => {
   const { children } = props;
 
   const { theme: storyBookTheme } = useStorybookState();

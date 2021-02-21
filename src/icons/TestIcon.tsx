@@ -1,6 +1,6 @@
-import React, { SFC } from 'react';
+import React from 'react';
 
-const TestIcon: SFC<React.SVGProps<SVGSVGElement>> = (props) => {
+const TestIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

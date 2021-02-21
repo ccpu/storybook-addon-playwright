@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '../common/ThemeProvider';
@@ -45,7 +45,7 @@ export interface PreviewDialogProps {
   onClose: () => void;
 }
 
-const PreviewDialog: SFC<PreviewDialogProps> = (props) => {
+const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
   const { onClose, open } = props;
 
   const classes = useStyles();

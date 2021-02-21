@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { IconButton } from '@material-ui/core';
 import CheckBoxUnchecked from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxChecked from '@material-ui/icons/CheckBox';
@@ -8,7 +8,7 @@ export interface CheckBoxProps {
   checked: boolean;
 }
 
-const CheckBox: SFC<CheckBoxProps> = (props) => {
+const CheckBox: React.FC<CheckBoxProps> = (props) => {
   const { onClick, checked } = props;
 
   return (

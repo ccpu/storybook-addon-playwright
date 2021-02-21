@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles, capitalize } from '@material-ui/core';
 import { DragHandle } from './DragHandle';
 import clsx from 'clsx';
@@ -70,7 +70,7 @@ export interface ListItemWrapperProps
   secondaryColor?: boolean;
 }
 
-const ListItemWrapper: SFC<ListItemWrapperProps> = (props) => {
+const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
   const {
     title,
     draggable,

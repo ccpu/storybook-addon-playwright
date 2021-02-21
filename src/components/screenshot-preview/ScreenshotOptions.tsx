@@ -1,10 +1,10 @@
-import React, { SFC, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import CameraIcon from '@material-ui/icons/Camera';
 import { useScreenshotOptions } from '../../hooks';
 import { OptionPopover } from './OptionPopover';
 import { MemoizedSchemaFormLoader } from '../common';
 
-const ScreenshotOptions: SFC = () => {
+const ScreenshotOptions: React.FC = () => {
   const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
 
   const handleSave = useCallback(

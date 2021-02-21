@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
@@ -18,7 +18,7 @@ export interface ScreenshotUpdateProps {
   imageDiffResult?: ImageDiffResult;
 }
 
-const ScreenshotUpdate: SFC<ScreenshotUpdateProps> = (props) => {
+const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
   const { screenshot, onStateChange, imageDiffResult } = props;
 
   const storyData = useCurrentStoryData();

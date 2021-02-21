@@ -1,4 +1,4 @@
-import React, { SFC, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { IconButton, Separator } from '@storybook/components';
 import { makeStyles } from '@material-ui/core';
 import { CommonProvider } from '../common';
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Tool: SFC = () => {
+const Tool: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const { setAddonState, addonState } = useAddonState();

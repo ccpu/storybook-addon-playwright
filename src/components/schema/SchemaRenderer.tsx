@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ActionSchema } from '../../typings';
 import { MemoizedSchemaProp } from './SchemaProp';
 
@@ -13,7 +13,7 @@ export interface SchemaRendererProps {
   onSelectorChange?: (objPath: string, val: unknown) => void;
 }
 
-const SchemaRenderer: SFC<SchemaRendererProps> = ({
+const SchemaRenderer: React.FC<SchemaRendererProps> = ({
   schemaProps,
   required,
   parents = [],

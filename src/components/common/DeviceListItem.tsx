@@ -1,4 +1,4 @@
-import React, { forwardRef, Ref, SFC, useCallback, memo } from 'react';
+import React, { forwardRef, Ref, useCallback, memo } from 'react';
 import { ViewportSize } from 'playwright/types/types';
 import { MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
@@ -23,7 +23,7 @@ export interface DeviceListItemProps {
   value?: string;
 }
 
-const DeviceListItem: SFC<DeviceListItemProps> = memo(
+const DeviceListItem: React.FC<DeviceListItemProps> = memo(
   forwardRef((props, ref: Ref<HTMLLIElement>) => {
     const { viewportSize, name, value, onClick, selected } = props;
 

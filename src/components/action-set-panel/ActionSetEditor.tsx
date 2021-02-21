@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { ActionList } from '../actions/ActionList';
 import { ActionSet } from '../../typings';
 import { Snackbar, Loader, ListItemWrapper, InputDialog } from '../common';
@@ -29,7 +29,7 @@ interface Props {
   actionSet: ActionSet;
 }
 
-const ActionSetEditor: SFC<Props> = ({ actionSet }) => {
+const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
   const [editDescription, setEditDescription] = React.useState(false);
 
   const {

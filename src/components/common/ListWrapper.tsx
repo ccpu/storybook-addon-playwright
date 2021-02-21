@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
 
 export { useStyles as useListWrapperStyles };
 
-const ListWrapper: SFC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
+const ListWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   const { children, ...rest } = props;
 
   const classes = useStyles();

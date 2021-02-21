@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import AddIcon from '@material-ui/icons/AddSharp';
 import CloseIcon from '@material-ui/icons/CloseSharp';
 import SaveIcon from '@material-ui/icons/SaveSharp';
@@ -15,7 +15,7 @@ export interface ActionSetEditorIconsProps {
   onAddAction: (actionName: string) => void;
 }
 
-const ActionSetEditorIcons: SFC<ActionSetEditorIconsProps> = (props) => {
+const ActionSetEditorIcons: React.FC<ActionSetEditorIconsProps> = (props) => {
   const {
     onSave,
     onEditTitle: onEditDescription,

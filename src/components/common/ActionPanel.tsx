@@ -1,4 +1,4 @@
-import React, { SFC, memo } from 'react';
+import React, { memo } from 'react';
 import {
   DialogTitle,
   Button,
@@ -14,7 +14,7 @@ export interface ActionPanelProps {
   negativeActionName?: string;
 }
 
-const ActionPanel: SFC<ActionPanelProps> = memo(
+const ActionPanel: React.FC<ActionPanelProps> = memo(
   ({
     onPositiveAction,
     title,

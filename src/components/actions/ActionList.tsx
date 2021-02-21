@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { ActionOptions } from './ActionOptions';
 import {
   SortableContainer,
@@ -59,7 +59,7 @@ interface ActionListProps {
   actionSet: ActionSet;
 }
 
-const ActionList: SFC<ActionListProps> = ({ actionSet }) => {
+const ActionList: React.FC<ActionListProps> = ({ actionSet }) => {
   const dispatch = useActionDispatchContext();
 
   const classes = useStyles();

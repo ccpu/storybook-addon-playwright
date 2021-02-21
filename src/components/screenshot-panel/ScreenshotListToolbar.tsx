@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { Toolbar } from '../common';
 import Compare from '@material-ui/icons/Compare';
 import { IconButton } from '@storybook/components';
@@ -15,7 +15,7 @@ export interface ScreenshotListToolbarProps {
   onDelete: () => void;
 }
 
-const ScreenshotListToolbar: SFC<ScreenshotListToolbarProps> = (props) => {
+const ScreenshotListToolbar: React.FC<ScreenshotListToolbarProps> = (props) => {
   const {
     hasScreenShot,
     title,

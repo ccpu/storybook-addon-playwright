@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScreenshotTestTargetType } from '../../typings';
 import {
   useImageDiffScreenshots,
@@ -20,7 +20,9 @@ export interface StoryScreenshotPreviewProps {
   onLoad?: () => void;
 }
 
-const StoryScreenshotPreview: SFC<StoryScreenshotPreviewProps> = (props) => {
+const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
+  props,
+) => {
   const { onClose, updating, target, onLoad } = props;
 
   const { loading, storyData } = useImageDiffScreenshots(target, onLoad);

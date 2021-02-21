@@ -1,4 +1,4 @@
-import React, { SFC, useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { makeStyles, capitalize } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
@@ -107,7 +107,7 @@ export interface PreviewItemProps {
   onSaveComplete?: (browserType: string) => void;
 }
 
-const ScreenshotView: SFC<PreviewItemProps> = (props) => {
+const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
   const {
     browserType,
     url,

@@ -1,4 +1,4 @@
-import React, { SFC, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { StoryData, ScreenshotData } from '../../typings';
 import { Dialog, DialogProps, ImageDiffPreview } from '../common';
 import { makeStyles, capitalize } from '@material-ui/core';
@@ -41,7 +41,7 @@ export interface ScreenshotListPreviewDialogProps {
   draggable?: boolean;
 }
 
-const ScreenshotListPreviewDialog: SFC<
+const ScreenshotListPreviewDialog: React.FC<
   ScreenshotListPreviewDialogProps & DialogProps
 > = ({
   screenshots,

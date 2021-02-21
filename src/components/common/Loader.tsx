@@ -1,4 +1,4 @@
-import React, { memo, SFC } from 'react';
+import React, { memo } from 'react';
 import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
 import tinycolor from 'tinycolor2';
 
@@ -23,7 +23,7 @@ export interface LoaderProps {
   position?: 'relative' | 'absolute';
 }
 
-const Loader: SFC<LoaderProps> = memo((props) => {
+const Loader: React.FC<LoaderProps> = memo((props) => {
   const { open, progressSize, position } = props;
 
   const classes = useStyles();

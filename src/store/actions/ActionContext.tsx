@@ -1,4 +1,4 @@
-import React, { SFC, createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
 import { useGlobalActionDispatch } from '../../hooks';
@@ -14,7 +14,7 @@ export const useActionContext = () => useContext(ActionContext);
 export const ActionContextProvider = ActionContext.Provider;
 export const ActionConsumer = ActionContext.Consumer;
 
-const ActionProvider: SFC = (props) => {
+const ActionProvider: React.FC = (props) => {
   const { children } = props;
 
   const [state, dispatch] = useReducer(

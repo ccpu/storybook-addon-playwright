@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapInteraction } from 'react-map-interaction';
 import { useKeyPress } from '../../hooks';
 import { DiffDirection } from '../../api/typings/image-diff';
@@ -8,7 +8,7 @@ export interface ImagePreviewProps {
   diffDirection?: DiffDirection;
 }
 
-const ImagePreview: SFC<ImagePreviewProps> = (props) => {
+const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
   const { imgSrcString, diffDirection } = props;
   const isPressed = useKeyPress('Control');
   const prevImage = useRef<string>();

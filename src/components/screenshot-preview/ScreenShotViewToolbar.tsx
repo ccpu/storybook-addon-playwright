@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { makeStyles, Tooltip } from '@material-ui/core';
 import { CircularProgress } from '@material-ui/core';
 import { BrowserTypes } from '../../typings';
@@ -56,7 +56,7 @@ export interface PreviewItemProps {
   onFullScreen: () => void;
 }
 
-const ScreenShotViewToolbar: SFC<PreviewItemProps> = (props) => {
+const ScreenShotViewToolbar: React.FC<PreviewItemProps> = (props) => {
   const {
     browserType,
     onSave,

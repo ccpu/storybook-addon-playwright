@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { SchemaRenderer } from './SchemaRenderer';
 import { Control } from './Control';
 import { SelectorControl } from './SelectorControl';
@@ -19,7 +19,7 @@ export interface SchemaPropProps {
   onSelectorChange?: (objPath: string, val: unknown) => void;
 }
 
-const SchemaProp: SFC<SchemaPropProps> = ({
+const SchemaProp: React.FC<SchemaPropProps> = ({
   name,
   schema,
   parents = [],

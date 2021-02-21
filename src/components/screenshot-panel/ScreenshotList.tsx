@@ -1,11 +1,11 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { useCurrentStoryData } from '../../hooks';
 import { useScreenshotContext } from '../../store/screenshot';
 
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
 
-const ScreenshotList: SFC = ({ children }) => {
+const ScreenshotList: React.FC = ({ children }) => {
   const storyData = useCurrentStoryData();
 
   const state = useScreenshotContext();

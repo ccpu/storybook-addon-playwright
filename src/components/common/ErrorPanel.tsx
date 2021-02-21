@@ -1,4 +1,4 @@
-import React, { memo, SFC } from 'react';
+import React, { memo } from 'react';
 import { makeStyles, Backdrop } from '@material-ui/core';
 
 const useStyles = makeStyles(
@@ -19,7 +19,7 @@ export interface ErrorPanelProps {
   message: string;
 }
 
-const ErrorPanel: SFC<ErrorPanelProps> = memo((props) => {
+const ErrorPanel: React.FC<ErrorPanelProps> = memo((props) => {
   const { message } = props;
 
   const classes = useStyles();

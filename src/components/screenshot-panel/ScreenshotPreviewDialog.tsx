@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { ScreenshotData, StoryData } from '../../typings';
 import { useAsyncApiCall } from '../../hooks';
 import {
@@ -17,7 +17,9 @@ export interface ScreenshotPreviewDialogProps
   storyData: StoryData;
 }
 
-const ScreenshotPreviewDialog: SFC<ScreenshotPreviewDialogProps> = (props) => {
+const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
+  props,
+) => {
   const { storyData, screenShotData, onClose, ...rest } = props;
 
   const {

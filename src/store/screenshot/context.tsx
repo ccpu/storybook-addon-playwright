@@ -1,4 +1,4 @@
-import React, { SFC, createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { initialState, reducer, ReducerState, Action } from './reducer';
 import { useReducer } from 'reinspect';
 import {
@@ -21,7 +21,7 @@ export const useScreenshotContext = () => useContext(ScreenshotContext);
 export const ScreenshotContextProvider = ScreenshotContext.Provider;
 export const ScreenshotConsumer = ScreenshotContext.Consumer;
 
-const ScreenshotProvider: SFC = (props) => {
+const ScreenshotProvider: React.FC = (props) => {
   const { children } = props;
 
   const [state, dispatch] = useReducer(

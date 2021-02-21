@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, forwardRef, Ref, SFC } from 'react';
+import React, { useState, forwardRef, Ref } from 'react';
 import { IconButton } from '@material-ui/core';
 import Compare from '@material-ui/icons/Compare';
 import { Loader } from '../common';
@@ -56,7 +56,7 @@ export interface ScreenshotListItemMenuProps {
   isEditing?: boolean;
 }
 
-const ScreenshotListItemMenu: SFC<ScreenshotListItemMenuProps> = forwardRef(
+const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> = forwardRef(
   (
     {
       enableLoadSetting,

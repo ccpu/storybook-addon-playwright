@@ -1,9 +1,9 @@
-import React, { SFC, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ThemeProvider } from '../common';
 import { StateInspector } from 'reinspect';
 import { SnackbarProvider } from 'notistack';
 
-const CommonProvider: SFC = (props) => {
+const CommonProvider: React.FC = (props) => {
   const { children } = props;
 
   const div = useRef<HTMLDivElement>(document.createElement('div'));

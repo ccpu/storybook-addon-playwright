@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { ImageDiffPreview, ImageDiffPreviewProps } from './ImageDiffPreview';
 import { Dialog, DialogProps } from './Dialog';
 
@@ -6,7 +6,9 @@ export interface ImageDiffPreviewDialogProps
   extends DialogProps,
     ImageDiffPreviewProps {}
 
-const ImageDiffPreviewDialog: SFC<ImageDiffPreviewDialogProps> = (props) => {
+const ImageDiffPreviewDialog: React.FC<ImageDiffPreviewDialogProps> = (
+  props,
+) => {
   const { imageDiffResult, activeTab, ...rest } = props;
 
   return (

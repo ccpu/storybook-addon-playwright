@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import CloseSharp from '@material-ui/icons/CloseSharp';
 import { AlertTitle } from '@material-ui/lab';
 import { Button } from '@material-ui/core';
@@ -11,7 +11,7 @@ export interface SnackbarContentProps {
   onRetry?: () => void;
 }
 
-const SnackbarContent: SFC<SnackbarContentProps> = ({
+const SnackbarContent: React.FC<SnackbarContentProps> = ({
   closeIcon = true,
   onClose,
   title,

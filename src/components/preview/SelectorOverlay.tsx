@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useSelectorManager } from '../../hooks';
 import useMouseHovered from 'react-use/lib/useMouseHovered';
@@ -52,7 +52,7 @@ const defaultRect = {
   width: ('100%' as unknown) as number,
 } as ClientRect;
 
-const SelectorOverlay: SFC<Props> = (props) => {
+const SelectorOverlay: React.FC<Props> = (props) => {
   const { iframe } = props;
   const {
     stopSelector,

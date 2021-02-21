@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Webkit: React.SFC<React.SVGProps<SVGSVGElement>> = (props) => (
+const Webkit: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     version="1.1"

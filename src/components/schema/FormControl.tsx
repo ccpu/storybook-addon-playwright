@@ -1,4 +1,4 @@
-import React, { SFC, memo } from 'react';
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { capitalize } from '../../utils';
 import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
@@ -70,7 +70,7 @@ export interface ControlFormProps {
   active?: boolean;
 }
 
-const FormControl: SFC<ControlFormProps> = memo((props) => {
+const FormControl: React.FC<ControlFormProps> = memo((props) => {
   const {
     label,
     description,

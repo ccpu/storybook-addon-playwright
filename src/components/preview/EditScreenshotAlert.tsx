@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { useEditScreenshot } from '../../hooks';
 import { Alert } from '@material-ui/lab';
 import { makeStyles, Button } from '@material-ui/core';
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
   { name: 'EditScreenshotAlert' },
 );
 
-const EditScreenshotAlert: SFC = () => {
+const EditScreenshotAlert: React.FC = () => {
   const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
 
   const classes = useStyles();

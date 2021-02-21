@@ -1,4 +1,4 @@
-import React, { SFC, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles, Divider, Button } from '@material-ui/core';
 import { MemoizedSchemaRenderer } from '../schema';
 import { Config } from 'ts-to-json/dist/src/Config';
@@ -37,7 +37,7 @@ export interface SchemaFormProps extends Partial<Config> {
   FooterComponent?: React.ReactNode;
 }
 
-const SchemaFormLoader: SFC<SchemaFormProps> = ({
+const SchemaFormLoader: React.FC<SchemaFormProps> = ({
   defaultData,
   onSave,
   FooterComponent,

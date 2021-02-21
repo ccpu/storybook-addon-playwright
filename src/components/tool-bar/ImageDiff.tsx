@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
 import Compare from '@material-ui/icons/Compare';
@@ -47,7 +47,7 @@ interface ImageDiffStyleProps {
   storyData: StoryData;
 }
 
-const ImageDiff: SFC<ImageDiffStyleProps> = (props) => {
+const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
   const { target, storyData } = props;
 
   const classes = useStyles({ classes: props.classes });

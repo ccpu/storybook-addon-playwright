@@ -1,4 +1,4 @@
-import React, { SFC, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import {
   Popover,
@@ -38,7 +38,7 @@ export interface OptionPopoverProps {
   active?: boolean;
 }
 
-const OptionPopover: SFC<OptionPopoverProps> = ({
+const OptionPopover: React.FC<OptionPopoverProps> = ({
   title,
   Icon,
   children,

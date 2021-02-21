@@ -1,6 +1,6 @@
-import React, { SFC } from 'react';
+import React from 'react';
 
-const LayoutBottomRight: SFC<React.SVGProps<SVGSVGElement>> = (props) => {
+const LayoutBottomRight: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

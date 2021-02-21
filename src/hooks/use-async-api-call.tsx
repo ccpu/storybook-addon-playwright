@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, SFC, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Snackbar, SnackbarProps } from '../components';
 import React from 'react';
 import { Button } from '@material-ui/core';
@@ -80,7 +80,7 @@ export const useAsyncApiCall = <T extends Function>(
     setError(undefined);
   }, []);
 
-  const ErrorSnackbar: SFC<
+  const ErrorSnackbar: React.FC<
     SnackbarProps & { onRetry?: () => void }
   > = useCallback(
     ({ onRetry }) => {

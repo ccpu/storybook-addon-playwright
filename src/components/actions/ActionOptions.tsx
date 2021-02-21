@@ -1,4 +1,4 @@
-import React, { memo, SFC, useCallback, useState, useEffect } from 'react';
+import React, { memo, useCallback, useState, useEffect } from 'react';
 import {
   AccordionDetails,
   makeStyles,
@@ -70,7 +70,7 @@ export interface ActionOptionsProps {
   actionSetId: string;
 }
 
-const ActionOptions: SFC<ActionOptionsProps> = memo((props) => {
+const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
   const { actionId, actionName, DragHandle, actionSetId } = props;
 
   const [subtitle, setSubtitle] = useState<string[]>();

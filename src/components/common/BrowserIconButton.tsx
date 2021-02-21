@@ -1,4 +1,4 @@
-import React, { SFC, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { BrowserTypes } from '../../typings';
 import { IconButton } from '@storybook/components';
 import { BrowserIcon } from '../common/BrowserIcon';
@@ -10,7 +10,7 @@ export interface BrowserIconProps {
   active: boolean;
 }
 
-const BrowserIconButton: SFC<BrowserIconProps> = (props) => {
+const BrowserIconButton: React.FC<BrowserIconProps> = (props) => {
   const { browserType, onClick, active } = props;
 
   const handleClick = useCallback(() => {

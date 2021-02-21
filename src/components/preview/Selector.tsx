@@ -1,8 +1,8 @@
-import React, { SFC, memo, useEffect, useState, useRef } from 'react';
+import React, { memo, useEffect, useState, useRef } from 'react';
 import { useSelectorManager } from '../../hooks';
 import { SelectorOverlay } from './SelectorOverlay';
 
-const Selector: SFC = memo((props) => {
+const Selector: React.FC = memo((props) => {
   const { children } = props;
   const { selectorManager } = useSelectorManager();
 

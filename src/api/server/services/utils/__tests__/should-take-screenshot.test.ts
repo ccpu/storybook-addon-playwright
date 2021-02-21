@@ -86,4 +86,18 @@ describe('shouldTakeScreenshot', () => {
       ),
     ).toBeFalsy();
   });
+
+  it('should when current action is waitForTimeout', () => {
+    expect(
+      shouldTakeScreenshot(
+        [
+          { id: 'id', name: 'hover' },
+          { id: 'id', name: 'waitForTimeout' },
+          { id: 'id', name: 'click' },
+        ],
+        1,
+        true,
+      ),
+    ).toBeTruthy();
+  });
 });

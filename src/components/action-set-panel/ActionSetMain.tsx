@@ -75,11 +75,37 @@ const ActionSetMain: React.FC = () => {
     [dispatch, storyId],
   );
 
+  const onAddQuickAction = React.useCallback(
+    (actionName: string, actionTitle: string) => {
+      const id = nanoid(12);
+      const newActionSet: ActionSet = {
+        actions: [
+          {
+            id: nanoid(10),
+            name: actionName,
+          },
+        ],
+        id,
+        title: actionTitle,
+      };
+
+      dispatch({
+        actionSet: newActionSet,
+        new: true,
+        selected: true,
+        storyId,
+        type: 'addActionSet',
+      });
+    },
+    [dispatch, storyId],
+  );
+
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       <ActionToolbar
         onAddActionSet={toggleDescriptionDialog}
         onReset={handleReset}
+        onAddQuickAction={onAddQuickAction}
       />
       <ActionSetList onSortEnd={handleSortEnd} useDragHandle />
 

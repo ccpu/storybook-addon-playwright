@@ -99,7 +99,7 @@ export const makeScreenshot = async (
           !['takeScreenshot', 'waitForSelector', 'waitForTimeout'].includes(
             a.name,
           ),
-      ).length > 1
+      ).length > 0
     ) {
       imageInfos.push({
         buffer: await takeScreenshot(page, data, configs),

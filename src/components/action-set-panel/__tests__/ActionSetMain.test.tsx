@@ -102,4 +102,29 @@ describe('ActionSetMain', () => {
       { storyId: 'story-id', type: 'deleteTempActionSets' },
     ]);
   });
+
+  it('should add quick action', () => {
+    const wrapper = shallow(<ActionSetMain />);
+
+    const toolbar = wrapper.find(ActionToolbar);
+
+    toolbar.props().onAddQuickAction('foo', 'bar');
+
+    expect(dispatchMock).toHaveBeenNthCalledWith(1, [
+      { type: 'clearCurrentActionSets' },
+    ]);
+    expect(dispatchMock).toHaveBeenNthCalledWith(2, [
+      {
+        actionSet: {
+          actions: [{ id: 'id-3', name: 'foo' }],
+          id: 'id-2',
+          title: 'bar',
+        },
+        new: true,
+        selected: true,
+        storyId: 'story-id',
+        type: 'addActionSet',
+      },
+    ]);
+  });
 });

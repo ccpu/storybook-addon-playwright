@@ -6,16 +6,19 @@ export const knobsToQuerystring = (props?: ScreenshotProp) => {
   const keys = Object.keys(props);
 
   const propQuery = keys.map((prop) => {
-    if(Array.isArray(props[prop]))
-    {
-        return `knob-${prop}=${props[prop].join(',')}`;
+    const propVal = props[prop];
+    if (Array.isArray(propVal)) {
+        if(propVal.length>0&& typeof propVal[0]==='object')
+        {
+            return `knob-${prop}=${JSON.stringify(propVal)}`;
+        }else{
+            return `knob-${prop}=${propVal.join(',')}`;
+        }
     }
-
-    if (typeof props[prop] === 'object') {
-      return `knob-${prop}=${JSON.stringify(props[prop])}`;
+    if (typeof propVal === 'object') {
+        return `knob-${prop}=${JSON.stringify(propVal)}`;
     }
-
-    return `knob-${prop}=${props[prop]}`;
+    return `knob-${prop}=${propVal}`;
   });
   return encodeURI(propQuery.join('&'));
 };

@@ -1,8 +1,9 @@
-import { Mouse } from 'playwright';
+import { Mouse, Touchscreen } from 'playwright';
 import { PageMethodKeys } from '../../typings';
 import { generateSchema } from './generate-schema';
 
 type MouseKeys = keyof Mouse;
+type TouchscreenKeys = keyof Touchscreen;
 
 const selectedPageKeys: PageMethodKeys[] = [
   'click',
@@ -38,9 +39,12 @@ const selectedMouseKeys: MouseKeys[] = [
   'up',
 ];
 
+const selectedTouchProp: TouchscreenKeys[] = ['tap'];
+
 const selectedKeys = [
   ...selectedPageKeys,
   ...selectedMouseKeys.map((x) => 'mouse.' + x),
+  ...selectedTouchProp.map((x) => 'touchscreen.' + x),
 ] as string[];
 
 export const generateActionSchema = (pathToTypes: string) => {

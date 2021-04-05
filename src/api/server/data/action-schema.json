@@ -835,6 +835,33 @@
     ],
     "description": "Focuses the element, and then uses `keyboard.down` and `keyboard.up`.\n`key` can specify the intended keyboardEvent.key value or a single character to generate the text for. A superset of the `key` values can be found here. Examples of the keys are:\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\nFollowing modification shortcuts are also suported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When speficied with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n```js\nconst page = await browser.newPage();\nawait page.goto('https://keycode.info');\nawait page.press('body', 'A');\nawait page.screenshot({ path: 'A.png' });\nawait page.press('body', 'ArrowLeft');\nawait page.screenshot({ path: 'ArrowLeft.png' });\nawait page.press('body', 'Shift+O');\nawait page.screenshot({ path: 'O.png' });\nawait browser.close();\n```"
   },
+  "touchscreen": {
+    "type": "object",
+    "properties": {
+      "tap": {
+        "kind": "function",
+        "type": "Promise",
+        "parameters": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "description": "Dispatches a `touchstart` and `touchend` event with a single touch at the position (`x`,`y`)."
+      }
+    },
+    "required": [
+      "tap"
+    ],
+    "additionalProperties": false,
+    "description": "The Touchscreen class operates in main-frame CSS pixels relative to the top-left corner of the viewport. Methods on the\ntouchscreen can only be used in browser contexts that have been intialized with `hasTouch` set to true."
+  },
   "type": {
     "kind": "function",
     "type": "Promise",

@@ -3,56 +3,22 @@
     "type": "boolean",
     "description": "Whether to automatically download all the attachments. Defaults to `false` where all the downloads are canceled."
   },
-  "ignoreHTTPSErrors": {
-    "type": "boolean",
-    "description": "Whether to ignore HTTPS errors during navigation. Defaults to `false`."
-  },
   "bypassCSP": {
     "type": "boolean",
     "description": "Toggles bypassing page's Content-Security-Policy."
   },
-  "viewport": {
-    "type": "object",
-    "properties": {
-      "width": {
-        "type": "number",
-        "description": "page width in pixels."
-      },
-      "height": {
-        "type": "number",
-        "description": "page height in pixels."
-      }
-    },
-    "required": [
-      "width",
-      "height"
-    ],
-    "additionalProperties": false,
-    "description": "Sets a consistent viewport for each page. Defaults to an 1280x720 viewport. `null` disables the default viewport."
-  },
-  "userAgent": {
+  "colorScheme": {
     "type": "string",
-    "description": "Specific user agent to use in this context."
+    "enum": [
+      "light",
+      "dark",
+      "no-preference"
+    ],
+    "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See\n[page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#pageemulatemediaoptions) for more details.\nDefaults to `'light'`."
   },
   "deviceScaleFactor": {
     "type": "number",
     "description": "Specify device scale factor (can be thought of as dpr). Defaults to `1`."
-  },
-  "isMobile": {
-    "type": "boolean",
-    "description": "Whether the `meta viewport` tag is taken into account and touch events are enabled. Defaults to `false`. Not supported in Firefox."
-  },
-  "hasTouch": {
-    "type": "boolean",
-    "description": "Specifies if viewport supports touch events. Defaults to false."
-  },
-  "javaScriptEnabled": {
-    "type": "boolean",
-    "description": "Whether or not to enable JavaScript in the context. Defaults to true."
-  },
-  "timezoneId": {
-    "type": "string",
-    "description": "Changes the timezone of the context. See ICU’s `metaZones.txt` for a list of supported timezone IDs."
   },
   "geolocation": {
     "type": "object",
@@ -76,20 +42,9 @@
     ],
     "additionalProperties": false
   },
-  "locale": {
-    "type": "string",
-    "description": "Specify user locale, for example `en-GB`, `de-DE`, etc. Locale will affect `navigator.language` value, `Accept-Language` request header value as well as number and date formatting rules."
-  },
-  "permissions": {
-    "type": "array",
-    "items": {
-      "type": "string"
-    },
-    "description": "A list of permissions to grant to all pages in this context. See browserContext.grantPermissions for more details."
-  },
-  "offline": {
+  "hasTouch": {
     "type": "boolean",
-    "description": "Whether to emulate network being offline. Defaults to `false`."
+    "description": "Specifies if viewport supports touch events. Defaults to false."
   },
   "httpCredentials": {
     "type": "object",
@@ -106,23 +61,41 @@
       "password"
     ],
     "additionalProperties": false,
-    "description": "Credentials for HTTP authentication."
+    "description": "Credentials for [HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)."
   },
-  "colorScheme": {
+  "ignoreHTTPSErrors": {
+    "type": "boolean",
+    "description": "Whether to ignore HTTPS errors during navigation. Defaults to `false`."
+  },
+  "isMobile": {
+    "type": "boolean",
+    "description": "Whether the `meta viewport` tag is taken into account and touch events are enabled. Defaults to `false`. Not supported\nin Firefox."
+  },
+  "javaScriptEnabled": {
+    "type": "boolean",
+    "description": "Whether or not to enable JavaScript in the context. Defaults to `true`."
+  },
+  "locale": {
     "type": "string",
-    "enum": [
-      "dark",
-      "light",
-      "no-preference"
-    ],
-    "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See page.emulateMedia(options) for more details. Defaults to '`light`'."
+    "description": "Specify user locale, for example `en-GB`, `de-DE`, etc. Locale will affect `navigator.language` value, `Accept-Language`\nrequest header value as well as number and date formatting rules."
+  },
+  "offline": {
+    "type": "boolean",
+    "description": "Whether to emulate network being offline. Defaults to `false`."
+  },
+  "permissions": {
+    "type": "array",
+    "items": {
+      "type": "string"
+    },
+    "description": "A list of permissions to grant to all pages in this context. See\n[browserContext.grantPermissions(permissions[, options])](https://playwright.dev/docs/api/class-browsercontext#browsercontextgrantpermissionspermissions-options)\nfor more details."
   },
   "proxy": {
     "type": "object",
     "properties": {
       "server": {
         "type": "string",
-        "description": "Proxy to be used for all requests. HTTP and SOCKS proxies are supported, for example `http://myproxy.com:3128` or `socks5://myproxy.com:3128`. Short form `myproxy.com:3128` is considered an HTTP proxy."
+        "description": "Proxy to be used for all requests. HTTP and SOCKS proxies are supported, for example `http://myproxy.com:3128` or\n`socks5://myproxy.com:3128`. Short form `myproxy.com:3128` is considered an HTTP proxy."
       },
       "bypass": {
         "type": "string",
@@ -141,30 +114,7 @@
       "server"
     ],
     "additionalProperties": false,
-    "description": "Network proxy settings to use with this context. Note that browser needs to be launched with the global proxy for this option to work. If all contexts override the proxy, global proxy will be never used and can be any string, for example `launch({ proxy: { server: 'per-context' } })`."
-  },
-  "videosPath": {
-    "type": "string",
-    "description": "**NOTE** Use `recordVideo` instead, it takes precedence over `videosPath`. Enables video recording for all pages to `videosPath` directory. If not specified, videos are not recorded. Make sure to await `browserContext.close` for videos to be saved."
-  },
-  "videoSize": {
-    "type": "object",
-    "properties": {
-      "width": {
-        "type": "number",
-        "description": "Video frame width."
-      },
-      "height": {
-        "type": "number",
-        "description": "Video frame height."
-      }
-    },
-    "required": [
-      "width",
-      "height"
-    ],
-    "additionalProperties": false,
-    "description": "**NOTE** Use `recordVideo` instead, it takes precedence over `videoSize`. Specifies dimensions of the automatically recorded video. Can only be used if `videosPath` is set. If not specified the size will be equal to `viewport`. If `viewport` is not configured explicitly the video size defaults to 1280x720. Actual picture of the page will be scaled down if necessary to fit specified size."
+    "description": "Network proxy settings to use with this context. Note that browser needs to be launched with the global proxy for this\noption to work. If all contexts override the proxy, global proxy will be never used and can be any string, for example\n`launch({ proxy: { server: 'per-context' } })`."
   },
   "recordHar": {
     "type": "object",
@@ -182,7 +132,7 @@
       "path"
     ],
     "additionalProperties": false,
-    "description": "Enables HAR recording for all pages into `recordHar.path` file. If not specified, the HAR is not recorded. Make sure to await `browserContext.close` for the HAR to be saved."
+    "description": "Enables [HAR](http://www.softwareishard.com/blog/har-12-spec) recording for all pages into `recordHar.path` file. If not\nspecified, the HAR is not recorded. Make sure to await\n[browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browsercontextclose) for the HAR to be\nsaved."
   },
   "recordVideo": {
     "type": "object",
@@ -208,14 +158,155 @@
           "height"
         ],
         "additionalProperties": false,
-        "description": "Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport`. If `viewport` is not configured explicitly the video size defaults to 1280x720. Actual picture of each page will be scaled down if necessary to fit the specified size."
+        "description": "Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport` scaled down to fit\ninto 800x800. If `viewport` is not configured explicitly the video size defaults to 800x450. Actual picture of each page\nwill be scaled down if necessary to fit the specified size."
       }
     },
     "required": [
       "dir"
     ],
     "additionalProperties": false,
-    "description": "Enables video recording for all pages into `recordVideo.dir` directory. If not specified videos are not recorded. Make sure to await `browserContext.close` for videos to be saved."
+    "description": "Enables video recording for all pages into `recordVideo.dir` directory. If not specified videos are not recorded. Make\nsure to await [browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browsercontextclose) for\nvideos to be saved."
+  },
+  "storageState": {
+    "anyOf": [
+      {
+        "type": "string"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "cookies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Optional either url or domain / path are required"
+                },
+                "domain": {
+                  "type": "string",
+                  "description": "Optional either url or domain / path are required"
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Optional either url or domain / path are required"
+                },
+                "expires": {
+                  "type": "number",
+                  "description": "Optional Unix time in seconds."
+                },
+                "httpOnly": {
+                  "type": "boolean",
+                  "description": "Optional httpOnly flag"
+                },
+                "secure": {
+                  "type": "boolean",
+                  "description": "Optional secure flag"
+                },
+                "sameSite": {
+                  "type": "string",
+                  "enum": [
+                    "Strict",
+                    "Lax",
+                    "None"
+                  ],
+                  "description": "Optional sameSite flag"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            "description": "Optional cookies to set for context"
+          },
+          "origins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "origin": {
+                  "type": "string"
+                },
+                "localStorage": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "origin",
+                "localStorage"
+              ],
+              "additionalProperties": false
+            },
+            "description": "Optional localStorage to set for context"
+          }
+        },
+        "additionalProperties": false
+      }
+    ],
+    "description": "Populates context with given storage state. This option can be used to initialize context with logged-in information\nobtained via\n[browserContext.storageState([options])](https://playwright.dev/docs/api/class-browsercontext#browsercontextstoragestateoptions).\nEither a path to the file with saved storage, or an object with the following fields:"
+  },
+  "timezoneId": {
+    "type": "string",
+    "description": "Changes the timezone of the context. See\n[ICU's metaZones.txt](https://cs.chromium.org/chromium/src/third_party/icu/source/data/misc/metaZones.txt?rcl=faee8bc70570192d82d2978a71e2a615788597d1)\nfor a list of supported timezone IDs."
+  },
+  "userAgent": {
+    "type": "string",
+    "description": "Specific user agent to use in this context."
+  },
+  "videoSize": {
+    "type": "object",
+    "properties": {
+      "width": {
+        "type": "number",
+        "description": "Video frame width."
+      },
+      "height": {
+        "type": "number",
+        "description": "Video frame height."
+      }
+    },
+    "required": [
+      "width",
+      "height"
+    ],
+    "additionalProperties": false,
+    "description": "**DEPRECATED** Use `recordVideo` instead."
+  },
+  "videosPath": {
+    "type": "string",
+    "description": "**DEPRECATED** Use `recordVideo` instead."
+  },
+  "viewport": {
+    "type": "object",
+    "properties": {
+      "width": {
+        "type": "number",
+        "description": "page width in pixels."
+      },
+      "height": {
+        "type": "number",
+        "description": "page height in pixels."
+      }
+    },
+    "required": [
+      "width",
+      "height"
+    ],
+    "additionalProperties": false,
+    "description": "Sets a consistent viewport for each page. Defaults to an 1280x720 viewport. `null` disables the default viewport."
   },
   "cursor": {
     "type": "boolean"

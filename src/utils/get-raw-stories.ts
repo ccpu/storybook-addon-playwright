@@ -1,5 +1,5 @@
 import { getIframe } from '../utils';
-import { StoreItem } from '@storybook/client-api/dist/types';
+import { StoreItem } from '@storybook/client-api/dist/ts3.9';
 
 interface RequiredContext {
   __STORYBOOK_CLIENT_API__: {

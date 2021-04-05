@@ -5,6 +5,7 @@ import { getStoryPlaywrightFileInfo, saveStoryFile } from '../utils';
 import { migrateToV1 } from './migration-v1';
 import { migrationV2 } from './migration-v2';
 import { migrationV3 } from './migration-v3';
+import { migrationV4 } from './migration-v4';
 import { getVersion } from '../utils';
 
 export const migrateFile = (file: string, version: string) => {
@@ -22,6 +23,10 @@ export const migrateFile = (file: string, version: string) => {
 
   if (data.version === '2' && +version >= 3) {
     data = migrationV3(data, version);
+  }
+
+  if (data.version === '3' && +version >= 4) {
+    data = migrationV4(data, version);
   }
 
   return data;

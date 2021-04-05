@@ -12,5 +12,11 @@
     "scrl",
     "scrollbar",
     "tippyjs"
-  ]
+  ],
+  "liveServer.settings.fileList": [
+    {
+      "label": "jest",
+      "relativePath": "coverage/lcov-report/index.html"
+    }
+  ],
 }

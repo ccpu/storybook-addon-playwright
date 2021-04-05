@@ -14,8 +14,8 @@ An addon to visually test the stories in the multiple browsers within storybook 
 
 | Package    | Version |
 | ---------- | ------- |
-| storybook  | ~6.1    |
-| playwright | ~1.6    |
+| storybook  | 6       |
+| playwright | ~1.10   |
 
 ## Motivation
 

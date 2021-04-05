@@ -1,4 +1,4 @@
-import { RESET } from '@storybook/addon-knobs/dist/shared';
+import { RESET } from '@storybook/addon-knobs/dist/cjs/shared';
 import { useStorybookApi } from '@storybook/api';
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
 import { useCurrentStoryData } from './use-current-story-data';

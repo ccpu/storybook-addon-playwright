@@ -1,6 +1,6 @@
 import { useKnobs } from '../use-knobs';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { SET } from '@storybook/addon-knobs/dist/shared';
+import { SET } from '@storybook/addon-knobs/dist/cjs/shared';
 import addons from '@storybook/addons';
 import { STORY_CHANGED } from '@storybook/core-events';
 import { KnobStoreKnob } from '../../typings';

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { ControlTypes, ControlProps } from '../typings';
-import { KnobStoreKnob } from '@storybook/addon-knobs/dist/KnobStore';
-import { getKnobControl } from '@storybook/addon-knobs/dist/components/types';
+import { KnobStoreKnob } from '@storybook/addon-knobs/dist/ts3.9/KnobStore';
+import { getKnobControl } from '@storybook/addon-knobs/dist/cjs/components/types';
 
 const convertOptions = (options?: string[]) => {
   return options.reduce((obj, key) => {

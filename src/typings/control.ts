@@ -1,5 +1,5 @@
 import { ControlTypes } from '.';
-import { OptionsKnobOptionsDisplay } from '@storybook/addon-knobs/dist/components/types/Options';
+import { OptionsKnobOptionsDisplay } from '@storybook/addon-knobs/dist/ts3.9/components/types/Options';
 
 export interface ControlProps {
   label: string;

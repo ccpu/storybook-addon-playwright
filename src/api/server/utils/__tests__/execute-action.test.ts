@@ -33,7 +33,7 @@ describe('executeAction', () => {
 
     const val = await executeAction((page as unknown) as Page, action);
 
-    expect(val).toStrictEqual(['div>div']);
+    expect(val).toStrictEqual(['div>div', undefined]);
   });
 
   it('should not execute if required param not provided e.g selector', async () => {
@@ -62,7 +62,7 @@ describe('executeAction', () => {
 
     const val = await executeAction((page as unknown) as Page, action);
 
-    expect(val).toStrictEqual([1, 1]);
+    expect(val).toStrictEqual([1, 1, undefined]);
   });
 
   it('should not execute if action is not implemented', async () => {

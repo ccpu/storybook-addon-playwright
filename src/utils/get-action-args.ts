@@ -29,7 +29,7 @@ export const getActionArgs = (
       }
 
       arr.push(action.args[actionName]);
-    } else if (isRequired) {
+    } else {
       arr.push(undefined);
     }
     return arr;

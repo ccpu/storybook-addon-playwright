@@ -1,4 +1,5 @@
-import { PlaywrightPageExtraFunctions } from './typings';
+import { PlaywrightPageWithExtra } from './typings';
+import { Page } from 'playwright';
 
 import {
   scrollSelector,
@@ -13,9 +14,10 @@ import {
   touchStart,
   touchMove,
 } from '.';
+import { touchFromTo } from './touch-from-to';
 
-export function extendPage<T>(page: T) {
-  const thisPage = page as PlaywrightPageExtraFunctions & T;
+export function extendPage<T extends Page>(page: T) {
+  const thisPage = page as PlaywrightPageWithExtra & T;
 
   thisPage.dragDropSelector = dragDropSelector;
   thisPage.scrollSelector = scrollSelector;
@@ -28,6 +30,7 @@ export function extendPage<T>(page: T) {
   thisPage.touchMove = touchMove;
   thisPage.touchEnd = touchEnd;
   thisPage.touchStart = touchStart;
+  thisPage.touchFromTo = touchFromTo;
 
   return thisPage;
 }

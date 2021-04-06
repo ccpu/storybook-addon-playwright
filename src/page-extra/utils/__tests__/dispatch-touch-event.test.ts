@@ -97,4 +97,44 @@ describe('touch', () => {
 
     expect(elm.dispatchEvent).toHaveBeenCalledTimes(1);
   });
+
+  it('should have use clint for page if not provided', async () => {
+    const evalMock = jest.fn();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    global.Touch = jest.fn();
+
+    const elm = document.createElement('div');
+    elm.dispatchEvent = jest.fn();
+
+    evalMock.mockImplementationOnce((_el, func, opts) => {
+      func(elm, opts);
+    });
+
+    page.$eval = evalMock;
+
+    await dispatchTouchEvent(
+      page,
+      'touchstart',
+      '.selector',
+      undefined,
+      undefined,
+      { x: 3, y: 3 },
+      { bubbles: false, cancelable: false },
+    );
+
+    expect(global.Touch).toHaveBeenCalledWith({
+      clientX: 3,
+      clientY: 3,
+      identifier: 1557831718135,
+      pageX: 3,
+      pageY: 3,
+      screenX: undefined,
+      screenY: undefined,
+      target: elm,
+    });
+
+    expect(elm.dispatchEvent).toHaveBeenCalledTimes(1);
+  });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Draggable from 'react-draggable';
 export default { title: 'Touch' };
 
 const StoryComponent: React.FC = () => {
@@ -22,15 +22,17 @@ const StoryComponent: React.FC = () => {
   }, []);
 
   return (
-    <div
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={handleTouchCancel}
-      style={{ background: 'red', height: 100, width: 100 }}
-    >
-      {touchState}
-    </div>
+    <Draggable>
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
+        style={{ background: 'red', height: 100, width: 100 }}
+      >
+        {touchState}
+      </div>
+    </Draggable>
   );
 };
 

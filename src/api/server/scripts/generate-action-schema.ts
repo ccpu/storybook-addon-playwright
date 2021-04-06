@@ -33,6 +33,7 @@ const selectedPageKeys: PageMethodKeys[] = [
   'touchStart',
   'touchCancel',
   'touchEnd',
+  'touchFromTo',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [

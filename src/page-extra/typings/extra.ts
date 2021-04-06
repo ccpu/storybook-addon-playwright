@@ -20,7 +20,13 @@ export interface PageExtraTimeOut {
 }
 
 export interface PageExtraTouchOptions {
+  /**
+   * @default true
+   */
   bubbles?: boolean;
+  /**
+   * @default true
+   */
   cancelable?: boolean;
 }
 
@@ -57,7 +63,7 @@ export interface ElementHandleBoundingBox {
   height: number;
 }
 
-export interface PlaywrightPageExtraFunctions {
+export interface PlaywrightPageWithExtra {
   /**
    * This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.
    * If the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error.
@@ -168,6 +174,22 @@ export interface PlaywrightPageExtraFunctions {
     client?: Position,
     options?: PageExtraTouchOptions,
   ) => Promise<void>;
+
+  /**
+   * This method fetches an element with `selector`, and dispatch  touchstart,touchmove and touchend event.
+   * If there's no element matching `selector`, the method waits until a matching element appears in the DOM.
+   * @param selector A selector to search for element to click. If there are multiple elements satisfying the selector, the first will be clicked.
+   */
+  touchFromTo: (
+    selector: string,
+    pageFrom?: Position,
+    pageTo?: Position,
+    clientFrom?: Position,
+    clientTo?: Position,
+    screenFrom?: Position,
+    screenTo?: Position,
+    options?: PageExtraTouchOptions,
+  ) => Promise<void>;
 }
 
-export interface ExtendedPage extends Page, PlaywrightPageExtraFunctions {}
+export interface ExtendedPage extends Page, PlaywrightPageWithExtra {}

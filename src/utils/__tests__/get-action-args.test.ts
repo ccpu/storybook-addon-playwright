@@ -16,19 +16,19 @@ describe('getActionArgs', () => {
       },
     };
     const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual(['div>div', { x: 1 }]);
+    expect(sortedAction).toStrictEqual(['div>div', { x: 1 }, undefined]);
   });
 
-  it('should have undefined value for required params like "selector"', () => {
+  it('should have undefined if args missing', () => {
     const action: StoryAction = {
       id: 'someId',
       name: 'click',
     };
     const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual([undefined]);
+    expect(sortedAction).toStrictEqual([undefined, undefined, undefined]);
   });
 
-  it('should not have empty object if param not required', () => {
+  it('should replace  empty object with undefined', () => {
     const action: StoryAction = {
       id: 'someId',
       name: 'click',
@@ -38,48 +38,10 @@ describe('getActionArgs', () => {
       },
     };
     const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual(['div>div']);
+    expect(sortedAction).toStrictEqual(['div>div', undefined]);
   });
 
-  it('should not have empty array if param not required', () => {
-    const action: StoryAction = {
-      id: 'someId',
-      name: 'click',
-      args: {
-        arr: [],
-        selector: 'div>div',
-      },
-    };
-    const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual(['div>div']);
-  });
-
-  it('should not have undefined if param not required', () => {
-    const action: StoryAction = {
-      id: 'someId',
-      name: 'click',
-      args: {
-        options: undefined,
-        selector: 'div>div',
-      },
-    };
-    const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual(['div>div']);
-  });
-
-  it('should have undefined if param required', () => {
-    const action: StoryAction = {
-      id: 'someId',
-      name: 'click',
-      args: {
-        selector: undefined,
-      },
-    };
-    const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual([undefined]);
-  });
-
-  it('should not ignore 0 and null params', () => {
+  it('should not ignore 0 and null args', () => {
     const action: StoryAction = {
       id: 'someId',
       name: 'click',
@@ -103,7 +65,7 @@ describe('getActionArgs', () => {
       },
     };
     const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual([1, 2]);
+    expect(sortedAction).toStrictEqual([1, 2, undefined]);
   });
 
   it('should keep order even if no value present e.g selector missing', () => {
@@ -117,7 +79,7 @@ describe('getActionArgs', () => {
       },
     };
     const sortedAction = getActionArgs(action, getActionSchemaData());
-    expect(sortedAction).toStrictEqual([undefined, { x: 1 }]);
+    expect(sortedAction).toStrictEqual([undefined, { x: 1 }, undefined]);
   });
 
   it('should throw error if action is not exist in schema, so we know its deprecated', () => {

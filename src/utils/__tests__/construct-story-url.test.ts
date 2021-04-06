@@ -18,15 +18,15 @@ describe('constructStoryUrl', () => {
   });
 
   it('should to have valid url', () => {
-    const url = constructStoryUrl('localhost:9001', 'my-story');
-    expect(url).toBe('http://localhost:9001/iframe.html?id=my-story');
+    const url = constructStoryUrl('localhost:9002', 'my-story');
+    expect(url).toBe('http://localhost:9002/iframe.html?id=my-story');
   });
 
   it('should have knobs', () => {
     const knobs: ScreenshotProp = { 'props-a': 1 };
-    const url = constructStoryUrl('localhost:9001', 'my-story', knobs);
+    const url = constructStoryUrl('localhost:9002', 'my-story', knobs);
     expect(url).toBe(
-      'http://localhost:9001/iframe.html?id=my-story&knob-props-a=1',
+      'http://localhost:9002/iframe.html?id=my-story&knob-props-a=1',
     );
   });
 });

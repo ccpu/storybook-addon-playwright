@@ -23,7 +23,7 @@ async function setupPlaywright() {
   try {
     let browser;
     setConfig({
-      storybookEndpoint: `http://localhost:9001/`,
+      storybookEndpoint: `http://localhost:9002/`,
       getPage: async (browserType, options) => {
         if (!browser) {
           browser = {

@@ -8,6 +8,7 @@ const saveSchema = (result: unknown, fileName: string) => {
   fs.writeFileSync(
     path.resolve('../data/' + fileName + '.json'),
     JSON.stringify(result, null, 2),
+    'utf8',
   );
 };
 

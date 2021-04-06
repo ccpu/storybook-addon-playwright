@@ -22,7 +22,7 @@ describe('touchCancel', () => {
     expect(touchCancel).toBeDefined();
   });
 
-  it('should call touch', () => {
+  it('should call dispatchTouchEvent', () => {
     page.touchCancel(
       '.selector',
       { x: 0, y: 0 },

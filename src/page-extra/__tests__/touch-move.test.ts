@@ -22,7 +22,7 @@ describe('touchMove', () => {
     expect(touchMove).toBeDefined();
   });
 
-  it('should call touch', () => {
+  it('should call dispatchTouchEvent', () => {
     page.touchMove(
       '.selector',
       { x: 0, y: 0 },

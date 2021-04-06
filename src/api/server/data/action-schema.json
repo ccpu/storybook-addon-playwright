@@ -234,9 +234,6 @@
       "options": {
         "type": "object",
         "properties": {
-          "timeout": {
-            "type": "number"
-          },
           "bubbles": {
             "type": "boolean"
           },
@@ -298,9 +295,6 @@
       "options": {
         "type": "object",
         "properties": {
-          "timeout": {
-            "type": "number"
-          },
           "bubbles": {
             "type": "boolean"
           },
@@ -362,9 +356,6 @@
       "options": {
         "type": "object",
         "properties": {
-          "timeout": {
-            "type": "number"
-          },
           "bubbles": {
             "type": "boolean"
           },
@@ -426,9 +417,6 @@
       "options": {
         "type": "object",
         "properties": {
-          "timeout": {
-            "type": "number"
-          },
           "bubbles": {
             "type": "boolean"
           },

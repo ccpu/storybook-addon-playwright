@@ -9,11 +9,11 @@
       "options": {
         "type": "object",
         "properties": {
-          "blur": {
-            "type": "boolean"
-          },
           "timeout": {
             "type": "number"
+          },
+          "blur": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -187,6 +187,262 @@
       "selector"
     ],
     "description": "This method fetches an element with `selector`, and dispatch WheelEvent.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "touchStart": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "page": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "screen": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "client": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "number"
+          },
+          "bubbles": {
+            "type": "boolean"
+          },
+          "cancelable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and dispatch touchstart event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "touchMove": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "page": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "screen": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "client": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "number"
+          },
+          "bubbles": {
+            "type": "boolean"
+          },
+          "cancelable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and dispatch touchmove event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "touchEnd": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "page": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "screen": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "client": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "number"
+          },
+          "bubbles": {
+            "type": "boolean"
+          },
+          "cancelable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and dispatch touchend event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+  },
+  "touchCancel": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "page": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "screen": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "client": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "number"
+          },
+          "bubbles": {
+            "type": "boolean"
+          },
+          "cancelable": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method fetches an element with `selector`, and dispatch touchcancel event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "waitForSelector": {
     "kind": "function",

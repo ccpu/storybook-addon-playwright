@@ -1527,13 +1527,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@playwright-utils/page@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@playwright-utils/page/-/page-0.7.0.tgz#da2542af2559151176cdf868d78de45e5266e1e9"
-  integrity sha512-+bmiJmNeQe/kY2pET6vTrz8dr/o5IaE8TTBUi4zx0ZGdE169jRvzf0XsOAEY+1WAosI4smUYehU/HGIhVap0sA==
-  dependencies:
-    playwright "^1.6.2"
-
 "@pmmmwh/react-refresh-webpack-plugin@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -9427,7 +9420,7 @@ pkg-up@3.1.0:
   dependencies:
     find-up "^3.0.0"
 
-playwright@^1.6.2, playwright@~1.10.0:
+playwright@~1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.10.0.tgz#a14d295f1ad886caf4cc5e674afe03ac832066bc"
   integrity sha512-b7SGBcCPq4W3pb4ImEDmNXtO0ZkJbZMuWiShsaNJd+rGfY/6fqwgllsAojmxGSgFmijYw7WxCoPiAIEDIH16Kw==

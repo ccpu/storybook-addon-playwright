@@ -4,7 +4,7 @@ import {
   BrowserContextOptions,
   ViewportSize,
 } from 'playwright/types/types';
-import { ExtendedPlaywrightPageFunctions } from '@playwright-utils/page/lib/typings/page';
+import { PlaywrightPageExtraFunctions } from '../../page-extra/typings';
 
 export type MergeType = 'stitch' | 'overlay';
 export interface TakeScreenshotStitchOptions {
@@ -68,7 +68,7 @@ export interface TakeScreenshotOverlayOptions {
     | 'exclusion';
 }
 
-export interface PlaywrightPage extends Page, ExtendedPlaywrightPageFunctions {
+export interface PlaywrightPage extends Page, PlaywrightPageExtraFunctions {
   /**
    * This method will take a screenshot at the position that it activated, its useful for taking a screenshot in sequence for events/actions. In the end the screenshots will be merged with the final screenshot.
    *

@@ -8,7 +8,7 @@ import {
   BrowserContextOptions,
   StoryAction,
 } from '../../../typings';
-import { extendPage } from '@playwright-utils/page';
+import { extendPage } from '../../../page-extra';
 import { Page } from 'playwright';
 import joinImage from 'join-images';
 import sharp from 'sharp';

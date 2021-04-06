@@ -5,7 +5,7 @@ import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 
 export default {
   decorators: [withKnobs],
-  title: 'Tippy',
+  title: 'Mouse',
 };
 
 export const WithTippy = () => {

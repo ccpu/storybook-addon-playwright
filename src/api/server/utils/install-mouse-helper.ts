@@ -48,18 +48,37 @@ async function installMouseHelper(page: Page) {
         `;
     document.head.appendChild(styleElement);
     document.body.appendChild(box);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const setPosition = (e: any) => {
+      const touch =
+        (e.touches && e.touches[0]) ||
+        (e.changedTouches && e.changedTouches[0]);
+
+      let pageY = e.pageY;
+      let pageX = e.pageX;
+
+      if (touch) {
+        pageY = touch.pageY;
+        pageX = touch.pageX;
+      }
+
+      box.style.left = pageX + 'px';
+      box.style.top = pageY + 'px';
+    };
+
     document.addEventListener(
       'mousemove',
       (event) => {
-        box.style.left = event.pageX + 'px';
-        box.style.top = event.pageY + 'px';
+        setPosition(event);
         box.style.zIndex = getHighestZIndex().toString();
       },
       true,
     );
     document.addEventListener(
       'mousedown',
-      () => {
+      (event) => {
+        setPosition(event);
         box.classList.add('button-mousedown');
         box.style.zIndex = getHighestZIndex().toString();
       },
@@ -69,6 +88,43 @@ async function installMouseHelper(page: Page) {
       'mouseup',
       () => {
         box.classList.remove('button-mousedown');
+        box.style.zIndex = getHighestZIndex().toString();
+      },
+      true,
+    );
+
+    document.addEventListener(
+      'touchstart',
+      (event) => {
+        setPosition(event);
+        box.classList.add('button-mousedown');
+        box.style.zIndex = getHighestZIndex().toString();
+      },
+      true,
+    );
+
+    document.addEventListener(
+      'touchend',
+      () => {
+        box.classList.remove('button-mousedown');
+        box.style.zIndex = getHighestZIndex().toString();
+      },
+      true,
+    );
+
+    document.addEventListener(
+      'touchcancel',
+      () => {
+        box.classList.remove('button-mousedown');
+        box.style.zIndex = getHighestZIndex().toString();
+      },
+      true,
+    );
+
+    document.addEventListener(
+      'touchmove',
+      (event) => {
+        setPosition(event);
         box.style.zIndex = getHighestZIndex().toString();
       },
       true,

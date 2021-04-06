@@ -29,6 +29,10 @@ const selectedPageKeys: PageMethodKeys[] = [
   'mouseMoveToSelector',
   'selectorMouseWheel',
   'keyboard',
+  'touchMove',
+  'touchStart',
+  'touchCancel',
+  'touchEnd',
 ];
 
 const selectedMouseKeys: MouseKeys[] = [

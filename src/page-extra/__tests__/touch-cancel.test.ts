@@ -9,7 +9,7 @@ const pageMock = (): Promise<PageProps> => {
   });
 };
 
-jest.mock('../touch');
+jest.mock('../dispatch-touch-event');
 
 describe('touchCancel', () => {
   let page: ExtendedPage;

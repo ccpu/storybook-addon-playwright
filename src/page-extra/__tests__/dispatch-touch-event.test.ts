@@ -1,4 +1,4 @@
-import { touch } from '../touch';
+import { dispatchTouchEvent } from '../dispatch-touch-event';
 import { setSelectorSize } from '../set-selector-size';
 import { pagePropsMock, PageProps } from '../../../__manual_mocks__/playwright';
 import { ExtendedPage } from '../typings';
@@ -25,7 +25,7 @@ describe('touch', () => {
   });
 
   it('should be defined', () => {
-    expect(touch).toBeDefined();
+    expect(dispatchTouchEvent).toBeDefined();
   });
 
   it('should handle defaults', async () => {
@@ -41,7 +41,7 @@ describe('touch', () => {
 
     page.$eval = evalMock;
 
-    await touch(page, 'touchstart', '.selector');
+    await dispatchTouchEvent(page, 'touchstart', '.selector');
 
     expect(global.Touch).toHaveBeenCalledWith({
       clientX: undefined,
@@ -71,7 +71,7 @@ describe('touch', () => {
 
     page.$eval = evalMock;
 
-    await touch(
+    await dispatchTouchEvent(
       page,
       'touchstart',
       '.selector',

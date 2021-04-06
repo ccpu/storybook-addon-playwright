@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import { Position, PageExtraTouchOptions } from './typings';
-import { touch } from './touch';
+import { dispatchTouchEvent } from './dispatch-touch-event';
 
 export async function touchCancel(
   this: Page,
@@ -10,5 +10,13 @@ export async function touchCancel(
   client?: Position,
   options?: PageExtraTouchOptions,
 ) {
-  await touch(this, 'touchcancel', selector, page, screen, client, options);
+  await dispatchTouchEvent(
+    this,
+    'touchcancel',
+    selector,
+    page,
+    screen,
+    client,
+    options,
+  );
 }

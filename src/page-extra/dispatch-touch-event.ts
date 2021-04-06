@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 import { Position, PageExtraTouchOptions } from './typings';
 
-export async function touch(
+export async function dispatchTouchEvent(
   playWright: Page,
   type: 'touchstart' | 'touchend' | 'touchcancel' | 'touchmove',
   selector: string,

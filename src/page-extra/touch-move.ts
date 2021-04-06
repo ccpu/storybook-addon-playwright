@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import { Position, PageExtraTouchOptions } from './typings';
-import { touch } from './touch';
+import { dispatchTouchEvent } from './dispatch-touch-event';
 
 export async function touchMove(
   this: Page,
@@ -10,5 +10,13 @@ export async function touchMove(
   client?: Position,
   options?: PageExtraTouchOptions,
 ) {
-  await touch(this, 'touchmove', selector, page, screen, client, options);
+  await dispatchTouchEvent(
+    this,
+    'touchmove',
+    selector,
+    page,
+    screen,
+    client,
+    options,
+  );
 }

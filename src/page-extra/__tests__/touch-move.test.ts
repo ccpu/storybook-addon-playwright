@@ -1,5 +1,5 @@
 import { touchMove } from '../touch-move';
-import { touch } from '../touch';
+import { dispatchTouchEvent } from '../dispatch-touch-event';
 import { pagePropsMock, PageProps } from '../../../__manual_mocks__/playwright';
 import { ExtendedPage } from '../typings';
 
@@ -30,6 +30,6 @@ describe('touchMove', () => {
       { x: 0, y: 0 },
       { bubbles: false, cancelable: false },
     );
-    expect(touch).toHaveBeenCalledTimes(1);
+    expect(dispatchTouchEvent).toHaveBeenCalledTimes(1);
   });
 });

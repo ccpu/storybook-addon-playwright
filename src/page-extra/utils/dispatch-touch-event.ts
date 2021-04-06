@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import { Position, PageExtraTouchOptions } from './typings';
+import { Position, PageExtraTouchOptions } from '../typings';
 
 export async function dispatchTouchEvent(
   playWright: Page,

@@ -1,7 +1,10 @@
 import { dispatchTouchEvent } from '../dispatch-touch-event';
-import { setSelectorSize } from '../set-selector-size';
-import { pagePropsMock, PageProps } from '../../../__manual_mocks__/playwright';
-import { ExtendedPage } from '../typings';
+import { setSelectorSize } from '../../set-selector-size';
+import {
+  pagePropsMock,
+  PageProps,
+} from '../../../../__manual_mocks__/playwright';
+import { ExtendedPage } from '../../typings';
 
 const pageMock = (): Promise<PageProps> => {
   return new Promise<PageProps>((resolvePage) => {

@@ -1,5 +1,5 @@
 import { touchEnd } from '../touch-end';
-import { dispatchTouchEvent } from '../dispatch-touch-event';
+import { dispatchTouchEvent } from '../utils/dispatch-touch-event';
 import { pagePropsMock, PageProps } from '../../../__manual_mocks__/playwright';
 import { ExtendedPage } from '../typings';
 
@@ -9,7 +9,7 @@ const pageMock = (): Promise<PageProps> => {
   });
 };
 
-jest.mock('../dispatch-touch-event');
+jest.mock('../utils/dispatch-touch-event');
 
 describe('touchEnd', () => {
   let page: ExtendedPage;

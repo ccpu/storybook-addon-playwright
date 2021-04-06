@@ -1,6 +1,6 @@
 import { Page } from 'playwright';
 import { Position, PageExtraTouchOptions } from './typings';
-import { dispatchTouchEvent } from './dispatch-touch-event';
+import { dispatchTouchEvent } from './utils/dispatch-touch-event';
 
 export async function touchMove(
   this: Page,

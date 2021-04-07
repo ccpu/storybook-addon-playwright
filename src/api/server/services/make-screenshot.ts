@@ -63,7 +63,7 @@ export const makeScreenshot = async (
   await page.goto(url, configs.pageGotoOptions);
 
   if (configs.afterNavigation) {
-    await configs.afterNavigation(page);
+    await configs.afterNavigation(page, data);
   }
 
   if (browserOptions && browserOptions.cursor) {

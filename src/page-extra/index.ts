@@ -12,3 +12,4 @@ export * from './touch-cancel';
 export * from './touch-move';
 export * from './touch-end';
 export * from './touch-start';
+export * from './mouse-from-to';

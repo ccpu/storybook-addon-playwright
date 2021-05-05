@@ -62,6 +62,41 @@
     ],
     "description": "This method fetches an element with `selector`, and move it to the position given by user.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
+  "mouseFromTo": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "from": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "to": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "from",
+      "to"
+    ],
+    "description": "This method will perform mouse down, move,and up from to selected location."
+  },
   "scrollSelector": {
     "kind": "function",
     "type": "Promise",

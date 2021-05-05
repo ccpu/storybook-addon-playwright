@@ -82,6 +82,14 @@ export interface PlaywrightPageWithExtra {
     to: Position,
     mouseDownRelativeToSelector?: Position,
   ) => Promise<void>;
+
+  /**
+   * This method will perform mouse down, move,and up from to selected location.
+   * @param from position in page
+   * @param to position in page
+   */
+  mouseFromTo: (from: Position, to: Position) => Promise<void>;
+
   /**
    * This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.
    * If there's no element matching `selector`, the method waits until a matching element appears in the DOM.

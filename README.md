@@ -260,6 +260,7 @@ The following custom methods has been added to the playwright page:
 - takeScreenshot
 - takeScreenshotOptions
 - selectorMouseWheel
+- mouseFromTo
 
 ### clearInput
 
@@ -299,6 +300,10 @@ Only one instance can be used.
 ### selectorMouseWheel
 
 This method fetches an element with `selector`, and dispatch WheelEvent.
+
+### mouseFromTo
+
+This method will perform mouse down, move,and up from to selected location.
 
 ## Testing
 

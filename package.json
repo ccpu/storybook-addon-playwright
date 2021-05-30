@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-playwright",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {
@@ -109,7 +109,7 @@
     "hash-sum": "^2.0.0",
     "ip": "^1.1.5",
     "jest-image-snapshot": "^4.2.0",
-    "join-images": "^0.2.5",
+    "join-images": "^0.2.6",
     "jsonfile": "^6.1.0",
     "lodash": "^4.17.20",
     "nanoid": "^3.1.18",

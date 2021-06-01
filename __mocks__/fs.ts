@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
 import * as orgFs from 'fs';
 
@@ -15,13 +16,11 @@ let mockFiles = Object.create(null);
 
 function __setMockFiles(newMockFiles) {
   mockFiles = Object.create(null);
-  for (const file in newMockFiles) {
-    const dir = path.dirname(file);
-
+  for (const dir in newMockFiles) {
     if (!mockFiles[dir]) {
       mockFiles[dir] = [];
     }
-    mockFiles[dir].push(path.basename(file));
+    mockFiles[dir].push(path.basename(dir));
   }
 }
 
@@ -35,5 +34,9 @@ fs.__setMockFiles = __setMockFiles;
 fs.readdirSync = readdirSync;
 
 fs.unlinkSync = jest.fn();
+
+fs.existsSync = (directoryPath: any) => {
+  return mockFiles[directoryPath] !== undefined;
+};
 
 module.exports = fs;

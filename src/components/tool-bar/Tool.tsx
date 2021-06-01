@@ -13,6 +13,7 @@ import { ImageDiff } from './ImageDiff';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import { useResetSetting } from '../../hooks/use-reset-setting';
 import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
+import { FixScreenshotFileDialog } from '../common';
 
 const useStyles = makeStyles(() => ({
   asterisk: {
@@ -119,6 +120,7 @@ const Tool: React.FC = () => {
             target="file"
           />
           <ScreenshotUpdateIcon target="file" />
+          <FixScreenshotFileDialog />
         </>
       )}
 

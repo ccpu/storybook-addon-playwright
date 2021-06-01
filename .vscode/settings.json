@@ -4,6 +4,7 @@
     "Toolshown",
     "autorun",
     "dblclick",
+    "deepmerge",
     "draggables",
     "droppable",
     "mobx",

@@ -3,6 +3,7 @@ export const ROUTE = {
   DELETE_ACTION_SET: '/actionSet/delete',
   DELETE_SCREENSHOT: '/screenshot/delete',
   DELETE_STORY_SCREENSHOT: '/screenshot/deleteStory',
+  FIX_STORY_TITLE_CHANGE: '/story/fixTitleChange',
   GET_ACTIONS_DATA: '/screenshot/actionsData',
   GET_ACTION_SET: '/actionSet/get',
   GET_SCHEMA: '/getSchema',

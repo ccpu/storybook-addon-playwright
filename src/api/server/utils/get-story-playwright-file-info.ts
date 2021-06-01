@@ -17,5 +17,6 @@ export const getStoryPlaywrightFileInfo = (storyRelativeFilePath: string) => {
     dir: parsedFileName.dir,
     name: name,
     path: path.join(path.dirname(absolutePath), name),
+    screenShotsDir: path.join(parsedFileName.dir, '__screenshots__'),
   };
 };

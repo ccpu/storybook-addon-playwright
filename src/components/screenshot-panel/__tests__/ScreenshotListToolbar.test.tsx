@@ -4,7 +4,10 @@ import React from 'react';
 import Compare from '@material-ui/icons/Compare';
 import Visibility from '@material-ui/icons/Visibility';
 import Update from '@material-ui/icons/Update';
-import { DeleteConfirmationButton } from '../../common';
+import {
+  DeleteConfirmationButton,
+  FixScreenshotFileDialog,
+} from '../../common';
 
 describe('ScreenshotListToolbar', () => {
   const onTestClickMock = jest.fn();
@@ -31,7 +34,7 @@ describe('ScreenshotListToolbar', () => {
     expect(wrapper.exists()).toBeTruthy();
   });
 
-  it('should note render if hasScreenShot=false', () => {
+  it('should only render FixScreenshotFileDialog if hasScreenShot=false', () => {
     const wrapper = shallow(
       <ScreenshotListToolbar
         title={'title'}
@@ -42,7 +45,8 @@ describe('ScreenshotListToolbar', () => {
       />,
     );
 
-    expect(wrapper.type()).toBe(null);
+    expect(wrapper.find(FixScreenshotFileDialog).exists()).toBeTruthy();
+    expect(wrapper.find(DeleteConfirmationButton).exists()).toBeFalsy();
   });
 
   it('should handle callbacks', () => {

@@ -36,3 +36,4 @@ export * from './use-action-editor';
 export * from './use-copy-action-set';
 export * from './use-screenshot-update-state';
 export * from './use-key-press-fn';
+export * from './use-fix-screenshot-file-name';

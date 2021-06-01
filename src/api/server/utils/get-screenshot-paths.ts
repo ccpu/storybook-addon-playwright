@@ -12,15 +12,15 @@ export interface ScreenshotPathInfo {
 
 export const getScreenshotPaths = (data: DiffImageToScreenShot) => {
   const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
-  const screenshotsDir = path.join(fileInfo.dir, '__screenshots__');
+
   const screenshotIdentifier = kebabCase(
     `${path.basename(data.storyId)}--${data.title}--${data.browserType}`,
   );
 
-  const diffDir = path.join(screenshotsDir, '__diff_output__');
+  const diffDir = path.join(fileInfo.screenShotsDir, '__diff_output__');
 
   const fileName = path.join(
-    screenshotsDir,
+    fileInfo.screenShotsDir,
     screenshotIdentifier + '-snap.png',
   );
 
@@ -28,6 +28,6 @@ export const getScreenshotPaths = (data: DiffImageToScreenShot) => {
     diffDir,
     fileName,
     screenshotIdentifier,
-    screenshotsDir,
+    screenshotsDir: fileInfo.screenShotsDir,
   };
 };

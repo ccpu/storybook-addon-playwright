@@ -1,4 +1,11 @@
 module.exports = {
+  globals: {
+    'ts-jest': {
+      diagnostics: {
+        warnOnly: true,
+      },
+    },
+  },
   collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}', '!src/**/*.d.ts'],
   coverageDirectory: 'coverage',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],

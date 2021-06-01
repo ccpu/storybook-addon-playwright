@@ -16,4 +16,6 @@ export type StoryData = {
     [parameterName: string]: unknown;
   };
   isLeaf: boolean;
+  parent: string;
+  story: string;
 };

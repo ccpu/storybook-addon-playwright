@@ -31,10 +31,7 @@ export async function dragDropSelector(
 
   await this.mouse.down();
 
-  await this.mouse.move(
-    box.x + mouseDownRelativeX + mouseMoveX,
-    box.y + mouseDownRelativeY + mouseMoveY,
-  );
+  await this.mouse.move(mouseMoveX, mouseMoveY);
 
   await this.mouse.up();
 }

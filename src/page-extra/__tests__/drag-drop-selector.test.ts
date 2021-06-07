@@ -35,7 +35,6 @@ describe('dragDropSelector', () => {
   it('should move by 50 px but with click on specified location on selector', async () => {
     const moveMock = jest.fn();
     const upMock = jest.fn();
-    354743;
     const downMock = jest.fn();
 
     page.mouse.move = moveMock;

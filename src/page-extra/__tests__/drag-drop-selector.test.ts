@@ -27,7 +27,7 @@ describe('dragDropSelector', () => {
 
     await page.dragDropSelector('#selector', { x: 50, y: 50 });
     expect(moveMock.mock.calls[0]).toMatchObject([50, 50]);
-    expect(moveMock.mock.calls[1]).toMatchObject([100, 100]);
+    expect(moveMock.mock.calls[1]).toMatchObject([50, 50]);
     expect(downMock).toHaveBeenCalledTimes(1);
     expect(upMock).toHaveBeenCalledTimes(1);
   });
@@ -35,6 +35,7 @@ describe('dragDropSelector', () => {
   it('should move by 50 px but with click on specified location on selector', async () => {
     const moveMock = jest.fn();
     const upMock = jest.fn();
+    354743;
     const downMock = jest.fn();
 
     page.mouse.move = moveMock;
@@ -48,7 +49,7 @@ describe('dragDropSelector', () => {
     );
 
     expect(moveMock.mock.calls[0]).toMatchObject([10, 10]);
-    expect(moveMock.mock.calls[1]).toMatchObject([60, 60]);
+    expect(moveMock.mock.calls[1]).toMatchObject([50, 50]);
     expect(downMock).toHaveBeenCalledTimes(1);
     expect(upMock).toHaveBeenCalledTimes(1);
   });

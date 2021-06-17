@@ -24,6 +24,8 @@ import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { mocked } from 'ts-jest/utils';
 import { executeAction } from '../../utils/execute-action';
 import { installMouseHelper } from '../../utils/install-mouse-helper';
+import { releaseModifierKey } from '../utils/release-modifier-Key';
+
 import { Page } from 'playwright';
 import {
   TakeScreenshotOptionsParams,
@@ -33,6 +35,7 @@ import {
 jest.mock('../../configs');
 jest.mock('../../utils/execute-action');
 jest.mock('../../utils/install-mouse-helper.ts');
+jest.mock('../utils/release-modifier-Key');
 
 const getConfigsMock = mocked(getConfigs);
 
@@ -97,6 +100,22 @@ describe('makeScreenshot', () => {
       storyId: 'story-id',
     });
     expect(screenshot.buffer).toBeDefined();
+  });
+
+  it('should call to release modifier keys after screenshot', async () => {
+    getConfigsMock.mockImplementationOnce(() => {
+      return defaultConfigs({
+        releaseModifierKey: true,
+      });
+    });
+
+    await makeScreenshot({
+      browserType: 'chromium',
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    expect(releaseModifierKey).toHaveBeenCalledTimes(1);
   });
 
   it('should convert to base64', async () => {

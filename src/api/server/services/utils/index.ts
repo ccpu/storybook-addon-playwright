@@ -7,3 +7,4 @@ export * from './find-screenshot-with-same-setting';
 export * from './set-story-options';
 export * from './should-take-screenshot';
 export * from './get-story-playwright-data-by-file-name';
+export * from './release-modifier-Key';

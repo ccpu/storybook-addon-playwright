@@ -18,6 +18,7 @@ export interface Config<T extends unknown = Page> {
   customActionSchema?: ActionSchemaList;
   // pageMethods?: PageMethodKeys[];
   pageGotoOptions?: PageGotoOptions;
+  releaseModifierKey?: boolean;
   getPage: (
     browserType: BrowserTypes,
     options: BrowserContextOptions,

@@ -16,7 +16,7 @@ import {
   TakeScreenshotParams,
   TakeScreenshotOptionsParams,
 } from '../../typings';
-import { shouldTakeScreenshot } from './utils';
+import { shouldTakeScreenshot, releaseModifierKey } from './utils';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -130,6 +130,10 @@ export const makeScreenshot = async (
   }
 
   let buffer = await takeScreenshot(page, data, configs);
+
+  if (configs.releaseModifierKey) {
+    await releaseModifierKey(page, data.actionSets);
+  }
 
   if (configs.afterScreenshot) {
     await configs.afterScreenshot(page, data);

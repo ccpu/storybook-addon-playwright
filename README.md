@@ -98,6 +98,7 @@ module.exports = middleware;
 - pageGotoOptions
 - afterUrlConstruction
 - afterNavigation
+- releaseModifierKey
 
 ### storybookEndpoint
 
@@ -144,6 +145,10 @@ Will be called before page.goto, can be used to manipulate url.
 ### afterNavigation
 
 Will be called when page navigated to story.
+
+### releaseModifierKey
+
+When set to true, will execute keyboard.up for modifier key, Shift, Meta, Control, or Alt, after screenshot taken.
 
 ## How it works
 

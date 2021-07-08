@@ -6,6 +6,7 @@ import {
   DiffDirection,
   ImageDiffResult,
   ScreenshotRequest,
+  TakeScreenshotOptionsParams,
 } from '../api/typings';
 import { RequestData } from './request';
 import { StoryInfo } from './story-info';
@@ -55,4 +56,5 @@ export interface Config<T extends unknown = Page> {
     file?: number;
     story?: number;
   };
+  screenshotOptions: TakeScreenshotOptionsParams;
 }

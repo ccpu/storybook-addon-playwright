@@ -99,6 +99,7 @@ module.exports = middleware;
 - afterUrlConstruction
 - afterNavigation
 - releaseModifierKey
+- screenshotOptions
 
 ### storybookEndpoint
 
@@ -149,6 +150,10 @@ Will be called when page navigated to story.
 ### releaseModifierKey
 
 When set to true, will execute keyboard.up for modifier key, Shift, Meta, Control, or Alt, after screenshot taken.
+
+### screenshotOptions
+
+Default Options to apply when taking screenshot.
 
 ## How it works
 

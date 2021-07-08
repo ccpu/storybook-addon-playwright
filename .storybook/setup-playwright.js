@@ -60,6 +60,11 @@ async function setupPlaywright() {
           },
         },
       },
+      // screenshotOptions: {
+      //   mergeType: 'stitch',
+      //   stitchOptions: { offset: 5 },
+      //   overlayOptions: { blend: 'add' },
+      // },
       // pageGotoOptions: {
       //   timeout: 5000,
       // },

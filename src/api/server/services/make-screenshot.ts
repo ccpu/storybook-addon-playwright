@@ -40,6 +40,8 @@ export const makeScreenshot = async (
 ): Promise<ScreenshotImageData> => {
   const configs = getConfigs();
 
+  const { screenshotOptions: defaultScreenshotOptions = {} } = configs;
+
   const browserOptions = data.browserOptions as BrowserContextOptions;
 
   const page = await configs.getPage(data.browserType, browserOptions, data);
@@ -145,17 +147,30 @@ export const makeScreenshot = async (
         ? data.screenshotOptions.type
         : 'png';
 
-    const options: TakeScreenshotOptionsParams =
+    let options: TakeScreenshotOptionsParams =
       screenshotOptionAction && screenshotOptionAction.args
         ? ((screenshotOptionAction.args as unknown) as TakeScreenshotOptionsParams)
-        : { mergeType: 'stitch' };
+        : {};
+
+    options = {
+      mergeType: options.mergeType
+        ? options.mergeType
+        : defaultScreenshotOptions.mergeType || 'stitch',
+      overlayOptions: {
+        ...defaultScreenshotOptions.overlayOptions,
+        ...options.overlayOptions,
+      },
+      stitchOptions: {
+        ...defaultScreenshotOptions.stitchOptions,
+        ...options.stitchOptions,
+      },
+    };
 
     if (options.mergeType === 'stitch') {
       buffer = await (
-        await joinImage(
-          [...imageInfos.map((x) => x.buffer), buffer],
-          options.stitchOptions,
-        )
+        await joinImage([...imageInfos.map((x) => x.buffer), buffer], {
+          ...options.stitchOptions,
+        })
       )
         .toFormat(format)
         .toBuffer();

@@ -320,12 +320,12 @@ describe('makeScreenshot', () => {
     expect(sharpMock).toHaveBeenCalledTimes(0);
     expect(joinImagesMock).toHaveBeenCalledWith(
       ['buffer-data', 'buffer-data'],
-      undefined,
+      {},
     );
     expect(screenshotMock).toBeCalledTimes(2);
   });
 
-  it('should overwrite takeScreenshotOptions options by takeScreenshot options when overlay merging', async () => {
+  it('should overwrite takeScreenshotOptions by takeScreenshot options when overlay merging', async () => {
     await makeScreenshot(
       {
         actionSets: [
@@ -333,6 +333,7 @@ describe('makeScreenshot', () => {
             actions: [
               {
                 args: {
+                  mergeType: 'overlay',
                   overlayOptions: {
                     blend: 'clear',
                   },
@@ -369,6 +370,96 @@ describe('makeScreenshot', () => {
 
     expect(compositeMock).toHaveBeenCalledWith([
       { blend: 'add', input: 'buffer-data' },
+    ]);
+  });
+
+  it('should apply config default screenshot options', async () => {
+    getConfigsMock.mockImplementationOnce(() => {
+      return defaultConfigs({
+        getPage: getPageMock,
+        screenshotOptions: {
+          mergeType: 'overlay',
+          overlayOptions: { blend: 'xor' },
+        },
+      });
+    });
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {} as TakeScreenshotParams,
+                id: 'takeScreenshot-id',
+                name: 'takeScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(compositeMock).toHaveBeenCalledWith([
+      { blend: 'xor', input: 'buffer-data' },
+    ]);
+  });
+
+  it('should overwrite config default screenshot options', async () => {
+    getConfigsMock.mockImplementationOnce(() => {
+      return defaultConfigs({
+        getPage: getPageMock,
+        screenshotOptions: {
+          mergeType: 'stitch',
+          overlayOptions: { blend: 'xor' },
+        },
+      });
+    });
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {
+                  mergeType: 'overlay',
+                  overlayOptions: {
+                    blend: 'clear',
+                  },
+                } as TakeScreenshotOptionsParams,
+                id: 'takeScreenshotOptions-id',
+                name: 'takeScreenshotOptions',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+          {
+            actions: [
+              {
+                args: {} as TakeScreenshotParams,
+                id: 'takeScreenshot-id',
+                name: 'takeScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(compositeMock).toHaveBeenCalledWith([
+      { blend: 'clear', input: 'buffer-data' },
     ]);
   });
 
@@ -452,7 +543,7 @@ describe('makeScreenshot', () => {
 
     expect(joinImagesMock).toHaveBeenCalledWith(
       ['buffer-data', 'buffer-data', 'buffer-data'],
-      undefined,
+      {},
     );
   });
 

@@ -56,5 +56,5 @@ export interface Config<T extends unknown = Page> {
     file?: number;
     story?: number;
   };
-  screenshotOptions: TakeScreenshotOptionsParams;
+  screenshotOptions?: TakeScreenshotOptionsParams;
 }

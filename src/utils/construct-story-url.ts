@@ -1,5 +1,6 @@
 import { ScreenshotProp } from '../typings';
-import normalize from 'normalize-url';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const normalize = require('normalize-url');
 import { knobsToQuerystring } from './knobs-to-querystring';
 import { parse } from 'url';
 import { resolve } from 'path';

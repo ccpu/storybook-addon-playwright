@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useStorybookApi } from '@storybook/api';
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
-import { RESET } from '@storybook/addon-knobs/dist/cjs/shared.js';
+import { RESET } from '@storybook/addon-knobs/dist/shared.js';
 import { useActiveBrowsers } from './use-active-browser';
 import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 import { useAddonState } from './use-addon-state';
@@ -18,10 +18,8 @@ interface EditScreenshotState {
 }
 
 export const useEditScreenshot = () => {
-  const [
-    editScreenshotState,
-    setEditScreenshotState,
-  ] = useGlobalState<EditScreenshotState>('edit-story-screenshot', undefined);
+  const [editScreenshotState, setEditScreenshotState] =
+    useGlobalState<EditScreenshotState>('edit-story-screenshot', undefined);
 
   const storyData = useCurrentStoryData();
 
@@ -29,11 +27,8 @@ export const useEditScreenshot = () => {
 
   const { setBrowserState } = useActiveBrowsers('dialog');
 
-  const {
-    loadSetting,
-    screenshotOptions,
-    browserOptions,
-  } = useLoadScreenshotSettings();
+  const { loadSetting, screenshotOptions, browserOptions } =
+    useLoadScreenshotSettings();
 
   const { dispatch } = useGlobalActionDispatch();
 

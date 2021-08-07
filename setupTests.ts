@@ -1,5 +1,5 @@
 import enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 
 //! uncomment this will cause problem with jest mocks

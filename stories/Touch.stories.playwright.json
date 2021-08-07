@@ -1,0 +1,251 @@
+{
+  "version": "4",
+  "stories": {
+    "touch--with-default": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "name": "touchEnd",
+              "args": {
+                "selector": "html>body>#root>div",
+                "page": {
+                  "x": 67,
+                  "y": 120
+                }
+              }
+            }
+          ],
+          "id": "2DgXBLw6Dru_",
+          "title": "touch end"
+        },
+        {
+          "actions": [
+            {
+              "name": "touchFromTo",
+              "args": {
+                "selector": "html>body>#root>div",
+                "clientTo": {
+                  "x": 74,
+                  "y": 69
+                }
+              }
+            }
+          ],
+          "id": "qciLPQscb07X",
+          "title": "touch from to"
+        },
+        {
+          "actions": [
+            {
+              "name": "touchMove",
+              "args": {
+                "selector": "html>body>#root>div",
+                "client": {
+                  "x": 17,
+                  "y": 27
+                }
+              }
+            }
+          ],
+          "id": "3RvVmIbV2iSx",
+          "title": "touch move"
+        },
+        {
+          "actions": [
+            {
+              "name": "touchFromTo",
+              "args": {
+                "selector": "html>body>#root>div",
+                "clientFrom": {
+                  "x": null,
+                  "y": null
+                },
+                "clientTo": {
+                  "x": null,
+                  "y": null
+                },
+                "pageFrom": {
+                  "x": 24,
+                  "y": 22
+                },
+                "pageTo": {
+                  "x": 66,
+                  "y": 82
+                }
+              }
+            }
+          ],
+          "id": "vcPx82_7kVUg",
+          "title": "touch from to"
+        },
+        {
+          "actions": [
+            {
+              "name": "touchStart",
+              "args": {
+                "selector": "html>body>#root>div",
+                "clients": {
+                  "x": 97,
+                  "y": 109
+                },
+                "client": {
+                  "x": 41,
+                  "y": 30
+                }
+              }
+            }
+          ],
+          "id": "OCeIpxTOJoNG",
+          "title": "touch start"
+        },
+        {
+          "actions": [
+            {
+              "name": "mouseFromTo",
+              "args": {
+                "from": {
+                  "x": 64,
+                  "y": 63
+                },
+                "to": {
+                  "x": 218,
+                  "y": 255
+                }
+              }
+            }
+          ],
+          "id": "SGWcfWy7PE8a",
+          "title": "mouse from to"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshotAll"
+            }
+          ],
+          "id": "W0_j42vwskVx",
+          "title": "Take screenshot of all actions"
+        },
+        {
+          "actions": [
+            {
+              "name": "dragDropSelector",
+              "args": {
+                "selector": "html>body>#root>div",
+                "to": {
+                  "x": 75,
+                  "y": 102
+                },
+                "mouseDownRelativeToSelector": {
+                  "x": null,
+                  "y": null
+                }
+              }
+            }
+          ],
+          "id": "bzdHdllkVhYJ",
+          "title": "drag drop selector"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshotOptions",
+              "args": {
+                "mergeType": "overlay",
+                "overlayOptions": {
+                  "blend": "exclusion"
+                }
+              }
+            }
+          ],
+          "id": "h3i7z-6c1v3g",
+          "title": "Screenshot options"
+        }
+      ],
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "touchStart",
+                  "args": {
+                    "selector": "html>body>#root>div",
+                    "clients": {
+                      "x": 97,
+                      "y": 109
+                    },
+                    "client": {
+                      "x": 64,
+                      "y": 42
+                    }
+                  }
+                }
+              ],
+              "title": "touch start"
+            },
+            {
+              "actions": [
+                {
+                  "name": "touchMove",
+                  "args": {
+                    "selector": "html>body>#root>div",
+                    "client": {
+                      "x": 67,
+                      "y": 111
+                    }
+                  }
+                }
+              ],
+              "title": "touch move"
+            },
+            {
+              "actions": [
+                {
+                  "name": "takeScreenshotAll"
+                }
+              ],
+              "title": "Take screenshot of all actions"
+            },
+            {
+              "actions": [
+                {
+                  "name": "touchEnd",
+                  "args": {
+                    "selector": "html>body>#root>div",
+                    "page": {
+                      "x": 67,
+                      "y": 120
+                    }
+                  }
+                }
+              ],
+              "title": "touch end"
+            }
+          ],
+          "browserOptionsId": "SSyL1CPufciH",
+          "browserType": "chromium",
+          "id": "Onzwhnykeaur",
+          "index": 0,
+          "title": "should handle touch events"
+        }
+      ]
+    }
+  },
+  "browserOptions": {
+    "SSyL1CPufciH": {
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1",
+      "viewport": {
+        "width": 200,
+        "height": 200
+      },
+      "deviceScaleFactor": 2,
+      "isMobile": true,
+      "hasTouch": true,
+      "defaultBrowserType": "webkit",
+      "deviceName": "iPhone 8",
+      "cursor": true
+    }
+  }
+}

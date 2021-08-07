@@ -35,6 +35,6 @@ dist/
 
 # Local History for Visual Studio Code
 .history/
-__screenshots__/**/*
-*.playwright.json
-*snap.png
+# __screenshots__/**/*
+# *.playwright.json
+# *snap.png

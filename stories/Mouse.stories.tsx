@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import Draggable from 'react-draggable';
 
 export default {
   decorators: [withKnobs],
@@ -25,4 +26,16 @@ export const WithInput = () => {
   }, []);
 
   return <input type="text" onChange={handleChange} value={val} />;
+};
+
+const StoryDraggable: React.FC = () => {
+  return (
+    <Draggable>
+      <div style={{ background: 'red', height: 100, width: 100 }}></div>
+    </Draggable>
+  );
+};
+
+export const WithDraggable = () => {
+  return <StoryDraggable />;
 };

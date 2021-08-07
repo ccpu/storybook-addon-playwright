@@ -1,0 +1,109 @@
+{
+  "version": "2",
+  "stories": {
+    "inputwheel--with-input-wheel": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "name": "click",
+              "args": {
+                "selector": "html>body>#root>div>input"
+              }
+            }
+          ],
+          "id": "krjJCMXoP_-e",
+          "title": "mouse click"
+        },
+        {
+          "actions": [
+            {
+              "name": "touchStart",
+              "args": {
+                "selector": "html>body>#root>div>input",
+                "clients": {
+                  "x": 143,
+                  "y": 28
+                }
+              }
+            }
+          ],
+          "id": "m9PHKJe1MmG4",
+          "title": "touch start"
+        },
+        {
+          "actions": [
+            {
+              "name": "touchEnd",
+              "args": {
+                "selector": "html>body>#root>div>input",
+                "clients": {
+                  "x": 85,
+                  "y": 73
+                }
+              }
+            }
+          ],
+          "id": "FoZdgUDnOo7s",
+          "title": "touch end"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshot"
+            }
+          ],
+          "id": "t-L0br3qjMlc",
+          "title": "Take screenshot"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshot"
+            }
+          ],
+          "id": "eTXBfeR1jJ-s",
+          "title": "Take screenshot"
+        },
+        {
+          "actions": [
+            {
+              "name": "keyboard.down",
+              "args": {
+                "key": "Control"
+              }
+            }
+          ],
+          "id": "YS9GXm4Ob_Np",
+          "title": "keydown"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshotAll"
+            }
+          ],
+          "id": "zjgHFLzuMbXG",
+          "title": "Take screenshot of all actions"
+        }
+      ]
+    },
+    "inputwheel--with-text-field": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "name": "type",
+              "args": {
+                "selector": "html>body>#root>div>div>input",
+                "text": "123"
+              }
+            }
+          ],
+          "id": "YiI6_WkT0nkB",
+          "title": "type"
+        }
+      ]
+    }
+  }
+}

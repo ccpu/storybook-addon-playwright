@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import {
-  createMuiTheme,
+  createTheme,
   ThemeProvider as MuThemeProvider,
 } from '@material-ui/core/styles';
 import { useStorybookState } from '@storybook/api';
@@ -11,7 +11,7 @@ const ThemeProvider: React.FC = memo((props) => {
 
   const { theme: storyBookTheme } = useStorybookState();
 
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       action: { active: storyBookTheme.barTextColor },
       background: {

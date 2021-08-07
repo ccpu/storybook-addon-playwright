@@ -1,0 +1,133 @@
+{
+  "version": "4",
+  "stories": {
+    "mouse--with-tippy": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "name": "hover",
+              "args": {
+                "selector": "html>body>#root>button"
+              }
+            }
+          ],
+          "id": "Oz3loHz4HT2-",
+          "title": "Should hover"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 100
+              }
+            }
+          ],
+          "id": "h3JTzMBCR73C",
+          "title": "delay"
+        }
+      ],
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "hover",
+                  "args": {
+                    "selector": "html>body>#root>button"
+                  }
+                }
+              ],
+              "title": "Should hover"
+            },
+            {
+              "actions": [
+                {
+                  "name": "waitForTimeout",
+                  "args": {
+                    "timeout": 100
+                  }
+                }
+              ],
+              "title": "delay"
+            }
+          ],
+          "browserOptionsId": "GIEplriVQiCS",
+          "browserType": "chromium",
+          "id": "ADdiUEIsWlhM",
+          "index": 0,
+          "title": "should hover"
+        }
+      ]
+    },
+    "mouse--with-draggable": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "name": "mouseFromTo",
+              "args": {
+                "from": {
+                  "x": 57,
+                  "y": 49
+                },
+                "to": {
+                  "x": 107,
+                  "y": 140
+                }
+              }
+            }
+          ],
+          "id": "D8K1kPcVYRkI",
+          "title": "move"
+        }
+      ],
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "mouseFromTo",
+                  "args": {
+                    "from": {
+                      "x": 57,
+                      "y": 49
+                    },
+                    "to": {
+                      "x": 107,
+                      "y": 140
+                    }
+                  }
+                }
+              ],
+              "title": "move"
+            }
+          ],
+          "browserOptionsId": "T35dZA6Jl-UK",
+          "browserType": "chromium",
+          "id": "xuaBs7SXGtvN",
+          "index": 0,
+          "title": "should drag"
+        }
+      ]
+    }
+  },
+  "browserOptions": {
+    "GIEplriVQiCS": {
+      "viewport": {
+        "width": 200,
+        "height": 120
+      },
+      "cursor": true
+    },
+    "T35dZA6Jl-UK": {
+      "viewport": {
+        "width": 300,
+        "height": 300
+      }
+    }
+  }
+}

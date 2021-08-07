@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import { KnobType } from '@storybook/addon-knobs/dist/ts3.9/components/types';
+import { KnobType } from '@storybook/addon-knobs/dist/components/types';
 export type StoryActionPosition = { x: number; y: number };
 
 export type ControlTypes = KnobType;

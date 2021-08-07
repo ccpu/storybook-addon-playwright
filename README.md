@@ -51,6 +51,8 @@ module.exports = {
 };
 ```
 
+> If story book complain that it can not find `register` in `@storybook/addon-knobs/register` path you may need to point it to destination folder: `@storybook/addon-knobs/dist/register`
+
 within `.storybook/main.js` OR `.storybook/middleware.js`:
 
 ```js

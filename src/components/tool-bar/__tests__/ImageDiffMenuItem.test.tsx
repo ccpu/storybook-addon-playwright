@@ -44,4 +44,31 @@ describe('ImageDiffMenuItem', () => {
       'playwright-addon/screenshot-panel',
     );
   });
+
+  it('should show error if unable to find story', () => {
+    const onClickMock = jest.fn();
+    const selectStoryMock = jest.fn();
+    const setSelectedPanelMock = jest.fn();
+
+    (useStorybookApi as jest.Mock).mockImplementationOnce(() => ({
+      getData: () => {
+        return undefined;
+      },
+      selectStory: selectStoryMock,
+      setSelectedPanel: setSelectedPanelMock,
+    }));
+
+    const wrapper = shallow(
+      <ImageDiffMenuItem
+        imageDiff={{ pass: true, storyId: 'story-id' }}
+        onClick={onClickMock}
+      />,
+    );
+
+    expect(wrapper.find(MenuItem).props().onClick).toBeUndefined();
+
+    expect(wrapper.find(MenuItem).find('b').first().text()).toBe(
+      'Unable to locate story!',
+    );
+  });
 });

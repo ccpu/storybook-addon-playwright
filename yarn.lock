@@ -8077,10 +8077,10 @@ jest@^26.6.3:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
-join-images@^0.2.8:
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/join-images/-/join-images-0.2.8.tgz#e93b232528c26fb2f658b965c207cba11599aaeb"
-  integrity sha512-IbS5BQCHPFQsGye9zke5r8YIB1NWijFjcP3JpUOoBZkSclka1sRx/z9rA6mWIV0NqOegre120opcai4Jk2h7fw==
+join-images@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/join-images/-/join-images-0.2.9.tgz#2028a6cc15d3385d1bf525d422f58b9bf0ce8d26"
+  integrity sha512-Jypp8rYnUkFPbnTi4FUaZS7i/Oy8CuTv0hb323hVTkK7FM6LVWkVi6zmRKZpNgoSU691c3BHw7zD+Ex01qN1ew==
   dependencies:
     is-plain-obj "^3.0.0"
     sharp "^0.28.3"

@@ -23,7 +23,7 @@ export interface Config<T extends unknown = Page> {
   getPage: (
     browserType: BrowserTypes,
     options: BrowserContextOptions,
-    requestData: RequestData,
+    requestData: ScreenshotRequest,
   ) => Promise<T>;
   beforeScreenshot?: (
     page: T,

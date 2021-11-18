@@ -11,6 +11,7 @@ import {
 import { RequestData } from './request';
 import { StoryInfo } from './story-info';
 import { TestFileScreenshots } from '../api/server/services/test-file-screenshots';
+import { Theme } from '@material-ui/core';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 
@@ -57,4 +58,5 @@ export interface Config<T extends unknown = Page> {
     story?: number;
   };
   screenshotOptions?: TakeScreenshotOptionsParams;
+  theme?: Theme;
 }

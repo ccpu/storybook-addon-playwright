@@ -4,13 +4,14 @@ import {
   ThemeProvider as MuThemeProvider,
 } from '@material-ui/core/styles';
 import { useStorybookState } from '@storybook/api';
+import { useCustomTheme } from '../../hooks/use-custom-theme';
 // import global from 'jss-plugin-global';
 
 const ThemeProvider: React.FC = memo((props) => {
   const { children } = props;
 
   const { theme: storyBookTheme } = useStorybookState();
-
+  const { theme: customTheme } = useCustomTheme();
   const theme = createTheme({
     palette: {
       action: { active: storyBookTheme.barTextColor },
@@ -27,7 +28,7 @@ const ThemeProvider: React.FC = memo((props) => {
     typography: {
       fontFamily: storyBookTheme.fontBase,
     },
-  });
+  }, customTheme);
 
   return <MuThemeProvider theme={theme}>{children}</MuThemeProvider>;
 });

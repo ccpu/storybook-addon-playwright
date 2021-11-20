@@ -20,7 +20,7 @@
             {
               "name": "waitForTimeout",
               "args": {
-                "timeout": 100
+                "timeout": 500
               }
             }
           ],
@@ -47,7 +47,7 @@
                 {
                   "name": "waitForTimeout",
                   "args": {
-                    "timeout": 100
+                    "timeout": 500
                   }
                 }
               ],
@@ -56,7 +56,7 @@
           ],
           "browserOptionsId": "GIEplriVQiCS",
           "browserType": "chromium",
-          "id": "ADdiUEIsWlhM",
+          "id": "pmrTVde8v-Sx",
           "index": 0,
           "title": "should hover"
         }

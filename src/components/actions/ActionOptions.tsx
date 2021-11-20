@@ -38,7 +38,7 @@ const useStyles = makeStyles(
       heading: {
         alignItems: 'center',
         display: 'flex',
-        fontWeight: theme.typography.fontWeightRegular,
+        fontWeight: theme.typography.fontWeightRegular as never,
         marginRight: 10,
       },
       icon: {

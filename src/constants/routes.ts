@@ -8,6 +8,7 @@ export const ROUTE = {
   GET_ACTION_SET: '/actionSet/get',
   GET_SCHEMA: '/getSchema',
   GET_STORY_SCREENSHOTS: '/screenshot/all',
+  GET_THEME: '/getTheme',
   SAVE_ACTION_SET: '/actionSet/save',
   SAVE_SCREENSHOT: '/screenshot/save',
   TAKE_SCREENSHOT: '/screenshot/get',

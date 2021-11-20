@@ -14,3 +14,4 @@ export * from './delete-story-screenshots';
 export * from './change-screenshot-index';
 export * from './get-schema-controller';
 export * from './fix-screenshot-file-name';
+export * from './get-theme-data';

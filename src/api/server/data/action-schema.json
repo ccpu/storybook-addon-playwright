@@ -22,7 +22,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.\nIf the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error."
+    "description": "This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.\r\nIf the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error."
   },
   "dragDropSelector": {
     "kind": "function",
@@ -60,7 +60,7 @@
       "selector",
       "to"
     ],
-    "description": "This method fetches an element with `selector`, and move it to the position given by user.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and move it to the position given by user.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "mouseFromTo": {
     "kind": "function",
@@ -121,7 +121,7 @@
       "selector",
       "scrollProperty"
     ],
-    "description": "This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "mouseDownOnSelector": {
     "kind": "function",
@@ -146,7 +146,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and perform mousedown on the center of selector.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and perform mousedown on the center of selector.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "mouseMoveToSelector": {
     "kind": "function",
@@ -171,7 +171,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and move the mouse to center of selector.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and move the mouse to center of selector.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "setSelectorSize": {
     "kind": "function",
@@ -190,7 +190,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, set the height and with.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, set the height and with.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "selectorMouseWheel": {
     "kind": "function",
@@ -221,7 +221,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and dispatch WheelEvent.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and dispatch WheelEvent.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchStart": {
     "kind": "function",
@@ -284,7 +284,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and dispatch touchstart event.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and dispatch touchstart event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchMove": {
     "kind": "function",
@@ -347,7 +347,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and dispatch touchmove event.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and dispatch touchmove event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchEnd": {
     "kind": "function",
@@ -410,7 +410,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and dispatch touchend event.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and dispatch touchend event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchCancel": {
     "kind": "function",
@@ -473,7 +473,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and dispatch touchcancel event.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and dispatch touchcancel event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchFromTo": {
     "kind": "function",
@@ -572,7 +572,7 @@
     "required": [
       "selector"
     ],
-    "description": "This method fetches an element with `selector`, and dispatch  touchstart,touchmove and touchend event.\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
+    "description": "This method fetches an element with `selector`, and dispatch  touchstart,touchmove and touchend event.\r\nIf there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "waitForSelector": {
     "kind": "function",
@@ -1510,6 +1510,6 @@
       }
     },
     "required": [],
-    "description": "The purpose of this action is to have centralized options for all screenshots. This action can be used in conjunction with takeScreenshot action only.\nOnly one instance can be used."
+    "description": "The purpose of this action is to have centralized options for all screenshots. This action can be used in conjunction with takeScreenshot action only.\r\nOnly one instance can be used."
   }
 }

@@ -1,7 +1,6 @@
 import { Page } from 'playwright';
 import { ActionSchemaList } from './action-schema';
 import { BrowserTypes, BrowserContextOptions } from './screenshot';
-// import { PageMethodKeys } from '../api/server/services/typings/app-types';
 import {
   DiffDirection,
   ImageDiffResult,
@@ -12,6 +11,10 @@ import { RequestData } from './request';
 import { StoryInfo } from './story-info';
 import { TestFileScreenshots } from '../api/server/services/test-file-screenshots';
 import { Theme } from '@material-ui/core';
+import {
+  CompareScreenshotParams,
+  CompareScreenshotReturnType,
+} from './compare-screenshot';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 
@@ -58,5 +61,8 @@ export interface Config<T extends unknown = Page> {
     story?: number;
   };
   screenshotOptions?: TakeScreenshotOptionsParams;
+  compareScreenshot?: (
+    data: CompareScreenshotParams,
+  ) => Promise<CompareScreenshotReturnType | false>;
   theme?: Theme;
 }

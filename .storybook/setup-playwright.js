@@ -60,6 +60,19 @@ async function setupPlaywright() {
           },
         },
       },
+      // compareScreenshot: async (data) => {
+      //   if (data.requestType !== 'all') return false;
+      //   return new Promise((resolve, reject) => {
+      //     const result = data.screenshot.base64 === data.baseImage.base64;
+
+      //     if (!result)
+      //       reject(new Error('Screenshots base64 are not identical!'));
+      //     else
+      //       resolve({
+      //         pass: result,
+      //       });
+      //   });
+      // },
       // screenshotOptions: {
       //   mergeType: 'stitch',
       //   stitchOptions: { offset: 5 },

@@ -8,7 +8,7 @@ import { getScreenshotPaths } from '../utils/get-screenshot-paths';
 // import { nanoid } from 'nanoid';
 import path from 'path';
 
-interface SnapshotOptions extends MatchImageSnapshotOptions {
+export interface SnapshotOptions extends MatchImageSnapshotOptions {
   receivedImageBuffer: Buffer;
   updateSnapshot?: boolean;
 }

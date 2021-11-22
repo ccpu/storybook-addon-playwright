@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import DeviceDescriptors from 'playwright/lib/server/deviceDescriptors';
+import DeviceDescriptors from '../../data/deviceDescriptorsSource.json';
 import { Menu } from '@material-ui/core';
 import { DeviceListItem } from './DeviceListItem';
 import { BrowserContextOptions } from '../../typings';

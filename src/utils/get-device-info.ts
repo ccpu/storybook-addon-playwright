@@ -1,4 +1,4 @@
-import DeviceDescriptors from 'playwright/lib/server/deviceDescriptors';
+import DeviceDescriptors from '../data/deviceDescriptorsSource.json';
 import { BrowserContextOptions } from '../typings';
 
 export const getDeviceInfo = (

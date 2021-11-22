@@ -3,7 +3,7 @@ import {
   Page,
   BrowserContextOptions,
   ViewportSize,
-} from 'playwright/types/types';
+} from 'playwright-core/types/types';
 import { PlaywrightPageWithExtra } from '../../page-extra/typings';
 
 export type MergeType = 'stitch' | 'overlay';

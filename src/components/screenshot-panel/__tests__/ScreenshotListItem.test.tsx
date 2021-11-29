@@ -167,9 +167,7 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff();
-
-    await new Promise((resolve) => setImmediate(resolve));
+    await wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff();
 
     expect(wrapper.find(ImageDiffMessage)).toHaveLength(1);
 
@@ -200,7 +198,7 @@ describe('ScreenshotListItem', () => {
       .props()
       .onClick({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
 
-    await new Promise((resolve) => setImmediate(resolve));
+    // await new Promise((resolve) => setImmediate(resolve));
 
     expect(wrapper.find(ScreenshotPreviewDialog)).toHaveLength(1);
 

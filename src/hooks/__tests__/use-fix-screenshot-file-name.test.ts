@@ -19,10 +19,10 @@ const makeCallMock = jest.fn();
 const clearErrorMock = jest.fn();
 mocked(useAsyncApiCall).mockImplementation(
   () =>
-    (({
+    ({
       clearError: clearErrorMock,
       makeCall: makeCallMock,
-    } as unknown) as ReturnType<typeof useAsyncApiCall>),
+    } as unknown as ReturnType<typeof useAsyncApiCall>),
 );
 
 describe('useFixScreenshotFileName', () => {
@@ -38,19 +38,6 @@ describe('useFixScreenshotFileName', () => {
     });
 
     expect(result.current.functionName).toBe('foo');
-  });
-
-  it('should handle reload', () => {
-    const orgReload = document.location.reload;
-    document.location.reload = jest.fn();
-
-    const { result } = renderHook(() => useFixScreenshotFileName({}));
-
-    result.current.handleReload();
-
-    expect(document.location.reload).toHaveBeenCalledTimes(1);
-
-    document.location.reload = orgReload;
   });
 
   it('should trigger show/hide', () => {
@@ -104,10 +91,11 @@ describe('useFixScreenshotFileName', () => {
       result.current.fixFileNames();
     });
 
-    expect(
-      openSnackbarMock,
-    ).toHaveBeenCalledWith('Enter previous name export function.', {
-      variant: 'error',
-    });
+    expect(openSnackbarMock).toHaveBeenCalledWith(
+      'Enter previous name export function.',
+      {
+        variant: 'error',
+      },
+    );
   });
 });

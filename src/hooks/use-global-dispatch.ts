@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type DispatchType<T extends unknown = any> = (action: T) => void;
+export type DispatchType<T = any> = (action: T) => void;
 
 export const _dispatchFuncs: { [id: string]: DispatchType } = {};
 

@@ -13,9 +13,14 @@ module.exports = {
   testEnvironment: 'jsdom',
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|js)x?$',
   preset: 'ts-jest',
+  transform: {
+    '^.+\\.(ts|tsx)?$': 'ts-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
   setupFilesAfterEnv: [
     './setupTests.ts',
     './node_modules/jest-enzyme/lib/index.js',
   ],
+  transformIgnorePatterns: ['/node_modules/(?!(p-limit|yocto-queue)/)'],
   testPathIgnorePatterns: ['./stories/*'],
 };

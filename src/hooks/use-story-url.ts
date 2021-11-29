@@ -7,7 +7,7 @@ export const useStoryUrl = () => {
   const [url, setUrl] = useState<string>();
 
   useEffect(() => {
-    let newUrl = constructStoryUrl(state.location.host, state.storyId);
+    let newUrl = constructStoryUrl(window.location.host, state.storyId);
 
     const queryKeys = Object.keys(state.customQueryParams);
     if (queryKeys.length > 0) {
@@ -20,7 +20,7 @@ export const useStoryUrl = () => {
     }
 
     setUrl(newUrl);
-  }, [state.customQueryParams, state.location.host, state.storyId]);
+  }, [state.customQueryParams, state.storyId]);
 
   return url;
 };

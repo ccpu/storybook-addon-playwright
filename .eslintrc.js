@@ -23,7 +23,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:jest/recommended',
     'prettier',
-    'prettier/@typescript-eslint',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
@@ -35,6 +34,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'off',
-    'jest/no-conditional-expect':'off'
+    'jest/no-conditional-expect': 'off',
   },
 };

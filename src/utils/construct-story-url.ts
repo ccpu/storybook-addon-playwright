@@ -1,6 +1,6 @@
 import { ScreenshotProp } from '../typings';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const normalize = require('normalize-url');
+
+import normalize from 'normalize-url';
 import { knobsToQuerystring } from './knobs-to-querystring';
 import { parse } from 'url';
 import { resolve } from 'path';
@@ -12,7 +12,6 @@ export const constructStoryUrl = (
   props?: ScreenshotProp,
 ) => {
   const parsedEndpoint = parse(endpoint);
-
   const normalized =
     parsedEndpoint.hostname || ip.isV4Format(endpoint)
       ? normalize(endpoint)

@@ -1,7 +1,7 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { createElement } from 'react';
 import { useImageDiffScreenshots } from '../use-imagediff-screenshots';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useScreenshotImageDiffResults } from '../use-screenshot-imageDiff-results';
 import { mocked } from 'ts-jest/utils';
 import { StoryData } from '../../typings';
@@ -47,11 +47,11 @@ describe('useStoryScreenshotsDiff', () => {
 
   it('should load story diffs', async () => {
     const onLoadMock = jest.fn();
-    renderHook(() => useImageDiffScreenshots('story', onLoadMock));
+    const { waitForNextUpdate } = renderHook(() =>
+      useImageDiffScreenshots('story', onLoadMock),
+    );
 
-    await act(async () => {
-      await new Promise((resolve) => setImmediate(resolve));
-    });
+    await waitForNextUpdate();
     // expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
     expect(dispatchMock).toHaveBeenCalledWith([
       { screenshots: [{ id: 'screenshot-is' }], type: 'setScreenshots' },
@@ -61,11 +61,11 @@ describe('useStoryScreenshotsDiff', () => {
   });
 
   it('should load file diffs', async () => {
-    renderHook(() => useImageDiffScreenshots('file', jest.fn()));
+    const { waitForNextUpdate } = renderHook(() =>
+      useImageDiffScreenshots('file', jest.fn()),
+    );
 
-    await act(async () => {
-      await new Promise((resolve) => setImmediate(resolve));
-    });
+    await waitForNextUpdate();
 
     expect(dispatchMock).toHaveBeenCalledWith([
       { screenshots: [{ id: 'screenshot-is' }], type: 'setScreenshots' },
@@ -73,11 +73,11 @@ describe('useStoryScreenshotsDiff', () => {
   });
 
   it('should load all diffs', async () => {
-    renderHook(() => useImageDiffScreenshots('all', jest.fn()));
+    const { waitForNextUpdate } = renderHook(() =>
+      useImageDiffScreenshots('all', jest.fn()),
+    );
 
-    await act(async () => {
-      await new Promise((resolve) => setImmediate(resolve));
-    });
+    await waitForNextUpdate();
 
     expect(dispatchMock).toHaveBeenCalledWith([
       { screenshots: [{ id: 'screenshot-is' }], type: 'setScreenshots' },

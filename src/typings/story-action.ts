@@ -4,7 +4,7 @@ export type StoryActionPosition = { x: number; y: number };
 
 export type ControlTypes = KnobType;
 
-export interface StoryAction<T extends unknown = Page> {
+export interface StoryAction<T = Page> {
   id: string;
   name: string;
   labe?: string;

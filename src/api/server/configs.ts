@@ -4,9 +4,9 @@ import { migration } from './migration';
 
 let configs: Config<Page>;
 
-export const setConfig = <T extends unknown = Page>(conf: Config<T>) => {
+export const setConfig = <T = Page>(conf: Config<T>) => {
   configs = {
-    ...((conf as unknown) as Config<Page>),
+    ...(conf as unknown as Config<Page>),
     concurrencyLimit: {
       file: 1,
       story: 1,

@@ -18,7 +18,7 @@ import {
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 
-export interface Config<T extends unknown = Page> {
+export interface Config<T = Page> {
   storybookEndpoint: string;
   customActionSchema?: ActionSchemaList;
   // pageMethods?: PageMethodKeys[];

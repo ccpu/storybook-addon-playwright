@@ -19,10 +19,8 @@ export const useFixScreenshotFileName = (props: Props) => {
 
   const { openSnackbar } = useSnackbar();
 
-  const [
-    showFixScreenshotFileDialog,
-    setShowFixScreenshotFileDialog,
-  ] = React.useState<boolean>(false);
+  const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] =
+    React.useState<boolean>(false);
 
   const {
     inProgress: fixFileNamesInProgress,

@@ -16,7 +16,7 @@ export interface BrowserContextOptions extends PlaywrightBrowserContextOptions {
   deviceName?: string;
 }
 
-export interface PageInfo<T extends unknown = Page> {
+export interface PageInfo<T = Page> {
   page: T;
   browserName: BrowserTypes;
 }

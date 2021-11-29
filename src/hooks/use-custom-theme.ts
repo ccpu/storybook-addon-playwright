@@ -1,15 +1,15 @@
 import { Theme } from '@material-ui/core';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { getThemeData } from '../api/client/get-theme-data';
 
 export const useCustomTheme = () => {
-  const [theme, setTheme] = useState<Theme>();
-  const isTheme = useRef(false);
+  const [theme, setTheme] = React.useState<Theme>();
+  const isTheme = React.useRef(false);
 
-  const fetchTheme = useCallback(async () => {
+  const fetchTheme = React.useCallback(async () => {
     try {
       const resp = await getThemeData();
-      if (!isTheme.current) {
+      if (!isTheme.current && resp) {
         setTheme(resp);
       }
     } catch (error) {
@@ -17,7 +17,7 @@ export const useCustomTheme = () => {
     }
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchTheme();
     return () => {
       isTheme.current = true;

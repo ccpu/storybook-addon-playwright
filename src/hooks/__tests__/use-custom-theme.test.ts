@@ -11,7 +11,6 @@ const theme = createTheme({
 });
 
 describe('useCustomTheme', () => {
-
   it('should not have any theme', () => {
     const { result } = renderHook(() => useCustomTheme());
 
@@ -19,10 +18,12 @@ describe('useCustomTheme', () => {
   });
 
   it('should return custom theme', async () => {
-    const { result } = renderHook(() => useCustomTheme());
+    const { result } = renderHook(() => {
+      return useCustomTheme();
+    });
 
-     act( () => {
-       result.current.setTheme(theme);
+    act(() => {
+      result.current.setTheme(theme);
     });
 
     expect(result.current.theme.palette.primary.main).toEqual('#000000');

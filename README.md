@@ -102,6 +102,7 @@ module.exports = middleware;
 - afterNavigation
 - releaseModifierKey
 - screenshotOptions
+- theme
 
 ### storybookEndpoint
 
@@ -156,6 +157,31 @@ When set to true, will execute keyboard.up for modifier key, Shift, Meta, Contro
 ### screenshotOptions
 
 Default Options to apply when taking screenshot.
+
+### theme
+
+It overrides the default theme of the addon. It is a `json` of type material-ui [`Theme`](https://mui.com/customization/default-theme/) object.
+
+```js
+.
+.
+.
+setConfig({
+  theme: {
+    palette: {
+      primary: {
+        main: '#0052cc',
+      },
+      secondary: {
+        main: '#edf2ff',
+      },
+    },
+  }
+});
+.
+.
+.
+```
 
 ## How it works
 

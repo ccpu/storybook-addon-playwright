@@ -11,6 +11,7 @@ const useStyles = makeStyles(
         '& button': {
           alignItems: 'center',
           display: 'flex',
+          marginTop: 0,
         },
         '& svg': {
           width: 18,
@@ -27,13 +28,13 @@ const useStyles = makeStyles(
         '&.border-top': {
           borderTop: '1px solid ' + divider,
         },
+        padding: 2,
       },
       toolbar: {
         '& > .left': {
           '& > *': {
-            marginLeft: 15,
+            marginLeft: 8,
           },
-          flexBasis: '60%',
         },
         '& > .left,& > .right': {
           alignItems: 'center',
@@ -42,7 +43,7 @@ const useStyles = makeStyles(
         },
         '& > .right': {
           '& > *': {
-            marginRight: 15,
+            marginRight: 6,
           },
         },
         alignItems: 'center',

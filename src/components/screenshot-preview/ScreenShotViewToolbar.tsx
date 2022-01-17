@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => {
         alignItems: 'center',
         display: 'flex',
         height: 30,
-        marginLeft: 8,
+        marginLeft: 6,
+        marginTop: 0,
       },
       '& svg:not(.browser-loader)': {
         width: 17,

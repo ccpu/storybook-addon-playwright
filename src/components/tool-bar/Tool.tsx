@@ -17,7 +17,8 @@ import { FixScreenshotFileDialog } from '../common';
 
 const useStyles = makeStyles(() => ({
   asterisk: {
-    left: 6,
+    height: 2,
+    left: -3,
     margin: 0,
     position: 'relative',
     top: 4,

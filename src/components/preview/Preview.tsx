@@ -52,6 +52,9 @@ const useStyles = makeStyles(
         width: '100%',
       },
       snapshotPanel: {
+        '& > span': {
+          display: 'none',
+        },
         height: '100%',
         width: '100%',
       },

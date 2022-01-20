@@ -37,6 +37,11 @@ async function setupPlaywright() {
         page.addBox = addBox;
         return page;
       },
+      afterNavigation: async (page, _data) => {
+        await page.waitForFunction(() => {
+          return document.getElementById('root').childNodes.length > 0;
+        });
+      },
       afterScreenshot: async (page) => {
         await page.close();
       },

@@ -16,7 +16,11 @@ import {
   TakeScreenshotParams,
   TakeScreenshotOptionsParams,
 } from '../../typings';
-import { shouldTakeScreenshot, releaseModifierKey } from './utils';
+import {
+  shouldTakeScreenshot,
+  releaseModifierKey,
+  isInteractiveAction,
+} from './utils';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -94,18 +98,16 @@ export const makeScreenshot = async (
       (a) => !['takeScreenshotAll', 'takeScreenshotOptions'].includes(a.name),
     );
 
+    /**
+     * Take first image of current page before any action executed
+     */
     if (
       takeScreenshotAll &&
-      filterActions.filter(
-        (a) =>
-          !['takeScreenshot', 'waitForSelector', 'waitForTimeout'].includes(
-            a.name,
-          ),
-      ).length > 0
+      filterActions.filter((a) => isInteractiveAction(a)).length > 0
     ) {
       imageInfos.push({
         buffer: await takeScreenshot(page, data, configs),
-        options: (takeScreenshotAll.args as unknown) as TakeScreenshotParams,
+        options: takeScreenshotAll.args as unknown as TakeScreenshotParams,
       });
     }
 
@@ -115,7 +117,7 @@ export const makeScreenshot = async (
       if (action.name === 'takeScreenshot') {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
-          options: (action.args as unknown) as TakeScreenshotParams,
+          options: action.args as unknown as TakeScreenshotParams,
         });
         continue;
       }
@@ -125,7 +127,7 @@ export const makeScreenshot = async (
       if (shouldTakeScreenshot(filterActions, i, Boolean(takeScreenshotAll))) {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
-          options: (takeScreenshotAll.args as unknown) as TakeScreenshotParams,
+          options: takeScreenshotAll.args as unknown as TakeScreenshotParams,
         });
       }
     }
@@ -149,7 +151,7 @@ export const makeScreenshot = async (
 
     let options: TakeScreenshotOptionsParams =
       screenshotOptionAction && screenshotOptionAction.args
-        ? ((screenshotOptionAction.args as unknown) as TakeScreenshotOptionsParams)
+        ? (screenshotOptionAction.args as unknown as TakeScreenshotOptionsParams)
         : {};
 
     options = {

@@ -85,6 +85,153 @@
           ],
           "id": "zjgHFLzuMbXG",
           "title": "Take screenshot of all actions"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 100
+              }
+            }
+          ],
+          "id": "J22SZV2Nfiso",
+          "title": "delay 100"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 100
+              }
+            }
+          ],
+          "id": "3KP4VgIKFOiY",
+          "title": "delay 100"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 100
+              }
+            }
+          ],
+          "id": "SIOLicXITeXZ",
+          "title": "delay 100"
+        },
+        {
+          "actions": [
+            {
+              "name": "mouse.click",
+              "args": {
+                "x": 109,
+                "y": 64
+              }
+            }
+          ],
+          "id": "Swyo6JW5R9ku",
+          "title": "mouse click"
+        },
+        {
+          "actions": [
+            {
+              "name": "keyboard.press",
+              "args": {
+                "key": "2"
+              }
+            }
+          ],
+          "id": "3J7_yPCJG31p",
+          "title": "type 2"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 200
+              }
+            }
+          ],
+          "id": "SsVfuAD0QJ6m",
+          "title": "delay 200"
+        }
+      ],
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "takeScreenshotAll"
+                }
+              ],
+              "title": "Take screenshot of all actions"
+            },
+            {
+              "actions": [
+                {
+                  "name": "waitForTimeout",
+                  "args": {
+                    "timeout": 200
+                  }
+                }
+              ],
+              "title": "delay 200"
+            },
+            {
+              "actions": [
+                {
+                  "name": "click",
+                  "args": {
+                    "selector": "html>body>#root>div>input"
+                  }
+                }
+              ],
+              "title": "mouse click"
+            },
+            {
+              "actions": [
+                {
+                  "name": "waitForTimeout",
+                  "args": {
+                    "timeout": 100
+                  }
+                }
+              ],
+              "title": "delay 100"
+            },
+            {
+              "actions": [
+                {
+                  "name": "keyboard.press",
+                  "args": {
+                    "key": "2"
+                  }
+                }
+              ],
+              "title": "type 2"
+            },
+            {
+              "actions": [
+                {
+                  "name": "waitForTimeout",
+                  "args": {
+                    "timeout": 100
+                  }
+                }
+              ],
+              "title": "delay 100"
+            }
+          ],
+          "browserOptionsId": "Epcpwe0oWFQ8",
+          "browserType": "chromium",
+          "id": "mLqyU2xGWUqn",
+          "index": 0,
+          "title": "should wait for input value to change to 1 and change input value afterwards"
         }
       ]
     },
@@ -104,6 +251,15 @@
           "title": "type"
         }
       ]
+    }
+  },
+  "browserOptions": {
+    "Epcpwe0oWFQ8": {
+      "viewport": {
+        "width": 200,
+        "height": 120
+      },
+      "cursor": true
     }
   }
 }

@@ -10,6 +10,8 @@ const InputWheel: React.FC = () => {
 
   const input = React.useRef<HTMLInputElement>(null);
 
+  const [value, setValue] = React.useState<number>(0);
+
   const onMouseWheel = React.useCallback((e: WheelEvent) => {
     setDelta(e);
     return false;
@@ -27,9 +29,27 @@ const InputWheel: React.FC = () => {
     };
   }, [onMouseWheel]);
 
+  const handleValueChange = React.useCallback((e) => {
+    setValue(e.target.value);
+  }, []);
+
+  /**
+   * to test fist delay with screenshot
+   */
+  React.useEffect(() => {
+    setTimeout(() => {
+      setValue(1);
+    }, 150);
+  }, []);
+
   return (
     <div>
-      <input type="text" ref={input} value={6} onChange={() => undefined} />
+      <input
+        type="text"
+        ref={input}
+        value={value}
+        onChange={handleValueChange}
+      />
       {delta && (
         <div>
           deltaMode: {delta.deltaMode}

@@ -24,9 +24,8 @@ export const useScreenshot = (
 
   const prevHash = useRef<string>();
 
-  const { error, makeCall, inProgress, result } = useAsyncApiCall(
-    getScreenshot,
-  );
+  const { error, makeCall, inProgress, result } =
+    useAsyncApiCall(getScreenshot);
 
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
@@ -55,9 +54,11 @@ export const useScreenshot = (
   const latHotReload =
     iframe &&
     iframe.contentWindow &&
-    ((iframe.contentWindow as unknown) as {
-      __playwright_addon_hot_reload_time__: number;
-    }).__playwright_addon_hot_reload_time__;
+    (
+      iframe.contentWindow as unknown as {
+        __playwright_addon_hot_reload_time__: number;
+      }
+    ).__playwright_addon_hot_reload_time__;
 
   useEffect(() => {
     if (inProgress || !latHotReload) return;

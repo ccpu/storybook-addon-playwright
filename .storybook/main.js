@@ -5,4 +5,7 @@ module.exports = {
     'storybook-dark-mode/register',
     path.resolve(__dirname, '../preset.js'),
   ],
+  features: {
+    storyStoreV7: true,
+  },
 };

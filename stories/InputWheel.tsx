@@ -29,8 +29,7 @@ const InputWheel: React.FC = () => {
 
   return (
     <div>
-      {' '}
-      <input type="text" ref={input} />
+      <input type="text" ref={input} value={6} onChange={() => undefined} />
       {delta && (
         <div>
           deltaMode: {delta.deltaMode}

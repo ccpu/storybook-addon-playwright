@@ -1,58 +1,68 @@
-import webpack, { Compiler } from 'webpack';
-import ModuleFilenameHelpers from 'webpack/lib/ModuleFilenameHelpers';
-import { ConcatSource } from 'webpack-sources';
+import webpack from 'webpack';
+import VirtualModulePlugin from 'webpack-virtual-modules';
+// import ModuleFilenameHelpers from 'webpack/lib/ModuleFilenameHelpers';
+// import { ConcatSource } from 'webpack-sources';
 
-class ReloadTimestampPlugin {
-  apply(compiler: Compiler) {
-    let time = Date.now();
+/**
+ * sometime throws window undefined error, need more work
+ */
 
-    compiler.hooks.compilation.tap('ReloadTimestampPlugin', (compilation) => {
-      compilation.hooks.optimizeChunkAssets.tapAsync(
-        'ReloadTimestampPlugin',
-        (chunks, done) => {
-          appendTimeToChunks(compilation, chunks);
-          done();
-        },
-      );
-    });
+// class ReloadTimestampPlugin {
+//   apply(compiler: webpack.Compiler) {
+//     let time = Date.now();
 
-    compiler.hooks.beforeCompile.tap('ReloadTimestampPlugin', () => {
-      time = Date.now();
-    });
+//     compiler.hooks.compilation.tap('ReloadTimestampPlugin', (compilation) => {
+//       compilation.hooks.optimizeChunkAssets.tapAsync(
+//         'ReloadTimestampPlugin',
+//         (chunks, done) => {
+//           appendTimeToChunks(compilation, chunks);
+//           done();
+//         },
+//       );
+//     });
 
-    function appendTime(
-      compilation: webpack.compilation.Compilation,
-      fileName: string,
-    ) {
-      compilation.assets[fileName] = new ConcatSource(
-        String(
-          `\n(function () { window.__playwright_addon_hot_reload_time__ = ${time};})();\n`,
-        ),
-        compilation.assets[fileName],
-        String(``),
-      );
-    }
+//     compiler.hooks.beforeCompile.tap('ReloadTimestampPlugin', () => {
+//       time = Date.now();
+//     });
 
-    function appendTimeToChunks(
-      compilation: webpack.compilation.Compilation,
-      chunks: webpack.compilation.Chunk[],
-    ) {
-      for (const chunk of chunks) {
-        if (!chunk.rendered) {
-          // Skip already rendered (cached) chunks
-          // to avoid rebuilding unchanged code.
-          continue;
-        }
+//     function appendTime(
+//       compilation: webpack.compilation.Compilation,
+//       fileName: string,
+//     ) {
+//       compilation.assets[fileName] = new ConcatSource(
+//         String(
+//           `\n(function () {
+//                 if (typeof(window) !== 'undefined'){
+//                   window.__playwright_addon_hot_reload_time__ = ${time};
+//                 }
+//             })();\n`,
+//         ),
+//         compilation.assets[fileName],
+//         String(``),
+//       );
+//     }
 
-        for (const fileName of chunk.files) {
-          if (ModuleFilenameHelpers.matchObject({ test: /\.js$/ }, fileName)) {
-            appendTime(compilation, fileName);
-          }
-        }
-      }
-    }
-  }
-}
+//     function appendTimeToChunks(
+//       compilation: webpack.compilation.Compilation,
+//       chunks: webpack.compilation.Chunk[],
+//     ) {
+//       for (const chunk of chunks) {
+//         if (!chunk.rendered) {
+//           // Skip already rendered (cached) chunks
+//           // to avoid rebuilding unchanged code.
+//           continue;
+//         }
+
+//         for (const fileName of chunk.files) {
+//           if (ModuleFilenameHelpers.matchObject({ test: /\.js$/ }, fileName)) {
+//             console.log(fileName);
+//             appendTime(compilation, fileName);
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 module.exports = {
   addons: [],
@@ -66,46 +76,46 @@ module.exports = {
     return config;
   },
   webpackFinal: async (config: webpack.Configuration) => {
-    config.plugins.push(new ReloadTimestampPlugin());
+    // config.plugins.push(new ReloadTimestampPlugin());
 
-    // const virtualModulePlugins = config.plugins.filter(
-    //   (x) =>
-    //     (x as unknown as { _staticModules: { [key: string]: string } })
-    //       ._staticModules,
-    // );
+    const virtualModulePlugins = config.plugins.filter(
+      (x) =>
+        (x as unknown as { _staticModules: { [key: string]: string } })
+          ._staticModules,
+    );
 
-    // config.plugins = config.plugins.filter(
-    //   (x) => !(x instanceof VirtualModulePlugin),
-    // );
+    config.plugins = config.plugins.filter(
+      (x) => !(x instanceof VirtualModulePlugin),
+    );
 
-    // let foundModule = false;
+    let foundModule = false;
 
-    // virtualModulePlugins.forEach((plugin: VirtualModulePlugin) => {
-    //   const staticModules = plugin._staticModules;
-    //   const virtualModuleMapping = Object.keys(staticModules).reduce(
-    //     (vm, modulePath) => {
-    //       let moduleContent = staticModules[modulePath];
-    //       if (
-    //         !foundModule &&
-    //         (modulePath.endsWith('generated-entry.js') ||
-    //           modulePath.endsWith('generated-stories-entry.js') ||
-    //           modulePath.endsWith('storybook-stories.js') ||
-    //           modulePath.endsWith('storybook-config-entry.js'))
-    //       ) {
-    //         (foundModule = true),
-    //           (moduleContent += `\n
-    //         window.__playwright_addon_hot_reload_time__ = Date.now();`);
-    //       }
+    virtualModulePlugins.forEach((plugin: VirtualModulePlugin) => {
+      const staticModules = plugin._staticModules;
+      const virtualModuleMapping = Object.keys(staticModules).reduce(
+        (vm, modulePath) => {
+          let moduleContent = staticModules[modulePath];
+          if (
+            !foundModule &&
+            (modulePath.endsWith('generated-entry.js') ||
+              modulePath.endsWith('generated-stories-entry.js') ||
+              modulePath.endsWith('storybook-stories.js') ||
+              modulePath.endsWith('storybook-config-entry.js'))
+          ) {
+            (foundModule = true),
+              (moduleContent += `\n
+            window.__playwright_addon_hot_reload_time__ = Date.now();`);
+          }
 
-    //       vm[modulePath] = moduleContent;
+          vm[modulePath] = moduleContent;
 
-    //       return vm;
-    //     },
-    //     {},
-    //   );
+          return vm;
+        },
+        {},
+      );
 
-    //   config.plugins.push(new VirtualModulePlugin(virtualModuleMapping));
-    // });
+      config.plugins.push(new VirtualModulePlugin(virtualModuleMapping));
+    });
 
     return config;
   },

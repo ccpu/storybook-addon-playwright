@@ -117,6 +117,12 @@ module.exports = {
       config.plugins.push(new VirtualModulePlugin(virtualModuleMapping));
     });
 
+    if (!foundModule) {
+      throw new Error(
+        'VirtualModulePlugin generate with storybook not found! possibly file name changed.',
+      );
+    }
+
     return config;
   },
 };

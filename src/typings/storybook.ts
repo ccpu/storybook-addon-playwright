@@ -17,5 +17,4 @@ export type StoryData = {
   };
   isLeaf: boolean;
   parent: string;
-  story: string;
 };

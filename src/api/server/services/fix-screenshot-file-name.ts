@@ -22,7 +22,7 @@ export const fixScreenshotFileName = async (info: FixScreenshotFileName) => {
 
   const fileInfos = getStoryPlaywrightFileInfo(info.parameters.fileName);
   const oldStoryId = kebabCase(info.previousNamedExport);
-  const newStoryId = kebabCase(info.story);
+  const newStoryId = kebabCase(info.id.split('--')[1]);
   let oldTitle: string;
   let newTitle: string;
   let storyScreenshots: ScreenshotFileData[] = [];
@@ -45,7 +45,7 @@ export const fixScreenshotFileName = async (info: FixScreenshotFileName) => {
 
     storyScreenshots = [
       ...storyScreenshots,
-      ...storyData.screenshots.map((x) => ({
+      ...(storyData.screenshots || []).map((x) => ({
         browser: x.browserType,
         newStoryId: hasNewStoryId && newStoryId,
         screenshotTitle: x.title,

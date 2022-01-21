@@ -9,6 +9,7 @@ export interface SnackbarProps extends Omit<OptionsObject, 'onClose'> {
   closeIcon?: boolean;
   open?: boolean;
   message?: string;
+  messageKey?: string;
 }
 
 if (!window.__visible_snackbar_messages__) {
@@ -18,8 +19,9 @@ if (!window.__visible_snackbar_messages__) {
 const Snackbar: React.FC<SnackbarProps> = memo(
   ({
     title,
-    message,
+    message = '',
     children,
+    messageKey,
     closeIcon = true,
     variant = 'error',
     open,
@@ -28,8 +30,9 @@ const Snackbar: React.FC<SnackbarProps> = memo(
     ...rest
   }) => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
     const key = useRef<SnackbarKey>();
-    const messageHash = useRef<string>(objectHash({ children, message }));
+    const messageHash = useRef<string>(messageKey || objectHash({ message }));
     const unmounted = useRef<boolean>();
 
     const handleClose = useCallback(() => {

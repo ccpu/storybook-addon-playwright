@@ -7,6 +7,8 @@ import { DialogContent } from '@material-ui/core';
 import CloseSharp from '@material-ui/icons/CloseSharp';
 
 jest.mock('react', () => ({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   ...jest.requireActual('react'),
   useEffect: (f) => f(),
 }));
@@ -128,13 +130,13 @@ describe('Snackbar', () => {
     );
 
     expect(window.__visible_snackbar_messages__).toStrictEqual({
-      '83bd044348ea9694a81d3873682c0d2ca45bb296': true,
+      '6962551387d6f2c27805853f21c1dd714eb41a3e': true,
     });
 
     wrapper.setProps({ closeIcon: false });
 
     expect(window.__visible_snackbar_messages__).toStrictEqual({
-      '83bd044348ea9694a81d3873682c0d2ca45bb296': true,
+      '6962551387d6f2c27805853f21c1dd714eb41a3e': true,
     });
   });
 });

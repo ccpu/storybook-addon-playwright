@@ -9,10 +9,19 @@ import Compare from '@material-ui/icons/Compare';
 import { ScreenshotDelete } from '../ScreenshotDelete';
 import { ScreenshotInfo } from '../ScreenshotInfo';
 
+const onDeleteMock = jest.fn();
+
 describe('ScreenshotListItemMenu', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render', () => {
     const wrapper = shallow(
-      <ScreenshotListItemMenu screenshot={getScreenshotDate()} />,
+      <ScreenshotListItemMenu
+        screenshot={getScreenshotDate()}
+        onDelete={onDeleteMock}
+      />,
     );
     expect(wrapper.exists()).toBeTruthy();
 
@@ -30,6 +39,7 @@ describe('ScreenshotListItemMenu', () => {
       <ScreenshotListItemMenu
         screenshot={getScreenshotDate()}
         onEditClick={editMock}
+        onDelete={onDeleteMock}
         enableEditScreenshot
       />,
     );
@@ -51,6 +61,7 @@ describe('ScreenshotListItemMenu', () => {
     const wrapper = shallow(
       <ScreenshotListItemMenu
         screenshot={getScreenshotDate()}
+        onDelete={onDeleteMock}
         onLoadSettingClick={editMock}
         enableLoadSetting
       />,
@@ -69,7 +80,11 @@ describe('ScreenshotListItemMenu', () => {
 
   it('should render update component', () => {
     const wrapper = shallow(
-      <ScreenshotListItemMenu screenshot={getScreenshotDate()} enableUpdate />,
+      <ScreenshotListItemMenu
+        screenshot={getScreenshotDate()}
+        onDelete={onDeleteMock}
+        enableUpdate
+      />,
     );
     const screenshotUpdate = wrapper.find(ScreenshotUpdate);
 
@@ -82,6 +97,7 @@ describe('ScreenshotListItemMenu', () => {
     const wrapper = shallow(
       <ScreenshotListItemMenu
         screenshot={getScreenshotDate()}
+        onDelete={onDeleteMock}
         enableImageDiff
         onRunImageDiff={funcMock}
       />,
@@ -97,5 +113,21 @@ describe('ScreenshotListItemMenu', () => {
       .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
 
     expect(funcMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should call on delete', () => {
+    const wrapper = shallow(
+      <ScreenshotListItemMenu
+        screenshot={getScreenshotDate()}
+        onDelete={onDeleteMock}
+      />,
+    );
+    expect(wrapper.exists()).toBeTruthy();
+
+    const delComp = wrapper.find(ScreenshotDelete);
+
+    delComp.props().onDelete();
+
+    expect(onDeleteMock).toHaveBeenCalledTimes(1);
   });
 });

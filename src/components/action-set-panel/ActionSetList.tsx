@@ -33,7 +33,7 @@ const ActionSetList = SortableContainer(() => {
     ErrorSnackbar,
   } = useCopyActionSet(storyData);
 
-  const [error, setError] = useState();
+  const [error, setError] = useState<string>();
 
   const storyId = storyData ? storyData.id : undefined;
 
@@ -64,9 +64,8 @@ const ActionSetList = SortableContainer(() => {
           storyId: storyData.id,
           type: 'deleteActionSet',
         });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        setError(error.message);
+      } catch (error) {
+        setError((error as { message: string }).message);
       }
     },
     [dispatch, storyData],

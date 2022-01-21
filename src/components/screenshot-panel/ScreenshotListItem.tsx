@@ -39,7 +39,8 @@ const useStyles = makeStyles(
   { name: 'ScreenshotListItemMenu' },
 );
 
-export interface ScreenshotListItemProps extends ScreenshotListItemMenuProps {
+export interface ScreenshotListItemProps
+  extends Omit<ScreenshotListItemMenuProps, 'onDelete'> {
   onClick?: (item: ScreenshotData) => void;
   selected?: boolean;
   forceShowMenu?: boolean;
@@ -78,11 +79,8 @@ function ScreenshotListItem({
 
   const [showPreview, setShowPreview] = useState(false);
 
-  const {
-    inProgress,
-    testScreenshot,
-    TestScreenshotErrorSnackbar,
-  } = useScreenshotImageDiff(storyData);
+  const { inProgress, testScreenshot, TestScreenshotErrorSnackbar } =
+    useScreenshotImageDiff(storyData);
 
   const isPassesImageDiff = imageDiffResult && imageDiffResult.pass;
 
@@ -151,12 +149,13 @@ function ScreenshotListItem({
     editScreenshot,
     loadSetting,
     editScreenshotState,
+    clearScreenshotEdit,
   } = useEditScreenshot();
 
-  const handleEdit = useCallback(() => editScreenshot(screenshot), [
-    editScreenshot,
-    screenshot,
-  ]);
+  const handleEdit = useCallback(
+    () => editScreenshot(screenshot),
+    [editScreenshot, screenshot],
+  );
 
   const handleLoadSetting = useCallback(() => {
     loadSetting(screenshot);
@@ -228,6 +227,7 @@ function ScreenshotListItem({
           onEditClick={handleEdit}
           onLoadSettingClick={handleLoadSetting}
           isEditing={Boolean(editScreenshotState)}
+          onDelete={clearScreenshotEdit}
           {...rest}
         />
 

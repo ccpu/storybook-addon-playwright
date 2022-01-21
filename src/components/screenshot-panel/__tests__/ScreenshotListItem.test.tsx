@@ -21,9 +21,11 @@ jest.mock('../../../hooks/use-edit-screenshot');
 const loadSettingMock = jest.fn();
 const editMock = jest.fn();
 
+const clearScreenshotEditMock = jest.fn();
+
 (useEditScreenshot as jest.Mock).mockImplementation(() => {
   return {
-    clearScreenshotEdit: jest.fn(),
+    clearScreenshotEdit: clearScreenshotEditMock,
     editScreenshot: editMock,
     loadSetting: loadSettingMock,
   };
@@ -256,5 +258,20 @@ describe('ScreenshotListItem', () => {
     );
     useEffectCleanup();
     expect(spyOnClearTimeout).toHaveBeenCalledTimes(1);
+  });
+
+  it('should cancel screenshot edit mode when screenshot removed', () => {
+    const wrapper = shallow(
+      <ScreenshotListItem
+        storyData={storyData}
+        screenshot={getScreenshotDate()}
+        imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
+        showPreviewOnClick
+      />,
+    );
+
+    wrapper.find(ScreenshotListItemMenu).props().onDelete();
+
+    expect(clearScreenshotEditMock).toHaveBeenCalledWith();
   });
 });

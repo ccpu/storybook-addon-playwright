@@ -8,6 +8,7 @@ import { DeleteConfirmationButton } from '../../common';
 
 jest.mock('../../../hooks/use-delete-screenshot');
 const useDeleteScreenshotMock = useDeleteScreenshot as jest.Mock;
+const onDeleteMock = jest.fn();
 
 describe('ScreenshotDelete', () => {
   it('should render', () => {
@@ -17,6 +18,7 @@ describe('ScreenshotDelete', () => {
         screenshot={getScreenshotDate()}
         onClose={jest.fn()}
         onStateChange={stateMock}
+        onDelete={onDeleteMock}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -37,6 +39,7 @@ describe('ScreenshotDelete', () => {
         screenshot={getScreenshotDate()}
         onClose={jest.fn()}
         onStateChange={jest.fn()}
+        onDelete={onDeleteMock}
       />,
     );
 
@@ -44,5 +47,6 @@ describe('ScreenshotDelete', () => {
     dialog.props().onDelete();
     expect(dialog).toBeDefined();
     expect(deleteMock).toHaveBeenCalledWith('screenshot-id');
+    expect(onDeleteMock).toHaveBeenCalled();
   });
 });

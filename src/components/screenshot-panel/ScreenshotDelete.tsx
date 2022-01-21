@@ -8,10 +8,11 @@ export interface ScreenshotDeleteProps {
   screenshot: ScreenshotData;
   onClose: () => void;
   onStateChange: (working: boolean) => void;
+  onDelete: () => void;
 }
 
 const ScreenshotDelete: React.FC<ScreenshotDeleteProps> = (props) => {
-  const { onStateChange, screenshot, onClose } = props;
+  const { onStateChange, screenshot, onClose, onDelete } = props;
 
   const {
     deleteScreenshot,
@@ -21,6 +22,7 @@ const ScreenshotDelete: React.FC<ScreenshotDeleteProps> = (props) => {
 
   const handleDeleteConfirmation = useCallback(() => {
     deleteScreenshot(screenshot.id);
+    onDelete();
   }, [deleteScreenshot, screenshot.id]);
 
   useEffect(() => {

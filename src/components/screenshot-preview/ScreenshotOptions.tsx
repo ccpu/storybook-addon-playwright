@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import CameraIcon from '@material-ui/icons/Camera';
+import CameraIcon from '@mui/icons-material/Camera';
 import { useScreenshotOptions } from '../../hooks';
 import { OptionPopover } from './OptionPopover';
 import { MemoizedSchemaFormLoader } from '../common';

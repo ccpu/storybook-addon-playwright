@@ -7,7 +7,7 @@ import { IconButton } from '@storybook/components';
 import { useScreenshotImageDiffResults } from '../../../hooks/use-screenshot-imageDiff-results';
 import { useGlobalImageDiffResults } from '../../../hooks/use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@mui/material';
 import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
 import { mocked } from 'ts-jest/utils';
 import { useGlobalScreenshotDispatch } from '../../../hooks';

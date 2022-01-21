@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from 'react';
-import { IconButton } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/EditSharp';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/EditSharp';
 import { SortableElement, SortableElementProps } from 'react-sortable-hoc';
 import { ListItemWrapper, DeleteConfirmationButton, CheckBox } from '../common';
 import { ActionSet } from '../../typings';
 import { ActionSetEditor } from './ActionSetEditor';
 import { TEMP_ACTION_SET } from '../../constants';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 
 export interface ActionSetActionSetListItemProps extends SortableElementProps {
   onEdit: (item: ActionSet) => void;

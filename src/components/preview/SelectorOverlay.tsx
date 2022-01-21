@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { useSelectorManager } from '../../hooks';
 import useMouseHovered from 'react-use/lib/useMouseHovered';
 import clsx from 'clsx';
 import useThrottleFn from 'react-use/lib/useThrottleFn';
 import { getSelectorPath } from '@dom-utils/selector-path';
 import useKey from 'react-use/lib/useKey';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       hidden: {
         display: 'none',
@@ -46,19 +47,16 @@ interface Props {
 }
 
 const defaultRect = {
-  height: ('100%' as unknown) as number,
+  height: '100%' as unknown as number,
   left: 0,
   right: 0,
-  width: ('100%' as unknown) as number,
+  width: '100%' as unknown as number,
 } as ClientRect;
 
 const SelectorOverlay: React.FC<Props> = (props) => {
   const { iframe } = props;
-  const {
-    stopSelector,
-    selectorManager,
-    setSelectorData,
-  } = useSelectorManager();
+  const { stopSelector, selectorManager, setSelectorData } =
+    useSelectorManager();
 
   const [mouseupRef, setMouseupRef] = useState<HTMLElement>();
 

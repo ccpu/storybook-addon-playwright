@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEditScreenshot } from '../../hooks';
-import { Alert } from '@material-ui/lab';
-import { makeStyles, Button } from '@material-ui/core';
+import { Button, Alert } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(
   () => {

@@ -13,7 +13,7 @@ import { Loader, Snackbar } from '../common';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotList } from './ScreenshotList';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);

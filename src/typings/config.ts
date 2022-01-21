@@ -10,7 +10,7 @@ import {
 import { RequestData } from './request';
 import { StoryInfo } from './story-info';
 import { TestFileScreenshots } from '../api/server/services/test-file-screenshots';
-import { Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
 import {
   CompareScreenshotParams,
   CompareScreenshotReturnType,

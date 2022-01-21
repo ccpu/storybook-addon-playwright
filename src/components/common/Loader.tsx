@@ -1,9 +1,11 @@
 import React, { memo } from 'react';
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+import { Backdrop, CircularProgress } from '@mui/material';
 import tinycolor from 'tinycolor2';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const { background } = theme.palette;
     const color = tinycolor(background.paper);
     color.setAlpha(0.5);

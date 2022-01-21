@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import AddIcon from '@material-ui/icons/AddSharp';
-import CloseIcon from '@material-ui/icons/CloseSharp';
-import SaveIcon from '@material-ui/icons/SaveSharp';
-import EditIcon from '@material-ui/icons/EditSharp';
-import { IconButton } from '@material-ui/core';
+import AddIcon from '@mui/icons-material/AddSharp';
+import CloseIcon from '@mui/icons-material/CloseSharp';
+import SaveIcon from '@mui/icons-material/SaveSharp';
+import EditIcon from '@mui/icons-material/EditSharp';
+import { IconButton } from '@mui/material';
 import { ActionMenu } from './ActionMenu';
 import { useActionSchemaLoader } from '../../hooks';
 import { Loader } from '../common';

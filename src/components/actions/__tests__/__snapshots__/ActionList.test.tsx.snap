@@ -2,7 +2,7 @@
 
 exports[`ActionList should show error if no actions provided 1`] = `
 <div
-  className="ActionSetList-noActionMessage-1"
+  className="noActionMessage"
 >
   <div>
     Click the 

@@ -1,14 +1,16 @@
 import React from 'react';
-import { makeStyles, Tooltip } from '@material-ui/core';
-import { CircularProgress } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { BrowserTypes } from '../../typings';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
-import RefreshIcon from '@material-ui/icons/RefreshOutlined';
-import Fullscreen from '@material-ui/icons/FullscreenSharp';
+import SaveIcon from '@mui/icons-material/SaveAltOutlined';
+import RefreshIcon from '@mui/icons-material/RefreshOutlined';
+import Fullscreen from '@mui/icons-material/FullscreenSharp';
 import { IconButton } from '@storybook/components';
 import { BrowserOptions } from './BrowserOptions';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@storybook/theming';
 
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles((theme: Theme) => {
   const { palette } = theme;
 
   return {

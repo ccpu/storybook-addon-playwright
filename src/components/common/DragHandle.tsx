@@ -1,6 +1,6 @@
 import React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
-import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
+import DragIndicatorSharp from '@mui/icons-material/DragIndicatorSharp';
 
 export const DragHandle = SortableHandle(() => (
   <DragIndicatorSharp

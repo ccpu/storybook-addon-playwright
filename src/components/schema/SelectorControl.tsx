@@ -1,15 +1,17 @@
 import React, { memo, useCallback, useState, useEffect } from 'react';
-import { makeStyles, IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import { ControlProps } from '../../typings';
 import { useControl, useSelectorManager, SelectorType } from '../../hooks';
 import { FormControl } from './FormControl';
-import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
+import TargetIcon from '@mui/icons-material/FilterCenterFocusSharp';
 import { isValidSelector } from '../../utils';
 import clsx from 'clsx';
-import PointerIcon from '@material-ui/icons/FilterTiltShift';
+import PointerIcon from '@mui/icons-material/FilterTiltShift';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       button: {
         color: theme.palette.text.primary,

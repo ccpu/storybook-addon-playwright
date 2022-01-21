@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
 import { getEndpoint, responseHandler } from './utils';
 
 export const getThemeData = async (): Promise<Theme | undefined> => {

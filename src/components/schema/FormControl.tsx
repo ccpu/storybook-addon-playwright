@@ -1,14 +1,15 @@
 import React, { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
 import { capitalize } from '../../utils';
-import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
-import { Tooltip } from '@material-ui/core';
-import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';
-import CheckNotSelected from '@material-ui/icons/RadioButtonUncheckedRounded';
+import HelpOutlineSharp from '@mui/icons-material/HelpOutlineSharp';
+import { Tooltip } from '@mui/material';
+import CheckSelected from '@mui/icons-material/CheckCircleOutlineRounded';
+import CheckNotSelected from '@mui/icons-material/RadioButtonUncheckedRounded';
 import clsx from 'clsx';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       active: {
         color: theme.palette.primary.main,
@@ -95,12 +96,7 @@ const FormControl: React.FC<ControlFormProps> = memo((props) => {
       <div className={classes.iconWrapper}>
         <div>
           {description && (
-            <Tooltip
-              placement="top"
-              interactive
-              enterDelay={800}
-              title={description}
-            >
+            <Tooltip placement="top" enterDelay={800} title={description}>
               <HelpOutlineSharp className={classes.icons} />
             </Tooltip>
           )}

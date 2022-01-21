@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { IconButton } from '@storybook/components';
 import { BrowserTypes } from '../../typings';
-import CloseOutlined from '@material-ui/icons/CloseOutlined';
+import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import { Toolbar as CommonToolbar } from '../common';
-import RefreshSharp from '@material-ui/icons/RefreshSharp';
+import RefreshSharp from '@mui/icons-material/RefreshSharp';
 import { BrowserIconButton } from '../common/BrowserIconButton';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 import { useBrowserOptions } from '../../hooks';
-import { Tooltip } from '@material-ui/core';
-import NearMeIcon from '@material-ui/icons/NearMe';
+import { Tooltip } from '@mui/material';
+import NearMeIcon from '@mui/icons-material/NearMe';
 import { BrowserOptions } from './BrowserOptions';
 import { ScreenshotOptions } from './ScreenshotOptions';
 

@@ -8,15 +8,15 @@ import {
   ScreenshotListItemMenu,
   ScreenshotListItemMenuProps,
 } from './ScreenshotListItemMenu';
-import CheckCircle from '@material-ui/icons/CheckCircle';
-import Error from '@material-ui/icons/Error';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import Error from '@mui/icons-material/Error';
 import {
   useScreenshotImageDiff,
   useDragStart,
   useEditScreenshot,
 } from '../../hooks';
 import { ScreenshotInfo } from './ScreenshotInfo';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { ImageDiffResult } from '../../api/typings';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 import { ScreenshotListItemWrapper } from './ScreenshotListItemWrapper';

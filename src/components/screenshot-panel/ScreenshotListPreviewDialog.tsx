@@ -1,14 +1,16 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { StoryData, ScreenshotData } from '../../typings';
 import { Dialog, DialogProps, ImageDiffPreview } from '../common';
-import { makeStyles, capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import { useScreenshotContext } from '../../store/screenshot';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
 import { useKeyPressFn } from '../../hooks';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const {
       palette: { divider },
     } = theme;

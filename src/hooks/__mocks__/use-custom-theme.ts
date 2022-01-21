@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material';
 import { mocked } from 'ts-jest/utils';
 
 export const useCustomTheme = jest.fn();

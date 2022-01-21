@@ -2,9 +2,9 @@ import { Snackbar } from '../Snackbar';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useSnackbar } from 'notistack';
-import { AlertTitle } from '@material-ui/lab';
-import { DialogContent } from '@material-ui/core';
-import CloseSharp from '@material-ui/icons/CloseSharp';
+import { AlertTitle } from '@mui/material';
+import { DialogContent } from '@mui/material';
+import CloseSharp from '@mui/icons-material/CloseSharp';
 
 jest.mock('react', () => ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

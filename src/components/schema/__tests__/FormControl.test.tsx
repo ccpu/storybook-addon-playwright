@@ -1,7 +1,7 @@
 import { FormControl } from '../FormControl';
 import { shallow } from 'enzyme';
 import React from 'react';
-import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';
+import CheckSelected from '@mui/icons-material/CheckCircleOutlineRounded';
 
 describe('FormControl', () => {
   const onAppendValueToTitleMock = jest.fn();

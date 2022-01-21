@@ -1,7 +1,7 @@
 import { Tool } from '../Tool';
 import { shallow } from 'enzyme';
 import React from 'react';
-import WebOutlined from '@material-ui/icons/Launch';
+import WebOutlined from '@mui/icons-material/Launch';
 import { PreviewDialog } from '../../screenshot-preview';
 import { LayoutBottom, LayoutRight } from '../../../icons';
 import { useAddonState } from '../../../hooks//use-addon-state';

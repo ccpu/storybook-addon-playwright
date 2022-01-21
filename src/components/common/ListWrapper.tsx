@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import { SortableContainer } from 'react-sortable-hoc';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       root: {
         '& *:focus': { outline: 'none' },

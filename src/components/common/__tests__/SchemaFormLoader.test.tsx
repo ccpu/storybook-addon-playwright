@@ -4,7 +4,7 @@ import { SchemaFormLoader } from '../SchemaFormLoader';
 import { shallow } from 'enzyme';
 import React from 'react';
 import fetch from 'jest-fetch-mock';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { MemoizedSchemaRenderer } from '../../schema';
 
 const schema = getActionSchemaData();

@@ -2,8 +2,8 @@ import { EditScreenshotAlert } from '../EditScreenshotAlert';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useEditScreenshot } from '../../../hooks//use-edit-screenshot';
-import { Alert } from '@material-ui/lab';
-import { Button } from '@material-ui/core';
+import { Alert } from '@mui/material';
+import { Button } from '@mui/material';
 
 jest.mock('../../../hooks//use-edit-screenshot');
 

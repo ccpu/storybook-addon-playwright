@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
 import { useStoryUrl, useActiveBrowsers } from '../../hooks';
 import { ScreenShotViewPanel } from '../../typings';
@@ -7,8 +6,10 @@ import { Toolbar } from './Toolbar';
 import useMeasure from 'react-use/lib/useMeasure';
 import clsx from 'clsx';
 import { InputDialog, Loader } from '../common';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   error: {
     color: 'red',
     marginTop: '10%',
@@ -65,9 +66,8 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const [ref, rect] = useMeasure();
 
-  const { activeBrowsers, toggleBrowser, browserTypes } = useActiveBrowsers(
-    viewPanel,
-  );
+  const { activeBrowsers, toggleBrowser, browserTypes } =
+    useActiveBrowsers(viewPanel);
 
   const [refresh, setRefresh] = useState(false);
 

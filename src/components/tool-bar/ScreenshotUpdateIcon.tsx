@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScreenshotTestTargetType } from '../../typings';
-import Update from '@material-ui/icons/Update';
+import Update from '@mui/icons-material/Update';
 import { IconButton } from '@storybook/components';
 import { Loader } from '../common';
 import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';

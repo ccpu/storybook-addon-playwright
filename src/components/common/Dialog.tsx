@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  makeStyles,
   Dialog as MuDialog,
   DialogProps as MuDialogProps,
   DialogTitle,
@@ -8,8 +7,10 @@ import {
   DialogActions,
   Divider,
   Typography,
-} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 interface StyleProps {
   width?: string | number;
@@ -17,7 +18,7 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const { primary } = theme.palette;
 
     return {
@@ -91,7 +92,7 @@ const Dialog: React.FC<DialogProps> = ({
     >
       {(TitleActions || enableCloseButton || title || subtitle) && (
         <>
-          <DialogTitle disableTypography={true} className={classes.title}>
+          <DialogTitle className={classes.title}>
             <div>
               {title && <Typography variant="h6">{title}</Typography>}
               {subtitle && <Typography variant="body1">{subtitle}</Typography>}

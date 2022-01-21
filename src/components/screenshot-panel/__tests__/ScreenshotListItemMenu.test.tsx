@@ -2,10 +2,10 @@ import { ScreenshotListItemMenu } from '../ScreenshotListItemMenu';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
-import EditIcon from '@material-ui/icons/Edit';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import EditIcon from '@mui/icons-material/Edit';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import { ScreenshotUpdate } from '../ScreenshotUpdate';
-import Compare from '@material-ui/icons/Compare';
+import Compare from '@mui/icons-material/Compare';
 import { ScreenshotDelete } from '../ScreenshotDelete';
 import { ScreenshotInfo } from '../ScreenshotInfo';
 

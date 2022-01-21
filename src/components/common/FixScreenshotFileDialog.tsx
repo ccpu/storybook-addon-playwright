@@ -1,9 +1,9 @@
 import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
-import { Button, TextField, DialogActions } from '@material-ui/core';
+import { Button, TextField, DialogActions } from '@mui/material';
 import { Dialog } from '../common';
 import { IconButton } from '@storybook/components';
-import FixIcon from '@material-ui/icons/BuildSharp';
+import FixIcon from '@mui/icons-material/BuildSharp';
 import { Loader } from '../common';
 
 interface Props {

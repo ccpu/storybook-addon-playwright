@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
+import { Menu, Badge, MenuItem, Theme } from '@mui/material';
 import { IconButton } from '@storybook/components';
-import Compare from '@material-ui/icons/Compare';
+import Compare from '@mui/icons-material/Compare';
 import {
   useGlobalImageDiffResults,
   useScreenshotImageDiffResults,
@@ -12,9 +12,10 @@ import { Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
 import { ScreenshotTestTargetType, StoryData } from '../../typings';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       button: {},
       imageDiffBadge: {
@@ -60,11 +61,8 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
   const { openSnackbar } = useSnackbar();
 
-  const {
-    testStoryScreenShots,
-    imageDiffTestInProgress,
-    clearImageDiffError,
-  } = useScreenshotImageDiffResults();
+  const { testStoryScreenShots, imageDiffTestInProgress, clearImageDiffError } =
+    useScreenshotImageDiffResults();
 
   const diffResults =
     target === 'file'

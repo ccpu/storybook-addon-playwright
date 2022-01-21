@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { ImageDiffResult } from '../../api/typings';
-import { makeStyles, Tabs, Tab, Divider } from '@material-ui/core';
+import { Tabs, Tab, Divider, Alert } from '@mui/material';
 import { ImagePreview } from './ImagePreview';
-import { Alert } from '@material-ui/lab';
 import { getImageDiffMessages } from '../../utils';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(
   () => {

@@ -1,7 +1,7 @@
 import { DeviceList } from '../DeviceList';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Menu, Button } from '@material-ui/core';
+import { Menu, Button } from '@mui/material';
 import { DeviceListItem } from '../DeviceListItem';
 
 describe('DeviceList', () => {

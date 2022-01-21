@@ -133,12 +133,9 @@ describe('SelectorControl', () => {
       />,
     );
 
-    expect(
-      wrapper
-        .find('.selector-root > div')
-        .prop('className')
-        .startsWith('SelectorControl-buttonWrap'),
-    ).toBe(true);
+    expect(wrapper.find('.selector-root > div').prop('className')).toBe(
+      'buttonWrap',
+    );
   });
 
   it('should start selector and return selector path', () => {

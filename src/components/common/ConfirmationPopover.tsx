@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { ActionPopoverProps, ActionPopover } from './ActionPopover';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
 export interface ConfirmationPopoverProps extends ActionPopoverProps {
   onConfirm: () => void;

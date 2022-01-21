@@ -1,4 +1,4 @@
-import { lighten, darken } from '@material-ui/core/styles';
+import { lighten, darken } from '@mui/material/styles';
 
 export const getBorderColor = (
   type: 'dark' | 'light',

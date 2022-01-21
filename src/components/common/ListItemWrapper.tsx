@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from 'react';
-import { makeStyles, capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import { DragHandle } from './DragHandle';
 import clsx from 'clsx';
 import tinycolor from 'tinycolor2';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const {
       palette: { divider, text, primary, secondary },
     } = theme;

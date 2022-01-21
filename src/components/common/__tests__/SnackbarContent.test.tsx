@@ -1,9 +1,9 @@
 import React from 'react';
 import { SnackbarContent } from '../SnackbarContent';
 import { shallow } from 'enzyme';
-import { AlertTitle } from '@material-ui/lab';
-import Icon from '@material-ui/icons/AcUnit';
-import { Button } from '@material-ui/core';
+import { AlertTitle } from '@mui/material';
+import Icon from '@mui/icons-material/AcUnit';
+import { Button } from '@mui/material';
 
 describe('SnackbarContent', () => {
   it('should render', () => {

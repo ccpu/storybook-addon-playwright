@@ -7,7 +7,7 @@ import {
 } from '../../hooks';
 import { Loader } from '../common';
 import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import {
   useScreenshotContext,
   useScreenshotDispatch,

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { IconButton } from '@storybook/components';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@mui/material';
 import { useAddonState } from '../../hooks/use-addon-state';
 import { LayoutBottomRight } from '../../icons';
 

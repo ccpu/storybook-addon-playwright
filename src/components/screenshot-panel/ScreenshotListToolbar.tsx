@@ -1,9 +1,9 @@
 import React from 'react';
 import { Toolbar } from '../common';
-import Compare from '@material-ui/icons/Compare';
+import Compare from '@mui/icons-material/Compare';
 import { IconButton } from '@storybook/components';
-import Visibility from '@material-ui/icons/Visibility';
-import Update from '@material-ui/icons/Update';
+import Visibility from '@mui/icons-material/Visibility';
+import Update from '@mui/icons-material/Update';
 import { DeleteConfirmationButton, FixScreenshotFileDialog } from '../common';
 
 export interface ScreenshotListToolbarProps {

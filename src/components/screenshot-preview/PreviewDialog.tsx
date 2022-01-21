@@ -1,10 +1,11 @@
 import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core/styles';
+import Dialog from '@mui/material/Dialog';
 import { ThemeProvider } from '../common/ThemeProvider';
 import { ScreenshotListView } from './ScreenshotListView';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: theme.palette.divider,
     boxShadow: 'none',

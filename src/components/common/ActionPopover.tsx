@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Popover, PopoverProps } from '@material-ui/core';
+import { Popover, PopoverProps } from '@mui/material';
 import { ActionPanelProps, ActionPanel } from './ActionPanel';
 
 export interface ActionPopoverProps

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { BrowserTypes } from '../../typings';
 import { IconButton } from '@storybook/components';
 import { BrowserIcon } from '../common/BrowserIcon';
-import { capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 
 export interface BrowserIconProps {
   browserType: BrowserTypes;

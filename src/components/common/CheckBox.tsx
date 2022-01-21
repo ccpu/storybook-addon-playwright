@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
-import CheckBoxUnchecked from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxChecked from '@material-ui/icons/CheckBox';
+import { IconButton } from '@mui/material';
+import CheckBoxUnchecked from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxChecked from '@mui/icons-material/CheckBox';
 
 export interface CheckBoxProps {
   onClick: () => void;

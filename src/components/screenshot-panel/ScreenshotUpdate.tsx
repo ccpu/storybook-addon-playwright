@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../typings';
-import Update from '@material-ui/icons/Update';
-import { IconButton, Button } from '@material-ui/core';
+import Update from '@mui/icons-material/Update';
+import { IconButton, Button } from '@mui/material';
 import {
   useAsyncApiCall,
   useScreenshotUpdate,

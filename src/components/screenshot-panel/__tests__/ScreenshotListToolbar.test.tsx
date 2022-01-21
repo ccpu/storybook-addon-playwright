@@ -1,9 +1,9 @@
 import { ScreenshotListToolbar } from '../ScreenshotListToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import Compare from '@material-ui/icons/Compare';
-import Visibility from '@material-ui/icons/Visibility';
-import Update from '@material-ui/icons/Update';
+import Compare from '@mui/icons-material/Compare';
+import Visibility from '@mui/icons-material/Visibility';
+import Update from '@mui/icons-material/Update';
 import {
   DeleteConfirmationButton,
   FixScreenshotFileDialog,

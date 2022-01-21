@@ -2,7 +2,7 @@ import { PreviewPlacementMenu } from '../PreviewPlacementMenu';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem } from '@mui/material';
 import { useAddonState } from '../../../hooks/use-addon-state';
 
 jest.mock('../../../hooks/use-addon-state.ts');
@@ -56,9 +56,9 @@ describe('PreviewPlacementMenu', () => {
     menuItem
       .first()
       .props()
-      .onClick(({
+      .onClick({
         currentTarget: { dataset: { placement: 'Auto' } },
-      } as unknown) as React.MouseEvent<HTMLLIElement, MouseEvent>);
+      } as unknown as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
     expect(setAddonStateMock).toHaveBeenCalledWith({ placement: 'Auto' });
   });

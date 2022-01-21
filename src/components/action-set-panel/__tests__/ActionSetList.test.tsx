@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionSet } from '../../../typings';
 import { Snackbar } from '../../common';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import fetch from 'jest-fetch-mock';
 import { SortableActionSetListItem } from '../ActionSetListItem';
 import { useStoryActionSetsLoader } from '../../../hooks/use-story-action-sets-loader';

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { IconButton as MuIconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
+import { IconButton as MuIconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/DeleteOutlineSharp';
 import { ConfirmationPopover } from '../common';
 
 export interface DeleteConfirmationButtonProps {
@@ -14,10 +14,8 @@ const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
   IconButton = MuIconButton,
   onClose,
 }) => {
-  const [
-    confirmAnchorEl,
-    setConfirmAnchorEl,
-  ] = React.useState<HTMLButtonElement | null>(null);
+  const [confirmAnchorEl, setConfirmAnchorEl] =
+    React.useState<HTMLButtonElement | null>(null);
 
   const handleDelete = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

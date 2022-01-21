@@ -6,13 +6,14 @@ import {
   SortEnd,
 } from 'react-sortable-hoc';
 import { useActionDispatchContext } from '../../store';
-import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../typings';
 import { DragHandle, ListWrapper } from '../common';
 import { useCurrentStoryData } from '../../hooks';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const {
       palette: { text },
     } = theme;

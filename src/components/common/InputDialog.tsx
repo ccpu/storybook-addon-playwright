@@ -1,7 +1,7 @@
-import { TextField, makeStyles, Snackbar } from '@material-ui/core';
+import { TextField, Snackbar, Alert } from '@mui/material';
 import React, { useCallback, useState, useEffect } from 'react';
 import { ActionDialog, ActionDialogDialogProps } from './ActionDialog';
-import Alert from '@material-ui/lab/Alert';
+import makeStyles from '@mui/styles/makeStyles';
 
 interface StyleProps {
   width?: number | string;

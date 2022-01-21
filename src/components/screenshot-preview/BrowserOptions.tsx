@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useBrowserOptions, BrowsersOption } from '../../hooks/';
 import { OptionPopover } from './OptionPopover';
-import SettingIcon from '@material-ui/icons/Settings';
+import SettingIcon from '@mui/icons-material/Settings';
 import { MemoizedSchemaFormLoader, DeviceList } from '../common';
 
 export interface BrowserOptionsProps {

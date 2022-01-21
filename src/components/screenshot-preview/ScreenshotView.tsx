@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { makeStyles, capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import {
@@ -18,13 +18,15 @@ import {
 } from '../common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { useBrowserOptions } from '../../hooks';
-import { lighten, darken } from '@material-ui/core/styles';
+import { lighten, darken } from '@mui/material/styles';
 import { getBorderColor } from './utils';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const getBackgroundColor =
-      theme.palette.type === 'light' ? lighten : darken;
+      theme.palette.mode === 'light' ? lighten : darken;
     const { palette } = theme;
     const { background } = palette;
 
@@ -38,7 +40,7 @@ const useStyles = makeStyles(
         '& .os-scrollbar-track': {
           '& .os-scrollbar-handle': {
             backgroundColor: getBorderColor(
-              palette.type,
+              palette.mode,
               background.paper,
               0.6,
             ),
@@ -70,7 +72,7 @@ const useStyles = makeStyles(
 
       fakeBorder: {
         border:
-          '10px solid ' + getBorderColor(palette.type, background.paper, 0.1),
+          '10px solid ' + getBorderColor(palette.mode, background.paper, 0.1),
         borderTop: 0,
         bottom: 0,
         left: 0,

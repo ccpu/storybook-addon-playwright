@@ -2,8 +2,8 @@ import { dispatchMock } from '../../../../__manual_mocks__/store/action/context'
 import React from 'react';
 import { ActionOptions } from '../ActionOptions';
 import { mount } from 'enzyme';
-import { Chip, IconButton } from '@material-ui/core';
-import Accordion from '@material-ui/core/Accordion';
+import { Chip, IconButton } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
 import { useEditorAction } from '../../../hooks/use-editor-action';
 
 jest.mock('../../../hooks/use-editor-action', () => ({
@@ -91,10 +91,10 @@ describe('ActionOptions', () => {
       .find(IconButton)
       .last()
       .props()
-      .onClick(({
+      .onClick({
         preventDefault: jest.fn(),
         stopPropagation: jest.fn(),
-      } as unknown) as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+      } as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(dispatchMock).toHaveBeenCalledWith([
       {

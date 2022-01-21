@@ -2,7 +2,7 @@ import { getStoryData } from '../../../../__test_data__/story-data';
 import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem } from '@mui/material';
 import { useStorybookApi } from '@storybook/api';
 
 describe('ImageDiffMenuItem', () => {

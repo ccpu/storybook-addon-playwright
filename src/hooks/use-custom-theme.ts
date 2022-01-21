@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
 import React from 'react';
 import { getThemeData } from '../api/client/get-theme-data';
 

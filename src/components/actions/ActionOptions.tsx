@@ -1,23 +1,19 @@
 import React, { memo, useCallback, useState, useEffect } from 'react';
-import {
-  AccordionDetails,
-  makeStyles,
-  Chip,
-  IconButton,
-  Tooltip,
-} from '@material-ui/core';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
+import { AccordionDetails, Chip, IconButton, Tooltip } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../utils';
 import { useActionContext, useActionDispatchContext } from '../../store';
 import { useEditorAction, useCurrentStoryData } from '../../hooks';
 import { getActionOptionValue } from './utils';
-import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
-import HelpIcon from '@material-ui/icons/HelpOutline';
+import DeleteIcon from '@mui/icons-material/DeleteOutlineSharp';
+import HelpIcon from '@mui/icons-material/HelpOutline';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const { divider } = theme.palette;
     return {
       chip: {

@@ -1,11 +1,12 @@
 import React, { forwardRef, Ref, useCallback } from 'react';
 import { ImageDiffResult } from '../../api/typings';
-import { MenuItem, makeStyles } from '@material-ui/core';
+import { MenuItem, Theme } from '@mui/material';
 import { useStorybookApi } from '@storybook/api';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       notFound: {
         '& > div': {

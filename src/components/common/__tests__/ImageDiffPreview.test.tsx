@@ -2,8 +2,8 @@ import { ImageDiffPreview } from '../ImageDiffPreview';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ImagePreview } from '../ImagePreview';
-import { Tabs } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Tabs } from '@mui/material';
+import { Alert } from '@mui/material';
 
 describe('ImageDiffPreview', () => {
   it('should render', () => {
@@ -80,14 +80,14 @@ describe('ImageDiffPreview', () => {
     wrapper
       .find(Tabs)
       .props()
-      .onChange({} as React.ChangeEvent<unknown>, 0);
+      .onChange({} as React.SyntheticEvent<Element, Event>, 0);
 
     expect(wrapper.find(ImagePreview).props().imgSrcString).toBe('diff');
 
     wrapper
       .find(Tabs)
       .props()
-      .onChange({} as React.ChangeEvent<unknown>, 1);
+      .onChange({} as React.SyntheticEvent<Element, Event>, 1);
 
     expect(wrapper.find(ImagePreview).props().imgSrcString).toBe('new');
   });

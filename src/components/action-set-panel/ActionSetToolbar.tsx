@@ -1,9 +1,9 @@
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import AddIcon from '@material-ui/icons/AddSharp';
-import RestoreIcon from '@material-ui/icons/Restore';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import AddAPhoto from '@material-ui/icons/AddAPhoto';
+import AddIcon from '@mui/icons-material/AddSharp';
+import RestoreIcon from '@mui/icons-material/Restore';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import { Toolbar } from '../common';
 
 export interface ActionToolbarProps {

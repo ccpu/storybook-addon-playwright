@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { makeStyles, Divider, Button } from '@material-ui/core';
+import { Divider, Button } from '@mui/material';
 import { MemoizedSchemaRenderer } from '../schema';
 import { Config } from 'ts-to-json/dist/src/Config';
 import { useAsyncApiCall } from '../../hooks';
@@ -7,6 +7,7 @@ import { Loader } from './Loader';
 import { Definition } from 'ts-to-json';
 import * as immutableObject from 'object-path-immutable';
 import { getSchemaClient } from '../../api/client/get-schema-client';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(
   () => {
@@ -49,9 +50,11 @@ const SchemaFormLoader: React.FC<SchemaFormProps> = ({
 
   const [reset, setReset] = useState(false);
 
-  const { makeCall, result: schema, inProgress } = useAsyncApiCall(
-    getSchemaClient,
-  );
+  const {
+    makeCall,
+    result: schema,
+    inProgress,
+  } = useAsyncApiCall(getSchemaClient);
 
   useEffect(() => {
     if (schema || inProgress) return;

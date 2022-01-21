@@ -2,13 +2,15 @@ import React, { useCallback } from 'react';
 import { ActionList } from '../actions/ActionList';
 import { ActionSet } from '../../typings';
 import { Snackbar, Loader, ListItemWrapper, InputDialog } from '../common';
-import { makeStyles, Divider } from '@material-ui/core';
+import { Divider } from '@mui/material';
 import { useActionSchemaLoader, useActionEditor } from '../../hooks';
 import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 import { TEMP_ACTION_SET } from '../../constants';
+import makeStyles from '@mui/styles/makeStyles';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     const {
       palette: { secondary },
     } = theme;

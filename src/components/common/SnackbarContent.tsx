@@ -1,7 +1,6 @@
 import React from 'react';
-import CloseSharp from '@material-ui/icons/CloseSharp';
-import { AlertTitle } from '@material-ui/lab';
-import { Button } from '@material-ui/core';
+import CloseSharp from '@mui/icons-material/CloseSharp';
+import { Button, AlertTitle } from '@mui/material';
 
 export interface SnackbarContentProps {
   onClose?: () => void;

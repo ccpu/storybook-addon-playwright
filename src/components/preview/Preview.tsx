@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useStorybookState } from '@storybook/api';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
 import { isHorizontalPanel } from './utils';

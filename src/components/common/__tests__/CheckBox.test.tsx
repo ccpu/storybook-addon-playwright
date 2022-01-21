@@ -1,8 +1,8 @@
 import { CheckBox } from '../CheckBox';
 import { shallow } from 'enzyme';
 import React from 'react';
-import CheckBoxUnchecked from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxChecked from '@material-ui/icons/CheckBox';
+import CheckBoxUnchecked from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxChecked from '@mui/icons-material/CheckBox';
 
 describe('CheckBox', () => {
   it('should render', () => {

@@ -1,8 +1,8 @@
 import { ScreenShotViewToolbar } from '../ScreenShotViewToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import { CircularProgress } from '@mui/material';
+import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 
 describe('ScreenShotViewToolbar', () => {
   const onRefreshMock = jest.fn();

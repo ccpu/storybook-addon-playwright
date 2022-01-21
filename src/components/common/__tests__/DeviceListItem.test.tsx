@@ -1,7 +1,7 @@
 import { DeviceListItem } from '../DeviceListItem';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem } from '@mui/material';
 
 describe('DeviceListItem', () => {
   const onClickMock = jest.fn();

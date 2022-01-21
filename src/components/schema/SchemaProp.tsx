@@ -3,7 +3,7 @@ import { SchemaRenderer } from './SchemaRenderer';
 import { Control } from './Control';
 import { SelectorControl } from './SelectorControl';
 import { ActionSchema } from '../../typings';
-import { capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import startCase from 'lodash/startCase';
 
 export interface SchemaPropProps {

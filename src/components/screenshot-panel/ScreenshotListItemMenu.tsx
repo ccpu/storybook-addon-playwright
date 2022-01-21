@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, forwardRef, Ref } from 'react';
-import { IconButton } from '@material-ui/core';
-import Compare from '@material-ui/icons/Compare';
+import { IconButton } from '@mui/material';
+import Compare from '@mui/icons-material/Compare';
 import { Loader } from '../common';
 import { ScreenshotData } from '../../typings';
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@mui/icons-material/Edit';
 import { ScreenshotUpdate } from './ScreenshotUpdate';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ScreenshotDelete } from './ScreenshotDelete';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { ImageDiffResult } from '../../api/typings';
+import { Theme } from '@mui/material';
 
 const useStyles = makeStyles(
-  (theme) => {
+  (theme: Theme) => {
     return {
       menu: {
         '&::before': {

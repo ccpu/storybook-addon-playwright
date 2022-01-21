@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Snackbar, SnackbarProps } from '../components';
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { useSnackbar } from './use-snackbar';
 
 type ArgsType<T> = T extends (...args: infer U) => unknown ? U : never;
@@ -80,29 +80,28 @@ export const useAsyncApiCall = <T extends Function>(
     setError(undefined);
   }, []);
 
-  const ErrorSnackbar: React.FC<
-    SnackbarProps & { onRetry?: () => void }
-  > = useCallback(
-    ({ onRetry }) => {
-      if (!error) return null;
-      return (
-        <Snackbar
-          variant="error"
-          open={true}
-          onClose={clearError}
-          action={
-            onRetry && (
-              <Button color="inherit" onClick={onRetry}>
-                Retry
-              </Button>
-            )
-          }
-          message={error}
-        />
-      );
-    },
-    [clearError, error],
-  );
+  const ErrorSnackbar: React.FC<SnackbarProps & { onRetry?: () => void }> =
+    useCallback(
+      ({ onRetry }) => {
+        if (!error) return null;
+        return (
+          <Snackbar
+            variant="error"
+            open={true}
+            onClose={clearError}
+            action={
+              onRetry && (
+                <Button color="inherit" onClick={onRetry}>
+                  Retry
+                </Button>
+              )
+            }
+            message={error}
+          />
+        );
+      },
+      [clearError, error],
+    );
 
   useEffect(() => {
     return () => {

@@ -2,7 +2,7 @@ import '../../../../__manual_mocks__/react-useEffect';
 import { InputDialog } from '../InputDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { TextField, Snackbar } from '@material-ui/core';
+import { TextField, Snackbar } from '@mui/material';
 import { ActionDialog } from '../ActionDialog';
 
 describe('InputDialog', () => {

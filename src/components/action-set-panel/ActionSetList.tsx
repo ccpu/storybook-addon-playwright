@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useStoryActionSetsLoader, useCopyActionSet } from '../../hooks';
 import { useCurrentStoryData, useCurrentStoryActionSets } from '../../hooks';
-import { makeStyles, Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { Loader, Snackbar, ListWrapper } from '../common';
 import { useActionDispatchContext } from '../../store';
 import { deleteActionSet } from '../../api/client';
@@ -9,6 +9,7 @@ import { ActionSet } from '../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
 import { SortableActionSetListItem } from './ActionSetListItem';
 import clsx from 'clsx';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles(
   () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActionMenuItem } from '../ActionMenuItem';
 import { shallow } from 'enzyme';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem } from '@mui/material';
 describe('ActionMenuItem', () => {
   it('should render', () => {
     const wrapper = shallow(

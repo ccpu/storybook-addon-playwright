@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import Settings from '@material-ui/icons/Settings';
-import { IconButton, Popover } from '@material-ui/core';
+import Settings from '@mui/icons-material/Settings';
+import { IconButton, Popover } from '@mui/material';
 import { ScreenshotData } from '../../typings';
 import ReactJson from 'react-json-view';
 

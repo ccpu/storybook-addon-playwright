@@ -4,7 +4,7 @@ import {
   Button,
   DialogContent,
   DialogActions,
-} from '@material-ui/core';
+} from '@mui/material';
 
 export interface ActionPanelProps {
   title?: string;

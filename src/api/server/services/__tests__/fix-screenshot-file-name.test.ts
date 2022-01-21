@@ -132,13 +132,13 @@ describe('fixScreenshotFileName', () => {
     it('should apply export function change', async () => {
       await fixScreenshotFileName({
         ...storyData,
+        id: 'story--new-id',
         previousNamedExport: 'func-name',
-        story: 'new-story-id',
       });
 
       expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
         stories: {
-          'component--new-story-id': {
+          'component--new-id': {
             screenshots: [
               {
                 browserType: 'chromium',
@@ -156,12 +156,35 @@ describe('fixScreenshotFileName', () => {
       });
     });
 
+    it('should handle story with no screenshots', async () => {
+      mocked(getStoryPlaywrightDataByFileName).mockImplementationOnce(() => {
+        return new Promise((resolve) => {
+          resolve({
+            stories: {
+              'story-title--func-name': {},
+            },
+          });
+        });
+      });
+
+      await fixScreenshotFileName({
+        ...storyData,
+        id: 'story--new-id',
+        previousNamedExport: 'func-name',
+      });
+
+      expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
+        stories: {
+          'component--new-id': {},
+        },
+      });
+    });
+
     it('should throw if unable to locate old stories', async () => {
       await expect(
         fixScreenshotFileName({
           ...storyData,
           previousNamedExport: 'bad-name',
-          story: 'new-story-id',
         }),
       ).rejects.toThrow();
     });

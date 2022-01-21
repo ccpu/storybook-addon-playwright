@@ -140,13 +140,13 @@ describe('useActionSetEditor', () => {
   it('should not change store if call client api failed', async () => {
     mocked(useAsyncApiCall).mockImplementation(
       () =>
-        (({
+        ({
           makeCall: () => {
             return new Promise((resolve) => {
               resolve(new Error('ops'));
             });
           },
-        } as unknown) as ReturnType<typeof useAsyncApiCall>),
+        } as unknown as ReturnType<typeof useAsyncApiCall>),
     );
     const { result } = renderHook(() => useActionEditor(actionSet));
     await act(async () => {
@@ -159,9 +159,9 @@ describe('useActionSetEditor', () => {
     const orgEditingActionSet = getOrgEditingActionSet();
     mocked(useActionContext).mockImplementation(
       () =>
-        (({
+        ({
           orgEditingActionSet: orgEditingActionSet,
-        } as unknown) as ReducerState),
+        } as unknown as ReducerState),
     );
 
     const { result } = renderHook(() => useActionEditor(actionSet));
@@ -204,6 +204,16 @@ describe('useActionSetEditor', () => {
         storyId: 'story-id',
         type: 'saveActionSet',
       },
+    ]);
+  });
+
+  it('should cancel edit mode when story change (unmounted)', async () => {
+    const { unmount } = renderHook(() => useActionEditor(actionSet));
+
+    unmount();
+
+    expect(dispatchMock).toHaveBeenCalledWith([
+      { type: 'clearActionExpansion' },
     ]);
   });
 });

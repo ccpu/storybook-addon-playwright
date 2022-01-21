@@ -6,6 +6,7 @@ import { ActionListValidationResult, validateActionList } from '../utils';
 import { saveActionSet } from '../api/client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCurrentStoryData } from './use-current-story-data';
+import React from 'react';
 
 export const useActionEditor = (actionSet: ActionSet) => {
   const dispatch = useActionDispatchContext();
@@ -19,9 +20,8 @@ export const useActionEditor = (actionSet: ActionSet) => {
 
   const storyData = useCurrentStoryData();
 
-  const [validationResult, setValidationResult] = useState<
-    ActionListValidationResult[]
-  >();
+  const [validationResult, setValidationResult] =
+    useState<ActionListValidationResult[]>();
 
   const handleAddAction = useCallback(
     (actionName: string) => {
@@ -97,6 +97,15 @@ export const useActionEditor = (actionSet: ActionSet) => {
       type: 'cancelEditActionSet',
     });
   }, [dispatch, storyData]);
+
+  const editingAction = actionSet !== undefined;
+  const storyId = storyData && storyData.id;
+
+  React.useEffect(() => {
+    return () => {
+      if (editingAction && storyId) cancelEditActionSet();
+    };
+  }, [cancelEditActionSet, editingAction, storyId]);
 
   return {
     ErrorSnackbar,

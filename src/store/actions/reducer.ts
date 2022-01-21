@@ -289,6 +289,13 @@ export function mainReducer(
     }
 
     case 'deleteTempActionSets': {
+      if (
+        !state.stories[action.storyId] ||
+        !state.stories[action.storyId].actionSets
+      ) {
+        return state;
+      }
+
       return updateStoryActionSet(
         state,
         action.storyId,

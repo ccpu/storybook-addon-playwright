@@ -37,11 +37,8 @@ const ActionSetList = SortableContainer(() => {
 
   const storyId = storyData ? storyData.id : undefined;
 
-  const {
-    storyActionSets,
-    currentActionSets,
-    state,
-  } = useCurrentStoryActionSets();
+  const { storyActionSets, currentActionSets, state } =
+    useCurrentStoryActionSets();
 
   const {
     loading,
@@ -67,7 +64,8 @@ const ActionSetList = SortableContainer(() => {
           storyId: storyData.id,
           type: 'deleteActionSet',
         });
-      } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
         setError(error.message);
       }
     },

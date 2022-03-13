@@ -28,19 +28,19 @@ async function installMouseHelper(page: Page) {
     }
     styleElement.innerHTML = `
         playwright-mouse-pointer {
-            position: absolute;
+            position: absolute !important;
             top: -100px;
             z-index: 1000;
             left: -100px;
             width: 14px;
             height: 14px;
             background: rgba(0, 0, 0, 0.39);
-            border: 2px solid #fbfbfb9e;
+            border: 2px solid #fbfbfb9e !important;
             border-radius: 14px;
             margin: -8px 0 0 -8px;
             padding: 0;
-            pointer-events: none;
-            box-sizing: content-box;
+            pointer-events: none !important;
+            box-sizing: content-box !important;
           }
           playwright-mouse-pointer.button-mousedown {
             background: rgba(243, 169, 4, 0.87);

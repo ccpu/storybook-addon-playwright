@@ -58,8 +58,8 @@ export const useAsyncApiCall = <T extends Function>(
         }
       } catch (error) {
         setInProgress(false);
-        setError(error.message);
-        return new Error(error.message);
+        setError((error as { message: string }).message);
+        return new Error((error as { message: string }).message);
       }
       return data;
     },
@@ -80,29 +80,28 @@ export const useAsyncApiCall = <T extends Function>(
     setError(undefined);
   }, []);
 
-  const ErrorSnackbar: React.FC<
-    SnackbarProps & { onRetry?: () => void }
-  > = useCallback(
-    ({ onRetry }) => {
-      if (!error) return null;
-      return (
-        <Snackbar
-          variant="error"
-          open={true}
-          onClose={clearError}
-          action={
-            onRetry && (
-              <Button color="inherit" onClick={onRetry}>
-                Retry
-              </Button>
-            )
-          }
-          message={error}
-        />
-      );
-    },
-    [clearError, error],
-  );
+  const ErrorSnackbar: React.FC<SnackbarProps & { onRetry?: () => void }> =
+    useCallback(
+      ({ onRetry }) => {
+        if (!error) return null;
+        return (
+          <Snackbar
+            variant="error"
+            open={true}
+            onClose={clearError}
+            action={
+              onRetry && (
+                <Button color="inherit" onClick={onRetry}>
+                  Retry
+                </Button>
+              )
+            }
+            message={error}
+          />
+        );
+      },
+      [clearError, error],
+    );
 
   useEffect(() => {
     return () => {

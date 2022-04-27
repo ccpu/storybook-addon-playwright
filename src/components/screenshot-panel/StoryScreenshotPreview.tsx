@@ -59,7 +59,7 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
         variant: 'success',
       });
     } catch (error) {
-      openSnackbar(error.message, {
+      openSnackbar((error as { message: string }).message, {
         variant: 'error',
       });
     }

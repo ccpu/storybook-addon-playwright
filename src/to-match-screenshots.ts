@@ -32,7 +32,7 @@ export async function toMatchScreenshots(
             customSnapshotsDir: baselineScreenshotPath.screenshotsDir,
           });
         } catch (error) {
-          throw error.message;
+          throw (error as { message: string }).message;
         }
       },
       playwrightJsonPath:

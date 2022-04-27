@@ -5,7 +5,7 @@
   },
   "baseURL": {
     "type": "string",
-    "description": "When using [page.goto(url[, options])](https://playwright.dev/docs/api/class-page#page-goto),\n[page.route(url, handler[, options])](https://playwright.dev/docs/api/class-page#page-route),\n[page.waitForURL(url[, options])](https://playwright.dev/docs/api/class-page#page-wait-for-url),\n[page.waitForRequest(urlOrPredicate[, options])](https://playwright.dev/docs/api/class-page#page-wait-for-request), or\n[page.waitForResponse(urlOrPredicate[, options])](https://playwright.dev/docs/api/class-page#page-wait-for-response) it\ntakes the base URL in consideration by using the [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL)\nconstructor for building the corresponding URL. Examples:\n- baseURL: `http://localhost:3000` and navigating to `/bar.html` results in `http://localhost:3000/bar.html`\n- baseURL: `http://localhost:3000/foo/` and navigating to `./bar.html` results in `http://localhost:3000/foo/bar.html`"
+    "description": "When using [page.goto(url[, options])](https://playwright.dev/docs/api/class-page#page-goto), [page.route(url, handler[, options])](https://playwright.dev/docs/api/class-page#page-route), [page.waitForURL(url[, options])](https://playwright.dev/docs/api/class-page#page-wait-for-url), [page.waitForRequest(urlOrPredicate[, options])](https://playwright.dev/docs/api/class-page#page-wait-for-request), or [page.waitForResponse(urlOrPredicate[, options])](https://playwright.dev/docs/api/class-page#page-wait-for-response) it takes the base URL in consideration by using the [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor for building the corresponding URL. Examples:\n- baseURL: `http://localhost:3000` and navigating to `/bar.html` results in `http://localhost:3000/bar.html`\n- baseURL: `http://localhost:3000/foo/` and navigating to `./bar.html` results in `http://localhost:3000/foo/bar.html`"
   },
   "bypassCSP": {
     "type": "boolean",
@@ -18,7 +18,7 @@
       "dark",
       "no-preference"
     ],
-    "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See\n[page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults\nto `'light'`."
+    "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults to `'light'`."
   },
   "deviceScaleFactor": {
     "type": "number",
@@ -30,7 +30,7 @@
       "active",
       "none"
     ],
-    "description": "Emulates `'forced-colors'` media feature, supported values are `'active'`, `'none'`. See\n[page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults\nto `'none'`.\n\n> NOTE: It's not supported in WebKit, see [here](https://bugs.webkit.org/show_bug.cgi?id=225281) in their issue tracker."
+    "description": "Emulates `'forced-colors'` media feature, supported values are `'active'`, `'none'`. See [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults to `'none'`.\n\n> NOTE: It's not supported in WebKit, see [here](https://bugs.webkit.org/show_bug.cgi?id=225281) in their issue tracker."
   },
   "geolocation": {
     "type": "object",
@@ -81,7 +81,7 @@
   },
   "isMobile": {
     "type": "boolean",
-    "description": "Whether the `meta viewport` tag is taken into account and touch events are enabled. Defaults to `false`. Not supported\nin Firefox."
+    "description": "Whether the `meta viewport` tag is taken into account and touch events are enabled. Defaults to `false`. Not supported in Firefox."
   },
   "javaScriptEnabled": {
     "type": "boolean",
@@ -89,7 +89,7 @@
   },
   "locale": {
     "type": "string",
-    "description": "Specify user locale, for example `en-GB`, `de-DE`, etc. Locale will affect `navigator.language` value, `Accept-Language`\nrequest header value as well as number and date formatting rules."
+    "description": "Specify user locale, for example `en-GB`, `de-DE`, etc. Locale will affect `navigator.language` value, `Accept-Language` request header value as well as number and date formatting rules."
   },
   "offline": {
     "type": "boolean",
@@ -100,14 +100,14 @@
     "items": {
       "type": "string"
     },
-    "description": "A list of permissions to grant to all pages in this context. See\n[browserContext.grantPermissions(permissions[, options])](https://playwright.dev/docs/api/class-browsercontext#browser-context-grant-permissions)\nfor more details."
+    "description": "A list of permissions to grant to all pages in this context. See [browserContext.grantPermissions(permissions[, options])](https://playwright.dev/docs/api/class-browsercontext#browser-context-grant-permissions) for more details."
   },
   "proxy": {
     "type": "object",
     "properties": {
       "server": {
         "type": "string",
-        "description": "Proxy to be used for all requests. HTTP and SOCKS proxies are supported, for example `http://myproxy.com:3128` or\n`socks5://myproxy.com:3128`. Short form `myproxy.com:3128` is considered an HTTP proxy."
+        "description": "Proxy to be used for all requests. HTTP and SOCKS proxies are supported, for example `http://myproxy.com:3128` or `socks5://myproxy.com:3128`. Short form `myproxy.com:3128` is considered an HTTP proxy."
       },
       "bypass": {
         "type": "string",
@@ -126,7 +126,7 @@
       "server"
     ],
     "additionalProperties": false,
-    "description": "Network proxy settings to use with this context.\n\n> NOTE: For Chromium on Windows the browser needs to be launched with the global proxy for this option to work. If all\ncontexts override the proxy, global proxy will be never used and can be any string, for example `launch({ proxy: {\nserver: 'http://per-context' } })`."
+    "description": "Network proxy settings to use with this context.\n\n> NOTE: For Chromium on Windows the browser needs to be launched with the global proxy for this option to work. If all contexts override the proxy, global proxy will be never used and can be any string, for example `launch({ proxy: { server: 'http://per-context' } })`."
   },
   "recordHar": {
     "type": "object",
@@ -144,7 +144,7 @@
       "path"
     ],
     "additionalProperties": false,
-    "description": "Enables [HAR](http://www.softwareishard.com/blog/har-12-spec) recording for all pages into `recordHar.path` file. If not\nspecified, the HAR is not recorded. Make sure to await\n[browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browser-context-close) for the HAR to be\nsaved."
+    "description": "Enables [HAR](http://www.softwareishard.com/blog/har-12-spec) recording for all pages into `recordHar.path` file. If not specified, the HAR is not recorded. Make sure to await [browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browser-context-close) for the HAR to be saved."
   },
   "recordVideo": {
     "type": "object",
@@ -170,14 +170,14 @@
           "height"
         ],
         "additionalProperties": false,
-        "description": "Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport` scaled down to fit\ninto 800x800. If `viewport` is not configured explicitly the video size defaults to 800x450. Actual picture of each page\nwill be scaled down if necessary to fit the specified size."
+        "description": "Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport` scaled down to fit into 800x800. If `viewport` is not configured explicitly the video size defaults to 800x450. Actual picture of each page will be scaled down if necessary to fit the specified size."
       }
     },
     "required": [
       "dir"
     ],
     "additionalProperties": false,
-    "description": "Enables video recording for all pages into `recordVideo.dir` directory. If not specified videos are not recorded. Make\nsure to await [browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browser-context-close) for\nvideos to be saved."
+    "description": "Enables video recording for all pages into `recordVideo.dir` directory. If not specified videos are not recorded. Make sure to await [browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browser-context-close) for videos to be saved."
   },
   "reducedMotion": {
     "type": "string",
@@ -185,7 +185,7 @@
       "reduce",
       "no-preference"
     ],
-    "description": "Emulates `'prefers-reduced-motion'` media feature, supported values are `'reduce'`, `'no-preference'`. See\n[page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults\nto `'no-preference'`."
+    "description": "Emulates `'prefers-reduced-motion'` media feature, supported values are `'reduce'`, `'no-preference'`. See [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults to `'no-preference'`."
   },
   "screen": {
     "type": "object",
@@ -204,7 +204,7 @@
       "height"
     ],
     "additionalProperties": false,
-    "description": "Emulates consistent window screen size available inside web page via `window.screen`. Is only used when the `viewport`\nis set."
+    "description": "Emulates consistent window screen size available inside web page via `window.screen`. Is only used when the `viewport` is set."
   },
   "storageState": {
     "anyOf": [
@@ -299,15 +299,15 @@
         "additionalProperties": false
       }
     ],
-    "description": "Populates context with given storage state. This option can be used to initialize context with logged-in information\nobtained via\n[browserContext.storageState([options])](https://playwright.dev/docs/api/class-browsercontext#browser-context-storage-state).\nEither a path to the file with saved storage, or an object with the following fields:"
+    "description": "Populates context with given storage state. This option can be used to initialize context with logged-in information obtained via [browserContext.storageState([options])](https://playwright.dev/docs/api/class-browsercontext#browser-context-storage-state). Either a path to the file with saved storage, or an object with the following fields:"
   },
   "strictSelectors": {
     "type": "boolean",
-    "description": "It specified, enables strict selectors mode for this context. In the strict selectors mode all operations on selectors\nthat imply single target DOM element will throw when more than one element matches the selector. See [Locator] to learn\nmore about the strict mode."
+    "description": "It specified, enables strict selectors mode for this context. In the strict selectors mode all operations on selectors that imply single target DOM element will throw when more than one element matches the selector. See [Locator] to learn more about the strict mode."
   },
   "timezoneId": {
     "type": "string",
-    "description": "Changes the timezone of the context. See\n[ICU's metaZones.txt](https://cs.chromium.org/chromium/src/third_party/icu/source/data/misc/metaZones.txt?rcl=faee8bc70570192d82d2978a71e2a615788597d1)\nfor a list of supported timezone IDs."
+    "description": "Changes the timezone of the context. See [ICU's metaZones.txt](https://cs.chromium.org/chromium/src/third_party/icu/source/data/misc/metaZones.txt?rcl=faee8bc70570192d82d2978a71e2a615788597d1) for a list of supported timezone IDs."
   },
   "userAgent": {
     "type": "string",
@@ -330,11 +330,13 @@
       "height"
     ],
     "additionalProperties": false,
-    "description": "**DEPRECATED** Use `recordVideo` instead."
+    "description": "**DEPRECATED** Use `recordVideo` instead.",
+    "deprecated": true
   },
   "videosPath": {
     "type": "string",
-    "description": "**DEPRECATED** Use `recordVideo` instead."
+    "description": "**DEPRECATED** Use `recordVideo` instead.",
+    "deprecated": true
   },
   "viewport": {
     "type": "object",

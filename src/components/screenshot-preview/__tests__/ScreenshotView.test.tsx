@@ -11,7 +11,7 @@ jest.mock('../../../hooks/use-save-screenshot');
 const useSaveScreenshotMock = useSaveScreenshot as jest.Mock;
 const onSaveMock = jest.fn();
 onSaveMock.mockImplementation(() => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     resolve();
   });
 });
@@ -29,7 +29,7 @@ jest.mock('../../../hooks/use-screenshot.ts');
 jest.mock('../../../hooks/use-browser-options.ts');
 jest.mock('../../../hooks/use-edit-screenshot.ts');
 
-const useScreenshotMock = useScreenshot as jest.Mock; 
+const useScreenshotMock = useScreenshot as jest.Mock;
 
 describe('ScreenshotView', () => {
   const useScreenshotMockData = () => ({

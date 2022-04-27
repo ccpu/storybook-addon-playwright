@@ -7,7 +7,7 @@ import { SelectorOverlay } from '../SelectorOverlay';
 jest.mock('../../../hooks/use-selector-manager');
 
 jest.mock('react', () => ({
-  ...jest.requireActual('react'),
+  ...(jest.requireActual('react') as object),
   useEffect: (cb: () => void) => {
     cb();
   },

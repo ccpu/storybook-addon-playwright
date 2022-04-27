@@ -97,7 +97,10 @@ export const testScreenshotService = async (
     result.newScreenshot = snapshotData.base64;
   } catch (error) {
     result.pass = false;
-    result.error = typeof error === 'string' ? error : error.message;
+    result.error =
+      typeof error === 'string'
+        ? error
+        : (error as { message: string }).message;
   }
 
   result.screenshotId = data.screenshotId;

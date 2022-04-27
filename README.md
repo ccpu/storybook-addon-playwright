@@ -8,7 +8,7 @@ An addon to visually test the stories in the multiple browsers within storybook 
 
 > Works with [Component Story Format (CSF)](https://storybook.js.org/docs/formats/component-story-format/) only.
 
-![addon-screenshot](assets/addon-screenshot.gif)
+![addon-screenshot](https://raw.githubusercontent.com/ccpu/storybook-addon-playwright/master/assets/addon-screenshot.gif)
 
 ## Compatibility
 

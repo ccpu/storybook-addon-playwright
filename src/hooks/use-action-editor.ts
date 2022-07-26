@@ -56,6 +56,7 @@ export const useActionEditor = (actionSet: ActionSet) => {
       setValidationResult(validateResult);
       return;
     }
+
     let result: void | Error;
 
     if (!actionSet.temp) {

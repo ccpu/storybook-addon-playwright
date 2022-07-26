@@ -60,11 +60,8 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
   const { openSnackbar } = useSnackbar();
 
-  const {
-    testStoryScreenShots,
-    imageDiffTestInProgress,
-    clearImageDiffError,
-  } = useScreenshotImageDiffResults();
+  const { testStoryScreenShots, imageDiffTestInProgress, clearImageDiffError } =
+    useScreenshotImageDiffResults();
 
   const diffResults =
     target === 'file'
@@ -143,6 +140,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
           badgeContent={diffResults.length}
           color="secondary"
           className={classes.imageDiffBadge}
+          overlap="rectangular"
         />
 
         <Compare viewBox="1.5 1 20 20" />

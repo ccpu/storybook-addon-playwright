@@ -18,6 +18,9 @@ import {
   fixScreenshotFileName,
   getSchemaController,
   getThemeData,
+  addToFavourite,
+  getFavouriteActions,
+  deleteFavouriteAction,
 } from './controller';
 import { Router, Response, Request } from 'express';
 
@@ -65,6 +68,9 @@ const expressMiddleWare = (router: Partial<Router>) => {
   router.post(ROUTE.GET_SCHEMA, asyncCatch(getSchemaController));
   router.post(ROUTE.FIX_STORY_TITLE_CHANGE, asyncCatch(fixScreenshotFileName));
   router.post(ROUTE.GET_THEME, asyncCatch(getThemeData));
+  router.post(ROUTE.ADD_FAVOURITE_ACTION, asyncCatch(addToFavourite));
+  router.post(ROUTE.DELETE_FAVOURITE_ACTION, asyncCatch(deleteFavouriteAction));
+  router.post(ROUTE.GET_FAVOURITE_ACTIONS, asyncCatch(getFavouriteActions));
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   router.use((error, _req, res, next) => {

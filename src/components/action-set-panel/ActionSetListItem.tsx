@@ -8,6 +8,7 @@ import { ActionSet } from '../../typings';
 import { ActionSetEditor } from './ActionSetEditor';
 import { TEMP_ACTION_SET } from '../../constants';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import { AddFavouriteAction } from './AddFavouriteAction';
 
 export interface ActionSetActionSetListItemProps extends SortableElementProps {
   onEdit: (item: ActionSet) => void;
@@ -78,6 +79,8 @@ export function ActionSetListItem({
           >
             <FileCopyOutlinedIcon />
           </IconButton>
+
+          {!hideIcons && <AddFavouriteAction item={item} />}
           <CheckBox onClick={handleCheckStateChanged} checked={checked} />
           {!hideIcons && (
             <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />

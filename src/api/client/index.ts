@@ -11,3 +11,4 @@ export * from './test-screenshots';
 export * from './update-screenshot';
 export * from './delete-story-screenshots';
 export * from './change-screenshot-index';
+export * from './add-favourite-action';

@@ -8,9 +8,13 @@ import { ActionSet } from '../../typings';
 import { useCurrentActions } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/api';
+import { FavouriteActions } from './FavouriteActions';
 
 const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
+
+  const [addToFavouriteAnchor, setAddToFavouriteAnchor] =
+    useState<HTMLElement>();
 
   const { storyId } = useStorybookState();
 
@@ -75,38 +79,22 @@ const ActionSetMain: React.FC = () => {
     [dispatch, storyId],
   );
 
-  const onAddQuickAction = React.useCallback(
-    (actionName: string, actionTitle: string) => {
-      const id = nanoid(12);
-      const newActionSet: ActionSet = {
-        actions: [
-          {
-            id: nanoid(10),
-            name: actionName,
-          },
-        ],
-        id,
-        title: actionTitle,
-      };
+  const onFavoriteActionsClick = React.useCallback((e) => {
+    setAddToFavouriteAnchor(e.target);
+  }, []);
 
-      dispatch({
-        actionSet: newActionSet,
-        new: true,
-        selected: true,
-        storyId,
-        type: 'addActionSet',
-      });
-    },
-    [dispatch, storyId],
-  );
+  const onFavoriteActionsClose = React.useCallback(() => {
+    setAddToFavouriteAnchor(null);
+  }, []);
 
   return (
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       <ActionToolbar
         onAddActionSet={toggleDescriptionDialog}
         onReset={handleReset}
-        onAddQuickAction={onAddQuickAction}
+        onFavoriteActionsClick={onFavoriteActionsClick}
       />
+
       <ActionSetList onSortEnd={handleSortEnd} useDragHandle />
 
       <InputDialog
@@ -115,6 +103,11 @@ const ActionSetMain: React.FC = () => {
         open={showDescDialog}
         onSave={createNewActionSet}
         required
+      />
+
+      <FavouriteActions
+        anchorEl={addToFavouriteAnchor}
+        onClose={onFavoriteActionsClose}
       />
     </div>
   );

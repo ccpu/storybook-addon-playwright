@@ -113,18 +113,6 @@
         {
           "actions": [
             {
-              "name": "waitForTimeout",
-              "args": {
-                "timeout": 100
-              }
-            }
-          ],
-          "id": "SIOLicXITeXZ",
-          "title": "delay 100"
-        },
-        {
-          "actions": [
-            {
               "name": "mouse.click",
               "args": {
                 "x": 109,

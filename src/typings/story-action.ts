@@ -22,4 +22,5 @@ export interface ActionSet {
   title: string;
   actions: StoryAction[];
   temp?: boolean;
+  visibleTo?: string;
 }

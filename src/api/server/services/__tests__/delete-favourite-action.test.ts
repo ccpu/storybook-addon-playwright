@@ -1,5 +1,5 @@
 import { mocked } from 'ts-jest/utils';
-import { ActionSet } from '../../../../typings';
+import { FavouriteActionSet } from '../../../../typings';
 import { deleteFavouriteAction } from '../delete-favourite-action';
 import { getFavouriteActions } from '../get-favourite-actions';
 import jsonfile from 'jsonfile';
@@ -7,7 +7,7 @@ import jsonfile from 'jsonfile';
 jest.mock('../get-favourite-actions');
 
 describe('deleteFavouriteAction', () => {
-  const actionSet: ActionSet = {
+  const actionSet: FavouriteActionSet = {
     actions: [
       {
         id: 'action-id',

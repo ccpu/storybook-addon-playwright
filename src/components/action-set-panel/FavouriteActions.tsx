@@ -9,7 +9,7 @@ import {
   capitalize,
 } from '@material-ui/core';
 import { getFavouriteActions } from '../../api/client/get-favourite-actions';
-import { ActionSet } from '../../typings';
+import { FavouriteActionSet } from '../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { useActionDispatchContext } from '../../store';
 import { nanoid } from 'nanoid';
@@ -35,9 +35,8 @@ export interface FavouriteActionsProps {
   onClose: () => void;
 }
 
-const defaults: ActionSet[] = [
+const defaults: FavouriteActionSet[] = [
   {
-    visibleTo: '*',
     actions: [
       {
         id: 'Kj6iSI1D3BIF1yX_BLgxF',
@@ -46,9 +45,9 @@ const defaults: ActionSet[] = [
     ],
     id: '1--default',
     title: 'Take screenshot',
+    visibleTo: '*',
   },
   {
-    visibleTo: '*',
     actions: [
       {
         id: 'zjgHFLzuMbXG',
@@ -57,13 +56,15 @@ const defaults: ActionSet[] = [
     ],
     id: '2--default',
     title: 'Take screenshot of all actions',
+    visibleTo: '*',
   },
 ];
 
 const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   const { anchorEl, onClose } = props;
 
-  const [actionSets, setActionSets] = React.useState<ActionSet[]>(defaults);
+  const [actionSets, setActionSets] =
+    React.useState<FavouriteActionSet[]>(defaults);
 
   const { makeCall: saveActionSet } = useAsyncApiCall(
     saveActionSetClient,
@@ -91,12 +92,12 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
     }
   }, [anchorEl, storyId]);
 
-  const onAddQuickAction = async (item: ActionSet) => {
+  const onAddQuickAction = async (item: FavouriteActionSet) => {
     const id = nanoid(12);
-    const newActionSet: ActionSet = {
+    const newActionSet: FavouriteActionSet = {
       ...item,
-      visibleTo: undefined,
       id,
+      visibleTo: undefined,
     };
 
     const result = await saveActionSet({

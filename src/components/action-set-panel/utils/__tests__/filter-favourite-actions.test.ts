@@ -1,8 +1,7 @@
-import { ActionSet } from '../../../../typings/story-action';
+import { FavouriteActionSet } from '../../../../typings/story-action';
 import { filterFavouriteActions } from '../filter-favourite-actions';
 
-const baseActionSet: ActionSet = {
-  visibleTo: '*',
+const baseActionSet: FavouriteActionSet = {
   actions: [
     {
       id: 'action-id',
@@ -11,6 +10,7 @@ const baseActionSet: ActionSet = {
   ],
   id: 'action-set-id',
   title: 'action-set-desc',
+  visibleTo: '*',
 };
 
 describe('filterFavouriteActions', () => {
@@ -19,7 +19,7 @@ describe('filterFavouriteActions', () => {
   });
 
   it('should have action for all stories', () => {
-    const actionSet: ActionSet[] = [
+    const actionSet: FavouriteActionSet[] = [
       {
         ...baseActionSet,
         visibleTo: '*',
@@ -32,7 +32,7 @@ describe('filterFavouriteActions', () => {
   });
 
   it('should have action parent', () => {
-    const actionSet: ActionSet[] = [
+    const actionSet: FavouriteActionSet[] = [
       {
         ...baseActionSet,
         visibleTo: 'parent',
@@ -45,7 +45,7 @@ describe('filterFavouriteActions', () => {
   });
 
   it('should have action for stories startWith', () => {
-    const actionSet: ActionSet[] = [
+    const actionSet: FavouriteActionSet[] = [
       {
         ...baseActionSet,
         visibleTo: 'parent--story*',
@@ -62,7 +62,7 @@ describe('filterFavouriteActions', () => {
   });
 
   it('should not have action for stories that story id not start with visibleTo', () => {
-    const actionSet: ActionSet[] = [
+    const actionSet: FavouriteActionSet[] = [
       {
         ...baseActionSet,
         visibleTo: 'parent--story*',
@@ -73,7 +73,7 @@ describe('filterFavouriteActions', () => {
   });
 
   it('should match using regex', () => {
-    const actionSet: ActionSet[] = [
+    const actionSet: FavouriteActionSet[] = [
       {
         ...baseActionSet,
         visibleTo: '^(parent1|parent2)',

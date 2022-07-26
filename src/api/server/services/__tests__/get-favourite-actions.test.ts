@@ -1,9 +1,9 @@
 import { getFavouriteActions } from '../get-favourite-actions';
 import fs from 'fs';
 import { FavouriteActions } from '../../../typings/favourite-actions';
-import { ActionSet } from '../../../../typings';
+import { FavouriteActionSet } from '../../../../typings';
 
-const actionSet: ActionSet = {
+const actionSet: FavouriteActionSet = {
   actions: [
     {
       id: 'action-id',

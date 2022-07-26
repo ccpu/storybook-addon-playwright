@@ -1,6 +1,6 @@
 import { AddFavouriteAction } from '../AddFavouriteAction';
 import { shallow } from 'enzyme';
-import { ActionSet } from '../../../typings';
+import { FavouriteActionSet } from '../../../typings';
 import React from 'react';
 import { RadioGroup, Button, TextField } from '@material-ui/core';
 import { addFavouriteAction } from '../../../api/client/add-favourite-action';
@@ -8,7 +8,7 @@ import { addFavouriteAction } from '../../../api/client/add-favourite-action';
 jest.mock('../../../hooks/use-anchor-el');
 jest.mock('../../../api/client/add-favourite-action');
 
-const actionSet: ActionSet = {
+const actionSet: FavouriteActionSet = {
   actions: [
     {
       id: 'action-id',

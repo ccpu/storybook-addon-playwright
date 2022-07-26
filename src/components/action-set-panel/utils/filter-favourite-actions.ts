@@ -1,7 +1,7 @@
-import { ActionSet } from '../../../typings/story-action';
+import { FavouriteActionSet } from '../../../typings/story-action';
 
 export const filterFavouriteActions = (
-  actions: ActionSet[],
+  actions: FavouriteActionSet[],
   storyId: string,
 ) => {
   return actions.reduce((arr, item) => {

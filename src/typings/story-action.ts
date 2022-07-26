@@ -22,5 +22,8 @@ export interface ActionSet {
   title: string;
   actions: StoryAction[];
   temp?: boolean;
+}
+
+export interface FavouriteActionSet extends ActionSet {
   visibleTo?: string;
 }

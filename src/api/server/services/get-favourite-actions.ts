@@ -1,10 +1,10 @@
 import { readFile } from 'jsonfile';
-import { ActionSet } from '../../../typings';
+import { FavouriteActionSet } from '../../../typings';
 import { FAVOURITE_ACTIONS_FILE_PATH } from './constants';
 import * as fs from 'fs';
 import { FavouriteActions } from '../../typings/favourite-actions';
 
-export const getFavouriteActions = async (): Promise<ActionSet[]> => {
+export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(FAVOURITE_ACTIONS_FILE_PATH)) {
       resolve([]);

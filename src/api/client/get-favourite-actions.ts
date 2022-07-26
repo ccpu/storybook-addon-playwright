@@ -1,7 +1,7 @@
 import { getEndpoint, responseHandler } from './utils';
-import { ActionSet } from '../../typings';
+import { FavouriteActionSet } from '../../typings';
 
-export const getFavouriteActions = async (): Promise<ActionSet[]> => {
+export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
   const restEndpoint = getEndpoint('GET_FAVOURITE_ACTIONS');
 
   const resp = await fetch(restEndpoint, {

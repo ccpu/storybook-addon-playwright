@@ -1,7 +1,7 @@
-import { ActionSet } from '../../typings';
+import { FavouriteActionSet } from '../../typings';
 import { getEndpoint, responseHandler } from './utils';
 
-export const addFavouriteAction = async (data: ActionSet) => {
+export const addFavouriteAction = async (data: FavouriteActionSet) => {
   const restEndpoint = getEndpoint('ADD_FAVOURITE_ACTION');
 
   await fetch(restEndpoint, {

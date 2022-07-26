@@ -3,7 +3,7 @@ import fs from 'fs';
 import jsonfile from 'jsonfile';
 import { mocked } from 'ts-jest/utils';
 import { FavouriteActions } from '../../../typings/favourite-actions';
-import { ActionSet } from '../../../../typings';
+import { FavouriteActionSet } from '../../../../typings';
 
 const spyOnFs = jest.spyOn(fs, 'existsSync');
 
@@ -11,7 +11,7 @@ const spyOnReadFileSync = jest.spyOn(jsonfile, 'readFileSync');
 const spyOnWriteFileSync = jest.spyOn(jsonfile, 'writeFileSync');
 
 describe('addToFavourite', () => {
-  const actionSet: ActionSet = {
+  const actionSet: FavouriteActionSet = {
     actions: [
       {
         id: 'action-id',

@@ -1,9 +1,9 @@
-import { ActionSet } from '../../../typings';
+import { FavouriteActionSet } from '../../../typings';
 import { addFavouriteAction } from '../add-favourite-action';
 import fetch from 'jest-fetch-mock';
 
 describe('addFavouriteAction', () => {
-  const actionSet: ActionSet = {
+  const actionSet: FavouriteActionSet = {
     actions: [
       {
         id: 'action-id',

@@ -1,5 +1,5 @@
-import { ActionSet } from '../../typings';
+import { FavouriteActionSet } from '../../typings';
 
 export interface FavouriteActions {
-  actionSets: ActionSet[];
+  actionSets: FavouriteActionSet[];
 }

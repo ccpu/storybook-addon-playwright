@@ -1,13 +1,13 @@
 import { getFavouriteActions } from '../get-favourite-actions';
 import fetch from 'jest-fetch-mock';
-import { ActionSet } from '../../../typings';
+import { FavouriteActionSet } from '../../../typings';
 
 describe('getFavouriteActions', () => {
   it('should be defined', () => {
     expect(getFavouriteActions).toBeDefined();
   });
 
-  const resData: ActionSet[] = [
+  const resData: FavouriteActionSet[] = [
     {
       actions: [
         {

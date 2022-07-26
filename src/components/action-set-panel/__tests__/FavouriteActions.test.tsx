@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { MenuItem, IconButton } from '@material-ui/core';
 import { getFavouriteActions } from '../../../api/client/get-favourite-actions';
 import { mocked } from 'ts-jest/utils';
-import { ActionSet } from '../../../typings';
+import { FavouriteActionSet } from '../../../typings';
 import { deleteFavouriteAction } from '../../../api/client/delete-favourite-action';
 import { useActionDispatchContext } from '../../../store/actions/ActionContext';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
@@ -39,7 +39,7 @@ jest.mock('react', () => ({
   },
 }));
 
-const actionSet: ActionSet = {
+const actionSet: FavouriteActionSet = {
   actions: [
     {
       id: 'action-id',

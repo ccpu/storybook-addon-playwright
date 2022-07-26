@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionSet } from '../../typings';
+import { FavouriteActionSet } from '../../typings';
 import StarIcon from '@material-ui/icons/Star';
 // import { useCurrentStoryData } from '../../hooks/use-current-story-data';
 import {
@@ -24,7 +24,7 @@ import { useCurrentStoryData } from '../../hooks/use-current-story-data';
 import { useSnackbar } from '../../hooks/use-snackbar';
 
 export interface AddFavouriteActionProps {
-  item: ActionSet;
+  item: FavouriteActionSet;
 }
 
 const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {

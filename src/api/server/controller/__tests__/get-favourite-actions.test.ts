@@ -1,9 +1,9 @@
 import { getFavouriteActions } from '../get-favourite-actions';
 import { Request, Response } from 'express';
-import { ActionSet } from '../../../../typings';
+import { FavouriteActionSet } from '../../../../typings';
 
 jest.mock('../../services/get-favourite-actions', () => ({
-  getFavouriteActions: (): ActionSet[] => {
+  getFavouriteActions: (): FavouriteActionSet[] => {
     return [
       {
         actions: [

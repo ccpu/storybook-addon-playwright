@@ -89,8 +89,11 @@ module.exports = {
     );
 
     let foundModule = false;
-
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     virtualModulePlugins.forEach((plugin: VirtualModulePlugin) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       const staticModules = plugin._staticModules;
       const virtualModuleMapping = Object.keys(staticModules).reduce(
         (vm, modulePath) => {

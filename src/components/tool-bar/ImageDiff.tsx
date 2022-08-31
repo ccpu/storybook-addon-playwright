@@ -140,7 +140,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
           badgeContent={diffResults.length}
           color="secondary"
           className={classes.imageDiffBadge}
-          overlap="rectangular"
+          overlap="rectangle"
         />
 
         <Compare viewBox="1.5 1 20 20" />

@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core';
+import { createMuiTheme as createTheme } from '@material-ui/core';
 import { getThemeData } from '../get-theme-data';
 
 const mockTheme = createTheme({

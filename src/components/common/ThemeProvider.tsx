@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import {
-  createTheme,
+  createMuiTheme as createTheme,
   ThemeProvider as MuThemeProvider,
 } from '@material-ui/core/styles';
 import { useStorybookState } from '@storybook/api';

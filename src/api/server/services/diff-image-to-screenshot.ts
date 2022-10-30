@@ -23,8 +23,10 @@ export const diffImageToScreenshot = async (
       const paths = getScreenshotPaths(data);
       const config = getConfigs();
 
-      const diffDir = path.resolve(__dirname, data.storyId, '__diff_output__');
-
+      const diffDir = path.resolve(process.cwd(), '__stories__', data.storyId, '__diff_output__');
+      if (!fs.existsSync(diffDir)) {
+        fs.mkdirSync(diffDir, { recursive: true })
+      }
       const result = runDiffImageToSnapshot({
         blur: 0,
         diffDir,

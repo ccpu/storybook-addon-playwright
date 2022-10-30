@@ -8,6 +8,7 @@ import { Toolbar } from '../common';
 export interface ActionToolbarProps {
   onAddActionSet: () => void;
   onReset: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFavoriteActionsClick: (e: any) => void;
 }
 

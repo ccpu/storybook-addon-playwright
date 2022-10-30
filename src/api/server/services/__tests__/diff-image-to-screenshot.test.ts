@@ -1,5 +1,8 @@
 const spyOnRmdirSyncMock = jest.fn();
 jest.mock('fs', () => ({
+  existsSync: () => {
+    return true;
+  },
   rmdirSync: spyOnRmdirSyncMock,
 }));
 import { runDiffImageToSnapshotMock } from '../../../../../__manual_mocks__/jest-image-snapshot';
@@ -9,7 +12,7 @@ import { Page } from 'playwright';
 import { DiffImageToScreenShot } from '../../../typings';
 
 jest.mock('../../configs');
-const configsMock = (configs as unknown) as jest.Mocked<typeof configs>;
+const configsMock = configs as unknown as jest.Mocked<typeof configs>;
 
 describe('diffImageToScreenshot', () => {
   const diffData: DiffImageToScreenShot = {

@@ -20,10 +20,16 @@ export const testFileScreenshots = async (
 
   const storiesData = await getStoryPlaywrightData(fileName);
 
+  const storyBaseId = (
+    storiesData.storyData.length > 0
+      ? storiesData.storyData[0].storyId
+      : storyId
+  ).split('--')[0];
+
   const limit = pLimit(configs.concurrencyLimit.story);
 
   if (configs.beforeFileImageDiff) {
-    configs.beforeFileImageDiff(options);
+    await configs.beforeFileImageDiff({ ...options, storyId: storyBaseId });
   }
 
   const promisees = storiesData.storyData.reduce((arr, story) => {
@@ -56,7 +62,10 @@ export const testFileScreenshots = async (
   }, []);
 
   if (configs.afterFileImageDiff) {
-    configs.afterFileImageDiff(results, options);
+    await configs.afterFileImageDiff(results, {
+      ...options,
+      storyId: storyBaseId,
+    });
   }
 
   if (onComplete) onComplete(results);

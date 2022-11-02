@@ -76,6 +76,7 @@ describe('testFileScreenshots', () => {
       fileName: 'story.ts',
       requestId: 'request-id',
       requestType: 'all',
+      storyId: 'story-id',
     });
     expect(afterFileImageDiffMock).toHaveBeenCalledWith(
       [
@@ -86,7 +87,12 @@ describe('testFileScreenshots', () => {
           storyId: 'story-id',
         },
       ],
-      { fileName: 'story.ts', requestId: 'request-id', requestType: 'all' },
+      {
+        fileName: 'story.ts',
+        requestId: 'request-id',
+        requestType: 'all',
+        storyId: 'story-id',
+      },
     );
   });
 

@@ -89,11 +89,25 @@
           }
         },
         "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "releaseMouse": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "releaseMouse"
+        ],
+        "additionalProperties": false
       }
     },
     "required": [
       "from",
-      "to"
+      "to",
+      "options"
     ],
     "description": "This method will perform mouse down, move,and up from to selected location."
   },

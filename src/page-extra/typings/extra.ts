@@ -63,6 +63,13 @@ export interface ElementHandleBoundingBox {
   height: number;
 }
 
+export interface MouseFromToOptions {
+  /**
+   * @default true
+   */
+  releaseMouse: boolean;
+}
+
 export interface PlaywrightPageWithExtra {
   /**
    * This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.
@@ -88,7 +95,11 @@ export interface PlaywrightPageWithExtra {
    * @param from position in page
    * @param to position in page
    */
-  mouseFromTo: (from: Position, to: Position) => Promise<void>;
+  mouseFromTo: (
+    from: Position,
+    to: Position,
+    options: MouseFromToOptions,
+  ) => Promise<void>;
 
   /**
    * This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.

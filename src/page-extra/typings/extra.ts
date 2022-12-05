@@ -64,7 +64,7 @@ export interface ElementHandleBoundingBox {
 }
 
 export interface MouseFromToOptions {
-  skipMouseUp: boolean;
+  skipMouseUp?: boolean;
 }
 
 export interface PlaywrightPageWithExtra {
@@ -95,7 +95,7 @@ export interface PlaywrightPageWithExtra {
   mouseFromTo: (
     from: Position,
     to: Position,
-    options: MouseFromToOptions,
+    options?: MouseFromToOptions,
   ) => Promise<void>;
 
   /**

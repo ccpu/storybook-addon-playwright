@@ -97,16 +97,12 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "skipMouseUp"
-        ],
         "additionalProperties": false
       }
     },
     "required": [
       "from",
-      "to",
-      "options"
+      "to"
     ],
     "description": "This method will perform mouse down, move,and up from to selected location."
   },

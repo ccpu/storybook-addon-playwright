@@ -93,13 +93,12 @@
       "options": {
         "type": "object",
         "properties": {
-          "releaseMouse": {
-            "type": "boolean",
-            "default": true
+          "skipMouseUp": {
+            "type": "boolean"
           }
         },
         "required": [
-          "releaseMouse"
+          "skipMouseUp"
         ],
         "additionalProperties": false
       }

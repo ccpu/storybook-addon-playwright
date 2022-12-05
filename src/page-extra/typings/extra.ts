@@ -64,10 +64,7 @@ export interface ElementHandleBoundingBox {
 }
 
 export interface MouseFromToOptions {
-  /**
-   * @default true
-   */
-  releaseMouse: boolean;
+  skipMouseUp: boolean;
 }
 
 export interface PlaywrightPageWithExtra {

@@ -9,8 +9,6 @@ export async function mouseFromTo(
 ) {
   const { skipMouseUp } = options || {};
 
-  console.log(options);
-
   // move mouse to center of element or specified point
   await this.mouse.move(from.x, from.y);
 

@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-playwright",
-  "version": "4.13.9",
+  "version": "4.13.11",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "engines": {
@@ -144,7 +144,7 @@
     "reinspect": "^1.1.0",
     "sharp": "^0.30.4",
     "tinycolor2": "^1.4.2",
-    "ts-to-json": "^1.7.0",
+    "ts-to-json": "^1.7.2",
     "typescript": "4.2.3",
     "webpack-sources": "^3.2.3"
   },

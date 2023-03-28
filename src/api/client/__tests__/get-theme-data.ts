@@ -1,6 +1,6 @@
 import { getThemeData } from '../get-theme-data';
 import fetch from 'jest-fetch-mock';
-import { createMuiTheme as createTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
 describe('getThemeData', () => {
   const mockTheme = createTheme({

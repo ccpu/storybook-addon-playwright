@@ -1,6 +1,6 @@
 import { useCustomTheme } from '../use-custom-theme';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { createMuiTheme as createTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
   palette: {

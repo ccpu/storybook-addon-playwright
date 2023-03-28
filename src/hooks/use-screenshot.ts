@@ -7,7 +7,7 @@ import sum from 'hash-sum';
 import { useCurrentActions } from './use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { useAsyncApiCall } from './use-async-api-call';
-import { useIframe } from './use-iframe';
+import { usePreviewIframe } from './use-iframe';
 import { nanoid } from 'nanoid';
 
 export const useScreenshot = (
@@ -49,7 +49,7 @@ export const useScreenshot = (
     state.storyId,
   ]);
 
-  const iframe = useIframe();
+  const iframe = usePreviewIframe();
 
   const latHotReload =
     iframe &&

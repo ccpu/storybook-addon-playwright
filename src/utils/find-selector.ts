@@ -1,6 +1,7 @@
-import { getIframe } from './get-iframe';
+import { getPreviewIframe } from './get-iframe';
 
 export const findSelector = (selector: string) => {
-  const element = getIframe().contentWindow.document.querySelector(selector);
+  const element =
+    getPreviewIframe().contentWindow.document.querySelector(selector);
   return element;
 };

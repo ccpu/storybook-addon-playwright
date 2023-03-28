@@ -1,4 +1,4 @@
-import { getIframe } from '../utils';
+import { getPreviewIframe } from '../utils';
 import { StoreItem } from '@storybook/client-api/dist/ts3.9';
 
 interface RequiredContext {
@@ -8,8 +8,8 @@ interface RequiredContext {
 }
 
 export const getRawStories = (): StoreItem[] | undefined => {
-  const iframeWindow = (getIframe()
-    .contentWindow as unknown) as RequiredContext;
+  const iframeWindow = getPreviewIframe()
+    .contentWindow as unknown as RequiredContext;
   if (!iframeWindow || !iframeWindow.__STORYBOOK_CLIENT_API__) return undefined;
   return iframeWindow.__STORYBOOK_CLIENT_API__.raw();
 };

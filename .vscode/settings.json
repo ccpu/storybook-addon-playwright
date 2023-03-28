@@ -1,7 +1,5 @@
 {
   "cSpell.words": [
-    "Resizer",
-    "Toolshown",
     "autorun",
     "dblclick",
     "deepmerge",
@@ -10,9 +8,12 @@
     "mobx",
     "normalazed",
     "pkginfo",
+    "Resizer",
     "scrl",
     "scrollbar",
-    "tippyjs"
+    "Selecto",
+    "tippyjs",
+    "Toolshown"
   ],
   "liveServer.settings.fileList": [
     {

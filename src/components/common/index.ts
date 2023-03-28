@@ -24,3 +24,4 @@ export * from './CommonProvider';
 export * from './SchemaFormLoader';
 export * from './SnackbarContent';
 export * from './FixScreenshotFileDialog';
+export * from './IframeOverlay';

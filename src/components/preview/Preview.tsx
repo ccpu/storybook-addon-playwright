@@ -10,6 +10,7 @@ import { Separator } from '@storybook/components';
 import { CommonProvider } from '../common';
 import { Selector } from './Selector';
 import { EditScreenshotAlert } from './EditScreenshotAlert';
+import { Clipper } from '../Clipper/Clipper';
 
 const useStyles = makeStyles(
   () => {
@@ -137,7 +138,7 @@ const Preview: React.FC = (props) => {
             <div className={classes.iframeContainer}>
               <Selector>{children}</Selector>
             </div>
-
+            <Clipper />
             <EditScreenshotAlert />
           </div>
           <div

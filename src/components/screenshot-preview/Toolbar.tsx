@@ -11,6 +11,7 @@ import { Tooltip } from '@material-ui/core';
 import NearMeIcon from '@material-ui/icons/NearMe';
 import { BrowserOptions } from './BrowserOptions';
 import { ScreenshotOptions } from './ScreenshotOptions';
+import { ClipperButton } from '../Clipper/ClipperButton';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -72,6 +73,7 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
             <NearMeIcon style={{ transform: 'rotate(-80deg)' }} />
           </Tooltip>
         </IconButton>
+        <ClipperButton />
         <IconButton onClick={onRefresh}>
           <Tooltip placement="top" title="Refresh">
             <RefreshSharp />

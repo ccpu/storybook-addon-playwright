@@ -39,8 +39,6 @@ const Clipper: React.FC = () => {
 
   const handleEnd = React.useCallback(
     (e) => {
-      stop();
-
       if (!overlayRef.current) return;
 
       const { height, width, top, left } = e.rect as DOMRect;
@@ -56,6 +54,8 @@ const Clipper: React.FC = () => {
           y: left - overlayRect.left,
         },
       });
+
+      stop();
     },
     [screenshotOptions, setScreenshotOptions, stop],
   );
@@ -74,7 +74,7 @@ const Clipper: React.FC = () => {
         selectByClick={true}
         selectFromInside={true}
         ratio={0}
-        onDragEnd={handleEnd}
+        onSelectEnd={handleEnd}
       ></Selecto>
     </IframeOverlay>
   );

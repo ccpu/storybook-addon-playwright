@@ -147,7 +147,10 @@ describe('SelectorControl', () => {
     const button = wrapper.find('button');
 
     act(() => {
-      button.props().onClick({} as React.MouseEvent);
+      button
+        .first()
+        .props()
+        .onClick({} as React.MouseEvent);
     });
 
     expect(onSelectorChangeMock).toHaveBeenCalledWith(

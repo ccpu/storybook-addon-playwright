@@ -3,10 +3,10 @@ import { SelectorState } from '../typings/selector';
 import { EVENTS } from '../constants';
 import { useGlobalState } from './use-global-state';
 
-export type SelectorType = 'selector' | 'position';
+export type SelectorType = 'selector' | 'position' | 'id-selector';
 
 export interface SelectorManageSharedProps {
-  type?: 'selector' | 'position';
+  type?: SelectorType;
   onData?: (data: SelectorState) => void;
   onStop?: () => void;
 }

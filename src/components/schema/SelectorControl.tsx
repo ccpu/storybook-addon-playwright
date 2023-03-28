@@ -34,13 +34,34 @@ const useStyles = makeStyles(
         alignItems: 'center',
         display: 'flex',
       },
+      selectorButtonWrap: {
+        alignItems: 'center',
+        backgroundColor: theme.palette.background.paper,
+        display: 'flex',
+        flexDirection: 'column',
+      },
+      selectorHashIcon: {
+        '&:before': {
+          backgroundColor: theme.palette.background.paper,
+          content: '"#"',
+          fontSize: '12px',
+          left: '6px',
+          position: 'absolute',
+          top: '3px',
+        },
+        height: 20,
+        position: 'relative',
+      },
+      selectorIcon: {
+        fontSize: '1.25rem',
+      },
     };
   },
   { name: 'SelectorControl' },
 );
 
 export interface SelectorControlProps extends ControlProps {
-  selectorType: SelectorType;
+  selectorType: 'selector' | 'position';
   isFollowedByPositionProp: boolean;
   fullObjectPath: string;
   onSelectorChange: (objPath: string, val: unknown) => void;
@@ -70,35 +91,46 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
 
   const { Control, knob, handleChange, setKnob } = useControl(props);
 
-  const handleSelectorClick = useCallback(() => {
-    setValidate(false);
-    startSelector({
-      onData: (data) => {
-        if (selectorType === 'selector') {
-          onSelectorChange(fullObjectPath, data.path);
-        } else if (isFollowedByPositionProp) {
-          const objPath =
-            fullObjectPath.length === 1
-              ? ''
-              : fullObjectPath.slice(0, -2) + '.';
-          onSelectorChange(objPath + `x`, data.x);
-          onSelectorChange(objPath + `y`, data.y);
-        } else {
-          const key = label === 'top' ? 'y' : label === 'left' ? 'x' : label;
-          handleChange(data[key]);
-        }
-      },
-      type: selectorType,
-    });
-  }, [
-    startSelector,
-    selectorType,
-    isFollowedByPositionProp,
-    onSelectorChange,
-    fullObjectPath,
-    label,
-    handleChange,
-  ]);
+  const startSelectorClick = useCallback(
+    (type: SelectorType) => {
+      setValidate(false);
+      startSelector({
+        onData: (data) => {
+          console.log(data);
+          if (type === 'selector' || type === 'id-selector') {
+            onSelectorChange(fullObjectPath, data.path);
+          } else if (isFollowedByPositionProp) {
+            const objPath =
+              fullObjectPath.length === 1
+                ? ''
+                : fullObjectPath.slice(0, -2) + '.';
+            onSelectorChange(objPath + `x`, data.x);
+            onSelectorChange(objPath + `y`, data.y);
+          } else {
+            const key = label === 'top' ? 'y' : label === 'left' ? 'x' : label;
+            handleChange(data[key]);
+          }
+        },
+        type,
+      });
+    },
+    [
+      startSelector,
+      isFollowedByPositionProp,
+      onSelectorChange,
+      fullObjectPath,
+      label,
+      handleChange,
+    ],
+  );
+
+  const handleSelectorClick = React.useCallback(() => {
+    startSelectorClick(selectorType);
+  }, [selectorType, startSelectorClick]);
+
+  const handleIdSelectorClick = React.useCallback(() => {
+    startSelectorClick('id-selector');
+  }, [startSelectorClick]);
 
   useEffect(() => {
     if (validate && selectorType !== 'selector') {
@@ -130,6 +162,8 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
     [],
   );
 
+  const isSelector = selectorType === 'selector';
+
   return (
     <FormControl
       label={label}
@@ -146,15 +180,36 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
       >
         <Control onChange={handleControlChange} knob={knob} required />
         <div
-          className={clsx({ [classes.buttonWrap]: isFollowedByPositionProp })}
+          className={clsx({
+            [classes.buttonWrap]: isFollowedByPositionProp,
+            [classes.selectorButtonWrap]: isSelector,
+          })}
         >
           <IconButton
             size="small"
             onClick={handleSelectorClick}
             className={classes.button}
           >
-            {selectorType === 'selector' ? <TargetIcon /> : <PointerIcon />}
+            {isSelector ? (
+              <TargetIcon className={classes.selectorIcon} />
+            ) : (
+              <PointerIcon />
+            )}
           </IconButton>
+
+          {isSelector && (
+            <IconButton
+              size="small"
+              onClick={handleIdSelectorClick}
+              className={classes.button}
+            >
+              {
+                <div className={classes.selectorHashIcon}>
+                  <TargetIcon className={classes.selectorIcon} />
+                </div>
+              }
+            </IconButton>
+          )}
         </div>
       </div>
       {invalidSelector && validate && (

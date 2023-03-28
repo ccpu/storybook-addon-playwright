@@ -6,18 +6,6 @@
         {
           "actions": [
             {
-              "name": "click",
-              "args": {
-                "selector": "html>body>#root>div>input"
-              }
-            }
-          ],
-          "id": "krjJCMXoP_-e",
-          "title": "mouse click"
-        },
-        {
-          "actions": [
-            {
               "name": "touchStart",
               "args": {
                 "selector": "html>body>#root>div>input",
@@ -146,6 +134,18 @@
           ],
           "id": "SsVfuAD0QJ6m",
           "title": "delay 200"
+        },
+        {
+          "actions": [
+            {
+              "name": "click",
+              "args": {
+                "selector": "html"
+              }
+            }
+          ],
+          "id": "krjJCMXoP_-e",
+          "title": "mouse click"
         }
       ],
       "screenshots": [

@@ -46,19 +46,16 @@ interface Props {
 }
 
 const defaultRect = {
-  height: ('100%' as unknown) as number,
+  height: '100%' as unknown as number,
   left: 0,
   right: 0,
-  width: ('100%' as unknown) as number,
+  width: '100%' as unknown as number,
 } as ClientRect;
 
 const SelectorOverlay: React.FC<Props> = (props) => {
   const { iframe } = props;
-  const {
-    stopSelector,
-    selectorManager,
-    setSelectorData,
-  } = useSelectorManager();
+  const { stopSelector, selectorManager, setSelectorData } =
+    useSelectorManager();
 
   const [mouseupRef, setMouseupRef] = useState<HTMLElement>();
 
@@ -66,7 +63,8 @@ const SelectorOverlay: React.FC<Props> = (props) => {
 
   const selectorRef = useRef<HTMLDivElement>(null);
 
-  const isSelector = selectorManager.type === 'selector';
+  const isIdSelector = selectorManager.type === 'id-selector';
+  const isSelector = selectorManager.type === 'selector' || isIdSelector;
 
   const [selectorInfo, setSelectorInfo] = useState<{
     rect?: ClientRect;
@@ -85,20 +83,27 @@ const SelectorOverlay: React.FC<Props> = (props) => {
       if (iframe) {
         const node = iframe.contentWindow.document.elementFromPoint(x, y);
         if (node) {
-          const path = getSelectorPath(node, { minify: true }).replace(
-            'html>body>div:nth-child(3)',
-            'html>body>#root',
-          );
-          if (node.tagName === 'HTML') {
-            setSelectorInfo({
-              rect: defaultRect,
-              selector: path,
-            });
-          } else {
+          if (isIdSelector) {
             setSelectorInfo({
               rect: node.getBoundingClientRect(),
-              selector: path,
+              selector: node.id ? '#' + node.id : '',
             });
+          } else {
+            const path = getSelectorPath(node, { minify: true }).replace(
+              'html>body>div:nth-child(3)',
+              'html>body>#root',
+            );
+            if (node.tagName === 'HTML') {
+              setSelectorInfo({
+                rect: defaultRect,
+                selector: path,
+              });
+            } else {
+              setSelectorInfo({
+                rect: node.getBoundingClientRect(),
+                selector: path,
+              });
+            }
           }
         } else {
           setSelectorInfo({ ...selectorInfo, rect: undefined });

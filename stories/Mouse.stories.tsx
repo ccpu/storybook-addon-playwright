@@ -25,7 +25,7 @@ export const WithInput = () => {
     setVal(e.target.value);
   }, []);
 
-  return <input type="text" onChange={handleChange} value={val} />;
+  return <input type="text" id="input" onChange={handleChange} value={val} />;
 };
 
 const StoryDraggable: React.FC = () => {

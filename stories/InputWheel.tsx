@@ -49,6 +49,7 @@ const InputWheel: React.FC = () => {
         ref={input}
         value={value}
         onChange={handleValueChange}
+        id="input"
       />
       {delta && (
         <div>

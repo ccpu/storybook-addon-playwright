@@ -5,7 +5,7 @@ import fetch from 'jest-fetch-mock';
 import { UpdateScreenshot } from '../../api/typings';
 import mockConsole from 'jest-mock-console';
 
-jest.mock('../../utils/get-iframe.ts');
+jest.mock('../../utils/get-preview-iframe.ts');
 
 describe('useScreenshotUpdate', () => {
   let restoreConsole;

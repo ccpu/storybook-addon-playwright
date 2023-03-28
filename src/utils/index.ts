@@ -1,6 +1,6 @@
 export * from './capitalize';
 export * from './find-selector';
-export * from './get-iframe';
+export * from './get-preview-iframe';
 export * from './get-schema';
 export * from './is-valid-selector';
 export * from './construct-story-url';
@@ -13,3 +13,5 @@ export * from './get-device-info';
 export * from './get-story-function';
 export * from './get-raw-stories';
 export * from './is-story-json-file';
+export * from './get-iframe-document';
+export * from './get-iframe-scroll-position';

@@ -1,7 +1,12 @@
 import React from 'react';
 import Selecto from 'react-selecto';
 import { create } from 'zustand';
-import { useKeyPressFn, useScreenshotOptions } from '../../hooks';
+import {
+  useKeyPressFn,
+  usePreviewIframe,
+  useScreenshotOptions,
+} from '../../hooks';
+import { getIframeScrollPosition } from '../../utils';
 import { IframeOverlay } from '../common/IframeOverlay';
 
 export interface ClipperProps {
@@ -37,27 +42,35 @@ const Clipper: React.FC = () => {
 
   const overlayRef = React.useRef<HTMLDivElement>(null);
 
+  const iframe = usePreviewIframe();
+
   const handleEnd = React.useCallback(
     (e) => {
-      if (!overlayRef.current) return;
+      if (!overlayRef.current || !iframe) return;
+      const iframeScroll = getIframeScrollPosition(iframe);
 
       const { height, width, top, left } = e.rect as DOMRect;
 
       const overlayRect = overlayRef.current.getBoundingClientRect();
+
+      const clipperPos = {
+        left: iframeScroll.scrollLeft + left,
+        top: iframeScroll.scrollTop + top,
+      };
 
       setScreenshotOptions({
         ...screenshotOptions,
         clip: {
           height,
           width,
-          x: top - overlayRect.top,
-          y: left - overlayRect.left,
+          x: clipperPos.left - overlayRect.left,
+          y: clipperPos.top - overlayRect.top,
         },
       });
 
       stop();
     },
-    [screenshotOptions, setScreenshotOptions, stop],
+    [iframe, screenshotOptions, setScreenshotOptions, stop],
   );
 
   useKeyPressFn(undefined, (e) => {

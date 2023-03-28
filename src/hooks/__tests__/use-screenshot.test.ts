@@ -9,7 +9,7 @@ jest.mock('../use-knobs', () => ({
   },
 }));
 
-jest.mock('../../utils/get-iframe.ts');
+jest.mock('../../utils/get-preview-iframe.ts');
 
 describe('useScreenshot', () => {
   beforeEach(() => {

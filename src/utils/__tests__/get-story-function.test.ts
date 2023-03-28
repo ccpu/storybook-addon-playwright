@@ -1,6 +1,6 @@
 import { getStoryFunction } from '../get-story-function';
 
-jest.mock('../../utils/get-iframe.ts');
+jest.mock('../../utils/get-preview-iframe.ts');
 
 describe('getStoryFunction', () => {
   beforeEach(() => {

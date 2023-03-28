@@ -1,4 +1,4 @@
-import { getPreviewIframe } from './get-iframe';
+import { getPreviewIframe } from './get-preview-iframe';
 
 export const findSelector = (selector: string) => {
   const element =

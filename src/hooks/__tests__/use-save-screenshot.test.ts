@@ -12,7 +12,7 @@ jest.mock('nanoid', () => ({
   },
 }));
 
-jest.mock('../../utils/get-iframe.ts');
+jest.mock('../../utils/get-preview-iframe.ts');
 jest.mock('../use-edit-screenshot');
 const useEditScreenshotMock = mocked(useEditScreenshot);
 

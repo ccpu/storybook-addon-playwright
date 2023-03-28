@@ -1,4 +1,4 @@
-export const getIframe = jest.fn();
+export const getPreviewIframe = jest.fn();
 
 const WithStory = () => true;
 const WithStory2 = () => false;
@@ -28,7 +28,7 @@ requiredFunc.resolve = (path: string) => {
   return path === './story.ts' ? './stories/story.ts' : undefined;
 };
 
-getIframe.mockImplementation(() => ({
+getPreviewIframe.mockImplementation(() => ({
   contentWindow: {
     __STORYBOOK_CLIENT_API__: {
       raw: () => [

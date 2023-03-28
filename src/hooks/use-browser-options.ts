@@ -10,13 +10,14 @@ export interface BrowsersOption {
   all?: BrowserContextOptions;
 }
 
-export const useBrowserOptions = (browserName?: keyof BrowsersOption) => {
-  const [browserOptions, setGlobalBrowserOptions] = useGlobalState<
-    BrowsersOption
-  >('browser-options', { all: {} }, true);
+export type BrowsersOptionTypes = keyof BrowsersOption;
+
+export const useBrowserOptions = (browserName?: BrowsersOptionTypes) => {
+  const [browserOptions, setGlobalBrowserOptions] =
+    useGlobalState<BrowsersOption>('browser-options', { all: {} }, true);
 
   const setBrowserDeviceOptions = useCallback(
-    (browserType: keyof BrowsersOption, deviceName: string) => {
+    (browserType: BrowsersOptionTypes, deviceName: string) => {
       setGlobalBrowserOptions({
         ...browserOptions,
         [browserType]: getDeviceInfo(deviceName),
@@ -26,7 +27,7 @@ export const useBrowserOptions = (browserName?: keyof BrowsersOption) => {
   );
 
   const setBrowserOptions = useCallback(
-    (browserType: keyof BrowsersOption, options: BrowserContextOptions) => {
+    (browserType: BrowsersOptionTypes, options: BrowserContextOptions) => {
       setGlobalBrowserOptions({
         ...browserOptions,
         [browserType]: options,

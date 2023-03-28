@@ -5,7 +5,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import mockConsole from 'jest-mock-console';
 
-jest.mock('../../utils/get-iframe.ts');
+jest.mock('../../utils/get-preview-iframe.ts');
 jest.mock('../../store/screenshot/context.tsx');
 
 describe('useScreenshotIndexChange', () => {

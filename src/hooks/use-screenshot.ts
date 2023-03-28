@@ -7,7 +7,7 @@ import sum from 'hash-sum';
 import { useCurrentActions } from './use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { useAsyncApiCall } from './use-async-api-call';
-import { usePreviewIframe } from './use-iframe';
+import { usePreviewIframe } from './use-preview-iframe';
 import { nanoid } from 'nanoid';
 
 export const useScreenshot = (

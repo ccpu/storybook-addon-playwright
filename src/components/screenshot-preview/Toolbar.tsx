@@ -12,6 +12,7 @@ import NearMeIcon from '@material-ui/icons/NearMe';
 import { BrowserOptions } from './BrowserOptions';
 import { ScreenshotOptions } from './ScreenshotOptions';
 import { ClipperButton } from '../Clipper/ClipperButton';
+import { ResetSettings } from './ResetSettings';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -85,9 +86,11 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
           </Tooltip>
         </IconButton>
 
-        <ScreenshotOptions />
+        <ResetSettings />
 
+        <ScreenshotOptions />
         <BrowserOptions browserType="all" />
+
         <IconButton onClick={onCLose}>
           <Tooltip placement="top" title="Close panel">
             <CloseOutlined />

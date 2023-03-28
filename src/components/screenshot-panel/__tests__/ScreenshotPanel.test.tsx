@@ -10,7 +10,7 @@ import mockConsole from 'jest-mock-console';
 import { useScreenshotImageDiffResults } from '../../../hooks/use-screenshot-imageDiff-results';
 import { StoryData } from '../../../../dist/typings';
 
-jest.mock('../../../utils/get-iframe.ts');
+jest.mock('../../../utils/get-preview-iframe.ts');
 jest.mock('../../../store/screenshot/context');
 jest.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
 

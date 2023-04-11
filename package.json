@@ -124,7 +124,7 @@
     "hash-sum": "^2.0.0",
     "ip": "^1.1.5",
     "jest-image-snapshot": "^4.5.1",
-    "join-images": "1.1.4",
+    "join-images": "^1.1.5",
     "jsonfile": "^6.1.0",
     "lodash": "^4.17.20",
     "nanoid": "^3.1.18",

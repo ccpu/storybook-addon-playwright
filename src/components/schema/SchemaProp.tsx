@@ -95,7 +95,7 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
     );
   }
 
-  switch (schema.type) {
+  switch (schema.type as typeof schema.type | 'any') {
     case 'string':
     case 'any':
       return (

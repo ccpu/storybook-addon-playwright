@@ -12998,10 +12998,10 @@ ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-ts-to-json@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/ts-to-json/-/ts-to-json-1.8.2.tgz#919e4daf5f571a2f2b377469fd73e721ff41383b"
-  integrity sha512-PayympgMpxD2WJWolTGJz1VDKfGi1gMNIR1w2cHq2joAbGBtioDgJ8UOe6Eo/Ytc77i+Ogd0E8HVxifQzuPI8A==
+ts-to-json@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/ts-to-json/-/ts-to-json-1.8.3.tgz#73bc614b803da7aa58670a4cd1f1b3ce8b9c60b2"
+  integrity sha512-HCv4P0pbc8qEplAh17f6oOd48O93w+sRwVGWHPrLntKxoZYIes+ybQQYez1T0fl+kJd9UFeOTqpRlxsZT4188w==
   dependencies:
     "@types/json-schema" "^7.0.12"
     commander "^10.0.1"

@@ -9,7 +9,23 @@
       "group": "build",
       "command": "npm run watch",
       "problemMatcher": [],
-      "auto": true
-    }
+      "runOptions": {
+        "runOn": "folderOpen",
+      }
+    },
+    {
+      "label": "storybook start",
+      "type": "shell",
+      "command": "npm run start:storybook",
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "close": true
+      },
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen",
+      }
+    },
   ]
 }

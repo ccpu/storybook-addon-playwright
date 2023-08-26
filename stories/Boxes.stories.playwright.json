@@ -1,0 +1,65 @@
+{
+  "version": "4",
+  "stories": {
+    "boxes--with-default": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "name": "takeElementScreenshot",
+              "args": {
+                "selector": "#blue"
+              }
+            }
+          ],
+          "id": "uD9-r01lb3fr",
+          "title": "take element screen shot"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeElementScreenshot",
+              "args": {
+                "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+              }
+            }
+          ],
+          "id": "ShWEtROi5Dh2",
+          "title": "take element screen shot"
+        }
+      ],
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "#blue"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            },
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            }
+          ],
+          "browserType": "chromium",
+          "id": "Kebe6ydEbfyt",
+          "index": 0,
+          "title": "should take screen shot by element id"
+        }
+      ]
+    }
+  }
+}

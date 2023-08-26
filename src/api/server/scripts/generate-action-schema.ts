@@ -20,6 +20,7 @@ const selectedPageKeys: PageMethodKeys[] = [
   'waitForSelector',
   'waitForTimeout',
   'dragDropSelector',
+  'takeElementScreenshot',
   'takeScreenshot',
   'takeScreenshotAll',
   'takeScreenshotOptions',

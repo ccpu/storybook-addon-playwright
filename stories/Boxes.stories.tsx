@@ -5,6 +5,18 @@ export default { title: 'Boxes' };
 export const withDefault = () => (
   <>
     <div
+      id="blue"
+      style={{
+        backgroundColor: 'blue',
+        height: 100,
+        left: 60,
+        position: 'absolute',
+        top: 50,
+        width: 100,
+      }}
+    />
+    <div
+      id="red"
       style={{
         backgroundColor: 'red',
         height: 100,

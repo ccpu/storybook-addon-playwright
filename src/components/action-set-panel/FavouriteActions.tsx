@@ -39,7 +39,7 @@ const defaults: FavouriteActionSet[] = [
   {
     actions: [
       {
-        id: 'Kj6iSI1D3BIF1yX_BLgxF',
+        id: 'Kj6iSI1D3BIF1yX',
         name: 'takeScreenshot',
       },
     ],

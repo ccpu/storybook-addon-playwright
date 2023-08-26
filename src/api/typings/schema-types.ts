@@ -88,6 +88,11 @@ export interface PlaywrightPage extends Page, PlaywrightPageWithExtra {
   ) => Promise<void>;
 
   /**
+   * This method will take a screenshot of an element.
+   */
+  takeElementScreenshot: (selector: string) => Promise<void>;
+
+  /**
    * The purpose of this action is to have centralized options for all screenshots. This action can be used in conjunction with takeScreenshot action only.
    * Only one instance can be used.
    *

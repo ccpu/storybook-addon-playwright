@@ -1531,6 +1531,19 @@
     "required": [],
     "description": "This method will take a screenshot after each action, its useful for looking at over all action execution. In the end the screenshots will be merged."
   },
+  "takeElementScreenshot": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "selector"
+    ],
+    "description": "This method will take a screenshot of an element."
+  },
   "takeScreenshotOptions": {
     "kind": "function",
     "type": "Promise",

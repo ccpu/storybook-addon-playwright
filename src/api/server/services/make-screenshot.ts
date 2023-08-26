@@ -9,7 +9,7 @@ import {
   StoryAction,
 } from '../../../typings';
 import { extendPage } from '../../../page-extra';
-import { Page } from 'playwright';
+import { ElementHandle, Page } from 'playwright';
 import joinImage from 'join-images';
 import sharp from 'sharp';
 import {
@@ -31,10 +31,16 @@ async function takeScreenshot(
   page: Page,
   data: ScreenshotRequest,
   configs: Config<Page>,
+  handler?: ElementHandle<SVGElement | HTMLElement>,
 ) {
   if (configs.beforeScreenshot) {
     await configs.beforeScreenshot(page, data, data);
   }
+
+  if (handler) {
+    return await handler.screenshot(data.screenshotOptions);
+  }
+
   return await page.screenshot(data.screenshotOptions);
 }
 
@@ -80,11 +86,17 @@ export const makeScreenshot = async (
 
   let screenshotOptionAction: StoryAction;
 
+  let hasElementScreenshot = false;
+
   if (data.actionSets) {
     const actions = data.actionSets.reduce((arr, actionSet) => {
       arr = [...arr, ...actionSet.actions];
       return arr;
     }, [] as StoryAction[]);
+
+    hasElementScreenshot = Boolean(
+      actions.find((x) => x.name === 'takeElementScreenshot'),
+    );
 
     const takeScreenshotAll = actions.find(
       (x) => x.name === 'takeScreenshotAll',
@@ -114,6 +126,18 @@ export const makeScreenshot = async (
     for (let i = 0; i < filterActions.length; i++) {
       const action = filterActions[i];
 
+      if (action.name === 'takeElementScreenshot') {
+        if (action && action.args && action.args.selector) {
+          const elementHandle = await page.$(action.args.selector as string);
+
+          imageInfos.push({
+            buffer: await takeScreenshot(page, data, configs, elementHandle),
+            options: action.args as unknown as TakeScreenshotParams,
+          });
+        }
+        continue;
+      }
+
       if (action.name === 'takeScreenshot') {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
@@ -133,7 +157,8 @@ export const makeScreenshot = async (
     }
   }
 
-  let buffer = await takeScreenshot(page, data, configs);
+  let buffer =
+    !hasElementScreenshot && (await takeScreenshot(page, data, configs));
 
   if (configs.releaseModifierKey) {
     await releaseModifierKey(page, data.actionSets);
@@ -169,8 +194,14 @@ export const makeScreenshot = async (
     };
 
     if (options.mergeType === 'stitch') {
+      const screenshotsBuffers = imageInfos.map((x) => x.buffer);
+
+      if (buffer) {
+        screenshotsBuffers.push(buffer);
+      }
+
       buffer = await (
-        await joinImage([...imageInfos.map((x) => x.buffer), buffer], {
+        await joinImage(screenshotsBuffers, {
           ...options.stitchOptions,
         })
       )

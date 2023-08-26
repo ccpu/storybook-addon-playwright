@@ -86,7 +86,7 @@ export const makeScreenshot = async (
 
   let screenshotOptionAction: StoryAction;
 
-  let hasElementScreenshot = false;
+  let lastAction: StoryAction;
 
   if (data.actionSets) {
     const actions = data.actionSets.reduce((arr, actionSet) => {
@@ -94,9 +94,7 @@ export const makeScreenshot = async (
       return arr;
     }, [] as StoryAction[]);
 
-    hasElementScreenshot = Boolean(
-      actions.find((x) => x.name === 'takeElementScreenshot'),
-    );
+    lastAction = actions.slice(-1)[0];
 
     const takeScreenshotAll = actions.find(
       (x) => x.name === 'takeScreenshotAll',
@@ -157,8 +155,12 @@ export const makeScreenshot = async (
     }
   }
 
+  const isTakeElementScreenshotAtLast =
+    lastAction && lastAction.name === 'takeElementScreenshot';
+
   let buffer =
-    !hasElementScreenshot && (await takeScreenshot(page, data, configs));
+    !isTakeElementScreenshotAtLast &&
+    (await takeScreenshot(page, data, configs));
 
   if (configs.releaseModifierKey) {
     await releaseModifierKey(page, data.actionSets);

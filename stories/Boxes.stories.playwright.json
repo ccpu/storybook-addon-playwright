@@ -26,6 +26,19 @@
           ],
           "id": "ShWEtROi5Dh2",
           "title": "take element screen shot"
+        },
+        {
+          "actions": [
+            {
+              "name": "mouse.move",
+              "args": {
+                "x": 109,
+                "y": 96
+              }
+            }
+          ],
+          "id": "sUub-uW-n0cg",
+          "title": "mouse move"
         }
       ],
       "screenshots": [
@@ -58,8 +71,67 @@
           "id": "Kebe6ydEbfyt",
           "index": 0,
           "title": "should take screen shot by element id"
+        },
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "#blue"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            },
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            },
+            {
+              "actions": [
+                {
+                  "name": "mouse.move",
+                  "args": {
+                    "x": 109,
+                    "y": 96
+                  }
+                }
+              ],
+              "title": "mouse move"
+            }
+          ],
+          "browserOptionsId": "Db-vUIXws6EF",
+          "browserType": "chromium",
+          "id": "7CKrSH6hoRaO",
+          "index": 1,
+          "screenshotOptionsId": "fmsdQSLwg4Bi",
+          "title": "should allow last screenshot if last action is not takeElementScreenshot"
         }
       ]
+    }
+  },
+  "browserOptions": {
+    "Db-vUIXws6EF": {
+      "cursor": true
+    }
+  },
+  "screenshotOptions": {
+    "fmsdQSLwg4Bi": {
+      "clip": {
+        "height": 168,
+        "width": 223,
+        "x": 12,
+        "y": 22
+      }
     }
   }
 }

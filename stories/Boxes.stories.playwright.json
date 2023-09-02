@@ -39,6 +39,15 @@
           ],
           "id": "sUub-uW-n0cg",
           "title": "mouse move"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshot"
+            }
+          ],
+          "id": "qBq2fHBzwKfh",
+          "title": "Take screenshot"
         }
       ],
       "screenshots": [

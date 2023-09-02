@@ -97,7 +97,7 @@ describe('FavouriteActions', () => {
     expect(useActionDispatchContext).toHaveBeenCalled();
     expect(saveActionSetMock).toHaveBeenCalledWith({
       actionSet: {
-        actions: [{ id: 'Kj6iSI1D3BIF1yX_BLgxF', name: 'takeScreenshot' }],
+        actions: [{ id: 'Kj6iSI1D3BIF1yX', name: 'takeScreenshot' }],
         adaptabilityLevel: undefined,
         id: 'id-1',
         title: 'Take screenshot',

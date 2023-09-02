@@ -45,16 +45,16 @@ const screenshotMock = jest.fn();
 
 screenshotMock.mockImplementation(() => {
   return new Promise((resolve) => {
-    resolve(('buffer-data' as unknown) as Buffer);
+    resolve('buffer-data' as unknown as Buffer);
   });
 });
 
 getPageMock.mockImplementation(() => {
   return new Promise((resolve) => {
-    resolve(({
+    resolve({
       goto: jest.fn(),
       screenshot: screenshotMock,
-    } as unknown) as Page);
+    } as unknown as Page);
   });
 });
 
@@ -246,7 +246,7 @@ describe('makeScreenshot', () => {
     expect(installMouseHelper).toBeCalledTimes(1);
   });
 
-  it('should take 2 screenshots with stitch as default merge process', async () => {
+  it('should take 1 screenshots with stitch as default merge process', async () => {
     await makeScreenshot(
       {
         actionSets: [
@@ -279,7 +279,7 @@ describe('makeScreenshot', () => {
     );
 
     expect(joinImagesMock).toHaveBeenCalledTimes(1);
-    expect(screenshotMock).toBeCalledTimes(2);
+    expect(screenshotMock).toBeCalledTimes(1);
   });
 
   it('should take 2 screenshots with stitch for merge process', async () => {
@@ -318,11 +318,8 @@ describe('makeScreenshot', () => {
     );
 
     expect(sharpMock).toHaveBeenCalledTimes(0);
-    expect(joinImagesMock).toHaveBeenCalledWith(
-      ['buffer-data', 'buffer-data'],
-      {},
-    );
-    expect(screenshotMock).toBeCalledTimes(2);
+    expect(joinImagesMock).toHaveBeenCalledWith(['buffer-data'], {});
+    expect(screenshotMock).toBeCalledTimes(1);
   });
 
   it('should overwrite takeScreenshotOptions by takeScreenshot options when overlay merging', async () => {
@@ -501,10 +498,9 @@ describe('makeScreenshot', () => {
       true,
     );
 
-    expect(joinImagesMock).toHaveBeenCalledWith(
-      ['buffer-data', 'buffer-data'],
-      { direction: 'horizontal' },
-    );
+    expect(joinImagesMock).toHaveBeenCalledWith(['buffer-data'], {
+      direction: 'horizontal',
+    });
   });
 
   it('should take 3 screenshot for all actions', async () => {

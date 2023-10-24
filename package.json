@@ -86,7 +86,7 @@
     "storybook-dark-mode": "^1.0.8",
     "ts-jest": "^27.0.7",
     "tslib": "2.4.0",
-    "webpack": "5.74.0",
+    "webpack": "5.76.0",
     "webpack-virtual-modules": "0.4.4"
   },
   "resolutions": {

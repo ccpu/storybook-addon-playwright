@@ -63,7 +63,14 @@ export interface ElementHandleBoundingBox {
   height: number;
 }
 
-export interface MouseFromToOptions {
+export interface MouseOptions {
+  /**
+   * @default 1
+   */
+  steps?: number;
+}
+
+export interface MouseFromToOptions extends MouseOptions {
   skipMouseUp?: boolean;
 }
 
@@ -85,6 +92,7 @@ export interface PlaywrightPageWithExtra {
     selector: string,
     to: Position,
     mouseDownRelativeToSelector?: Position,
+    options?: MouseOptions,
   ) => Promise<void>;
 
   /**
@@ -111,14 +119,22 @@ export interface PlaywrightPageWithExtra {
    * @param selector A selector to search for element to click. If there are multiple elements satisfying the selector, the first will be clicked.
    * @param point
    */
-  mouseDownOnSelector: (selector: string, point?: Position) => Promise<void>;
+  mouseDownOnSelector: (
+    selector: string,
+    point?: Position,
+    options?: MouseOptions,
+  ) => Promise<void>;
   /**
    * This method fetches an element with `selector`, and move the mouse to center of selector.
    * If there's no element matching `selector`, the method waits until a matching element appears in the DOM.
    * @param selector A selector to search for element to click. If there are multiple elements satisfying the selector, the first will be clicked.
    * @param point
    */
-  mouseMoveToSelector: (selector: string, point?: Position) => Promise<void>;
+  mouseMoveToSelector: (
+    selector: string,
+    point?: Position,
+    options?: MouseOptions,
+  ) => Promise<void>;
 
   /**
    * This method fetches an element with `selector`, set the height and with.

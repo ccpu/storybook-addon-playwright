@@ -11,7 +11,7 @@ const pageMock = (): Promise<PageProps> => {
 describe('mouseDownOnSelector', () => {
   let page: ExtendedPage;
   beforeAll(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.mouseDownOnSelector = mouseDownOnSelector;
   });
 
@@ -22,7 +22,13 @@ describe('mouseDownOnSelector', () => {
     page.mouse.down = downMock;
 
     await page.mouseDownOnSelector('#selector');
-    expect(moveMock.mock.calls[0]).toMatchObject([50, 50]);
+    expect(moveMock.mock.calls[0]).toMatchObject([
+      50,
+      50,
+      {
+        steps: 1,
+      },
+    ]);
     expect(downMock).toHaveBeenCalledTimes(1);
   });
 
@@ -33,7 +39,13 @@ describe('mouseDownOnSelector', () => {
     page.mouse.down = downMock;
 
     await page.mouseDownOnSelector('#selector', { x: 10, y: 20 });
-    expect(moveMock.mock.calls[0]).toMatchObject([10, 20]);
+    expect(moveMock.mock.calls[0]).toMatchObject([
+      10,
+      20,
+      {
+        steps: 1,
+      },
+    ]);
     expect(downMock).toHaveBeenCalledTimes(1);
   });
 });

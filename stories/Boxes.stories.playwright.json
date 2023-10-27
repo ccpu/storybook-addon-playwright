@@ -48,6 +48,18 @@
           ],
           "id": "qBq2fHBzwKfh",
           "title": "Take screenshot"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 50
+              }
+            }
+          ],
+          "id": "6UCUswgZ6mmh",
+          "title": "delay"
         }
       ],
       "screenshots": [

@@ -12,7 +12,7 @@ describe('dragDropSelector', () => {
   let page: ExtendedPage;
 
   beforeEach(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.dragDropSelector = dragDropSelector;
   });
 
@@ -26,8 +26,20 @@ describe('dragDropSelector', () => {
     page.mouse.up = upMock;
 
     await page.dragDropSelector('#selector', { x: 50, y: 50 });
-    expect(moveMock.mock.calls[0]).toMatchObject([50, 50]);
-    expect(moveMock.mock.calls[1]).toMatchObject([50, 50]);
+    expect(moveMock.mock.calls[0]).toMatchObject([
+      50,
+      50,
+      {
+        steps: 1,
+      },
+    ]);
+    expect(moveMock.mock.calls[1]).toMatchObject([
+      50,
+      50,
+      {
+        steps: 1,
+      },
+    ]);
     expect(downMock).toHaveBeenCalledTimes(1);
     expect(upMock).toHaveBeenCalledTimes(1);
   });
@@ -47,8 +59,20 @@ describe('dragDropSelector', () => {
       { x: 10, y: 10 },
     );
 
-    expect(moveMock.mock.calls[0]).toMatchObject([10, 10]);
-    expect(moveMock.mock.calls[1]).toMatchObject([50, 50]);
+    expect(moveMock.mock.calls[0]).toMatchObject([
+      10,
+      10,
+      {
+        steps: 1,
+      },
+    ]);
+    expect(moveMock.mock.calls[1]).toMatchObject([
+      50,
+      50,
+      {
+        steps: 1,
+      },
+    ]);
     expect(downMock).toHaveBeenCalledTimes(1);
     expect(upMock).toHaveBeenCalledTimes(1);
   });

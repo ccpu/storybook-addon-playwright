@@ -54,6 +54,16 @@
           }
         },
         "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "number",
+            "default": 1
+          }
+        },
+        "additionalProperties": false
       }
     },
     "required": [
@@ -93,6 +103,10 @@
       "options": {
         "type": "object",
         "properties": {
+          "steps": {
+            "type": "number",
+            "default": 1
+          },
           "skipMouseUp": {
             "type": "boolean"
           }
@@ -150,6 +164,16 @@
           }
         },
         "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "number",
+            "default": 1
+          }
+        },
+        "additionalProperties": false
       }
     },
     "required": [
@@ -172,6 +196,16 @@
           },
           "y": {
             "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "number",
+            "default": 1
           }
         },
         "additionalProperties": false

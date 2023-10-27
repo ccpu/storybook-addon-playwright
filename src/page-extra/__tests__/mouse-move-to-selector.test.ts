@@ -11,7 +11,7 @@ const pageMock = (): Promise<PageProps> => {
 describe('mouseDownOnSelector', () => {
   let page: ExtendedPage;
   beforeAll(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.mouseMoveToSelector = mouseMoveToSelector;
   });
 
@@ -20,7 +20,13 @@ describe('mouseDownOnSelector', () => {
     page.mouse.move = moveMock;
 
     await page.mouseMoveToSelector('#selector');
-    expect(moveMock.mock.calls[0]).toMatchObject([50, 50]);
+    expect(moveMock.mock.calls[0]).toMatchObject([
+      50,
+      50,
+      {
+        steps: 1,
+      },
+    ]);
   });
 
   it('should mouse move to specified point', async () => {
@@ -29,6 +35,12 @@ describe('mouseDownOnSelector', () => {
     page.mouse.move = moveMock;
 
     await page.mouseMoveToSelector('#selector', { x: 10, y: 20 });
-    expect(moveMock.mock.calls[0]).toMatchObject([10, 20]);
+    expect(moveMock.mock.calls[0]).toMatchObject([
+      10,
+      20,
+      {
+        steps: 1,
+      },
+    ]);
   });
 });

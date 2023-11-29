@@ -104,8 +104,8 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
               fullObjectPath.length === 1
                 ? ''
                 : fullObjectPath.slice(0, -2) + '.';
-            onSelectorChange(objPath + `x`, data.x);
-            onSelectorChange(objPath + `y`, data.y);
+            onSelectorChange(objPath + `x`, Math.round(data.x));
+            onSelectorChange(objPath + `y`, Math.round(data.y));
           } else {
             const key = label === 'top' ? 'y' : label === 'left' ? 'x' : label;
             handleChange(data[key]);

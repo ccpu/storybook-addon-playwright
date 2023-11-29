@@ -121,8 +121,8 @@ const SelectorOverlay: React.FC<Props> = (props) => {
       stopSelector();
       setSelectorData({
         path: isInBoundary ? selectorInfo.selector : undefined,
-        x: elX,
-        y: elY,
+        x: Math.round(elX),
+        y: Math.round(elY),
       });
     }
   }, [

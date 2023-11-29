@@ -63,8 +63,8 @@ const Clipper: React.FC = () => {
         clip: {
           height,
           width,
-          x: clipperPos.left - overlayRect.left,
-          y: clipperPos.top - overlayRect.top,
+          x: Math.round(clipperPos.left - overlayRect.left),
+          y: Math.round(clipperPos.top - overlayRect.top),
         },
       });
 

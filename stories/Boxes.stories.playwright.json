@@ -8,18 +8,6 @@
             {
               "name": "takeElementScreenshot",
               "args": {
-                "selector": "#blue"
-              }
-            }
-          ],
-          "id": "uD9-r01lb3fr",
-          "title": "take element screen shot"
-        },
-        {
-          "actions": [
-            {
-              "name": "takeElementScreenshot",
-              "args": {
                 "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
               }
             }
@@ -60,6 +48,18 @@
           ],
           "id": "6UCUswgZ6mmh",
           "title": "delay"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeElementScreenshot",
+              "args": {
+                "selector": "#blue"
+              }
+            }
+          ],
+          "id": "uD9-r01lb3fr",
+          "title": "take element screen shot"
         }
       ],
       "screenshots": [

@@ -3,17 +3,26 @@ import { IconButton } from '@storybook/components';
 import AddIcon from '@material-ui/icons/AddSharp';
 import RestoreIcon from '@material-ui/icons/Restore';
 import StarIcon from '@material-ui/icons/Star';
-import { Toolbar } from '../common';
+
+import { DeleteConfirmationButton, Toolbar } from '../common';
 
 export interface ActionToolbarProps {
   onAddActionSet: () => void;
   onReset: () => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onFavoriteActionsClick: (e: any) => void;
+  onDeleteSelectedActionSets: () => void;
+  deleteDisabled?: boolean;
 }
 
 const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
-  const { onAddActionSet, onReset, onFavoriteActionsClick } = props;
+  const {
+    onAddActionSet,
+    onReset,
+    onFavoriteActionsClick,
+    onDeleteSelectedActionSets,
+    deleteDisabled,
+  } = props;
 
   return (
     <>
@@ -31,6 +40,13 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
           <IconButton onClick={onReset} title="Reset">
             <RestoreIcon />
           </IconButton>
+
+          <DeleteConfirmationButton
+            disabled={deleteDisabled}
+            onDelete={onDeleteSelectedActionSets}
+            IconButton={IconButton}
+          />
+
           <IconButton onClick={onAddActionSet} title="Add Action Set">
             <AddIcon />
           </IconButton>

@@ -8,12 +8,21 @@ import { InputDialog } from '../../common';
 import { ActionSetList } from '../ActionSetList';
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/api';
+import { useCurrentActions } from '../../../hooks/use-current-actions';
+import { mocked } from 'ts-jest/utils';
+import { deleteActionSet } from '../../../api/client/delete-action-set';
 
 jest.mock('../../../hooks/use-current-story-data');
+jest.mock('../../../hooks/use-current-actions');
+jest.mock('../../../api/client/delete-action-set');
 
 describe('ActionSetMain', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mocked(useCurrentActions).mockReturnValue({
+      currentActions: [],
+      state: {} as any,
+    });
   });
 
   it('should render', () => {
@@ -100,6 +109,33 @@ describe('ActionSetMain', () => {
     ]);
     expect(dispatchMock).toHaveBeenCalledWith([
       { storyId: 'story-id', type: 'deleteTempActionSets' },
+    ]);
+  });
+
+  it('should delete selected actions', () => {
+    mocked(deleteActionSet).mockReturnValue(Promise.resolve());
+
+    mocked(useCurrentActions).mockReturnValue({
+      currentActions: [
+        { actions: [], id: 'action-set-id', title: 'action-set-title' },
+      ],
+      state: {} as any,
+    });
+
+    const wrapper = shallow(<ActionSetMain />);
+
+    const toolbar = wrapper.find(ActionToolbar);
+
+    toolbar.props().onDeleteSelectedActionSets();
+
+    expect(deleteActionSet).toHaveBeenCalledWith({
+      actionSetId: 'action-set-id',
+      fileName: './test.stories.tsx',
+      storyId: 'story-id',
+    });
+
+    expect(dispatchMock).toHaveBeenCalledWith([
+      { type: 'clearCurrentActionSets' },
     ]);
   });
 });

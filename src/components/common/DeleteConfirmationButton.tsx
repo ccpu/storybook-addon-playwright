@@ -7,17 +7,17 @@ export interface DeleteConfirmationButtonProps {
   onDelete: () => void;
   IconButton?: React.ComponentType;
   onClose?: () => void;
+  disabled?: boolean;
 }
 
 const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
   onDelete,
   IconButton = MuIconButton,
   onClose,
+  disabled,
 }) => {
-  const [
-    confirmAnchorEl,
-    setConfirmAnchorEl,
-  ] = React.useState<HTMLButtonElement | null>(null);
+  const [confirmAnchorEl, setConfirmAnchorEl] =
+    React.useState<HTMLButtonElement | null>(null);
 
   const handleDelete = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -39,7 +39,12 @@ const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
 
   return (
     <>
-      <IconButton onClick={handleDelete} title="Delete Item" size="small">
+      <IconButton
+        disabled={disabled}
+        onClick={handleDelete}
+        title="Delete Item"
+        size="small"
+      >
         <DeleteIcon />
       </IconButton>
 

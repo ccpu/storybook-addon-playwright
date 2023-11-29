@@ -5,10 +5,11 @@ import { useActionDispatchContext } from '../../store';
 import { nanoid } from 'nanoid';
 import { ActionSetList } from './ActionSetList';
 import { ActionSet } from '../../typings';
-import { useCurrentActions } from '../../hooks';
+import { useCurrentActions, useCurrentStoryData } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/api';
 import { FavouriteActions } from './FavouriteActions';
+import { deleteActionSet } from '../../api/client';
 
 const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
@@ -18,9 +19,11 @@ const ActionSetMain: React.FC = () => {
 
   const { storyId } = useStorybookState();
 
+  const storyData = useCurrentStoryData();
+
   const dispatch = useActionDispatchContext();
 
-  useCurrentActions(storyId);
+  const { currentActions } = useCurrentActions(storyId);
 
   const toggleDescriptionDialog = useCallback(() => {
     setShowDescDialog(!showDescDialog);
@@ -63,6 +66,22 @@ const ActionSetMain: React.FC = () => {
     });
   }, [dispatch, storyId]);
 
+  const handleDeleteSelectedActionSets = useCallback(() => {
+    currentActions.forEach((action) => {
+      deleteActionSet({
+        actionSetId: action.id,
+        fileName: storyData.parameters.fileName,
+        storyId: storyId,
+      }).then(() => {
+        dispatch({
+          actionSetId: action.id,
+          storyId,
+          type: 'deleteActionSet',
+        });
+      });
+    });
+  }, [currentActions, dispatch, storyData, storyId]);
+
   useEffect(() => {
     dispatch({ type: 'clearCurrentActionSets' });
   }, [dispatch, storyId]);
@@ -93,6 +112,8 @@ const ActionSetMain: React.FC = () => {
         onAddActionSet={toggleDescriptionDialog}
         onReset={handleReset}
         onFavoriteActionsClick={onFavoriteActionsClick}
+        onDeleteSelectedActionSets={handleDeleteSelectedActionSets}
+        deleteDisabled={currentActions.length === 0}
       />
 
       <ActionSetList onSortEnd={handleSortEnd} useDragHandle />

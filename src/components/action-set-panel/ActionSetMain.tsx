@@ -66,20 +66,24 @@ const ActionSetMain: React.FC = () => {
     });
   }, [dispatch, storyId]);
 
-  const handleDeleteSelectedActionSets = useCallback(() => {
-    currentActions.forEach((action) => {
-      deleteActionSet({
-        actionSetId: action.id,
-        fileName: storyData.parameters.fileName,
-        storyId: storyId,
-      }).then(() => {
+  const handleDeleteSelectedActionSets = useCallback(async () => {
+    for (const action of currentActions) {
+      try {
+        await deleteActionSet({
+          actionSetId: action.id,
+          fileName: storyData.parameters.fileName,
+          storyId: storyId,
+        });
+
         dispatch({
           actionSetId: action.id,
           storyId,
           type: 'deleteActionSet',
         });
-      });
-    });
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }, [currentActions, dispatch, storyData, storyId]);
 
   useEffect(() => {

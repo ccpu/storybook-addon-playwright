@@ -66,7 +66,7 @@ export interface Config<T = Page> {
     data: CompareScreenshotParams,
   ) => Promise<CompareScreenshotReturnType | false>;
   theme?: Theme;
-  imageDiffOptions: Pick<
+  imageDiffOptions?: Pick<
     MatchImageSnapshotOptions,
     | 'allowSizeMismatch'
     | 'comparisonMethod'

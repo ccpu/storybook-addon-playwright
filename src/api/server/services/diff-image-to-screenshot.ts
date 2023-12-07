@@ -23,6 +23,8 @@ export const diffImageToScreenshot = async (
       const paths = getScreenshotPaths(data);
       const config = getConfigs();
 
+      const { imageDiffOptions = {} } = config;
+
       const diffDir = path.resolve(
         process.cwd(),
         '__stories__',
@@ -45,7 +47,7 @@ export const diffImageToScreenshot = async (
         snapshotsDir: paths.screenshotsDir,
         updatePassedSnapshot: false,
         updateSnapshot: false,
-        ...config.imageDiffOptions,
+        ...imageDiffOptions,
         ...options,
       } as SnapshotOptions) as ImageDiffResult;
 
@@ -54,6 +56,9 @@ export const diffImageToScreenshot = async (
       }
 
       result.diffDirection = config.diffDirection;
+      if (imageDiffOptions.allowSizeMismatch) {
+        result.diffSize = false;
+      }
       resolve(result);
     } catch (error) {
       reject(error);

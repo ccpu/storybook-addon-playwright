@@ -15,6 +15,7 @@ import {
   CompareScreenshotParams,
   CompareScreenshotReturnType,
 } from './compare-screenshot';
+import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 
@@ -65,4 +66,11 @@ export interface Config<T = Page> {
     data: CompareScreenshotParams,
   ) => Promise<CompareScreenshotReturnType | false>;
   theme?: Theme;
+  imageDiffOptions: Pick<
+    MatchImageSnapshotOptions,
+    | 'allowSizeMismatch'
+    | 'comparisonMethod'
+    | 'diffDirection'
+    | 'customDiffConfig'
+  >;
 }

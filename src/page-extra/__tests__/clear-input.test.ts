@@ -11,7 +11,7 @@ const pageMock = (): Promise<PageProps> => {
 describe('clearInput', () => {
   let page: ExtendedPage;
   beforeEach(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.clearInput = clearInput;
     jest.clearAllMocks();
   });

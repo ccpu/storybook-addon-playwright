@@ -4,14 +4,17 @@ import { ClearInputOptions } from './typings';
 export async function clearInput(
   this: Page,
   selector: string,
-  options?: ClearInputOptions,
+  options: ClearInputOptions = {},
 ) {
+  const { blur, timeout } = options;
+
   await this.fill(selector, '');
-  if (!options) return;
-  if (options.blur) {
+
+  if (blur) {
     await this.$eval(selector, (e) => e.blur());
   }
-  if (options.timeout) {
+
+  if (timeout) {
     await this.waitForTimeout(options.timeout);
   }
 }

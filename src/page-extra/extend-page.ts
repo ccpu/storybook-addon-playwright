@@ -16,6 +16,7 @@ import {
   mouseFromTo,
 } from '.';
 import { touchFromTo } from './touch-from-to';
+import { clearInputAndType } from './clear-input-and-type';
 
 export function extendPage<T extends Page>(page: T) {
   const thisPage = page as PlaywrightPageWithExtra & T;
@@ -26,6 +27,7 @@ export function extendPage<T extends Page>(page: T) {
   thisPage.mouseMoveToSelector = mouseMoveToSelector;
   thisPage.setSelectorSize = setSelectorSize;
   thisPage.clearInput = clearInput;
+  thisPage.clearInputAndType = clearInputAndType;
   thisPage.selectorMouseWheel = selectorMouseWheel;
   thisPage.touchCancel = touchCancel;
   thisPage.touchMove = touchMove;

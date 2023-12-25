@@ -24,6 +24,45 @@
     ],
     "description": "This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event. If the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error."
   },
+  "clearInputAndType": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between key presses in milliseconds. Defaults to 0."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+          },
+          "strict": {
+            "type": "boolean",
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "selector",
+      "text"
+    ],
+    "description": "This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and type text and triggers an input event. If the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error."
+  },
   "dragDropSelector": {
     "kind": "function",
     "type": "Promise",

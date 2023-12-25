@@ -18,7 +18,7 @@
       "type": "shell",
       "command": "npm run start:storybook",
       "presentation": {
-        "reveal": "silent",
+        "reveal": "always",
         "revealProblems": "onProblem",
         "close": true
       },

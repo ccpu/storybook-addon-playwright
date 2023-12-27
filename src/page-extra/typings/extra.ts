@@ -34,34 +34,6 @@ export interface ClearInputOptions extends PageExtraTimeOut {
   blur?: boolean;
 }
 
-export interface ClearInputAndTypeOptions {
-  /**
-   * Time to wait between key presses in milliseconds. Defaults to 0.
-   */
-  delay?: number;
-
-  /**
-   * Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can
-   * opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to
-   * inaccessible pages. Defaults to `false`.
-   */
-  noWaitAfter?: boolean;
-
-  /**
-   * When true, the call requires selector to resolve to a single element. If given selector resolves to more then one
-   * element, the call throws an exception.
-   */
-  strict?: boolean;
-
-  /**
-   * Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by
-   * using the
-   * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout)
-   * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
-   */
-  timeout?: number;
-}
-
 export interface SelectorMouseWheelOptions {
   deltaMode?: number;
   deltaX?: number;
@@ -108,16 +80,6 @@ export interface PlaywrightPageWithExtra {
    * If the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error.
    */
   clearInput: (selector: string, options?: ClearInputOptions) => Promise<void>;
-
-  /**
-   * This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and type text and triggers an input event.
-   * If the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error.
-   */
-  clearInputAndType: (
-    selector: string,
-    text: string,
-    options?: ClearInputAndTypeOptions,
-  ) => Promise<void>;
 
   /**
    * This method fetches an element with `selector`, and move it to the position given by user.

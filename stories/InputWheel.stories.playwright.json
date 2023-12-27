@@ -26,19 +26,6 @@
           ],
           "id": "Mi5MWw3NOZDj",
           "title": "clear input"
-        },
-        {
-          "actions": [
-            {
-              "name": "clearInputAndType",
-              "args": {
-                "selector": "#input",
-                "text": "new text"
-              }
-            }
-          ],
-          "id": "RNdSLMEU9tVu",
-          "title": "clear and type"
         }
       ],
       "screenshots": [
@@ -113,37 +100,6 @@
           "id": "mLqyU2xGWUqn",
           "index": 0,
           "title": "should wait for input value to change to 1 and change input value afterwards"
-        },
-        {
-          "actionSets": [
-            {
-              "actions": [
-                {
-                  "name": "waitForTimeout",
-                  "args": {
-                    "timeout": 200
-                  }
-                }
-              ],
-              "title": "delay 200"
-            },
-            {
-              "actions": [
-                {
-                  "name": "clearInputAndType",
-                  "args": {
-                    "selector": "#input",
-                    "text": "new text"
-                  }
-                }
-              ],
-              "title": "clear and type"
-            }
-          ],
-          "browserType": "chromium",
-          "id": "SfuglKKCZot5",
-          "index": 1,
-          "title": "should clear input and type"
         }
       ]
     },

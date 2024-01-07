@@ -1,5 +1,5 @@
 import { getPointByDirection } from './utils/get-point-by-direction';
-import { MouseOptions, Position } from './typings';
+import { MouseFromToOptions, Position } from './typings';
 import { Page } from 'playwright';
 import { getBoundingBox } from './utils/get-boundingBox';
 
@@ -8,9 +8,9 @@ export async function dragDropSelector(
   selector: string,
   to: Position,
   mouseDownRelativeToSelector?: Position,
-  options?: MouseOptions,
+  options?: MouseFromToOptions,
 ) {
-  const { steps = 1 } = options || {};
+  const { steps = 1, skipMouseUp } = options || {};
 
   const box = await getBoundingBox(this, selector);
 
@@ -40,5 +40,5 @@ export async function dragDropSelector(
 
   await this.mouse.move(mouseMoveX, mouseMoveY, { steps });
 
-  await this.mouse.up();
+  if (!skipMouseUp) await this.mouse.up();
 }

@@ -92,7 +92,7 @@ export interface PlaywrightPageWithExtra {
     selector: string,
     to: Position,
     mouseDownRelativeToSelector?: Position,
-    options?: MouseOptions,
+    options?: MouseFromToOptions,
   ) => Promise<void>;
 
   /**

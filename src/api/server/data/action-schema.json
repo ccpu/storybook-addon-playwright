@@ -61,6 +61,9 @@
           "steps": {
             "type": "number",
             "default": 1
+          },
+          "skipMouseUp": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

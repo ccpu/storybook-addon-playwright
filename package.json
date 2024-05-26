@@ -94,7 +94,7 @@
     "@types/react-dom": "17.0.16"
   },
   "scripts": {
-    "start:storybook": "start-storybook -p 9002 --ci --no-manager-cache",
+    "start:storybook": "set NODE_OPTIONS=--openssl-legacy-provider && start-storybook -p 9002 --ci --no-manager-cache",
     "clean": "rimraf coverage dist/* tmp",
     "build": "npm run clean && tsc -p tsconfig.release.json",
     "watch": "tsc -w -p tsconfig.release.json",

@@ -1,25 +1,16 @@
 import { useKnobs } from '../use-knobs';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { SET } from '@storybook/addon-knobs/dist/shared';
-import addons from '@storybook/addons';
-import { STORY_CHANGED } from '@storybook/core-events';
-import { KnobStoreKnob } from '../../typings';
+import { STORY_ARGS_UPDATED, STORY_CHANGED } from '@storybook/core-events';
+import { addons } from '@storybook/manager-api';
 
 describe('useKnobs', () => {
-  const getKnobs = (knob?: Partial<KnobStoreKnob>) => {
+  const getArgs = (args?: Record<string, unknown>) => {
     return {
-      knobs: {
-        text: {
-          defaultValue: 'knob-value',
-          groupId: undefined,
-          label: 'text',
-          name: 'text',
-          type: 'text',
-          used: true,
-          value: 'knob-value 1',
-          ...knob,
-        },
+      args: {
+        text: 'knob-value 1',
+        ...args,
       },
+      storyId: 'story-id',
     };
   };
 
@@ -28,12 +19,12 @@ describe('useKnobs', () => {
     expect(result.current).toStrictEqual(undefined);
   });
 
-  it('should receive knobs and remove when story changed', async () => {
+  it('should receive args and remove when story changed', async () => {
     const { result } = renderHook(() => useKnobs());
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (addons as any).__setEvent(SET, getKnobs());
+      (addons as any).__setEvent(STORY_ARGS_UPDATED, getArgs());
     });
 
     expect(result.current).toStrictEqual({
@@ -48,12 +39,15 @@ describe('useKnobs', () => {
     expect(result.current).toStrictEqual(undefined);
   });
 
-  it('should note set knobs if value and defaultValue same', () => {
+  it('should not set args if undefined', () => {
     const { result } = renderHook(() => useKnobs());
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (addons as any).__setEvent(SET, getKnobs({ value: 'knob-value' }));
+      (addons as any).__setEvent(
+        STORY_ARGS_UPDATED,
+        getArgs({ text: undefined }),
+      );
     });
 
     expect(result.current).toStrictEqual(undefined);

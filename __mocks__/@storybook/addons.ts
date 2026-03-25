@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// Legacy mock - redirects to @storybook/manager-api mock for backward compatibility
 import { EventEmitter } from 'events';
-import { types as addonsTypes } from '@storybook/addons';
 
-const addonsMock = jest.createMockFromModule('@storybook/addons') as any;
-export const types = addonsTypes;
+const addonsMock = {} as any;
+
+export const types = {
+  PANEL: 'panel',
+  PREVIEW: 'preview',
+  TAB: 'tab',
+  TOOL: 'tool',
+  TOOLEXTRA: 'toolextra',
+};
 
 const ee = new EventEmitter();
 

@@ -1,7 +1,35 @@
-// Legacy mock - kept for backward compatibility
-// New code should import from @storybook/manager-api
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { EventEmitter } from 'events';
 import { getStoryData } from '../../__test_data__/story-data';
 
+const ee = new EventEmitter();
+
+// Addon types enum
+export const types = {
+  PANEL: 'panel',
+  PREVIEW: 'preview',
+  TAB: 'tab',
+  TOOL: 'tool',
+  TOOLEXTRA: 'toolextra',
+};
+
+// Addons mock (replaces @storybook/addons default export)
+export const addons = {
+  add: jest.fn(),
+  getChannel: () => ({
+    emit: ee.emit.bind(ee),
+    off: ee.off.bind(ee),
+    on: ee.on.bind(ee),
+  }),
+  register: (_id: string, fn: () => void) => fn(),
+};
+
+// Helper for tests to emit events
+(addons as any).__setEvent = (eve: string, val: unknown) => {
+  ee.emit(eve, val);
+};
+
+// useStorybookState mock (replaces @storybook/api)
 export const useStorybookState = jest.fn().mockImplementation(() => {
   return {
     customQueryParams: {
@@ -45,6 +73,7 @@ export const useStorybookState = jest.fn().mockImplementation(() => {
   } as unknown;
 });
 
+// useStorybookApi mock (replaces @storybook/api)
 export const useStorybookApi = jest.fn().mockImplementation(() => ({
   emit: jest.fn(),
   getCurrentStoryData: () => {

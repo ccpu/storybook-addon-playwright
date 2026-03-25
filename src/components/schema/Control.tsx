@@ -31,7 +31,7 @@ const Control: React.FC<ControlProps & Partial<ComponentType>> = memo(
           value !== false
         }
       >
-        <StorybookControl onChange={handleChange} knob={knob} required />
+        <StorybookControl onChange={handleChange} knob={knob} />
       </FormControl>
     );
   },

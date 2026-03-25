@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { constructStoryUrl } from '../utils';
 
 export const useStoryUrl = () => {

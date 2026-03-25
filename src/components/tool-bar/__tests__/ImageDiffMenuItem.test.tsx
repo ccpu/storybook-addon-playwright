@@ -3,7 +3,7 @@ import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { MenuItem } from '@material-ui/core';
-import { useStorybookApi } from '@storybook/api';
+import { useStorybookApi } from '@storybook/manager-api';
 
 describe('ImageDiffMenuItem', () => {
   it('should render', () => {

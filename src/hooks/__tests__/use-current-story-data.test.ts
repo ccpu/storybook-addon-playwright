@@ -1,6 +1,6 @@
 import { useCurrentStoryData } from '../use-current-story-data';
 import { renderHook } from '@testing-library/react-hooks';
-import { useStorybookApi } from '@storybook/api';
+import { useStorybookApi } from '@storybook/manager-api';
 import { mocked } from 'ts-jest/utils';
 
 describe('useCurrentStoryData', () => {

@@ -2,9 +2,9 @@ import { useGlobalState } from './use-global-state';
 import { ScreenshotData, BrowserTypes, ScreenshotOptions } from '../typings';
 import { useCallback, useEffect, useRef } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
-import { useStorybookApi } from '@storybook/api';
+import { useStorybookApi } from '@storybook/manager-api';
 import { useGlobalActionDispatch } from './use-global-action-dispatch';
-import { RESET } from '@storybook/addon-knobs/dist/shared.js';
+import { RESET_STORY_ARGS } from '@storybook/core-events';
 import { useActiveBrowsers } from './use-active-browser';
 import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 import { useAddonState } from './use-addon-state';
@@ -46,7 +46,7 @@ export const useEditScreenshot = () => {
       type: 'clearCurrentActionSets',
     });
 
-    api.emit(RESET);
+    api.emit(RESET_STORY_ARGS, { storyId: storyData?.id });
 
     if (editScreenshotState) {
       loadSetting(

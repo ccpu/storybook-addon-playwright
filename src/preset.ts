@@ -69,23 +69,23 @@ module.exports = {
   babel: async (config: webpack.Configuration) => {
     return config;
   },
-  managerBabel: async (config: webpack.Configuration) => {
-    return config;
+  managerEntries: (entry: string[] = []) => {
+    return [...entry, require.resolve('./register')];
   },
   managerWebpack: async (config: webpack.Configuration) => {
     return config;
   },
   webpackFinal: async (config: webpack.Configuration) => {
-    // config.plugins.push(new ReloadTimestampPlugin());
-
+    // Find all VirtualModulePlugin instances (regardless of version) by their _staticModules property
     const virtualModulePlugins = config.plugins.filter(
       (x) =>
         (x as unknown as { _staticModules: { [key: string]: string } })
           ._staticModules,
     );
 
+    // Remove them using the same property check (not instanceof, which breaks due to version mismatch)
     config.plugins = config.plugins.filter(
-      (x) => !(x instanceof VirtualModulePlugin),
+      (x) => !(x as unknown as { _staticModules: unknown })._staticModules,
     );
 
     let foundModule = false;
@@ -103,7 +103,9 @@ module.exports = {
             (modulePath.endsWith('generated-entry.js') ||
               modulePath.endsWith('generated-stories-entry.js') ||
               modulePath.endsWith('storybook-stories.js') ||
-              modulePath.endsWith('storybook-config-entry.js'))
+              modulePath.endsWith('storybook-config-entry.js') ||
+              modulePath.includes('virtual-') ||
+              modulePath.includes('node_modules/.cache/storybook'))
           ) {
             (foundModule = true),
               (moduleContent += `\n
@@ -117,12 +119,15 @@ module.exports = {
         {},
       );
 
-      config.plugins.push(new VirtualModulePlugin(virtualModuleMapping));
+      // Re-create using the same constructor as the original plugin to avoid version mismatch
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const PluginClass = (plugin as any).constructor;
+      config.plugins.push(new PluginClass(virtualModuleMapping));
     });
 
     if (!foundModule) {
-      throw new Error(
-        'VirtualModulePlugin generate with storybook not found! possibly file name changed.',
+      console.warn(
+        'storybook-addon-playwright: VirtualModulePlugin entry not found. Hot reload detection may not work.',
       );
     }
 

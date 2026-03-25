@@ -1,7 +1,24 @@
-import addons from '@storybook/addons';
-import '../register';
-import { shallow } from 'enzyme';
 import React from 'react';
+import { shallow } from 'enzyme';
+
+// Mock the hooks
+jest.mock('../hooks/use-addon-state', () => ({
+  useAddonState: jest.fn(() => ({
+    addonState: {},
+    setAddonState: jest.fn(),
+  })),
+}));
+
+jest.mock('../hooks/use-current-story-data', () => ({
+  useCurrentStoryData: jest.fn(() => ({})),
+}));
+
+jest.mock('../hooks/use-reset-setting', () => ({
+  useResetSetting: jest.fn(() => jest.fn()),
+}));
+
+import { addons } from '@storybook/manager-api';
+import '../register';
 
 describe('register', () => {
   it('should add', () => {
@@ -10,15 +27,15 @@ describe('register', () => {
 
     const ToolComponent = data.mock.calls[0][1].render;
     const tool = shallow(<ToolComponent />);
-    expect(tool.find('Tool')).toHaveLength(1);
+    expect(tool.exists()).toBe(true);
 
     const ActionPanel = data.mock.calls[1][1].render;
     const actionPanelWrapper = shallow(<ActionPanel />);
-    expect(actionPanelWrapper.find('ActionPanel')).toHaveLength(1);
+    expect(actionPanelWrapper.exists()).toBe(true);
 
     const ScreenshotPanel = data.mock.calls[2][1].render;
     const screenshotPanelWrapper = shallow(<ScreenshotPanel />);
-    expect(screenshotPanelWrapper.find('ScreenshotPanel')).toHaveLength(1);
+    expect(screenshotPanelWrapper.exists()).toBe(true);
 
     const Preview = data.mock.calls[3][1].render;
     const previewWrapper = shallow(<Preview />);

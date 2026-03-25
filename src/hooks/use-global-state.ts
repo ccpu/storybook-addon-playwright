@@ -5,7 +5,7 @@ import {
   Dispatch,
   SetStateAction,
 } from 'react';
-import addons from '@storybook/addons';
+import { addons } from '@storybook/manager-api';
 
 export const makeGlobalStateId = (id: string) => {
   return `__playwright_${id}`;

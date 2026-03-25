@@ -1,5 +1,4 @@
 import { constructStoryUrl } from '../construct-story-url';
-import { parse } from 'url';
 import { ScreenshotProp } from '../../typings';
 
 describe('constructStoryUrl', () => {
@@ -10,11 +9,10 @@ describe('constructStoryUrl', () => {
   });
 
   it('should construct file', () => {
-    expect(
-      parse(
-        constructStoryUrl('./storybook-static', 'story-id', { prop: 'val' }),
-      ).protocol,
-    ).toBe('file:');
+    const url = constructStoryUrl('./storybook-static', 'story-id', {
+      prop: 'val',
+    });
+    expect(url.startsWith('file:///')).toBe(true);
   });
 
   it('should to have valid url', () => {

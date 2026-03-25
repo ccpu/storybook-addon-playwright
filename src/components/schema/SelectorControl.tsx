@@ -149,7 +149,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
   }, [handleChange, knob, setKnob, value]);
 
   const handleControlChange = useCallback(
-    (value: string) => {
+    (value: unknown) => {
       setValidate(true);
       handleChange(value);
     },
@@ -178,7 +178,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
         })}
         onBlur={handleBlur}
       >
-        <Control onChange={handleControlChange} knob={knob} required />
+        <Control onChange={handleControlChange} knob={knob} />
         <div
           className={clsx({
             [classes.buttonWrap]: isFollowedByPositionProp,

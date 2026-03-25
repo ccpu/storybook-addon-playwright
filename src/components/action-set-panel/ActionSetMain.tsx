@@ -7,7 +7,7 @@ import { ActionSetList } from './ActionSetList';
 import { ActionSet } from '../../typings';
 import { useCurrentActions, useCurrentStoryData } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { FavouriteActions } from './FavouriteActions';
 import { deleteActionSet } from '../../api/client';
 

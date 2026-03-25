@@ -1,6 +1,6 @@
 import { useCallback, useRef, useEffect } from 'react';
 import { useKnobs } from './use-knobs';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { getScreenshot } from '../api/client';
 import { BrowserTypes, BrowserContextOptions } from '../typings';
 import sum from 'hash-sum';

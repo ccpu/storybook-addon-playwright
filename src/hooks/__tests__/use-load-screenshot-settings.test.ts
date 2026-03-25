@@ -9,11 +9,11 @@ jest.mock('../use-current-story-data');
 jest.mock('../use-browser-options.ts');
 jest.mock('../use-screenshot-options.ts');
 
-jest.unmock('@storybook/api');
+jest.unmock('@storybook/manager-api');
 
 const emitMock = jest.fn();
 
-jest.mock('@storybook/api', () => ({
+jest.mock('@storybook/manager-api', () => ({
   useStorybookApi: () => ({
     emit: emitMock,
   }),
@@ -80,7 +80,7 @@ describe('useLoadScreenshotSettings', () => {
     expect(dispatchMock).toHaveBeenCalledTimes(0);
   });
 
-  it('should rest and  emit pops to make knob change', () => {
+  it('should reset and emit args to update story', () => {
     const { result } = renderHook(() => useLoadScreenshotSettings());
 
     act(() => {
@@ -89,10 +89,12 @@ describe('useLoadScreenshotSettings', () => {
       result.current.loadSetting(data);
     });
 
-    expect(emitMock).toHaveBeenCalledWith('storybookjs/knobs/reset');
-    expect(emitMock).toHaveBeenCalledWith('storybookjs/knobs/change', {
-      name: 'prop',
-      value: 'prop-val',
+    expect(emitMock).toHaveBeenCalledWith('resetStoryArgs', {
+      storyId: 'story-id',
+    });
+    expect(emitMock).toHaveBeenCalledWith('updateStoryArgs', {
+      storyId: 'story-id',
+      updatedArgs: { prop: 'prop-val' },
     });
   });
 

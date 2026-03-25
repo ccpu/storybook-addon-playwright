@@ -1,5 +1,12 @@
 import { ControlTypes } from '.';
-import { OptionsKnobOptionsDisplay } from '@storybook/addon-knobs/dist/components/types/Options';
+
+export type OptionsKnobOptionsDisplay =
+  | 'radio'
+  | 'inline-radio'
+  | 'check'
+  | 'inline-check'
+  | 'select'
+  | 'multi-select';
 
 export interface ControlProps {
   label: string;

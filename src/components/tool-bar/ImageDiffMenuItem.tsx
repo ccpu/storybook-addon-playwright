@@ -1,7 +1,7 @@
 import React, { forwardRef, Ref, useCallback } from 'react';
 import { ImageDiffResult } from '../../api/typings';
 import { MenuItem, makeStyles } from '@material-ui/core';
-import { useStorybookApi } from '@storybook/api';
+import { useStorybookApi } from '@storybook/manager-api';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
 
 const useStyles = makeStyles(

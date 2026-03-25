@@ -71,11 +71,11 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
       : imageDiffResult;
 
   const handleImageDiffClick = useCallback(
-    async (event: React.MouseEvent<HTMLButtonElement>) => {
+    async (event: React.SyntheticEvent) => {
       //fixes menu close
       if (anchorEl) return;
       if (diffResults.length > 0) {
-        setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget as HTMLElement);
       } else {
         const result = await testStoryScreenShots(target);
         if (result instanceof Error) {

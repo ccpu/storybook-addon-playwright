@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
@@ -77,6 +77,8 @@ const useStyles = makeStyles(
 
 const Preview: React.FC = (props) => {
   const { children } = props;
+
+  console.log(props);
 
   const [isDragging, setIsDragging] = useState(false);
 

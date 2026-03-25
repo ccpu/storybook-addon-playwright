@@ -5,7 +5,7 @@ import WebOutlined from '@material-ui/icons/Launch';
 import { PreviewDialog } from '../../screenshot-preview';
 import { LayoutBottom, LayoutRight } from '../../../icons';
 import { useAddonState } from '../../../hooks//use-addon-state';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 
 jest.mock('../../../hooks/use-addon-state.ts');
 jest.mock('../../../hooks/use-current-story-data.ts');

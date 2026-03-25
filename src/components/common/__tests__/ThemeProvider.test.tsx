@@ -2,7 +2,7 @@ import { getStorybookState } from '../../../../__test_data__/storybook-state';
 import { ThemeProvider } from '../ThemeProvider';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { useCustomTheme } from '../../../hooks/use-custom-theme';
 
 jest.mock('../../../hooks/use-custom-theme.ts');
@@ -13,10 +13,10 @@ describe('ThemeProvider', () => {
     (useStorybookState as jest.Mock).mockImplementationOnce(() =>
       getStorybookState('light'),
     );
-    useCustomThemeMock.mockImplementationOnce(()=>{
+    useCustomThemeMock.mockImplementationOnce(() => {
       return {
-        theme: undefined
-      }
+        theme: undefined,
+      };
     });
     const wrapper = shallow(
       <ThemeProvider>
@@ -32,10 +32,10 @@ describe('ThemeProvider', () => {
       getStorybookState('dark'),
     );
 
-    useCustomThemeMock.mockImplementationOnce(()=>{
+    useCustomThemeMock.mockImplementationOnce(() => {
       return {
-        theme: undefined
-      }
+        theme: undefined,
+      };
     });
 
     const wrapper = shallow(
@@ -52,16 +52,16 @@ describe('ThemeProvider', () => {
       getStorybookState('light'),
     );
 
-    useCustomThemeMock.mockImplementationOnce(()=>{
+    useCustomThemeMock.mockImplementationOnce(() => {
       return {
         theme: {
-          palette:{
+          palette: {
             primary: {
-              main: '#000000'
-            }
-          }
-        }
-      }
+              main: '#000000',
+            },
+          },
+        },
+      };
     });
 
     const wrapper = shallow(

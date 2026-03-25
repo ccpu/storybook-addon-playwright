@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import {
-  createMuiTheme as createTheme,
+  createTheme,
   ThemeProvider as MuThemeProvider,
 } from '@material-ui/core/styles';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { useCustomTheme } from '../../hooks/use-custom-theme';
 // import global from 'jss-plugin-global';
 
@@ -12,23 +12,26 @@ const ThemeProvider: React.FC = memo((props) => {
 
   const { theme: storyBookTheme } = useStorybookState();
   const { theme: customTheme } = useCustomTheme();
-  const theme = createTheme({
-    palette: {
-      action: { active: storyBookTheme.barTextColor },
-      background: {
-        default: storyBookTheme.appBg,
-        paper: storyBookTheme.appContentBg,
+  const theme = createTheme(
+    {
+      palette: {
+        action: { active: storyBookTheme.barTextColor },
+        background: {
+          default: storyBookTheme.appBg,
+          paper: storyBookTheme.appContentBg,
+        },
+        divider: storyBookTheme.appBorderColor,
+        primary: { main: storyBookTheme.colorSecondary },
+        secondary: { main: storyBookTheme.colorPrimary },
+        text: { primary: storyBookTheme.barTextColor },
+        type: storyBookTheme.base === 'dark' ? 'dark' : 'light',
       },
-      divider: storyBookTheme.appBorderColor,
-      primary: { main: storyBookTheme.colorSecondary },
-      secondary: { main: storyBookTheme.colorPrimary },
-      text: { primary: storyBookTheme.barTextColor },
-      type: storyBookTheme.base === 'dark' ? 'dark' : 'light',
+      typography: {
+        fontFamily: storyBookTheme.fontBase,
+      },
     },
-    typography: {
-      fontFamily: storyBookTheme.fontBase,
-    },
-  }, customTheme);
+    customTheme,
+  );
 
   return <MuThemeProvider theme={theme}>{children}</MuThemeProvider>;
 });

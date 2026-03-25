@@ -5,6 +5,7 @@ export const storyData: StoryData = {
   isLeaf: true,
   kind: 'Component',
   name: 'With Component',
+  importPath: './test.stories.tsx',
   parameters: {
     __id: 'story-id',
     component: {

@@ -7,7 +7,7 @@ import { ActionToolbar } from '../ActionSetToolbar';
 import { InputDialog } from '../../common';
 import { ActionSetList } from '../ActionSetList';
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { useCurrentActions } from '../../../hooks/use-current-actions';
 import { mocked } from 'ts-jest/utils';
 import { deleteActionSet } from '../../../api/client/delete-action-set';

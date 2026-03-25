@@ -9,12 +9,9 @@ const PreviewPlacementMenu: React.FC = () => {
 
   const { setAddonState, addonState } = useAddonState();
 
-  const handlePlacementClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    },
-    [],
-  );
+  const handlePlacementClick = useCallback((event: React.SyntheticEvent) => {
+    setAnchorEl(event.currentTarget as HTMLElement);
+  }, []);
 
   const handleClose = useCallback(() => {
     setAnchorEl(null);

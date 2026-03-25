@@ -22,33 +22,57 @@ import {
   getFavouriteActions,
   deleteFavouriteAction,
 } from './controller';
-import { Router, Response, Request } from 'express';
+import { Response, Request } from 'express';
+
+type MiddlewareRouter = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  post: (path: string, handler: any) => unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  use: (path: string, handler: any) => unknown;
+};
+
+const addonRoutes = Object.values(ROUTE);
+
+const registerRouteMiddleware = (
+  router: MiddlewareRouter,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  middleware: any,
+) => {
+  addonRoutes.forEach((route) => {
+    router.use(route, middleware);
+  });
+};
+
+const setInfiniteTimeout = (req, res, next) => {
+  req.setTimeout(0);
+  res.setTimeout(0);
+  next();
+};
 
 export const asyncCatch = function (func) {
-  return async function (
-    req: Request,
-    res: Response,
-    next: (err: unknown) => void,
-  ) {
+  return async function (req: Request, res: Response) {
     try {
       return await func(req, res);
     } catch (err) {
-      next(err);
+      const error = err as { status?: number; message?: string };
+      res.status(error.status || 500).send({
+        message:
+          process.env.NODE_ENV === 'development'
+            ? error.message
+            : 'Internal Server Error',
+        status: error.status || 500,
+      });
     }
   };
 };
 
-const expressMiddleWare = (router: Partial<Router>) => {
-  router.use(bodyParser.json({ limit: '5000mb' }));
-  router.use(bodyParser.urlencoded({ extended: true, limit: '5000mb' }));
-
-  router.use((req, res, next) => {
-    // Set the timeout for all HTTP requests
-    req.setTimeout(0);
-    // Set the server response timeout for all HTTP requests
-    res.setTimeout(0);
-    next();
-  });
+const expressMiddleWare = (router: MiddlewareRouter) => {
+  registerRouteMiddleware(router, bodyParser.json({ limit: '5000mb' }));
+  registerRouteMiddleware(
+    router,
+    bodyParser.urlencoded({ extended: true, limit: '5000mb' }),
+  );
+  registerRouteMiddleware(router, setInfiniteTimeout);
 
   router.post(ROUTE.TAKE_SCREENSHOT, asyncCatch(getScreenshot));
   router.post(ROUTE.SAVE_SCREENSHOT, asyncCatch(saveScreenshot));
@@ -71,17 +95,5 @@ const expressMiddleWare = (router: Partial<Router>) => {
   router.post(ROUTE.ADD_FAVOURITE_ACTION, asyncCatch(addToFavourite));
   router.post(ROUTE.DELETE_FAVOURITE_ACTION, asyncCatch(deleteFavouriteAction));
   router.post(ROUTE.GET_FAVOURITE_ACTIONS, asyncCatch(getFavouriteActions));
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  router.use((error, _req, res, next) => {
-    res.status(error.status || 500).send({
-      message:
-        process.env.NODE_ENV === 'development'
-          ? error.message
-          : 'Internal Server Error',
-      status: error.status || 500,
-    });
-    next(error);
-  });
 };
 export default expressMiddleWare;

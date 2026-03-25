@@ -4,11 +4,11 @@ import { useGlobalActionDispatch } from '../../hooks/use-global-action-dispatch'
 
 jest.mock('../../hooks/use-global-action-dispatch');
 jest.mock('../use-current-story-data');
-jest.unmock('@storybook/api');
+jest.unmock('@storybook/manager-api');
 
 const emitMock = jest.fn();
 
-jest.mock('@storybook/api', () => ({
+jest.mock('@storybook/manager-api', () => ({
   useStorybookApi: () => ({
     emit: emitMock,
   }),

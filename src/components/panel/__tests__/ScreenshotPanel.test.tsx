@@ -2,7 +2,7 @@ import { ScreenshotPanel } from '../ScreenshotPanel';
 import { ScreenshotMain } from '../../screenshot-panel/ScreenshotMain';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { SCREENSHOT_PANEL_ID } from '../../../constants';
 
 describe('ScreenshotPanel', () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useStorybookApi } from '@storybook/api';
+import { useStorybookApi } from '@storybook/manager-api';
 import { StoryData } from '../typings';
 
 export const useCurrentStoryData = () => {
@@ -7,17 +7,19 @@ export const useCurrentStoryData = () => {
 
   const api = useStorybookApi();
 
-  const currentStory = (api.getCurrentStoryData() as unknown) as StoryData;
+  const currentStory = api.getCurrentStoryData();
 
   useEffect(() => {
-    if (!currentStory) return;
-
+    if (!currentStory || !currentStory.importPath) return;
     const data = currentStory;
-    const fileName = data.parameters.fileName;
+    const filePath = data.importPath;
+    const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
 
     setData({
-      ...data,
+      id: data.id,
+      name: data.name,
       parameters: { ...data.parameters, fileName: fileName },
+      parent: data.parent,
     });
   }, [currentStory]);
 

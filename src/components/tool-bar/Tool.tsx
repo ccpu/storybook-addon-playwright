@@ -7,7 +7,7 @@ import WebOutlined from '@material-ui/icons/Launch';
 import { useAddonState, useCurrentStoryData } from '../../hooks';
 import { LayoutRight, LayoutBottom } from '../../icons';
 import { PreviewPlacementMenu } from './PreviewPlacementMenu';
-import { useStorybookState } from '@storybook/api';
+import { useStorybookState } from '@storybook/manager-api';
 import { isHorizontalPanel } from '../preview/utils';
 import { ImageDiff } from './ImageDiff';
 import RefreshIcon from '@material-ui/icons/Refresh';

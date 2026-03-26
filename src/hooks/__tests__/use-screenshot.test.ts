@@ -1,7 +1,9 @@
 import { useScreenshot } from '../use-screenshot';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import fetch from 'jest-fetch-mock';
 import { GetScreenshotResponse } from '../../api/typings';
+import { addons } from '@storybook/manager-api';
+import { STORY_RENDERED } from '@storybook/core-events';
 
 jest.mock('../use-knobs', () => ({
   useKnobs: () => {
@@ -24,6 +26,11 @@ describe('useScreenshot', () => {
     const { result, waitForNextUpdate } = renderHook(() =>
       useScreenshot('chromium'),
     );
+
+    act(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (addons as any).__setEvent(STORY_RENDERED);
+    });
 
     expect(result.current.loading).toBe(true);
     await waitForNextUpdate();

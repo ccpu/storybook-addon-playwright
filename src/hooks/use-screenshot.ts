@@ -1,13 +1,13 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, useState } from 'react';
 import { useKnobs } from './use-knobs';
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState, addons } from '@storybook/manager-api';
 import { getScreenshot } from '../api/client';
 import { BrowserTypes, BrowserContextOptions } from '../typings';
 import sum from 'hash-sum';
 import { useCurrentActions } from './use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { useAsyncApiCall } from './use-async-api-call';
-import { usePreviewIframe } from './use-preview-iframe';
+import { STORY_RENDERED } from '@storybook/core-events';
 import { nanoid } from 'nanoid';
 
 export const useScreenshot = (
@@ -26,6 +26,19 @@ export const useScreenshot = (
 
   const { error, makeCall, inProgress, result } =
     useAsyncApiCall(getScreenshot);
+
+  // Incremented each time the preview finishes rendering (including HMR).
+  // Used instead of polling iframe.contentWindow.__playwright_addon_hot_reload_time__.
+  const [renderCount, setRenderCount] = useState(0);
+
+  useEffect(() => {
+    const channel = addons.getChannel();
+    const handler = () => setRenderCount((c) => c + 1);
+    channel.on(STORY_RENDERED, handler);
+    return () => {
+      channel.off(STORY_RENDERED, handler);
+    };
+  }, []);
 
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
@@ -49,26 +62,15 @@ export const useScreenshot = (
     state.storyId,
   ]);
 
-  const iframe = usePreviewIframe();
-
-  const latHotReload =
-    iframe &&
-    iframe.contentWindow &&
-    (
-      iframe.contentWindow as unknown as {
-        __playwright_addon_hot_reload_time__: number;
-      }
-    ).__playwright_addon_hot_reload_time__;
-
   useEffect(() => {
-    if (inProgress || !latHotReload) return;
+    if (inProgress || renderCount === 0) return;
 
     const currentHash = sum({
       browserOptions,
       currentActions,
       id: state.storyId,
       knobs,
-      latHotReload,
+      renderCount,
       screenshotOptions,
     });
 
@@ -87,7 +89,7 @@ export const useScreenshot = (
     state.storyId,
     screenshotOptions,
     inProgress,
-    latHotReload,
+    renderCount,
   ]);
 
   return { error, getSnapshot, loading: inProgress, screenshot: result };

@@ -94,6 +94,7 @@
   },
   "scripts": {
     "start:storybook": "storybook dev -p 9002 --ci",
+    "start:storybook:dev": "node .storybook/start-dev.js",
     "clean": "rimraf coverage dist/* tmp",
     "build": "npm run clean && tsc -p tsconfig.release.json",
     "watch": "tsc -w -p tsconfig.release.json",

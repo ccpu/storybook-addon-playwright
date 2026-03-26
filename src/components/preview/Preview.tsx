@@ -78,6 +78,8 @@ const useStyles = makeStyles(
 const Preview: React.FC = (props) => {
   const { children } = props;
 
+  //console.log(props);
+
   const [isDragging, setIsDragging] = useState(false);
 
   const { addonState, setAddonState } = useAddonState();

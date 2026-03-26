@@ -17,6 +17,7 @@ export const useCurrentStoryData = () => {
 
     setData({
       id: data.id,
+      importPath: data.importPath,
       name: data.name,
       parameters: { ...data.parameters, fileName: fileName },
       parent: data.parent,

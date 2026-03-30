@@ -21,6 +21,7 @@ module.exports = {
   moduleNameMapper: {
     // tRPC client mock for all test files
     '^(.*)/trpc/client$': '<rootDir>/src/trpc/__mocks__/client.ts',
+    '^join-images$': '<rootDir>/__mocks__/join-images.ts',
     // Storybook 8 uses subpath exports which Jest 27 doesn't support.
     // Map storybook/internal/* paths to @storybook/core dist files.
     '^storybook/internal/manager-api$':
@@ -39,11 +40,12 @@ module.exports = {
       '<rootDir>/node_modules/@storybook/core/dist/types/index.cjs',
     '^storybook/internal/client-logger$':
       '<rootDir>/node_modules/@storybook/core/dist/client-logger/index.cjs',
+    '^sharp$': '<rootDir>/__mocks__/sharp.ts',
   },
   setupFilesAfterEnv: [
     './setupTests.ts',
     './node_modules/jest-enzyme/lib/index.js',
   ],
   transformIgnorePatterns: ['/node_modules/(?!(p-limit|yocto-queue)/)'],
-  testPathIgnorePatterns: ['./stories/*'],
+  testPathIgnorePatterns: ['./dist/*', './stories/*'],
 };

@@ -13,11 +13,7 @@
   },
   "colorScheme": {
     "type": "string",
-    "enum": [
-      "light",
-      "dark",
-      "no-preference"
-    ],
+    "enum": ["light", "dark", "no-preference"],
     "description": "Emulates `'prefers-colors-scheme'` media feature, supported values are `'light'`, `'dark'`, `'no-preference'`. See [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults to `'light'`."
   },
   "deviceScaleFactor": {
@@ -26,10 +22,7 @@
   },
   "forcedColors": {
     "type": "string",
-    "enum": [
-      "active",
-      "none"
-    ],
+    "enum": ["active", "none"],
     "description": "Emulates `'forced-colors'` media feature, supported values are `'active'`, `'none'`. See [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults to `'none'`.\n\n> NOTE: It's not supported in WebKit, see [here](https://bugs.webkit.org/show_bug.cgi?id=225281) in their issue tracker."
   },
   "geolocation": {
@@ -48,10 +41,7 @@
         "description": "Non-negative accuracy value. Defaults to `0`."
       }
     },
-    "required": [
-      "latitude",
-      "longitude"
-    ],
+    "required": ["latitude", "longitude"],
     "additionalProperties": false
   },
   "hasTouch": {
@@ -68,10 +58,7 @@
         "type": "string"
       }
     },
-    "required": [
-      "username",
-      "password"
-    ],
+    "required": ["username", "password"],
     "additionalProperties": false,
     "description": "Credentials for [HTTP authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)."
   },
@@ -122,9 +109,7 @@
         "description": "Optional password to use if HTTP proxy requires authentication."
       }
     },
-    "required": [
-      "server"
-    ],
+    "required": ["server"],
     "additionalProperties": false,
     "description": "Network proxy settings to use with this context.\n\n> NOTE: For Chromium on Windows the browser needs to be launched with the global proxy for this option to work. If all contexts override the proxy, global proxy will be never used and can be any string, for example `launch({ proxy: { server: 'http://per-context' } })`."
   },
@@ -140,9 +125,7 @@
         "description": "Path on the filesystem to write the HAR file to."
       }
     },
-    "required": [
-      "path"
-    ],
+    "required": ["path"],
     "additionalProperties": false,
     "description": "Enables [HAR](http://www.softwareishard.com/blog/har-12-spec) recording for all pages into `recordHar.path` file. If not specified, the HAR is not recorded. Make sure to await [browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browser-context-close) for the HAR to be saved."
   },
@@ -165,26 +148,18 @@
             "description": "Video frame height."
           }
         },
-        "required": [
-          "width",
-          "height"
-        ],
+        "required": ["width", "height"],
         "additionalProperties": false,
         "description": "Optional dimensions of the recorded videos. If not specified the size will be equal to `viewport` scaled down to fit into 800x800. If `viewport` is not configured explicitly the video size defaults to 800x450. Actual picture of each page will be scaled down if necessary to fit the specified size."
       }
     },
-    "required": [
-      "dir"
-    ],
+    "required": ["dir"],
     "additionalProperties": false,
     "description": "Enables video recording for all pages into `recordVideo.dir` directory. If not specified videos are not recorded. Make sure to await [browserContext.close()](https://playwright.dev/docs/api/class-browsercontext#browser-context-close) for videos to be saved."
   },
   "reducedMotion": {
     "type": "string",
-    "enum": [
-      "reduce",
-      "no-preference"
-    ],
+    "enum": ["reduce", "no-preference"],
     "description": "Emulates `'prefers-reduced-motion'` media feature, supported values are `'reduce'`, `'no-preference'`. See [page.emulateMedia([options])](https://playwright.dev/docs/api/class-page#page-emulate-media) for more details. Defaults to `'no-preference'`."
   },
   "screen": {
@@ -199,10 +174,7 @@
         "description": "page height in pixels."
       }
     },
-    "required": [
-      "width",
-      "height"
-    ],
+    "required": ["width", "height"],
     "additionalProperties": false,
     "description": "Emulates consistent window screen size available inside web page via `window.screen`. Is only used when the `viewport` is set."
   },
@@ -245,11 +217,7 @@
                 },
                 "sameSite": {
                   "type": "string",
-                  "enum": [
-                    "Strict",
-                    "Lax",
-                    "None"
-                  ],
+                  "enum": ["Strict", "Lax", "None"],
                   "description": "sameSite flag"
                 }
               },
@@ -283,19 +251,13 @@
                   }
                 }
               },
-              "required": [
-                "origin",
-                "localStorage"
-              ],
+              "required": ["origin", "localStorage"],
               "additionalProperties": false
             },
             "description": "localStorage to set for context"
           }
         },
-        "required": [
-          "cookies",
-          "origins"
-        ],
+        "required": ["cookies", "origins"],
         "additionalProperties": false
       }
     ],
@@ -325,10 +287,7 @@
         "description": "Video frame height."
       }
     },
-    "required": [
-      "width",
-      "height"
-    ],
+    "required": ["width", "height"],
     "additionalProperties": false,
     "description": "**DEPRECATED** Use `recordVideo` instead.",
     "deprecated": true
@@ -350,10 +309,7 @@
         "description": "page height in pixels."
       }
     },
-    "required": [
-      "width",
-      "height"
-    ],
+    "required": ["width", "height"],
     "additionalProperties": false,
     "description": "Emulates consistent viewport for each page. Defaults to an 1280x720 viewport. `null` disables the default viewport."
   },

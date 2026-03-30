@@ -15,10 +15,10 @@ describe('fixTitleRouter', () => {
     (service.fixScreenshotFileName as jest.Mock).mockResolvedValue(mockResult);
 
     const input = {
-      parameters: { fileName: 'file.ts' },
-      previousNamedExport: 'OldName',
       id: 'parent--new-name',
+      parameters: { fileName: 'file.ts' },
       parent: 'parent',
+      previousNamedExport: 'OldName',
     };
 
     const result = await caller.fixScreenshotFileName(input);

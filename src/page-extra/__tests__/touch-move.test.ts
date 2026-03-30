@@ -14,7 +14,7 @@ jest.mock('../utils/dispatch-touch-event');
 describe('touchMove', () => {
   let page: ExtendedPage;
   beforeAll(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.touchMove = touchMove;
   });
 

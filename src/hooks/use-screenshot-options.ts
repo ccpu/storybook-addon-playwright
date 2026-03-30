@@ -6,9 +6,8 @@ export const useScreenshotOptions: () => {
   screenshotOptions: ScreenshotOptions;
   setScreenshotOptions: Dispatch<SetStateAction<ScreenshotOptions>>;
 } = () => {
-  const [screenshotOptions, setScreenshotOptions] = useGlobalState<
-    ScreenshotOptions
-  >('screenshotOptions', {}, true);
+  const [screenshotOptions, setScreenshotOptions] =
+    useGlobalState<ScreenshotOptions>('screenshotOptions', {}, true);
 
   return { screenshotOptions, setScreenshotOptions };
 };

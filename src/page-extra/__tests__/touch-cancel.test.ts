@@ -14,7 +14,7 @@ jest.mock('../utils/dispatch-touch-event');
 describe('touchCancel', () => {
   let page: ExtendedPage;
   beforeAll(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.touchCancel = touchCancel;
   });
 

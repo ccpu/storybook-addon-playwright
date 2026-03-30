@@ -19,9 +19,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event. If the element matching selector is not an <input>, <textarea> or [contenteditable] element, this method throws an error."
   },
   "dragDropSelector": {
@@ -69,10 +67,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector",
-      "to"
-    ],
+    "required": ["selector", "to"],
     "description": "This method fetches an element with `selector`, and move it to the position given by user. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "mouseFromTo": {
@@ -117,10 +112,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "from",
-      "to"
-    ],
+    "required": ["from", "to"],
     "description": "This method will perform mouse down, move,and up from to selected location."
   },
   "scrollSelector": {
@@ -143,10 +135,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector",
-      "scrollProperty"
-    ],
+    "required": ["selector", "scrollProperty"],
     "description": "This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "mouseDownOnSelector": {
@@ -179,9 +168,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and perform mousedown on the center of selector. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "mouseMoveToSelector": {
@@ -214,9 +201,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and move the mouse to center of selector. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "setSelectorSize": {
@@ -233,9 +218,7 @@
         "type": "string"
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, set the height and with. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "selectorMouseWheel": {
@@ -264,9 +247,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and dispatch WheelEvent. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchStart": {
@@ -327,9 +308,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and dispatch touchstart event. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchMove": {
@@ -390,9 +369,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and dispatch touchmove event. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchEnd": {
@@ -453,9 +430,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and dispatch touchend event. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchCancel": {
@@ -516,9 +491,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and dispatch touchcancel event. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "touchFromTo": {
@@ -615,9 +588,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector`, and dispatch  touchstart,touchmove and touchend event. If there's no element matching `selector`, the method waits until a matching element appears in the DOM."
   },
   "waitForSelector": {
@@ -633,12 +604,7 @@
         "properties": {
           "state": {
             "type": "string",
-            "enum": [
-              "attached",
-              "detached",
-              "visible",
-              "hidden"
-            ],
+            "enum": ["attached", "detached", "visible", "hidden"],
             "description": "Defaults to `'visible'`. Can be either:\n- `'attached'` - wait for element to be present in DOM.\n- `'detached'` - wait for element to not be present in DOM.\n- `'visible'` - wait for element to have non-empty bounding box and no `visibility:hidden`. Note that element without   any content or with `display:none` has an empty bounding box and is not considered visible.\n- `'hidden'` - wait for element to be either detached from DOM, or have an empty bounding box or `visibility:hidden`.   This is opposite to the `'visible'` option."
           },
           "strict": {
@@ -653,10 +619,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector",
-      "options"
-    ],
+    "required": ["selector", "options"],
     "description": "Returns when element specified by selector satisfies `state` option. Returns `null` if waiting for `hidden` or `detached`.\n\n> NOTE: Playwright automatically waits for element to be ready before performing an action. Using [Locator] objects and web-first assertions make the code wait-for-selector-free.\n\nWait for the `selector` to satisfy `state` option (either appear/disappear from dom, or become visible/hidden). If at the moment of calling the method `selector` already satisfies the condition, the method will return immediately. If the selector doesn't satisfy the condition for the `timeout` milliseconds, the function will throw.\n\nThis method works across navigations:\n\n```js const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.\n\n(async () => {   const browser = await chromium.launch();   const page = await browser.newPage();   for (let currentURL of ['https://google.com', 'https://bbc.com']) {     await page.goto(currentURL);     const element = await page.waitForSelector('img');     console.log('Loaded image: ' + await element.getAttribute('src'));   }   await browser.close(); })(); ```"
   },
   "check": {
@@ -688,10 +651,7 @@
                 "type": "number"
               }
             },
-            "required": [
-              "x",
-              "y"
-            ],
+            "required": ["x", "y"],
             "additionalProperties": false,
             "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
           },
@@ -711,9 +671,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method checks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is already    checked, this method returns immediately. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the element. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. 1. Ensure that the element is now checked. If not, this method throws.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.check(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-check)."
   },
   "click": {
@@ -729,11 +687,7 @@
         "properties": {
           "button": {
             "type": "string",
-            "enum": [
-              "left",
-              "right",
-              "middle"
-            ],
+            "enum": ["left", "right", "middle"],
             "description": "Defaults to `left`."
           },
           "clickCount": {
@@ -752,12 +706,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "Alt",
-                "Control",
-                "Meta",
-                "Shift"
-              ]
+              "enum": ["Alt", "Control", "Meta", "Shift"]
             },
             "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
           },
@@ -775,10 +724,7 @@
                 "type": "number"
               }
             },
-            "required": [
-              "x",
-              "y"
-            ],
+            "required": ["x", "y"],
             "additionalProperties": false,
             "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
           },
@@ -798,9 +744,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method clicks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the element, or    the specified `position`. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.click(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-click)."
   },
   "dblclick": {
@@ -816,11 +760,7 @@
         "properties": {
           "button": {
             "type": "string",
-            "enum": [
-              "left",
-              "right",
-              "middle"
-            ],
+            "enum": ["left", "right", "middle"],
             "description": "Defaults to `left`."
           },
           "delay": {
@@ -835,12 +775,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "Alt",
-                "Control",
-                "Meta",
-                "Shift"
-              ]
+              "enum": ["Alt", "Control", "Meta", "Shift"]
             },
             "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
           },
@@ -858,10 +793,7 @@
                 "type": "number"
               }
             },
-            "required": [
-              "x",
-              "y"
-            ],
+            "required": ["x", "y"],
             "additionalProperties": false,
             "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
           },
@@ -881,9 +813,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method double clicks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to double click in the center of the    element, or the specified `position`. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. Note that if the    first click of the `dblclick()` triggers a navigation event, this method will throw.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\n> NOTE: `page.dblclick()` dispatches two `click` events and a single `dblclick` event.\n\nShortcut for main frame's [frame.dblclick(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-dblclick)."
   },
   "fill": {
@@ -921,10 +851,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector",
-      "value"
-    ],
+    "required": ["selector", "value"],
     "description": "This method waits for an element matching `selector`, waits for [actionability](https://playwright.dev/docs/actionability) checks, focuses the element, fills it and triggers an `input` event after filling. Note that you can pass an empty string to clear the input field.\n\nIf the target element is not an `<input>`, `<textarea>` or `[contenteditable]` element, this method throws an error. However, if the element is inside the `<label>` element that has an associated [control](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control), the control will be filled instead.\n\nTo send fine-grained keyboard events, use [page.type(selector, text[, options])](https://playwright.dev/docs/api/class-page#page-type).\n\nShortcut for main frame's [frame.fill(selector, value[, options])](https://playwright.dev/docs/api/class-frame#frame-fill)."
   },
   "focus": {
@@ -950,9 +877,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method fetches an element with `selector` and focuses it. If there's no element matching `selector`, the method waits until a matching element appears in the DOM.\n\nShortcut for main frame's [frame.focus(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-focus)."
   },
   "hover": {
@@ -974,12 +899,7 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "Alt",
-                "Control",
-                "Meta",
-                "Shift"
-              ]
+              "enum": ["Alt", "Control", "Meta", "Shift"]
             },
             "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
           },
@@ -993,10 +913,7 @@
                 "type": "number"
               }
             },
-            "required": [
-              "x",
-              "y"
-            ],
+            "required": ["x", "y"],
             "additionalProperties": false,
             "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
           },
@@ -1016,9 +933,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method hovers over an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to hover over the center of the element,    or the specified `position`. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.hover(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-hover)."
   },
   "keyboard": {
@@ -1033,9 +948,7 @@
             "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
           }
         },
-        "required": [
-          "key"
-        ],
+        "required": ["key"],
         "description": "Dispatches a `keydown` event.\n\n`key` can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the `key` values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\n\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\n\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nIf `key` is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key presses will be sent with that modifier active. To release the modifier key, use [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\nAfter the key is pressed once, subsequent calls to [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) will have [repeat](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat) set to true. To release the key, use [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\n> NOTE: Modifier keys DO influence `keyboard.down`. Holding down `Shift` will type the text in upper case."
       },
       "insertText": {
@@ -1047,9 +960,7 @@
             "description": "Sets input to the specified text value."
           }
         },
-        "required": [
-          "text"
-        ],
+        "required": ["text"],
         "description": "Dispatches only `input` event, does not emit the `keydown`, `keyup` or `keypress` events.\n\n```js page.keyboard.insertText('嗨'); ```\n\n> NOTE: Modifier keys DO NOT effect `keyboard.insertText`. Holding down `Shift` will not type the text in upper case."
       },
       "press": {
@@ -1071,9 +982,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "key"
-        ],
+        "required": ["key"],
         "description": "`key` can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the `key` values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\n\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\n\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When specified with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n\n```js const page = await browser.newPage(); await page.goto('https://keycode.info'); await page.keyboard.press('A'); await page.screenshot({ path: 'A.png' }); await page.keyboard.press('ArrowLeft'); await page.screenshot({ path: 'ArrowLeft.png' }); await page.keyboard.press('Shift+O'); await page.screenshot({ path: 'O.png' }); await browser.close(); ```\n\nShortcut for [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) and [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up)."
       },
       "type": {
@@ -1095,9 +1004,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "text"
-        ],
+        "required": ["text"],
         "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text.\n\nTo press a special key, like `Control` or `ArrowDown`, use [keyboard.press(key[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-press).\n\n```js await page.keyboard.type('Hello'); // Types instantly await page.keyboard.type('World', {delay: 100}); // Types slower, like a user ```\n\n> NOTE: Modifier keys DO NOT effect `keyboard.type`. Holding down `Shift` will not type the text in upper case. > NOTE: For characters that are not on a US keyboard, only an `input` event will be sent."
       },
       "up": {
@@ -1109,19 +1016,11 @@
             "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
           }
         },
-        "required": [
-          "key"
-        ],
+        "required": ["key"],
         "description": "Dispatches a `keyup` event."
       }
     },
-    "required": [
-      "down",
-      "insertText",
-      "press",
-      "type",
-      "up"
-    ],
+    "required": ["down", "insertText", "press", "type", "up"],
     "additionalProperties": false,
     "description": "Keyboard provides an api for managing a virtual keyboard. The high level api is [keyboard.type(text[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-type), which takes raw characters and generates proper keydown, keypress/input, and keyup events on your page.\n\nFor finer control, you can use [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down), [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up), and [keyboard.insertText(text)](https://playwright.dev/docs/api/class-keyboard#keyboard-insert-text) to manually fire events as if they were generated from a real keyboard.\n\nAn example of holding down `Shift` in order to select and delete some text:\n\n```js await page.keyboard.type('Hello World!'); await page.keyboard.press('ArrowLeft');\n\nawait page.keyboard.down('Shift'); for (let i = 0; i < ' World'.length; i++)   await page.keyboard.press('ArrowLeft'); await page.keyboard.up('Shift');\n\nawait page.keyboard.press('Backspace'); // Result text will end up saying 'Hello!' ```\n\nAn example of pressing uppercase `A`\n\n```js await page.keyboard.press('Shift+KeyA'); // or await page.keyboard.press('Shift+A'); ```\n\nAn example to trigger select-all with the keyboard\n\n```js // on Windows and Linux await page.keyboard.press('Control+A'); // on macOS await page.keyboard.press('Meta+A'); ```"
   },
@@ -1143,11 +1042,7 @@
             "properties": {
               "button": {
                 "type": "string",
-                "enum": [
-                  "left",
-                  "right",
-                  "middle"
-                ],
+                "enum": ["left", "right", "middle"],
                 "description": "Defaults to `left`."
               },
               "clickCount": {
@@ -1162,10 +1057,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "x",
-          "y"
-        ],
+        "required": ["x", "y"],
         "description": "Shortcut for [mouse.move(x, y[, options])](https://playwright.dev/docs/api/class-mouse#mouse-move), [mouse.down([options])](https://playwright.dev/docs/api/class-mouse#mouse-down), [mouse.up([options])](https://playwright.dev/docs/api/class-mouse#mouse-up)."
       },
       "dblclick": {
@@ -1183,11 +1075,7 @@
             "properties": {
               "button": {
                 "type": "string",
-                "enum": [
-                  "left",
-                  "right",
-                  "middle"
-                ],
+                "enum": ["left", "right", "middle"],
                 "description": "Defaults to `left`."
               },
               "delay": {
@@ -1198,10 +1086,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "x",
-          "y"
-        ],
+        "required": ["x", "y"],
         "description": "Shortcut for [mouse.move(x, y[, options])](https://playwright.dev/docs/api/class-mouse#mouse-move), [mouse.down([options])](https://playwright.dev/docs/api/class-mouse#mouse-down), [mouse.up([options])](https://playwright.dev/docs/api/class-mouse#mouse-up), [mouse.down([options])](https://playwright.dev/docs/api/class-mouse#mouse-down) and [mouse.up([options])](https://playwright.dev/docs/api/class-mouse#mouse-up)."
       },
       "down": {
@@ -1213,11 +1098,7 @@
             "properties": {
               "button": {
                 "type": "string",
-                "enum": [
-                  "left",
-                  "right",
-                  "middle"
-                ],
+                "enum": ["left", "right", "middle"],
                 "description": "Defaults to `left`."
               },
               "clickCount": {
@@ -1252,10 +1133,7 @@
             "additionalProperties": false
           }
         },
-        "required": [
-          "x",
-          "y"
-        ],
+        "required": ["x", "y"],
         "description": "Dispatches a `mousemove` event."
       },
       "up": {
@@ -1267,11 +1145,7 @@
             "properties": {
               "button": {
                 "type": "string",
-                "enum": [
-                  "left",
-                  "right",
-                  "middle"
-                ],
+                "enum": ["left", "right", "middle"],
                 "description": "Defaults to `left`."
               },
               "clickCount": {
@@ -1286,13 +1160,7 @@
         "description": "Dispatches a `mouseup` event."
       }
     },
-    "required": [
-      "click",
-      "dblclick",
-      "down",
-      "move",
-      "up"
-    ],
+    "required": ["click", "dblclick", "down", "move", "up"],
     "additionalProperties": false,
     "description": "The Mouse class operates in main-frame CSS pixels relative to the top-left corner of the viewport.\n\nEvery `page` object has its own Mouse, accessible with [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse).\n\n```js // Using ‘page.mouse’ to trace a 100x100 square. await page.mouse.move(0, 0); await page.mouse.down(); await page.mouse.move(0, 100); await page.mouse.move(100, 100); await page.mouse.move(100, 0); await page.mouse.move(0, 0); await page.mouse.up(); ```"
   },
@@ -1331,10 +1199,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector",
-      "key"
-    ],
+    "required": ["selector", "key"],
     "description": "Focuses the element, and then uses [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) and [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\n`key` can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the `key` values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\n\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\n\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When specified with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n\n```js const page = await browser.newPage(); await page.goto('https://keycode.info'); await page.press('body', 'A'); await page.screenshot({ path: 'A.png' }); await page.press('body', 'ArrowLeft'); await page.screenshot({ path: 'ArrowLeft.png' }); await page.press('body', 'Shift+O'); await page.screenshot({ path: 'O.png' }); await browser.close(); ```"
   },
   "touchscreen": {
@@ -1351,16 +1216,11 @@
             "type": "number"
           }
         },
-        "required": [
-          "x",
-          "y"
-        ],
+        "required": ["x", "y"],
         "description": "Dispatches a `touchstart` and `touchend` event with a single touch at the position (`x`,`y`)."
       }
     },
-    "required": [
-      "tap"
-    ],
+    "required": ["tap"],
     "additionalProperties": false,
     "description": "The Touchscreen class operates in main-frame CSS pixels relative to the top-left corner of the viewport. Methods on the touchscreen can only be used in browser contexts that have been initialized with `hasTouch` set to true."
   },
@@ -1399,10 +1259,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector",
-      "text"
-    ],
+    "required": ["selector", "text"],
     "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text. `page.type` can be used to send fine-grained keyboard events. To fill values in form fields, use [page.fill(selector, value[, options])](https://playwright.dev/docs/api/class-page#page-fill).\n\nTo press a special key, like `Control` or `ArrowDown`, use [keyboard.press(key[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-press).\n\n```js await page.type('#mytextarea', 'Hello'); // Types instantly await page.type('#mytextarea', 'World', {delay: 100}); // Types slower, like a user ```\n\nShortcut for main frame's [frame.type(selector, text[, options])](https://playwright.dev/docs/api/class-frame#frame-type)."
   },
   "uncheck": {
@@ -1434,10 +1291,7 @@
                 "type": "number"
               }
             },
-            "required": [
-              "x",
-              "y"
-            ],
+            "required": ["x", "y"],
             "additionalProperties": false,
             "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
           },
@@ -1457,9 +1311,7 @@
         "additionalProperties": false
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method unchecks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is already    unchecked, this method returns immediately. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the element. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. 1. Ensure that the element is now unchecked. If not, this method throws.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.uncheck(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-uncheck)."
   },
   "waitForTimeout": {
@@ -1471,9 +1323,7 @@
         "description": "A timeout to wait for"
       }
     },
-    "required": [
-      "timeout"
-    ],
+    "required": ["timeout"],
     "description": "Waits for the given `timeout` in milliseconds.\n\nNote that `page.waitForTimeout()` should only be used for debugging. Tests using the timer in production are going to be flaky. Use signals such as network events, selectors becoming visible and others instead.\n\n```js // wait for 1 second await page.waitForTimeout(1000); ```\n\nShortcut for main frame's [frame.waitForTimeout(timeout)](https://playwright.dev/docs/api/class-frame#frame-wait-for-timeout)."
   },
   "takeScreenshot": {
@@ -1576,9 +1426,7 @@
         "type": "string"
       }
     },
-    "required": [
-      "selector"
-    ],
+    "required": ["selector"],
     "description": "This method will take a screenshot of an element."
   },
   "takeScreenshotOptions": {
@@ -1587,29 +1435,19 @@
     "parameters": {
       "mergeType": {
         "type": "string",
-        "enum": [
-          "stitch",
-          "overlay"
-        ]
+        "enum": ["stitch", "overlay"]
       },
       "stitchOptions": {
         "type": "object",
         "properties": {
           "direction": {
             "type": "string",
-            "enum": [
-              "vertical",
-              "horizontal"
-            ],
+            "enum": ["vertical", "horizontal"],
             "description": "Direction of the merged image."
           },
           "align": {
             "type": "string",
-            "enum": [
-              "start",
-              "center",
-              "end"
-            ],
+            "enum": ["start", "center", "end"],
             "description": "Aligning of given images. If the images are not all the same size, images will be sorted to largest image. Possible values are `start`, `center` and `end`. Default is `start`."
           },
           "offset": {

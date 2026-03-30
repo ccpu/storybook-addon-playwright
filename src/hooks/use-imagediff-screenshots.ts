@@ -27,11 +27,8 @@ export const useImageDiffScreenshots = (
   target: ScreenshotTestTargetType,
   onLoaded: () => void,
 ) => {
-  const {
-    imageDiffTestInProgress,
-    testStoryScreenShots,
-    storyData,
-  } = useScreenshotImageDiffResults();
+  const { imageDiffTestInProgress, testStoryScreenShots, storyData } =
+    useScreenshotImageDiffResults();
 
   const [loaded, setLoaded] = React.useState<boolean>(false);
 

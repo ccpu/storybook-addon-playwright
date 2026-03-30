@@ -15,7 +15,7 @@ const pageMock = (): Promise<PageProps> => {
 describe('touch', () => {
   let page: ExtendedPage;
   beforeAll(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.setSelectorSize = setSelectorSize;
   });
 

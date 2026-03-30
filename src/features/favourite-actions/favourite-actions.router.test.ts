@@ -13,7 +13,7 @@ describe('favouriteActionsRouter', () => {
   it('addFavouriteAction calls addFavouriteAction service', async () => {
     (service.addFavouriteAction as jest.Mock).mockResolvedValue(undefined);
 
-    const input = { id: 'fav-1', actions: [] };
+    const input = { actions: [], id: 'fav-1' };
     const result = await caller.addFavouriteAction(input);
 
     expect(service.addFavouriteAction).toHaveBeenCalledWith(input);
@@ -21,7 +21,7 @@ describe('favouriteActionsRouter', () => {
   });
 
   it('getFavouriteActions calls getFavouriteActions service', async () => {
-    const mockResult = [{ id: 'fav-1', actions: [] }];
+    const mockResult = [{ actions: [], id: 'fav-1' }];
     (service.getFavouriteActions as jest.Mock).mockResolvedValue(mockResult);
 
     const result = await caller.getFavouriteActions();

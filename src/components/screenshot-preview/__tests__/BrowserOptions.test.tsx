@@ -47,8 +47,9 @@ describe('BrowserOptions', () => {
   it('should handleDeviceSelection', () => {
     const wrapper = shallow(<BrowserOptions browserType="all" />);
 
-    const FooterComponent = wrapper.find(MemoizedSchemaFormLoader).props()
-      .FooterComponent;
+    const FooterComponent = wrapper
+      .find(MemoizedSchemaFormLoader)
+      .props().FooterComponent;
 
     expect(FooterComponent).toBeDefined();
 

@@ -31,7 +31,7 @@ describe('executeAction', () => {
       name: 'click',
     };
 
-    const val = await executeAction((page as unknown) as Page, action);
+    const val = await executeAction(page as unknown as Page, action);
 
     expect(val).toStrictEqual(['div>div', undefined]);
   });
@@ -45,7 +45,7 @@ describe('executeAction', () => {
       name: 'click',
     };
 
-    const val = await executeAction((page as unknown) as Page, action);
+    const val = await executeAction(page as unknown as Page, action);
 
     expect(val).toStrictEqual(undefined);
   });
@@ -60,7 +60,7 @@ describe('executeAction', () => {
       name: 'mouse.click',
     };
 
-    const val = await executeAction((page as unknown) as Page, action);
+    const val = await executeAction(page as unknown as Page, action);
 
     expect(val).toStrictEqual([1, 1, undefined]);
   });
@@ -74,7 +74,7 @@ describe('executeAction', () => {
       name: 'customAction',
     };
 
-    const val = await executeAction((page as unknown) as Page, action);
+    const val = await executeAction(page as unknown as Page, action);
 
     expect(val).toStrictEqual(undefined);
   });

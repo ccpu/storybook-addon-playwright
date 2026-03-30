@@ -11,7 +11,7 @@ const pageMock = (): Promise<PageProps> => {
 describe('setSelectorSize', () => {
   let page: ExtendedPage;
   beforeAll(async () => {
-    page = ((await pageMock()) as unknown) as ExtendedPage;
+    page = (await pageMock()) as unknown as ExtendedPage;
     page.setSelectorSize = setSelectorSize;
   });
 

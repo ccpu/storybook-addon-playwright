@@ -18,10 +18,10 @@ describe('useAction', () => {
   beforeEach(() => {
     useActionContextMock.mockImplementation(
       () =>
-        (({
+        ({
           orgEditingActionSet: orgEditingActionSet,
           stories: data.stories,
-        } as unknown) as ReducerState),
+        } as unknown as ReducerState),
     );
   });
 
@@ -38,9 +38,9 @@ describe('useAction', () => {
   });
 
   it('should not have action', () => {
-    useActionContextMock.mockReturnValue(({
+    useActionContextMock.mockReturnValue({
       editorActionSet: undefined,
-    } as unknown) as ReducerState);
+    } as unknown as ReducerState);
 
     const { result } = renderHook(() =>
       useEditorAction('story-id', 'action-id'),
@@ -54,10 +54,10 @@ describe('useAction', () => {
     orgEditingActionSet.id = 'invalid';
     useActionContextMock.mockImplementation(
       () =>
-        (({
+        ({
           orgEditingActionSet: orgEditingActionSet,
           stories: data.stories,
-        } as unknown) as ReducerState),
+        } as unknown as ReducerState),
     );
 
     const { result } = renderHook(() =>

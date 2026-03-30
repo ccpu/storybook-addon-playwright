@@ -37,14 +37,14 @@ const useSelectorManagerMockData = (
 });
 
 const getIframe = (elementFromPointEl?: HTMLElement) => {
-  return ({
+  return {
     contentWindow: {
       document: {
         elementFromPoint: (x: number) =>
           x === -1 ? undefined : elementFromPointEl,
       },
     },
-  } as unknown) as HTMLIFrameElement;
+  } as unknown as HTMLIFrameElement;
 };
 
 describe('SelectorOverlay', () => {

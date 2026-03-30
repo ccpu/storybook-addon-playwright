@@ -5,9 +5,9 @@ import { ReducerState } from '../../../../__manual_mocks__/store/action/context'
 export const useActionContext = jest.fn();
 export const useActionDispatchContext = jest.fn();
 
-const mockData = ({
+const mockData = {
   actionSchema: getActionSchemaData(),
-} as unknown) as ReducerState;
+} as unknown as ReducerState;
 
 const useActionContextMock = mocked(useActionContext);
 useActionContextMock.mockImplementation(() => mockData);

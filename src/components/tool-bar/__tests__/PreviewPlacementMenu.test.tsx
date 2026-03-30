@@ -56,9 +56,9 @@ describe('PreviewPlacementMenu', () => {
     menuItem
       .first()
       .props()
-      .onClick(({
+      .onClick({
         currentTarget: { dataset: { placement: 'Auto' } },
-      } as unknown) as React.MouseEvent<HTMLLIElement, MouseEvent>);
+      } as unknown as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
     expect(setAddonStateMock).toHaveBeenCalledWith({ placement: 'Auto' });
   });

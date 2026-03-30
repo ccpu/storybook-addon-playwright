@@ -65,9 +65,8 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const [ref, rect] = useMeasure();
 
-  const { activeBrowsers, toggleBrowser, browserTypes } = useActiveBrowsers(
-    viewPanel,
-  );
+  const { activeBrowsers, toggleBrowser, browserTypes } =
+    useActiveBrowsers(viewPanel);
 
   const [refresh, setRefresh] = useState(false);
 

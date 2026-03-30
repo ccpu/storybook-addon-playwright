@@ -21,7 +21,7 @@ describe('schemaRouter', () => {
   });
 
   it('getSchema calls getSchema service with schemaName', async () => {
-    const mockResult = { type: 'object', properties: {} };
+    const mockResult = { properties: {}, type: 'object' };
     (service.getSchema as jest.Mock).mockReturnValue(mockResult);
 
     const result = await caller.getSchema({ schemaName: 'browser-options' });

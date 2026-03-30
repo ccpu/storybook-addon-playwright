@@ -1,10 +1,7 @@
 {
   "type": {
     "type": "string",
-    "enum": [
-      "png",
-      "jpeg"
-    ],
+    "enum": ["png", "jpeg"],
     "description": "Specify screenshot type, defaults to `png`."
   },
   "quality": {
@@ -35,12 +32,7 @@
         "description": "height of clipping area"
       }
     },
-    "required": [
-      "x",
-      "y",
-      "width",
-      "height"
-    ],
+    "required": ["x", "y", "width", "height"],
     "additionalProperties": false,
     "description": "An object which specifies clipping of the resulting image. Should have the following fields:"
   },

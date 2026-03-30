@@ -2,10 +2,10 @@ import { StoryData } from '../src/typings';
 
 export const storyData: StoryData = {
   id: 'story-id',
+  importPath: './test.stories.tsx',
   isLeaf: true,
   kind: 'Component',
   name: 'With Component',
-  importPath: './test.stories.tsx',
   parameters: {
     __id: 'story-id',
     component: {

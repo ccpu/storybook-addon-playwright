@@ -10,7 +10,7 @@ describe('releaseModifierKey', () => {
     const keyboardUpMock = jest.fn();
 
     releaseModifierKey(
-      ({ keyboard: { up: keyboardUpMock } } as unknown) as Page,
+      { keyboard: { up: keyboardUpMock } } as unknown as Page,
       [
         {
           actions: [
@@ -32,7 +32,7 @@ describe('releaseModifierKey', () => {
     const keyboardUpMock = jest.fn();
 
     releaseModifierKey(
-      ({ keyboard: { up: keyboardUpMock } } as unknown) as Page,
+      { keyboard: { up: keyboardUpMock } } as unknown as Page,
       [
         {
           actions: [

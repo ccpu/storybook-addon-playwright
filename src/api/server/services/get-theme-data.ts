@@ -1,5 +1,5 @@
-import { getConfigs } from "../configs";
+import { getConfigs } from '../configs';
 
 export const getThemeData = () => {
-    return getConfigs().theme;
-}
+  return getConfigs().theme;
+};

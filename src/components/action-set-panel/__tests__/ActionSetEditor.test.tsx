@@ -20,15 +20,15 @@ const handleAddActionMock = jest.fn();
 const handleDescriptionChangeMock = jest.fn();
 mocked(useActionEditor).mockImplementation(
   () =>
-    (({
+    ({
       handleAddAction: handleAddActionMock,
       handleDescriptionChange: handleDescriptionChangeMock,
-    } as unknown) as ReturnType<typeof useActionEditor>),
+    } as unknown as ReturnType<typeof useActionEditor>),
 );
 
 describe('ActionSetEditor', () => {
-  const actionSet: ActionSet = storyFileInfo().stories['story-id']
-    .actionSets[0];
+  const actionSet: ActionSet =
+    storyFileInfo().stories['story-id'].actionSets[0];
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -44,9 +44,11 @@ describe('ActionSetEditor', () => {
 
     const listWrapperProps = wrapper.find(ListItemWrapper).props().icons;
 
-    (listWrapperProps as {
-      props: ActionSetEditorIconsProps;
-    }).props.onAddAction('click actionSet');
+    (
+      listWrapperProps as {
+        props: ActionSetEditorIconsProps;
+      }
+    ).props.onAddAction('click actionSet');
 
     expect(handleAddActionMock).toHaveBeenCalledWith('click actionSet');
   });
@@ -56,9 +58,11 @@ describe('ActionSetEditor', () => {
 
     const listWrapperProps = wrapper.find(ListItemWrapper).props().icons;
 
-    (listWrapperProps as {
-      props: ActionSetEditorIconsProps;
-    }).props.onEditTitle();
+    (
+      listWrapperProps as {
+        props: ActionSetEditorIconsProps;
+      }
+    ).props.onEditTitle();
 
     const inputDialog = wrapper.find(InputDialog);
     expect(inputDialog.exists()).toBeTruthy();
@@ -70,9 +74,9 @@ describe('ActionSetEditor', () => {
   it('should handle validation results', () => {
     mocked(useActionEditor).mockImplementation(
       () =>
-        (({
+        ({
           validationResult: [{ id: 'action-id', required: ['foo'] }],
-        } as unknown) as ReturnType<typeof useActionEditor>),
+        } as unknown as ReturnType<typeof useActionEditor>),
     );
 
     const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);

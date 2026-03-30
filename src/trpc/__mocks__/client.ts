@@ -2,36 +2,36 @@ const makeMutation = () => ({ mutate: jest.fn().mockResolvedValue(undefined) });
 const makeQuery = () => ({ query: jest.fn().mockResolvedValue(undefined) });
 
 export const trpc = {
-  screenshot: {
-    takeScreenshot: makeMutation(),
-    saveScreenshot: makeMutation(),
-    deleteScreenshot: makeMutation(),
-    updateScreenshot: makeMutation(),
-    testScreenshot: makeMutation(),
-    getStoryScreenshots: makeMutation(),
-    deleteStoryScreenshots: makeMutation(),
-    changeScreenshotIndex: makeMutation(),
-    testStoryScreenshots: makeMutation(),
-    testScreenshots: makeMutation(),
-  },
   actionSet: {
-    saveActionSet: makeMutation(),
-    getActionSet: makeMutation(),
     deleteActionSet: makeMutation(),
+    getActionSet: makeMutation(),
+    saveActionSet: makeMutation(),
   },
   favouriteActions: {
     addFavouriteAction: makeMutation(),
-    getFavouriteActions: makeQuery(),
     deleteFavouriteAction: makeMutation(),
+    getFavouriteActions: makeQuery(),
+  },
+  fixTitle: {
+    fixScreenshotFileName: makeMutation(),
   },
   schema: {
     getActionsSchema: makeQuery(),
     getSchema: makeMutation(),
   },
+  screenshot: {
+    changeScreenshotIndex: makeMutation(),
+    deleteScreenshot: makeMutation(),
+    deleteStoryScreenshots: makeMutation(),
+    getStoryScreenshots: makeMutation(),
+    saveScreenshot: makeMutation(),
+    takeScreenshot: makeMutation(),
+    testScreenshot: makeMutation(),
+    testScreenshots: makeMutation(),
+    testStoryScreenshots: makeMutation(),
+    updateScreenshot: makeMutation(),
+  },
   theme: {
     getThemeData: makeQuery(),
-  },
-  fixTitle: {
-    fixScreenshotFileName: makeMutation(),
   },
 } as const;

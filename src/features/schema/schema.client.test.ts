@@ -19,7 +19,7 @@ describe('schema client', () => {
   });
 
   it('getSchema calls trpc.schema.getSchema.mutate', async () => {
-    const mockResponse = { type: 'object', properties: {} };
+    const mockResponse = { properties: {}, type: 'object' };
     (trpc.schema.getSchema.mutate as jest.Mock).mockResolvedValueOnce(
       mockResponse,
     );

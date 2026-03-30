@@ -91,10 +91,10 @@ describe('ActionOptions', () => {
       .find(IconButton)
       .last()
       .props()
-      .onClick(({
+      .onClick({
         preventDefault: jest.fn(),
         stopPropagation: jest.fn(),
-      } as unknown) as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+      } as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(dispatchMock).toHaveBeenCalledWith([
       {

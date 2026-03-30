@@ -7,12 +7,12 @@ import { themeRouter } from '../features/theme/theme.router';
 import { fixTitleRouter } from '../features/fix-title/fix-title.router';
 
 export const appRouter = router({
-  screenshot: screenshotRouter,
   actionSet: actionSetRouter,
   favouriteActions: favouriteActionsRouter,
-  schema: schemaRouter,
-  theme: themeRouter,
   fixTitle: fixTitleRouter,
+  schema: schemaRouter,
+  screenshot: screenshotRouter,
+  theme: themeRouter,
 });
 
 export type AppRouter = typeof appRouter;

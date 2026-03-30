@@ -3,7 +3,7 @@ import { testFileScreenshots } from '../api/server/services/test-file-screenshot
 import { ImageDiffResult } from '../api/typings';
 
 jest.mock('../api/server/services/test-file-screenshots');
-const testScreenshotsMock = (testFileScreenshots as unknown) as jest.Mock<
+const testScreenshotsMock = testFileScreenshots as unknown as jest.Mock<
   ImageDiffResult[]
 >;
 testScreenshotsMock.mockImplementation(() => {

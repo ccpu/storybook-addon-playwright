@@ -13,6 +13,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts|js)x?$',
   preset: 'ts-jest',
+  setupFiles: ['./setupTests.polyfills.js'],
   transform: {
     '^.+\\.(ts|tsx)?$': 'ts-jest',
     '^.+\\.(js|jsx)$': 'babel-jest',

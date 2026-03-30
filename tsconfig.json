@@ -35,6 +35,7 @@
     "__manual_mocks__/**/*",
     "middleware.d.ts",
     "configs.d.ts",
+    "tsup.config.ts",
     "stories/**/*"
   ],
   "exclude": ["**/.storybook/**/*", "node_modules", "**/node_modules/*"]

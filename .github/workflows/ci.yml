@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - next
+  pull_request:
+    branches:
+      - master
+      - next
+  workflow_call:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    name: JavaScript Tests
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup project
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: 18
+          pnpm-version: 10.25.0
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Run tests
+        run: pnpm test
+        env:
+          CI: true

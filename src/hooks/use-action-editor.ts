@@ -3,7 +3,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { StoryAction, ActionSet } from '../typings';
 import { ActionListValidationResult, validateActionList } from '../utils';
-import { saveActionSet } from '../api/client';
+import { saveActionSet } from '../features/action-set/action-set.client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCurrentStoryData } from './use-current-story-data';
 import React from 'react';

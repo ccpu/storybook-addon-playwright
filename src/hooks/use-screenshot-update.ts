@@ -1,4 +1,4 @@
-import { updateScreenshot as updateScreenshotClient } from '../api/client';
+import { updateScreenshot as updateScreenshotClient } from '../features/screenshot/screenshot.client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCallback } from 'react';
 import { useScreenshotDispatch } from '../store/screenshot';

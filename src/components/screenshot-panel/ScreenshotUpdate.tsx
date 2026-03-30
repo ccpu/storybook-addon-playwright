@@ -7,7 +7,7 @@ import {
   useScreenshotUpdate,
   useCurrentStoryData,
 } from '../../hooks';
-import { testScreenshot as testScreenshotClient } from '../../api/client';
+import { testScreenshot as testScreenshotClient } from '../../features/screenshot/screenshot.client';
 import { Loader, ImageDiffPreviewDialog } from '../common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ImageDiffResult } from '../../api/typings';

@@ -1,31 +1,27 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useDeleteStoryScreenshot } from '../use-delete-story-screenshots';
-import fetch from 'jest-fetch-mock';
+import { mocked } from 'ts-jest/utils';
+import { deleteStoryScreenshots } from '../../features/screenshot/screenshot.client';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 jest.mock('../use-current-story-data');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useDeleteStoryScreenshot', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it('should delete', async () => {
-    const mockReq = fetch.mockResponseOnce(JSON.stringify({}));
+    mocked(deleteStoryScreenshots).mockResolvedValueOnce(undefined);
     const { result } = renderHook(() => useDeleteStoryScreenshot());
 
     await act(async () => {
       await result.current.deleteStoryScreenshots();
     });
 
-    expect(
-      mockReq,
-    ).toHaveBeenCalledWith('http://localhost/screenshot/deleteStory', {
-      body: '{"fileName":"./test.stories.tsx","storyId":"story-id"}',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-      },
-      method: 'post',
+    expect(deleteStoryScreenshots).toHaveBeenCalledWith({
+      fileName: './test.stories.tsx',
+      storyId: 'story-id',
     });
 
     expect(dispatchMock).toHaveBeenCalledWith([
@@ -34,7 +30,7 @@ describe('useDeleteStoryScreenshot', () => {
   });
 
   it('should not dispatch on error', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
+    mocked(deleteStoryScreenshots).mockRejectedValueOnce(new Error('foo'));
     const { result } = renderHook(() => useDeleteStoryScreenshot());
 
     await act(async () => {

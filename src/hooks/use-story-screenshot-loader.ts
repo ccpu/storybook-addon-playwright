@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useRef } from 'react';
-import { getStoryScreenshots } from '../api/client/get-story-screenshots';
+import { getStoryScreenshots } from '../features/screenshot/screenshot.client';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useScreenshotDispatch } from '../store/screenshot';
 import { useAsyncApiCall } from './use-async-api-call';

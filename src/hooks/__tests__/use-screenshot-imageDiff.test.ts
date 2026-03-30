@@ -1,9 +1,11 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useScreenshotImageDiff } from '../use-screenshot-imageDiff';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
-import { ImageDiffResult } from '../../api/typings';
+import { mocked } from 'ts-jest/utils';
+import { testScreenshot } from '../../features/screenshot/screenshot.client';
 import { StoryData } from '../../typings';
+
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshotImageDiff', () => {
   beforeEach(() => {
@@ -11,9 +13,9 @@ describe('useScreenshotImageDiff', () => {
   });
 
   it('should dispatch result', async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify({ newScreenshot: 'image-src' } as ImageDiffResult),
-    );
+    mocked(testScreenshot).mockResolvedValueOnce({
+      newScreenshot: 'image-src',
+    } as any);
     const { result } = renderHook(() =>
       useScreenshotImageDiff({
         id: 'story-id',

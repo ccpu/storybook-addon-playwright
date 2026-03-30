@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import { FavouriteActionSet } from '../../../typings';
 import React from 'react';
 import { RadioGroup, Button, TextField } from '@material-ui/core';
-import { addFavouriteAction } from '../../../api/client/add-favourite-action';
+import { addFavouriteAction } from '../../../features/favourite-actions/favourite-actions.client';
 
 jest.mock('../../../hooks/use-anchor-el');
-jest.mock('../../../api/client/add-favourite-action');
+jest.mock('../../../features/favourite-actions/favourite-actions.client');
 
 const actionSet: FavouriteActionSet = {
   actions: [

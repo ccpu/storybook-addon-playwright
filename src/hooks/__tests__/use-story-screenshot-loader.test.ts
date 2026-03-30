@@ -1,10 +1,11 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useStoryScreenshotLoader } from '../use-story-screenshot-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
-import { ScreenshotData } from '../../typings';
+import { mocked } from 'ts-jest/utils';
+import { getStoryScreenshots } from '../../features/screenshot/screenshot.client';
 
 jest.mock('../use-current-story-data');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useStoryScreenshotLoader', () => {
   afterEach(() => {
@@ -12,13 +13,11 @@ describe('useStoryScreenshotLoader', () => {
   });
 
   it('should load story screenshots', async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify({
-        browserType: 'chromium',
-        id: 'screenshot-id',
-        title: 'title',
-      } as ScreenshotData),
-    );
+    mocked(getStoryScreenshots).mockResolvedValueOnce({
+      browserType: 'chromium',
+      id: 'screenshot-id',
+      title: 'title',
+    } as any);
 
     await act(async () => {
       renderHook(() => useStoryScreenshotLoader());

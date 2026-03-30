@@ -1,4 +1,4 @@
-import { deleteStoryScreenshots as deleteStoryScreenshotsClient } from '../api/client';
+import { deleteStoryScreenshots as deleteStoryScreenshotsClient } from '../features/screenshot/screenshot.client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useCallback } from 'react';

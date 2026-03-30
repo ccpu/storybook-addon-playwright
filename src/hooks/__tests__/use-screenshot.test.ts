@@ -1,7 +1,7 @@
 import { useScreenshot } from '../use-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
-import { GetScreenshotResponse } from '../../api/typings';
+import { mocked } from 'ts-jest/utils';
+import { getScreenshot } from '../../features/screenshot/screenshot.client';
 import { addons } from '@storybook/manager-api';
 import { STORY_RENDERED } from '@storybook/core-events';
 
@@ -12,16 +12,15 @@ jest.mock('../use-knobs', () => ({
 }));
 
 jest.mock('../../utils/get-preview-iframe.ts');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshot', () => {
   beforeEach(() => {
-    fetch.resetMocks();
+    jest.clearAllMocks();
   });
 
   it('should return base64', async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify({ base64: 'base64' } as GetScreenshotResponse),
-    );
+    mocked(getScreenshot).mockResolvedValueOnce({ base64: 'base64' } as any);
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useScreenshot('chromium'),

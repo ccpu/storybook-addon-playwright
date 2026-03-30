@@ -1,11 +1,12 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useScreenshotUpdate } from '../use-screenshot-update';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
-import { UpdateScreenshot } from '../../api/typings';
+import { mocked } from 'ts-jest/utils';
+import { updateScreenshot } from '../../features/screenshot/screenshot.client';
 import mockConsole from 'jest-mock-console';
 
 jest.mock('../../utils/get-preview-iframe.ts');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshotUpdate', () => {
   let restoreConsole;
@@ -22,12 +23,7 @@ describe('useScreenshotUpdate', () => {
     jest.clearAllMocks();
   });
   it('should dispatch new result', async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify({
-        screenshotId: 'screenshot-id',
-        storyId: 'story-id',
-      } as UpdateScreenshot),
-    );
+    mocked(updateScreenshot).mockResolvedValueOnce({} as any);
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {
@@ -50,7 +46,7 @@ describe('useScreenshotUpdate', () => {
   });
 
   it('should not dispatch on error', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
+    mocked(updateScreenshot).mockRejectedValueOnce(new Error('foo'));
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {

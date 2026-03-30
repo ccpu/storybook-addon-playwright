@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { SortEnd } from 'react-sortable-hoc';
 import { useAsyncApiCall } from './use-async-api-call';
-import { changeScreenShotIndex } from '../api/client';
+import { changeScreenShotIndex } from '../features/screenshot/screenshot.client';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useScreenshotDispatch } from '../store/screenshot';
 

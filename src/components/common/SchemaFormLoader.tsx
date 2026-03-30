@@ -6,7 +6,7 @@ import { useAsyncApiCall } from '../../hooks';
 import { Loader } from './Loader';
 import { Definition } from 'ts-to-json';
 import * as immutableObject from 'object-path-immutable';
-import { getSchemaClient } from '../../api/client/get-schema-client';
+import { getSchema } from '../../features/schema/schema.client';
 
 const useStyles = makeStyles(
   () => {
@@ -49,13 +49,11 @@ const SchemaFormLoader: React.FC<SchemaFormProps> = ({
 
   const [reset, setReset] = useState(false);
 
-  const { makeCall, result: schema, inProgress } = useAsyncApiCall(
-    getSchemaClient,
-  );
+  const { makeCall, result: schema, inProgress } = useAsyncApiCall(getSchema);
 
   useEffect(() => {
     if (schema || inProgress) return;
-    makeCall(schemaName);
+    makeCall({ schemaName });
   }, [inProgress, makeCall, schema, schemaName]);
 
   const handleSave = useCallback(() => {
@@ -91,7 +89,7 @@ const SchemaFormLoader: React.FC<SchemaFormProps> = ({
         <Loader open={schema === undefined} position="relative" />
         {schema && !reset && (
           <MemoizedSchemaRenderer
-            schemaProps={schema as Definition}
+            schemaProps={schema as unknown as Definition}
             onChange={handleChange}
             getValue={getValue}
           />

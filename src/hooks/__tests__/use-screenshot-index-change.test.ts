@@ -1,12 +1,14 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useScreenshotIndexChange } from '../use-screenshot-index-change';
-import fetch from 'jest-fetch-mock';
+import { mocked } from 'ts-jest/utils';
+import { changeScreenShotIndex } from '../../features/screenshot/screenshot.client';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import mockConsole from 'jest-mock-console';
 
 jest.mock('../../utils/get-preview-iframe.ts');
 jest.mock('../../store/screenshot/context.tsx');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshotIndexChange', () => {
   let restoreConsole;
@@ -23,7 +25,7 @@ describe('useScreenshotIndexChange', () => {
     jest.clearAllMocks();
   });
   it('should dispatch index', async () => {
-    fetch.mockResponseOnce(JSON.stringify({}));
+    mocked(changeScreenShotIndex).mockResolvedValueOnce({} as any);
     const { result } = renderHook(() => useScreenshotIndexChange());
 
     await act(async () => {
@@ -36,7 +38,7 @@ describe('useScreenshotIndexChange', () => {
   });
 
   it('should reverse index on error', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
+    mocked(changeScreenShotIndex).mockRejectedValueOnce(new Error('foo'));
     const { result } = renderHook(() => useScreenshotIndexChange());
 
     await act(async () => {

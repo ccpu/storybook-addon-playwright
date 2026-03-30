@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { getActionSet } from '../api/client/get-action-set';
+import { getActionSet } from '../features/action-set/action-set.client';
 import { useActionDispatchContext } from '../store';
 
 interface LoadedStory {

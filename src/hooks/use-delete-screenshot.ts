@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useCurrentStoryData } from './use-current-story-data';
-import { deleteScreenshot as deleteScreenshotService } from '../api/client';
+import { deleteScreenshot as deleteScreenshotService } from '../features/screenshot/screenshot.client';
 import { useScreenshotDispatch } from '../store/screenshot';
 import { useAsyncApiCall } from './use-async-api-call';
 

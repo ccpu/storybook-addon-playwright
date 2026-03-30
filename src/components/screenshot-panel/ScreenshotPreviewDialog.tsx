@@ -7,7 +7,7 @@ import {
   DialogProps,
   ImageDiffPreviewProps,
 } from '../common';
-import { testScreenshot } from '../../api/client';
+import { testScreenshot } from '../../features/screenshot/screenshot.client';
 import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotPreviewDialogProps
@@ -22,13 +22,8 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 ) => {
   const { storyData, screenShotData, onClose, ...rest } = props;
 
-  const {
-    makeCall,
-    result,
-    inProgress,
-    clearResult,
-    ErrorSnackbar,
-  } = useAsyncApiCall(testScreenshot);
+  const { makeCall, result, inProgress, clearResult, ErrorSnackbar } =
+    useAsyncApiCall(testScreenshot);
 
   useEffect(() => {
     makeCall({

@@ -4,14 +4,15 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date';
 import { IconButton } from '@material-ui/core';
-import { testScreenshot } from '../../../api/client/test-screenshot';
-import { updateScreenshot } from '../../../api/client/update-screenshot';
+import {
+  testScreenshot,
+  updateScreenshot,
+} from '../../../features/screenshot/screenshot.client';
 import { mocked } from 'ts-jest/utils';
 import { ImageDiffPreviewDialog } from '../../common';
 
 jest.mock('../../../store/screenshot/context');
-jest.mock('../../../api/client/test-screenshot');
-jest.mock('../../../api/client/update-screenshot');
+jest.mock('../../../features/screenshot/screenshot.client');
 jest.mock('../../../hooks/use-current-story-data');
 
 const testScreenshotMock = mocked(testScreenshot);

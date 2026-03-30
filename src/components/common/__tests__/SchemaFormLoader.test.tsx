@@ -3,20 +3,22 @@ import { getActionSchemaData } from '../../../../__test_data__';
 import { SchemaFormLoader } from '../SchemaFormLoader';
 import { shallow } from 'enzyme';
 import React from 'react';
-import fetch from 'jest-fetch-mock';
+import { mocked } from 'ts-jest/utils';
+import { getSchema } from '../../../features/schema/schema.client';
 import { Button } from '@material-ui/core';
 import { MemoizedSchemaRenderer } from '../../schema';
+
+jest.mock('../../../features/schema/schema.client');
 
 const schema = getActionSchemaData();
 
 describe('SchemaFormLoader', () => {
   beforeEach(() => {
-    fetch.mockResponseOnce(JSON.stringify(schema));
+    mocked(getSchema).mockResolvedValue(schema as any);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-    fetch.mockClear();
   });
 
   it('should render', () => {
@@ -24,14 +26,7 @@ describe('SchemaFormLoader', () => {
       <SchemaFormLoader schemaName="MyType" onSave={jest.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
-    expect(fetch).toHaveBeenCalledWith('http://localhost/getSchema', {
-      body: '{"schemaName":"MyType"}',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        'Content-Type': 'application/json',
-      },
-      method: 'post',
-    });
+    expect(getSchema).toHaveBeenCalledWith({ schemaName: 'MyType' });
   });
 
   it('should change value and save', async () => {

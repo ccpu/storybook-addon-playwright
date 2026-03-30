@@ -9,7 +9,7 @@ import { useCurrentActions, useCurrentStoryData } from '../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { FavouriteActions } from './FavouriteActions';
-import { deleteActionSet } from '../../api/client';
+import { deleteActionSet } from '../../features/action-set/action-set.client';
 
 const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);

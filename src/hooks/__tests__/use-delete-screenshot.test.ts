@@ -1,10 +1,12 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useDeleteScreenshot } from '../use-delete-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
+import { mocked } from 'ts-jest/utils';
+import { deleteScreenshot } from '../../features/screenshot/screenshot.client';
 import mockConsole from 'jest-mock-console';
 
 jest.mock('../../utils/get-preview-iframe.ts');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useDeleteScreenshot', () => {
   let restoreConsole;
@@ -28,7 +30,7 @@ describe('useDeleteScreenshot', () => {
   });
 
   it('should call for delete', async () => {
-    fetch.mockResponseOnce(JSON.stringify('{success:true}'));
+    mocked(deleteScreenshot).mockResolvedValueOnce(undefined);
     const { result } = renderHook(() => useDeleteScreenshot());
 
     await act(async () => {
@@ -41,7 +43,7 @@ describe('useDeleteScreenshot', () => {
   });
 
   it('should have error', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
+    mocked(deleteScreenshot).mockRejectedValueOnce(new Error('foo'));
     const { result } = renderHook(() => useDeleteScreenshot());
 
     await act(async () => {

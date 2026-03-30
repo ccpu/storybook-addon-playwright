@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useScreenshotDispatch } from '../store/screenshot';
 import { useAsyncApiCall } from './use-async-api-call';
-import { testScreenshot as testScreenshotClient } from '../api/client';
+import { testScreenshot as testScreenshotClient } from '../features/screenshot/screenshot.client';
 import { StoryData } from '../typings';
 
 export const useScreenshotImageDiff = (storyData: StoryData) => {

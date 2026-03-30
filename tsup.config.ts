@@ -35,6 +35,8 @@ export default defineConfig((overrideOptions) => {
         'to-match-screenshots': 'src/to-match-screenshots.ts',
         'api/server/routes': 'src/api/server/routes.ts',
         'constants/routes': 'src/constants/routes.ts',
+        'trpc/router': 'src/trpc/router.ts',
+        'trpc/context': 'src/trpc/context.ts',
       },
       format: ['cjs'],
       platform: 'node',

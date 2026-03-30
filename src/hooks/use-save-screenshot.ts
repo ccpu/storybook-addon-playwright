@@ -2,9 +2,9 @@ import { useCallback } from 'react';
 import { useKnobs } from './use-knobs';
 import { useCurrentActions } from './use-current-actions';
 import { useCurrentStoryData } from './use-current-story-data';
-import { saveScreenshot as saveScreenshotClient } from '../api/client';
+import { saveScreenshot as saveScreenshotClient } from '../features/screenshot/screenshot.client';
 import { BrowserTypes, BrowserContextOptions } from '../typings';
-import { SaveScreenshotRequest } from '../api/typings';
+import { SaveScreenshotRequest, ImageDiffResult } from '../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
@@ -81,8 +81,10 @@ export const useSaveScreenshot = () => {
 
       if (res instanceof Error) return res;
 
+      const result = (res as ImageDiffResult) || {};
+
       if (editScreenshotState && isUpdating(browserType)) {
-        if (res.added) {
+        if (result.added) {
           screenshotDispatch({
             screenshotId: editScreenshotState.screenshotData.id,
             type: 'removeScreenshot',
@@ -91,8 +93,8 @@ export const useSaveScreenshot = () => {
         clearScreenshotEdit();
       }
 
-      if (res.added) {
-        data.index = res.index;
+      if (result.added) {
+        data.index = result.index;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { base64, ...rest } = data;
         screenshotDispatch({
@@ -100,7 +102,7 @@ export const useSaveScreenshot = () => {
           type: 'addScreenshot',
         });
       }
-      return res;
+      return result;
     },
     [
       currentActions,

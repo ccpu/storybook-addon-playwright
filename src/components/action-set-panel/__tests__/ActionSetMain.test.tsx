@@ -10,11 +10,11 @@ import { SortEnd, SortEvent } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { useCurrentActions } from '../../../hooks/use-current-actions';
 import { mocked } from 'ts-jest/utils';
-import { deleteActionSet } from '../../../api/client/delete-action-set';
+import { deleteActionSet } from '../../../features/action-set/action-set.client';
 
 jest.mock('../../../hooks/use-current-story-data');
 jest.mock('../../../hooks/use-current-actions');
-jest.mock('../../../api/client/delete-action-set');
+jest.mock('../../../features/action-set/action-set.client');
 
 describe('ActionSetMain', () => {
   beforeEach(() => {

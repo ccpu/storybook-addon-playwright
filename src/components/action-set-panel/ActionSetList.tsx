@@ -4,7 +4,7 @@ import { useCurrentStoryData, useCurrentStoryActionSets } from '../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
 import { Loader, Snackbar, ListWrapper } from '../common';
 import { useActionDispatchContext } from '../../store';
-import { deleteActionSet } from '../../api/client';
+import { deleteActionSet } from '../../features/action-set/action-set.client';
 import { ActionSet } from '../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
 import { SortableActionSetListItem } from './ActionSetListItem';

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useAsyncApiCall } from './use-async-api-call';
-import { testScreenshots } from '../api/client';
+import { testScreenshots } from '../features/screenshot/screenshot.client';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
 import { nanoid } from 'nanoid';
 import { ScreenshotTestTargetType } from '../typings';

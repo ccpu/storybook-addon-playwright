@@ -18,6 +18,8 @@ module.exports = {
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
   moduleNameMapper: {
+    // tRPC client mock for all test files
+    '^(.*)/trpc/client$': '<rootDir>/src/trpc/__mocks__/client.ts',
     // Storybook 8 uses subpath exports which Jest 27 doesn't support.
     // Map storybook/internal/* paths to @storybook/core dist files.
     '^storybook/internal/manager-api$':

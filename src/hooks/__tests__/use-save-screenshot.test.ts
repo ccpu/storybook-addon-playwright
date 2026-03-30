@@ -3,7 +3,7 @@ import { useEditScreenshot } from '../use-edit-screenshot';
 import { globalDispatchMock } from '../../../__manual_mocks__/hooks/use-global-screenshot-dispatch';
 import { useSaveScreenshot } from '../use-save-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import fetch from 'jest-fetch-mock';
+import { saveScreenshot } from '../../features/screenshot/screenshot.client';
 import mockConsole from 'jest-mock-console';
 
 jest.mock('nanoid', () => ({
@@ -14,6 +14,7 @@ jest.mock('nanoid', () => ({
 
 jest.mock('../../utils/get-preview-iframe.ts');
 jest.mock('../use-edit-screenshot');
+jest.mock('../../features/screenshot/screenshot.client');
 const useEditScreenshotMock = mocked(useEditScreenshot);
 
 describe('useSaveScreenshot', () => {
@@ -43,7 +44,7 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should add', async () => {
-    fetch.mockResponseOnce(JSON.stringify({ added: true }));
+    mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -72,7 +73,7 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should handle error', async () => {
-    fetch.mockRejectOnce(new Error('foo'));
+    mocked(saveScreenshot).mockRejectedValueOnce(new Error('foo'));
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -90,7 +91,7 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should clear result', async () => {
-    fetch.mockResponseOnce(JSON.stringify({ added: true }));
+    mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -125,7 +126,7 @@ describe('useSaveScreenshot', () => {
       };
     });
 
-    const fetchMock = fetch.mockResponseOnce(JSON.stringify({ added: true }));
+    mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -137,11 +138,10 @@ describe('useSaveScreenshot', () => {
     await act(async () => {
       await result.current.saveScreenShot('chromium', 'title', 'base64-image');
     });
-    ``;
 
-    const data = JSON.parse(fetchMock.mock.calls[0][1].body.toString());
+    const callArg = mocked(saveScreenshot).mock.calls[0][0] as any;
 
-    expect(data.updateScreenshot).toStrictEqual({
+    expect(callArg.updateScreenshot).toStrictEqual({
       browserType: 'chromium',
       id: 'screenshot-id',
       index: 1,

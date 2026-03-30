@@ -5,9 +5,10 @@ import { shallow } from 'enzyme';
 import { ScreenshotData, StoryData } from '../../../typings';
 import React from 'react';
 import { ImageDiffPreviewDialog } from '../../common';
-import { ImageDiffResult } from '../../../api/typings';
-import fetchMock from 'jest-fetch-mock';
+import { testScreenshot } from '../../../features/screenshot/screenshot.client';
 import { act } from '@testing-library/react-hooks';
+
+jest.mock('../../../features/screenshot/screenshot.client');
 
 describe('ScreenshotPreviewDialog', () => {
   const getScreenshotDate = (): ScreenshotData => {
@@ -27,10 +28,6 @@ describe('ScreenshotPreviewDialog', () => {
   });
 
   it('should render result', async () => {
-    const responseMock = fetchMock.mockResponseOnce(
-      JSON.stringify({ pass: true } as ImageDiffResult),
-    );
-
     const wrapper = shallow(
       <ScreenshotPreviewDialog
         storyData={storyData as StoryData}
@@ -43,7 +40,7 @@ describe('ScreenshotPreviewDialog', () => {
 
     const imageDiffPreviewDialog = wrapper.find(ImageDiffPreviewDialog);
 
-    expect(responseMock).toHaveBeenCalledTimes(1);
+    expect(testScreenshot).toHaveBeenCalledTimes(1);
 
     expect(imageDiffPreviewDialog.exists()).toBeTruthy();
 
@@ -53,10 +50,6 @@ describe('ScreenshotPreviewDialog', () => {
   });
 
   it('should show handle close', async () => {
-    fetchMock.mockResponseOnce(
-      JSON.stringify({ pass: true } as ImageDiffResult),
-    );
-
     const onCLoseMock = jest.fn();
 
     const wrapper = shallow(

@@ -8,15 +8,17 @@ import {
   IconButton,
   capitalize,
 } from '@material-ui/core';
-import { getFavouriteActions } from '../../api/client/get-favourite-actions';
+import {
+  getFavouriteActions,
+  deleteFavouriteAction,
+} from '../../features/favourite-actions/favourite-actions.client';
 import { FavouriteActionSet } from '../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { useActionDispatchContext } from '../../store';
 import { nanoid } from 'nanoid';
-import { deleteFavouriteAction } from '../../api/client/delete-favourite-action';
 import { useCurrentStoryData } from '../../hooks/use-current-story-data';
 import { useAsyncApiCall } from '../../hooks/use-async-api-call';
-import { saveActionSet as saveActionSetClient } from '../../api/client/save-action-set';
+import { saveActionSet as saveActionSetClient } from '../../features/action-set/action-set.client';
 import { filterFavouriteActions } from './utils/filter-favourite-actions';
 
 const useStyles = makeStyles(

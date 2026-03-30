@@ -1,8 +1,11 @@
 import { useStoryActionSetsLoader } from '../use-story-action-sets-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ActionProvider } from '../../store/actions/ActionContext';
-import fetch from 'jest-fetch-mock';
+import { mocked } from 'ts-jest/utils';
+import { getActionSet } from '../../features/action-set/action-set.client';
 import { ActionSet } from '../../typings';
+
+jest.mock('../../features/action-set/action-set.client');
 
 describe('useStoryFileActionSets', () => {
   let cnt = 0;
@@ -31,7 +34,7 @@ describe('useStoryFileActionSets', () => {
   ];
 
   it('should load once', async () => {
-    fetch.mockResponseOnce(JSON.stringify(actionSets));
+    mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
 
     const fileInfo = getFileInfo();
 
@@ -55,7 +58,7 @@ describe('useStoryFileActionSets', () => {
   });
 
   it('should handle error and retry', async () => {
-    fetch.mockRejectOnce(() => Promise.reject(new Error('bad url')));
+    mocked(getActionSet).mockRejectedValueOnce(new Error('bad url'));
 
     const fileInfo = getFileInfo();
 
@@ -68,7 +71,7 @@ describe('useStoryFileActionSets', () => {
 
     expect(result.current.error).toStrictEqual('bad url');
 
-    fetch.mockResponseOnce(JSON.stringify(actionSets));
+    mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
 
     act(() => {
       result.current.retry();

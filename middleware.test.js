@@ -1,50 +1,59 @@
-jest.mock('./dist/constants/routes', () => ({
-  ROUTE: {
-    GET_SCHEMA: '/getSchema',
-    TAKE_SCREENSHOT: '/screenshot/get',
-  },
+jest.mock('@trpc/server/adapters/fetch', () => ({
+  fetchRequestHandler: jest.fn().mockResolvedValue(
+    new Response(JSON.stringify({ result: 'ok' }), {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+    }),
+  ),
 }));
 
-jest.mock('./dist/api/server/routes', () => jest.fn());
+jest.mock('./dist/trpc/router', () => ({
+  appRouter: { _def: {} },
+}));
+
+jest.mock('./dist/trpc/context', () => ({
+  createContext: jest.fn().mockReturnValue({}),
+}));
 
 const middleware = require('./middleware');
-const routes = require('./dist/api/server/routes');
+const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');
 
 describe('middleware', () => {
-  it('should register compat middleware only for addon routes', () => {
-    const router = { use: jest.fn() };
+  it('should register a /trpc/* route handler', () => {
+    const router = { all: jest.fn() };
 
     middleware(router);
 
-    expect(router.use).toHaveBeenNthCalledWith(
-      1,
-      '/getSchema',
-      expect.any(Function),
-    );
-    expect(router.use).toHaveBeenNthCalledWith(
-      2,
-      '/screenshot/get',
-      expect.any(Function),
-    );
-    expect(routes).toHaveBeenCalledWith(router);
+    expect(router.all).toHaveBeenCalledWith('/trpc/*', expect.any(Function));
   });
 
-  it('should send buffers without serializing them to json', () => {
-    const router = { use: jest.fn() };
+  it('should call fetchRequestHandler and pipe response', async () => {
+    const router = { all: jest.fn() };
 
     middleware(router);
 
-    const compatMiddleware = router.use.mock.calls[0][1];
-    const res = {
-      end: jest.fn(),
-      setHeader: jest.fn(),
+    const handler = router.all.mock.calls[0][1];
+
+    const req = {
+      url: '/trpc/screenshot.takeScreenshot',
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
     };
-    const payload = Buffer.from('<!doctype html>');
 
-    compatMiddleware({}, res, jest.fn());
-    res.send(payload);
+    const res = {
+      statusCode: 0,
+      setHeader: jest.fn(),
+      end: jest.fn(),
+    };
 
-    expect(res.end).toHaveBeenCalledWith(payload);
-    expect(res.setHeader).not.toHaveBeenCalled();
+    await handler(req, res);
+
+    expect(fetchRequestHandler).toHaveBeenCalledWith(
+      expect.objectContaining({
+        endpoint: '/trpc',
+      }),
+    );
+    expect(res.statusCode).toBe(200);
+    expect(res.end).toHaveBeenCalled();
   });
 });

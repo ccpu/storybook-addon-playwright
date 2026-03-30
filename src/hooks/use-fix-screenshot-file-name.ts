@@ -1,5 +1,5 @@
 import React from 'react';
-import { fixScreenshotFileName } from '../api/client/fix-screenshot-file-name';
+import { fixScreenshotFileName } from '../features/fix-title/fix-title.client';
 import { useAsyncApiCall } from './use-async-api-call';
 import { useCurrentStoryData } from './use-current-story-data';
 import { useSnackbar } from './use-snackbar';

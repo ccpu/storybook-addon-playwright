@@ -5,15 +5,16 @@ import React from 'react';
 import { ActionSet } from '../../../typings';
 import { Snackbar } from '../../common';
 import { Button } from '@material-ui/core';
-import fetch from 'jest-fetch-mock';
+import { mocked } from 'ts-jest/utils';
 import { SortableActionSetListItem } from '../ActionSetListItem';
 import { useStoryActionSetsLoader } from '../../../hooks/use-story-action-sets-loader';
 import { useCurrentStoryActionSets } from '../../../hooks/use-current-story-action-sets';
-import { mocked } from 'ts-jest/utils';
+import { deleteActionSet } from '../../../features/action-set/action-set.client';
 
 jest.mock('../../../hooks/use-current-story-data');
 jest.mock('../../../hooks/use-story-action-sets-loader');
 jest.mock('../../../hooks/use-current-story-action-sets');
+jest.mock('../../../features/action-set/action-set.client');
 
 const useCurrentStoryActionSetsData = {
   currentActionSets: ['action-set-id'],
@@ -76,7 +77,7 @@ describe('ActionSetList', () => {
   });
 
   it('should delete action set', async () => {
-    fetch.mockResponseOnce(JSON.stringify('{success:true}'));
+    mocked(deleteActionSet).mockResolvedValueOnce(undefined);
 
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
@@ -99,7 +100,7 @@ describe('ActionSetList', () => {
   });
 
   it('should display error if request failed and close after', async () => {
-    fetch.mockRejectOnce(() => Promise.reject(new Error('foo')));
+    mocked(deleteActionSet).mockRejectedValueOnce(new Error('foo'));
 
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
@@ -120,8 +121,6 @@ describe('ActionSetList', () => {
   });
 
   it('should handle edit', async () => {
-    fetch.mockRejectOnce(() => Promise.reject(new Error('foo')));
-
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
     })

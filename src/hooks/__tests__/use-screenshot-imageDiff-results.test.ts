@@ -1,10 +1,10 @@
 import { globalDispatchMock } from '../../../__manual_mocks__/hooks/use-global-screenshot-dispatch';
 import { useScreenshotImageDiffResults } from '../use-screenshot-imageDiff-results';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { testScreenshots } from '../../api/client/test-screenshots';
+import { testScreenshots } from '../../features/screenshot/screenshot.client';
 
 jest.mock('../use-current-story-data');
-jest.mock('../../api/client/test-screenshots');
+jest.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshotImageDiffResults', () => {
   beforeEach(() => {

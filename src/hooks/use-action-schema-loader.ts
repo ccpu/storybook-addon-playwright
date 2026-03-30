@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { getActionSchema } from '../api/client/get-action-schema';
+import { getActionsSchema as getActionSchema } from '../features/schema/schema.client';
 import { useGlobalState } from './use-global-state';
 import { useActionDispatchContext } from '../store';
 import { useAsyncApiCall } from './use-async-api-call';

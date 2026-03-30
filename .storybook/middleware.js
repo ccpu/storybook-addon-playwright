@@ -6,8 +6,8 @@ const { setupPlaywright } = require('./setup-playwright');
 })();
 
 // SSE endpoint used by live-reload-client.js.
-// Currently not used for src/ changes (start-dev.js restarts the server for
-// those), but kept here in case in-process signalling is needed in future.
+// When tsup finishes a rebuild (onSuccess), Storybook is restarted — the browser
+// loses the SSE connection, polls until the new server is up, then auto-reloads.
 
 let sseClients = [];
 

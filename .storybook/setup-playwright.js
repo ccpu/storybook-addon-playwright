@@ -1,8 +1,6 @@
 const { setConfig } = require('../configs');
-
 const playwright = require('playwright');
 
-//async function addBox(this: Page, position: { x: number; y: number })
 async function addBox(position) {
   await this.evaluate((pos) => {
     if (!pos) return;
@@ -14,32 +12,31 @@ async function addBox(position) {
     div.style.top = pos.y + 'px';
     div.style.left = pos.x + 'px';
     div.style.zIndex = '10000000';
-
     document.body.append(div);
   }, position);
 }
 
 async function setupPlaywright() {
   try {
-    let browser;
-    setConfig({
-      storybookEndpoint: `http://localhost:9002/`,
-      getPage: async (browserType, options) => {
-        if (!browser) {
-          browser = {
-            chromium: await playwright['chromium'].launch(),
-            firefox: await playwright['firefox'].launch(),
-            webkit: await playwright['webkit'].launch(),
-          };
-        }
+    const browser = {};
 
+    setConfig({
+      storybookEndpoint: 'http://localhost:9002/',
+      getPage: async (browserType, options) => {
+        if (!browser[browserType]) {
+          browser[browserType] = await playwright[browserType].launch();
+        }
         const page = await browser[browserType].newPage(options);
         page.addBox = addBox;
         return page;
       },
-      afterNavigation: async (page, _data) => {
+      afterNavigation: async (page) => {
         await page.waitForFunction(() => {
-          return document.getElementById('root').childNodes.length > 0;
+          const root =
+            document.getElementById('storybook-root') ||
+            document.getElementById('root');
+
+          return (root?.childNodes.length ?? 0) > 0;
         });
       },
       afterScreenshot: async (page) => {
@@ -53,43 +50,20 @@ async function setupPlaywright() {
             position: {
               type: 'object',
               properties: {
-                x: {
-                  type: 'number',
-                },
-                y: {
-                  type: 'number',
-                },
+                x: { type: 'number' },
+                y: { type: 'number' },
               },
               required: ['x', 'y'],
             },
           },
         },
       },
-      // compareScreenshot: async (data) => {
-      //   if (data.requestType !== 'all') return false;
-      //   return new Promise((resolve, reject) => {
-      //     const result = data.screenshot.base64 === data.baseImage.base64;
-
-      //     if (!result)
-      //       reject(new Error('Screenshots base64 are not identical!'));
-      //     else
-      //       resolve({
-      //         pass: result,
-      //       });
-      //   });
-      // },
-      // screenshotOptions: {
-      //   mergeType: 'stitch',
-      //   stitchOptions: { offset: 5 },
-      //   overlayOptions: { blend: 'add' },
-      // },
-      // pageGotoOptions: {
-      //   timeout: 5000,
-      // },
     });
   } catch (error) {
     console.error(error);
   }
 }
 
-module.exports = { setupPlaywright };
+module.exports = {
+  setupPlaywright,
+};

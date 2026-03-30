@@ -1,7 +1,6 @@
 # Logs
 logs
 *.log
-npm-debug.log*
 report*
 
 # Dependencies
@@ -24,8 +23,9 @@ dist/
 # JetBrains IDEs
 .idea/
 
-# Optional npm cache directory
-.npm
+# Optional pnpm cache directory
+.pnpm-store
+pnpm-debug.log*
 
 # Optional eslint cache
 .eslintcache

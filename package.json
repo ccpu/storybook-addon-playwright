@@ -3,8 +3,10 @@
   "version": "4.21.0",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
+  "packageManager": "pnpm@10.25.0",
   "engines": {
-    "node": ">= 18.0"
+    "node": ">= 18.0",
+    "pnpm": ">= 10.25.0"
   },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -95,23 +97,23 @@
     "@types/react-dom": "17.0.16"
   },
   "scripts": {
-    "start:storybook": "npm run build && storybook dev -p 9002 --ci",
-    "start:storybook:dev": "npm run build && npx tsx .storybook/start-dev.ts",
+    "start:storybook": "pnpm run build && storybook dev -p 9002 --ci",
+    "start:storybook:dev": "pnpm run build && pnpm exec tsx .storybook/start-dev.ts",
     "start:storybook:dev:legacy": "tsup --watch",
     "clean": "rimraf coverage dist/* tmp",
-    "build": "npm run clean && tsc -p tsconfig.release.json",
+    "build": "pnpm run clean && tsc -p tsconfig.release.json",
     "watch": "tsc -w -p tsconfig.release.json",
-    "lint": "yarn eslint . --ext .ts,.tsx",
+    "lint": "eslint . --ext .ts,.tsx",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "prepublish": "npm run lint && npm run build"
+    "prepublish": "pnpm run lint && pnpm run build"
   },
   "license": "MIT",
   "dependencies": {
     "@dom-utils/selector-path": "^1.0.3",
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.58",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@storybook/components": "^8.6.18",
     "@storybook/core-events": "^8.6.18",
     "@storybook/manager-api": "^8.6.18",

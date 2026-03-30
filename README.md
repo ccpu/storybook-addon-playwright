@@ -33,7 +33,7 @@ Required packages:
 - @storybook/addon-knobs
 
 ```js
-yarn add storybook-addon-playwright @storybook/addon-knobs --dev
+pnpm add -D storybook-addon-playwright @storybook/addon-knobs
 ```
 
 ## Configuration

@@ -7,25 +7,25 @@
       "label": "watch",
       "type": "shell",
       "group": "build",
-      "command": "npm run watch",
+      "command": "pnpm run watch",
       "problemMatcher": [],
       "runOptions": {
-        "runOn": "folderOpen",
+        "runOn": "folderOpen"
       }
-    },
-    {
-      "label": "storybook start",
-      "type": "shell",
-      "command": "npm run start:storybook",
-      "presentation": {
-        "reveal": "always",
-        "revealProblems": "onProblem",
-        "close": true
-      },
-      "problemMatcher": [],
-      "runOptions": {
-        "runOn": "folderOpen",
-      }
-    },
+    }
+    // {
+    //   "label": "storybook start",
+    //   "type": "shell",
+    //   "command": "pnpm run start:storybook",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "revealProblems": "onProblem",
+    //     "close": true
+    //   },
+    //   "problemMatcher": [],
+    //   // "runOptions": {
+    //   //   "runOn": "folderOpen",
+    //   // }
+    // },
   ]
 }

@@ -1,7 +1,7 @@
-import { ReducerState } from '../../../src/store/actions/reducer';
-import { useActionDispatchContext } from '../../../src/store/actions/ActionContext';
+import { ReducerState } from '../../../src/features/action-set/store/reducer';
+import { useActionDispatchContext } from '../../../src/features/action-set/store/ActionContext';
 
-vi.mock('../../../src/store/actions/ActionContext');
+vi.mock('../../../src/features/action-set/store/ActionContext');
 
 export const dispatchMock = vi.fn();
 

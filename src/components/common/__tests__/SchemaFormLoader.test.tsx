@@ -16,7 +16,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { getSchema } from '../../../features/schema/schema.client';
 import { Button } from '@material-ui/core';
-import { MemoizedSchemaRenderer } from '../../schema';
+import { MemoizedSchemaRenderer } from '../../../features/schema/components/index';
 
 vi.mock('../../../features/schema/schema.client');
 

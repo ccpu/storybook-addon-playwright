@@ -2,10 +2,10 @@ import { ScreenshotUpdateIcon } from '../ScreenshotUpdateIcon';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { useScreenshotUpdateState } from '../../../hooks/use-screenshot-update-state';
+import { useScreenshotUpdateState } from '../../../features/screenshot/hooks/use-screenshot-update-state';
 import { Loader } from '../../common';
 
-vi.mock('../../../hooks/use-screenshot-update-state.ts');
+vi.mock('../../../features/screenshot/hooks/use-screenshot-update-state.ts');
 
 describe('ScreenshotUpdateIcon', () => {
   it('should render', () => {

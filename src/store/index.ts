@@ -1,1 +1,1 @@
-export * from './actions';
+export * from '../features/action-set/store/index';

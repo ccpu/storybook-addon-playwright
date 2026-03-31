@@ -4,7 +4,7 @@ import {
   ThemeProvider as MuThemeProvider,
 } from '@material-ui/core/styles';
 import { useStorybookState } from '@storybook/manager-api';
-import { useCustomTheme } from '../../hooks/use-custom-theme';
+import { useCustomTheme } from '../../features/theme/hooks/use-custom-theme';
 // import global from 'jss-plugin-global';
 
 const ThemeProvider: React.FC = memo((props) => {

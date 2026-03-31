@@ -1,8 +1,8 @@
 import { useResetSetting } from '../use-reset-setting';
 import { renderHook } from '@testing-library/react-hooks';
-import { useGlobalActionDispatch } from '../../hooks/use-global-action-dispatch';
+import { useGlobalActionDispatch } from '../../features/action-set/hooks/use-global-action-dispatch';
 
-vi.mock('../../hooks/use-global-action-dispatch');
+vi.mock('../../features/action-set/hooks/use-global-action-dispatch');
 vi.mock('../use-current-story-data');
 vi.unmock('@storybook/manager-api');
 

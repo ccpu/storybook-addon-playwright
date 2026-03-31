@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { IconButton, Separator } from '@storybook/components';
 import { makeStyles } from '@material-ui/core';
 import { CommonProvider } from '../common';
-import { PreviewDialog } from '../screenshot-preview';
+import { PreviewDialog } from '../../features/screenshot/components/screenshot-preview/index';
 import WebOutlined from '@material-ui/icons/Launch';
 import { useAddonState, useCurrentStoryData } from '../../hooks';
 import { LayoutRight, LayoutBottom } from '../../icons';

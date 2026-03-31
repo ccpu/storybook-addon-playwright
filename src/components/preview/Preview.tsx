@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import SplitPane from 'react-split-pane';
 import { isHorizontalPanel } from './utils';
 import { useAddonState } from '../../hooks';
-import { ScreenshotListView } from '../screenshot-preview';
+import { ScreenshotListView } from '../../features/screenshot/components/screenshot-preview/index';
 import { Separator } from '@storybook/components';
 import { CommonProvider } from '../common';
 import { Selector } from './Selector';

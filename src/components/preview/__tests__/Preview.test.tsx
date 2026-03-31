@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useAddonState } from '../../../hooks/use-addon-state';
 import { AddonState } from '../../../typings';
-import { ScreenshotListView } from '../../screenshot-preview';
+import { ScreenshotListView } from '../../../features/screenshot/components/screenshot-preview/index';
 import SplitPane from 'react-split-pane';
 
 vi.mock('../../../hooks/use-addon-state.ts');

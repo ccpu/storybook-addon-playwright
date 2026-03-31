@@ -1,6 +1,6 @@
 import { RESET_STORY_ARGS } from '@storybook/core-events';
 import { useStorybookApi } from '@storybook/manager-api';
-import { useGlobalActionDispatch } from './use-global-action-dispatch';
+import { useGlobalActionDispatch } from '../features/action-set/hooks/use-global-action-dispatch';
 import { useCurrentStoryData } from './use-current-story-data';
 
 export const useResetSetting = () => {

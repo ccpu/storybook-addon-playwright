@@ -5,7 +5,7 @@
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "packageManager": "pnpm@10.25.0",
   "engines": {
-    "node": ">= 18.0",
+    "node": ">= 20.19.0",
     "pnpm": ">= 10.25.0"
   },
   "main": "dist/index.js",

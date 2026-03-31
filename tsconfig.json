@@ -41,6 +41,7 @@
     "tsup.config.ts",
     "stories/**/*",
     "vitest.config.ts",
+    "vitest.middleware.config.ts",
     "setupTests.ts"
   ],
   "exclude": ["**/.storybook/**/*", "node_modules", "**/node_modules/*"]

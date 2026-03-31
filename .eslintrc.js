@@ -26,6 +26,11 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
   rules: {
     'sort-keys-fix/sort-keys-fix': 'warn',
     'react-hooks/rules-of-hooks': 'error',

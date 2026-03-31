@@ -5,12 +5,12 @@ import React from 'react';
 import { useStorybookState } from '@storybook/manager-api';
 import { useCustomTheme } from '../../../hooks/use-custom-theme';
 
-jest.mock('../../../hooks/use-custom-theme.ts');
-const useCustomThemeMock = useCustomTheme as jest.Mock;
+vi.mock('../../../hooks/use-custom-theme.ts');
+const useCustomThemeMock = useCustomTheme as Mock;
 
 describe('ThemeProvider', () => {
   it('should have light theme', () => {
-    (useStorybookState as jest.Mock).mockImplementationOnce(() =>
+    (useStorybookState as Mock).mockImplementationOnce(() =>
       getStorybookState('light'),
     );
     useCustomThemeMock.mockImplementationOnce(() => {
@@ -28,7 +28,7 @@ describe('ThemeProvider', () => {
   });
 
   it('should have dark theme', () => {
-    (useStorybookState as jest.Mock).mockImplementationOnce(() =>
+    (useStorybookState as Mock).mockImplementationOnce(() =>
       getStorybookState('dark'),
     );
 
@@ -48,7 +48,7 @@ describe('ThemeProvider', () => {
   });
 
   it('should override theme using useCustomTheme', () => {
-    (useStorybookState as jest.Mock).mockImplementationOnce(() =>
+    (useStorybookState as Mock).mockImplementationOnce(() =>
       getStorybookState('light'),
     );
 

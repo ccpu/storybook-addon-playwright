@@ -1,4 +1,4 @@
-export const useScreenshotOptions = jest.fn();
+export const useScreenshotOptions = vi.fn();
 
 useScreenshotOptions.mockImplementation(() => ({
   screenshotOptions: undefined,

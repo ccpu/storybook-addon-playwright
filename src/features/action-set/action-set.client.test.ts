@@ -1,4 +1,4 @@
-jest.mock('../../trpc/client');
+vi.mock('../../trpc/client');
 
 import { trpc } from '../../trpc/client';
 import {
@@ -8,10 +8,10 @@ import {
 } from './action-set.client';
 
 describe('action-set client', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('saveActionSet calls trpc.actionSet.saveActionSet.mutate', async () => {
-    (trpc.actionSet.saveActionSet.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.actionSet.saveActionSet.mutate as Mock).mockResolvedValueOnce(
       undefined,
     );
 
@@ -27,7 +27,7 @@ describe('action-set client', () => {
 
   it('getActionSet calls trpc.actionSet.getActionSet.mutate', async () => {
     const mockResponse = [{ actions: [], id: 'as-1' }];
-    (trpc.actionSet.getActionSet.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.actionSet.getActionSet.mutate as Mock).mockResolvedValueOnce(
       mockResponse,
     );
 
@@ -39,7 +39,7 @@ describe('action-set client', () => {
   });
 
   it('deleteActionSet calls trpc.actionSet.deleteActionSet.mutate', async () => {
-    (trpc.actionSet.deleteActionSet.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.actionSet.deleteActionSet.mutate as Mock).mockResolvedValueOnce(
       undefined,
     );
 

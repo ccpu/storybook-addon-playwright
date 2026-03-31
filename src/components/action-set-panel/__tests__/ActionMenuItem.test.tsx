@@ -5,13 +5,13 @@ import { MenuItem } from '@material-ui/core';
 describe('ActionMenuItem', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <ActionMenuItem label="click" name="click" onChange={jest.fn()} />,
+      <ActionMenuItem label="click" name="click" onChange={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should handle change', () => {
-    const changeMock = jest.fn();
+    const changeMock = vi.fn();
     const wrapper = shallow(
       <ActionMenuItem label="click" name="click" onChange={changeMock} />,
     );

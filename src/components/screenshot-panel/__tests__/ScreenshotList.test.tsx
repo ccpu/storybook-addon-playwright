@@ -3,21 +3,20 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { SortableScreenshotListItem } from '../ScreenshotListItem';
 import { useScreenshotContext } from '../../../store/screenshot/context';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../../store/screenshot/context');
-jest.mock('../../../hooks/use-current-story-data');
-jest.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
+vi.mock('../../../store/screenshot/context');
+vi.mock('../../../hooks/use-current-story-data');
+vi.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
 
-const useScreenshotContextMock = mocked(useScreenshotContext);
+const useScreenshotContextMock = vi.mocked(useScreenshotContext);
 
 describe('ScreenshotList', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should render', () => {

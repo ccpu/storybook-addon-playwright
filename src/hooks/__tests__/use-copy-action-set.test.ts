@@ -1,17 +1,16 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/action/context';
 import { useCopyActionSet } from '../use-copy-action-set';
-import { mocked } from 'ts-jest/utils';
 import { useAsyncApiCall } from '../use-async-api-call';
 import { renderHook } from '@testing-library/react-hooks';
 import { StoryData } from '../../typings';
 
-jest.mock('../use-async-api-call');
+vi.mock('../use-async-api-call');
 
-const onSaveMock = jest.fn();
-mocked(useAsyncApiCall).mockImplementation(() => ({
-  ErrorSnackbar: jest.fn(),
-  clearError: jest.fn(),
-  clearResult: jest.fn(),
+const onSaveMock = vi.fn();
+vi.mocked(useAsyncApiCall).mockImplementation(() => ({
+  ErrorSnackbar: vi.fn(),
+  clearError: vi.fn(),
+  clearResult: vi.fn(),
   error: undefined,
   inProgress: false,
   makeCall: onSaveMock,

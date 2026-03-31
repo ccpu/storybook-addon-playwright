@@ -1,4 +1,4 @@
-const makeScreenshot = jest.fn();
+const makeScreenshot = vi.fn();
 makeScreenshot.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({

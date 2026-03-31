@@ -4,7 +4,7 @@ import React from 'react';
 import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';
 
 describe('FormControl', () => {
-  const onAppendValueToTitleMock = jest.fn();
+  const onAppendValueToTitleMock = vi.fn();
 
   it('should render', () => {
     const wrapper = shallow(

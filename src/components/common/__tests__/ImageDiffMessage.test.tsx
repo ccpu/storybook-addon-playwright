@@ -1,27 +1,38 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+// Also patches React.default.useEffect for components using React.useEffect().
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import { ImageDiffMessage } from '../ImageDiffMessage';
 import '../../../../__manual_mocks__/react-useEffect';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ImageDiffPreviewDialog } from '../ImageDiffPreviewDialog';
-import { mocked } from 'ts-jest/utils';
 import { useSnackbar } from '../../../hooks/use-snackbar';
 
-jest.mock('../../../hooks/use-snackbar');
+vi.mock('../../../hooks/use-snackbar');
 
-const openSnackbarMock = jest.fn();
+const openSnackbarMock = vi.fn();
 
-mocked(useSnackbar).mockImplementation(() => ({
+vi.mocked(useSnackbar).mockImplementation(() => ({
   openSnackbar: openSnackbarMock,
 }));
 
 describe('ImageDiffMessage', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should do nothing if result undefined', () => {
     const wrapper = shallow(
-      <ImageDiffMessage result={undefined} onClose={jest.fn()} />,
+      <ImageDiffMessage result={undefined} onClose={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
     expect(openSnackbarMock).toHaveBeenCalledTimes(0);
@@ -30,7 +41,7 @@ describe('ImageDiffMessage', () => {
 
   it('should show message for added screenshot', () => {
     const wrapper = shallow(
-      <ImageDiffMessage result={{ added: true }} onClose={jest.fn()} />,
+      <ImageDiffMessage result={{ added: true }} onClose={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
     expect(openSnackbarMock.mock.calls[0][0]).toBe(
@@ -39,7 +50,7 @@ describe('ImageDiffMessage', () => {
   });
 
   it('should screenshot image diff successfully passed snackbar', () => {
-    shallow(<ImageDiffMessage result={{ pass: true }} onClose={jest.fn()} />);
+    shallow(<ImageDiffMessage result={{ pass: true }} onClose={vi.fn()} />);
 
     expect(openSnackbarMock.mock.calls[0][0]).toBe(
       'Testing existing screenshot were successful, no change has been detected.',
@@ -59,7 +70,7 @@ describe('ImageDiffMessage', () => {
           },
           pass: false,
         }}
-        onClose={jest.fn()}
+        onClose={vi.fn()}
       />,
     );
 
@@ -69,7 +80,7 @@ describe('ImageDiffMessage', () => {
   });
 
   it('should show/close ImageDiffPreviewDialog found difference', () => {
-    const onCloseMock = jest.fn();
+    const onCloseMock = vi.fn();
     const wrapper = shallow(
       <ImageDiffMessage
         result={{

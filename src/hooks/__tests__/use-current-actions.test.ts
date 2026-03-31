@@ -3,20 +3,20 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useActionContext } from '../../store/actions/ActionContext';
 import { storyFileInfo } from '../../../__test_data__/story-file-info';
 
-jest.mock('../../store/actions/ActionContext');
+vi.mock('../../store/actions/ActionContext');
 
 describe('useCurrentActions', () => {
   const data = storyFileInfo();
 
   it('should not have action if context not initialised', () => {
-    (useActionContext as jest.Mock).mockReturnValueOnce({});
+    (useActionContext as Mock).mockReturnValueOnce({});
 
     const { result } = renderHook(() => useCurrentActions('story-id'));
     expect(result.current.currentActions).toStrictEqual([]);
   });
 
   it('should return selected actionSets', () => {
-    (useActionContext as jest.Mock).mockReturnValue({
+    (useActionContext as Mock).mockReturnValue({
       currentActionSets: ['action-set-id'],
       initialised: true,
       stories: data.stories,
@@ -36,7 +36,7 @@ describe('useCurrentActions', () => {
   });
 
   it('should not return any action sets', () => {
-    (useActionContext as jest.Mock).mockReturnValue({
+    (useActionContext as Mock).mockReturnValue({
       currentActionSets: [],
       initialised: true,
       stories: data.stories,

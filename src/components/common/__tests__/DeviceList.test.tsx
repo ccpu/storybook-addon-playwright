@@ -6,12 +6,12 @@ import { DeviceListItem } from '../DeviceListItem';
 
 describe('DeviceList', () => {
   it('should render', () => {
-    const wrapper = shallow(<DeviceList onDeviceSelect={jest.fn()} />);
+    const wrapper = shallow(<DeviceList onDeviceSelect={vi.fn()} />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should open close menu', () => {
-    const wrapper = shallow(<DeviceList onDeviceSelect={jest.fn()} />);
+    const wrapper = shallow(<DeviceList onDeviceSelect={vi.fn()} />);
 
     expect(wrapper.find(Menu).props().anchorEl).toBe(null);
 
@@ -31,7 +31,7 @@ describe('DeviceList', () => {
   });
 
   it('should handle selection', () => {
-    const onSelectedMock = jest.fn();
+    const onSelectedMock = vi.fn();
 
     const wrapper = shallow(<DeviceList onDeviceSelect={onSelectedMock} />);
 

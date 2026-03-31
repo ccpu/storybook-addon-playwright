@@ -28,7 +28,7 @@ describe('SnackbarContent', () => {
   });
 
   it('should have retry button', () => {
-    const onRetryMock = jest.fn();
+    const onRetryMock = vi.fn();
     const wrapper = shallow(
       <SnackbarContent
         message="message"

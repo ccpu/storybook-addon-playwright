@@ -1,10 +1,10 @@
-const useScreenshotIndexChange = jest.fn();
+const useScreenshotIndexChange = vi.fn();
 
 useScreenshotIndexChange.mockImplementation(() => ({
   ChangeIndexErrorSnackbar: () => undefined,
   ChangeIndexInProgress: false,
   ChangeIndexSuccessSnackbar: () => undefined,
-  changeIndex: jest.fn(),
+  changeIndex: vi.fn(),
 }));
 
 export { useScreenshotIndexChange };

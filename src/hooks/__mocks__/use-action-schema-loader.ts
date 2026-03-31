@@ -1,4 +1,4 @@
-export const useActionSchemaLoader = jest.fn();
+export const useActionSchemaLoader = vi.fn();
 
 useActionSchemaLoader.mockImplementation(() => ({
   loading: false,

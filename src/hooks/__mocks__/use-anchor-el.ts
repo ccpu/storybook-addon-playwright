@@ -1,8 +1,8 @@
-export const useAnchorEl = jest.fn();
+export const useAnchorEl = vi.fn();
 
 useAnchorEl.mockImplementation(() => ({
   anchorEl: document.createElement('div'),
   anchorElRef: {},
-  clearAnchorEl: jest.fn(),
-  setAnchorEl: jest.fn(),
+  clearAnchorEl: vi.fn(),
+  setAnchorEl: vi.fn(),
 }));

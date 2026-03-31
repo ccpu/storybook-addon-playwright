@@ -1,18 +1,17 @@
 import { saveStoryFile } from '../../utils';
 import { saveActionSet } from '../save-action-set';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/load-story-data');
-const saveStoryFileMock = mocked(saveStoryFile);
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
+const saveStoryFileMock = vi.mocked(saveStoryFile);
 
 describe('saveActionSet', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should create story actionSets if not exist', async () => {

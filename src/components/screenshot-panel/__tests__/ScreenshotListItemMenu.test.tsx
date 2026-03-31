@@ -9,11 +9,11 @@ import Compare from '@material-ui/icons/Compare';
 import { ScreenshotDelete } from '../ScreenshotDelete';
 import { ScreenshotInfo } from '../ScreenshotInfo';
 
-const onDeleteMock = jest.fn();
+const onDeleteMock = vi.fn();
 
 describe('ScreenshotListItemMenu', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -33,7 +33,7 @@ describe('ScreenshotListItemMenu', () => {
   });
 
   it('should have edit icon', () => {
-    const editMock = jest.fn();
+    const editMock = vi.fn();
 
     const wrapper = shallow(
       <ScreenshotListItemMenu
@@ -56,7 +56,7 @@ describe('ScreenshotListItemMenu', () => {
   });
 
   it('should render load screenshot setting into storybook icon', () => {
-    const editMock = jest.fn();
+    const editMock = vi.fn();
 
     const wrapper = shallow(
       <ScreenshotListItemMenu
@@ -92,7 +92,7 @@ describe('ScreenshotListItemMenu', () => {
   });
 
   it('should render image diff icon', () => {
-    const funcMock = jest.fn();
+    const funcMock = vi.fn();
 
     const wrapper = shallow(
       <ScreenshotListItemMenu

@@ -1,23 +1,22 @@
 import { useFixScreenshotFileName } from '../use-fix-screenshot-file-name';
-import { mocked } from 'ts-jest/utils';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useAsyncApiCall } from '../use-async-api-call';
 import { useSnackbar } from '../../hooks/use-snackbar';
 
-jest.mock('../../hooks/use-snackbar');
+vi.mock('../../hooks/use-snackbar');
 
-jest.mock('../use-async-api-call');
-jest.mock('../use-current-story-data');
+vi.mock('../use-async-api-call');
+vi.mock('../use-current-story-data');
 
-const openSnackbarMock = jest.fn();
+const openSnackbarMock = vi.fn();
 
-mocked(useSnackbar).mockImplementation(() => ({
+vi.mocked(useSnackbar).mockImplementation(() => ({
   openSnackbar: openSnackbarMock,
 }));
 
-const makeCallMock = jest.fn();
-const clearErrorMock = jest.fn();
-mocked(useAsyncApiCall).mockImplementation(
+const makeCallMock = vi.fn();
+const clearErrorMock = vi.fn();
+vi.mocked(useAsyncApiCall).mockImplementation(
   () =>
     ({
       clearError: clearErrorMock,

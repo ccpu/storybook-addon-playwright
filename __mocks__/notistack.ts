@@ -1,8 +1,8 @@
-export const useSnackbar = jest.fn().mockImplementation(() => {
+export const useSnackbar = vi.fn().mockImplementation(() => {
   return {
-    closeSnackbar: jest.fn(),
-    enqueueSnackbar: jest.fn(),
+    closeSnackbar: vi.fn(),
+    enqueueSnackbar: vi.fn(),
   };
 });
 
-export const SnackbarProvider = jest.fn();
+export const SnackbarProvider = vi.fn();

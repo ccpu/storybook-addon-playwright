@@ -1,4 +1,4 @@
-export const useStoryActionSetsLoader = jest.fn().mockImplementation(() => ({
+export const useStoryActionSetsLoader = vi.fn().mockImplementation(() => ({
   loading: false,
-  retry: jest.fn(),
+  retry: vi.fn(),
 }));

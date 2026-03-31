@@ -1,15 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migration should migrate from v0 to v1 1`] = `
-Object {
-  "browserOptions": Object {
-    "id-2": Object {
+exports[`migration > should migrate from v0 to v1 1`] = `
+{
+  "browserOptions": {
+    "id-2": {
       "cursor": true,
     },
   },
-  "screenshotOptions": Object {
-    "id-1": Object {
-      "clip": Object {
+  "screenshotOptions": {
+    "id-1": {
+      "clip": {
         "height": 600,
         "width": 600,
         "x": 0,
@@ -17,13 +17,13 @@ Object {
       },
     },
   },
-  "stories": Object {
-    "with-actionSets": Object {
-      "actionSets": Array [
-        Object {
-          "actions": Array [
-            Object {
-              "args": Object {
+  "stories": {
+    "with-actionSets": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "args": {
                 "timeout": 500,
               },
               "id": "4ps_NuM6B2",
@@ -35,13 +35,13 @@ Object {
         },
       ],
     },
-    "with-defaults": Object {
-      "screenshots": Array [
-        Object {
-          "actions": Array [
-            Object {
-              "args": Object {
-                "options": Object {
+    "with-defaults": {
+      "screenshots": [
+        {
+          "actions": [
+            {
+              "args": {
+                "options": {
                   "button": "middle",
                 },
               },
@@ -53,7 +53,7 @@ Object {
           "browserType": "chromium",
           "id": "id-3",
           "index": 4,
-          "props": Object {
+          "props": {
             "color": "red",
             "size": 20,
           },
@@ -67,16 +67,16 @@ Object {
 }
 `;
 
-exports[`migration should migrate from v0 to v2 1`] = `
-Object {
-  "browserOptions": Object {
-    "id-6": Object {
+exports[`migration > should migrate from v0 to v2 1`] = `
+{
+  "browserOptions": {
+    "id-6": {
       "cursor": true,
     },
   },
-  "screenshotOptions": Object {
-    "id-5": Object {
-      "clip": Object {
+  "screenshotOptions": {
+    "id-5": {
+      "clip": {
         "height": 600,
         "width": 600,
         "x": 0,
@@ -84,13 +84,13 @@ Object {
       },
     },
   },
-  "stories": Object {
-    "with-actionSets": Object {
-      "actionSets": Array [
-        Object {
-          "actions": Array [
-            Object {
-              "args": Object {
+  "stories": {
+    "with-actionSets": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "args": {
                 "timeout": 500,
               },
               "name": "waitForTimeout",
@@ -101,15 +101,15 @@ Object {
         },
       ],
     },
-    "with-defaults": Object {
-      "screenshots": Array [
-        Object {
-          "actionSets": Array [
-            Object {
-              "actions": Array [
-                Object {
-                  "args": Object {
-                    "options": Object {
+    "with-defaults": {
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "args": {
+                    "options": {
                       "button": "middle",
                     },
                   },
@@ -124,7 +124,7 @@ Object {
           "browserType": "chromium",
           "id": "id-7",
           "index": 4,
-          "props": Object {
+          "props": {
             "color": "red",
             "size": 20,
           },
@@ -138,16 +138,16 @@ Object {
 }
 `;
 
-exports[`migration should migrate from v1 to v2 1`] = `
-Object {
-  "browserOptions": Object {
-    "c99BcUTVviggy9H9vRFM8": Object {
+exports[`migration > should migrate from v1 to v2 1`] = `
+{
+  "browserOptions": {
+    "c99BcUTVviggy9H9vRFM8": {
       "cursor": true,
     },
   },
-  "screenshotOptions": Object {
-    "jTfiAoRWN1vGRuthlPSRl": Object {
-      "clip": Object {
+  "screenshotOptions": {
+    "jTfiAoRWN1vGRuthlPSRl": {
+      "clip": {
         "height": 600,
         "width": 600,
         "x": 0,
@@ -155,13 +155,13 @@ Object {
       },
     },
   },
-  "stories": Object {
-    "with-defaults": Object {
-      "actionSets": Array [
-        Object {
-          "actions": Array [
-            Object {
-              "args": Object {
+  "stories": {
+    "with-defaults": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "args": {
                 "x": 497,
                 "y": 113,
               },
@@ -172,13 +172,13 @@ Object {
           "title": "vertical scroll down",
         },
       ],
-      "screenshots": Array [
-        Object {
-          "actionSets": Array [
-            Object {
-              "actions": Array [
-                Object {
-                  "args": Object {
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "args": {
                     "selector": "html",
                   },
                   "name": "click",
@@ -192,7 +192,7 @@ Object {
           "browserType": "chromium",
           "id": "DFNYJhhPYuQHTDX",
           "index": 1,
-          "props": Object {
+          "props": {
             "showOnCreate": false,
           },
           "screenshotOptionsId": "jTfiAoRWN1vGRuthlPSRl",
@@ -205,16 +205,16 @@ Object {
 }
 `;
 
-exports[`migration should migrate from v1 to v3 1`] = `
-Object {
-  "browserOptions": Object {
-    "c99BcUTVviggy9H9vRFM8": Object {
+exports[`migration > should migrate from v1 to v3 1`] = `
+{
+  "browserOptions": {
+    "c99BcUTVviggy9H9vRFM8": {
       "cursor": true,
     },
   },
-  "screenshotOptions": Object {
-    "jTfiAoRWN1vGRuthlPSRl": Object {
-      "clip": Object {
+  "screenshotOptions": {
+    "jTfiAoRWN1vGRuthlPSRl": {
+      "clip": {
         "height": 600,
         "width": 600,
         "x": 0,
@@ -222,13 +222,13 @@ Object {
       },
     },
   },
-  "stories": Object {
-    "with-defaults": Object {
-      "actionSets": Array [
-        Object {
-          "actions": Array [
-            Object {
-              "args": Object {
+  "stories": {
+    "with-defaults": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "args": {
                 "x": 497,
                 "y": 113,
               },
@@ -239,13 +239,13 @@ Object {
           "title": "vertical scroll down",
         },
       ],
-      "screenshots": Array [
-        Object {
-          "actionSets": Array [
-            Object {
-              "actions": Array [
-                Object {
-                  "args": Object {
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "args": {
                     "selector": "html",
                   },
                   "name": "click",
@@ -259,7 +259,7 @@ Object {
           "browserType": "chromium",
           "id": "DFNYJhhPYuQHTDX",
           "index": 1,
-          "props": Object {
+          "props": {
             "showOnCreate": false,
           },
           "screenshotOptionsId": "jTfiAoRWN1vGRuthlPSRl",

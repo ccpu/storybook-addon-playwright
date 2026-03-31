@@ -7,12 +7,12 @@ import { LayoutBottom, LayoutRight } from '../../../icons';
 import { useAddonState } from '../../../hooks//use-addon-state';
 import { useStorybookState } from '@storybook/manager-api';
 
-jest.mock('../../../hooks/use-addon-state.ts');
-jest.mock('../../../hooks/use-current-story-data.ts');
+vi.mock('../../../hooks/use-addon-state.ts');
+vi.mock('../../../hooks/use-current-story-data.ts');
 
 describe('Tool', () => {
   beforeAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -34,9 +34,9 @@ describe('Tool', () => {
   });
 
   it('should enable browser preview panel', () => {
-    const setAddonStateMock = jest.fn();
+    const setAddonStateMock = vi.fn();
 
-    (useAddonState as jest.Mock).mockImplementationOnce(() => {
+    (useAddonState as Mock).mockImplementationOnce(() => {
       return {
         addonState: {},
         setAddonState: setAddonStateMock,
@@ -53,7 +53,7 @@ describe('Tool', () => {
   });
 
   it('should show LayoutRight', () => {
-    (useStorybookState as jest.Mock).mockImplementationOnce(() => ({
+    (useStorybookState as Mock).mockImplementationOnce(() => ({
       layout: { panelPosition: 'bottom' },
     }));
 

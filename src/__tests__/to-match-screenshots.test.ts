@@ -1,15 +1,15 @@
 import { toMatchScreenshots } from '../to-match-screenshots';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 
-jest.mock('../api/server/utils/load-story-data.ts');
-jest.mock('../api/server/services/make-screenshot.ts');
+vi.mock('../api/server/utils/load-story-data.ts');
+vi.mock('../api/server/services/make-screenshot.ts');
 
 describe('toMatchScreenshots', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should pass', async () => {
@@ -17,7 +17,7 @@ describe('toMatchScreenshots', () => {
       message: () => 'mock passed',
       pass: true,
     };
-    (toMatchImageSnapshot as jest.Mock)
+    (toMatchImageSnapshot as Mock)
       .mockImplementationOnce(() => successMockData)
       .mockImplementationOnce(() => successMockData);
 
@@ -35,7 +35,7 @@ describe('toMatchScreenshots', () => {
       pass: false,
     };
 
-    (toMatchImageSnapshot as jest.Mock)
+    (toMatchImageSnapshot as Mock)
       .mockImplementationOnce(() => failMockData)
       .mockImplementationOnce(() => failMockData);
 

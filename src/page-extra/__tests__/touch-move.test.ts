@@ -9,7 +9,7 @@ const pageMock = (): Promise<PageProps> => {
   });
 };
 
-jest.mock('../utils/dispatch-touch-event');
+vi.mock('../utils/dispatch-touch-event');
 
 describe('touchMove', () => {
   let page: ExtendedPage;

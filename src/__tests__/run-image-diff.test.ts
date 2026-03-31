@@ -2,9 +2,9 @@ import { runImageDiff } from '../run-image-diff';
 import { testFileScreenshots } from '../api/server/services/test-file-screenshots';
 import { ImageDiffResult } from '../api/typings';
 
-jest.mock('../api/server/services/test-file-screenshots');
-const testScreenshotsMock = testFileScreenshots as unknown as jest.Mock<
-  ImageDiffResult[]
+vi.mock('../api/server/services/test-file-screenshots');
+const testScreenshotsMock = testFileScreenshots as unknown as Mock<
+  () => ImageDiffResult[]
 >;
 testScreenshotsMock.mockImplementation(() => {
   return [{ pass: true }];
@@ -12,7 +12,7 @@ testScreenshotsMock.mockImplementation(() => {
 
 describe('runImageDiff', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should have result', async () => {
@@ -21,7 +21,7 @@ describe('runImageDiff', () => {
   });
 
   it('should call onComplete', async () => {
-    const onCompleteMock = jest.fn();
+    const onCompleteMock = vi.fn();
     await runImageDiff('test.playwright.json', {
       onComplete: onCompleteMock,
       requestId: 'request-id',

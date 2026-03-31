@@ -5,7 +5,7 @@ describe('setStoryOptions', () => {
   const storyData: PlaywrightData = {};
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should set data and return id', () => {

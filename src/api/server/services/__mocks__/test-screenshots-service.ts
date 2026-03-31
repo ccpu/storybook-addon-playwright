@@ -1,6 +1,6 @@
 import { ImageDiffResult } from '../../../typings';
 
-const testScreenshots = jest.fn();
+const testScreenshots = vi.fn();
 
 testScreenshots.mockImplementation((): Promise<ImageDiffResult[]> => {
   return new Promise((resolve) => {

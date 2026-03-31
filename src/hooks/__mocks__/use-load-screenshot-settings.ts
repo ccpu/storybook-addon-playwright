@@ -1,7 +1,7 @@
-const useLoadScreenshotSettings = jest.fn();
+const useLoadScreenshotSettings = vi.fn();
 
 useLoadScreenshotSettings.mockImplementation(() => ({
-  loadSetting: jest.fn(),
+  loadSetting: vi.fn(),
 }));
 
 export { useLoadScreenshotSettings };

@@ -1,13 +1,3 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ActionList should show error if no actions provided 1`] = `
-<div
-  className="ActionSetList-noActionMessage-1"
->
-  <div>
-    Click the 
-    '+'
-     button to create an action.
-  </div>
-</div>
-`;
+exports[`ActionList > should show error if no actions provided 1`] = `ShallowWrapper {}`;

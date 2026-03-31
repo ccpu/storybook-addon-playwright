@@ -1,3 +1,15 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+// Also patch the default export so React.useEffect() calls are intercepted too.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import { useEffectCleanup } from '../../../../__manual_mocks__/react-useEffect';
 import { StoryScreenshotPreview } from '../StoryScreenshotPreview';
 import { shallow } from 'enzyme';
@@ -5,7 +17,6 @@ import React from 'react';
 import { useScreenshotUpdate } from '../../../hooks/use-screenshot-update';
 import { ScreenshotListPreviewDialog } from '../ScreenshotListPreviewDialog';
 import { useImageDiffScreenshots } from '../../../hooks/use-imagediff-screenshots';
-import { mocked } from 'ts-jest/utils';
 
 import { StoryData, ScreenshotData } from '../../../typings';
 import {
@@ -15,32 +26,32 @@ import {
 
 import { useSnackbar } from '../../../hooks/use-snackbar';
 
-jest.mock('../../../hooks/use-snackbar');
+vi.mock('../../../hooks/use-snackbar');
 
-const openSnackbarMock = jest.fn();
+const openSnackbarMock = vi.fn();
 
-mocked(useSnackbar).mockImplementation(() => ({
+vi.mocked(useSnackbar).mockImplementation(() => ({
   openSnackbar: openSnackbarMock,
 }));
 
-jest.mock('../../../hooks/use-screenshot-update');
-jest.mock('../../../hooks/use-imagediff-screenshots');
-jest.mock('../../../store/screenshot/context');
+vi.mock('../../../hooks/use-screenshot-update');
+vi.mock('../../../hooks/use-imagediff-screenshots');
+vi.mock('../../../store/screenshot/context');
 
-mocked(useScreenshotContext).mockImplementation(() => ({
+vi.mocked(useScreenshotContext).mockImplementation(() => ({
   imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
   pauseDeleteImageDiffResult: false,
   screenshots: [{ id: 'screenshot-id', title: 'title' }] as ScreenshotData[],
 }));
 
-const dispatchMock = jest.fn();
-mocked(useScreenshotDispatch).mockImplementation(() => {
+const dispatchMock = vi.fn();
+vi.mocked(useScreenshotDispatch).mockImplementation(() => {
   return (...arg) => {
     return dispatchMock(arg);
   };
 });
 
-mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
+vi.mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
   loaded: true,
   loading: false,
   storyData: {} as StoryData,
@@ -48,20 +59,18 @@ mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
 
 describe('StoryScreenshotPreview', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
     const wrapper = shallow(
-      <StoryScreenshotPreview target="all" onClose={jest.fn()} />,
+      <StoryScreenshotPreview target="all" onClose={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should pause and unpause removing image diff result', () => {
-    shallow(
-      <StoryScreenshotPreview target="all" onClose={jest.fn()} updating />,
-    );
+    shallow(<StoryScreenshotPreview target="all" onClose={vi.fn()} updating />);
 
     useEffectCleanup();
 
@@ -77,13 +86,13 @@ describe('StoryScreenshotPreview', () => {
   });
 
   it('should handle update', async () => {
-    const updateScreenshotMock = jest.fn();
-    (useScreenshotUpdate as jest.Mock).mockImplementationOnce(() => ({
+    const updateScreenshotMock = vi.fn();
+    (useScreenshotUpdate as Mock).mockImplementationOnce(() => ({
       updateScreenshot: updateScreenshotMock,
     }));
 
     const wrapper = shallow(
-      <StoryScreenshotPreview target="all" onClose={jest.fn()} updating />,
+      <StoryScreenshotPreview target="all" onClose={vi.fn()} updating />,
     );
 
     const previewDialog = wrapper.find(ScreenshotListPreviewDialog);
@@ -102,7 +111,7 @@ describe('StoryScreenshotPreview', () => {
   });
 
   it('should throw if imageDiffResult not found while updating', async () => {
-    mocked(useScreenshotContext).mockImplementation(() => ({
+    vi.mocked(useScreenshotContext).mockImplementation(() => ({
       imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id-2' }],
       pauseDeleteImageDiffResult: false,
       screenshots: [
@@ -111,7 +120,7 @@ describe('StoryScreenshotPreview', () => {
     }));
 
     const wrapper = shallow(
-      <StoryScreenshotPreview target="all" onClose={jest.fn()} updating />,
+      <StoryScreenshotPreview target="all" onClose={vi.fn()} updating />,
     );
 
     const previewDialog = wrapper.find(ScreenshotListPreviewDialog);

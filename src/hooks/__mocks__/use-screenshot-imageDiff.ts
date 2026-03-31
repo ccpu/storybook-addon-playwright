@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-const useScreenshotImageDiff = jest.fn();
+const useScreenshotImageDiff = vi.fn();
 
 useScreenshotImageDiff.mockImplementation(() => ({
   TestScreenshotErrorSnackbar: () => createElement('div'),

@@ -15,7 +15,7 @@ export const types = {
 
 // Addons mock (replaces @storybook/addons default export)
 export const addons = {
-  add: jest.fn(),
+  add: vi.fn(),
   getChannel: () => ({
     emit: ee.emit.bind(ee),
     off: ee.off.bind(ee),
@@ -30,7 +30,7 @@ export const addons = {
 };
 
 // useStorybookState mock (replaces @storybook/api)
-export const useStorybookState = jest.fn().mockImplementation(() => {
+export const useStorybookState = vi.fn().mockImplementation(() => {
   return {
     customQueryParams: {
       'knob-text': 'some text',
@@ -74,8 +74,8 @@ export const useStorybookState = jest.fn().mockImplementation(() => {
 });
 
 // useStorybookApi mock (replaces @storybook/api)
-export const useStorybookApi = jest.fn().mockImplementation(() => ({
-  emit: jest.fn(),
+export const useStorybookApi = vi.fn().mockImplementation(() => ({
+  emit: vi.fn(),
   getCurrentStoryData: () => {
     return getStoryData();
   },
@@ -85,6 +85,6 @@ export const useStorybookApi = jest.fn().mockImplementation(() => ({
   getData: () => {
     return getStoryData();
   },
-  selectStory: jest.fn(),
-  setSelectedPanel: jest.fn(),
+  selectStory: vi.fn(),
+  setSelectedPanel: vi.fn(),
 }));

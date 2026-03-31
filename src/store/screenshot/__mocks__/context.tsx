@@ -1,13 +1,13 @@
 import { ReducerState } from '../reducer';
 
-export const ScreenshotDispatchContext = jest.fn();
+export const ScreenshotDispatchContext = vi.fn();
 
-const useScreenshotDispatch = jest.fn();
+const useScreenshotDispatch = vi.fn();
 useScreenshotDispatch.mockImplementation(() => {
-  return jest.fn();
+  return vi.fn();
 });
 
-const useScreenshotContext = jest.fn();
+const useScreenshotContext = vi.fn();
 
 const StateData: Partial<ReducerState> = {
   imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],

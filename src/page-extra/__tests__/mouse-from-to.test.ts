@@ -16,11 +16,11 @@ describe('mouseDownOnSelector', () => {
   });
 
   it('should move mouse from to', async () => {
-    const moveMock = jest.fn();
+    const moveMock = vi.fn();
     page.mouse.move = moveMock;
 
-    page.mouse.down = jest.fn();
-    page.mouse.up = jest.fn();
+    page.mouse.down = vi.fn();
+    page.mouse.up = vi.fn();
 
     await page.mouseFromTo({ x: 1, y: 1 }, { x: 2, y: 2 });
     expect(moveMock.mock.calls[0]).toMatchObject([

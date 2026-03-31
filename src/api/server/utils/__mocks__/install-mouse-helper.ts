@@ -1,1 +1,1 @@
-export const installMouseHelper = jest.fn();
+export const installMouseHelper = vi.fn();

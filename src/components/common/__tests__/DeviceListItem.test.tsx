@@ -4,7 +4,7 @@ import React from 'react';
 import { MenuItem } from '@material-ui/core';
 
 describe('DeviceListItem', () => {
-  const onClickMock = jest.fn();
+  const onClickMock = vi.fn();
   afterEach(() => {
     onClickMock.mockClear();
   });

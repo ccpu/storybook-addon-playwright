@@ -9,15 +9,15 @@ const mockTheme = createTheme({
   },
 });
 
-jest.mock('../../configs');
+vi.mock('../../configs');
 
-jest.mock('../get-theme-data', () => ({
+vi.mock('../get-theme-data', () => ({
   getThemeData: () => mockTheme,
 }));
 
 describe('getThemeData', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return theme data', async () => {

@@ -4,10 +4,10 @@ import React from 'react';
 
 import { Dialog } from '../Dialog';
 describe('ActionDialog', () => {
-  const onCloseMock = jest.fn();
+  const onCloseMock = vi.fn();
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -24,7 +24,7 @@ describe('ActionDialog', () => {
   });
 
   it('should handle cancel', () => {
-    const onCancelMock = jest.fn();
+    const onCancelMock = vi.fn();
     const wrapper = shallow(
       <ActionDialog
         open={true}

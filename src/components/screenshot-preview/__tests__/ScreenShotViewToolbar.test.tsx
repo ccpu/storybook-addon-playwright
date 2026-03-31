@@ -5,8 +5,8 @@ import { CircularProgress } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 
 describe('ScreenShotViewToolbar', () => {
-  const onRefreshMock = jest.fn();
-  const onSaveMock = jest.fn();
+  const onRefreshMock = vi.fn();
+  const onSaveMock = vi.fn();
   beforeEach(() => {
     onRefreshMock.mockClear();
     onSaveMock.mockClear();
@@ -20,7 +20,7 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
-        onFullScreen={jest.fn()}
+        onFullScreen={vi.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -34,7 +34,7 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
-        onFullScreen={jest.fn()}
+        onFullScreen={vi.fn()}
       />,
     );
     expect(wrapper.find(CircularProgress).exists()).toBeTruthy();
@@ -48,7 +48,7 @@ describe('ScreenShotViewToolbar', () => {
         onRefresh={onRefreshMock}
         onSave={onSaveMock}
         showSaveButton={false}
-        onFullScreen={jest.fn()}
+        onFullScreen={vi.fn()}
       />,
     );
     expect(wrapper.find(SaveIcon).exists()).toBeFalsy();

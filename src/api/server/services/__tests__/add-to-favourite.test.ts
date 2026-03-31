@@ -1,14 +1,13 @@
 import { addToFavourite } from '../add-to-favourite';
 import fs from 'fs';
 import jsonfile from 'jsonfile';
-import { mocked } from 'ts-jest/utils';
 import { FavouriteActions } from '../../../typings/favourite-actions';
 import { FavouriteActionSet } from '../../../../typings';
 
-const spyOnFs = jest.spyOn(fs, 'existsSync');
+const spyOnFs = vi.spyOn(fs, 'existsSync');
 
-const spyOnReadFileSync = jest.spyOn(jsonfile, 'readFileSync');
-const spyOnWriteFileSync = jest.spyOn(jsonfile, 'writeFileSync');
+const spyOnReadFileSync = vi.spyOn(jsonfile, 'readFileSync');
+const spyOnWriteFileSync = vi.spyOn(jsonfile, 'writeFileSync');
 
 describe('addToFavourite', () => {
   const actionSet: FavouriteActionSet = {
@@ -27,7 +26,7 @@ describe('addToFavourite', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -39,8 +38,8 @@ describe('addToFavourite', () => {
       return true;
     });
 
-    mocked(spyOnReadFileSync).mockImplementationOnce(() => favouriteActions);
-    mocked(spyOnWriteFileSync).mockImplementationOnce(() => undefined);
+    vi.mocked(spyOnReadFileSync).mockImplementationOnce(() => favouriteActions);
+    vi.mocked(spyOnWriteFileSync).mockImplementationOnce(() => undefined);
 
     addToFavourite(actionSet);
 

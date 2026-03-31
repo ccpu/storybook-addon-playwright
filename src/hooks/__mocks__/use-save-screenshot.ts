@@ -1,8 +1,8 @@
-export const useSaveScreenshot = jest.fn().mockImplementation(() => ({
+export const useSaveScreenshot = vi.fn().mockImplementation(() => ({
   ErrorSnackbar: () => null,
-  getUpdatingScreenshotTitle: jest.fn(),
+  getUpdatingScreenshotTitle: vi.fn(),
   inProgress: false,
-  onSuccessClose: jest.fn(),
+  onSuccessClose: vi.fn(),
   result: undefined,
-  saveScreenShot: jest.fn(),
+  saveScreenShot: vi.fn(),
 }));

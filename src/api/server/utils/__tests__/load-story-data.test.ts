@@ -2,7 +2,7 @@ import { loadStoryData } from '../load-story-data';
 import { getStoryPlaywrightFileInfo } from '../get-story-playwright-file-info';
 import fs from 'fs';
 
-const spyOnFs = jest.spyOn(fs, 'existsSync');
+const spyOnFs = vi.spyOn(fs, 'existsSync');
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 spyOnFs.mockImplementation((file: any) => {
   if (file.indexOf('story-notExist.playwright.json') !== -1) {
@@ -11,7 +11,7 @@ spyOnFs.mockImplementation((file: any) => {
   return true;
 });
 
-jest.mock('jsonfile', () => ({
+vi.mock('jsonfile', () => ({
   readFile: (
     file: string,
     callBack: (err?: string, data?: unknown) => void,
@@ -28,7 +28,7 @@ jest.mock('jsonfile', () => ({
 
 describe('loadStoryData', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should not create object if story-id file not exist', async () => {

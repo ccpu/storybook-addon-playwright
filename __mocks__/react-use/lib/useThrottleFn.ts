@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-export const useThrottleFn = jest.fn();
+export const useThrottleFn = vi.fn();
 useThrottleFn.mockImplementation((cb, _delay, data) => {
   const mounted = useRef<boolean>(false);
   if (!mounted.current) {

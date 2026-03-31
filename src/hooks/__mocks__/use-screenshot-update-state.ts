@@ -1,10 +1,8 @@
-import { mocked } from 'ts-jest/utils';
+export const useScreenshotUpdateState = vi.fn();
 
-export const useScreenshotUpdateState = jest.fn();
-
-mocked(useScreenshotUpdateState).mockImplementation(() => ({
-  handleClose: jest.fn(),
-  handleLoadingDone: jest.fn(),
-  runDiffTest: jest.fn(),
+vi.mocked(useScreenshotUpdateState).mockImplementation(() => ({
+  handleClose: vi.fn(),
+  handleLoadingDone: vi.fn(),
+  runDiffTest: vi.fn(),
   updateInf: {},
 }));

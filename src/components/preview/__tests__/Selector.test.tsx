@@ -4,10 +4,12 @@ import { shallow } from 'enzyme';
 import { useSelectorManager } from '../../../hooks/use-selector-manager';
 import { SelectorOverlay } from '../SelectorOverlay';
 
-jest.mock('../../../hooks/use-selector-manager');
+vi.mock('../../../hooks/use-selector-manager');
 
-jest.mock('react', () => ({
-  ...(jest.requireActual('react') as object),
+// Changed to async factory using vi.importActual because jest.requireActual
+// does not exist in vitest (no sync equivalent; vi.importActual is async-only).
+vi.mock('react', async () => ({
+  ...((await vi.importActual('react')) as object),
   useEffect: (cb: () => void) => {
     cb();
   },
@@ -22,7 +24,7 @@ describe('Selector', () => {
   });
 
   it('should shod selector overlay', async () => {
-    (useSelectorManager as jest.Mock).mockImplementationOnce(() => ({
+    (useSelectorManager as Mock).mockImplementationOnce(() => ({
       selectorManager: { start: true },
     }));
     const wrapper = shallow(<Selector />);

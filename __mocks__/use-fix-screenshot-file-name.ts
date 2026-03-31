@@ -1,1 +1,1 @@
-export const useFixScreenshotFileName = jest.fn();
+export const useFixScreenshotFileName = vi.fn();

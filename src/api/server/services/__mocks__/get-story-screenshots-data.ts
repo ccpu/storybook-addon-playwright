@@ -1,6 +1,6 @@
 import { ScreenshotData, StoryInfo } from '../../../../typings';
 
-const getStoryScreenshotsData = jest.fn();
+const getStoryScreenshotsData = vi.fn();
 
 getStoryScreenshotsData.mockImplementation(
   (data: StoryInfo): Promise<ScreenshotData[]> => {

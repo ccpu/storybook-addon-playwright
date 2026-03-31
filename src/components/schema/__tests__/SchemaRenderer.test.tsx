@@ -3,14 +3,14 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 describe('SchemaRenderer', () => {
-  const onChangeMock = jest.fn();
+  const onChangeMock = vi.fn();
 
   const getVal = () => {
     return null;
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {

@@ -6,8 +6,8 @@ import { AddonState } from '../../../typings';
 import { ScreenshotListView } from '../../screenshot-preview';
 import SplitPane from 'react-split-pane';
 
-jest.mock('../../../hooks/use-addon-state.ts');
-(useAddonState as jest.Mock).mockImplementation(() => ({
+vi.mock('../../../hooks/use-addon-state.ts');
+(useAddonState as Mock).mockImplementation(() => ({
   addonState: {
     previewPanelEnabled: true,
   } as AddonState,
@@ -15,7 +15,7 @@ jest.mock('../../../hooks/use-addon-state.ts');
 
 describe('Preview', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should render', () => {
     const wrapper = shallow(<Preview />);
@@ -23,7 +23,7 @@ describe('Preview', () => {
   });
 
   it('should nothing addonState not set yet', () => {
-    (useAddonState as jest.Mock).mockImplementationOnce(() => ({
+    (useAddonState as Mock).mockImplementationOnce(() => ({
       addonState: undefined,
     }));
     const wrapper = shallow(<Preview />);
@@ -40,7 +40,7 @@ describe('Preview', () => {
   });
 
   it('should preview panel vertical', () => {
-    (useAddonState as jest.Mock).mockImplementationOnce(() => ({
+    (useAddonState as Mock).mockImplementationOnce(() => ({
       addonState: {
         placement: 'right',
         previewPanelEnabled: true,
@@ -85,9 +85,9 @@ describe('Preview', () => {
   });
 
   it('should handle resize change', () => {
-    const setAddonState = jest.fn();
+    const setAddonState = vi.fn();
 
-    (useAddonState as jest.Mock).mockImplementationOnce(() => ({
+    (useAddonState as Mock).mockImplementationOnce(() => ({
       addonState: {
         previewPanelEnabled: true,
       },
@@ -105,9 +105,9 @@ describe('Preview', () => {
   });
 
   it('should handle closing browser screenshot preview panel', () => {
-    const setAddonState = jest.fn();
+    const setAddonState = vi.fn();
 
-    (useAddonState as jest.Mock).mockImplementationOnce(() => ({
+    (useAddonState as Mock).mockImplementationOnce(() => ({
       addonState: {
         previewPanelEnabled: true,
       } as AddonState,

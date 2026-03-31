@@ -1,3 +1,15 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<object>();
+  return {
+    ...actual,
+    useEffect: (fn: any, deps?: any) =>
+      (globalThis as any).__useEffectSpy?.(fn, deps),
+  };
+});
 import { dispatchMock } from '../../../../__manual_mocks__/store/action/context';
 import '../../../../__manual_mocks__/react-useEffect';
 import { ActionSetMain } from '../ActionSetMain';
@@ -9,17 +21,16 @@ import { ActionSetList } from '../ActionSetList';
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { useCurrentActions } from '../../../hooks/use-current-actions';
-import { mocked } from 'ts-jest/utils';
 import { deleteActionSet } from '../../../features/action-set/action-set.client';
 
-jest.mock('../../../hooks/use-current-story-data');
-jest.mock('../../../hooks/use-current-actions');
-jest.mock('../../../features/action-set/action-set.client');
+vi.mock('../../../hooks/use-current-story-data');
+vi.mock('../../../hooks/use-current-actions');
+vi.mock('../../../features/action-set/action-set.client');
 
 describe('ActionSetMain', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    mocked(useCurrentActions).mockReturnValue({
+    vi.clearAllMocks();
+    vi.mocked(useCurrentActions).mockReturnValue({
       currentActions: [],
       state: {} as any,
     });
@@ -87,7 +98,7 @@ describe('ActionSetMain', () => {
   it('should clearCurrentActionSets on story change', () => {
     const wrapper = shallow(<ActionSetMain />);
 
-    (useStorybookState as jest.Mock).mockImplementationOnce(() => ({
+    (useStorybookState as Mock).mockImplementationOnce(() => ({
       storyId: 'new-story-id',
     }));
 
@@ -113,9 +124,9 @@ describe('ActionSetMain', () => {
   });
 
   it('should delete selected actions', () => {
-    mocked(deleteActionSet).mockReturnValue(Promise.resolve());
+    vi.mocked(deleteActionSet).mockReturnValue(Promise.resolve());
 
-    mocked(useCurrentActions).mockReturnValue({
+    vi.mocked(useCurrentActions).mockReturnValue({
       currentActions: [
         { actions: [], id: 'action-set-id', title: 'action-set-title' },
       ],

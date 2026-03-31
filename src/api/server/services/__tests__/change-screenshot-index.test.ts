@@ -1,9 +1,8 @@
 import { changeScreenshotIndex } from '../change-screenshot-index';
 import { saveStoryFile } from '../../utils';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../utils/load-story-data');
-jest.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
+vi.mock('../../utils/save-story-file');
 
 describe('changeScreenShotIndex', () => {
   it('should save to file with new index', async () => {
@@ -14,7 +13,7 @@ describe('changeScreenShotIndex', () => {
       storyId: 'story-id',
     });
 
-    expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
+    expect(vi.mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
       stories: {
         'story-id': {
           actionSets: [

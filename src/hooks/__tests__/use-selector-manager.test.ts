@@ -9,8 +9,8 @@ describe('useSelectorManager', () => {
   });
 
   it('should handle start as stop of selector operation', () => {
-    const onDataMock = jest.fn();
-    const onStopMock = jest.fn();
+    const onDataMock = vi.fn();
+    const onStopMock = vi.fn();
 
     const { result } = renderHook(() => useSelectorManager());
 

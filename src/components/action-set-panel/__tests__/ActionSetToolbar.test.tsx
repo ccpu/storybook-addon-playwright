@@ -6,9 +6,9 @@ describe('ActionToolbar', () => {
   it('should render', () => {
     const wrapper = shallow(
       <ActionToolbar
-        onAddActionSet={jest.fn()}
-        onReset={jest.fn()}
-        onFavoriteActionsClick={jest.fn()}
+        onAddActionSet={vi.fn()}
+        onReset={vi.fn()}
+        onFavoriteActionsClick={vi.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();

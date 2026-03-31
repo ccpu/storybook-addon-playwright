@@ -1,17 +1,15 @@
-import { mocked } from 'ts-jest/utils';
+export const getScreenshot = vi.fn();
+export const saveScreenshot = vi.fn();
+export const deleteScreenshot = vi.fn();
+export const updateScreenshot = vi.fn();
+export const testScreenshot = vi.fn();
+export const getStoryScreenshots = vi.fn();
+export const deleteStoryScreenshots = vi.fn();
+export const changeScreenShotIndex = vi.fn();
+export const testStoryScreenshots = vi.fn();
+export const testScreenshots = vi.fn();
 
-export const getScreenshot = jest.fn();
-export const saveScreenshot = jest.fn();
-export const deleteScreenshot = jest.fn();
-export const updateScreenshot = jest.fn();
-export const testScreenshot = jest.fn();
-export const getStoryScreenshots = jest.fn();
-export const deleteStoryScreenshots = jest.fn();
-export const changeScreenShotIndex = jest.fn();
-export const testStoryScreenshots = jest.fn();
-export const testScreenshots = jest.fn();
-
-mocked(testScreenshot).mockImplementation(() =>
+vi.mocked(testScreenshot).mockImplementation(() =>
   Promise.resolve({
     fileName: './test.stories.tsx',
     newScreenshot: 'base64-image',
@@ -21,6 +19,6 @@ mocked(testScreenshot).mockImplementation(() =>
   }),
 );
 
-mocked(testScreenshots).mockImplementation(() =>
+vi.mocked(testScreenshots).mockImplementation(() =>
   Promise.resolve([{ pass: true }]),
 );

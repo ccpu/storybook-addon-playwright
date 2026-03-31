@@ -2,8 +2,8 @@ import { getStoryScreenshotsData } from '../get-story-screenshots-data';
 import { storyFileInfo } from '../../../../../__test_data__/story-file-info';
 import { loadStoryData } from '../../utils/load-story-data';
 
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/load-story-data');
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
 
 describe('getStoryScreenshots', () => {
   it('should have result', async () => {
@@ -54,7 +54,7 @@ describe('getStoryScreenshots', () => {
   });
 
   it('should set screenshot browserOptions', async () => {
-    (loadStoryData as jest.Mock).mockImplementation(() => {
+    (loadStoryData as Mock).mockImplementation(() => {
       const data = storyFileInfo({
         browserOptions: {
           'browser-option-id': {

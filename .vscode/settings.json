@@ -17,7 +17,7 @@
   ],
   "liveServer.settings.fileList": [
     {
-      "label": "jest",
+      "label": "vitest",
       "relativePath": "coverage/lcov-report/index.html"
     }
   ]

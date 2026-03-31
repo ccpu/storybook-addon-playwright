@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useBrowserOptions } from '../../../hooks/use-browser-options';
 
-jest.mock('../../../hooks//use-browser-options.ts');
+vi.mock('../../../hooks//use-browser-options.ts');
 
-const setBrowserOptionsMock = jest.fn();
-(useBrowserOptions as jest.Mock).mockImplementation(() => {
+const setBrowserOptionsMock = vi.fn();
+(useBrowserOptions as Mock).mockImplementation(() => {
   return {
     browserOptions: {},
     setBrowserOptions: setBrowserOptionsMock,
@@ -15,17 +15,17 @@ const setBrowserOptionsMock = jest.fn();
 
 describe('Toolbar', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should render', () => {
     const wrapper = shallow(
       <Toolbar
         activeBrowsers={['chromium']}
         browserTypes={['chromium']}
-        onCLose={jest.fn()}
-        onRefresh={jest.fn()}
-        toggleBrowser={jest.fn()}
-        onSave={jest.fn()}
+        onCLose={vi.fn()}
+        onRefresh={vi.fn()}
+        toggleBrowser={vi.fn()}
+        onSave={vi.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -36,10 +36,10 @@ describe('Toolbar', () => {
       <Toolbar
         activeBrowsers={['chromium']}
         browserTypes={['chromium']}
-        onCLose={jest.fn()}
-        onRefresh={jest.fn()}
-        toggleBrowser={jest.fn()}
-        onSave={jest.fn()}
+        onCLose={vi.fn()}
+        onRefresh={vi.fn()}
+        toggleBrowser={vi.fn()}
+        onSave={vi.fn()}
       />,
     );
 
@@ -52,7 +52,7 @@ describe('Toolbar', () => {
   });
 
   it('should handle disable cursor', () => {
-    (useBrowserOptions as jest.Mock).mockImplementationOnce(() => ({
+    (useBrowserOptions as Mock).mockImplementationOnce(() => ({
       browserOptions: { all: { cursor: true } },
       setBrowserOptions: setBrowserOptionsMock,
     }));
@@ -61,10 +61,10 @@ describe('Toolbar', () => {
       <Toolbar
         activeBrowsers={['chromium']}
         browserTypes={['chromium']}
-        onCLose={jest.fn()}
-        onRefresh={jest.fn()}
-        toggleBrowser={jest.fn()}
-        onSave={jest.fn()}
+        onCLose={vi.fn()}
+        onRefresh={vi.fn()}
+        toggleBrowser={vi.fn()}
+        onSave={vi.fn()}
       />,
     );
 

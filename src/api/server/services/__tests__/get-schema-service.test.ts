@@ -2,7 +2,7 @@ import { getSchemaService } from '../get-schema-service';
 
 describe('getSchemaService', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should generate PlaywrightScreenshotOptionSchema schema', () => {

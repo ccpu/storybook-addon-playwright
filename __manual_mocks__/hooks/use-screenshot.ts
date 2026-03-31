@@ -1,7 +1,7 @@
-export const useScreenshotMock = jest.fn();
-export const getSnapshotMock = jest.fn();
+export const useScreenshotMock = vi.fn();
+export const getSnapshotMock = vi.fn();
 
-jest.mock('../../src/hooks/use-screenshot', () => ({
+vi.mock('../../src/hooks/use-screenshot', () => ({
   useScreenshot: useScreenshotMock,
 }));
 

@@ -1,4 +1,4 @@
-jest.mock('../../trpc/client');
+vi.mock('../../trpc/client');
 
 import { trpc } from '../../trpc/client';
 import {
@@ -15,11 +15,11 @@ import {
 } from './screenshot.client';
 
 describe('screenshot client', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('getScreenshot calls trpc.screenshot.takeScreenshot.mutate', async () => {
     const mockResponse = { base64: 'xyz' };
-    (trpc.screenshot.takeScreenshot.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.screenshot.takeScreenshot.mutate as Mock).mockResolvedValueOnce(
       mockResponse,
     );
 
@@ -33,7 +33,7 @@ describe('screenshot client', () => {
 
   it('saveScreenshot calls trpc.screenshot.saveScreenshot.mutate', async () => {
     const mockResponse = { pass: true };
-    (trpc.screenshot.saveScreenshot.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.screenshot.saveScreenshot.mutate as Mock).mockResolvedValueOnce(
       mockResponse,
     );
 
@@ -46,9 +46,9 @@ describe('screenshot client', () => {
   });
 
   it('deleteScreenshot resolves without error', async () => {
-    (
-      trpc.screenshot.deleteScreenshot.mutate as jest.Mock
-    ).mockResolvedValueOnce(undefined);
+    (trpc.screenshot.deleteScreenshot.mutate as Mock).mockResolvedValueOnce(
+      undefined,
+    );
 
     await expect(
       deleteScreenshot({ storyId: 'story--name' } as any),
@@ -57,9 +57,9 @@ describe('screenshot client', () => {
 
   it('updateScreenshot calls trpc.screenshot.updateScreenshot.mutate', async () => {
     const mockResponse = { pass: true };
-    (
-      trpc.screenshot.updateScreenshot.mutate as jest.Mock
-    ).mockResolvedValueOnce(mockResponse);
+    (trpc.screenshot.updateScreenshot.mutate as Mock).mockResolvedValueOnce(
+      mockResponse,
+    );
 
     const result = await updateScreenshot({
       base64: 'abc',
@@ -79,7 +79,7 @@ describe('screenshot client', () => {
 
   it('testScreenshot calls trpc.screenshot.testScreenshot.mutate', async () => {
     const mockResponse = { pass: true };
-    (trpc.screenshot.testScreenshot.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.screenshot.testScreenshot.mutate as Mock).mockResolvedValueOnce(
       mockResponse,
     );
 
@@ -99,9 +99,9 @@ describe('screenshot client', () => {
 
   it('getStoryScreenshots calls trpc.screenshot.getStoryScreenshots.mutate', async () => {
     const mockResponse = [{ id: '1', title: 'test' }];
-    (
-      trpc.screenshot.getStoryScreenshots.mutate as jest.Mock
-    ).mockResolvedValueOnce(mockResponse);
+    (trpc.screenshot.getStoryScreenshots.mutate as Mock).mockResolvedValueOnce(
+      mockResponse,
+    );
 
     const result = await getStoryScreenshots({
       fileName: 'file.ts',
@@ -117,7 +117,7 @@ describe('screenshot client', () => {
 
   it('deleteStoryScreenshots resolves without error', async () => {
     (
-      trpc.screenshot.deleteStoryScreenshots.mutate as jest.Mock
+      trpc.screenshot.deleteStoryScreenshots.mutate as Mock
     ).mockResolvedValueOnce(undefined);
 
     await expect(
@@ -130,7 +130,7 @@ describe('screenshot client', () => {
 
   it('changeScreenShotIndex calls trpc.screenshot.changeScreenshotIndex.mutate', async () => {
     (
-      trpc.screenshot.changeScreenshotIndex.mutate as jest.Mock
+      trpc.screenshot.changeScreenshotIndex.mutate as Mock
     ).mockResolvedValueOnce(undefined);
 
     await expect(
@@ -145,9 +145,9 @@ describe('screenshot client', () => {
 
   it('testStoryScreenshots calls trpc.screenshot.testStoryScreenshots.mutate', async () => {
     const mockResponse = [{ pass: true }];
-    (
-      trpc.screenshot.testStoryScreenshots.mutate as jest.Mock
-    ).mockResolvedValueOnce(mockResponse);
+    (trpc.screenshot.testStoryScreenshots.mutate as Mock).mockResolvedValueOnce(
+      mockResponse,
+    );
 
     const result = await testStoryScreenshots({
       fileName: 'file.ts',
@@ -163,7 +163,7 @@ describe('screenshot client', () => {
 
   it('testScreenshots calls trpc.screenshot.testScreenshots.mutate', async () => {
     const mockResponse = [{ pass: true }];
-    (trpc.screenshot.testScreenshots.mutate as jest.Mock).mockResolvedValueOnce(
+    (trpc.screenshot.testScreenshots.mutate as Mock).mockResolvedValueOnce(
       mockResponse,
     );
 

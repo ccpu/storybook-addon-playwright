@@ -1,1 +1,1 @@
-export const getStoryPlaywrightDataByFileName = jest.fn();
+export const getStoryPlaywrightDataByFileName = vi.fn();

@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 describe('Control', () => {
-  const onChangeMock = jest.fn();
-  const onAppendValueToTitleMock = jest.fn();
+  const onChangeMock = vi.fn();
+  const onAppendValueToTitleMock = vi.fn();
 
   beforeAll(() => {
     onChangeMock.mockClear();

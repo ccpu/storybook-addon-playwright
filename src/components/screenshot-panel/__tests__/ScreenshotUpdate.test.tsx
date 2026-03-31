@@ -1,3 +1,14 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotUpdate } from '../ScreenshotUpdate';
 import { shallow } from 'enzyme';
@@ -8,27 +19,26 @@ import {
   testScreenshot,
   updateScreenshot,
 } from '../../../features/screenshot/screenshot.client';
-import { mocked } from 'ts-jest/utils';
 import { ImageDiffPreviewDialog } from '../../common';
 
-jest.mock('../../../store/screenshot/context');
-jest.mock('../../../features/screenshot/screenshot.client');
-jest.mock('../../../hooks/use-current-story-data');
+vi.mock('../../../store/screenshot/context');
+vi.mock('../../../features/screenshot/screenshot.client');
+vi.mock('../../../hooks/use-current-story-data');
 
-const testScreenshotMock = mocked(testScreenshot);
-const updateScreenshotMock = mocked(updateScreenshot);
+const testScreenshotMock = vi.mocked(testScreenshot);
+const updateScreenshotMock = vi.mocked(updateScreenshot);
 
 describe('ScreenshotUpdate', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should render', () => {
-    const onStateChangeMock = jest.fn();
+    const onStateChangeMock = vi.fn();
     const wrapper = shallow(
       <ScreenshotUpdate
         screenshot={getScreenshotDate()}
@@ -43,7 +53,7 @@ describe('ScreenshotUpdate', () => {
     const wrapper = shallow(
       <ScreenshotUpdate
         screenshot={getScreenshotDate()}
-        onStateChange={jest.fn()}
+        onStateChange={vi.fn()}
       />,
     );
     const button = wrapper.find(IconButton).first();
@@ -91,7 +101,7 @@ describe('ScreenshotUpdate', () => {
     const wrapper = shallow(
       <ScreenshotUpdate
         screenshot={getScreenshotDate()}
-        onStateChange={jest.fn()}
+        onStateChange={vi.fn()}
         imageDiffResult={{
           fileName: './test.stories.tsx',
           newScreenshot: 'base64-image',

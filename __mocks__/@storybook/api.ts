@@ -2,7 +2,7 @@
 // New code should import from @storybook/manager-api
 import { getStoryData } from '../../__test_data__/story-data';
 
-export const useStorybookState = jest.fn().mockImplementation(() => {
+export const useStorybookState = vi.fn().mockImplementation(() => {
   return {
     customQueryParams: {
       'knob-text': 'some text',
@@ -45,8 +45,8 @@ export const useStorybookState = jest.fn().mockImplementation(() => {
   } as unknown;
 });
 
-export const useStorybookApi = jest.fn().mockImplementation(() => ({
-  emit: jest.fn(),
+export const useStorybookApi = vi.fn().mockImplementation(() => ({
+  emit: vi.fn(),
   getCurrentStoryData: () => {
     return getStoryData();
   },
@@ -56,6 +56,6 @@ export const useStorybookApi = jest.fn().mockImplementation(() => ({
   getData: () => {
     return getStoryData();
   },
-  selectStory: jest.fn(),
-  setSelectedPanel: jest.fn(),
+  selectStory: vi.fn(),
+  setSelectedPanel: vi.fn(),
 }));

@@ -6,8 +6,8 @@ import { Chip, IconButton } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import { useEditorAction } from '../../../hooks/use-editor-action';
 
-jest.mock('../../../hooks/use-editor-action', () => ({
-  useEditorAction: jest.fn(),
+vi.mock('../../../hooks/use-editor-action', () => ({
+  useEditorAction: vi.fn(),
 }));
 
 const defaultMockData = {
@@ -20,7 +20,7 @@ describe('ActionOptions', () => {
   beforeEach(() => {
     dispatchMock.mockClear();
 
-    (useEditorAction as jest.Mock).mockImplementation(() => defaultMockData);
+    (useEditorAction as Mock).mockImplementation(() => defaultMockData);
   });
 
   it('should render', () => {
@@ -43,7 +43,7 @@ describe('ActionOptions', () => {
       subtitleItems: ['selector'],
     };
 
-    (useEditorAction as jest.Mock).mockImplementation(() => mockData);
+    (useEditorAction as Mock).mockImplementation(() => mockData);
 
     const wrapper = mount(
       <ActionOptions
@@ -92,8 +92,8 @@ describe('ActionOptions', () => {
       .last()
       .props()
       .onClick({
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn(),
+        preventDefault: vi.fn(),
+        stopPropagation: vi.fn(),
       } as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(dispatchMock).toHaveBeenCalledWith([

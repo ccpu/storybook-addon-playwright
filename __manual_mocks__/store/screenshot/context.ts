@@ -1,19 +1,16 @@
 import { ReducerState } from '../../../src/store/screenshot/reducer';
 
-jest.unmock('../../../src/store/screenshot/context');
+vi.unmock('../../../src/store/screenshot/context');
 
-export const dispatchMock = jest.fn();
+export const dispatchMock = vi.fn();
 
 const mockData: Partial<ReducerState> = {
   screenshots: [],
 };
 
-export const useScreenShotContext = jest.fn() as jest.Mock<
-  Partial<ReducerState>
->;
-useScreenShotContext.mockImplementation(() => mockData);
+export const useScreenShotContext = vi.fn(() => mockData);
 
-jest.mock('../../../src/store/screenshot/context', () => ({
+vi.mock('../../../src/store/screenshot/context', () => ({
   useScreenshotContext: useScreenShotContext,
   useScreenshotDispatch: () => {
     return (...arg) => {

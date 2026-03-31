@@ -17,9 +17,9 @@ describe('dragDropSelector', () => {
   });
 
   it('should move by 50 px', async () => {
-    const moveMock = jest.fn();
-    const upMock = jest.fn();
-    const downMock = jest.fn();
+    const moveMock = vi.fn();
+    const upMock = vi.fn();
+    const downMock = vi.fn();
 
     page.mouse.move = moveMock;
     page.mouse.down = downMock;
@@ -45,9 +45,9 @@ describe('dragDropSelector', () => {
   });
 
   it('should move by 50 px but with click on specified location on selector', async () => {
-    const moveMock = jest.fn();
-    const upMock = jest.fn();
-    const downMock = jest.fn();
+    const moveMock = vi.fn();
+    const upMock = vi.fn();
+    const downMock = vi.fn();
 
     page.mouse.move = moveMock;
     page.mouse.down = downMock;

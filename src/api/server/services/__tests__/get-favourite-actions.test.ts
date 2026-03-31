@@ -18,9 +18,9 @@ const favouriteActions: FavouriteActions = {
   actionSets: [actionSet],
 };
 
-const spyOnFs = jest.spyOn(fs, 'existsSync');
+const spyOnFs = vi.spyOn(fs, 'existsSync');
 
-jest.mock('jsonfile', () => ({
+vi.mock('jsonfile', () => ({
   readFile: (
     _file: string,
     callBack: (err?: string, data?: unknown) => void,
@@ -31,7 +31,7 @@ jest.mock('jsonfile', () => ({
 
 describe('getFavouriteActions', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should be defined', () => {

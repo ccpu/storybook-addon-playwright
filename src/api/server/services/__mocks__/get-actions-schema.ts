@@ -1,3 +1,3 @@
-const getActionsSchema = jest.fn();
+const getActionsSchema = vi.fn();
 
 export { getActionsSchema };

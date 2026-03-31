@@ -1,1 +1,1 @@
-export const releaseModifierKey = jest.fn();
+export const releaseModifierKey = vi.fn();

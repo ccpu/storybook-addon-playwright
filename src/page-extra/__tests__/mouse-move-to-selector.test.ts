@@ -16,7 +16,7 @@ describe('mouseDownOnSelector', () => {
   });
 
   it('should mouse move to center', async () => {
-    const moveMock = jest.fn();
+    const moveMock = vi.fn();
     page.mouse.move = moveMock;
 
     await page.mouseMoveToSelector('#selector');
@@ -30,7 +30,7 @@ describe('mouseDownOnSelector', () => {
   });
 
   it('should mouse move to specified point', async () => {
-    const moveMock = jest.fn();
+    const moveMock = vi.fn();
 
     page.mouse.move = moveMock;
 

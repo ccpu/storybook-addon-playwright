@@ -1,3 +1,3 @@
-const useGlobalScreenshotDispatch = jest.fn();
+const useGlobalScreenshotDispatch = vi.fn();
 
 export { useGlobalScreenshotDispatch };

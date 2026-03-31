@@ -6,39 +6,51 @@ import {
   getFavouriteActions,
   deleteFavouriteAction,
 } from '../../../features/favourite-actions/favourite-actions.client';
-import { mocked } from 'ts-jest/utils';
 import { FavouriteActionSet } from '../../../typings';
 import { useActionDispatchContext } from '../../../store/actions/ActionContext';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 // import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 
-jest.mock('../../../features/favourite-actions/favourite-actions.client');
-jest.mock('../../../store/actions/ActionContext');
-jest.mock('../../../hooks/use-async-api-call');
-jest.mock('../../../hooks/use-current-story-data');
+vi.mock('../../../features/favourite-actions/favourite-actions.client');
+vi.mock('../../../store/actions/ActionContext');
+vi.mock('../../../hooks/use-async-api-call');
+vi.mock('../../../hooks/use-current-story-data');
 
-const saveActionSetMock = jest.fn();
+const saveActionSetMock = vi.fn();
 
-mocked(useAsyncApiCall).mockImplementation(() => ({
-  ErrorSnackbar: jest.fn(),
-  clearError: jest.fn(),
-  clearResult: jest.fn(),
+vi.mocked(useAsyncApiCall).mockImplementation(() => ({
+  ErrorSnackbar: vi.fn(),
+  clearError: vi.fn(),
+  clearResult: vi.fn(),
   error: undefined,
   inProgress: false,
   makeCall: saveActionSetMock,
   result: undefined,
 }));
 
-jest.mock('react', () => ({
+// Changed to async factory using vi.importActual because jest.requireActual
+// does not exist in vitest (no sync equivalent; vi.importActual is async-only).
+// Changed: patch both named exports AND the `default` React object so that
+// components accessing React.useEffect / React.useState via the default import
+// also get the mocked versions (vitest ESM interop issue).
+vi.mock('react', async (importOriginal) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  ...jest.requireActual('react'),
-  useEffect: (f) => f(),
-  useState: (def) => {
-    const set = jest.fn();
-    return [def, set];
-  },
-}));
+  const actual = await importOriginal<any>();
+  const patchedDefault = {
+    ...(actual.default ?? actual),
+    useCallback: (f) => f,
+    useEffect: (f) => f(),
+    useState: (def) => [def, vi.fn()],
+  };
+  return {
+    ...actual,
+    default: patchedDefault,
+    useCallback: (f) => f,
+    useEffect: (f) => f(),
+    useState: (def) => [def, vi.fn()],
+  };
+});
 
 const actionSet: FavouriteActionSet = {
   actions: [
@@ -52,19 +64,19 @@ const actionSet: FavouriteActionSet = {
 };
 
 describe('FavouriteActions', () => {
-  const onCloseMock = jest.fn();
+  const onCloseMock = vi.fn();
   const anchorEl = document.createElement('div');
 
-  mocked(getFavouriteActions).mockImplementation(
+  vi.mocked(getFavouriteActions).mockImplementation(
     () =>
       new Promise((resolve) => {
         resolve([actionSet]);
       }),
   );
-  mocked(useActionDispatchContext).mockImplementation(() => () => undefined);
+  vi.mocked(useActionDispatchContext).mockImplementation(() => () => undefined);
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should be defined', () => {

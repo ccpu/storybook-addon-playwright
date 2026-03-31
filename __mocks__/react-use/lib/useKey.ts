@@ -1,3 +1,3 @@
-const useKey = jest.fn();
+const useKey = vi.fn();
 
 export default useKey;

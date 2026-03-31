@@ -1,10 +1,10 @@
 import { getStoryFunction } from '../get-story-function';
 
-jest.mock('../../utils/get-preview-iframe.ts');
+vi.mock('../../utils/get-preview-iframe.ts');
 
 describe('getStoryFunction', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return func', () => {

@@ -1,21 +1,22 @@
-const unlinkSyncMock = jest.fn();
-jest.mock('fs', () => ({ existsSync: () => true, unlinkSync: unlinkSyncMock }));
+// Changed: vi.hoisted() ensures the variable is initialized before the Mock
+// factory runs (vitest hoists vi.mock to before all declarations, causing TDZ).
+const unlinkSyncMock = vi.hoisted(() => vi.fn());
+vi.mock('fs', () => ({ existsSync: () => true, unlinkSync: unlinkSyncMock }));
 
 import { storyFileInfo } from '../../../../../__test_data__/story-file-info';
 import { deleteScreenshot } from '../delete-screenshot';
 import { saveStoryFile, loadStoryData } from '../../utils';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/load-story-data');
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
 
 describe('deleteScreenshot', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should do nothing if story not available', async () => {
@@ -34,7 +35,7 @@ describe('deleteScreenshot', () => {
       storyId: 'story-id',
     });
     expect(
-      mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
+      vi.mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
     ).toStrictEqual([
       {
         actionSets: [
@@ -55,7 +56,7 @@ describe('deleteScreenshot', () => {
   });
 
   it('should not have screenshots prop if no screen shot available', async () => {
-    mocked(loadStoryData).mockImplementationOnce(() => {
+    vi.mocked(loadStoryData).mockImplementationOnce(() => {
       const data = storyFileInfo();
       return new Promise((resolve) => {
         data.stories['story-id'].screenshots = [
@@ -72,7 +73,7 @@ describe('deleteScreenshot', () => {
     });
 
     expect(
-      mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
+      vi.mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
     ).toStrictEqual(undefined);
 
     expect(unlinkSyncMock).toBeCalledTimes(1);

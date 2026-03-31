@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 describe('ActionPopover', () => {
-  const OnCloseMock = jest.fn();
+  const OnCloseMock = vi.fn();
   afterEach(() => {
     OnCloseMock.mockClear();
   });

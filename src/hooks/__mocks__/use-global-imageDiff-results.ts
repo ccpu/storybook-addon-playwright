@@ -1,6 +1,6 @@
 import { UseGlobalImageDiffResults } from '../use-global-imageDiff-results';
 
-const useGlobalImageDiffResults = jest.fn();
+const useGlobalImageDiffResults = vi.fn();
 
 useGlobalImageDiffResults.mockImplementation((): UseGlobalImageDiffResults => {
   return {

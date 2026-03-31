@@ -1,8 +1,8 @@
 import { ActionSet } from '../../src/typings';
 
-export const useCurrentStoryActionSetsMock = jest.fn();
+export const useCurrentStoryActionSetsMock = vi.fn();
 
-jest.mock('../../src/hooks/use-current-story-action-sets', () => ({
+vi.mock('../../src/hooks/use-current-story-action-sets', () => ({
   useCurrentStoryActionSets: useCurrentStoryActionSetsMock,
 }));
 

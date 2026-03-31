@@ -1,11 +1,10 @@
 import { useCurrentStoryData } from '../use-current-story-data';
 import { renderHook } from '@testing-library/react-hooks';
 import { useStorybookApi } from '@storybook/manager-api';
-import { mocked } from 'ts-jest/utils';
 
 describe('useCurrentStoryData', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return story data', () => {
@@ -15,7 +14,7 @@ describe('useCurrentStoryData', () => {
   });
 
   it('should do nothing if story data not available yet', () => {
-    mocked(useStorybookApi).mockImplementationOnce(
+    vi.mocked(useStorybookApi).mockImplementationOnce(
       () =>
         ({
           getCurrentStoryData: () => {

@@ -1,1 +1,1 @@
-export const useCurrentActions = jest.fn().mockReturnValue([]);
+export const useCurrentActions = vi.fn().mockReturnValue([]);

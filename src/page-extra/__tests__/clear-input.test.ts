@@ -13,28 +13,28 @@ describe('clearInput', () => {
   beforeEach(async () => {
     page = (await pageMock()) as unknown as ExtendedPage;
     page.clearInput = clearInput;
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should empty', async () => {
-    const fillMock = jest.fn();
+    const fillMock = vi.fn();
     page.fill = fillMock;
     await page.clearInput('#selector');
     expect(fillMock).toHaveBeenCalledWith('#selector', '');
   });
 
   it('should not focuses', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
     page.$eval = evalMock;
-    page.fill = jest.fn();
+    page.fill = vi.fn();
     await page.clearInput('#selector', { blur: true });
     expect(evalMock).toHaveBeenCalledTimes(1);
   });
 
   it('should wait for timeout', async () => {
-    const timeoutMock = jest.fn();
-    page.$eval = jest.fn();
-    page.fill = jest.fn();
+    const timeoutMock = vi.fn();
+    page.$eval = vi.fn();
+    page.fill = vi.fn();
     page.waitForTimeout = timeoutMock;
     await page.clearInput('#selector', { timeout: 200 });
     expect(timeoutMock).toHaveBeenCalledWith(200);

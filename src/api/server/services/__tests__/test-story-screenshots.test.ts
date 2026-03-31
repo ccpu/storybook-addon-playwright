@@ -1,16 +1,15 @@
 import { testStoryScreenshots } from '../test-story-screenshots';
 import { getConfigs } from '../../configs';
-import { mocked } from 'ts-jest/utils';
 import { defaultConfigs } from '../../../../../__test_data__/configs';
 
-jest.mock('../make-screenshot');
-jest.mock('../../utils/load-story-data');
-jest.mock('../diff-image-to-screenshot');
-jest.mock('../../configs');
+vi.mock('../make-screenshot');
+vi.mock('../../utils/load-story-data');
+vi.mock('../diff-image-to-screenshot');
+vi.mock('../../configs');
 
-const afterStoryImageDiffMock = jest.fn();
-const beforeStoryImageDiffMock = jest.fn();
-mocked(getConfigs).mockImplementation(() => ({
+const afterStoryImageDiffMock = vi.fn();
+const beforeStoryImageDiffMock = vi.fn();
+vi.mocked(getConfigs).mockImplementation(() => ({
   afterStoryImageDiff: afterStoryImageDiffMock,
   beforeStoryImageDiff: beforeStoryImageDiffMock,
   ...defaultConfigs(),
@@ -18,7 +17,7 @@ mocked(getConfigs).mockImplementation(() => ({
 
 describe('testStoryScreenshot', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should have diff', async () => {

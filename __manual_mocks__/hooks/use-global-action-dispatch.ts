@@ -1,6 +1,6 @@
-export const dispatchMock = jest.fn();
+export const dispatchMock = vi.fn();
 
-jest.mock('../../src/hooks/use-global-action-dispatch', () => ({
+vi.mock('../../src/hooks/use-global-action-dispatch', () => ({
   useGlobalActionDispatch: () => ({
     dispatch: dispatchMock,
   }),

@@ -16,7 +16,7 @@ describe('setSelectorSize', () => {
   });
 
   it('should set element size', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
 
     const elm = document.createElement('div');
 
@@ -39,7 +39,7 @@ describe('setSelectorSize', () => {
     expect(elm.style.height).toBe('100px');
   });
   it('should do nothing if with or height not provided', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
 
     const elm = document.createElement('div');
 

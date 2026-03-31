@@ -1,5 +1,7 @@
-const writeFileMock = jest.fn();
-jest.mock('jsonfile', () => ({
+// Changed: vi.hoisted() ensures the variable is initialized before the Mock
+// factory runs (vitest hoists vi.mock to before all declarations, causing TDZ).
+const writeFileMock = vi.hoisted(() => vi.fn());
+vi.mock('jsonfile', () => ({
   writeFileSync: writeFileMock,
 }));
 
@@ -8,11 +10,11 @@ import { getStoryPlaywrightFileInfo } from '../get-story-playwright-file-info';
 import * as jsonfile from 'jsonfile';
 import { unlinkSync } from 'fs';
 
-jest.mock('fs');
+vi.mock('fs');
 
 describe('saveStoryFile', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should save', async () => {

@@ -1,8 +1,8 @@
-export const useActiveBrowserMock = jest.fn();
-export const isDisabledMock = jest.fn();
-export const toggleBrowserMock = jest.fn();
+export const useActiveBrowserMock = vi.fn();
+export const isDisabledMock = vi.fn();
+export const toggleBrowserMock = vi.fn();
 
-jest.mock('../../src/hooks/use-active-browser', () => ({
+vi.mock('../../src/hooks/use-active-browser', () => ({
   useActiveBrowsers: useActiveBrowserMock,
 }));
 

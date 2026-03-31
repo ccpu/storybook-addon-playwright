@@ -10,13 +10,13 @@ import {
 } from '../../common';
 
 describe('ScreenshotListToolbar', () => {
-  const onTestClickMock = jest.fn();
-  const onPreviewClickMock = jest.fn();
-  const onUpdateClickMock = jest.fn();
-  const onDeleteMock = jest.fn();
+  const onTestClickMock = vi.fn();
+  const onPreviewClickMock = vi.fn();
+  const onUpdateClickMock = vi.fn();
+  const onDeleteMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {

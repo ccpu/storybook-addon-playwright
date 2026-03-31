@@ -8,15 +8,15 @@ import { ActionDialog } from '../ActionDialog';
 describe('InputDialog', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <InputDialog onSave={jest.fn()} open={true} onClose={jest.fn()} />,
+      <InputDialog onSave={vi.fn()} open={true} onClose={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should  save', () => {
-    const saveMock = jest.fn();
+    const saveMock = vi.fn();
     const wrapper = shallow(
-      <InputDialog onClose={jest.fn()} open={true} onSave={saveMock} />,
+      <InputDialog onClose={vi.fn()} open={true} onSave={saveMock} />,
     );
 
     wrapper
@@ -32,14 +32,9 @@ describe('InputDialog', () => {
   });
 
   it('should validate on save and show/close Snackbar', () => {
-    const saveMock = jest.fn();
+    const saveMock = vi.fn();
     const wrapper = shallow(
-      <InputDialog
-        onClose={jest.fn()}
-        open={true}
-        onSave={saveMock}
-        required
-      />,
+      <InputDialog onClose={vi.fn()} open={true} onSave={saveMock} required />,
     );
 
     wrapper
@@ -62,14 +57,14 @@ describe('InputDialog', () => {
   });
 
   it('should handle close and cancel', () => {
-    const closeMock = jest.fn();
-    const cancelMock = jest.fn();
+    const closeMock = vi.fn();
+    const cancelMock = vi.fn();
 
     const wrapper = shallow(
       <InputDialog
         onClose={closeMock}
         open={true}
-        onSave={jest.fn()}
+        onSave={vi.fn()}
         onCancel={cancelMock}
       />,
     );
@@ -81,9 +76,9 @@ describe('InputDialog', () => {
   it('should have default value', () => {
     const wrapper = shallow(
       <InputDialog
-        onClose={jest.fn()}
+        onClose={vi.fn()}
         open={true}
-        onSave={jest.fn()}
+        onSave={vi.fn()}
         value={'val'}
       />,
     );

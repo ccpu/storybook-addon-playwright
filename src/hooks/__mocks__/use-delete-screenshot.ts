@@ -1,4 +1,4 @@
-const useDeleteScreenshot = jest.fn();
+const useDeleteScreenshot = vi.fn();
 
 useDeleteScreenshot.mockImplementation(() => {
   return {

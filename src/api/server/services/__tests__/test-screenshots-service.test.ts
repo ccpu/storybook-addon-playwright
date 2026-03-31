@@ -1,25 +1,24 @@
 import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { testScreenshots } from '../test-screenshots-service';
 import { getConfigs } from '../../configs';
-import { mocked } from 'ts-jest/utils';
 import { testFileScreenshots } from '../test-file-screenshots';
 
-jest.mock('../make-screenshot');
-jest.mock('../../utils/load-story-data');
-jest.mock('../../configs');
-jest.mock('../test-file-screenshots');
-jest.mock('../../../../utils/get-playwright-config-files');
+vi.mock('../make-screenshot');
+vi.mock('../../utils/load-story-data');
+vi.mock('../../configs');
+vi.mock('../test-file-screenshots');
+vi.mock('../../../../utils/get-playwright-config-files');
 
-const afterAllImageDiffMock = jest.fn();
-const beforeAllImageDiffMock = jest.fn();
+const afterAllImageDiffMock = vi.fn();
+const beforeAllImageDiffMock = vi.fn();
 
-mocked(getConfigs).mockImplementation(() => ({
+vi.mocked(getConfigs).mockImplementation(() => ({
   afterAllImageDiff: afterAllImageDiffMock,
   beforeAllImageDiff: beforeAllImageDiffMock,
   ...defaultConfigs(),
 }));
 
-mocked(testFileScreenshots).mockImplementation(() => {
+vi.mocked(testFileScreenshots).mockImplementation(() => {
   return new Promise((resolve) => {
     resolve([
       {
@@ -34,7 +33,7 @@ mocked(testFileScreenshots).mockImplementation(() => {
 
 describe('testAppScreenshot', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should have result', async () => {

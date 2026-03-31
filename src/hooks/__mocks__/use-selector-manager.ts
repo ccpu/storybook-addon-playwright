@@ -1,6 +1,6 @@
-export const useSelectorManager = jest.fn().mockImplementation(() => ({
+export const useSelectorManager = vi.fn().mockImplementation(() => ({
   selectorManager: {},
-  setSelectorData: jest.fn(),
-  startSelector: jest.fn(),
-  stopSelector: jest.fn(),
+  setSelectorData: vi.fn(),
+  startSelector: vi.fn(),
+  stopSelector: vi.fn(),
 }));

@@ -1,6 +1,6 @@
-const useDragStart = jest.fn();
+const useDragStart = vi.fn();
 useDragStart.mockImplementation(() => {
-  return { dragStart: false, setDragStart: jest.fn() };
+  return { dragStart: false, setDragStart: vi.fn() };
 });
 
 export { useDragStart };

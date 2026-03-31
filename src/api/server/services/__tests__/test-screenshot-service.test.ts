@@ -1,22 +1,21 @@
 import { testScreenshotService } from '../test-screenshot-service';
 import { diffImageToScreenshot } from '../diff-image-to-screenshot';
-import { mocked } from 'ts-jest/utils';
 import { getConfigs } from '../../configs';
 import { defaultConfigs } from '../../../../../__test_data__/configs';
 import fs from 'fs';
 
-jest.mock('../../configs');
-jest.mock('../make-screenshot');
-jest.mock('../diff-image-to-screenshot');
-jest.mock('../../utils/load-story-data');
-jest.mock('fs');
+vi.mock('../../configs');
+vi.mock('../make-screenshot');
+vi.mock('../diff-image-to-screenshot');
+vi.mock('../../utils/load-story-data');
+vi.mock('fs');
 
 describe('testScreenshot', () => {
-  mocked(getConfigs).mockImplementation(() => ({
+  vi.mocked(getConfigs).mockImplementation(() => ({
     ...defaultConfigs(),
   }));
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should have result', async () => {
     const result = await testScreenshotService({
@@ -61,7 +60,7 @@ describe('testScreenshot', () => {
   });
 
   it('should handle exceptions', async () => {
-    mocked(diffImageToScreenshot).mockImplementationOnce(() => {
+    vi.mocked(diffImageToScreenshot).mockImplementationOnce(() => {
       throw new Error('ops');
     });
     const result = await testScreenshotService({
@@ -96,13 +95,13 @@ describe('testScreenshot', () => {
 });
 
 describe('testScreenshot compareScreenshot', () => {
-  const compareScreenshotMock = jest.fn();
-  const existsSyncMock = jest.spyOn(fs, 'existsSync');
+  const compareScreenshotMock = vi.fn();
+  const existsSyncMock = vi.spyOn(fs, 'existsSync');
   existsSyncMock.mockReturnValue(true);
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    mocked(getConfigs).mockImplementationOnce(() => ({
+    vi.clearAllMocks();
+    vi.mocked(getConfigs).mockImplementationOnce(() => ({
       ...defaultConfigs(),
       compareScreenshot: compareScreenshotMock,
     }));
@@ -122,7 +121,7 @@ describe('testScreenshot compareScreenshot', () => {
   });
 
   it('should use diffImageToScreenshot if compareScreenshot return false', async () => {
-    mocked(compareScreenshotMock).mockReturnValueOnce(false);
+    vi.mocked(compareScreenshotMock).mockReturnValueOnce(false);
 
     await testScreenshotService({
       fileName: 'story.ts',
@@ -135,7 +134,7 @@ describe('testScreenshot compareScreenshot', () => {
   });
 
   it('should handle returned result from compareScreenshot', async () => {
-    mocked(compareScreenshotMock).mockReturnValueOnce(
+    vi.mocked(compareScreenshotMock).mockReturnValueOnce(
       new Promise((resolve) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

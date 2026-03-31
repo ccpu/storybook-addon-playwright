@@ -1,12 +1,12 @@
 import { updateScreenshotService } from '../update-screenshot-service';
 
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/load-story-data');
-jest.mock('../diff-image-to-screenshot');
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
+vi.mock('../diff-image-to-screenshot');
 
 describe('updateScreenshot', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should update', async () => {

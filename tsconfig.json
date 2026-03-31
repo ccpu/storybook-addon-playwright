@@ -23,20 +23,25 @@
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["vitest/globals"]
   },
   "include": [
     "src/**/*",
     "__mocks__/**/*",
     "typings/**/*",
     "setupTests.ts",
+    "setupTests.automocks.ts",
+    "setupTests.vitest-globals.ts",
     "test-data/**/*",
     "__test_data__/**/*",
     "__manual_mocks__/**/*",
     "middleware.d.ts",
     "configs.d.ts",
     "tsup.config.ts",
-    "stories/**/*"
+    "stories/**/*",
+    "vitest.config.ts",
+    "setupTests.ts"
   ],
   "exclude": ["**/.storybook/**/*", "node_modules", "**/node_modules/*"]
 }

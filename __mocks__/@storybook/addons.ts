@@ -26,6 +26,6 @@ addonsMock.__setEvent = (eve: string, val: unknown) => {
 
 addonsMock.register = (_id: string, fn: () => void) => fn();
 
-addonsMock.add = jest.fn();
+addonsMock.add = vi.fn();
 
 export default addonsMock;

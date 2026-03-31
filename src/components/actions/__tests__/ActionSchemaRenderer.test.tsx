@@ -5,10 +5,9 @@ import { shallow } from 'enzyme';
 import { getActionSchemaData } from '../../../../__test_data__/action-schema';
 import { MemoizedSchemaRenderer } from '../../schema';
 import { useEditorAction } from '../../../hooks/use-editor-action';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../../hooks/use-editor-action');
-jest.mock('../../../hooks/use-current-story-data.ts');
+vi.mock('../../../hooks/use-editor-action');
+vi.mock('../../../hooks/use-current-story-data.ts');
 
 const defaultMockData = {
   args: { selector: 'html' },
@@ -16,13 +15,13 @@ const defaultMockData = {
   name: 'click',
 };
 
-mocked(useEditorAction).mockImplementation(() => defaultMockData);
+vi.mocked(useEditorAction).mockImplementation(() => defaultMockData);
 
 describe('ActionSchemaRenderer', () => {
   const schema = getActionSchemaData();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -37,7 +36,7 @@ describe('ActionSchemaRenderer', () => {
   });
 
   it('should not render until receive current editing actions data', () => {
-    mocked(useEditorAction).mockImplementationOnce(() => undefined);
+    vi.mocked(useEditorAction).mockImplementationOnce(() => undefined);
     const wrapper = shallow(
       <ActionSchemaRenderer
         schema={schema}

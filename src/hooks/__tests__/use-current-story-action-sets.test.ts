@@ -3,20 +3,20 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useActionContext } from '../../store/actions/ActionContext';
 import { ActionSet } from '../../typings';
 
-jest.mock('../../store/actions/ActionContext', () => ({
-  useActionContext: jest.fn(),
+vi.mock('../../store/actions/ActionContext', () => ({
+  useActionContext: vi.fn(),
 }));
 
 describe('useCurrentStoryActionSets', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   afterAll(() => {
-    (useActionContext as jest.Mock).mockRestore();
+    (useActionContext as Mock).mockRestore();
   });
 
   it('should not have action', () => {
-    (useActionContext as jest.Mock).mockReturnValue({});
+    (useActionContext as Mock).mockReturnValue({});
     const { result } = renderHook(() => useCurrentStoryActionSets());
     expect(result.current.storyActionSets).toStrictEqual([]);
   });
@@ -33,7 +33,7 @@ describe('useCurrentStoryActionSets', () => {
         },
       },
     };
-    (useActionContext as jest.Mock).mockReturnValue(stories);
+    (useActionContext as Mock).mockReturnValue(stories);
     const { result } = renderHook(() => useCurrentStoryActionSets());
 
     expect(result.current.storyActionSets).toStrictEqual([

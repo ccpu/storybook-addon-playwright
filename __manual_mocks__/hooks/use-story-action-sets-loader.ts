@@ -1,10 +1,10 @@
-export const useStoryActionSetsLoaderMock = jest.fn();
+export const useStoryActionSetsLoaderMock = vi.fn();
 
-jest.mock('../../src/hooks/use-story-action-sets-loader', () => ({
+vi.mock('../../src/hooks/use-story-action-sets-loader', () => ({
   useStoryActionSetsLoader: useStoryActionSetsLoaderMock,
 }));
 
-export const useStoryActionSetsLoaderRetryMock = jest.fn();
+export const useStoryActionSetsLoaderRetryMock = vi.fn();
 
 useStoryActionSetsLoaderMock.mockImplementation(() => ({
   error: undefined,

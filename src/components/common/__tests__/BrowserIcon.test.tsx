@@ -4,7 +4,7 @@ import React from 'react';
 import { Chrome, Firefox, Webkit, Browser } from '../../../icons';
 
 describe('BrowserIcon', () => {
-  const clickMock = jest.fn();
+  const clickMock = vi.fn();
   beforeEach(() => {
     clickMock.mockClear();
   });

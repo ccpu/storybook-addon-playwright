@@ -1,4 +1,4 @@
-export const getPreviewIframe = jest.fn();
+export const getPreviewIframe = vi.fn();
 
 const WithStory = () => true;
 const WithStory2 = () => false;

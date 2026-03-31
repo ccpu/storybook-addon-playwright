@@ -9,7 +9,9 @@ import { getScreenshotPaths } from '../utils/get-screenshot-paths';
 import path from 'path';
 
 export interface SnapshotOptions extends MatchImageSnapshotOptions {
+  allowSizeMismatch?: boolean;
   receivedImageBuffer: Buffer;
+  updatePassedSnapshot?: boolean;
   updateSnapshot?: boolean;
 }
 
@@ -23,7 +25,8 @@ export const diffImageToScreenshot = async (
       const paths = getScreenshotPaths(data);
       const config = getConfigs();
 
-      const { imageDiffOptions = {} } = config;
+      const imageDiffOptions: Partial<SnapshotOptions> =
+        config.imageDiffOptions ?? {};
 
       const diffDir = path.resolve(
         process.cwd(),

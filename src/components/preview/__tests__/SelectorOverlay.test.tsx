@@ -1,3 +1,36 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+// This vi.mock also overrides useRef to return the iframe-setup-compatible ref
+// that was previously in a separate vi.mock('react', ...) call (merged here).
+// Changed: events must be declared via vi.hoisted() so it is available when the
+// vi.mock factory (also hoisted) captures it via closure before module body runs.
+const events = vi.hoisted(() => ({} as Record<string, (e?: any) => void>));
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = {
+    ...(actual.default ?? actual),
+    useEffect: hook,
+    useRef: () => ({
+      current: {
+        addEventListener: (name: string, callback: () => void) => {
+          events[name] = callback;
+        },
+        contains: (elm: HTMLElement) => elm.className !== 'out',
+        querySelector: () => createElement('div'),
+      },
+    }),
+  };
+  return {
+    ...actual,
+    default: patchedDefault,
+    useEffect: hook,
+    useRef: patchedDefault.useRef,
+  };
+});
 import { useEffectCleanup } from '../../../../__manual_mocks__/react-useEffect';
 import { SelectorOverlay } from '../SelectorOverlay';
 import { shallow } from 'enzyme';
@@ -6,33 +39,18 @@ import useKey from 'react-use/lib/useKey';
 import { useSelectorManager } from '../../../hooks/use-selector-manager';
 import useThrottleFn from 'react-use/lib/useThrottleFn';
 
-jest.mock('../../../hooks/use-key-press');
-jest.mock('../../../hooks/use-selector-manager');
+vi.mock('../../../hooks/use-key-press');
+vi.mock('../../../hooks/use-selector-manager');
 
-const events = {};
-
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: () => ({
-    current: {
-      addEventListener: (name: string, callback: () => void) => {
-        events[name] = callback;
-      },
-      contains: (elm: HTMLElement) => elm.className !== 'out',
-      querySelector: () => createElement('div'),
-    },
-  }),
-}));
-
-const stopSelectorMock = jest.fn();
-const setSelectorDataMock = jest.fn();
+const stopSelectorMock = vi.fn();
+const setSelectorDataMock = vi.fn();
 
 const useSelectorManagerMockData = (
   selectorType: 'selector' | 'position' = 'selector',
 ) => ({
   selectorManager: { type: selectorType },
   setSelectorData: setSelectorDataMock,
-  startSelector: jest.fn(),
+  startSelector: vi.fn(),
   stopSelector: stopSelectorMock,
 });
 
@@ -53,19 +71,19 @@ describe('SelectorOverlay', () => {
   let eventListenerCallback: (e: Partial<MouseEvent>) => void;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 
-    document.body.addEventListener = jest
+    document.body.addEventListener = vi
       .fn()
       .mockImplementation((_name: string, cb: () => void) => {
         eventListenerCallback = cb;
       });
 
-    (useSelectorManager as jest.Mock).mockImplementation(() =>
+    (useSelectorManager as Mock).mockImplementation(() =>
       useSelectorManagerMockData(),
     );
 
-    (useThrottleFn as jest.Mock).mockImplementation((cb: () => void) => {
+    (useThrottleFn as Mock).mockImplementation((cb: () => void) => {
       useThrottleFnCallback = cb;
     });
   });
@@ -77,7 +95,7 @@ describe('SelectorOverlay', () => {
 
   it('should call to stop selector mode on "Escape" key press', () => {
     let callback: { (): void; (): void };
-    (useKey as jest.Mock).mockImplementation((_key: string, cb: () => void) => {
+    (useKey as Mock).mockImplementation((_key: string, cb: () => void) => {
       callback = cb;
     });
     shallow(<SelectorOverlay />);
@@ -129,7 +147,7 @@ describe('SelectorOverlay', () => {
   it('should start position selector and show info', () => {
     const elm = document.createElement('div');
 
-    (useSelectorManager as jest.Mock).mockImplementation(() =>
+    (useSelectorManager as Mock).mockImplementation(() =>
       useSelectorManagerMockData('position'),
     );
 
@@ -200,7 +218,7 @@ describe('SelectorOverlay', () => {
   });
 
   it('should remove style', () => {
-    const spyOnRemoveChild = jest.spyOn(document.head, 'removeChild');
+    const spyOnRemoveChild = vi.spyOn(document.head, 'removeChild');
     shallow(<SelectorOverlay iframe={getIframe()} />);
     useEffectCleanup();
     expect(spyOnRemoveChild).toHaveBeenCalledTimes(1);

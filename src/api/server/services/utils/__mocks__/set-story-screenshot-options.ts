@@ -1,1 +1,1 @@
-export const setStoryScreenshotOptions = jest.fn();
+export const setStoryScreenshotOptions = vi.fn();

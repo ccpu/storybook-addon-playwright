@@ -3,10 +3,9 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
 import { useScreenshotUpdateState } from '../../../hooks/use-screenshot-update-state';
-import { mocked } from 'ts-jest/utils';
 import { Loader } from '../../common';
 
-jest.mock('../../../hooks/use-screenshot-update-state.ts');
+vi.mock('../../../hooks/use-screenshot-update-state.ts');
 
 describe('ScreenshotUpdateIcon', () => {
   it('should render', () => {
@@ -16,11 +15,11 @@ describe('ScreenshotUpdateIcon', () => {
   });
 
   it('should have loader', () => {
-    mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
-      handleClose: jest.fn(),
-      handleLoadingDone: jest.fn(),
-      runDiffTest: jest.fn(),
-      setIsLoadingFinish: jest.fn(),
+    vi.mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
+      handleClose: vi.fn(),
+      handleLoadingDone: vi.fn(),
+      runDiffTest: vi.fn(),
+      setIsLoadingFinish: vi.fn(),
       updateInf: {
         inProgress: true,
         reqBy: 'tool-all',

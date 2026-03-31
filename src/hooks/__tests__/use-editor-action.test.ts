@@ -3,12 +3,11 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useActionContext } from '../../store/actions/ActionContext';
 import { storyFileInfo } from '../../../__test_data__/story-file-info';
 import { getOrgEditingActionSet } from '../../../__test_data__/get-org-editing-actionSet';
-import { mocked } from 'ts-jest/utils';
 import { ReducerState } from '../../store/actions/reducer';
 
-jest.mock('../../store/actions/ActionContext');
+vi.mock('../../store/actions/ActionContext');
 
-const useActionContextMock = mocked(useActionContext);
+const useActionContextMock = vi.mocked(useActionContext);
 
 const data = storyFileInfo();
 

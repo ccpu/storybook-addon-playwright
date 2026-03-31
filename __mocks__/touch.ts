@@ -1,1 +1,1 @@
-export const touch = jest.fn();
+export const touch = vi.fn();

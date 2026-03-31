@@ -1,4 +1,4 @@
-const useImageDiffScreenshots = jest.fn();
+const useImageDiffScreenshots = vi.fn();
 useImageDiffScreenshots.mockImplementation(() => ({
   loading: false,
 }));

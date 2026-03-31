@@ -7,26 +7,25 @@ import { useActionEditor } from '../use-action-editor';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ActionSet } from '../../typings';
 import { useAsyncApiCall } from '../use-async-api-call';
-import { mocked } from 'ts-jest/utils';
 import { validateActionList } from '../../utils/valid-action';
 import { useActionContext } from '../../store/actions/ActionContext';
 
-jest.mock('../use-current-story-data');
-jest.mock('../use-async-api-call');
-jest.mock('../../utils/valid-action');
+vi.mock('../use-current-story-data');
+vi.mock('../use-async-api-call');
+vi.mock('../../utils/valid-action');
 
-jest.mock('nanoid', () => ({
+vi.mock('nanoid', () => ({
   nanoid: () => {
     return 'action-id';
   },
 }));
 
-const onSaveMock = jest.fn();
+const onSaveMock = vi.fn();
 
-mocked(useAsyncApiCall).mockImplementation(() => ({
-  ErrorSnackbar: jest.fn(),
-  clearError: jest.fn(),
-  clearResult: jest.fn(),
+vi.mocked(useAsyncApiCall).mockImplementation(() => ({
+  ErrorSnackbar: vi.fn(),
+  clearError: vi.fn(),
+  clearResult: vi.fn(),
   error: undefined,
   inProgress: false,
   makeCall: onSaveMock,
@@ -35,7 +34,7 @@ mocked(useAsyncApiCall).mockImplementation(() => ({
 
 describe('useActionSetEditor', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const actionSet: ActionSet = {
@@ -95,7 +94,7 @@ describe('useActionSetEditor', () => {
   });
 
   it('should not save if validationFailed', async () => {
-    mocked(validateActionList).mockImplementationOnce(() => [
+    vi.mocked(validateActionList).mockImplementationOnce(() => [
       { id: 'action-id', name: 'click' },
     ]);
     const { result } = renderHook(() => useActionEditor(actionSet));
@@ -117,7 +116,7 @@ describe('useActionSetEditor', () => {
   });
 
   it('should clare validation result', async () => {
-    mocked(validateActionList).mockImplementationOnce(() => [
+    vi.mocked(validateActionList).mockImplementationOnce(() => [
       { id: 'action-id', name: 'click' },
     ]);
     const { result } = renderHook(() => useActionEditor(actionSet));
@@ -138,7 +137,7 @@ describe('useActionSetEditor', () => {
   });
 
   it('should not change store if call client api failed', async () => {
-    mocked(useAsyncApiCall).mockImplementation(
+    vi.mocked(useAsyncApiCall).mockImplementation(
       () =>
         ({
           makeCall: () => {
@@ -157,7 +156,7 @@ describe('useActionSetEditor', () => {
 
   it('should handle title change', () => {
     const orgEditingActionSet = getOrgEditingActionSet();
-    mocked(useActionContext).mockImplementation(
+    vi.mocked(useActionContext).mockImplementation(
       () =>
         ({
           orgEditingActionSet: orgEditingActionSet,

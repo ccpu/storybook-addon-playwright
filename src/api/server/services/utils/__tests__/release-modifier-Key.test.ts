@@ -7,7 +7,7 @@ describe('releaseModifierKey', () => {
   });
 
   it('should release modifier key', () => {
-    const keyboardUpMock = jest.fn();
+    const keyboardUpMock = vi.fn();
 
     releaseModifierKey(
       { keyboard: { up: keyboardUpMock } } as unknown as Page,
@@ -29,7 +29,7 @@ describe('releaseModifierKey', () => {
   });
 
   it('should do nothing for keys other than modifier key', () => {
-    const keyboardUpMock = jest.fn();
+    const keyboardUpMock = vi.fn();
 
     releaseModifierKey(
       { keyboard: { up: keyboardUpMock } } as unknown as Page,

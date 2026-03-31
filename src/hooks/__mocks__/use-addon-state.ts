@@ -1,6 +1,6 @@
-export const useAddonState = jest.fn().mockImplementation(() => {
+export const useAddonState = vi.fn().mockImplementation(() => {
   return {
-    addonState: jest.fn(),
-    setAddonState: jest.fn(),
+    addonState: vi.fn(),
+    setAddonState: vi.fn(),
   };
 });

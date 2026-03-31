@@ -1,1 +1,1 @@
-export const isHorizontal = jest.fn();
+export const isHorizontal = vi.fn();

@@ -2,19 +2,19 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 // Mock the hooks
-jest.mock('../hooks/use-addon-state', () => ({
-  useAddonState: jest.fn(() => ({
+vi.mock('../hooks/use-addon-state', () => ({
+  useAddonState: vi.fn(() => ({
     addonState: {},
-    setAddonState: jest.fn(),
+    setAddonState: vi.fn(),
   })),
 }));
 
-jest.mock('../hooks/use-current-story-data', () => ({
-  useCurrentStoryData: jest.fn(() => ({})),
+vi.mock('../hooks/use-current-story-data', () => ({
+  useCurrentStoryData: vi.fn(() => ({})),
 }));
 
-jest.mock('../hooks/use-reset-setting', () => ({
-  useResetSetting: jest.fn(() => jest.fn()),
+vi.mock('../hooks/use-reset-setting', () => ({
+  useResetSetting: vi.fn(() => vi.fn()),
 }));
 
 import { addons } from '@storybook/manager-api';
@@ -22,7 +22,7 @@ import '../register';
 
 describe('register', () => {
   it('should add', () => {
-    const data = addons.add as jest.Mock;
+    const data = addons.add as Mock;
     expect(data).toHaveBeenCalledTimes(4);
 
     const ToolComponent = data.mock.calls[0][1].render;

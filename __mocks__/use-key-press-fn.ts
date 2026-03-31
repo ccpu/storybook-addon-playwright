@@ -1,1 +1,1 @@
-export const useKeyPressFn = jest.fn();
+export const useKeyPressFn = vi.fn();

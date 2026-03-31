@@ -4,19 +4,18 @@ import { SaveScreenshotRequest } from '../../../typings';
 import { setConfig } from '../../configs';
 import { Page } from 'playwright';
 import * as diffImageToScreenshot from '../diff-image-to-screenshot';
-import { mocked } from 'ts-jest/utils';
 import { deleteScreenshot } from '../delete-screenshot';
 import { BrowserContextOptions } from '../../../../typings';
 import { saveStoryFile } from '../../utils';
 
-jest.mock('../diff-image-to-screenshot');
-jest.mock('../delete-screenshot');
-jest.mock('../../utils/load-story-data');
-jest.mock('../../utils/save-story-file');
+vi.mock('../diff-image-to-screenshot');
+vi.mock('../delete-screenshot');
+vi.mock('../../utils/load-story-data');
+vi.mock('../../utils/save-story-file');
 
-const loadStoryDataMock = mocked(loadStoryData);
+const loadStoryDataMock = vi.mocked(loadStoryData);
 
-const mockDiffImageToScreenshot = diffImageToScreenshot as jest.Mocked<
+const mockDiffImageToScreenshot = diffImageToScreenshot as Mocked<
   typeof diffImageToScreenshot
 >;
 mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementation(() => {
@@ -75,11 +74,11 @@ describe('saveScreenshot', () => {
         });
       });
     });
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should create new file and save data', async () => {
@@ -155,7 +154,7 @@ describe('saveScreenshot', () => {
       }),
     );
 
-    const mockData = mocked(saveStoryFile).mock;
+    const mockData = vi.mocked(saveStoryFile).mock;
 
     const data = mockData.calls[0][1].stories['story-id'].screenshots[1];
 
@@ -175,7 +174,7 @@ describe('saveScreenshot', () => {
       }),
     );
     // should delete old screenshot file
-    expect(mocked(deleteScreenshot)).toHaveBeenCalledWith({
+    expect(vi.mocked(deleteScreenshot)).toHaveBeenCalledWith({
       fileName: 'story.ts',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
@@ -207,7 +206,7 @@ describe('saveScreenshot', () => {
 
     await saveScreenshot(data);
 
-    const mockData = mocked(saveStoryFile).mock;
+    const mockData = vi.mocked(saveStoryFile).mock;
 
     const newId =
       mockData.calls[0][1].stories['story-id'].screenshots[0].actionSets[0].id;

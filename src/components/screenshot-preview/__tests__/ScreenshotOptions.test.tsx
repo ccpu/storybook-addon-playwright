@@ -2,12 +2,11 @@ import { ScreenshotOptions } from '../ScreenshotOptions';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useScreenshotOptions } from '../../../hooks/use-screenshot-options';
-import { mocked } from 'ts-jest/utils';
 import { MemoizedSchemaFormLoader } from '../..';
 
-jest.mock('../../../hooks/use-screenshot-options.ts');
-const setScreenshotOptionsMock = jest.fn();
-mocked(useScreenshotOptions).mockImplementation(() => ({
+vi.mock('../../../hooks/use-screenshot-options.ts');
+const setScreenshotOptionsMock = vi.fn();
+vi.mocked(useScreenshotOptions).mockImplementation(() => ({
   screenshotOptions: {},
   setScreenshotOptions: setScreenshotOptionsMock,
 }));

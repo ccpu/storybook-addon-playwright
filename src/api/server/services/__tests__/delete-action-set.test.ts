@@ -1,20 +1,19 @@
 import { deleteActionSet } from '../delete-action-set';
 import { storyFileInfo } from '../../../../../__test_data__/story-file-info';
 import { saveStoryFile, loadStoryData } from '../../utils';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/load-story-data');
-const saveStoryFileMock = mocked(saveStoryFile);
-const loadStoryDataMock = mocked(loadStoryData);
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
+const saveStoryFileMock = vi.mocked(saveStoryFile);
+const loadStoryDataMock = vi.mocked(loadStoryData);
 
 describe('deleteActionSet', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should throw error if story id missing', async () => {

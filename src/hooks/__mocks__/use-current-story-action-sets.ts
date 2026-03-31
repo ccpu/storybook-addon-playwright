@@ -1,4 +1,4 @@
-export const useCurrentStoryActionSets = jest.fn().mockImplementation(() => ({
+export const useCurrentStoryActionSets = vi.fn().mockImplementation(() => ({
   currentActionSets: [],
   state: {},
   storyActionSets: [],

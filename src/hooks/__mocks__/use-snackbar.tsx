@@ -1,1 +1,1 @@
-export const useSnackbar = jest.fn();
+export const useSnackbar = vi.fn();

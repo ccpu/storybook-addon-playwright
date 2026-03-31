@@ -9,34 +9,33 @@ import { useGlobalImageDiffResults } from '../../../hooks/use-global-imageDiff-r
 import { ImageDiffResult } from '../../../api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
-import { mocked } from 'ts-jest/utils';
 import { useGlobalScreenshotDispatch } from '../../../hooks';
 import { useSnackbar } from '../../../hooks/use-snackbar';
 import { StoryData } from '../../../typings';
 
-jest.mock('../../../hooks/use-snackbar');
+vi.mock('../../../hooks/use-snackbar');
 
-const openSnackbarMock = jest.fn();
+const openSnackbarMock = vi.fn();
 
-mocked(useSnackbar).mockImplementation(() => ({
+vi.mocked(useSnackbar).mockImplementation(() => ({
   openSnackbar: openSnackbarMock,
 }));
 
-jest.mock('../../../hooks/use-global-imageDiff-results.ts');
-jest.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
-jest.mock('../../../hooks/use-global-screenshot-dispatch.ts');
-jest.mock('../../../hooks/use-current-story-data');
+vi.mock('../../../hooks/use-global-imageDiff-results.ts');
+vi.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
+vi.mock('../../../hooks/use-global-screenshot-dispatch.ts');
+vi.mock('../../../hooks/use-current-story-data');
 
-const screenshotDispatchMock = jest.fn();
-mocked(useGlobalScreenshotDispatch).mockImplementation(() => ({
+const screenshotDispatchMock = vi.fn();
+vi.mocked(useGlobalScreenshotDispatch).mockImplementation(() => ({
   dispatch: screenshotDispatchMock,
 }));
 
-const testStoryScreenShotsMock = jest.fn();
-mocked(useScreenshotImageDiffResults).mockImplementation(() => {
+const testStoryScreenShotsMock = vi.fn();
+vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
     ErrorSnackbar: () => React.createElement('div'),
-    clearImageDiffError: jest.fn(),
+    clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {
       id: 'story-id',
@@ -57,11 +56,11 @@ describe('ImageDiff', () => {
   ] as ImageDiffResult[];
 
   beforeEach(() => {
-    (useGlobalImageDiffResults as jest.Mock).mockImplementation(() => {
+    (useGlobalImageDiffResults as Mock).mockImplementation(() => {
       return { imageDiffResult: [] };
     });
 
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   async function clickOnIconButton(
@@ -83,7 +82,7 @@ describe('ImageDiff', () => {
   });
 
   it('should show/hide menu with the list of story that failed image diff test', async () => {
-    (useGlobalImageDiffResults as jest.Mock)
+    (useGlobalImageDiffResults as Mock)
       .mockImplementationOnce(() => {
         return { imageDiffResult };
       })
@@ -133,7 +132,7 @@ describe('ImageDiff', () => {
   });
 
   it('should show menu', () => {
-    (useGlobalImageDiffResults as jest.Mock).mockImplementationOnce(() => ({
+    (useGlobalImageDiffResults as Mock).mockImplementationOnce(() => ({
       imageDiffResult: [
         {
           fileName: 'test.stories.playwright.json',
@@ -147,7 +146,7 @@ describe('ImageDiff', () => {
   });
 
   it('should clear result', async () => {
-    (useGlobalImageDiffResults as jest.Mock)
+    (useGlobalImageDiffResults as Mock)
       .mockImplementationOnce(() => {
         return { imageDiffResult };
       })
@@ -173,7 +172,7 @@ describe('ImageDiff', () => {
   });
 
   it('should hide menu on item click', async () => {
-    (useGlobalImageDiffResults as jest.Mock)
+    (useGlobalImageDiffResults as Mock)
       .mockImplementationOnce(() => {
         return { imageDiffResult };
       })
@@ -204,7 +203,7 @@ describe('ImageDiff', () => {
   });
 
   it('should remove only story file image diff', async () => {
-    (useGlobalImageDiffResults as jest.Mock)
+    (useGlobalImageDiffResults as Mock)
       .mockImplementation(() => {
         return { imageDiffResult };
       })

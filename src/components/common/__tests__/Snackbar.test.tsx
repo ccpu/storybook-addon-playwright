@@ -6,39 +6,41 @@ import { AlertTitle } from '@material-ui/lab';
 import { DialogContent } from '@material-ui/core';
 import CloseSharp from '@material-ui/icons/CloseSharp';
 
-jest.mock('react', () => ({
+// Changed to async factory using vi.importActual because jest.requireActual
+// does not exist in vitest (no sync equivalent; vi.importActual is async-only).
+vi.mock('react', async () => ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  ...jest.requireActual('react'),
+  ...((await vi.importActual('react')) as object),
   useEffect: (f) => f(),
 }));
 
 describe('Snackbar', () => {
   beforeEach(() => {
     window.__visible_snackbar_messages__ = {};
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
-    const wrapper = shallow(<Snackbar onClose={jest.fn()} />);
+    const wrapper = shallow(<Snackbar onClose={vi.fn()} />);
     expect(wrapper.type()).toBeNull();
   });
 
   it('should request snackbar', () => {
-    const enqueueSnackbarMock = jest.fn();
-    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+    const enqueueSnackbarMock = vi.fn();
+    (useSnackbar as Mock).mockImplementationOnce(() => ({
       enqueueSnackbar: enqueueSnackbarMock,
     }));
-    shallow(<Snackbar onClose={jest.fn()} open={true} message="foo" />);
+    shallow(<Snackbar onClose={vi.fn()} open={true} message="foo" />);
     const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
     expect(enqueueSnackbarMock).toHaveBeenCalledTimes(1);
     expect(wrapper.text()).toBe('foo');
   });
 
   it('should close snackbar', () => {
-    const closeSnackbar = jest.fn();
+    const closeSnackbar = vi.fn();
     let closeFun;
-    const onCloseMock = jest.fn();
+    const onCloseMock = vi.fn();
     const mockData = {
       closeSnackbar,
       enqueueSnackbar: (_e, options) => {
@@ -46,7 +48,7 @@ describe('Snackbar', () => {
         return 'key';
       },
     };
-    (useSnackbar as jest.Mock)
+    (useSnackbar as Mock)
       .mockImplementationOnce(() => mockData)
       .mockImplementationOnce(() => mockData);
 
@@ -62,40 +64,35 @@ describe('Snackbar', () => {
   });
 
   it('should replace "\n" with div', () => {
-    const enqueueSnackbarMock = jest.fn();
-    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+    const enqueueSnackbarMock = vi.fn();
+    (useSnackbar as Mock).mockImplementationOnce(() => ({
       enqueueSnackbar: enqueueSnackbarMock,
     }));
-    shallow(<Snackbar onClose={jest.fn()} open={true} message={`foo\nbar`} />);
+    shallow(<Snackbar onClose={vi.fn()} open={true} message={`foo\nbar`} />);
     const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
 
     expect(wrapper.find('div')).toHaveLength(3);
   });
 
   it('should have title', () => {
-    const enqueueSnackbarMock = jest.fn();
-    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+    const enqueueSnackbarMock = vi.fn();
+    (useSnackbar as Mock).mockImplementationOnce(() => ({
       enqueueSnackbar: enqueueSnackbarMock,
     }));
     shallow(
-      <Snackbar
-        onClose={jest.fn()}
-        open={true}
-        message={`foo`}
-        title="title"
-      />,
+      <Snackbar onClose={vi.fn()} open={true} message={`foo`} title="title" />,
     );
     const wrapper = shallow(enqueueSnackbarMock.mock.calls[0][0]);
     expect(wrapper.find(AlertTitle)).toHaveLength(1);
   });
 
   it('should render children and', () => {
-    const enqueueSnackbarMock = jest.fn();
-    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+    const enqueueSnackbarMock = vi.fn();
+    (useSnackbar as Mock).mockImplementationOnce(() => ({
       enqueueSnackbar: enqueueSnackbarMock,
     }));
     shallow(
-      <Snackbar onClose={jest.fn()} open={true}>
+      <Snackbar onClose={vi.fn()} open={true}>
         <DialogContent>tets</DialogContent>
       </Snackbar>,
     );
@@ -104,14 +101,14 @@ describe('Snackbar', () => {
   });
 
   it('should have close icon and close', () => {
-    const enqueueSnackbarMock = jest.fn();
-    const closeSnackbar = jest.fn();
-    (useSnackbar as jest.Mock).mockImplementationOnce(() => ({
+    const enqueueSnackbarMock = vi.fn();
+    const closeSnackbar = vi.fn();
+    (useSnackbar as Mock).mockImplementationOnce(() => ({
       closeSnackbar,
       enqueueSnackbar: enqueueSnackbarMock,
     }));
     shallow(
-      <Snackbar onClose={jest.fn()} open={true} closeIcon={true}>
+      <Snackbar onClose={vi.fn()} open={true} closeIcon={true}>
         <DialogContent>tets</DialogContent>
       </Snackbar>,
     );
@@ -126,7 +123,7 @@ describe('Snackbar', () => {
 
   it('should not show duplicates when rerender', () => {
     const wrapper = shallow(
-      <Snackbar onClose={jest.fn()} open={true} message="foo" />,
+      <Snackbar onClose={vi.fn()} open={true} message="foo" />,
     );
 
     expect(window.__visible_snackbar_messages__).toStrictEqual({

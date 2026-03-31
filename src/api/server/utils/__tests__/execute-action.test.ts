@@ -3,7 +3,7 @@ import { Page } from 'playwright';
 import { StoryAction } from '../../../../typings';
 import { getActionSchemaData } from '../../../../../__test_data__';
 
-jest.mock('../../services/get-actions-schema', () => ({
+vi.mock('../../services/get-actions-schema', () => ({
   getActionsSchema: () => {
     return getActionSchemaData();
   },

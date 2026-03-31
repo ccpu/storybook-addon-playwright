@@ -1,3 +1,3 @@
-const deleteActionSet = jest.fn();
+const deleteActionSet = vi.fn();
 
 export { deleteActionSet };

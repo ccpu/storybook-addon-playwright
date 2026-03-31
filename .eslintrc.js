@@ -13,7 +13,7 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'sort-keys-fix',
-    'jest',
+    'vitest',
     'react',
     'react-hooks',
   ],
@@ -21,7 +21,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:jest/recommended',
+    'plugin:vitest/legacy-recommended',
     'prettier',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
@@ -34,6 +34,6 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'off',
-    'jest/no-conditional-expect': 'off',
+    'vitest/no-conditional-expect': 'off',
   },
 };

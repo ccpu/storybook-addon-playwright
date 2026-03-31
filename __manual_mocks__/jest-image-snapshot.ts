@@ -1,9 +1,8 @@
 import { ImageDiffResult } from '../src/api/typings';
 
-export const runDiffImageToSnapshotMock =
-  jest.fn() as jest.Mock<ImageDiffResult>;
+export const runDiffImageToSnapshotMock = vi.fn<() => ImageDiffResult>();
 
-jest.mock('jest-image-snapshot/src/diff-snapshot', () => ({
+vi.mock('jest-image-snapshot/src/diff-snapshot', () => ({
   runDiffImageToSnapshot: runDiffImageToSnapshotMock,
 }));
 

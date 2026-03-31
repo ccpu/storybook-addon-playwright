@@ -1,12 +1,11 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useScreenshotUpdate } from '../use-screenshot-update';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mocked } from 'ts-jest/utils';
 import { updateScreenshot } from '../../features/screenshot/screenshot.client';
 import mockConsole from 'jest-mock-console';
 
-jest.mock('../../utils/get-preview-iframe.ts');
-jest.mock('../../features/screenshot/screenshot.client');
+vi.mock('../../utils/get-preview-iframe.ts');
+vi.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshotUpdate', () => {
   let restoreConsole;
@@ -20,10 +19,10 @@ describe('useScreenshotUpdate', () => {
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should dispatch new result', async () => {
-    mocked(updateScreenshot).mockResolvedValueOnce({} as any);
+    vi.mocked(updateScreenshot).mockResolvedValueOnce({} as any);
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {
@@ -46,7 +45,7 @@ describe('useScreenshotUpdate', () => {
   });
 
   it('should not dispatch on error', async () => {
-    mocked(updateScreenshot).mockRejectedValueOnce(new Error('foo'));
+    vi.mocked(updateScreenshot).mockRejectedValueOnce(new Error('foo'));
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {

@@ -1,6 +1,6 @@
-export const useBrowserOptions = jest.fn().mockImplementation(() => ({
+export const useBrowserOptions = vi.fn().mockImplementation(() => ({
   browserOptions: { all: {} },
-  getBrowserOptions: jest.fn(),
-  setBrowserDeviceOptions: jest.fn(),
-  setBrowserOptions: jest.fn(),
+  getBrowserOptions: vi.fn(),
+  setBrowserDeviceOptions: vi.fn(),
+  setBrowserOptions: vi.fn(),
 }));

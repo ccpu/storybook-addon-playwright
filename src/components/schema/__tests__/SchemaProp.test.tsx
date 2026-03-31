@@ -9,14 +9,14 @@ import { SchemaRenderer } from '../SchemaRenderer';
 const schema = getActionSchemaData();
 
 describe('SchemaProp', () => {
-  const onChangeMock = jest.fn();
+  const onChangeMock = vi.fn();
 
   const getVal = () => {
     return null;
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -41,7 +41,7 @@ describe('SchemaProp', () => {
         nextPropName=""
         schema={schema['click']['parameters']['selector']}
         onChange={onChangeMock}
-        onSelectorChange={jest.fn()}
+        onSelectorChange={vi.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -56,7 +56,7 @@ describe('SchemaProp', () => {
         schema={{ type: 'number' }}
         onChange={onChangeMock}
         getValue={getVal}
-        onSelectorChange={jest.fn()}
+        onSelectorChange={vi.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -71,7 +71,7 @@ describe('SchemaProp', () => {
         schema={{ type: 'number' }}
         onChange={onChangeMock}
         getValue={getVal}
-        onSelectorChange={jest.fn()}
+        onSelectorChange={vi.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -86,7 +86,7 @@ describe('SchemaProp', () => {
         schema={{ type: 'number' }}
         onChange={onChangeMock}
         getValue={getVal}
-        onSelectorChange={jest.fn()}
+        onSelectorChange={vi.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -101,7 +101,7 @@ describe('SchemaProp', () => {
         schema={{ type: 'number' }}
         onChange={onChangeMock}
         getValue={getVal}
-        onSelectorChange={jest.fn()}
+        onSelectorChange={vi.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -116,7 +116,7 @@ describe('SchemaProp', () => {
         schema={{ type: 'string' }}
         onChange={onChangeMock}
         getValue={getVal}
-        onSelectorChange={jest.fn()}
+        onSelectorChange={vi.fn()}
       />,
     );
     const selector = wrapper.find(SelectorControl);
@@ -269,7 +269,7 @@ describe('SchemaProp', () => {
   });
 
   it('should handle handleAppendToTile', () => {
-    const onAppendValueToTitleMock = jest.fn();
+    const onAppendValueToTitleMock = vi.fn();
     const wrapper = shallow(
       <SchemaProp
         name="string"

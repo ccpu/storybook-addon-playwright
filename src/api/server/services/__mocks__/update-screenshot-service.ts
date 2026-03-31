@@ -1,6 +1,6 @@
 import { ImageDiffResult, UpdateScreenshot } from '../../../typings';
 
-const updateScreenshotService = jest.fn();
+const updateScreenshotService = vi.fn();
 
 updateScreenshotService.mockImplementation(
   (data: UpdateScreenshot): Promise<ImageDiffResult> => {

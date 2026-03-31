@@ -9,11 +9,11 @@ import React from 'react';
 import { useGlobalActionDispatch } from '../../../hooks/use-global-action-dispatch';
 import { useReducer } from 'reinspect';
 
-jest.mock('../../../hooks/use-global-action-dispatch.ts');
+vi.mock('../../../hooks/use-global-action-dispatch.ts');
 
 describe('ActionProvider', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should render', () => {
     const wrapper = shallow(<ActionProvider />);
@@ -21,13 +21,13 @@ describe('ActionProvider', () => {
   });
 
   it('should handle global action call', () => {
-    const useReducerMock = useReducer as jest.Mock;
-    const dispatchMock = jest.fn();
+    const useReducerMock = useReducer as Mock;
+    const dispatchMock = vi.fn();
     let dispatchCallBack;
     useReducerMock.mockImplementationOnce(() => {
       return [{}, dispatchMock];
     });
-    (useGlobalActionDispatch as jest.Mock).mockImplementation((cb) => {
+    (useGlobalActionDispatch as Mock).mockImplementation((cb) => {
       dispatchCallBack = cb;
     });
     shallow(<ActionProvider />);

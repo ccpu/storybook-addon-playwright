@@ -1,3 +1,14 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotDelete } from '../ScreenshotDelete';
 import { shallow } from 'enzyme';
@@ -6,17 +17,17 @@ import { getScreenshotDate } from '../../../../__test_data__/get-screenshot-date
 import { useDeleteScreenshot } from '../../../hooks/use-delete-screenshot';
 import { DeleteConfirmationButton } from '../../common';
 
-jest.mock('../../../hooks/use-delete-screenshot');
-const useDeleteScreenshotMock = useDeleteScreenshot as jest.Mock;
-const onDeleteMock = jest.fn();
+vi.mock('../../../hooks/use-delete-screenshot');
+const useDeleteScreenshotMock = useDeleteScreenshot as Mock;
+const onDeleteMock = vi.fn();
 
 describe('ScreenshotDelete', () => {
   it('should render', () => {
-    const stateMock = jest.fn();
+    const stateMock = vi.fn();
     const wrapper = shallow(
       <ScreenshotDelete
         screenshot={getScreenshotDate()}
-        onClose={jest.fn()}
+        onClose={vi.fn()}
         onStateChange={stateMock}
         onDelete={onDeleteMock}
       />,
@@ -26,7 +37,7 @@ describe('ScreenshotDelete', () => {
   });
 
   it('should delete', () => {
-    const deleteMock = jest.fn();
+    const deleteMock = vi.fn();
     useDeleteScreenshotMock.mockImplementationOnce(() => {
       return {
         ErrorSnackbar: () => undefined,
@@ -37,8 +48,8 @@ describe('ScreenshotDelete', () => {
     const wrapper = shallow(
       <ScreenshotDelete
         screenshot={getScreenshotDate()}
-        onClose={jest.fn()}
-        onStateChange={jest.fn()}
+        onClose={vi.fn()}
+        onStateChange={vi.fn()}
         onDelete={onDeleteMock}
       />,
     );

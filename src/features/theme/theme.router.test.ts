@@ -2,17 +2,17 @@ import { themeRouter } from './theme.router';
 import { createCallerFactory } from '../../trpc/trpc';
 import * as service from './theme.service';
 
-jest.mock('./theme.service');
+vi.mock('./theme.service');
 
 const createCaller = createCallerFactory(themeRouter);
-const caller = createCaller({} as any);
+const caller = createCaller({} as Parameters<typeof createCaller>[0]);
 
 describe('themeRouter', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('getThemeData calls getThemeData service', async () => {
     const mockResult = { palette: { type: 'dark' } };
-    (service.getThemeData as jest.Mock).mockReturnValue(mockResult);
+    (service.getThemeData as Mock).mockReturnValue(mockResult);
 
     const result = await caller.getThemeData();
 
@@ -21,7 +21,7 @@ describe('themeRouter', () => {
   });
 
   it('getThemeData returns undefined when no theme configured', async () => {
-    (service.getThemeData as jest.Mock).mockReturnValue(undefined);
+    (service.getThemeData as Mock).mockReturnValue(undefined);
 
     const result = await caller.getThemeData();
 

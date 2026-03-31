@@ -1,27 +1,33 @@
-const sharpMock = jest.fn();
-const compositeMock = jest.fn();
-compositeMock.mockImplementation(() => ({
-  toFormat: () => ({
-    toBuffer: () => 'buffer-data',
-  }),
-}));
-sharpMock.mockImplementation(() => ({
-  composite: compositeMock,
-}));
-jest.mock('sharp', () => sharpMock);
-
-const joinImagesMock = jest.fn();
-joinImagesMock.mockImplementation(() => ({
-  toFormat: () => ({
-    toBuffer: () => 'buffer-data',
-  }),
-}));
-jest.mock('join-images', () => joinImagesMock);
+// Changed: vi.mock is hoisted above const declarations, causing TDZ when the
+// factory references top-level variables. Wrap mocks with vi.hoisted() so the
+// values are available before imports are resolved. (vitest ESM hoisting issue)
+const { sharpMock, compositeMock, joinImagesMock } = vi.hoisted(() => {
+  const compositeMock = vi.fn();
+  compositeMock.mockImplementation(() => ({
+    toFormat: () => ({
+      toBuffer: () => 'buffer-data',
+    }),
+  }));
+  const sharpMock = vi.fn();
+  sharpMock.mockImplementation(() => ({
+    composite: compositeMock,
+  }));
+  const joinImagesMock = vi.fn();
+  joinImagesMock.mockImplementation(() => ({
+    toFormat: () => ({
+      toBuffer: () => 'buffer-data',
+    }),
+  }));
+  return { compositeMock, joinImagesMock, sharpMock };
+});
+vi.mock('sharp', () => ({ default: sharpMock }));
+// Changed: vitest requires ESM-compatible mock factories to return { default: fn }
+// for default-export packages rather than the function directly.
+vi.mock('join-images', () => ({ default: joinImagesMock }));
 
 import { makeScreenshot } from '../make-screenshot';
 import { getConfigs } from '../../configs';
 import { defaultConfigs } from '../../../../../__test_data__/configs';
-import { mocked } from 'ts-jest/utils';
 import { executeAction } from '../../utils/execute-action';
 import { installMouseHelper } from '../../utils/install-mouse-helper';
 import { releaseModifierKey } from '../utils/release-modifier-Key';
@@ -32,16 +38,16 @@ import {
   TakeScreenshotParams,
 } from '../../../typings/';
 
-jest.mock('../../configs');
-jest.mock('../../utils/execute-action');
-jest.mock('../../utils/install-mouse-helper.ts');
-jest.mock('../utils/release-modifier-Key');
+vi.mock('../../configs');
+vi.mock('../../utils/execute-action');
+vi.mock('../../utils/install-mouse-helper.ts');
+vi.mock('../utils/release-modifier-Key');
 
-const getConfigsMock = mocked(getConfigs);
+const getConfigsMock = vi.mocked(getConfigs);
 
-const getPageMock = jest.fn();
+const getPageMock = vi.fn();
 
-const screenshotMock = jest.fn();
+const screenshotMock = vi.fn();
 
 screenshotMock.mockImplementation(() => {
   return new Promise((resolve) => {
@@ -52,7 +58,7 @@ screenshotMock.mockImplementation(() => {
 getPageMock.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({
-      goto: jest.fn(),
+      goto: vi.fn(),
       screenshot: screenshotMock,
     } as unknown as Page);
   });
@@ -66,7 +72,7 @@ getConfigsMock.mockImplementation(() => {
 
 describe('makeScreenshot', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should throw if no page returned', async () => {
@@ -151,7 +157,7 @@ describe('makeScreenshot', () => {
   });
 
   it('should call beforeSnapshotMock', async () => {
-    const beforeSnapshotMock = jest.fn();
+    const beforeSnapshotMock = vi.fn();
 
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
@@ -172,7 +178,7 @@ describe('makeScreenshot', () => {
   });
 
   it('should call afterSnapshot', async () => {
-    const afterSnapshotMock = jest.fn();
+    const afterSnapshotMock = vi.fn();
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         afterScreenshot: afterSnapshotMock,
@@ -192,7 +198,7 @@ describe('makeScreenshot', () => {
   });
 
   it('should call afterUrlConstruction', async () => {
-    const afterUrlConstructionMock = jest.fn();
+    const afterUrlConstructionMock = vi.fn();
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         afterUrlConstruction: afterUrlConstructionMock,
@@ -212,7 +218,7 @@ describe('makeScreenshot', () => {
   });
 
   it('should call afterNavigation', async () => {
-    const afterNavigation = jest.fn();
+    const afterNavigation = vi.fn();
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         afterNavigation: afterNavigation,

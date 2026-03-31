@@ -1,7 +1,7 @@
 import { getScreenshots } from '../get-screenshots';
 
-jest.mock('../api/server/utils/load-story-data.ts');
-jest.mock('../api/server/services/make-screenshot.ts');
+vi.mock('../api/server/utils/load-story-data.ts');
+vi.mock('../api/server/services/make-screenshot.ts');
 
 describe('getScreenshots', () => {
   it('should return result', async () => {
@@ -13,7 +13,7 @@ describe('getScreenshots', () => {
   });
 
   it('should call onScreenshotReady', async () => {
-    const onScreenshotReadyMock = jest.fn();
+    const onScreenshotReadyMock = vi.fn();
     await getScreenshots({
       onScreenshotReady: onScreenshotReadyMock,
       playwrightJsonPath: 'localhost:3000',

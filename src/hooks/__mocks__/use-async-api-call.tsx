@@ -1,13 +1,13 @@
-const useAsyncApiCall = jest.fn();
+const useAsyncApiCall = vi.fn();
 
 useAsyncApiCall.mockImplementation(() => {
   return {
-    ErrorSnackbar: jest.fn(),
-    clearError: jest.fn(),
-    clearResult: jest.fn(),
+    ErrorSnackbar: vi.fn(),
+    clearError: vi.fn(),
+    clearResult: vi.fn(),
     error: undefined,
     inProgress: false,
-    makeCall: jest.fn(),
+    makeCall: vi.fn(),
     result: undefined,
   };
 });

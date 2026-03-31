@@ -1,3 +1,3 @@
-export const addFavouriteAction = jest.fn();
-export const getFavouriteActions = jest.fn();
-export const deleteFavouriteAction = jest.fn();
+export const addFavouriteAction = vi.fn();
+export const getFavouriteActions = vi.fn();
+export const deleteFavouriteAction = vi.fn();

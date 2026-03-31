@@ -1,12 +1,11 @@
 import { dispatchMock } from '../../../__manual_mocks__/store/screenshot/context';
 import { useDeleteScreenshot } from '../use-delete-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mocked } from 'ts-jest/utils';
 import { deleteScreenshot } from '../../features/screenshot/screenshot.client';
 import mockConsole from 'jest-mock-console';
 
-jest.mock('../../utils/get-preview-iframe.ts');
-jest.mock('../../features/screenshot/screenshot.client');
+vi.mock('../../utils/get-preview-iframe.ts');
+vi.mock('../../features/screenshot/screenshot.client');
 
 describe('useDeleteScreenshot', () => {
   let restoreConsole;
@@ -20,7 +19,7 @@ describe('useDeleteScreenshot', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should not have value for error and loading', () => {
@@ -30,7 +29,7 @@ describe('useDeleteScreenshot', () => {
   });
 
   it('should call for delete', async () => {
-    mocked(deleteScreenshot).mockResolvedValueOnce(undefined);
+    vi.mocked(deleteScreenshot).mockResolvedValueOnce(undefined);
     const { result } = renderHook(() => useDeleteScreenshot());
 
     await act(async () => {
@@ -43,7 +42,7 @@ describe('useDeleteScreenshot', () => {
   });
 
   it('should have error', async () => {
-    mocked(deleteScreenshot).mockRejectedValueOnce(new Error('foo'));
+    vi.mocked(deleteScreenshot).mockRejectedValueOnce(new Error('foo'));
     const { result } = renderHook(() => useDeleteScreenshot());
 
     await act(async () => {

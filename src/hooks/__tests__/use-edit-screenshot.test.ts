@@ -5,34 +5,33 @@ import { useCurrentStoryData } from '../use-current-story-data';
 import { StoryData } from '../../typings';
 import { useAddonState } from '../use-addon-state';
 import { useLoadScreenshotSettings } from '../use-load-screenshot-settings';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../use-global-action-dispatch');
-jest.mock('../use-current-story-data');
-jest.mock('../use-load-screenshot-settings');
-jest.mock('../use-addon-state.ts');
-jest.mock('../use-browser-options.ts');
+vi.mock('../use-global-action-dispatch');
+vi.mock('../use-current-story-data');
+vi.mock('../use-load-screenshot-settings');
+vi.mock('../use-addon-state.ts');
+vi.mock('../use-browser-options.ts');
 
-const loadSettingMock = jest.fn();
-mocked(useLoadScreenshotSettings).mockImplementation(() => ({
+const loadSettingMock = vi.fn();
+vi.mocked(useLoadScreenshotSettings).mockImplementation(() => ({
   browserOptions: { all: {} },
   loadSetting: loadSettingMock,
   screenshotOptions: {},
 }));
 
-const useCurrentStoryDataMock = mocked(useCurrentStoryData);
+const useCurrentStoryDataMock = vi.mocked(useCurrentStoryData);
 
 describe('useEditScreenshot', () => {
-  const dispatchMock = jest.fn();
-  const setAddonStateMock = jest.fn();
+  const dispatchMock = vi.fn();
+  const setAddonStateMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    (useGlobalActionDispatch as jest.Mock).mockImplementation(() => ({
+    vi.clearAllMocks();
+    (useGlobalActionDispatch as Mock).mockImplementation(() => ({
       dispatch: dispatchMock,
     }));
 
-    (useAddonState as jest.Mock).mockImplementation(() => {
+    (useAddonState as Mock).mockImplementation(() => {
       return {
         addonState: {},
         setAddonState: setAddonStateMock,

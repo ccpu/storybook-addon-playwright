@@ -1,4 +1,4 @@
-export const getPlaywrightConfigFiles = jest.fn();
+export const getPlaywrightConfigFiles = vi.fn();
 
 getPlaywrightConfigFiles.mockImplementation(() => [
   './stories/test.stories.playwright.json',

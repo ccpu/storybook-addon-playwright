@@ -1,3 +1,14 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotView } from '../ScreenshotView';
 import { shallow } from 'enzyme';
@@ -7,9 +18,9 @@ import { ScreenShotViewToolbar } from '../ScreenShotViewToolbar';
 import { useScreenshot } from '../../../hooks/use-screenshot';
 import { useSaveScreenshot } from '../../../hooks/use-save-screenshot';
 
-jest.mock('../../../hooks/use-save-screenshot');
-const useSaveScreenshotMock = useSaveScreenshot as jest.Mock;
-const onSaveMock = jest.fn();
+vi.mock('../../../hooks/use-save-screenshot');
+const useSaveScreenshotMock = useSaveScreenshot as Mock;
+const onSaveMock = vi.fn();
 onSaveMock.mockImplementation(() => {
   return new Promise<void>((resolve) => {
     resolve();
@@ -18,22 +29,22 @@ onSaveMock.mockImplementation(() => {
 
 const useSaveScreenshotMockData = () => ({
   ErrorSnackbar: () => null,
-  getUpdatingScreenshotTitle: jest.fn(),
+  getUpdatingScreenshotTitle: vi.fn(),
   inProgress: false,
-  onSuccessClose: jest.fn(),
+  onSuccessClose: vi.fn(),
   result: undefined,
-  saveScreenShot: jest.fn(),
+  saveScreenShot: vi.fn(),
 });
 
-jest.mock('../../../hooks/use-screenshot.ts');
-jest.mock('../../../hooks/use-browser-options.ts');
-jest.mock('../../../hooks/use-edit-screenshot.ts');
+vi.mock('../../../hooks/use-screenshot.ts');
+vi.mock('../../../hooks/use-browser-options.ts');
+vi.mock('../../../hooks/use-edit-screenshot.ts');
 
-const useScreenshotMock = useScreenshot as jest.Mock;
+const useScreenshotMock = useScreenshot as Mock;
 
 describe('ScreenshotView', () => {
   const useScreenshotMockData = () => ({
-    getSnapshot: jest.fn(),
+    getSnapshot: vi.fn(),
     loading: false,
     screenshot: {
       base64: 'base64-image',
@@ -42,7 +53,7 @@ describe('ScreenshotView', () => {
   });
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     useScreenshotMock.mockImplementation(() => ({
       ...useScreenshotMockData(),
     }));
@@ -90,7 +101,7 @@ describe('ScreenshotView', () => {
   });
 
   it('should handle refresh', () => {
-    const onRefreshEndMock = jest.fn();
+    const onRefreshEndMock = vi.fn();
     const wrapper = shallow(
       <ScreenshotView
         browserType="storybook"
@@ -133,7 +144,7 @@ describe('ScreenshotView', () => {
       <ScreenshotView
         browserType="chromium"
         height={200}
-        onSaveComplete={jest.fn()}
+        onSaveComplete={vi.fn()}
       />,
     );
     wrapper.find(ScreenShotViewToolbar).props().onSave();
@@ -146,7 +157,7 @@ describe('ScreenshotView', () => {
   });
 
   it('should save screenshot when parent request it', async () => {
-    const onSaveCompleteMock = jest.fn();
+    const onSaveCompleteMock = vi.fn();
 
     useSaveScreenshotMock.mockImplementationOnce(() => {
       return {

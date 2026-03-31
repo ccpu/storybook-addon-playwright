@@ -5,8 +5,8 @@ import React from 'react';
 import { RadioGroup, Button, TextField } from '@material-ui/core';
 import { addFavouriteAction } from '../../../features/favourite-actions/favourite-actions.client';
 
-jest.mock('../../../hooks/use-anchor-el');
-jest.mock('../../../features/favourite-actions/favourite-actions.client');
+vi.mock('../../../hooks/use-anchor-el');
+vi.mock('../../../features/favourite-actions/favourite-actions.client');
 
 const actionSet: FavouriteActionSet = {
   actions: [
@@ -22,7 +22,7 @@ const actionSet: FavouriteActionSet = {
 
 describe('AddFavouriteAction', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should be defined', () => {

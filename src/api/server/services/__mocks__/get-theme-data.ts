@@ -1,3 +1,3 @@
-const getThemeData = jest.fn();
+const getThemeData = vi.fn();
 
 export { getThemeData };

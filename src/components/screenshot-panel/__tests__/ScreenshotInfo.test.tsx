@@ -90,7 +90,7 @@ describe('ScreenshotInfo', () => {
   });
 
   it('should call onClose', () => {
-    const onCloseMock = jest.fn();
+    const onCloseMock = vi.fn();
 
     const wrapper = shallow(
       <ScreenshotInfo

@@ -1,1 +1,1 @@
-export const deleteScreenshot = jest.fn();
+export const deleteScreenshot = vi.fn();

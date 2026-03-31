@@ -1,3 +1,3 @@
-const changeScreenshotIndex = jest.fn();
+const changeScreenshotIndex = vi.fn();
 
 export { changeScreenshotIndex };

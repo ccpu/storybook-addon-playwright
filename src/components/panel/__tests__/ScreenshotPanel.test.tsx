@@ -7,11 +7,11 @@ import { SCREENSHOT_PANEL_ID } from '../../../constants';
 
 describe('ScreenshotPanel', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
-    (useStorybookState as jest.Mock).mockImplementation(() => ({
+    (useStorybookState as Mock).mockImplementation(() => ({
       selectedPanel: SCREENSHOT_PANEL_ID,
     }));
     const wrapper = shallow(<ScreenshotPanel />);

@@ -4,8 +4,10 @@ import { ActionMenu } from '../ActionMenu';
 import { shallow } from 'enzyme';
 import { ActionMenuItem } from '../ActionMenuItem';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
+// Changed to async factory using vi.importActual because jest.requireActual
+// does not exist in vitest (no sync equivalent; vi.importActual is async-only).
+vi.mock('react', async () => ({
+  ...((await vi.importActual('react')) as object),
   useEffect: (f) => f(),
   useState: () => {
     let data = [{ label: 'click', name: 'click' }];
@@ -20,21 +22,21 @@ describe('ActionMenu', () => {
   it('should render', () => {
     const wrapper = shallow(
       <ActionMenu
-        onChange={jest.fn()}
+        onChange={vi.fn()}
         anchorEl={document.createElement('div')}
-        onClose={jest.fn()}
+        onClose={vi.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should handle item click', () => {
-    const changeMock = jest.fn();
+    const changeMock = vi.fn();
     const wrapper = shallow(
       <ActionMenu
         onChange={changeMock}
         anchorEl={document.createElement('div')}
-        onClose={jest.fn()}
+        onClose={vi.fn()}
       />,
     );
 

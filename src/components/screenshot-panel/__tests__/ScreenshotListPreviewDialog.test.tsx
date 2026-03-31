@@ -1,3 +1,14 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import '../../../../__manual_mocks__/react-useEffect';
 import { storyData } from '../../../../__test_data__/story-data';
 import { ScreenshotListPreviewDialog } from '../ScreenshotListPreviewDialog';
@@ -9,14 +20,13 @@ import { act } from 'react-dom/test-utils';
 import { ImageDiffPreview } from '../../common';
 // import * as useKeyPressFn from '../../../hooks/use-key-press-fn';
 import { useKeyPressFn } from '../../../hooks/use-key-press-fn';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../../store/screenshot/context');
-jest.mock('../../../hooks/use-key-press-fn');
+vi.mock('../../../store/screenshot/context');
+vi.mock('../../../hooks/use-key-press-fn');
 
 describe('ScreenshotListPreviewDialog', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -99,7 +109,7 @@ describe('ScreenshotListPreviewDialog', () => {
   it('should do nothing on arrow key press', async () => {
     let keyUpEv: (ev: KeyboardEvent) => void;
 
-    mocked(useKeyPressFn).mockImplementation((_keyDown, keyUp) => {
+    vi.mocked(useKeyPressFn).mockImplementation((_keyDown, keyUp) => {
       keyUpEv = keyUp;
     });
 
@@ -122,7 +132,7 @@ describe('ScreenshotListPreviewDialog', () => {
   it('should handle arrow key press', async () => {
     let keyUpEv: (ev: KeyboardEvent) => void;
 
-    mocked(useKeyPressFn).mockImplementation((_keyDown, keyUp) => {
+    vi.mocked(useKeyPressFn).mockImplementation((_keyDown, keyUp) => {
       keyUpEv = keyUp;
     });
 

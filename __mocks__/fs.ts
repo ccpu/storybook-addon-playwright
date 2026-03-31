@@ -7,7 +7,9 @@ interface FsProp extends Fs {
   __setMockFiles: (newMockFiles) => void;
 }
 
-const fs = jest.createMockFromModule('fs') as FsProp;
+// Changed: jest.createMockFromModule does not exist in vitest.
+// We construct a minimal manual mock instead of relying on auto-mock generation.
+const fs = {} as FsProp;
 
 // This is a custom function that our tests can use during setup to specify
 // what the files on the "mock" filesystem should look like when any of the
@@ -33,7 +35,12 @@ function readdirSync(directoryPath) {
 fs.__setMockFiles = __setMockFiles;
 fs.readdirSync = readdirSync;
 
-fs.unlinkSync = jest.fn();
+fs.unlinkSync = vi.fn();
+// Added: these are called by services under test (renameSync, readFileSync, writeFileSync)
+fs.renameSync = vi.fn();
+fs.readFileSync = vi.fn();
+fs.writeFileSync = vi.fn();
+fs.mkdirSync = vi.fn();
 
 fs.existsSync = (directoryPath: any) => {
   return mockFiles[directoryPath] !== undefined;

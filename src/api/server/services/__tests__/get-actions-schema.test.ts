@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { getActionsSchema } from '../get-actions-schema';
 
-jest.mock('../../configs');
+vi.mock('../../configs');
 
 describe('getActionsSchema', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return action schema', async () => {

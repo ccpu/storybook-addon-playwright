@@ -3,11 +3,10 @@ import { createElement } from 'react';
 import { useImageDiffScreenshots } from '../use-imagediff-screenshots';
 import { renderHook } from '@testing-library/react-hooks';
 import { useScreenshotImageDiffResults } from '../use-screenshot-imageDiff-results';
-import { mocked } from 'ts-jest/utils';
 import { StoryData } from '../../typings';
 import { ImageDiffResult } from '../../api/typings';
 
-const testStoryScreenShotsMock = jest.fn();
+const testStoryScreenShotsMock = vi.fn();
 
 const data = [
   {
@@ -18,18 +17,18 @@ const data = [
   },
 ] as ImageDiffResult[];
 
-mocked(testStoryScreenShotsMock).mockImplementation(() => {
+vi.mocked(testStoryScreenShotsMock).mockImplementation(() => {
   return new Promise((resolve) => {
     resolve(data);
   });
 });
 
-jest.mock('../use-screenshot-imageDiff-results.ts');
+vi.mock('../use-screenshot-imageDiff-results.ts');
 
-mocked(useScreenshotImageDiffResults).mockImplementation(() => {
+vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
     ErrorSnackbar: () => createElement('div'),
-    clearImageDiffError: jest.fn(),
+    clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {
       id: 'story-id',
@@ -42,11 +41,11 @@ mocked(useScreenshotImageDiffResults).mockImplementation(() => {
 
 describe('useStoryScreenshotsDiff', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should load story diffs', async () => {
-    const onLoadMock = jest.fn();
+    const onLoadMock = vi.fn();
     const { waitForNextUpdate } = renderHook(() =>
       useImageDiffScreenshots('story', onLoadMock),
     );
@@ -62,7 +61,7 @@ describe('useStoryScreenshotsDiff', () => {
 
   it('should load file diffs', async () => {
     const { waitForNextUpdate } = renderHook(() =>
-      useImageDiffScreenshots('file', jest.fn()),
+      useImageDiffScreenshots('file', vi.fn()),
     );
 
     await waitForNextUpdate();
@@ -74,7 +73,7 @@ describe('useStoryScreenshotsDiff', () => {
 
   it('should load all diffs', async () => {
     const { waitForNextUpdate } = renderHook(() =>
-      useImageDiffScreenshots('all', jest.fn()),
+      useImageDiffScreenshots('all', vi.fn()),
     );
 
     await waitForNextUpdate();
@@ -85,12 +84,12 @@ describe('useStoryScreenshotsDiff', () => {
   });
 
   it('should not load', () => {
-    (useScreenshotImageDiffResults as jest.Mock).mockImplementationOnce(() => ({
+    (useScreenshotImageDiffResults as Mock).mockImplementationOnce(() => ({
       storyInfo: undefined,
       testStoryScreenShots: testStoryScreenShotsMock,
     }));
 
-    renderHook(() => useImageDiffScreenshots('story', jest.fn()));
+    renderHook(() => useImageDiffScreenshots('story', vi.fn()));
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(0);
   });

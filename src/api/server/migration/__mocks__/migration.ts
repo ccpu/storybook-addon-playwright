@@ -1,1 +1,1 @@
-export const migration = jest.fn();
+export const migration = vi.fn();

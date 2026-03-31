@@ -5,15 +5,15 @@ import { ScreenshotData } from '../../typings';
 import { useScreenshotOptions } from '../use-screenshot-options';
 import { useBrowserOptions } from '../use-browser-options';
 
-jest.mock('../use-current-story-data');
-jest.mock('../use-browser-options.ts');
-jest.mock('../use-screenshot-options.ts');
+vi.mock('../use-current-story-data');
+vi.mock('../use-browser-options.ts');
+vi.mock('../use-screenshot-options.ts');
 
-jest.unmock('@storybook/manager-api');
+vi.unmock('@storybook/manager-api');
 
-const emitMock = jest.fn();
+const emitMock = vi.fn();
 
-jest.mock('@storybook/manager-api', () => ({
+vi.mock('@storybook/manager-api', () => ({
   useStorybookApi: () => ({
     emit: emitMock,
   }),
@@ -21,7 +21,7 @@ jest.mock('@storybook/manager-api', () => ({
 
 describe('useLoadScreenshotSettings', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     emitMock.mockClear();
   });
 
@@ -99,12 +99,12 @@ describe('useLoadScreenshotSettings', () => {
   });
 
   it('should set screenshotOptions and browserOptions', () => {
-    const setScreenshotOptionsMock = jest.fn();
-    const setBrowserOptionsMock = jest.fn();
-    (useScreenshotOptions as jest.Mock).mockImplementation(() => ({
+    const setScreenshotOptionsMock = vi.fn();
+    const setBrowserOptionsMock = vi.fn();
+    (useScreenshotOptions as Mock).mockImplementation(() => ({
       setScreenshotOptions: setScreenshotOptionsMock,
     }));
-    (useBrowserOptions as jest.Mock).mockImplementation(() => ({
+    (useBrowserOptions as Mock).mockImplementation(() => ({
       setBrowserOptions: setBrowserOptionsMock,
     }));
 

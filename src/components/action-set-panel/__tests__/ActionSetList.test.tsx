@@ -5,16 +5,15 @@ import React from 'react';
 import { ActionSet } from '../../../typings';
 import { Snackbar } from '../../common';
 import { Button } from '@material-ui/core';
-import { mocked } from 'ts-jest/utils';
 import { SortableActionSetListItem } from '../ActionSetListItem';
 import { useStoryActionSetsLoader } from '../../../hooks/use-story-action-sets-loader';
 import { useCurrentStoryActionSets } from '../../../hooks/use-current-story-action-sets';
 import { deleteActionSet } from '../../../features/action-set/action-set.client';
 
-jest.mock('../../../hooks/use-current-story-data');
-jest.mock('../../../hooks/use-story-action-sets-loader');
-jest.mock('../../../hooks/use-current-story-action-sets');
-jest.mock('../../../features/action-set/action-set.client');
+vi.mock('../../../hooks/use-current-story-data');
+vi.mock('../../../hooks/use-story-action-sets-loader');
+vi.mock('../../../hooks/use-current-story-action-sets');
+vi.mock('../../../features/action-set/action-set.client');
 
 const useCurrentStoryActionSetsData = {
   currentActionSets: ['action-set-id'],
@@ -27,13 +26,13 @@ const useCurrentStoryActionSetsData = {
   ] as ActionSet[],
 } as ReturnType<typeof useCurrentStoryActionSets>;
 
-mocked(useCurrentStoryActionSets).mockImplementation(
+vi.mocked(useCurrentStoryActionSets).mockImplementation(
   () => useCurrentStoryActionSetsData,
 );
 
 describe('ActionSetList', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -47,7 +46,7 @@ describe('ActionSetList', () => {
   });
 
   it('should show no data message', () => {
-    (useCurrentStoryActionSets as jest.Mock).mockImplementationOnce(() => ({
+    (useCurrentStoryActionSets as Mock).mockImplementationOnce(() => ({
       ...useCurrentStoryActionSetsData,
       currentActionSets: [],
       storyActionSets: [] as ActionSet[],
@@ -77,7 +76,7 @@ describe('ActionSetList', () => {
   });
 
   it('should delete action set', async () => {
-    mocked(deleteActionSet).mockResolvedValueOnce(undefined);
+    vi.mocked(deleteActionSet).mockResolvedValueOnce(undefined);
 
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
@@ -100,7 +99,7 @@ describe('ActionSetList', () => {
   });
 
   it('should display error if request failed and close after', async () => {
-    mocked(deleteActionSet).mockRejectedValueOnce(new Error('foo'));
+    vi.mocked(deleteActionSet).mockRejectedValueOnce(new Error('foo'));
 
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
@@ -150,8 +149,8 @@ describe('ActionSetList', () => {
   });
 
   it('should show action set loader error and retry', () => {
-    const retry = jest.fn();
-    (useStoryActionSetsLoader as jest.Mock).mockImplementationOnce(() => ({
+    const retry = vi.fn();
+    (useStoryActionSetsLoader as Mock).mockImplementationOnce(() => ({
       error: 'foo',
       loading: false,
       retry,

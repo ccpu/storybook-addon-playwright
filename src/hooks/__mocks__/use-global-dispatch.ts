@@ -1,1 +1,1 @@
-export const useGlobalDispatch = jest.fn();
+export const useGlobalDispatch = vi.fn();

@@ -5,7 +5,7 @@ import { ThemeProvider, themes, convert } from '@storybook/theming';
 import { SelectorManageSharedProps } from '../../../hooks/use-selector-manager';
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../../../hooks/use-selector-manager', () => ({
+vi.mock('../../../hooks/use-selector-manager', () => ({
   useSelectorManager() {
     return {
       startSelector: (props: SelectorManageSharedProps) => {
@@ -16,13 +16,13 @@ jest.mock('../../../hooks/use-selector-manager', () => ({
 }));
 
 describe('SelectorControl', () => {
-  const onChangeMock = jest.fn();
-  const onAppendValueToTitleMock = jest.fn();
+  const onChangeMock = vi.fn();
+  const onAppendValueToTitleMock = vi.fn();
 
-  const onSelectorChangeMock = jest.fn();
+  const onSelectorChangeMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {

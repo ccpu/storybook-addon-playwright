@@ -6,10 +6,11 @@ import { MapInteraction } from 'react-map-interaction';
 
 describe('ImagePreview', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    vi.useRealTimers();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('should render', () => {
     const wrapper = shallow(<ImagePreview imgSrcString="base64-mage" />);
@@ -22,7 +23,7 @@ describe('ImagePreview', () => {
   });
 
   it('should render nothing when imgSrcString prop value changed, to refresh MapInteraction', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     const wrapper = shallow(<ImagePreview imgSrcString="base64-mage" />);
 
     const oldProps = wrapper.find(MapInteraction).props();
@@ -32,5 +33,7 @@ describe('ImagePreview', () => {
     const newProps = wrapper.find(MapInteraction).props();
 
     expect(oldProps === newProps).toBeFalsy();
+
+    vi.useRealTimers();
   });
 });

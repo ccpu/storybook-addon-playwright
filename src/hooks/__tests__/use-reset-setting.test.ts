@@ -2,13 +2,13 @@ import { useResetSetting } from '../use-reset-setting';
 import { renderHook } from '@testing-library/react-hooks';
 import { useGlobalActionDispatch } from '../../hooks/use-global-action-dispatch';
 
-jest.mock('../../hooks/use-global-action-dispatch');
-jest.mock('../use-current-story-data');
-jest.unmock('@storybook/manager-api');
+vi.mock('../../hooks/use-global-action-dispatch');
+vi.mock('../use-current-story-data');
+vi.unmock('@storybook/manager-api');
 
-const emitMock = jest.fn();
+const emitMock = vi.fn();
 
-jest.mock('@storybook/manager-api', () => ({
+vi.mock('@storybook/manager-api', () => ({
   useStorybookApi: () => ({
     emit: emitMock,
   }),
@@ -16,8 +16,8 @@ jest.mock('@storybook/manager-api', () => ({
 
 describe('useResetSetting', () => {
   it('should reset', () => {
-    const dispatchMock = jest.fn();
-    (useGlobalActionDispatch as jest.Mock).mockImplementationOnce(() => ({
+    const dispatchMock = vi.fn();
+    (useGlobalActionDispatch as Mock).mockImplementationOnce(() => ({
       dispatch: dispatchMock,
     }));
     const { result } = renderHook(() => useResetSetting());

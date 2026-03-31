@@ -2,16 +2,16 @@ import { actionSetRouter } from './action-set.router';
 import { createCallerFactory } from '../../trpc/trpc';
 import * as service from './action-set.service';
 
-jest.mock('./action-set.service');
+vi.mock('./action-set.service');
 
 const createCaller = createCallerFactory(actionSetRouter);
 const caller = createCaller({} as any);
 
 describe('actionSetRouter', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('saveActionSet calls saveActionSet service', async () => {
-    (service.saveActionSet as jest.Mock).mockResolvedValue(undefined);
+    (service.saveActionSet as Mock).mockResolvedValue(undefined);
 
     const input = {
       actionSet: { actions: [], id: 'as-1' },
@@ -27,7 +27,7 @@ describe('actionSetRouter', () => {
 
   it('getActionSet calls getActionSet service', async () => {
     const mockResult = [{ actions: [], id: 'as-1' }];
-    (service.getActionSet as jest.Mock).mockResolvedValue(mockResult);
+    (service.getActionSet as Mock).mockResolvedValue(mockResult);
 
     const input = { fileName: 'file.ts', storyId: 'story--name' };
     const result = await caller.getActionSet(input);
@@ -37,7 +37,7 @@ describe('actionSetRouter', () => {
   });
 
   it('deleteActionSet calls deleteActionSet service', async () => {
-    (service.deleteActionSet as jest.Mock).mockResolvedValue(undefined);
+    (service.deleteActionSet as Mock).mockResolvedValue(undefined);
 
     const input = {
       actionSetId: 'as-1',

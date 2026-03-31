@@ -3,16 +3,15 @@ import { BrowserOptions } from '../BrowserOptions';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useBrowserOptions } from '../../../hooks/use-browser-options';
-import { mocked } from 'ts-jest/utils';
 import { MemoizedSchemaFormLoader } from '../..';
 import { OptionPopover } from '../OptionPopover';
 
-jest.mock('../../../hooks/use-browser-options.ts');
-const setBrowserOptionsMock = jest.fn();
-const setBrowserDeviceOptionsMock = jest.fn();
-mocked(useBrowserOptions).mockImplementation(() => ({
+vi.mock('../../../hooks/use-browser-options.ts');
+const setBrowserOptionsMock = vi.fn();
+const setBrowserDeviceOptionsMock = vi.fn();
+vi.mocked(useBrowserOptions).mockImplementation(() => ({
   browserOptions: {},
-  getBrowserOptions: jest.fn(),
+  getBrowserOptions: vi.fn(),
   hasOption: false,
   setBrowserDeviceOptions: setBrowserDeviceOptionsMock,
   setBrowserOptions: setBrowserOptionsMock,
@@ -25,11 +24,11 @@ describe('BrowserOptions', () => {
   });
 
   it('should not render', () => {
-    mocked(useBrowserOptions).mockImplementationOnce(() => ({
+    vi.mocked(useBrowserOptions).mockImplementationOnce(() => ({
       browserOptions: undefined,
-      getBrowserOptions: jest.fn(),
+      getBrowserOptions: vi.fn(),
       hasOption: false,
-      setBrowserDeviceOptions: jest.fn(),
+      setBrowserDeviceOptions: vi.fn(),
       setBrowserOptions: setBrowserOptionsMock,
     }));
     const wrapper = shallow(<BrowserOptions browserType="all" />);

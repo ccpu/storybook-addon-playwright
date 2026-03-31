@@ -1,4 +1,4 @@
-const useMouseHovered = jest
+const useMouseHovered = vi
   .fn()
   .mockImplementation(() => ({ elX: 10, elY: 10 }));
 

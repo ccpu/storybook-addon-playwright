@@ -18,7 +18,7 @@ describe('ListItemWrapper', () => {
   });
 
   it('should click on elements with clickable class name', () => {
-    const onClickMock = jest.fn();
+    const onClickMock = vi.fn();
     const wrapper = shallow(
       <ListItemWrapper
         onClick={onClickMock}

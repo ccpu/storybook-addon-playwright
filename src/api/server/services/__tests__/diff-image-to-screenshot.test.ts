@@ -1,5 +1,7 @@
-const spyOnRmdirSyncMock = jest.fn();
-jest.mock('fs', () => ({
+// Changed: vi.hoisted() ensures the variable is initialized before the Mock
+// factory runs (vitest hoists vi.mock to before all declarations, causing TDZ).
+const spyOnRmdirSyncMock = vi.hoisted(() => vi.fn());
+vi.mock('fs', () => ({
   existsSync: () => {
     return true;
   },
@@ -11,8 +13,8 @@ import * as configs from '../../configs';
 import { Page } from 'playwright';
 import { DiffImageToScreenShot } from '../../../typings';
 
-jest.mock('../../configs');
-const configsMock = configs as unknown as jest.Mocked<typeof configs>;
+vi.mock('../../configs');
+const configsMock = configs as unknown as Mocked<typeof configs>;
 
 describe('diffImageToScreenshot', () => {
   const diffData: DiffImageToScreenShot = {

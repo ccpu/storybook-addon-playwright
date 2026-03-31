@@ -5,11 +5,11 @@ import { IconButton } from '@storybook/components';
 import { Menu, MenuItem } from '@material-ui/core';
 import { useAddonState } from '../../../hooks/use-addon-state';
 
-jest.mock('../../../hooks/use-addon-state.ts');
+vi.mock('../../../hooks/use-addon-state.ts');
 
 describe('PreviewPlacementMenu', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -36,9 +36,9 @@ describe('PreviewPlacementMenu', () => {
   it('should handle menu item click', () => {
     const wrapper = shallow(<PreviewPlacementMenu />);
 
-    const setAddonStateMock = jest.fn();
+    const setAddonStateMock = vi.fn();
 
-    (useAddonState as jest.Mock).mockImplementation(() => {
+    (useAddonState as Mock).mockImplementation(() => {
       return {
         addonState: {},
         setAddonState: setAddonStateMock,

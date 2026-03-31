@@ -6,7 +6,7 @@ import { migrateFile } from '../migration';
 
 describe('migration', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should migrate from v0 to v1', () => {

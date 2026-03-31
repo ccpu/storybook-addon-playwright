@@ -6,19 +6,18 @@ import { ActionSet } from '../../../typings';
 import { ActionSetEditorIconsProps } from '../ActionSetEditorIcons';
 import { ListItemWrapper, InputDialog, Snackbar } from '../../common';
 import { useActionEditor } from '../../../hooks/use-action-editor';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../../hooks/use-action-editor');
+vi.mock('../../../hooks/use-action-editor');
 
-jest.mock('../../../hooks/use-action-schema-loader', () => ({
+vi.mock('../../../hooks/use-action-schema-loader', () => ({
   useActionSchemaLoader: () => {
     return { loading: false };
   },
 }));
 
-const handleAddActionMock = jest.fn();
-const handleDescriptionChangeMock = jest.fn();
-mocked(useActionEditor).mockImplementation(
+const handleAddActionMock = vi.fn();
+const handleDescriptionChangeMock = vi.fn();
+vi.mocked(useActionEditor).mockImplementation(
   () =>
     ({
       handleAddAction: handleAddActionMock,
@@ -31,7 +30,7 @@ describe('ActionSetEditor', () => {
     storyFileInfo().stories['story-id'].actionSets[0];
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -72,7 +71,7 @@ describe('ActionSetEditor', () => {
   });
 
   it('should handle validation results', () => {
-    mocked(useActionEditor).mockImplementation(
+    vi.mocked(useActionEditor).mockImplementation(
       () =>
         ({
           validationResult: [{ id: 'action-id', required: ['foo'] }],

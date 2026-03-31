@@ -1,19 +1,18 @@
 import { useAsyncApiCall } from '../use-async-api-call';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useSnackbar } from '../../hooks/use-snackbar';
-import { mocked } from 'ts-jest/utils';
 
-jest.mock('../../hooks/use-snackbar');
+vi.mock('../../hooks/use-snackbar');
 
-const openSnackbarMock = jest.fn();
+const openSnackbarMock = vi.fn();
 
-mocked(useSnackbar).mockImplementation(() => ({
+vi.mocked(useSnackbar).mockImplementation(() => ({
   openSnackbar: openSnackbarMock,
 }));
 
 describe('useAsyncApiCall', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const func = (shouldResolve) => {

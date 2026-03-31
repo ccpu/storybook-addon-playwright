@@ -1,16 +1,16 @@
-jest.mock('../../trpc/client');
+vi.mock('../../trpc/client');
 
 import { trpc } from '../../trpc/client';
 import { fixScreenshotFileName } from './fix-title.client';
 
 describe('fix-title client', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('fixScreenshotFileName calls trpc.fixTitle.fixScreenshotFileName.mutate', async () => {
     const mockResponse = { renamed: true };
-    (
-      trpc.fixTitle.fixScreenshotFileName.mutate as jest.Mock
-    ).mockResolvedValueOnce(mockResponse);
+    (trpc.fixTitle.fixScreenshotFileName.mutate as Mock).mockResolvedValueOnce(
+      mockResponse,
+    );
 
     const input = {
       id: 'parent--new-name',
@@ -28,9 +28,9 @@ describe('fix-title client', () => {
   });
 
   it('fixScreenshotFileName resolves without error', async () => {
-    (
-      trpc.fixTitle.fixScreenshotFileName.mutate as jest.Mock
-    ).mockResolvedValueOnce(undefined);
+    (trpc.fixTitle.fixScreenshotFileName.mutate as Mock).mockResolvedValueOnce(
+      undefined,
+    );
 
     await expect(
       fixScreenshotFileName({

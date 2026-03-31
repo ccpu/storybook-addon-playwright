@@ -1,11 +1,11 @@
-const useScreenshotImageDiffResults = jest.fn();
+const useScreenshotImageDiffResults = vi.fn();
 
 useScreenshotImageDiffResults.mockImplementation(() => {
   return {
-    clearImageDiffError: jest.fn(),
+    clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyImageDiffError: undefined,
-    testStoryScreenShots: jest.fn(),
+    testStoryScreenShots: vi.fn(),
   };
 });
 

@@ -1,4 +1,4 @@
-jest.mock('fast-glob', () => ({
+vi.mock('fast-glob', () => ({
   __esModule: true as never,
   default: () => {
     return new Promise((resolve) => {
@@ -9,25 +9,24 @@ jest.mock('fast-glob', () => ({
 
 import { testFileScreenshots } from '../test-file-screenshots';
 import { testStoryScreenshots } from '../test-story-screenshots';
-import { mocked } from 'ts-jest/utils';
 import { defaultConfigs } from '../../../../../__test_data__/configs';
 import { getConfigs } from '../../configs';
 
-jest.mock('../../configs');
-jest.mock('../make-screenshot');
-jest.mock('../../utils/load-story-data');
-jest.mock('../diff-image-to-screenshot');
-jest.mock('../test-story-screenshots.ts');
+vi.mock('../../configs');
+vi.mock('../make-screenshot');
+vi.mock('../../utils/load-story-data');
+vi.mock('../diff-image-to-screenshot');
+vi.mock('../test-story-screenshots.ts');
 
-const beforeFileImageDiffMock = jest.fn();
-const afterFileImageDiffMock = jest.fn();
-mocked(getConfigs).mockImplementation(() => ({
+const beforeFileImageDiffMock = vi.fn();
+const afterFileImageDiffMock = vi.fn();
+vi.mocked(getConfigs).mockImplementation(() => ({
   afterFileImageDiff: afterFileImageDiffMock,
   beforeFileImageDiff: beforeFileImageDiffMock,
   ...defaultConfigs(),
 }));
 
-mocked(testStoryScreenshots).mockImplementation(() => {
+vi.mocked(testStoryScreenshots).mockImplementation(() => {
   return new Promise((resolve) => {
     resolve([
       {
@@ -42,17 +41,17 @@ mocked(testStoryScreenshots).mockImplementation(() => {
 
 describe('testFileScreenshots', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should have appropriate data', async () => {
     await testFileScreenshots({
       fileName: 'story.ts',
-      onComplete: jest.fn(),
+      onComplete: vi.fn(),
       requestId: 'request-id',
       requestType: 'all',
     });
@@ -97,7 +96,7 @@ describe('testFileScreenshots', () => {
   });
 
   it('should have result', async () => {
-    const onCompleteMock = jest.fn();
+    const onCompleteMock = vi.fn();
     const result = await testFileScreenshots({
       fileName: 'story.ts',
       onComplete: onCompleteMock,
@@ -119,7 +118,7 @@ describe('testFileScreenshots', () => {
   });
 
   it('should test story within file', async () => {
-    const onCompleteMock = jest.fn();
+    const onCompleteMock = vi.fn();
     const result = await testFileScreenshots({
       fileName: 'story.ts',
       onComplete: onCompleteMock,
@@ -149,7 +148,7 @@ describe('testFileScreenshots', () => {
   });
 
   it('should not test if not found story within file', async () => {
-    const onCompleteMock = jest.fn();
+    const onCompleteMock = vi.fn();
     const result = await testFileScreenshots({
       fileName: 'story.ts',
       onComplete: onCompleteMock,

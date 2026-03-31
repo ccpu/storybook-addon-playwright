@@ -1,7 +1,7 @@
 import { getStoryPlaywrightData } from '../get-story-playwright-data';
 
-jest.mock('../../utils/load-story-data');
-jest.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
+vi.mock('../../utils/save-story-file');
 
 describe('getStoryPlaywrightData', () => {
   it('should have data', async () => {

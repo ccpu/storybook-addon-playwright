@@ -3,18 +3,17 @@ import { saveStoryFile } from '../../utils/save-story-file';
 import { fixScreenshotFileName } from '../fix-screenshot-file-name';
 import { getStoryPlaywrightDataByFileName } from '../utils/get-story-playwright-data-by-file-name';
 import fs from 'fs';
-import { mocked } from 'ts-jest/utils';
 import { PlaywrightData } from '../../../../typings';
 import { getStoryPlaywrightFileInfo } from '../../utils/get-story-playwright-file-info';
 
-jest.mock('fs');
-const existsSyncMock = jest.spyOn(fs, 'existsSync');
+vi.mock('fs');
+const existsSyncMock = vi.spyOn(fs, 'existsSync');
 
-jest.mock('../utils/get-story-playwright-data-by-file-name');
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/get-story-playwright-file-info');
+vi.mock('../utils/get-story-playwright-data-by-file-name');
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/get-story-playwright-file-info');
 
-mocked(getStoryPlaywrightFileInfo).mockReturnValue({
+vi.mocked(getStoryPlaywrightFileInfo).mockReturnValue({
   dir: 'dir',
   name: 'fileName',
   path: 'filePath',
@@ -35,7 +34,7 @@ const configs: PlaywrightData = {
   },
 };
 
-mocked(getStoryPlaywrightDataByFileName).mockImplementation(() => {
+vi.mocked(getStoryPlaywrightDataByFileName).mockImplementation(() => {
   return new Promise((resolve) => {
     resolve(configs);
   });
@@ -43,7 +42,7 @@ mocked(getStoryPlaywrightDataByFileName).mockImplementation(() => {
 
 describe('fixScreenshotFileName', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (fs as any).__setMockFiles({ component: ['component.png'] });
   });
@@ -54,12 +53,12 @@ describe('fixScreenshotFileName', () => {
 
   describe('fix story title change', () => {
     it('should apply change', async () => {
-      mocked(existsSyncMock).mockReturnValueOnce(true);
+      vi.mocked(existsSyncMock).mockReturnValueOnce(true);
       await fixScreenshotFileName({ ...storyData, parent: 'new-title' });
       expect(getStoryPlaywrightDataByFileName).toHaveBeenCalledWith(
         './test.stories.tsx',
       );
-      expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
+      expect(vi.mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
         stories: {
           'new-title--func-name': {
             screenshots: [
@@ -79,7 +78,7 @@ describe('fixScreenshotFileName', () => {
     });
 
     it('should merge if new screenshot added before applying fix', async () => {
-      mocked(getStoryPlaywrightDataByFileName).mockImplementation(() => {
+      vi.mocked(getStoryPlaywrightDataByFileName).mockImplementation(() => {
         return new Promise((resolve) => {
           resolve({
             stories: {
@@ -107,7 +106,7 @@ describe('fixScreenshotFileName', () => {
       });
       await fixScreenshotFileName({ ...storyData, parent: 'new-title' });
 
-      expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
+      expect(vi.mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
         stories: {
           'new-title--func-name': {
             screenshots: [
@@ -136,7 +135,7 @@ describe('fixScreenshotFileName', () => {
         previousNamedExport: 'func-name',
       });
 
-      expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
+      expect(vi.mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
         stories: {
           'component--new-id': {
             screenshots: [
@@ -157,7 +156,7 @@ describe('fixScreenshotFileName', () => {
     });
 
     it('should handle story with no screenshots', async () => {
-      mocked(getStoryPlaywrightDataByFileName).mockImplementationOnce(() => {
+      vi.mocked(getStoryPlaywrightDataByFileName).mockImplementationOnce(() => {
         return new Promise((resolve) => {
           resolve({
             stories: {
@@ -173,7 +172,7 @@ describe('fixScreenshotFileName', () => {
         previousNamedExport: 'func-name',
       });
 
-      expect(mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
+      expect(vi.mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
         stories: {
           'component--new-id': {},
         },

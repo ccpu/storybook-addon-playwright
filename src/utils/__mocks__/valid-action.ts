@@ -1,4 +1,4 @@
-export const validAction = jest.fn();
-export const validateActionList = jest.fn();
+export const validAction = vi.fn();
+export const validateActionList = vi.fn();
 
 validAction.mockImplementation(() => undefined);

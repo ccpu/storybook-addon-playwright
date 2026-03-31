@@ -1,4 +1,3 @@
-import { mocked } from 'ts-jest/utils';
 import { useEditScreenshot } from '../use-edit-screenshot';
 import { globalDispatchMock } from '../../../__manual_mocks__/hooks/use-global-screenshot-dispatch';
 import { useSaveScreenshot } from '../use-save-screenshot';
@@ -6,16 +5,16 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { saveScreenshot } from '../../features/screenshot/screenshot.client';
 import mockConsole from 'jest-mock-console';
 
-jest.mock('nanoid', () => ({
+vi.mock('nanoid', () => ({
   nanoid: () => {
     return 'some-id';
   },
 }));
 
-jest.mock('../../utils/get-preview-iframe.ts');
-jest.mock('../use-edit-screenshot');
-jest.mock('../../features/screenshot/screenshot.client');
-const useEditScreenshotMock = mocked(useEditScreenshot);
+vi.mock('../../utils/get-preview-iframe.ts');
+vi.mock('../use-edit-screenshot');
+vi.mock('../../features/screenshot/screenshot.client');
+const useEditScreenshotMock = vi.mocked(useEditScreenshot);
 
 describe('useSaveScreenshot', () => {
   let restoreConsole;
@@ -29,7 +28,7 @@ describe('useSaveScreenshot', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should not have any value', () => {
@@ -44,7 +43,7 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should add', async () => {
-    mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
+    vi.mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -73,7 +72,7 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should handle error', async () => {
-    mocked(saveScreenshot).mockRejectedValueOnce(new Error('foo'));
+    vi.mocked(saveScreenshot).mockRejectedValueOnce(new Error('foo'));
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -91,7 +90,7 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should clear result', async () => {
-    mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
+    vi.mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -113,7 +112,7 @@ describe('useSaveScreenshot', () => {
     // @ts-ignore
     useEditScreenshotMock.mockImplementation(() => {
       return {
-        clearScreenshotEdit: jest.fn(),
+        clearScreenshotEdit: vi.fn(),
         editScreenshotState: {
           screenshotData: {
             browserType: 'chromium',
@@ -126,7 +125,7 @@ describe('useSaveScreenshot', () => {
       };
     });
 
-    mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
+    vi.mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -139,7 +138,7 @@ describe('useSaveScreenshot', () => {
       await result.current.saveScreenShot('chromium', 'title', 'base64-image');
     });
 
-    const callArg = mocked(saveScreenshot).mock.calls[0][0] as any;
+    const callArg = vi.mocked(saveScreenshot).mock.calls[0][0] as any;
 
     expect(callArg.updateScreenshot).toStrictEqual({
       browserType: 'chromium',

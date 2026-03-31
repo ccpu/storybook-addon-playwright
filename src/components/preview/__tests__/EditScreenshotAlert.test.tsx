@@ -5,7 +5,7 @@ import { useEditScreenshot } from '../../../hooks//use-edit-screenshot';
 import { Alert } from '@material-ui/lab';
 import { Button } from '@material-ui/core';
 
-jest.mock('../../../hooks//use-edit-screenshot');
+vi.mock('../../../hooks//use-edit-screenshot');
 
 describe('EditScreenshotAlert', () => {
   it('should render nothing when editScreenshotState is not defined', () => {
@@ -14,9 +14,9 @@ describe('EditScreenshotAlert', () => {
   });
 
   it('should render alert and remove', () => {
-    const clearScreenshotEditMock = jest.fn();
+    const clearScreenshotEditMock = vi.fn();
 
-    (useEditScreenshot as jest.Mock).mockImplementationOnce(() => ({
+    (useEditScreenshot as Mock).mockImplementationOnce(() => ({
       clearScreenshotEdit: clearScreenshotEditMock,
       editScreenshotState: {
         screenshotData: { browserType: 'chromium', title: 'title' },

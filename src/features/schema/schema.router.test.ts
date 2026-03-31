@@ -2,17 +2,17 @@ import { schemaRouter } from './schema.router';
 import { createCallerFactory } from '../../trpc/trpc';
 import * as service from './schema.service';
 
-jest.mock('./schema.service');
+vi.mock('./schema.service');
 
 const createCaller = createCallerFactory(schemaRouter);
 const caller = createCaller({} as any);
 
 describe('schemaRouter', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('getActionsSchema calls getActionsSchema service', async () => {
     const mockResult = { click: { schema: {} } };
-    (service.getActionsSchema as jest.Mock).mockReturnValue(mockResult);
+    (service.getActionsSchema as Mock).mockReturnValue(mockResult);
 
     const result = await caller.getActionsSchema();
 
@@ -22,7 +22,7 @@ describe('schemaRouter', () => {
 
   it('getSchema calls getSchema service with schemaName', async () => {
     const mockResult = { properties: {}, type: 'object' };
-    (service.getSchema as jest.Mock).mockReturnValue(mockResult);
+    (service.getSchema as Mock).mockReturnValue(mockResult);
 
     const result = await caller.getSchema({ schemaName: 'browser-options' });
 

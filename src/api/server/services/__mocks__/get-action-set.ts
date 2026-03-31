@@ -1,3 +1,3 @@
-const getActionSet = jest.fn();
+const getActionSet = vi.fn();
 
 export { getActionSet };

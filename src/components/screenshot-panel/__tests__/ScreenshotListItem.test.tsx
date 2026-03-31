@@ -1,4 +1,15 @@
 import { dispatchMock } from '../../../../__manual_mocks__/store/screenshot/context';
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import { useEffectCleanup } from '../../../../__manual_mocks__/react-useEffect';
 import { ScreenshotListItem } from '../ScreenshotListItem';
 import { shallow } from 'enzyme';
@@ -15,15 +26,15 @@ import { ScreenshotInfo } from '../ScreenshotInfo';
 import { useEditScreenshot } from '../../../hooks/use-edit-screenshot';
 import { ScreenshotListItemWrapper } from '../ScreenshotListItemWrapper';
 
-jest.mock('../../../hooks/use-screenshot-imageDiff');
-jest.mock('../../../hooks/use-edit-screenshot');
+vi.mock('../../../hooks/use-screenshot-imageDiff');
+vi.mock('../../../hooks/use-edit-screenshot');
 
-const loadSettingMock = jest.fn();
-const editMock = jest.fn();
+const loadSettingMock = vi.fn();
+const editMock = vi.fn();
 
-const clearScreenshotEditMock = jest.fn();
+const clearScreenshotEditMock = vi.fn();
 
-(useEditScreenshot as jest.Mock).mockImplementation(() => {
+(useEditScreenshot as Mock).mockImplementation(() => {
   return {
     clearScreenshotEdit: clearScreenshotEditMock,
     editScreenshot: editMock,
@@ -33,11 +44,11 @@ const clearScreenshotEditMock = jest.fn();
 
 describe('ScreenshotListItem', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('should render', () => {
@@ -52,7 +63,7 @@ describe('ScreenshotListItem', () => {
   });
 
   it('should remove screenshot result on mount when it passed', () => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     shallow(
       <ScreenshotListItem
         storyData={storyData}
@@ -60,10 +71,11 @@ describe('ScreenshotListItem', () => {
         imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
       />,
     );
-    jest.advanceTimersByTime(10000);
+    vi.advanceTimersByTime(10000);
     expect(dispatchMock).toHaveBeenCalledWith([
       { screenshotId: 'screenshot-id', type: 'removeImageDiffResult' },
     ]);
+    vi.useRealTimers();
   });
 
   it('should remove result from imageDiffResults when pressing on check icon', () => {
@@ -86,7 +98,7 @@ describe('ScreenshotListItem', () => {
   });
 
   it('should not remove result if pauseDeleteImageDiffResult=true', () => {
-    const clearTimeoutMock = jest.fn();
+    const clearTimeoutMock = vi.fn();
     window.clearTimeout = clearTimeoutMock;
     const wrapper = shallow(
       <ScreenshotListItem
@@ -151,9 +163,9 @@ describe('ScreenshotListItem', () => {
   });
 
   it('should run image diff', async () => {
-    const testScreenshotMock = jest.fn();
+    const testScreenshotMock = vi.fn();
 
-    (useScreenshotImageDiff as jest.Mock).mockImplementation(() => {
+    (useScreenshotImageDiff as Mock).mockImplementation(() => {
       return {
         TestScreenshotErrorSnackbar: () => undefined,
         testScreenshot: testScreenshotMock,
@@ -183,7 +195,7 @@ describe('ScreenshotListItem', () => {
   });
 
   it('should show ScreenshotPreviewDialog on item click', async () => {
-    const onClickMock = jest.fn();
+    const onClickMock = vi.fn();
 
     const wrapper = shallow(
       <ScreenshotListItem
@@ -246,7 +258,7 @@ describe('ScreenshotListItem', () => {
   });
 
   it('should clearTimeout', () => {
-    const spyOnClearTimeout = jest.spyOn(window, 'clearTimeout');
+    const spyOnClearTimeout = vi.spyOn(window, 'clearTimeout');
     shallow(
       <ScreenshotListItem
         storyData={storyData}

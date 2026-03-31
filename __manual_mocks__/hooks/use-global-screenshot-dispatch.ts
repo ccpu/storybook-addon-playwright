@@ -1,6 +1,6 @@
-export const globalDispatchMock = jest.fn();
+export const globalDispatchMock = vi.fn();
 
-jest.mock('../../src/hooks/use-global-screenshot-dispatch', () => ({
+vi.mock('../../src/hooks/use-global-screenshot-dispatch', () => ({
   useGlobalScreenshotDispatch: () => ({
     dispatch: globalDispatchMock,
   }),

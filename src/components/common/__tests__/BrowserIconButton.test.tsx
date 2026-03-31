@@ -5,7 +5,7 @@ import React from 'react';
 import { IconButton } from '@storybook/components';
 
 describe('BrowserIcon', () => {
-  const clickMock = jest.fn();
+  const clickMock = vi.fn();
   beforeEach(() => {
     clickMock.mockClear();
   });

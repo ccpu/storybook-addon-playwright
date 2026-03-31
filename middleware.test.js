@@ -1,26 +1,16 @@
-jest.mock('@trpc/server/adapters/fetch', () => ({
-  fetchRequestHandler: jest.fn().mockResolvedValue(
-    new Response(JSON.stringify({ result: 'ok' }), {
-      status: 200,
-      headers: { 'content-type': 'application/json' },
-    }),
-  ),
-}));
-
-jest.mock('./dist/trpc/router', () => ({
-  appRouter: { _def: {} },
-}));
-
-jest.mock('./dist/trpc/context', () => ({
-  createContext: jest.fn().mockReturnValue({}),
-}));
+// Changed: The original test used CJS require() which vitest's ESM vi.mock()
+// cannot intercept for the deep dist/ CJS require chain. The fix uses a
+// Module._load patch in setupTests.vitest-globals.ts to intercept sharp,
+// join-images, @trpc/server/adapters/fetch, and dist/trpc/router at the
+// native Node module level. Test reverted to require() so it picks up the
+// same patches as middleware.js does.
 
 const middleware = require('./middleware');
 const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');
 
 describe('middleware', () => {
   it('should register a /trpc/* route handler', () => {
-    const router = { all: jest.fn() };
+    const router = { all: vi.fn() };
 
     middleware(router);
 
@@ -28,7 +18,7 @@ describe('middleware', () => {
   });
 
   it('should call fetchRequestHandler and pipe response', async () => {
-    const router = { all: jest.fn() };
+    const router = { all: vi.fn() };
 
     middleware(router);
 
@@ -42,8 +32,8 @@ describe('middleware', () => {
 
     const res = {
       statusCode: 0,
-      setHeader: jest.fn(),
-      end: jest.fn(),
+      setHeader: vi.fn(),
+      end: vi.fn(),
     };
 
     await handler(req, res);

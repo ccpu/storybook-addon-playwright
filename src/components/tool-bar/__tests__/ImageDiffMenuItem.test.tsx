@@ -8,17 +8,17 @@ import { useStorybookApi } from '@storybook/manager-api';
 describe('ImageDiffMenuItem', () => {
   it('should render', () => {
     const wrapper = shallow(
-      <ImageDiffMenuItem imageDiff={{ pass: true }} onClick={jest.fn()} />,
+      <ImageDiffMenuItem imageDiff={{ pass: true }} onClick={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should load story and call callback', () => {
-    const onClickMock = jest.fn();
-    const selectStoryMock = jest.fn();
-    const setSelectedPanelMock = jest.fn();
+    const onClickMock = vi.fn();
+    const selectStoryMock = vi.fn();
+    const setSelectedPanelMock = vi.fn();
 
-    (useStorybookApi as jest.Mock).mockImplementationOnce(() => ({
+    (useStorybookApi as Mock).mockImplementationOnce(() => ({
       getData: () => {
         return getStoryData();
       },
@@ -46,11 +46,11 @@ describe('ImageDiffMenuItem', () => {
   });
 
   it('should show error if unable to find story', () => {
-    const onClickMock = jest.fn();
-    const selectStoryMock = jest.fn();
-    const setSelectedPanelMock = jest.fn();
+    const onClickMock = vi.fn();
+    const selectStoryMock = vi.fn();
+    const setSelectedPanelMock = vi.fn();
 
-    (useStorybookApi as jest.Mock).mockImplementationOnce(() => ({
+    (useStorybookApi as Mock).mockImplementationOnce(() => ({
       getData: () => {
         return undefined;
       },

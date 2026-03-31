@@ -1,1 +1,1 @@
-export const executeAction = jest.fn();
+export const executeAction = vi.fn();

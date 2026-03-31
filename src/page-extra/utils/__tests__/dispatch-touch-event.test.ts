@@ -20,11 +20,9 @@ describe('touch', () => {
   });
 
   beforeEach(() => {
-    jest
-      .spyOn(global.Date, 'now')
-      .mockImplementationOnce(() =>
-        new Date('2019-05-14T11:01:58.135Z').valueOf(),
-      );
+    vi.spyOn(global.Date, 'now').mockImplementationOnce(() =>
+      new Date('2019-05-14T11:01:58.135Z').valueOf(),
+    );
   });
 
   it('should be defined', () => {
@@ -32,9 +30,9 @@ describe('touch', () => {
   });
 
   it('should handle defaults', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
 
-    global.Touch = jest.fn();
+    global.Touch = vi.fn();
 
     const elm = document.createElement('div');
 
@@ -59,14 +57,14 @@ describe('touch', () => {
   });
 
   it('should handle params', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    global.Touch = jest.fn();
+    global.Touch = vi.fn();
 
     const elm = document.createElement('div');
-    elm.dispatchEvent = jest.fn();
+    elm.dispatchEvent = vi.fn();
 
     evalMock.mockImplementationOnce((_el, func, opts) => {
       func(elm, opts);
@@ -99,14 +97,14 @@ describe('touch', () => {
   });
 
   it('should have use clint for page if not provided', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    global.Touch = jest.fn();
+    global.Touch = vi.fn();
 
     const elm = document.createElement('div');
-    elm.dispatchEvent = jest.fn();
+    elm.dispatchEvent = vi.fn();
 
     evalMock.mockImplementationOnce((_el, func, opts) => {
       func(elm, opts);

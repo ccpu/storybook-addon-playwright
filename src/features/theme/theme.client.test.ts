@@ -1,16 +1,14 @@
-jest.mock('../../trpc/client');
+vi.mock('../../trpc/client');
 
 import { trpc } from '../../trpc/client';
 import { getThemeData } from './theme.client';
 
 describe('theme client', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('getThemeData calls trpc.theme.getThemeData.query', async () => {
     const mockResponse = { palette: { type: 'dark' } };
-    (trpc.theme.getThemeData.query as jest.Mock).mockResolvedValueOnce(
-      mockResponse,
-    );
+    (trpc.theme.getThemeData.query as Mock).mockResolvedValueOnce(mockResponse);
 
     const result = await getThemeData();
 
@@ -19,9 +17,7 @@ describe('theme client', () => {
   });
 
   it('getThemeData returns undefined when no theme', async () => {
-    (trpc.theme.getThemeData.query as jest.Mock).mockResolvedValueOnce(
-      undefined,
-    );
+    (trpc.theme.getThemeData.query as Mock).mockResolvedValueOnce(undefined);
 
     const result = await getThemeData();
 

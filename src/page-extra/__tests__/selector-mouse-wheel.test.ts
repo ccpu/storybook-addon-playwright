@@ -16,7 +16,7 @@ describe('selectorMouseWheel', () => {
   });
 
   it('should test selectorMouseWheel', async () => {
-    const evalMock = jest.fn();
+    const evalMock = vi.fn();
     const elm = document.createElement('div');
 
     let delta: SelectorMouseWheelOptions = {};

@@ -1,14 +1,14 @@
 // import { useEditScreenshot  } from '../use-edit-screenshot';
 
-const useEditScreenshot = jest.fn();
+const useEditScreenshot = vi.fn();
 
 useEditScreenshot.mockImplementation(() => {
   return {
-    clearScreenshotEdit: jest.fn(),
-    editScreenshot: jest.fn(),
+    clearScreenshotEdit: vi.fn(),
+    editScreenshot: vi.fn(),
     editScreenshotState: undefined,
-    isEditing: jest.fn(),
-    loadSetting: jest.fn(),
+    isEditing: vi.fn(),
+    loadSetting: vi.fn(),
   };
 });
 

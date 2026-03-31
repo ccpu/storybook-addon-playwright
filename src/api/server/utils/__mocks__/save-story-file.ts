@@ -1,4 +1,4 @@
-const saveStoryFile = jest.fn();
+const saveStoryFile = vi.fn();
 
 saveStoryFile.mockImplementation(() => {
   return new Promise((resolve) => {

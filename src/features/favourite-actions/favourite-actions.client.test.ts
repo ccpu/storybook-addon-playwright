@@ -1,4 +1,4 @@
-jest.mock('../../trpc/client');
+vi.mock('../../trpc/client');
 
 import { trpc } from '../../trpc/client';
 import {
@@ -8,11 +8,11 @@ import {
 } from './favourite-actions.client';
 
 describe('favourite-actions client', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('addFavouriteAction calls trpc.favouriteActions.addFavouriteAction.mutate', async () => {
     (
-      trpc.favouriteActions.addFavouriteAction.mutate as jest.Mock
+      trpc.favouriteActions.addFavouriteAction.mutate as Mock
     ).mockResolvedValueOnce(undefined);
 
     const input = { actions: [], id: 'fav-1' };
@@ -25,7 +25,7 @@ describe('favourite-actions client', () => {
   it('getFavouriteActions calls trpc.favouriteActions.getFavouriteActions.query', async () => {
     const mockResponse = [{ actions: [], id: 'fav-1' }];
     (
-      trpc.favouriteActions.getFavouriteActions.query as jest.Mock
+      trpc.favouriteActions.getFavouriteActions.query as Mock
     ).mockResolvedValueOnce(mockResponse);
 
     const result = await getFavouriteActions();
@@ -36,7 +36,7 @@ describe('favourite-actions client', () => {
 
   it('deleteFavouriteAction calls trpc.favouriteActions.deleteFavouriteAction.mutate', async () => {
     (
-      trpc.favouriteActions.deleteFavouriteAction.mutate as jest.Mock
+      trpc.favouriteActions.deleteFavouriteAction.mutate as Mock
     ).mockResolvedValueOnce(undefined);
 
     const input = { actionSetId: 'fav-1' };

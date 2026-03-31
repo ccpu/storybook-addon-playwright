@@ -3,29 +3,29 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionMenu } from '../ActionMenu';
 
-jest.mock('../../../hooks/use-action-schema-loader');
+vi.mock('../../../hooks/use-action-schema-loader');
 
 describe('ActionSetEditorIcons', () => {
   it('should render', () => {
     const wrapper = shallow(
       <ActionSetEditorIcons
-        onAddAction={jest.fn()}
-        onCancel={jest.fn()}
-        onSave={jest.fn()}
-        onEditTitle={jest.fn()}
+        onAddAction={vi.fn()}
+        onCancel={vi.fn()}
+        onSave={vi.fn()}
+        onEditTitle={vi.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should handle action menu', () => {
-    const onAddActionMock = jest.fn();
+    const onAddActionMock = vi.fn();
     const wrapper = shallow(
       <ActionSetEditorIcons
         onAddAction={onAddActionMock}
-        onCancel={jest.fn()}
-        onSave={jest.fn()}
-        onEditTitle={jest.fn()}
+        onCancel={vi.fn()}
+        onSave={vi.fn()}
+        onEditTitle={vi.fn()}
       />,
     );
     wrapper

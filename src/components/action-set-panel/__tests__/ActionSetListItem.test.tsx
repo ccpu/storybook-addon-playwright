@@ -5,12 +5,12 @@ import { DeleteConfirmationButton, CheckBox } from '../../common';
 import { ActionSetEditor } from '../ActionSetEditor';
 
 describe('ActionSetListItem', () => {
-  const deleteMock = jest.fn();
-  const editMock = jest.fn();
-  const onCheckMock = jest.fn();
+  const deleteMock = vi.fn();
+  const editMock = vi.fn();
+  const onCheckMock = vi.fn();
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -127,7 +127,7 @@ describe('ActionSetListItem', () => {
   });
 
   it('should catt copy action set', () => {
-    const copyMock = jest.fn();
+    const copyMock = vi.fn();
     const wrapper = shallow(
       <ActionSetListItem
         item={{ actions: [], id: 'action-set-id', title: 'desc' }}

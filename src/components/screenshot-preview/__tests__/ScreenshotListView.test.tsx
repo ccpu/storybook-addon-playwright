@@ -7,10 +7,10 @@ import { Toolbar } from '../Toolbar';
 import { InputDialog, Loader } from '../../common';
 
 describe('ScreenshotList', () => {
-  const onCloseMock = jest.fn();
+  const onCloseMock = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -23,8 +23,8 @@ describe('ScreenshotList', () => {
   it('should not have screenshot view if there is no active browser', () => {
     useActiveBrowserMock.mockImplementationOnce(() => ({
       activeBrowsers: [],
-      isDisabled: jest.fn(),
-      toggleBrowser: jest.fn(),
+      isDisabled: vi.fn(),
+      toggleBrowser: vi.fn(),
     }));
 
     const wrapper = shallow(
@@ -85,8 +85,8 @@ describe('ScreenshotList', () => {
   it('should save screenshot', () => {
     useActiveBrowserMock.mockImplementation(() => ({
       activeBrowsers: ['chromium', 'firefox'],
-      isDisabled: jest.fn(),
-      toggleBrowser: jest.fn(),
+      isDisabled: vi.fn(),
+      toggleBrowser: vi.fn(),
     }));
 
     const wrapper = shallow(

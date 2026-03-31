@@ -1,15 +1,32 @@
-/// <reference types="jest" />
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import 'jest-extended';
+import type {
+  Assertion,
+  AsymmetricMatchersContaining,
+  Mock as VitestMock,
+  Mocked as VitestMocked,
+} from 'vitest';
+import type { MatchImageSnapshotOptions } from 'jest-image-snapshot';
+
+declare module 'vitest' {
+  interface Assertion<T = any> {
+    toMatchImageSnapshot(options?: MatchImageSnapshotOptions): T;
+    toMatchScreenshots(options?: MatchImageSnapshotOptions): T;
+  }
+
+  interface AsymmetricMatchersContaining {
+    toMatchImageSnapshot(options?: MatchImageSnapshotOptions): void;
+    toMatchScreenshots(options?: MatchImageSnapshotOptions): void;
+  }
+}
 
 declare global {
-  namespace jest {
-    interface Matchers<R> {
-      toMatchScreenshots(options?: MatchImageSnapshotOptions): R;
-    }
-  }
+  type Mock<T extends (...args: any[]) => any = (...args: any[]) => any> =
+    VitestMock<T>;
+  type Mocked<T> = VitestMocked<T>;
+
   interface Window {
     __visible_snackbar_messages__: { [message: string]: boolean };
   }
 }
+
+export type _VitestAssertion = Assertion;
+export type _VitestAsymmetricMatchersContaining = AsymmetricMatchersContaining;

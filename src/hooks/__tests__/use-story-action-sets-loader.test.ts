@@ -1,11 +1,10 @@
 import { useStoryActionSetsLoader } from '../use-story-action-sets-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ActionProvider } from '../../store/actions/ActionContext';
-import { mocked } from 'ts-jest/utils';
 import { getActionSet } from '../../features/action-set/action-set.client';
 import { ActionSet } from '../../typings';
 
-jest.mock('../../features/action-set/action-set.client');
+vi.mock('../../features/action-set/action-set.client');
 
 describe('useStoryFileActionSets', () => {
   let cnt = 0;
@@ -34,7 +33,7 @@ describe('useStoryFileActionSets', () => {
   ];
 
   it('should load once', async () => {
-    mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
+    vi.mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
 
     const fileInfo = getFileInfo();
 
@@ -58,7 +57,7 @@ describe('useStoryFileActionSets', () => {
   });
 
   it('should handle error and retry', async () => {
-    mocked(getActionSet).mockRejectedValueOnce(new Error('bad url'));
+    vi.mocked(getActionSet).mockRejectedValueOnce(new Error('bad url'));
 
     const fileInfo = getFileInfo();
 
@@ -71,7 +70,7 @@ describe('useStoryFileActionSets', () => {
 
     expect(result.current.error).toStrictEqual('bad url');
 
-    mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
+    vi.mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
 
     act(() => {
       result.current.retry();

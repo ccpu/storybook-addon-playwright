@@ -2,16 +2,16 @@ import { useSnackbar as notistackUseSnackbar } from 'notistack';
 import { useSnackbar } from '../use-snackbar';
 import { renderHook, act } from '@testing-library/react-hooks';
 
-const closeSnackbarMock = jest.fn();
-const enqueueSnackbarMock = jest.fn();
-(notistackUseSnackbar as jest.Mock).mockImplementation(() => ({
+const closeSnackbarMock = vi.fn();
+const enqueueSnackbarMock = vi.fn();
+(notistackUseSnackbar as Mock).mockImplementation(() => ({
   closeSnackbar: closeSnackbarMock,
   enqueueSnackbar: enqueueSnackbarMock,
 }));
 
 describe('useSnackbar', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should do nothing', () => {

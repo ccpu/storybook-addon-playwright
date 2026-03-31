@@ -1,3 +1,3 @@
-export const useGlobalActionDispatch = jest.fn();
+export const useGlobalActionDispatch = vi.fn();
 
 useGlobalActionDispatch.mockImplementation((callBack) => callBack());

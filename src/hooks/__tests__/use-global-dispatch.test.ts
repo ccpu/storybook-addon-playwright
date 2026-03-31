@@ -9,12 +9,12 @@ describe('useGlobalDispatch', () => {
   });
 
   it('should register callback', () => {
-    renderHook(() => useGlobalDispatch('actions', jest.fn()));
+    renderHook(() => useGlobalDispatch('actions', vi.fn()));
     expect(Object.keys(_dispatchFuncs)[0]).toStrictEqual('actions');
   });
 
   it('should call dispatch func', () => {
-    const cbMock = jest.fn();
+    const cbMock = vi.fn();
     const { result } = renderHook(() => useGlobalDispatch('actions', cbMock));
     result.current.dispatch({ type: 'action' });
     expect(cbMock).toHaveBeenCalledWith({ type: 'action' });
@@ -32,7 +32,7 @@ describe('useGlobalDispatch', () => {
 
     try {
       result.current.dispatch({ type: 'action2' });
-      // eslint-disable-next-line jest/no-conditional-expect
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(true).toBe(false);
     } catch (error) {
       expect(error.message).toBe('Dispatch id not registered yet!');

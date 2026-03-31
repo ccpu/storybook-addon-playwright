@@ -3,10 +3,9 @@ import { ScreenshotMain } from '../ScreenshotMain';
 import { shallow } from 'enzyme';
 import { ScreenshotPanel } from '../ScreenshotPanel';
 import { useScreenshotUpdateState } from '../../../hooks/use-screenshot-update-state';
-import { mocked } from 'ts-jest/utils';
 import { MemoizedStoryScreenshotPreview } from '../StoryScreenshotPreview';
 
-jest.mock('../../../hooks/use-screenshot-update-state.ts');
+vi.mock('../../../hooks/use-screenshot-update-state.ts');
 
 describe('ScreenshotMain', () => {
   it('should render', () => {
@@ -15,11 +14,11 @@ describe('ScreenshotMain', () => {
   });
 
   it('should render screenshot list preview', () => {
-    mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
-      handleClose: jest.fn(),
-      handleLoadingDone: jest.fn(),
-      runDiffTest: jest.fn(),
-      setIsLoadingFinish: jest.fn(),
+    vi.mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
+      handleClose: vi.fn(),
+      handleLoadingDone: vi.fn(),
+      runDiffTest: vi.fn(),
+      setIsLoadingFinish: vi.fn(),
       updateInf: {
         reqBy: 'req-id',
       },

@@ -6,8 +6,8 @@ import { useDragStart } from '../../../hooks/use-drag-start';
 import { ListWrapperSortableContainer } from '../../common';
 import { SortEnd, SortEvent, SortStart } from 'react-sortable-hoc';
 
-jest.mock('../../../hooks/use-screenshot-index-change');
-jest.mock('../../../hooks/use-drag-start');
+vi.mock('../../../hooks/use-screenshot-index-change');
+vi.mock('../../../hooks/use-drag-start');
 
 describe('ScreenshotListSortable', () => {
   it('should render', () => {
@@ -16,9 +16,9 @@ describe('ScreenshotListSortable', () => {
   });
 
   it('should handle sort start', () => {
-    const sortStartMock = jest.fn();
+    const sortStartMock = vi.fn();
 
-    (useDragStart as jest.Mock).mockImplementationOnce(() => ({
+    (useDragStart as Mock).mockImplementationOnce(() => ({
       setDragStart: sortStartMock,
     }));
 
@@ -32,9 +32,9 @@ describe('ScreenshotListSortable', () => {
   });
 
   it('should handle sort end', () => {
-    const sortEndMock = jest.fn();
+    const sortEndMock = vi.fn();
 
-    (useScreenshotIndexChange as jest.Mock).mockImplementationOnce(() => ({
+    (useScreenshotIndexChange as Mock).mockImplementationOnce(() => ({
       ChangeIndexErrorSnackbar: () => <div />,
       ChangeIndexInProgress: false,
       changeIndex: sortEndMock,

@@ -1,12 +1,12 @@
 import { getActionSet } from '../get-action-set';
 // import '../../../../../__manual_mocks__/nanoid';
 
-jest.mock('../../utils/save-story-file');
-jest.mock('../../utils/load-story-data');
+vi.mock('../../utils/save-story-file');
+vi.mock('../../utils/load-story-data');
 
 describe('getActionSet', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('should have action set', async () => {
     const data = await getActionSet({

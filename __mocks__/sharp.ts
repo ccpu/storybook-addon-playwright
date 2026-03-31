@@ -1,27 +1,27 @@
 type SharpChain = {
-  composite: jest.Mock;
-  extend: jest.Mock;
-  modulate: jest.Mock;
-  sharpen: jest.Mock;
-  resize: jest.Mock;
-  png: jest.Mock;
-  toFormat: jest.Mock;
-  toBuffer: jest.Mock;
-  metadata: jest.Mock;
+  composite: Mock;
+  extend: Mock;
+  modulate: Mock;
+  sharpen: Mock;
+  resize: Mock;
+  png: Mock;
+  toFormat: Mock;
+  toBuffer: Mock;
+  metadata: Mock;
 };
 
 const createChain = (input?: Buffer) => {
   const chain = {} as SharpChain;
 
-  chain.composite = jest.fn(() => chain);
-  chain.extend = jest.fn(() => chain);
-  chain.modulate = jest.fn(() => chain);
-  chain.sharpen = jest.fn(() => chain);
-  chain.resize = jest.fn(() => chain);
-  chain.png = jest.fn(() => chain);
-  chain.toFormat = jest.fn(() => chain);
-  chain.toBuffer = jest.fn(async () => input ?? Buffer.from('sharp'));
-  chain.metadata = jest.fn(async () => ({
+  chain.composite = vi.fn(() => chain);
+  chain.extend = vi.fn(() => chain);
+  chain.modulate = vi.fn(() => chain);
+  chain.sharpen = vi.fn(() => chain);
+  chain.resize = vi.fn(() => chain);
+  chain.png = vi.fn(() => chain);
+  chain.toFormat = vi.fn(() => chain);
+  chain.toBuffer = vi.fn(async () => input ?? Buffer.from('sharp'));
+  chain.metadata = vi.fn(async () => ({
     height: 1,
     width: 1,
   }));
@@ -29,6 +29,6 @@ const createChain = (input?: Buffer) => {
   return chain;
 };
 
-const sharp = jest.fn((input?: Buffer) => createChain(input));
+const sharp = vi.fn((input?: Buffer) => createChain(input));
 
 export default sharp;

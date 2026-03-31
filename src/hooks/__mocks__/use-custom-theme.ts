@@ -1,7 +1,6 @@
 import { createTheme } from '@material-ui/core/styles';
-import { mocked } from 'ts-jest/utils';
 
-export const useCustomTheme = jest.fn();
+export const useCustomTheme = vi.fn();
 
 const theme = createTheme({
   palette: {
@@ -11,6 +10,6 @@ const theme = createTheme({
   },
 });
 
-mocked(useCustomTheme).mockImplementation(() => ({
+vi.mocked(useCustomTheme).mockImplementation(() => ({
   theme,
 }));

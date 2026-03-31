@@ -1,10 +1,10 @@
 import { storyFileInfo } from '../../__test_data__/story-file-info';
 
-export const loadStoryDataMock = jest.fn();
+export const loadStoryDataMock = vi.fn();
 
-jest.unmock('../../src/api/server/utils/load-story-data');
+vi.unmock('../../src/api/server/utils/load-story-data');
 
-jest.mock('../../src/api/server/utils/load-story-data', () => ({
+vi.mock('../../src/api/server/utils/load-story-data', () => ({
   loadStoryData: loadStoryDataMock,
 }));
 

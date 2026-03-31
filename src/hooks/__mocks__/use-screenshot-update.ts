@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 
-const useScreenshotUpdate = jest.fn();
+const useScreenshotUpdate = vi.fn();
 
 useScreenshotUpdate.mockImplementation(() => ({
   UpdateScreenshotErrorSnackbar: createElement('div'),

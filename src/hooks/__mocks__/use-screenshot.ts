@@ -1,5 +1,5 @@
-export const useScreenshot = jest.fn().mockImplementation(() => ({
-  getSnapshot: jest.fn(),
+export const useScreenshot = vi.fn().mockImplementation(() => ({
+  getSnapshot: vi.fn(),
   loading: false,
   screenshot: undefined,
 }));

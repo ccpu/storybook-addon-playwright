@@ -3,12 +3,12 @@ import { useScreenshotImageDiffResults } from '../use-screenshot-imageDiff-resul
 import { renderHook, act } from '@testing-library/react-hooks';
 import { testScreenshots } from '../../features/screenshot/screenshot.client';
 
-jest.mock('../use-current-story-data');
-jest.mock('../../features/screenshot/screenshot.client');
+vi.mock('../use-current-story-data');
+vi.mock('../../features/screenshot/screenshot.client');
 
 describe('useScreenshotImageDiffResults', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should have result', async () => {

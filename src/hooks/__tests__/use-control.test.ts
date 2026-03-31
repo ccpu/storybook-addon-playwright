@@ -4,8 +4,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { ControlProps } from '../../typings';
 
 describe('useControl', () => {
-  const onAppendValueToTitleMock = jest.fn();
-  const onChangeMock = jest.fn();
+  const onAppendValueToTitleMock = vi.fn();
+  const onChangeMock = vi.fn();
   const getControlOptions = (): ControlProps => {
     return {
       appendValueToTitle: false,

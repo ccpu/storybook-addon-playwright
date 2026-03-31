@@ -1,3 +1,14 @@
+// Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
+// React.useEffect doesn't intercept static ESM named imports in vitest (unlike
+// babel-jest which uses live property reads). The mock routes useEffect calls
+// through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('react', async (importOriginal) => {
+  const actual = await importOriginal<any>();
+  const hook = (fn: any, deps?: any) =>
+    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  return { ...actual, default: patchedDefault, useEffect: hook };
+});
 import '../../../../__manual_mocks__/react-useEffect';
 import {
   ScreenshotProvider,
@@ -11,20 +22,20 @@ import { useReducer } from 'reinspect';
 import { useGlobalImageDiffResults } from '../../../hooks//use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
 
-jest.mock('../../../hooks/use-global-screenshot-dispatch.ts');
-jest.mock('../../../hooks//use-global-imageDiff-results');
+vi.mock('../../../hooks/use-global-screenshot-dispatch.ts');
+vi.mock('../../../hooks//use-global-imageDiff-results');
 
-const useReducerMock = useReducer as jest.Mock;
+const useReducerMock = useReducer as Mock;
 useReducerMock.mockImplementation(
   (_reducer: unknown, _initialState: unknown, initialStateFn: () => void) => {
     if (initialStateFn) initialStateFn();
-    return [{ imageDiffResults: [] }, jest.fn()];
+    return [{ imageDiffResults: [] }, vi.fn()];
   },
 );
 
 describe('ScreenshotProvider', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render', () => {
@@ -33,13 +44,13 @@ describe('ScreenshotProvider', () => {
   });
 
   it('should handle global action call', () => {
-    const dispatchMock = jest.fn();
+    const dispatchMock = vi.fn();
     let dispatchCallBack;
     useReducerMock.mockImplementationOnce(() => {
       return [{ imageDiffResults: [] }, dispatchMock];
     });
 
-    (useGlobalScreenshotDispatch as jest.Mock).mockImplementation((cb) => {
+    (useGlobalScreenshotDispatch as Mock).mockImplementation((cb) => {
       dispatchCallBack = cb;
     });
     shallow(<ScreenshotProvider />);
@@ -48,8 +59,8 @@ describe('ScreenshotProvider', () => {
   });
 
   it('should set image set failed image diff result on mount', () => {
-    const dispatchMock = jest.fn();
-    const setImageDiffResultMock = jest.fn();
+    const dispatchMock = vi.fn();
+    const setImageDiffResultMock = vi.fn();
 
     useReducerMock.mockImplementationOnce(() => {
       return [
@@ -62,7 +73,7 @@ describe('ScreenshotProvider', () => {
       ];
     });
 
-    (useGlobalImageDiffResults as jest.Mock).mockImplementationOnce(() => ({
+    (useGlobalImageDiffResults as Mock).mockImplementationOnce(() => ({
       setImageDiffResult: setImageDiffResultMock,
     }));
 

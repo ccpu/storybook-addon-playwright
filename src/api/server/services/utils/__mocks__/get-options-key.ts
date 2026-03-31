@@ -1,1 +1,1 @@
-export const getOptionsKey = jest.fn();
+export const getOptionsKey = vi.fn();

@@ -1,5 +1,5 @@
-const makeMutation = () => ({ mutate: jest.fn().mockResolvedValue(undefined) });
-const makeQuery = () => ({ query: jest.fn().mockResolvedValue(undefined) });
+const makeMutation = () => ({ mutate: vi.fn().mockResolvedValue(undefined) });
+const makeQuery = () => ({ query: vi.fn().mockResolvedValue(undefined) });
 
 export const trpc = {
   actionSet: {

@@ -1,6 +1,6 @@
 import { defaultConfigs } from '../../../../__test_data__/configs';
 
-const getConfigs = jest.fn();
+const getConfigs = vi.fn();
 
 getConfigs.mockImplementation(() => {
   return defaultConfigs();

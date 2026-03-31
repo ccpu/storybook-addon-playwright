@@ -1,14 +1,14 @@
-jest.mock('../../trpc/client');
+vi.mock('../../trpc/client');
 
 import { trpc } from '../../trpc/client';
 import { getActionsSchema, getSchema } from './schema.client';
 
 describe('schema client', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => vi.clearAllMocks());
 
   it('getActionsSchema calls trpc.schema.getActionsSchema.query', async () => {
     const mockResponse = { click: { schema: {} } };
-    (trpc.schema.getActionsSchema.query as jest.Mock).mockResolvedValueOnce(
+    (trpc.schema.getActionsSchema.query as Mock).mockResolvedValueOnce(
       mockResponse,
     );
 
@@ -20,9 +20,7 @@ describe('schema client', () => {
 
   it('getSchema calls trpc.schema.getSchema.mutate', async () => {
     const mockResponse = { properties: {}, type: 'object' };
-    (trpc.schema.getSchema.mutate as jest.Mock).mockResolvedValueOnce(
-      mockResponse,
-    );
+    (trpc.schema.getSchema.mutate as Mock).mockResolvedValueOnce(mockResponse);
 
     const input = { schemaName: 'browser-options' };
     const result = await getSchema(input as any);

@@ -1,3 +1,3 @@
-const saveActionSet = jest.fn();
+const saveActionSet = vi.fn();
 
 export { saveActionSet };

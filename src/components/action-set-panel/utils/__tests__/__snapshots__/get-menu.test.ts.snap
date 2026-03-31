@@ -1,16 +1,16 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getMenu should return valid 1`] = `
-Array [
-  Object {
+exports[`getMenu > should return valid 1`] = `
+[
+  {
     "label": "click",
     "name": "click",
   },
-  Object {
+  {
     "label": "mouse.click",
     "name": "mouse.click",
   },
-  Object {
+  {
     "label": "mouse.dblclick",
     "name": "mouse.dblclick",
   },

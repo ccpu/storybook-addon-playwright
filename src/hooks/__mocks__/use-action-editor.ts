@@ -1,1 +1,1 @@
-export const useActionEditor = jest.fn();
+export const useActionEditor = vi.fn();

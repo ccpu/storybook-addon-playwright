@@ -113,6 +113,7 @@
     "watch": "tsc -w -p tsconfig.release.json",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "node ./scripts/test.mjs",
+    "test:coverage": "node ./scripts/test.mjs --coverage",
     "test:watch": "vitest",
     "prepack": "pnpm run lint && pnpm run build"
   },

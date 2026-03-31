@@ -21,7 +21,12 @@ export default defineConfig({
       // for the middleware.test.js test.
       {
         find: /dist[/\\]trpc[/\\]router(\.js)?$/,
-        replacement: path.resolve(__dirname, 'dist/trpc/router.test-mock.cjs'),
+        replacement: path.resolve(__dirname, '__mocks__/dist-trpc-router.cjs'),
+      },
+      // Prevent the real compiled tRPC context from loading during tests.
+      {
+        find: /dist[/\\]trpc[/\\]context(\.js)?$/,
+        replacement: path.resolve(__dirname, '__mocks__/dist-trpc-context.cjs'),
       },
       // Always use the mock version of join-images (mirrors jest moduleNameMapper)
       {
@@ -39,8 +44,15 @@ export default defineConfig({
       reportsDirectory: './coverage',
     },
     environment: 'jsdom',
-    exclude: ['**/node_modules/**', '**/dist/**', '**/stories/**'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/stories/**',
+      'middleware.test.js',
+    ],
     globals: true,
+    pool: 'vmThreads',
+    useAtomics: true,
     server: {
       deps: {
         // Process ESM-only packages through Vite (mirrors transformIgnorePatterns)

@@ -1,9 +1,7 @@
-// Changed: The original test used CJS require() which vitest's ESM vi.mock()
-// cannot intercept for the deep dist/ CJS require chain. The fix uses a
-// Module._load patch in setupTests.vitest-globals.ts to intercept sharp,
-// join-images, @trpc/server/adapters/fetch, and dist/trpc/router at the
-// native Node module level. Test reverted to require() so it picks up the
-// same patches as middleware.js does.
+// The test relies on the Module._load patch in setupTests.vitest-globals.ts
+// to intercept CJS require() chains for sharp, join-images,
+// @trpc/server/adapters/fetch, and dist/trpc/router at the native Node level.
+// This only works in the 'forks' pool (see vitest.workspace.ts).
 
 const middleware = require('./middleware');
 const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');

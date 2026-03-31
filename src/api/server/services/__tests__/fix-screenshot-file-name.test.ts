@@ -3,6 +3,7 @@ import { saveStoryFile } from '../../utils/save-story-file';
 import { fixScreenshotFileName } from '../fix-screenshot-file-name';
 import { getStoryPlaywrightDataByFileName } from '../utils/get-story-playwright-data-by-file-name';
 import fs from 'fs';
+import path from 'path';
 import { PlaywrightData } from '../../../../typings';
 import { getStoryPlaywrightFileInfo } from '../../utils/get-story-playwright-file-info';
 
@@ -72,8 +73,14 @@ describe('fixScreenshotFileName', () => {
         },
       });
       expect(fs.renameSync).toHaveBeenCalledWith(
-        'screenShots-dir\\story-title-func-name-screenshot-title-chromium-snap.png',
-        'screenShots-dir\\new-title-func-name-screenshot-title-chromium-snap.png',
+        path.join(
+          'screenShots-dir',
+          'story-title-func-name-screenshot-title-chromium-snap.png',
+        ),
+        path.join(
+          'screenShots-dir',
+          'new-title-func-name-screenshot-title-chromium-snap.png',
+        ),
       );
     });
 

@@ -1,5 +1,5 @@
 import { ScreenshotPanel } from '../ScreenshotPanel';
-import { ScreenshotMain } from '../../screenshot-panel/ScreenshotMain';
+import { ScreenshotMain } from '../../../features/screenshot/components/screenshot-panel/ScreenshotMain';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useStorybookState } from '@storybook/manager-api';

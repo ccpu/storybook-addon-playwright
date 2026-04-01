@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles, Divider, Button } from '@material-ui/core';
-import { MemoizedSchemaRenderer } from '../schema';
+import { MemoizedSchemaRenderer } from '../../features/schema/components/index';
 import { Config } from 'ts-to-json/dist/src/Config';
 import { useAsyncApiCall } from '../../hooks';
 import { Loader } from './Loader';

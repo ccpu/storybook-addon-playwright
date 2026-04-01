@@ -1,0 +1,52 @@
+import { useEffect, useCallback, useRef } from 'react';
+import { getStoryScreenshots } from '../screenshot.client';
+import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
+import { useScreenshotDispatch } from '../store/index';
+import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+
+export const useStoryScreenshotLoader = () => {
+  const dispatch = useScreenshotDispatch();
+
+  const loadedStoryId = useRef<string>();
+
+  const storyData = useCurrentStoryData();
+
+  const {
+    makeCall,
+    error,
+    inProgress: screenshotLoaderInProgress,
+    ErrorSnackbar: ScreenshotLoaderErrorSnackbar,
+  } = useAsyncApiCall(getStoryScreenshots, false);
+
+  const loadScreenShots = useCallback(async () => {
+    const result = await makeCall({
+      fileName: storyData.parameters.fileName,
+      storyId: storyData.id,
+    });
+    if (result instanceof Error) return;
+    loadedStoryId.current = storyData.id;
+    dispatch({ screenshots: result, type: 'setScreenshots' });
+  }, [dispatch, makeCall, storyData]);
+
+  useEffect(() => {
+    if (
+      screenshotLoaderInProgress ||
+      !storyData ||
+      !storyData.parameters ||
+      error
+    )
+      return;
+    if (loadedStoryId.current && loadedStoryId.current === storyData.id) {
+      return;
+    }
+    loadScreenShots();
+  }, [dispatch, error, loadScreenShots, screenshotLoaderInProgress, storyData]);
+
+  return {
+    ScreenshotLoaderErrorSnackbar,
+    error,
+    loadScreenShots,
+    screenshotLoaderInProgress,
+    storyData,
+  };
+};

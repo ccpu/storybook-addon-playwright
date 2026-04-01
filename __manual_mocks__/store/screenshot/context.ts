@@ -1,6 +1,6 @@
-import { ReducerState } from '../../../src/store/screenshot/reducer';
+import { ReducerState } from '../../../src/features/screenshot/store/reducer';
 
-vi.unmock('../../../src/store/screenshot/context');
+vi.unmock('../../../src/features/screenshot/store/context');
 
 export const dispatchMock = vi.fn();
 
@@ -10,7 +10,7 @@ const mockData: Partial<ReducerState> = {
 
 export const useScreenShotContext = vi.fn(() => mockData);
 
-vi.mock('../../../src/store/screenshot/context', () => ({
+vi.mock('../../../src/features/screenshot/store/context', () => ({
   useScreenshotContext: useScreenShotContext,
   useScreenshotDispatch: () => {
     return (...arg) => {

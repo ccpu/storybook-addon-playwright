@@ -3,9 +3,9 @@ import { ThemeProvider } from '../ThemeProvider';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useStorybookState } from '@storybook/manager-api';
-import { useCustomTheme } from '../../../hooks/use-custom-theme';
+import { useCustomTheme } from '../../../features/theme/hooks/use-custom-theme';
 
-vi.mock('../../../hooks/use-custom-theme.ts');
+vi.mock('../../../features/theme/hooks/use-custom-theme.ts');
 const useCustomThemeMock = useCustomTheme as Mock;
 
 describe('ThemeProvider', () => {

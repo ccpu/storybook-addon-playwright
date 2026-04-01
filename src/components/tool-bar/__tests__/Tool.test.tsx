@@ -2,7 +2,7 @@ import { Tool } from '../Tool';
 import { shallow } from 'enzyme';
 import React from 'react';
 import WebOutlined from '@material-ui/icons/Launch';
-import { PreviewDialog } from '../../screenshot-preview';
+import { PreviewDialog } from '../../../features/screenshot/components/screenshot-preview/index';
 import { LayoutBottom, LayoutRight } from '../../../icons';
 import { useAddonState } from '../../../hooks//use-addon-state';
 import { useStorybookState } from '@storybook/manager-api';

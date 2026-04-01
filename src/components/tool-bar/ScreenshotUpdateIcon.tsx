@@ -3,7 +3,7 @@ import { ScreenshotTestTargetType } from '../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton } from '@storybook/components';
 import { Loader } from '../common';
-import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
+import { useScreenshotUpdateState } from '../../features/screenshot/hooks/use-screenshot-update-state';
 
 export interface ScreenshotUpdateIconProps {
   target: ScreenshotTestTargetType;

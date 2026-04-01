@@ -4,8 +4,8 @@ import { ImageDiff } from '../ImageDiff';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { useScreenshotImageDiffResults } from '../../../hooks/use-screenshot-imageDiff-results';
-import { useGlobalImageDiffResults } from '../../../hooks/use-global-imageDiff-results';
+import { useScreenshotImageDiffResults } from '../../../features/screenshot/hooks/use-screenshot-imageDiff-results';
+import { useGlobalImageDiffResults } from '../../../features/screenshot/hooks/use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../ImageDiffMenuItem';
@@ -21,9 +21,11 @@ vi.mocked(useSnackbar).mockImplementation(() => ({
   openSnackbar: openSnackbarMock,
 }));
 
-vi.mock('../../../hooks/use-global-imageDiff-results.ts');
-vi.mock('../../../hooks/use-screenshot-imageDiff-results.ts');
-vi.mock('../../../hooks/use-global-screenshot-dispatch.ts');
+vi.mock('../../../features/screenshot/hooks/use-global-imageDiff-results.ts');
+vi.mock(
+  '../../../features/screenshot/hooks/use-screenshot-imageDiff-results.ts',
+);
+vi.mock('../../../features/screenshot/hooks/use-global-screenshot-dispatch.ts');
 vi.mock('../../../hooks/use-current-story-data');
 
 const screenshotDispatchMock = vi.fn();

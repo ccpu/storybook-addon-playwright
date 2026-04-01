@@ -1,11 +1,11 @@
 import { EditScreenshotAlert } from '../EditScreenshotAlert';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useEditScreenshot } from '../../../hooks//use-edit-screenshot';
+import { useEditScreenshot } from '../../../features/screenshot/hooks/use-edit-screenshot';
 import { Alert } from '@material-ui/lab';
 import { Button } from '@material-ui/core';
 
-vi.mock('../../../hooks//use-edit-screenshot');
+vi.mock('../../../features/screenshot/hooks/use-edit-screenshot');
 
 describe('EditScreenshotAlert', () => {
   it('should render nothing when editScreenshotState is not defined', () => {

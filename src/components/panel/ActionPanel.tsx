@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { ActionSetMain } from '../action-set-panel';
+import { ActionSetMain } from '../../features/action-set/components/action-set-panel/index';
 import { CommonProvider } from '../common';
 import { ActionProvider } from '../../store';
 

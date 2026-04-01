@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStorybookState } from '@storybook/manager-api';
-import { ScreenshotMain } from '../screenshot-panel/ScreenshotMain';
+import { ScreenshotMain } from '../../features/screenshot/components/screenshot-panel/ScreenshotMain';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
 
 const ScreenshotPanel: React.FC = () => {

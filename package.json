@@ -170,6 +170,9 @@
     "displayName": "Playwright"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ],
     "overrides": {
       "enzyme>cheerio": "1.0.0-rc.12"
     }

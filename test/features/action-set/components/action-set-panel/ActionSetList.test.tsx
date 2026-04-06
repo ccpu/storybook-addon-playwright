@@ -1,4 +1,9 @@
-import { dispatchMock } from '../../../../manual-mocks/store/action/context';
+import {
+  dispatchMock,
+  deleteActionSetMock as deleteActionSetStoreMock,
+  editActionSetMock,
+  toggleCurrentActionSetMock,
+} from '../../../../manual-mocks/store/action/context';
 import { ActionSetList } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetList';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -105,13 +110,10 @@ describe('ActionSetList', () => {
 
     await new Promise((resolve) => setTimeout(resolve, 100));
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSetId: 'action-set-id',
-        storyId: 'story-id',
-        type: 'deleteActionSet',
-      },
-    ]);
+    expect(deleteActionSetStoreMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+    });
   });
 
   it('should display error if request failed and close after', async () => {
@@ -145,7 +147,7 @@ describe('ActionSetList', () => {
     const list = wrapper.find(SortableActionSetListItem);
     list.props().onEdit({ id: 'action-set-id' } as ActionSet);
 
-    expect(dispatchMock).toHaveBeenCalledTimes(1);
+    expect(editActionSetMock).toHaveBeenCalledTimes(1);
   });
 
   it('should toggle story current action sets', () => {
@@ -159,9 +161,7 @@ describe('ActionSetList', () => {
 
     list.props().onCheckBoxClick({ id: 'action-set-id' } as ActionSet);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { actionSetId: 'action-set-id', type: 'toggleCurrentActionSet' },
-    ]);
+    expect(toggleCurrentActionSetMock).toHaveBeenCalledWith('action-set-id');
   });
 
   it('should show action set loader error and retry', () => {

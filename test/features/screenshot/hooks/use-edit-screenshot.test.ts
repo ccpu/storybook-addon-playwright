@@ -1,4 +1,7 @@
-import { useGlobalActionDispatch } from '../../../../src/features/action-set/hooks/use-global-action-dispatch';
+import {
+  deleteTempActionSetsMock,
+  clearCurrentActionSetsMock,
+} from '../../../manual-mocks/store/action/context';
 import { useEditScreenshot } from '../../../../src/features/screenshot/hooks/use-edit-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useCurrentStoryData } from '../../../../src/hooks/use-current-story-data';
@@ -6,11 +9,6 @@ import { StoryData } from '../../../../src/typings';
 import { useAddonState } from '../../../../src/hooks/use-addon-state';
 import { useLoadScreenshotSettings } from '../../../../src/features/screenshot/hooks/use-load-screenshot-settings';
 
-vi.mock(
-  '../../../../src/features/action-set/hooks/use-global-action-dispatch',
-  async () =>
-    await import('../../action-set/hooks/__mocks__/use-global-action-dispatch'),
-);
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
@@ -38,14 +36,10 @@ vi.mocked(useLoadScreenshotSettings).mockImplementation(() => ({
 const useCurrentStoryDataMock = vi.mocked(useCurrentStoryData);
 
 describe('useEditScreenshot', () => {
-  const dispatchMock = vi.fn();
   const setAddonStateMock = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (useGlobalActionDispatch as Mock).mockImplementation(() => ({
-      dispatch: dispatchMock,
-    }));
 
     (useAddonState as Mock).mockImplementation(() => {
       return {
@@ -103,13 +97,8 @@ describe('useEditScreenshot', () => {
     });
 
     expect(result.current.editScreenshotState).toStrictEqual(undefined);
-    expect(dispatchMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      type: 'deleteTempActionSets',
-    });
-    expect(dispatchMock).toHaveBeenCalledWith({
-      type: 'clearCurrentActionSets',
-    });
+    expect(deleteTempActionSetsMock).toHaveBeenCalledWith('story-id');
+    expect(clearCurrentActionSetsMock).toHaveBeenCalled();
 
     expect(loadSettingMock).toHaveBeenNthCalledWith(
       3,

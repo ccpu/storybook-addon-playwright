@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { removeStoryScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
 import { useDeleteStoryScreenshot } from '../../../../src/features/screenshot/hooks/use-delete-story-screenshots';
 import { deleteStoryScreenshots } from '../../../../src/api/trpc/clients/screenshot.client';
 import { renderHook, act } from '@testing-library/react-hooks';
@@ -30,9 +30,7 @@ describe('useDeleteStoryScreenshot', () => {
       storyId: 'story-id',
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'removeStoryScreenshots' },
-    ]);
+    expect(removeStoryScreenshotsMock).toHaveBeenCalled();
   });
 
   it('should not dispatch on error', async () => {
@@ -43,6 +41,6 @@ describe('useDeleteStoryScreenshot', () => {
       await result.current.deleteStoryScreenshots();
     });
 
-    expect(dispatchMock).toHaveBeenCalledTimes(0);
+    expect(removeStoryScreenshotsMock).toHaveBeenCalledTimes(0);
   });
 });

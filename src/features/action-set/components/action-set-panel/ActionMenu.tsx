@@ -1,7 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Menu, makeStyles } from '@material-ui/core';
 import { ActionMenuItem, ActionMenuItemBase } from './ActionMenuItem';
-import { useActionContext } from '../../store/index';
+import { useActionSetStoreState } from '../../store/index';
 import { getMenu } from './utils/index';
 
 const useStyles = makeStyles(
@@ -24,7 +24,7 @@ export interface ActionMenuProps {
 const ActionMenu: React.FC<ActionMenuProps> = memo((props) => {
   const { onChange, onClose, anchorEl } = props;
 
-  const state = useActionContext();
+  const state = useActionSetStoreState();
 
   const [actionItems, setActionItems] = useState<ActionMenuItemBase[]>([]);
 

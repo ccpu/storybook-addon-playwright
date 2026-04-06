@@ -1,7 +1,7 @@
 import { updateScreenshot as updateScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useCallback } from 'react';
-import { useScreenshotDispatch } from '../store/index';
+import { updateImageDiffResult } from '../store/index';
 import { ImageDiffResult } from '../../../api/typings';
 
 export const useScreenshotUpdate = (successMessage?: string) => {
@@ -13,8 +13,6 @@ export const useScreenshotUpdate = (successMessage?: string) => {
   } = useAsyncApiCall(updateScreenshotClient, false, {
     successMessage,
   });
-
-  const dispatch = useScreenshotDispatch();
 
   const updateScreenshot = useCallback(
     async (imageDiffResult: ImageDiffResult) => {
@@ -36,12 +34,9 @@ export const useScreenshotUpdate = (successMessage?: string) => {
         storyId: imageDiffResult.storyId,
       };
 
-      dispatch({
-        imageDiffResult: newImageDiffResult,
-        type: 'updateImageDiffResult',
-      });
+      updateImageDiffResult(newImageDiffResult);
     },
-    [dispatch, makeCall],
+    [makeCall],
   );
 
   return {

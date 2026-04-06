@@ -1,13 +1,11 @@
 import { useCallback } from 'react';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { deleteScreenshot as deleteScreenshotService } from '../../../api/trpc/clients/screenshot.client';
-import { useScreenshotDispatch } from '../store/index';
+import { deleteScreenshot as deleteScreenshotFromStore } from '../store/index';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 
 export const useDeleteScreenshot = () => {
   const storyData = useCurrentStoryData();
-
-  const dispatch = useScreenshotDispatch();
 
   const { clearError, error, inProgress, makeCall, ErrorSnackbar } =
     useAsyncApiCall(deleteScreenshotService, false, {
@@ -23,10 +21,10 @@ export const useDeleteScreenshot = () => {
       });
 
       if (!(result instanceof Error)) {
-        dispatch({ screenshotId: id, type: 'deleteScreenshot' });
+        deleteScreenshotFromStore(id);
       }
     },
-    [dispatch, makeCall, storyData],
+    [makeCall, storyData],
   );
 
   return {

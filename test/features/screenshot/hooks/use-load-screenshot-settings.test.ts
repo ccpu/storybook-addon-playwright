@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/hooks/use-global-action-dispatch';
+import { setScreenShotActionSetsMock } from '../../../manual-mocks/store/action/context';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useLoadScreenshotSettings } from '../../../../src/features/screenshot/hooks/use-load-screenshot-settings';
 import { ScreenshotData } from '../../../../src/typings';
@@ -64,7 +64,8 @@ describe('useLoadScreenshotSettings', () => {
     act(() => {
       result.current.loadSetting(getData());
     });
-    expect(dispatchMock).toHaveBeenCalledWith({
+    expect(setScreenShotActionSetsMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
       actionSets: [
         {
           actions: [{ id: 'action-id', name: 'action-name' }],
@@ -72,8 +73,6 @@ describe('useLoadScreenshotSettings', () => {
           title: 'action-set-title',
         },
       ],
-      storyId: 'story-id',
-      type: 'setScreenShotActionSets',
     });
   });
 
@@ -86,7 +85,7 @@ describe('useLoadScreenshotSettings', () => {
       result.current.loadSetting(data);
     });
 
-    expect(dispatchMock).toHaveBeenCalledTimes(0);
+    expect(setScreenShotActionSetsMock).toHaveBeenCalledTimes(0);
   });
 
   it('should reset and emit args to update story', () => {

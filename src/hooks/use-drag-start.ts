@@ -1,6 +1,6 @@
-import { useGlobalState } from './use-global-state';
+import { useDragStartValue, setDragStart } from '../store';
 
 export const useDragStart = () => {
-  const [dragStart, setDragStart] = useGlobalState('drag-start', false);
+  const dragStart = useDragStartValue();
   return { dragStart, setDragStart };
 };

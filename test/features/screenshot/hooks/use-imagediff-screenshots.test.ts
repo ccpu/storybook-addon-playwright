@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { setScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
 import { createElement } from 'react';
 import { useImageDiffScreenshots } from '../../../../src/features/screenshot/hooks/use-imagediff-screenshots';
 import { renderHook } from '@testing-library/react-hooks';
@@ -55,9 +55,7 @@ describe('useStoryScreenshotsDiff', () => {
 
     await waitForNextUpdate();
     // expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshots: [{ id: 'screenshot-is' }], type: 'setScreenshots' },
-    ]);
+    expect(setScreenshotsMock).toHaveBeenCalledWith([{ id: 'screenshot-is' }]);
 
     expect(onLoadMock).toHaveBeenCalledTimes(1);
   });
@@ -69,9 +67,7 @@ describe('useStoryScreenshotsDiff', () => {
 
     await waitForNextUpdate();
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshots: [{ id: 'screenshot-is' }], type: 'setScreenshots' },
-    ]);
+    expect(setScreenshotsMock).toHaveBeenCalledWith([{ id: 'screenshot-is' }]);
   });
 
   it('should load all diffs', async () => {
@@ -81,9 +77,7 @@ describe('useStoryScreenshotsDiff', () => {
 
     await waitForNextUpdate();
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshots: [{ id: 'screenshot-is' }], type: 'setScreenshots' },
-    ]);
+    expect(setScreenshotsMock).toHaveBeenCalledWith([{ id: 'screenshot-is' }]);
   });
 
   it('should not load', () => {

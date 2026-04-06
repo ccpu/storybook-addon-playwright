@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useStorybookState } from '@storybook/manager-api';
 import { ActionSet } from '../../../typings';
-import { useActionContext } from '../../../store';
+import { useActionSetStoreState } from '../../../store';
 
 export const useCurrentStoryActionSets = () => {
   const storybookState = useStorybookState();
 
-  const state = useActionContext();
+  const state = useActionSetStoreState();
 
   const [storyActionSets, setStoryActionSets] = useState<ActionSet[]>([]);
 

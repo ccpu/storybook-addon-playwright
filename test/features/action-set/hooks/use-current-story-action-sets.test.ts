@@ -1,10 +1,11 @@
 import { useCurrentStoryActionSets } from '../../../../src/features/action-set/hooks/use-current-story-action-sets';
 import { renderHook } from '@testing-library/react-hooks';
-import { useActionContext } from '../../../../src/features/action-set/store/ActionContext';
+import { useActionSetStoreState } from '../../../../src/features/action-set/store/selectors';
 import { ActionSet } from '../../../../src/typings';
 
-vi.mock('../../../../src/features/action-set/store/ActionContext', () => ({
-  useActionContext: vi.fn(),
+vi.mock('../../../../src/features/action-set/store/selectors', () => ({
+  useActionSetStoreState: vi.fn(),
+  getActionSetState: vi.fn(),
 }));
 
 describe('useCurrentStoryActionSets', () => {
@@ -12,11 +13,11 @@ describe('useCurrentStoryActionSets', () => {
     vi.clearAllMocks();
   });
   afterAll(() => {
-    (useActionContext as Mock).mockRestore();
+    (useActionSetStoreState as Mock).mockRestore();
   });
 
   it('should not have action', () => {
-    (useActionContext as Mock).mockReturnValue({});
+    (useActionSetStoreState as Mock).mockReturnValue({});
     const { result } = renderHook(() => useCurrentStoryActionSets());
     expect(result.current.storyActionSets).toStrictEqual([]);
   });
@@ -33,7 +34,7 @@ describe('useCurrentStoryActionSets', () => {
         },
       },
     };
-    (useActionContext as Mock).mockReturnValue(stories);
+    (useActionSetStoreState as Mock).mockReturnValue(stories);
     const { result } = renderHook(() => useCurrentStoryActionSets());
 
     expect(result.current.storyActionSets).toStrictEqual([

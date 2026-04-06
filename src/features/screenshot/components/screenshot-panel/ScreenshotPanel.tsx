@@ -5,7 +5,10 @@ import {
   useDeleteStoryScreenshot,
   useScreenshotUpdateState,
 } from '../../../../hooks';
-import { useScreenshotContext, useScreenshotDispatch } from '../../store/index';
+import {
+  useScreenshotStoreState,
+  setPauseDeleteImageDiffResult,
+} from '../../store/index';
 import { Loader, Snackbar } from '../../../../components/common';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
@@ -17,8 +20,6 @@ const ScreenshotPanel = () => {
 
   const reqBy = 'screenshot-panel';
   const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, 'story');
-
-  const dispatch = useScreenshotDispatch();
 
   const {
     ScreenshotLoaderErrorSnackbar,
@@ -32,7 +33,7 @@ const ScreenshotPanel = () => {
     deleteStoryScreenshots,
   } = useDeleteStoryScreenshot();
 
-  const state = useScreenshotContext();
+  const state = useScreenshotStoreState();
 
   const {
     testStoryScreenShots,
@@ -48,11 +49,8 @@ const ScreenshotPanel = () => {
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
 
   useEffect(() => {
-    dispatch({
-      state: showPreview,
-      type: 'pauseDeleteImageDiffResult',
-    });
-  }, [dispatch, showPreview]);
+    setPauseDeleteImageDiffResult(showPreview);
+  }, [showPreview]);
 
   const handleStoryImgDiff = React.useCallback(() => {
     testStoryScreenShots('story');

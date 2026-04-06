@@ -3,15 +3,13 @@ import { ActionSet, StoryData } from '../../../typings';
 import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
 import { saveActionSet } from '../../../api/trpc/clients/action-set.client';
-import { useActionDispatchContext } from '../../../store';
+import { addActionSet as addActionSetToStore } from '../../../store';
 
 export const useCopyActionSet = (storyData: StoryData) => {
   const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(
     saveActionSet,
     false,
   );
-
-  const dispatch = useActionDispatchContext();
 
   const copyActionSet = useCallback(
     async (actionSet: ActionSet) => {
@@ -23,16 +21,15 @@ export const useCopyActionSet = (storyData: StoryData) => {
         storyId: storyData.id,
       });
       if (!(result instanceof Error)) {
-        dispatch({
+        addActionSetToStore({
           actionSet: copyActionSet,
-          new: false,
+          isNew: false,
           selected: true,
           storyId: storyData.id,
-          type: 'addActionSet',
         });
       }
     },
-    [storyData, dispatch, makeCall],
+    [storyData, makeCall],
   );
 
   return { ErrorSnackbar, copyActionSet, inProgress };

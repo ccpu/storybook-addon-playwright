@@ -1,12 +1,11 @@
 import { getActionSchemaData } from '../../../../configs';
-import type { ReducerState } from '../../../../../src/features/action-set/store/reducer';
+import type { ActionSetState } from '../../../../../src/features/action-set/store/action-set-store';
 
-export const useActionContext = vi.fn();
-export const useActionDispatchContext = vi.fn();
+export const useActionSetStoreState = vi.fn();
 
 const mockData = {
   actionSchema: getActionSchemaData(),
-} as unknown as ReducerState;
+} as unknown as ActionSetState;
 
-const useActionContextMock = vi.mocked(useActionContext);
-useActionContextMock.mockImplementation(() => mockData);
+const useActionSetStoreStateMock = vi.mocked(useActionSetStoreState);
+useActionSetStoreStateMock.mockImplementation(() => mockData);

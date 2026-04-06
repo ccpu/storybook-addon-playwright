@@ -8,7 +8,11 @@ import {
 import { Loader } from '../../../../components/common';
 import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
 import { Button } from '@material-ui/core';
-import { useScreenshotContext, useScreenshotDispatch } from '../../store/index';
+import {
+  useScreenshotStoreState,
+  setPauseDeleteImageDiffResult,
+  removePassedImageDiffResult,
+} from '../../store/index';
 
 export interface StoryScreenshotPreviewProps {
   onClose: () => void;
@@ -24,13 +28,11 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
 
   const { loading, storyData } = useImageDiffScreenshots(target, onLoad);
 
-  const dispatch = useScreenshotDispatch();
-
   const [updateInProgress, setUpdateInProgress] = useState(false);
 
   const { openSnackbar } = useSnackbar();
 
-  const state = useScreenshotContext();
+  const state = useScreenshotStoreState();
 
   const { updateScreenshot } = useScreenshotUpdate();
 
@@ -64,21 +66,13 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
   }, [openSnackbar, state, updateScreenshot]);
 
   React.useEffect(() => {
-    dispatch({
-      state: true,
-      type: 'pauseDeleteImageDiffResult',
-    });
+    setPauseDeleteImageDiffResult(true);
 
     return () => {
-      dispatch({
-        state: false,
-        type: 'pauseDeleteImageDiffResult',
-      });
-      dispatch({
-        type: 'removePassedImageDiffResult',
-      });
+      setPauseDeleteImageDiffResult(false);
+      removePassedImageDiffResult();
     };
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

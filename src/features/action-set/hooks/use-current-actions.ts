@@ -1,35 +1,20 @@
-import { useEffect } from 'react';
+import { useMemo } from 'react';
 import { ActionSet } from '../../../typings';
-import { useGlobalState } from '../../../hooks/use-global-state';
-import { useActionContext } from '../../../store';
+import { useActionSetStoreState } from '../../../store';
 
 export const useCurrentActions = (storyId: string) => {
-  const [currentActions, setActions] = useGlobalState<ActionSet[]>(
-    'current-actions',
-    [],
-  );
+  const state = useActionSetStoreState();
 
-  const state = useActionContext();
+  const currentActions = useMemo((): ActionSet[] => {
+    if (!state.initialised) return [];
 
-  useEffect(() => {
-    // state is not available in preview
-    if (!state.initialised) return;
+    const storyData = state.stories[storyId];
+    if (!storyData?.actionSets) return [];
 
-    const actionSetArr =
-      state.stories[storyId] && state.stories[storyId].actionSets
-        ? state.stories[storyId].actionSets.filter((x) =>
-            state.currentActionSets.includes(x.id),
-          )
-        : [];
-
-    setActions(actionSetArr);
-  }, [
-    setActions,
-    state.currentActionSets,
-    state.initialised,
-    state.stories,
-    storyId,
-  ]);
+    return storyData.actionSets.filter((x) =>
+      state.currentActionSets.includes(x.id),
+    );
+  }, [state.currentActionSets, state.initialised, state.stories, storyId]);
 
   return { currentActions, state };
 };

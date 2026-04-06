@@ -1,5 +1,5 @@
 import { useEditScreenshot } from '../../../../src/features/screenshot/hooks/use-edit-screenshot';
-import { globalDispatchMock } from '../../../manual-mocks/hooks/use-global-screenshot-dispatch';
+import { addScreenshotMock } from '../../../manual-mocks/store/screenshot/context';
 import { useSaveScreenshot } from '../../../../src/features/screenshot/hooks/use-save-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { saveScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
@@ -61,21 +61,18 @@ describe('useSaveScreenshot', () => {
       await result.current.saveScreenShot('chromium', 'title', 'base64-image');
     });
     ``;
-    expect(globalDispatchMock).toHaveBeenCalledWith({
-      screenshot: {
-        actionSets: [],
-        browserOptions: undefined,
-        browserType: 'chromium',
-        fileName: 'test.stories.tsx',
-        id: 'some-id',
-        index: undefined,
-        props: undefined,
-        screenshotOptions: undefined,
-        storyId: 'story-id',
-        title: 'title',
-        updateScreenshot: false,
-      },
-      type: 'addScreenshot',
+    expect(addScreenshotMock).toHaveBeenCalledWith({
+      actionSets: [],
+      browserOptions: undefined,
+      browserType: 'chromium',
+      fileName: 'test.stories.tsx',
+      id: 'some-id',
+      index: undefined,
+      props: undefined,
+      screenshotOptions: undefined,
+      storyId: 'story-id',
+      title: 'title',
+      updateScreenshot: false,
     });
 
     expect(result.current.result).toBeDefined();

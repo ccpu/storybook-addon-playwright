@@ -1,13 +1,9 @@
-import { useGlobalState } from '../../../hooks/use-global-state';
-import { ScreenshotOptions } from '../../../typings';
-import { Dispatch, SetStateAction } from 'react';
+import {
+  useScreenshotOptionsValue,
+  setScreenshotOptionsState,
+} from '../../../store';
 
-export const useScreenshotOptions: () => {
-  screenshotOptions: ScreenshotOptions;
-  setScreenshotOptions: Dispatch<SetStateAction<ScreenshotOptions>>;
-} = () => {
-  const [screenshotOptions, setScreenshotOptions] =
-    useGlobalState<ScreenshotOptions>('screenshotOptions', {}, true);
-
-  return { screenshotOptions, setScreenshotOptions };
+export const useScreenshotOptions = () => {
+  const screenshotOptions = useScreenshotOptionsValue();
+  return { screenshotOptions, setScreenshotOptions: setScreenshotOptionsState };
 };

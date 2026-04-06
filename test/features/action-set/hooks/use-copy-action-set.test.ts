@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/action/context';
+import { addActionSetMock } from '../../../manual-mocks/store/action/context';
 import { useCopyActionSet } from '../../../../src/features/action-set/hooks/use-copy-action-set';
 import { useAsyncApiCall } from '../../../../src/hooks/use-async-api-call';
 import { renderHook } from '@testing-library/react-hooks';
@@ -40,14 +40,11 @@ describe('useCopyActionSet', () => {
       fileName: 'file-name',
       storyId: 'story-id',
     });
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSet: { actions: [], id: 'id-1', title: 'action-set-title' },
-        new: false,
-        selected: true,
-        storyId: 'story-id',
-        type: 'addActionSet',
-      },
-    ]);
+    expect(addActionSetMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSet: { actions: [], id: 'id-1', title: 'action-set-title' },
+      selected: true,
+      isNew: false,
+    });
   });
 });

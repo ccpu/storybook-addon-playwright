@@ -3,7 +3,7 @@ import { ScreenshotTestTargetType, StoryData } from '../../../typings';
 import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
 import { isStoryJsonFile } from '../../../utils';
-import { useScreenshotDispatch } from '../store/index';
+import { setScreenshots } from '../store/index';
 
 const getScreenshotDataFromDiffResult = (
   results: ImageDiffResult[],
@@ -32,22 +32,15 @@ export const useImageDiffScreenshots = (
 
   const [loaded, setLoaded] = React.useState<boolean>(false);
 
-  const dispatch = useScreenshotDispatch();
-
   const loadData = React.useCallback(async () => {
     const results = await testStoryScreenShots(target);
     if (!(results instanceof Error))
-      dispatch({
-        screenshots: getScreenshotDataFromDiffResult(
-          results,
-          target,
-          storyData,
-        ),
-        type: 'setScreenshots',
-      });
+      setScreenshots(
+        getScreenshotDataFromDiffResult(results, target, storyData),
+      );
     if (onLoaded) onLoaded();
     setLoaded(true);
-  }, [testStoryScreenShots, target, dispatch, storyData, onLoaded]);
+  }, [testStoryScreenShots, target, storyData, onLoaded]);
 
   useEffect(() => {
     if (!storyData || loaded) return;

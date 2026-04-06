@@ -1,16 +1,16 @@
 import { useEditorAction } from '../../../../src/features/action-set/hooks/use-editor-action';
 import { renderHook } from '@testing-library/react-hooks';
-import { useActionContext } from '../../../../src/features/action-set/store/ActionContext';
+import { useActionSetStoreState } from '../../../../src/features/action-set/store/selectors';
+import { ActionSetState } from '../../../../src/features/action-set/store/action-set-store';
 import { storyFileInfo } from '../../../configs/story-file-info';
 import { getOrgEditingActionSet } from '../../../configs/get-org-editing-actionSet';
-import { ReducerState } from '../../../../src/features/action-set/store/reducer';
 
 vi.mock(
-  '../../../../src/features/action-set/store/ActionContext',
+  '../../../../src/features/action-set/store/selectors',
   async () => await import('../store/__mocks__/ActionContext'),
 );
 
-const useActionContextMock = vi.mocked(useActionContext);
+const useActionSetStoreStateMock = vi.mocked(useActionSetStoreState);
 
 const data = storyFileInfo();
 
@@ -18,12 +18,12 @@ describe('useAction', () => {
   const orgEditingActionSet = getOrgEditingActionSet();
 
   beforeEach(() => {
-    useActionContextMock.mockImplementation(
+    useActionSetStoreStateMock.mockImplementation(
       () =>
         ({
           orgEditingActionSet: orgEditingActionSet,
           stories: data.stories,
-        } as unknown as ReducerState),
+        } as unknown as ActionSetState),
     );
   });
 
@@ -40,9 +40,9 @@ describe('useAction', () => {
   });
 
   it('should not have action', () => {
-    useActionContextMock.mockReturnValue({
+    useActionSetStoreStateMock.mockReturnValue({
       editorActionSet: undefined,
-    } as unknown as ReducerState);
+    } as unknown as ActionSetState);
 
     const { result } = renderHook(() =>
       useEditorAction('story-id', 'action-id'),
@@ -54,12 +54,12 @@ describe('useAction', () => {
   it(`should not have action if story don't have actionSet`, () => {
     const orgEditingActionSet = getOrgEditingActionSet();
     orgEditingActionSet.id = 'invalid';
-    useActionContextMock.mockImplementation(
+    useActionSetStoreStateMock.mockImplementation(
       () =>
         ({
           orgEditingActionSet: orgEditingActionSet,
           stories: data.stories,
-        } as unknown as ReducerState),
+        } as unknown as ActionSetState),
     );
 
     const { result } = renderHook(() =>

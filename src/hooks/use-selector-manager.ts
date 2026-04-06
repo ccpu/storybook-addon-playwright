@@ -1,38 +1,32 @@
 import { useCallback } from 'react';
 import { SelectorState } from '../typings/selector';
-import { EVENTS } from '../constants';
-import { useGlobalState } from './use-global-state';
+import { useSelectorManagerValue, setSelectorManager } from '../store';
 
-export type SelectorType = 'selector' | 'position' | 'id-selector';
-
-export interface SelectorManageSharedProps {
-  type?: SelectorType;
-  onData?: (data: SelectorState) => void;
-  onStop?: () => void;
-}
-
-export interface SelectorManger extends SelectorManageSharedProps {
-  start: boolean;
-}
+export type {
+  SelectorType,
+  SelectorManageSharedProps,
+  SelectorManger,
+} from '../store';
 
 export const useSelectorManager = () => {
-  const [selectorManager, setSelectorManager] = useGlobalState<SelectorManger>(
-    EVENTS.SELECTOR,
-    {} as SelectorManger,
-  );
+  const selectorManager = useSelectorManagerValue();
 
   const startSelector = useCallback(
-    (options: SelectorManageSharedProps) => {
+    (options: {
+      type?: string;
+      onData?: (data: SelectorState) => void;
+      onStop?: () => void;
+    }) => {
       const { onData, type, onStop } = options;
 
       setSelectorManager({
         onData,
         onStop,
         start: true,
-        type: type,
+        type: type as 'selector' | 'position' | 'id-selector',
       });
     },
-    [setSelectorManager],
+    [],
   );
 
   const stopSelector = useCallback(() => {
@@ -44,7 +38,7 @@ export const useSelectorManager = () => {
       onStop: undefined,
       start: false,
     });
-  }, [selectorManager, setSelectorManager]);
+  }, [selectorManager]);
 
   const setSelectorData = useCallback(
     (data: SelectorState) => {

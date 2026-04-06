@@ -1,29 +1,24 @@
-import { useGlobalState } from '../../../hooks/use-global-state';
 import {
-  ScreenshotData,
-  BrowserTypes,
-  ScreenshotOptions,
-} from '../../../typings';
+  useEditScreenshotStateValue,
+  setEditScreenshotState,
+} from '../../../store';
+import { ScreenshotData, BrowserTypes } from '../../../typings';
 import { useCallback, useEffect, useRef } from 'react';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useStorybookApi } from '@storybook/manager-api';
-import { useGlobalActionDispatch } from '../../action-set/hooks/use-global-action-dispatch';
+import {
+  deleteTempActionSets,
+  clearCurrentActionSets,
+} from '../../action-set/store/actions';
 import { RESET_STORY_ARGS } from '@storybook/core-events';
 import { useActiveBrowsers } from '../../../hooks/use-active-browser';
 import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 import { useAddonState } from '../../../hooks/use-addon-state';
-import { BrowserContextOptions } from 'playwright';
 
-interface EditScreenshotState {
-  storyId: string;
-  screenshotData: ScreenshotData;
-  currentScreenshotOptions?: ScreenshotOptions;
-  currentBrowserOptions?: BrowserContextOptions;
-}
+export type { EditScreenshotState } from '../../../store';
 
 export const useEditScreenshot = () => {
-  const [editScreenshotState, setEditScreenshotState] =
-    useGlobalState<EditScreenshotState>('edit-story-screenshot', undefined);
+  const editScreenshotState = useEditScreenshotStateValue();
 
   const storyData = useCurrentStoryData();
 
@@ -34,21 +29,14 @@ export const useEditScreenshot = () => {
   const { loadSetting, screenshotOptions, browserOptions } =
     useLoadScreenshotSettings();
 
-  const { dispatch } = useGlobalActionDispatch();
-
   const unmounted = useRef<boolean>(false);
 
   const api = useStorybookApi();
 
   const clearScreenshotEdit = useCallback(() => {
-    dispatch({
-      storyId: storyData.id,
-      type: 'deleteTempActionSets',
-    });
+    deleteTempActionSets(storyData.id);
 
-    dispatch({
-      type: 'clearCurrentActionSets',
-    });
+    clearCurrentActionSets();
 
     api.emit(RESET_STORY_ARGS, { storyId: storyData?.id });
 
@@ -67,14 +55,7 @@ export const useEditScreenshot = () => {
     if (!unmounted.current) {
       setEditScreenshotState(undefined);
     }
-  }, [
-    api,
-    dispatch,
-    editScreenshotState,
-    loadSetting,
-    setEditScreenshotState,
-    storyData,
-  ]);
+  }, [api, editScreenshotState, loadSetting, storyData]);
 
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
@@ -102,7 +83,6 @@ export const useEditScreenshot = () => {
       screenshotOptions,
       setAddonState,
       setBrowserState,
-      setEditScreenshotState,
       storyData,
     ],
   );
@@ -129,12 +109,7 @@ export const useEditScreenshot = () => {
       clearScreenshotEdit();
       return undefined;
     }
-  }, [
-    clearScreenshotEdit,
-    editScreenshotState,
-    setEditScreenshotState,
-    storyData,
-  ]);
+  }, [clearScreenshotEdit, editScreenshotState, storyData]);
 
   return {
     clearScreenshotEdit,

@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { ActionSchema } from '../../../../typings';
 import { Definition } from 'ts-to-json';
 import { MemoizedSchemaRenderer } from '../../../schema/components/index';
-import { useActionDispatchContext } from '../../../../store';
+import { setActionOptions, toggleSubtitleItem } from '../../../../store';
 import { useCurrentStoryData, useEditorAction } from '../../../../hooks';
 import { getActionOptionValue } from './utils/index';
 
@@ -14,7 +14,6 @@ export interface ActionSchemaRendererProps {
 
 const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
   const { schema, actionId, actionSetId } = props;
-  const dispatch = useActionDispatchContext();
 
   const story = useCurrentStoryData();
 
@@ -22,16 +21,15 @@ const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
 
   const handleChange = useCallback(
     (objPath, val) => {
-      dispatch({
+      setActionOptions({
         actionId,
         actionSetId,
         objPath,
         storyId: story.id,
-        type: 'setActionOptions',
         val,
       });
     },
-    [actionId, actionSetId, dispatch, story],
+    [actionId, actionSetId, story],
   );
 
   const handleGetValue = useCallback(
@@ -55,29 +53,27 @@ const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
 
   const handleOnAppendValueToTitle = useCallback(
     (optionObjectPath) => {
-      dispatch({
+      toggleSubtitleItem({
         actionId,
         actionOptionPath: optionObjectPath,
         actionSetId,
         storyId: story.id,
-        type: 'toggleSubtitleItem',
       });
     },
-    [actionId, actionSetId, dispatch, story],
+    [actionId, actionSetId, story],
   );
 
   const handleSelectorChange = useCallback(
     (objPath: string, val: unknown) => {
-      dispatch({
+      setActionOptions({
         actionId,
         actionSetId,
-        objPath: objPath,
+        objPath,
         storyId: story.id,
-        type: 'setActionOptions',
         val,
       });
     },
-    [actionId, actionSetId, dispatch, story],
+    [actionId, actionSetId, story],
   );
 
   if (!action) return null;

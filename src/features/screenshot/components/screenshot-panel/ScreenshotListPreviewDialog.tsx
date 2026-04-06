@@ -6,7 +6,7 @@ import {
   ImageDiffPreview,
 } from '../../../../components/common';
 import { makeStyles, capitalize } from '@material-ui/core';
-import { useScreenshotContext } from '../../store/index';
+import { useScreenshotStoreState } from '../../store/index';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
 import { useKeyPressFn } from '../../../../hooks';
@@ -58,7 +58,7 @@ const ScreenshotListPreviewDialog: React.FC<
 }) => {
   const [currentItem, setCurrentItem] = useState<ScreenshotData>();
 
-  const state = useScreenshotContext();
+  const state = useScreenshotStoreState();
 
   const classes = useStyles();
 

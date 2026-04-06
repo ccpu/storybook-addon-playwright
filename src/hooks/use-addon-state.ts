@@ -1,13 +1,6 @@
-import { ADDON_STORAGE_KEY } from '../constants';
-import { AddonState } from '../typings';
-import { useGlobalState } from './use-global-state';
+import { useAddonStateValue, setAddonState } from '../store';
 
 export const useAddonState = () => {
-  const [addonState, setAddonState] = useGlobalState<AddonState>(
-    ADDON_STORAGE_KEY,
-    {} as AddonState,
-    true,
-  );
-
+  const addonState = useAddonStateValue();
   return { addonState, setAddonState };
 };

@@ -1,12 +1,10 @@
 import { useEffect, useCallback, useRef } from 'react';
 import { getStoryScreenshots } from '../../../api/trpc/clients/screenshot.client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { useScreenshotDispatch } from '../store/index';
+import { setScreenshots } from '../store/index';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 
 export const useStoryScreenshotLoader = () => {
-  const dispatch = useScreenshotDispatch();
-
   const loadedStoryId = useRef<string>();
 
   const storyData = useCurrentStoryData();
@@ -25,8 +23,8 @@ export const useStoryScreenshotLoader = () => {
     });
     if (result instanceof Error) return;
     loadedStoryId.current = storyData.id;
-    dispatch({ screenshots: result, type: 'setScreenshots' });
-  }, [dispatch, makeCall, storyData]);
+    setScreenshots(result);
+  }, [makeCall, storyData]);
 
   useEffect(() => {
     if (
@@ -40,7 +38,7 @@ export const useStoryScreenshotLoader = () => {
       return;
     }
     loadScreenShots();
-  }, [dispatch, error, loadScreenShots, screenshotLoaderInProgress, storyData]);
+  }, [error, loadScreenShots, screenshotLoaderInProgress, storyData]);
 
   return {
     ScreenshotLoaderErrorSnackbar,

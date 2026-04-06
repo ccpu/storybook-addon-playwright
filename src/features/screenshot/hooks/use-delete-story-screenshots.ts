@@ -2,7 +2,7 @@ import { deleteStoryScreenshots as deleteStoryScreenshotsClient } from '../../..
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useCallback } from 'react';
-import { useScreenshotDispatch } from '../store/index';
+import { removeStoryScreenshots } from '../store/index';
 
 export const useDeleteStoryScreenshot = () => {
   const {
@@ -14,7 +14,6 @@ export const useDeleteStoryScreenshot = () => {
   });
 
   const data = useCurrentStoryData();
-  const dispatch = useScreenshotDispatch();
 
   const deleteStoryScreenshots = useCallback(async () => {
     const result = await makeCall({
@@ -22,9 +21,9 @@ export const useDeleteStoryScreenshot = () => {
       storyId: data.id,
     });
     if (!(result instanceof Error)) {
-      dispatch({ type: 'removeStoryScreenshots' });
+      removeStoryScreenshots();
     }
-  }, [data, makeCall, dispatch]);
+  }, [data, makeCall]);
 
   return {
     DeleteScreenshotsErrorSnackbar,

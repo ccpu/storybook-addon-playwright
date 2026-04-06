@@ -1,39 +1,35 @@
 import { useCallback, useMemo } from 'react';
-import { useGlobalState } from './use-global-state';
+import {
+  useBrowserOptionsValue,
+  setBrowserOptions as setStoreBrowserOptions,
+  BrowsersOptionTypes,
+} from '../store';
 import { BrowserTypes, BrowserContextOptions } from '../typings';
 import { getDeviceInfo } from '../utils';
 
-export interface BrowsersOption {
-  chromium?: BrowserContextOptions;
-  firefox?: BrowserContextOptions;
-  webkit?: BrowserContextOptions;
-  all?: BrowserContextOptions;
-}
-
-export type BrowsersOptionTypes = keyof BrowsersOption;
+export type { BrowsersOption, BrowsersOptionTypes } from '../store';
 
 export const useBrowserOptions = (browserName?: BrowsersOptionTypes) => {
-  const [browserOptions, setGlobalBrowserOptions] =
-    useGlobalState<BrowsersOption>('browser-options', { all: {} }, true);
+  const browserOptions = useBrowserOptionsValue();
 
   const setBrowserDeviceOptions = useCallback(
     (browserType: BrowsersOptionTypes, deviceName: string) => {
-      setGlobalBrowserOptions({
+      setStoreBrowserOptions({
         ...browserOptions,
         [browserType]: getDeviceInfo(deviceName),
       });
     },
-    [browserOptions, setGlobalBrowserOptions],
+    [browserOptions],
   );
 
   const setBrowserOptions = useCallback(
     (browserType: BrowsersOptionTypes, options: BrowserContextOptions) => {
-      setGlobalBrowserOptions({
+      setStoreBrowserOptions({
         ...browserOptions,
         [browserType]: options,
       });
     },
-    [browserOptions, setGlobalBrowserOptions],
+    [browserOptions],
   );
 
   const getBrowserOptions = useCallback(

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useActionContext } from '../../../store';
+import { useActionSetStoreState } from '../../../store';
 import { StoryAction } from '../../../typings';
 
 export const useEditorAction = (
@@ -7,7 +7,7 @@ export const useEditorAction = (
   actionId: string,
 ): StoryAction | undefined => {
   const [action, setAction] = useState<StoryAction>();
-  const state = useActionContext();
+  const state = useActionSetStoreState();
 
   useEffect(() => {
     if (

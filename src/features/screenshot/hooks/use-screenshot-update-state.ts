@@ -1,38 +1,32 @@
 import React from 'react';
-import { useGlobalState } from '../../../hooks/use-global-state';
+import {
+  useScreenshotUpdateStateValue,
+  setScreenshotUpdateState,
+} from '../../../store';
 import { ScreenshotTestTargetType } from '../../../typings';
-
-interface Options {
-  inProgress?: boolean;
-  target?: ScreenshotTestTargetType;
-  reqBy?: string;
-}
 
 export const useScreenshotUpdateState = (
   reqBy: string,
   target?: ScreenshotTestTargetType,
 ) => {
-  const [updateInf, setUpdateInf] = useGlobalState<Options>(
-    'useScreenshotListUpdateDialog',
-    {},
-  );
+  const updateInf = useScreenshotUpdateStateValue();
 
   // to prevent rendering loop
   const [isLoadingFinish, setIsLoadingFinish] = React.useState<boolean>(false);
 
   const runDiffTest = React.useCallback(() => {
-    setUpdateInf({ inProgress: true, reqBy, target });
-  }, [reqBy, setUpdateInf, target]);
+    setScreenshotUpdateState({ inProgress: true, reqBy, target });
+  }, [reqBy, target]);
 
   const handleClose = React.useCallback(() => {
-    setUpdateInf({});
+    setScreenshotUpdateState({});
     setIsLoadingFinish(false);
-  }, [setUpdateInf]);
+  }, []);
 
   React.useEffect(() => {
     if (updateInf && updateInf.inProgress && isLoadingFinish)
-      setUpdateInf({ ...updateInf, inProgress: false });
-  }, [isLoadingFinish, setUpdateInf, updateInf]);
+      setScreenshotUpdateState({ ...updateInf, inProgress: false });
+  }, [isLoadingFinish, updateInf]);
 
   return {
     handleClose,

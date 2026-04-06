@@ -3,7 +3,6 @@ export * from './use-delete-story-screenshots';
 export * from './use-edit-screenshot';
 export * from './use-fix-screenshot-file-name';
 export * from './use-global-imageDiff-results';
-export * from './use-global-screenshot-dispatch';
 export * from './use-imagediff-screenshots';
 export * from './use-load-screenshot-settings';
 export * from './use-save-screenshot';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentStoryData } from '../../../../hooks';
-import { useScreenshotContext } from '../../store/index';
+import { useScreenshotStoreState } from '../../store/index';
 
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
@@ -8,7 +8,7 @@ import { ScreenshotListSortable } from './ScreenshotListSortable';
 const ScreenshotList: React.FC = ({ children }) => {
   const storyData = useCurrentStoryData();
 
-  const state = useScreenshotContext();
+  const state = useScreenshotStoreState();
 
   const hasScreenshot = state.screenshots && state.screenshots.length > 0;
 

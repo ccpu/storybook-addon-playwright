@@ -1,27 +1,28 @@
 import { useEffect, useCallback } from 'react';
 import { getActionsSchema as getActionSchema } from '../../../api/trpc/clients/schema.client';
-import { useGlobalState } from '../../../hooks/use-global-state';
-import { useActionDispatchContext } from '../../../store';
+import {
+  setActionSchema,
+  useSchemaLoaded,
+  setSchemaLoaded,
+} from '../../../store';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 
 export const useActionSchemaLoader = () => {
-  const [loaded, setLoaded] = useGlobalState<boolean>('action-schema');
+  const loaded = useSchemaLoaded();
 
   const { makeCall, inProgress } = useAsyncApiCall(getActionSchema, false);
-
-  const dispatch = useActionDispatchContext();
 
   const load = useCallback(async () => {
     const result = await makeCall();
     if (result instanceof Error) return;
-    dispatch({ actionSchema: result, type: 'setActionSchema' });
-    setLoaded(true);
-  }, [dispatch, makeCall, setLoaded]);
+    setActionSchema(result);
+    setSchemaLoaded(true);
+  }, [makeCall]);
 
   useEffect(() => {
     if (inProgress || loaded) return;
     load();
-  }, [dispatch, inProgress, load, loaded, setLoaded]);
+  }, [inProgress, load, loaded]);
 
   return { loaded, loading: inProgress };
 };

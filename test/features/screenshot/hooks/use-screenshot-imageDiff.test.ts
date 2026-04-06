@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { addImageDiffResultMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotImageDiff } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { testScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
@@ -30,11 +30,8 @@ describe('useScreenshotImageDiff', () => {
       await result.current.testScreenshot('screenshot-id');
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        imageDiffResult: { newScreenshot: 'image-src' },
-        type: 'addImageDiffResult',
-      },
-    ]);
+    expect(addImageDiffResultMock).toHaveBeenCalledWith({
+      newScreenshot: 'image-src',
+    });
   });
 });

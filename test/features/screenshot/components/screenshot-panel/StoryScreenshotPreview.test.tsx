@@ -10,6 +10,17 @@ vi.mock('react', async (importOriginal) => {
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
+
+const setPauseDeleteImageDiffResultMock = vi.fn();
+const removePassedImageDiffResultMock = vi.fn();
+
+vi.mock('../../../../../src/features/screenshot/store/actions', () => ({
+  setPauseDeleteImageDiffResult: (...args: any[]) =>
+    setPauseDeleteImageDiffResultMock(...args),
+  removePassedImageDiffResult: (...args: any[]) =>
+    removePassedImageDiffResultMock(...args),
+}));
+
 import { useEffectCleanup } from '../../../../manual-mocks/react-useEffect';
 import { StoryScreenshotPreview } from '../../../../../src/features/screenshot/components/screenshot-panel/StoryScreenshotPreview';
 import { shallow } from 'enzyme';
@@ -19,10 +30,7 @@ import { ScreenshotListPreviewDialog } from '../../../../../src/features/screens
 import { useImageDiffScreenshots } from '../../../../../src/features/screenshot/hooks/use-imagediff-screenshots';
 
 import { StoryData, ScreenshotData } from '../../../../../src/typings';
-import {
-  useScreenshotContext,
-  useScreenshotDispatch,
-} from '../../../../../src/features/screenshot/store/context';
+import { useScreenshotStoreState } from '../../../../../src/features/screenshot/store/selectors';
 
 import { useSnackbar } from '../../../../../src/hooks/use-snackbar';
 
@@ -46,22 +54,15 @@ vi.mock(
   async () => await import('../../hooks/__mocks__/use-imagediff-screenshots'),
 );
 vi.mock(
-  '../../../../../src/features/screenshot/store/context',
+  '../../../../../src/features/screenshot/store/selectors',
   async () => await import('../../store/__mocks__/context'),
 );
 
-vi.mocked(useScreenshotContext).mockImplementation(() => ({
+vi.mocked(useScreenshotStoreState).mockImplementation(() => ({
   imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
   pauseDeleteImageDiffResult: false,
   screenshots: [{ id: 'screenshot-id', title: 'title' }] as ScreenshotData[],
 }));
-
-const dispatchMock = vi.fn();
-vi.mocked(useScreenshotDispatch).mockImplementation(() => {
-  return (...arg) => {
-    return dispatchMock(arg);
-  };
-});
 
 vi.mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
   loaded: true,
@@ -86,15 +87,9 @@ describe('StoryScreenshotPreview', () => {
 
     useEffectCleanup();
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { state: true, type: 'pauseDeleteImageDiffResult' },
-    ]);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { state: false, type: 'pauseDeleteImageDiffResult' },
-    ]);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'removePassedImageDiffResult' },
-    ]);
+    expect(setPauseDeleteImageDiffResultMock).toHaveBeenCalledWith(true);
+    expect(setPauseDeleteImageDiffResultMock).toHaveBeenCalledWith(false);
+    expect(removePassedImageDiffResultMock).toHaveBeenCalled();
   });
 
   it('should handle update', async () => {
@@ -123,7 +118,7 @@ describe('StoryScreenshotPreview', () => {
   });
 
   it('should throw if imageDiffResult not found while updating', async () => {
-    vi.mocked(useScreenshotContext).mockImplementation(() => ({
+    vi.mocked(useScreenshotStoreState).mockImplementation(() => ({
       imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id-2' }],
       pauseDeleteImageDiffResult: false,
       screenshots: [

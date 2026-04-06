@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScreenshotPanel } from './ScreenshotPanel';
-import { ScreenshotProvider } from '../../store/index';
 import { CommonProvider } from '../../../../components/common';
 import { MemoizedStoryScreenshotPreview } from './StoryScreenshotPreview';
 import { useScreenshotUpdateState } from '../../../../hooks';
@@ -27,18 +26,16 @@ const ScreenshotMain: React.FC<ScreenshotMainProps> = ({ showPanel }) => {
 
   return (
     <CommonProvider>
-      <ScreenshotProvider>
-        {showPanel && !dialogOpen && <ScreenshotPanel />}
+      {showPanel && !dialogOpen && <ScreenshotPanel />}
 
-        {updateInf.reqBy && (
-          <MemoizedStoryScreenshotPreview
-            onClose={handleOnClose}
-            updating={true}
-            target={updateInf.target}
-            onLoad={handleOnLoad}
-          />
-        )}
-      </ScreenshotProvider>
+      {updateInf.reqBy && (
+        <MemoizedStoryScreenshotPreview
+          onClose={handleOnClose}
+          updating={true}
+          target={updateInf.target}
+          onLoad={handleOnLoad}
+        />
+      )}
     </CommonProvider>
   );
 };

@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { updateImageDiffResultMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotUpdate } from '../../../../src/features/screenshot/hooks/use-screenshot-update';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { updateScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
@@ -36,19 +36,14 @@ describe('useScreenshotUpdate', () => {
       await result.current.updateScreenshot({ screenshotId: 'screenshot-id' });
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        imageDiffResult: {
-          diffSize: false,
-          index: undefined,
-          newScreenshot: undefined,
-          pass: true,
-          screenshotId: 'screenshot-id',
-          storyId: undefined,
-        },
-        type: 'updateImageDiffResult',
-      },
-    ]);
+    expect(updateImageDiffResultMock).toHaveBeenCalledWith({
+      diffSize: false,
+      index: undefined,
+      newScreenshot: undefined,
+      pass: true,
+      screenshotId: 'screenshot-id',
+      storyId: undefined,
+    });
   });
 
   it('should not dispatch on error', async () => {
@@ -59,6 +54,6 @@ describe('useScreenshotUpdate', () => {
       await result.current.updateScreenshot({ screenshotId: 'screenshot-id' });
     });
 
-    expect(dispatchMock).toHaveBeenCalledTimes(0);
+    expect(updateImageDiffResultMock).toHaveBeenCalledTimes(0);
   });
 });

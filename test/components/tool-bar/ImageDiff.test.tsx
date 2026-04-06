@@ -1,3 +1,11 @@
+const removeImageDiffResultMock = vi.fn();
+const setImageDiffResultsMock = vi.fn();
+
+vi.mock('../../../src/features/screenshot/store/actions', () => ({
+  removeImageDiffResult: (...args: any[]) => removeImageDiffResultMock(...args),
+  setImageDiffResults: (...args: any[]) => setImageDiffResultsMock(...args),
+}));
+
 import '../../manual-mocks/react-useEffect';
 import { storyData } from '../../configs/story-data';
 import { ImageDiff } from '../../../src/components/tool-bar/ImageDiff';
@@ -9,7 +17,6 @@ import { useGlobalImageDiffResults } from '../../../src/features/screenshot/hook
 import { ImageDiffResult } from '../../../src/api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
-import { useGlobalScreenshotDispatch } from '../../../src/hooks';
 import { useSnackbar } from '../../../src/hooks/use-snackbar';
 import { StoryData } from '../../../src/typings';
 
@@ -39,21 +46,9 @@ vi.mock(
     ),
 );
 vi.mock(
-  '../../../src/features/screenshot/hooks/use-global-screenshot-dispatch',
-  async () =>
-    await import(
-      '../../features/screenshot/hooks/__mocks__/use-global-screenshot-dispatch'
-    ),
-);
-vi.mock(
   '../../../src/hooks/use-current-story-data',
   async () => await import('../../hooks/__mocks__/use-current-story-data'),
 );
-
-const screenshotDispatchMock = vi.fn();
-vi.mocked(useGlobalScreenshotDispatch).mockImplementation(() => ({
-  dispatch: screenshotDispatchMock,
-}));
 
 const testStoryScreenShotsMock = vi.fn();
 vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
@@ -249,10 +244,7 @@ describe('ImageDiff', () => {
       .props()
       .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
-    expect(screenshotDispatchMock).toHaveBeenCalledWith({
-      screenshotId: 'screenshot-id',
-      type: 'removeImageDiffResult',
-    });
+    expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
   });
 
   it('should show error server throw error', async () => {

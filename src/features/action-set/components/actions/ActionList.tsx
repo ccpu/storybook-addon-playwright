@@ -5,7 +5,7 @@ import {
   SortableElement,
   SortEnd,
 } from 'react-sortable-hoc';
-import { useActionDispatchContext } from '../../../../store';
+import { moveActionSetAction } from '../../../../store';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../../../typings';
 import { DragHandle, ListWrapper } from '../../../../components/common';
@@ -60,23 +60,20 @@ interface ActionListProps {
 }
 
 const ActionList: React.FC<ActionListProps> = ({ actionSet }) => {
-  const dispatch = useActionDispatchContext();
-
   const classes = useStyles();
 
   const story = useCurrentStoryData();
 
   const handleSortEnd = useCallback(
     (e: SortEnd) => {
-      dispatch({
+      moveActionSetAction({
         actionSetId: actionSet.id,
         newIndex: e.newIndex,
         oldIndex: e.oldIndex,
         storyId: story.id,
-        type: 'moveActionSetAction',
       });
     },
-    [actionSet.id, dispatch, story],
+    [actionSet.id, story],
   );
 
   if (!actionSet || !actionSet.actions.length) {

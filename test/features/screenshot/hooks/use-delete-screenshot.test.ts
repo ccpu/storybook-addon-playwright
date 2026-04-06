@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { deleteScreenshotMock } from '../../../manual-mocks/store/screenshot/context';
 import { useDeleteScreenshot } from '../../../../src/features/screenshot/hooks/use-delete-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { deleteScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
@@ -43,9 +43,7 @@ describe('useDeleteScreenshot', () => {
       await result.current.deleteScreenshot('screenshot-id');
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshotId: 'screenshot-id', type: 'deleteScreenshot' },
-    ]);
+    expect(deleteScreenshotMock).toHaveBeenCalledWith('screenshot-id');
   });
 
   it('should have error', async () => {

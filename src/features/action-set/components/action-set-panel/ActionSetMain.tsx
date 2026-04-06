@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../../../components/common';
-import { useActionDispatchContext } from '../../../../store';
 import { nanoid } from 'nanoid';
 import { ActionSetList } from './ActionSetList';
 import { ActionSet } from '../../../../typings';
@@ -10,6 +9,14 @@ import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { FavouriteActions } from './FavouriteActions';
 import { deleteActionSet } from '../../../../api/trpc/clients/action-set.client';
+import {
+  cancelEditActionSet,
+  addActionSet as addActionSetAction,
+  clearCurrentActionSets,
+  deleteTempActionSets,
+  deleteActionSet as deleteActionSetFromStore,
+  sortActionSets,
+} from '../../../../store';
 
 const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
@@ -20,8 +27,6 @@ const ActionSetMain: React.FC = () => {
   const { storyId } = useStorybookState();
 
   const storyData = useCurrentStoryData();
-
-  const dispatch = useActionDispatchContext();
 
   const { currentActions } = useCurrentActions(storyId);
 
@@ -38,33 +43,24 @@ const ActionSetMain: React.FC = () => {
         title: desc,
       };
 
-      dispatch({
-        storyId,
-        type: 'cancelEditActionSet',
-      });
+      cancelEditActionSet(storyId);
 
-      dispatch({
+      addActionSetAction({
         actionSet: newActionSet,
-        new: true,
+        isNew: true,
         selected: true,
         storyId,
-        type: 'addActionSet',
       });
 
       toggleDescriptionDialog();
     },
-    [dispatch, storyId, toggleDescriptionDialog],
+    [storyId, toggleDescriptionDialog],
   );
 
   const handleReset = useCallback(() => {
-    dispatch({
-      type: 'clearCurrentActionSets',
-    });
-    dispatch({
-      storyId,
-      type: 'deleteTempActionSets',
-    });
-  }, [dispatch, storyId]);
+    clearCurrentActionSets();
+    deleteTempActionSets(storyId);
+  }, [storyId]);
 
   const handleDeleteSelectedActionSets = useCallback(async () => {
     for (const action of currentActions) {
@@ -75,31 +71,22 @@ const ActionSetMain: React.FC = () => {
           storyId: storyId,
         });
 
-        dispatch({
-          actionSetId: action.id,
-          storyId,
-          type: 'deleteActionSet',
-        });
+        deleteActionSetFromStore({ actionSetId: action.id, storyId });
       } catch (error) {
         console.error(error);
       }
     }
-  }, [currentActions, dispatch, storyData, storyId]);
+  }, [currentActions, storyData, storyId]);
 
   useEffect(() => {
-    dispatch({ type: 'clearCurrentActionSets' });
-  }, [dispatch, storyId]);
+    clearCurrentActionSets();
+  }, [storyId]);
 
   const handleSortEnd = useCallback(
     (e: SortEnd) => {
-      dispatch({
-        newIndex: e.newIndex,
-        oldIndex: e.oldIndex,
-        storyId,
-        type: 'sortActionSets',
-      });
+      sortActionSets({ newIndex: e.newIndex, oldIndex: e.oldIndex, storyId });
     },
-    [dispatch, storyId],
+    [storyId],
   );
 
   const onFavoriteActionsClick = React.useCallback((e) => {

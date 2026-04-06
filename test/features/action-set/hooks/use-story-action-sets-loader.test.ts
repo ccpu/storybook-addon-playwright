@@ -1,6 +1,5 @@
 import { useStoryActionSetsLoader } from '../../../../src/features/action-set/hooks/use-story-action-sets-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { ActionProvider } from '../../../../src/features/action-set/store/ActionContext';
 import { getActionSet } from '../../../../src/api/trpc/clients/action-set.client';
 import { ActionSet } from '../../../../src/typings';
 
@@ -41,20 +40,16 @@ describe('useStoryFileActionSets', () => {
 
     const fileInfo = getFileInfo();
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
-      { wrapper: ActionProvider },
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
     );
 
     await waitForNextUpdate();
 
     expect(result.current.loading).toBe(false);
 
-    const hook2 = renderHook(
-      () => useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
-      {
-        wrapper: ActionProvider,
-      },
+    const hook2 = renderHook(() =>
+      useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
     );
 
     expect(hook2.result.current.loading).toBe(false);
@@ -65,9 +60,8 @@ describe('useStoryFileActionSets', () => {
 
     const fileInfo = getFileInfo();
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
-      { wrapper: ActionProvider },
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
     );
 
     await waitForNextUpdate();

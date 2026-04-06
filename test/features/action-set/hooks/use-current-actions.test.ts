@@ -1,10 +1,10 @@
 import { useCurrentActions } from '../../../../src/features/action-set/hooks/use-current-actions';
 import { renderHook } from '@testing-library/react-hooks';
-import { useActionContext } from '../../../../src/features/action-set/store/ActionContext';
+import { useActionSetStoreState } from '../../../../src/features/action-set/store/selectors';
 import { storyFileInfo } from '../../../configs/story-file-info';
 
 vi.mock(
-  '../../../../src/features/action-set/store/ActionContext',
+  '../../../../src/features/action-set/store/selectors',
   async () => await import('../store/__mocks__/ActionContext'),
 );
 
@@ -12,14 +12,14 @@ describe('useCurrentActions', () => {
   const data = storyFileInfo();
 
   it('should not have action if context not initialised', () => {
-    (useActionContext as Mock).mockReturnValueOnce({});
+    (useActionSetStoreState as Mock).mockReturnValueOnce({});
 
     const { result } = renderHook(() => useCurrentActions('story-id'));
     expect(result.current.currentActions).toStrictEqual([]);
   });
 
   it('should return selected actionSets', () => {
-    (useActionContext as Mock).mockReturnValue({
+    (useActionSetStoreState as Mock).mockReturnValue({
       currentActionSets: ['action-set-id'],
       initialised: true,
       stories: data.stories,
@@ -39,7 +39,7 @@ describe('useCurrentActions', () => {
   });
 
   it('should not return any action sets', () => {
-    (useActionContext as Mock).mockReturnValue({
+    (useActionSetStoreState as Mock).mockReturnValue({
       currentActionSets: [],
       initialised: true,
       stories: data.stories,

@@ -9,11 +9,17 @@ vi.mock('react', async (importOriginal) => {
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
+
+const setPauseDeleteImageDiffResultMock = vi.fn();
+
+vi.mock('../../../../../src/features/screenshot/store/actions', () => ({
+  setPauseDeleteImageDiffResult: (...args: any[]) =>
+    setPauseDeleteImageDiffResultMock(...args),
+}));
 import '../../../../manual-mocks/react-useEffect';
 import { ScreenshotPanel } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotPanel';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useScreenshotDispatch } from '../../../../../src/features/screenshot/store/context';
 import { ScreenshotListToolbar } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListToolbar';
 import { StoryScreenshotPreview } from '../../../../../src/features/screenshot/components/screenshot-panel/StoryScreenshotPreview';
 import mockConsole from 'jest-mock-console';
@@ -28,7 +34,7 @@ vi.mock(
   async () => await import('../../../../utils/__mocks__/get-preview-iframe'),
 );
 vi.mock(
-  '../../../../../src/features/screenshot/store/context',
+  '../../../../../src/features/screenshot/store/selectors',
   async () => await import('../../store/__mocks__/context'),
 );
 vi.mock(
@@ -105,14 +111,9 @@ describe('ScreenshotPanel', () => {
   });
 
   it('should render', () => {
-    const dispatchMock = vi.fn();
-    vi.mocked(useScreenshotDispatch).mockImplementationOnce(() => dispatchMock);
     const wrapper = shallow(<ScreenshotPanel />);
     expect(wrapper.exists()).toBeTruthy();
-    expect(dispatchMock).toHaveBeenCalledWith({
-      state: false,
-      type: 'pauseDeleteImageDiffResult',
-    });
+    expect(setPauseDeleteImageDiffResultMock).toHaveBeenCalledWith(false);
   });
 
   it('should show StoryScreenshotPreview', async () => {

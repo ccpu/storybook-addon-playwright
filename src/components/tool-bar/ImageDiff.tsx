@@ -6,8 +6,11 @@ import {
   useGlobalImageDiffResults,
   useScreenshotImageDiffResults,
   useSnackbar,
-  useGlobalScreenshotDispatch,
 } from '../../hooks';
+import {
+  removeImageDiffResult,
+  setImageDiffResults,
+} from '../../features/screenshot/store/actions';
 import { Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
@@ -55,8 +58,6 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const { imageDiffResult } = useGlobalImageDiffResults();
-
-  const { dispatch } = useGlobalScreenshotDispatch();
 
   const { openSnackbar } = useSnackbar();
 
@@ -112,15 +113,12 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
     setAnchorEl(null);
     if (target === 'file') {
       diffResults.forEach((sc) => {
-        dispatch({
-          screenshotId: sc.screenshotId,
-          type: 'removeImageDiffResult',
-        });
+        removeImageDiffResult(sc.screenshotId);
       });
     } else {
-      dispatch({ imageDiffResults: [], type: 'setImageDiffResults' });
+      setImageDiffResults([]);
     }
-  }, [dispatch, diffResults, target]);
+  }, [diffResults, target]);
 
   const title =
     target === 'file'

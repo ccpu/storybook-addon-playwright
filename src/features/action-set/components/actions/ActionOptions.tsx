@@ -10,7 +10,11 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../../../utils';
-import { useActionContext, useActionDispatchContext } from '../../../../store';
+import {
+  useActionSetStoreState,
+  toggleActionExpansion,
+  deleteActionSetAction,
+} from '../../../../store';
 import { useEditorAction, useCurrentStoryData } from '../../../../hooks';
 import { getActionOptionValue } from './utils/index';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
@@ -76,8 +80,7 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
   const [subtitle, setSubtitle] = useState<string[]>();
 
   const story = useCurrentStoryData();
-  const state = useActionContext();
-  const dispatch = useActionDispatchContext();
+  const state = useActionSetStoreState();
 
   const action = useEditorAction(story && story.id, actionId);
   const schema = getActionSchema(state.actionSchema, actionName);
@@ -85,8 +88,8 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
   const classes = useStyles();
 
   const handleExpand = useCallback(() => {
-    dispatch({ actionId, type: 'toggleActionExpansion' });
-  }, [actionId, dispatch]);
+    toggleActionExpansion(actionId);
+  }, [actionId]);
 
   useEffect(() => {
     if (!action || !action.subtitleItems) return;
@@ -106,14 +109,13 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();
       e.stopPropagation();
-      dispatch({
+      deleteActionSetAction({
         actionId,
         actionSetId,
         storyId: story.id,
-        type: 'deleteActionSetAction',
       });
     },
-    [actionId, actionSetId, dispatch, story],
+    [actionId, actionSetId, story],
   );
 
   const hasParameters =

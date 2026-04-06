@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { getActionSet } from '../../../api/trpc/clients/action-set.client';
-import { useActionDispatchContext } from '../../../store';
+import { addActionSetList } from '../../../store';
 
 interface LoadedStory {
   [fileName: string]: {
@@ -14,8 +14,6 @@ export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState<string>();
-
-  const dispatch = useActionDispatchContext();
 
   useEffect(() => {
     if (
@@ -37,11 +35,7 @@ export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
         __loadedFiles[fileName][storyId] = true;
 
         if (actionSets) {
-          dispatch({
-            actionSets,
-            storyId,
-            type: 'addActionSetList',
-          });
+          addActionSetList({ actionSets, storyId });
         }
       })
       .catch((error) => {
@@ -50,7 +44,7 @@ export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [dispatch, error, fileName, loading, storyId]);
+  }, [error, fileName, loading, storyId]);
 
   const retry = useCallback(() => {
     setError(undefined);

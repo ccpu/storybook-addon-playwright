@@ -10,7 +10,15 @@ vi.mock('react', async (importOriginal) => {
       (globalThis as any).__useEffectSpy?.(fn, deps),
   };
 });
-import { dispatchMock } from '../../../../manual-mocks/store/action/context';
+import {
+  dispatchMock,
+  sortActionSetsMock,
+  cancelEditActionSetMock,
+  addActionSetMock,
+  clearCurrentActionSetsMock,
+  deleteTempActionSetsMock,
+  deleteActionSetMock as deleteActionSetStoreMock,
+} from '../../../../manual-mocks/store/action/context';
 import '../../../../manual-mocks/react-useEffect';
 import { ActionSetMain } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetMain';
 import { shallow } from 'enzyme';
@@ -74,9 +82,11 @@ describe('ActionSetMain', () => {
     actionSetList
       .props()
       .onSortEnd({ newIndex: 1, oldIndex: 2 } as SortEnd, {} as SortEvent);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { newIndex: 1, oldIndex: 2, storyId: 'story-id', type: 'sortActionSets' },
-    ]);
+    expect(sortActionSetsMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      oldIndex: 2,
+      newIndex: 1,
+    });
   });
 
   it('should create new action set and cancel', () => {
@@ -87,23 +97,18 @@ describe('ActionSetMain', () => {
     const inputDialog = wrapper.find(InputDialog);
     inputDialog.props().onSave('new action set');
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { storyId: 'story-id', type: 'cancelEditActionSet' },
-    ]);
+    expect(cancelEditActionSetMock).toHaveBeenCalledWith('story-id');
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSet: {
-          actions: [],
-          id: 'id-1',
-          title: 'new action set',
-        },
-        new: true,
-        selected: true,
-        storyId: 'story-id',
-        type: 'addActionSet',
+    expect(addActionSetMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSet: {
+        actions: [],
+        id: 'id-1',
+        title: 'new action set',
       },
-    ]);
+      selected: true,
+      isNew: true,
+    });
   });
 
   it('should clearCurrentActionSets on story change', () => {
@@ -116,7 +121,7 @@ describe('ActionSetMain', () => {
     wrapper.setProps({ ['fake']: 'true' });
 
     // should called on mount an story change
-    expect(dispatchMock).toHaveBeenCalledTimes(2);
+    expect(clearCurrentActionSetsMock).toHaveBeenCalledTimes(2);
   });
 
   it('should handle reset', () => {
@@ -126,12 +131,8 @@ describe('ActionSetMain', () => {
 
     toolbar.props().onReset();
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearCurrentActionSets' },
-    ]);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { storyId: 'story-id', type: 'deleteTempActionSets' },
-    ]);
+    expect(clearCurrentActionSetsMock).toHaveBeenCalled();
+    expect(deleteTempActionSetsMock).toHaveBeenCalledWith('story-id');
   });
 
   it('should delete selected actions', () => {
@@ -156,8 +157,6 @@ describe('ActionSetMain', () => {
       storyId: 'story-id',
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearCurrentActionSets' },
-    ]);
+    expect(clearCurrentActionSetsMock).toHaveBeenCalled();
   });
 });

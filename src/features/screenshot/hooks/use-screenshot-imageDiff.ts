@@ -1,12 +1,10 @@
 import { useCallback } from 'react';
-import { useScreenshotDispatch } from '../store/index';
+import { addImageDiffResult } from '../store/index';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { testScreenshot as testScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
 import { StoryData } from '../../../typings';
 
 export const useScreenshotImageDiff = (storyData: StoryData) => {
-  const dispatch = useScreenshotDispatch();
-
   const {
     makeCall,
     error: testScreenshotError,
@@ -22,14 +20,11 @@ export const useScreenshotImageDiff = (storyData: StoryData) => {
         storyId: storyData.id,
       });
       if (!(result instanceof Error)) {
-        dispatch({
-          imageDiffResult: result,
-          type: 'addImageDiffResult',
-        });
+        addImageDiffResult(result);
       }
       return result;
     },
-    [dispatch, makeCall, storyData],
+    [makeCall, storyData],
   );
 
   return {

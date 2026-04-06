@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../../manual-mocks/store/screenshot/context';
+import { removeImageDiffResultMock } from '../../../../manual-mocks/store/screenshot/context';
 // Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
 // React.useEffect doesn't intercept static ESM named imports in vitest (unlike
 // babel-jest which uses live property reads). The mock routes useEffect calls
@@ -78,9 +78,7 @@ describe('ScreenshotListItem', () => {
       />,
     );
     vi.advanceTimersByTime(10000);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshotId: 'screenshot-id', type: 'removeImageDiffResult' },
-    ]);
+    expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
     vi.useRealTimers();
   });
 
@@ -98,9 +96,7 @@ describe('ScreenshotListItem', () => {
       .props()
       .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { screenshotId: 'screenshot-id', type: 'removeImageDiffResult' },
-    ]);
+    expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
   });
 
   it('should not remove result if pauseDeleteImageDiffResult=true', () => {
@@ -120,7 +116,7 @@ describe('ScreenshotListItem', () => {
       .props()
       .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
 
-    expect(dispatchMock).toHaveBeenCalledTimes(0);
+    expect(removeImageDiffResultMock).toHaveBeenCalledTimes(0);
     expect(clearTimeoutMock).toHaveBeenCalledTimes(1);
     clearTimeoutMock.mockRestore();
   });

@@ -5,7 +5,7 @@ import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
 import { SaveScreenshotRequest, ImageDiffResult } from '../../../api/typings';
-import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
+import { removeScreenshot, addScreenshot } from '../store/actions';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
 import { useScreenshotOptions } from './use-screenshot-options';
@@ -17,8 +17,6 @@ export const useSaveScreenshot = () => {
   const { screenshotOptions } = useScreenshotOptions();
 
   const storyData = useCurrentStoryData();
-
-  const { dispatch: screenshotDispatch } = useGlobalScreenshotDispatch();
 
   const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
 
@@ -85,10 +83,7 @@ export const useSaveScreenshot = () => {
 
       if (editScreenshotState && isUpdating(browserType)) {
         if (result.added) {
-          screenshotDispatch({
-            screenshotId: editScreenshotState.screenshotData.id,
-            type: 'removeScreenshot',
-          });
+          removeScreenshot(editScreenshotState.screenshotData.id);
         }
         clearScreenshotEdit();
       }
@@ -97,10 +92,7 @@ export const useSaveScreenshot = () => {
         data.index = result.index;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { base64, ...rest } = data;
-        screenshotDispatch({
-          screenshot: rest,
-          type: 'addScreenshot',
-        });
+        addScreenshot(rest);
       }
       return result;
     },
@@ -113,7 +105,6 @@ export const useSaveScreenshot = () => {
       editScreenshotState,
       makeCall,
       clearScreenshotEdit,
-      screenshotDispatch,
     ],
   );
 

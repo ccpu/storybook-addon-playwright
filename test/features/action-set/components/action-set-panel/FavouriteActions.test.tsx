@@ -1,3 +1,4 @@
+import { addActionSetMock } from '../../../../manual-mocks/store/action/context';
 import React from 'react';
 import { FavouriteActions } from '../../../../../src/features/action-set/components/action-set-panel/FavouriteActions';
 import { shallow } from 'enzyme';
@@ -7,7 +8,6 @@ import {
   deleteFavouriteAction,
 } from '../../../../../src/api/trpc/clients/favourite-actions.client';
 import { FavouriteActionSet } from '../../../../../src/typings';
-import { useActionDispatchContext } from '../../../../../src/features/action-set/store/ActionContext';
 import { useAsyncApiCall } from '../../../../../src/hooks/use-async-api-call';
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 
@@ -17,10 +17,6 @@ vi.mock(
     await import(
       '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
     ),
-);
-vi.mock(
-  '../../../../../src/features/action-set/store/ActionContext',
-  async () => await import('../../store/__mocks__/ActionContext'),
 );
 vi.mock(
   '../../../../../src/hooks/use-async-api-call',
@@ -89,7 +85,6 @@ describe('FavouriteActions', () => {
         resolve([actionSet]);
       }),
   );
-  vi.mocked(useActionDispatchContext).mockImplementation(() => () => undefined);
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -123,7 +118,7 @@ describe('FavouriteActions', () => {
       .props()
       .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
-    expect(useActionDispatchContext).toHaveBeenCalled();
+    expect(addActionSetMock).toHaveBeenCalled();
     expect(saveActionSetMock).toHaveBeenCalledWith({
       actionSet: {
         actions: [{ id: 'Kj6iSI1D3BIF1yX', name: 'takeScreenshot' }],

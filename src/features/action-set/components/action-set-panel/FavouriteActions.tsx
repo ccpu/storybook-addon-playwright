@@ -14,7 +14,7 @@ import {
 } from '../../../../api/trpc/clients/favourite-actions.client';
 import { FavouriteActionSet } from '../../../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
-import { useActionDispatchContext } from '../../../../store';
+import { addActionSet as addActionSetToStore } from '../../../../store';
 import { nanoid } from 'nanoid';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { useAsyncApiCall } from '../../../../hooks/use-async-api-call';
@@ -79,8 +79,6 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
 
   const classes = useStyles();
 
-  const dispatch = useActionDispatchContext();
-
   const loadActions = React.useCallback(() => {
     if (anchorEl) {
       getFavouriteActions().then((result) => {
@@ -109,12 +107,11 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
     });
 
     if (!(result instanceof Error))
-      dispatch({
+      addActionSetToStore({
         actionSet: newActionSet,
-        new: false,
+        isNew: false,
         selected: true,
         storyId,
-        type: 'addActionSet',
       });
   };
 

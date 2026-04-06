@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { setScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
 import { useStoryScreenshotLoader } from '../../../../src/features/screenshot/hooks/use-story-screenshot-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { getStoryScreenshots } from '../../../../src/api/trpc/clients/screenshot.client';
@@ -30,15 +30,10 @@ describe('useStoryScreenshotLoader', () => {
       await new Promise((r) => setTimeout(r, 200));
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        screenshots: {
-          browserType: 'chromium',
-          id: 'screenshot-id',
-          title: 'title',
-        },
-        type: 'setScreenshots',
-      },
-    ]);
+    expect(setScreenshotsMock).toHaveBeenCalledWith({
+      browserType: 'chromium',
+      id: 'screenshot-id',
+      title: 'title',
+    });
   });
 });

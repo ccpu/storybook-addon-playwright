@@ -6,7 +6,11 @@ import {
 } from '../../../../hooks';
 import { makeStyles, Button } from '@material-ui/core';
 import { Loader, Snackbar, ListWrapper } from '../../../../components/common';
-import { useActionDispatchContext } from '../../../../store';
+import {
+  deleteActionSet as deleteActionSetFromStore,
+  editActionSet,
+  toggleCurrentActionSet,
+} from '../../../../store';
 import { deleteActionSet } from '../../../../api/trpc/clients/action-set.client';
 import { ActionSet } from '../../../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
@@ -52,8 +56,6 @@ const ActionSetList = SortableContainer(() => {
     storyData && storyId,
   );
 
-  const dispatch = useActionDispatchContext();
-
   const handleDelete = useCallback(
     async (actionSet: ActionSet) => {
       try {
@@ -62,35 +64,28 @@ const ActionSetList = SortableContainer(() => {
           fileName: storyData.parameters.fileName,
           storyId: storyData.id,
         });
-        dispatch({
+        deleteActionSetFromStore({
           actionSetId: actionSet.id,
           storyId: storyData.id,
-          type: 'deleteActionSet',
         });
       } catch (error) {
         setError((error as { message: string }).message);
       }
     },
-    [dispatch, storyData],
+    [storyData],
   );
 
-  const handleEdit = useCallback(
-    (actionSet: ActionSet) => {
-      dispatch({ actionSet, type: 'editActionSet' });
-    },
-    [dispatch],
-  );
+  const handleEdit = useCallback((actionSet: ActionSet) => {
+    editActionSet(actionSet);
+  }, []);
 
   const handleErrorClose = useCallback(() => {
     setError(undefined);
   }, []);
 
-  const handleCheckBox = useCallback(
-    (actionSet: ActionSet) => {
-      dispatch({ actionSetId: actionSet.id, type: 'toggleCurrentActionSet' });
-    },
-    [dispatch],
-  );
+  const handleCheckBox = useCallback((actionSet: ActionSet) => {
+    toggleCurrentActionSet(actionSet.id);
+  }, []);
 
   const isEditing = state.orgEditingActionSet !== undefined;
 

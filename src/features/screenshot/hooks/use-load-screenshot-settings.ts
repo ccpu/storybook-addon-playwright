@@ -1,4 +1,4 @@
-import { useGlobalActionDispatch } from '../../action-set/hooks/use-global-action-dispatch';
+import { setScreenShotActionSets } from '../../action-set/store/actions';
 import { useStorybookApi } from '@storybook/manager-api';
 import { useCallback } from 'react';
 import { ScreenshotData, ScreenshotOptions } from '../../../typings';
@@ -18,8 +18,6 @@ interface ReturnType {
 }
 
 export const useLoadScreenshotSettings = (): ReturnType => {
-  const { dispatch } = useGlobalActionDispatch();
-
   const { setBrowserOptions, browserOptions } = useBrowserOptions();
   const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
 
@@ -31,13 +29,12 @@ export const useLoadScreenshotSettings = (): ReturnType => {
     (screenshotData: ScreenshotData) => {
       if (!screenshotData.actionSets || !screenshotData.actionSets.length)
         return;
-      dispatch({
+      setScreenShotActionSets({
         actionSets: screenshotData.actionSets,
         storyId: storyData.id,
-        type: 'setScreenShotActionSets',
       });
     },
-    [dispatch, storyData],
+    [storyData],
   );
   const loadSetting = useCallback(
     (screenshotData: ScreenshotData, force = false) => {

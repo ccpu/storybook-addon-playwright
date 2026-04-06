@@ -1,4 +1,4 @@
-import { dispatchMock } from '../../../manual-mocks/store/screenshot/context';
+import { changeScreenshotIndexMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotIndexChange } from '../../../../src/features/screenshot/hooks/use-screenshot-index-change';
 import { changeScreenShotIndex } from '../../../../src/api/trpc/clients/screenshot.client';
 import { renderHook, act } from '@testing-library/react-hooks';
@@ -8,10 +8,6 @@ import mockConsole from 'jest-mock-console';
 vi.mock(
   '../../../../src/utils/get-preview-iframe',
   async () => await import('../../../utils/__mocks__/get-preview-iframe'),
-);
-vi.mock(
-  '../../../../src/features/screenshot/store/context.tsx',
-  async () => await import('../store/__mocks__/context'),
 );
 vi.mock(
   '../../../../src/api/trpc/clients/screenshot.client',
@@ -41,9 +37,10 @@ describe('useScreenshotIndexChange', () => {
       await result.current.changeIndex({ newIndex: 1, oldIndex: 2 } as SortEnd);
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { newIndex: 1, oldIndex: 2, type: 'changeIndex' },
-    ]);
+    expect(changeScreenshotIndexMock).toHaveBeenCalledWith({
+      oldIndex: 2,
+      newIndex: 1,
+    });
   });
 
   it('should reverse index on error', async () => {
@@ -54,8 +51,9 @@ describe('useScreenshotIndexChange', () => {
       await result.current.changeIndex({ newIndex: 1, oldIndex: 2 } as SortEnd);
     });
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { newIndex: 2, oldIndex: 1, type: 'changeIndex' },
-    ]);
+    expect(changeScreenshotIndexMock).toHaveBeenCalledWith({
+      oldIndex: 1,
+      newIndex: 2,
+    });
   });
 });

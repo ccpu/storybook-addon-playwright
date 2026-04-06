@@ -22,7 +22,7 @@ import { ImageDiffPreview } from '../../../../../src/components/common';
 import { useKeyPressFn } from '../../../../../src/hooks/use-key-press-fn';
 
 vi.mock(
-  '../../../../../src/features/screenshot/store/context',
+  '../../../../../src/features/screenshot/store/selectors',
   async () => await import('../../store/__mocks__/context'),
 );
 vi.mock('../../../../../src/hooks/use-key-press-fn');

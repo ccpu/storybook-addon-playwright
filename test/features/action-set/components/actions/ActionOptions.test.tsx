@@ -1,4 +1,7 @@
-import { dispatchMock } from '../../../../manual-mocks/store/action/context';
+import {
+  toggleActionExpansionMock,
+  deleteActionSetActionMock,
+} from '../../../../manual-mocks/store/action/context';
 import React from 'react';
 import { ActionOptions } from '../../../../../src/features/action-set/components/actions/ActionOptions';
 import { mount } from 'enzyme';
@@ -21,7 +24,8 @@ const defaultMockData = {
 
 describe('ActionOptions', () => {
   beforeEach(() => {
-    dispatchMock.mockClear();
+    toggleActionExpansionMock.mockClear();
+    deleteActionSetActionMock.mockClear();
 
     (useEditorAction as Mock).mockImplementation(() => defaultMockData);
   });
@@ -75,9 +79,7 @@ describe('ActionOptions', () => {
       .props()
       .onChange({} as React.ChangeEvent<unknown>, true);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { actionId: 'action-id', type: 'toggleActionExpansion' },
-    ]);
+    expect(toggleActionExpansionMock).toHaveBeenCalledWith('action-id');
   });
 
   it('should handle delete action', () => {
@@ -99,14 +101,10 @@ describe('ActionOptions', () => {
         stopPropagation: vi.fn(),
       } as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionId: 'action-id',
-        actionSetId: 'action-set-id',
-
-        storyId: 'story-id',
-        type: 'deleteActionSetAction',
-      },
-    ]);
+    expect(deleteActionSetActionMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+      actionId: 'action-id',
+    });
   });
 });

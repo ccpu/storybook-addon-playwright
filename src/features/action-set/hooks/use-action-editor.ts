@@ -1,4 +1,12 @@
-import { useActionDispatchContext, useActionContext } from '../../../store';
+import {
+  useActionSetStoreState,
+  clearActionExpansion,
+  addActionSetAction,
+  toggleActionExpansion,
+  saveActionSet as saveActionSetStore,
+  setActionSetTitle,
+  cancelEditActionSet,
+} from '../../../store';
 import { useCallback, useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { StoryAction, ActionSet } from '../../../typings';
@@ -9,14 +17,12 @@ import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import React from 'react';
 
 export const useActionEditor = (actionSet: ActionSet) => {
-  const dispatch = useActionDispatchContext();
-
   const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(
     saveActionSet,
     false,
   );
 
-  const state = useActionContext();
+  const state = useActionSetStoreState();
 
   const storyData = useCurrentStoryData();
 
@@ -30,21 +36,20 @@ export const useActionEditor = (actionSet: ActionSet) => {
         id: actionId,
         name: actionName,
       };
-      dispatch({ type: 'clearActionExpansion' });
-      dispatch({
+      clearActionExpansion();
+      addActionSetAction({
         action: newAction,
         actionSetId: actionSet.id,
         storyId: storyData.id,
-        type: 'addActionSetAction',
       });
-      dispatch({ actionId, type: 'toggleActionExpansion' });
+      toggleActionExpansion(actionId);
     },
-    [dispatch, storyData, actionSet.id],
+    [storyData, actionSet.id],
   );
 
   useEffect(() => {
-    return () => dispatch({ type: 'clearActionExpansion' });
-  }, [dispatch]);
+    return () => clearActionExpansion();
+  }, []);
 
   const handleSave = useCallback(async () => {
     const validateResult = validateActionList(
@@ -68,13 +73,9 @@ export const useActionEditor = (actionSet: ActionSet) => {
     }
 
     if (!(result instanceof Error)) {
-      dispatch({
-        actionSet,
-        storyId: storyData.id,
-        type: 'saveActionSet',
-      });
+      saveActionSetStore();
     }
-  }, [actionSet, dispatch, makeCall, state.actionSchema, storyData]);
+  }, [actionSet, makeCall, state.actionSchema, storyData]);
 
   const clearValidationResult = useCallback(() => {
     setValidationResult(undefined);
@@ -82,35 +83,31 @@ export const useActionEditor = (actionSet: ActionSet) => {
 
   const handleDescriptionChange = useCallback(
     (title: string) => {
-      dispatch({
+      setActionSetTitle({
         actionSetId: state.orgEditingActionSet.id,
         storyId: storyData.id,
         title,
-        type: 'setActionSetTitle',
       });
     },
-    [dispatch, storyData, state.orgEditingActionSet],
+    [storyData, state.orgEditingActionSet],
   );
 
-  const cancelEditActionSet = useCallback(() => {
-    dispatch({
-      storyId: storyData.id,
-      type: 'cancelEditActionSet',
-    });
-  }, [dispatch, storyData]);
+  const handleCancelEditActionSet = useCallback(() => {
+    cancelEditActionSet(storyData.id);
+  }, [storyData]);
 
   const editingAction = actionSet !== undefined;
   const storyId = storyData && storyData.id;
 
   React.useEffect(() => {
     return () => {
-      if (editingAction && storyId) cancelEditActionSet();
+      if (editingAction && storyId) handleCancelEditActionSet();
     };
-  }, [cancelEditActionSet, editingAction, storyId]);
+  }, [handleCancelEditActionSet, editingAction, storyId]);
 
   return {
     ErrorSnackbar,
-    cancelEditActionSet,
+    cancelEditActionSet: handleCancelEditActionSet,
     clearValidationResult,
     handleAddAction,
     handleDescriptionChange,

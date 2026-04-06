@@ -6,7 +6,7 @@ import {
   Loader,
 } from '../../../../components/common';
 import { ScreenshotData, StoryData } from '../../../../typings';
-import { useScreenshotDispatch } from '../../store/index';
+import { removeImageDiffResult } from '../../store/index';
 import { SortableElement } from 'react-sortable-hoc';
 import {
   ScreenshotListItemMenu,
@@ -70,7 +70,7 @@ function ScreenshotListItem({
   storyData,
   ...rest
 }: ScreenshotListItemProps) {
-  const dispatch = useScreenshotDispatch();
+  const classes = useStyles();
 
   const [showMenu, setShowMenu] = useState(false);
   const [showImageDiffResult, setShowImageDiffResult] = useState(false);
@@ -78,8 +78,6 @@ function ScreenshotListItem({
   const timer = useRef(0);
 
   const { dragStart } = useDragStart();
-
-  const classes = useStyles();
 
   const [showPreview, setShowPreview] = useState(false);
 
@@ -91,19 +89,11 @@ function ScreenshotListItem({
   const handleRemoveScreenShotResult = useCallback(() => {
     setShowImageDiffResult(false);
     if (!pauseDeleteImageDiffResult && isPassesImageDiff) {
-      dispatch({
-        screenshotId: imageDiffResult.screenshotId,
-        type: 'removeImageDiffResult',
-      });
+      removeImageDiffResult(imageDiffResult.screenshotId);
     } else {
       window.clearTimeout(timer.current);
     }
-  }, [
-    pauseDeleteImageDiffResult,
-    isPassesImageDiff,
-    dispatch,
-    imageDiffResult,
-  ]);
+  }, [pauseDeleteImageDiffResult, isPassesImageDiff, imageDiffResult]);
 
   useEffect(() => {
     if (
@@ -120,7 +110,6 @@ function ScreenshotListItem({
     };
   }, [
     pauseDeleteImageDiffResult,
-    dispatch,
     handleRemoveScreenShotResult,
     imageDiffResult,
   ]);

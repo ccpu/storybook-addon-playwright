@@ -1,4 +1,7 @@
-import { dispatchMock } from '../../../../manual-mocks/store/action/context';
+import {
+  setActionOptionsMock,
+  toggleSubtitleItemMock,
+} from '../../../../manual-mocks/store/action/context';
 import React from 'react';
 import { ActionSchemaRenderer } from '../../../../../src/features/action-set/components/actions/ActionSchemaRenderer';
 import { shallow } from 'enzyme';
@@ -65,16 +68,13 @@ describe('ActionSchemaRenderer', () => {
 
     wrapper.find(MemoizedSchemaRenderer).props().onChange('opt.path', 1);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionId: 'action-id',
-        actionSetId: 'action-set-id',
-        objPath: 'opt.path',
-        storyId: 'story-id',
-        type: 'setActionOptions',
-        val: 1,
-      },
-    ]);
+    expect(setActionOptionsMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+      actionId: 'action-id',
+      objPath: 'opt.path',
+      val: 1,
+    });
   });
 
   it('should return value', () => {
@@ -107,15 +107,12 @@ describe('ActionSchemaRenderer', () => {
       .props()
       .onAppendValueToTitle('opt.path');
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionId: 'action-id',
-        actionOptionPath: 'opt.path',
-        actionSetId: 'action-set-id',
-        storyId: 'story-id',
-        type: 'toggleSubtitleItem',
-      },
-    ]);
+    expect(toggleSubtitleItemMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+      actionId: 'action-id',
+      actionOptionPath: 'opt.path',
+    });
   });
 
   it('should handle shouldAppendToTitle', () => {
@@ -149,15 +146,12 @@ describe('ActionSchemaRenderer', () => {
       .props()
       .onSelectorChange('opt.path', 1);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionId: 'action-id',
-        actionSetId: 'action-set-id',
-        objPath: 'opt.path',
-        storyId: 'story-id',
-        type: 'setActionOptions',
-        val: 1,
-      },
-    ]);
+    expect(setActionOptionsMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+      actionId: 'action-id',
+      objPath: 'opt.path',
+      val: 1,
+    });
   });
 });

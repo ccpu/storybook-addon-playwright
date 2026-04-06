@@ -1,14 +1,12 @@
 import { useCallback } from 'react';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { testScreenshots } from '../../../api/trpc/clients/screenshot.client';
-import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';
+import { addImageDiffResult, setImageDiffResults } from '../store/actions';
 import { nanoid } from 'nanoid';
 import { ScreenshotTestTargetType } from '../../../typings';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 
 export const useScreenshotImageDiffResults = () => {
-  const { dispatch } = useGlobalScreenshotDispatch();
-
   const storyData = useCurrentStoryData();
 
   const {
@@ -31,21 +29,15 @@ export const useScreenshotImageDiffResults = () => {
       if (!(results instanceof Error)) {
         if (type === 'file' || type === 'story') {
           results.forEach((result) => {
-            dispatch({
-              imageDiffResult: result,
-              type: 'addImageDiffResult',
-            });
+            addImageDiffResult(result);
           });
         } else {
-          dispatch({
-            imageDiffResults: results,
-            type: 'setImageDiffResults',
-          });
+          setImageDiffResults(results);
         }
       }
       return results;
     },
-    [dispatch, makeCall, storyData],
+    [makeCall, storyData],
   );
 
   return {

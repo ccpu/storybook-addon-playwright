@@ -3,7 +3,7 @@ import { SortEnd } from 'react-sortable-hoc';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { changeScreenShotIndex } from '../../../api/trpc/clients/screenshot.client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { useScreenshotDispatch } from '../store/index';
+import { changeScreenshotIndex } from '../store/index';
 
 export const useScreenshotIndexChange = () => {
   const {
@@ -14,15 +14,9 @@ export const useScreenshotIndexChange = () => {
 
   const storyData = useCurrentStoryData();
 
-  const dispatch = useScreenshotDispatch();
-
   const changeIndex = useCallback(
     async (e: SortEnd) => {
-      dispatch({
-        newIndex: e.newIndex,
-        oldIndex: e.oldIndex,
-        type: 'changeIndex',
-      });
+      changeScreenshotIndex({ newIndex: e.newIndex, oldIndex: e.oldIndex });
       const result = await makeCall({
         fileName: storyData.parameters.fileName,
         newIndex: e.newIndex,
@@ -30,14 +24,10 @@ export const useScreenshotIndexChange = () => {
         storyId: storyData.id,
       });
       if (result instanceof Error) {
-        dispatch({
-          newIndex: e.oldIndex,
-          oldIndex: e.newIndex,
-          type: 'changeIndex',
-        });
+        changeScreenshotIndex({ newIndex: e.oldIndex, oldIndex: e.newIndex });
       }
     },
-    [dispatch, makeCall, storyData],
+    [makeCall, storyData],
   );
   return {
     ChangeIndexErrorSnackbar,

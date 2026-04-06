@@ -1,15 +1,10 @@
-import { ReducerState } from '../../../../../src/features/screenshot/store/reducer';
+import { ScreenshotState } from '../../../../../src/features/screenshot/store/screenshot-store';
 
 export const ScreenshotDispatchContext = vi.fn();
 
-const useScreenshotDispatch = vi.fn();
-useScreenshotDispatch.mockImplementation(() => {
-  return vi.fn();
-});
+const useScreenshotStoreState = vi.fn();
 
-const useScreenshotContext = vi.fn();
-
-const StateData: Partial<ReducerState> = {
+const StateData: Partial<ScreenshotState> = {
   imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id' }],
   screenshots: [
     {
@@ -27,6 +22,8 @@ const StateData: Partial<ReducerState> = {
   ],
 };
 
-useScreenshotContext.mockImplementation((): Partial<ReducerState> => StateData);
+useScreenshotStoreState.mockImplementation(
+  (): Partial<ScreenshotState> => StateData,
+);
 
-export { useScreenshotDispatch, useScreenshotContext };
+export { useScreenshotStoreState };

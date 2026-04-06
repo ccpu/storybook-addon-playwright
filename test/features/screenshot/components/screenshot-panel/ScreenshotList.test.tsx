@@ -2,10 +2,10 @@ import { ScreenshotList } from '../../../../../src/features/screenshot/component
 import { shallow } from 'enzyme';
 import React from 'react';
 import { SortableScreenshotListItem } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListItem';
-import { useScreenshotContext } from '../../../../../src/features/screenshot/store/context';
+import { useScreenshotStoreState } from '../../../../../src/features/screenshot/store/selectors';
 
 vi.mock(
-  '../../../../../src/features/screenshot/store/context',
+  '../../../../../src/features/screenshot/store/selectors',
   async () => await import('../../store/__mocks__/context'),
 );
 vi.mock(
@@ -19,7 +19,7 @@ vi.mock(
     await import('../../hooks/__mocks__/use-screenshot-imageDiff-results'),
 );
 
-const useScreenshotContextMock = vi.mocked(useScreenshotContext);
+const useScreenshotStoreStateMock = vi.mocked(useScreenshotStoreState);
 
 describe('ScreenshotList', () => {
   beforeEach(() => {
@@ -42,7 +42,7 @@ describe('ScreenshotList', () => {
   });
 
   it('should show no data message', () => {
-    useScreenshotContextMock.mockImplementationOnce(() => ({
+    useScreenshotStoreStateMock.mockImplementationOnce(() => ({
       imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id-3' }],
       pauseDeleteImageDiffResult: false,
       screenshots: [],

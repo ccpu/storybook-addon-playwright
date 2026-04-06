@@ -1,4 +1,7 @@
-import { globalDispatchMock } from '../../../manual-mocks/hooks/use-global-screenshot-dispatch';
+import {
+  setImageDiffResultsMock,
+  addImageDiffResultMock,
+} from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotImageDiffResults } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { testScreenshots } from '../../../../src/api/trpc/clients/screenshot.client';
@@ -23,10 +26,7 @@ describe('useScreenshotImageDiffResults', () => {
     await act(async () => {
       await result.current.testStoryScreenShots('all');
     });
-    expect(globalDispatchMock).toHaveBeenCalledWith({
-      imageDiffResults: [{ pass: true }],
-      type: 'setImageDiffResults',
-    });
+    expect(setImageDiffResultsMock).toHaveBeenCalledWith([{ pass: true }]);
     expect(testScreenshots).toHaveBeenCalledWith({
       fileName: './test.stories.tsx',
       requestId: 'id-1',
@@ -40,10 +40,7 @@ describe('useScreenshotImageDiffResults', () => {
     await act(async () => {
       await result.current.testStoryScreenShots('file');
     });
-    expect(globalDispatchMock).toHaveBeenCalledWith({
-      imageDiffResult: { pass: true },
-      type: 'addImageDiffResult',
-    });
+    expect(addImageDiffResultMock).toHaveBeenCalledWith({ pass: true });
 
     expect(testScreenshots).toHaveBeenCalledWith({
       fileName: './test.stories.tsx',
@@ -58,10 +55,7 @@ describe('useScreenshotImageDiffResults', () => {
     await act(async () => {
       await result.current.testStoryScreenShots('story');
     });
-    expect(globalDispatchMock).toHaveBeenCalledWith({
-      imageDiffResult: { pass: true },
-      type: 'addImageDiffResult',
-    });
+    expect(addImageDiffResultMock).toHaveBeenCalledWith({ pass: true });
     expect(testScreenshots).toHaveBeenCalledWith({
       fileName: './test.stories.tsx',
       requestId: 'id-3',

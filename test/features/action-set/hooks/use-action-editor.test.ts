@@ -1,14 +1,18 @@
 import {
-  dispatchMock,
-  ReducerState,
+  clearActionExpansionMock,
+  addActionSetActionMock,
+  saveActionSetMock as saveActionSetStoreMock,
+  setActionSetTitleMock,
+  cancelEditActionSetMock,
 } from '../../../manual-mocks/store/action/context';
+import type { ActionSetState } from '../../../../src/features/action-set/store/action-set-store';
 import { getOrgEditingActionSet } from '../../../configs/get-org-editing-actionSet';
 import { useActionEditor } from '../../../../src/features/action-set/hooks/use-action-editor';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ActionSet } from '../../../../src/typings';
 import { useAsyncApiCall } from '../../../../src/hooks/use-async-api-call';
 import { validateActionList } from '../../../../src/utils/valid-action';
-import { useActionContext } from '../../../../src/features/action-set/store/ActionContext';
+import { useActionSetStoreState } from '../../../../src/features/action-set/store/selectors';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
@@ -55,41 +59,24 @@ describe('useActionSetEditor', () => {
   it('should clearActionExpansion on unmount', () => {
     const { unmount } = renderHook(() => useActionEditor(actionSet));
     unmount();
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearActionExpansion' },
-    ]);
+    expect(clearActionExpansionMock).toHaveBeenCalled();
   });
 
   it('should add action to actionSet', () => {
     const { result } = renderHook(() => useActionEditor(actionSet));
     result.current.handleAddAction('click');
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearActionExpansion' },
-    ]);
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        action: { id: 'action-id', name: 'click' },
-        actionSetId: 'action-set-id',
-        storyId: 'story-id',
-        type: 'addActionSetAction',
-      },
-    ]);
+    expect(clearActionExpansionMock).toHaveBeenCalled();
+    expect(addActionSetActionMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+      action: { id: 'action-id', name: 'click' },
+    });
   });
 
   it('should handle save', async () => {
     const { result } = renderHook(() => useActionEditor(actionSet));
     await result.current.handleSave();
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSet: {
-          actions: [],
-          id: 'action-set-id',
-          title: 'action-set-desc',
-        },
-        storyId: 'story-id',
-        type: 'saveActionSet',
-      },
-    ]);
+    expect(saveActionSetStoreMock).toHaveBeenCalled();
 
     expect(onSaveMock).toHaveBeenCalledWith({
       actionSet: {
@@ -111,17 +98,7 @@ describe('useActionSetEditor', () => {
       await result.current.handleSave();
     });
     expect(onSaveMock).toHaveBeenCalledTimes(0);
-    expect(dispatchMock).not.toHaveBeenCalledWith([
-      {
-        actionSet: {
-          actions: [],
-          id: 'action-set-id',
-          title: 'action-set-desc',
-        },
-        storyId: 'story-id',
-        type: 'saveActionSet',
-      },
-    ]);
+    expect(saveActionSetStoreMock).not.toHaveBeenCalled();
   });
 
   it('should clare validation result', async () => {
@@ -165,32 +142,27 @@ describe('useActionSetEditor', () => {
 
   it('should handle title change', () => {
     const orgEditingActionSet = getOrgEditingActionSet();
-    vi.mocked(useActionContext).mockImplementation(
+    vi.mocked(useActionSetStoreState).mockImplementation(
       () =>
         ({
           orgEditingActionSet: orgEditingActionSet,
-        } as unknown as ReducerState),
+        } as unknown as ActionSetState),
     );
 
     const { result } = renderHook(() => useActionEditor(actionSet));
 
     result.current.handleDescriptionChange('new-dec');
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSetId: 'action-set-id',
-        storyId: 'story-id',
-        title: 'new-dec',
-        type: 'setActionSetTitle',
-      },
-    ]);
+    expect(setActionSetTitleMock).toHaveBeenCalledWith({
+      storyId: 'story-id',
+      actionSetId: 'action-set-id',
+      title: 'new-dec',
+    });
   });
 
   it('should cancel', () => {
     const { result } = renderHook(() => useActionEditor(actionSet));
     result.current.cancelEditActionSet();
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { storyId: 'story-id', type: 'cancelEditActionSet' },
-    ]);
+    expect(cancelEditActionSetMock).toHaveBeenCalledWith('story-id');
   });
 
   it('should not save temp actions', async () => {
@@ -201,18 +173,7 @@ describe('useActionSetEditor', () => {
 
     expect(onSaveMock).toHaveBeenCalledTimes(0);
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      {
-        actionSet: {
-          actions: [],
-          id: 'action-set-id',
-          temp: true,
-          title: 'action-set-desc',
-        },
-        storyId: 'story-id',
-        type: 'saveActionSet',
-      },
-    ]);
+    expect(saveActionSetStoreMock).toHaveBeenCalled();
   });
 
   it('should cancel edit mode when story change (unmounted)', async () => {
@@ -220,8 +181,6 @@ describe('useActionSetEditor', () => {
 
     unmount();
 
-    expect(dispatchMock).toHaveBeenCalledWith([
-      { type: 'clearActionExpansion' },
-    ]);
+    expect(clearActionExpansionMock).toHaveBeenCalled();
   });
 });

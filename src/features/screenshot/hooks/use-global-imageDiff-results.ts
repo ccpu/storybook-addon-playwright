@@ -1,15 +1,13 @@
-import { useGlobalState } from '../../../hooks/use-global-state';
 import { ImageDiffResult } from '../../../api/typings';
-import { Dispatch, SetStateAction } from 'react';
+import { useImageDiffResults } from '../store/selectors';
+import { setImageDiffResults } from '../store/actions';
 
 export interface UseGlobalImageDiffResults {
   imageDiffResult: ImageDiffResult[];
-  setImageDiffResult: Dispatch<SetStateAction<ImageDiffResult[]>>;
+  setImageDiffResult: (results: ImageDiffResult[]) => void;
 }
 
 export const useGlobalImageDiffResults = (): UseGlobalImageDiffResults => {
-  const [imageDiffResult, setImageDiffResult] = useGlobalState<
-    ImageDiffResult[]
-  >('image-diff-results', []);
-  return { imageDiffResult, setImageDiffResult };
+  const imageDiffResult = useImageDiffResults();
+  return { imageDiffResult, setImageDiffResult: setImageDiffResults };
 };

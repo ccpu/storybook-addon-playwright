@@ -7,7 +7,7 @@ import {
   useScreenshotUpdate,
   useCurrentStoryData,
 } from '../../../../hooks';
-import { testScreenshot as testScreenshotClient } from '../../screenshot.client';
+import { testScreenshot as testScreenshotClient } from '../../../../api/trpc/clients/screenshot.client';
 import { Loader, ImageDiffPreviewDialog } from '../../../../components/common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ImageDiffResult } from '../../../../api/typings';

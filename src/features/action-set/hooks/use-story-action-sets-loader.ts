@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { getActionSet } from '../action-set.client';
+import { getActionSet } from '../../../api/trpc/clients/action-set.client';
 import { useActionDispatchContext } from '../../../store';
 
 interface LoadedStory {

@@ -1,13 +1,13 @@
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 import { getStoryPlaywrightData } from './api/server/utils';
-import { makeScreenshot } from './api/server/services';
+import { makeScreenshot } from './api/services';
 import {
   getScreenshotPaths,
   ScreenshotPathInfo,
 } from './api/server/utils/get-screenshot-paths';
 import fs from 'fs';
 import { RequestData } from './typings/request';
-import { setStoryScreenshotOptions } from './api/server/services/utils/set-story-screenshot-options';
+import { setStoryScreenshotOptions } from './api/services/utils/set-story-screenshot-options';
 
 interface RunImageDiffOptions extends RequestData {
   onScreenshotReady?: (

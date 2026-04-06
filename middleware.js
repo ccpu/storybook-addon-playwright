@@ -1,6 +1,6 @@
 const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');
-const { appRouter } = require('./dist/trpc/router');
-const { createContext } = require('./dist/trpc/context');
+const { appRouter } = require('./dist/api/trpc/router');
+const { createContext } = require('./dist/api/trpc/context');
 
 function toWebRequest(req) {
   return new Request(`http://localhost${req.url}`, {

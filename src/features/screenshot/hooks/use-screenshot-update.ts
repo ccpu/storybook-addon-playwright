@@ -1,4 +1,4 @@
-import { updateScreenshot as updateScreenshotClient } from '../screenshot.client';
+import { updateScreenshot as updateScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useCallback } from 'react';
 import { useScreenshotDispatch } from '../store/index';

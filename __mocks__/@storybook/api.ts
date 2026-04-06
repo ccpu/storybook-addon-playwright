@@ -1,6 +1,6 @@
 // Legacy mock - kept for backward compatibility
 // New code should import from @storybook/manager-api
-import { getStoryData } from '../../__test_data__/story-data';
+import { getStoryData } from '../../test/configs/story-data';
 
 export const useStorybookState = vi.fn().mockImplementation(() => {
   return {

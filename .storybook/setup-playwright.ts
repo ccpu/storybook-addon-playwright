@@ -55,7 +55,7 @@ export async function setupPlaywright() {
       autoMigration: true,
       customActionSchema: {
         addBox: {
-          type: 'promise',
+          type: 'Promise' as never,
           parameters: {
             position: {
               type: 'object',
@@ -86,7 +86,7 @@ export async function setupPlaywright() {
       // pageGotoOptions: {
       //   timeout: 5000,
       // },
-    });
+    } as any);
   } catch (error) {
     console.error(error);
   }

@@ -6,7 +6,7 @@ import { useAsyncApiCall } from '../../hooks';
 import { Loader } from './Loader';
 import { Definition } from 'ts-to-json';
 import * as immutableObject from 'object-path-immutable';
-import { getSchema } from '../../features/schema/schema.client';
+import { getSchema } from '../../api/trpc/clients/schema.client';
 
 const useStyles = makeStyles(
   () => {

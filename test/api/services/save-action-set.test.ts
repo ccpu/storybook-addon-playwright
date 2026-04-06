@@ -1,0 +1,87 @@
+import { saveStoryFile } from '../../../src/api/server/utils';
+import { saveActionSet } from '../../../src/api/services/save-action-set';
+
+vi.mock(
+  '../../../src/api/server/utils/save-story-file',
+  async () => await import('../server/utils/__mocks__/save-story-file'),
+);
+vi.mock(
+  '../../../src/api/server/utils/load-story-data',
+  async () => await import('../server/utils/__mocks__/load-story-data'),
+);
+const saveStoryFileMock = vi.mocked(saveStoryFile);
+
+describe('saveActionSet', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('should create story actionSets if not exist', async () => {
+    await saveActionSet({
+      actionSet: {
+        actions: [{ id: 'action-id', name: 'action-name' }],
+        id: 'action-set-id',
+        title: 'action-set-desc',
+      },
+      fileName: 'story.ts',
+      storyId: 'story-id-2',
+    });
+    const data = saveStoryFileMock.mock.calls[0][1].stories['story-id-2'];
+    expect(data).toStrictEqual({
+      actionSets: [
+        {
+          actions: [{ name: 'action-name' }],
+          id: 'action-set-id',
+          title: 'action-set-desc',
+        },
+      ],
+    });
+  });
+
+  it('should update story action set', async () => {
+    await saveActionSet({
+      actionSet: {
+        actions: [{ id: 'action-id', name: 'dbClick' }],
+        id: 'action-set-id',
+        title: 'action-set-desc',
+      },
+      fileName: 'story.ts',
+      storyId: 'story-id',
+    });
+    const data =
+      saveStoryFileMock.mock.calls[0][1].stories['story-id'].actionSets;
+    expect(data).toStrictEqual([
+      {
+        actions: [
+          { args: { selector: 'html' }, id: 'action-id', name: 'click' },
+        ],
+        id: 'action-set-id-2',
+        title: 'click',
+      },
+      {
+        actions: [{ name: 'dbClick' }],
+        id: 'action-set-id',
+        title: 'action-set-desc',
+      },
+    ]);
+  });
+
+  it('should create new story action set', async () => {
+    await saveActionSet({
+      actionSet: {
+        actions: [{ id: 'action-id', name: 'click' }],
+        id: 'action-set-id-3',
+        title: 'action-set-desc',
+      },
+      fileName: 'story.ts',
+      storyId: 'story-id',
+    });
+    const data =
+      saveStoryFileMock.mock.calls[0][1].stories['story-id'].actionSets;
+    expect(data).toHaveLength(3);
+  });
+});

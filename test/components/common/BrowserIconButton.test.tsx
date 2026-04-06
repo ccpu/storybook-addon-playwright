@@ -1,0 +1,39 @@
+import { BrowserIcon } from '../../../src/components/common/BrowserIcon';
+import { BrowserIconButton } from '../../../src/components/common/BrowserIconButton';
+import { shallow } from 'enzyme';
+import React from 'react';
+import { IconButton } from '@storybook/components';
+
+describe('BrowserIcon', () => {
+  const clickMock = vi.fn();
+  beforeEach(() => {
+    clickMock.mockClear();
+  });
+
+  it('should render', () => {
+    const wrapper = shallow(
+      <BrowserIconButton
+        active={false}
+        browserType="chromium"
+        onClick={clickMock}
+      />,
+    );
+    expect(wrapper.find(BrowserIcon)).toHaveLength(1);
+  });
+
+  it('should handle click', () => {
+    const wrapper = shallow(
+      <BrowserIconButton
+        active={false}
+        browserType="chromium"
+        onClick={clickMock}
+      />,
+    );
+    wrapper
+      .find(IconButton)
+      .props()
+      .onClick({} as never);
+
+    expect(clickMock).toHaveBeenCalledWith('chromium');
+  });
+});

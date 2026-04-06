@@ -11,7 +11,7 @@ import {
   FormControl,
   TextField,
 } from '@material-ui/core';
-import { addFavouriteAction } from '../../../favourite-actions/favourite-actions.client';
+import { addFavouriteAction } from '../../../../api/trpc/clients/favourite-actions.client';
 import { useAnchorEl } from '../../../../hooks/use-anchor-el';
 import {
   DialogTitle,

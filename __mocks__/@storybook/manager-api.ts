@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EventEmitter } from 'events';
-import { getStoryData } from '../../__test_data__/story-data';
+import { getStoryData } from '../../test/configs/story-data';
 
 const ee = new EventEmitter();
 

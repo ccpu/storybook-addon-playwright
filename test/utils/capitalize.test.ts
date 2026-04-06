@@ -1,0 +1,7 @@
+import { capitalize } from '../../src/utils/capitalize';
+
+describe('capitalize', () => {
+  it('should capitalize', () => {
+    expect(capitalize('foo')).toBe('Foo');
+  });
+});

@@ -2,7 +2,7 @@ import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { ActionSet, StoryData } from '../../../typings';
 import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
-import { saveActionSet } from '../action-set.client';
+import { saveActionSet } from '../../../api/trpc/clients/action-set.client';
 import { useActionDispatchContext } from '../../../store';
 
 export const useCopyActionSet = (storyData: StoryData) => {

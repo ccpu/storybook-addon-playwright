@@ -11,14 +11,14 @@ import {
 import {
   getFavouriteActions,
   deleteFavouriteAction,
-} from '../../../favourite-actions/favourite-actions.client';
+} from '../../../../api/trpc/clients/favourite-actions.client';
 import { FavouriteActionSet } from '../../../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { useActionDispatchContext } from '../../../../store';
 import { nanoid } from 'nanoid';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { useAsyncApiCall } from '../../../../hooks/use-async-api-call';
-import { saveActionSet as saveActionSetClient } from '../../action-set.client';
+import { saveActionSet as saveActionSetClient } from '../../../../api/trpc/clients/action-set.client';
 import { filterFavouriteActions } from './utils/filter-favourite-actions';
 
 const useStyles = makeStyles(

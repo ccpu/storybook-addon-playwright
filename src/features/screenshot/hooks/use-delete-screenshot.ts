@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { deleteScreenshot as deleteScreenshotService } from '../screenshot.client';
+import { deleteScreenshot as deleteScreenshotService } from '../../../api/trpc/clients/screenshot.client';
 import { useScreenshotDispatch } from '../store/index';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 

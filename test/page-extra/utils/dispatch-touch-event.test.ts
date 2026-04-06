@@ -1,0 +1,135 @@
+import { dispatchTouchEvent } from '../../../src/page-extra/utils/dispatch-touch-event';
+import { setSelectorSize } from '../../../src/page-extra/set-selector-size';
+import { pagePropsMock, PageProps } from '../../manual-mocks/playwright';
+import { ExtendedPage } from '../../../src/page-extra/typings';
+
+const pageMock = (): Promise<PageProps> => {
+  return new Promise<PageProps>((resolvePage) => {
+    resolvePage(pagePropsMock());
+  });
+};
+
+describe('touch', () => {
+  let page: ExtendedPage;
+  beforeAll(async () => {
+    page = (await pageMock()) as unknown as ExtendedPage;
+    page.setSelectorSize = setSelectorSize;
+  });
+
+  beforeEach(() => {
+    vi.spyOn(global.Date, 'now').mockImplementationOnce(() =>
+      new Date('2019-05-14T11:01:58.135Z').valueOf(),
+    );
+  });
+
+  it('should be defined', () => {
+    expect(dispatchTouchEvent).toBeDefined();
+  });
+
+  it('should handle defaults', async () => {
+    const evalMock = vi.fn();
+
+    global.Touch = vi.fn();
+
+    const elm = document.createElement('div');
+
+    evalMock.mockImplementationOnce((_el, func, opts) => {
+      func(elm, opts);
+    });
+
+    page.$eval = evalMock;
+
+    await dispatchTouchEvent(page, 'touchstart', '.selector');
+
+    expect(global.Touch).toHaveBeenCalledWith({
+      clientX: undefined,
+      clientY: undefined,
+      identifier: 1557831718135,
+      pageX: undefined,
+      pageY: undefined,
+      screenX: undefined,
+      screenY: undefined,
+      target: elm,
+    });
+  });
+
+  it('should handle params', async () => {
+    const evalMock = vi.fn();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    global.Touch = vi.fn();
+
+    const elm = document.createElement('div');
+    elm.dispatchEvent = vi.fn();
+
+    evalMock.mockImplementationOnce((_el, func, opts) => {
+      func(elm, opts);
+    });
+
+    page.$eval = evalMock;
+
+    await dispatchTouchEvent(
+      page,
+      'touchstart',
+      '.selector',
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: 3, y: 3 },
+      { bubbles: false, cancelable: false },
+    );
+
+    expect(global.Touch).toHaveBeenCalledWith({
+      clientX: 3,
+      clientY: 3,
+      identifier: 1557831718135,
+      pageX: 1,
+      pageY: 1,
+      screenX: 2,
+      screenY: 2,
+      target: elm,
+    });
+
+    expect(elm.dispatchEvent).toHaveBeenCalledTimes(1);
+  });
+
+  it('should have use clint for page if not provided', async () => {
+    const evalMock = vi.fn();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    global.Touch = vi.fn();
+
+    const elm = document.createElement('div');
+    elm.dispatchEvent = vi.fn();
+
+    evalMock.mockImplementationOnce((_el, func, opts) => {
+      func(elm, opts);
+    });
+
+    page.$eval = evalMock;
+
+    await dispatchTouchEvent(
+      page,
+      'touchstart',
+      '.selector',
+      undefined,
+      undefined,
+      { x: 3, y: 3 },
+      { bubbles: false, cancelable: false },
+    );
+
+    expect(global.Touch).toHaveBeenCalledWith({
+      clientX: 3,
+      clientY: 3,
+      identifier: 1557831718135,
+      pageX: 3,
+      pageY: 3,
+      screenX: undefined,
+      screenY: undefined,
+      target: elm,
+    });
+
+    expect(elm.dispatchEvent).toHaveBeenCalledTimes(1);
+  });
+});

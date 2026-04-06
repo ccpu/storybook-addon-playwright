@@ -1,9 +1,0 @@
-import { PreviewDialog } from '../PreviewDialog';
-import { shallow } from 'enzyme';
-import React from 'react';
-describe('PreviewDialog', () => {
-  it('should render', () => {
-    const wrapper = shallow(<PreviewDialog onClose={vi.fn()} open={true} />);
-    expect(wrapper.exists()).toBeTruthy();
-  });
-});

@@ -1,2 +1,2 @@
-export * from './favourite-actions.client';
-export * from './favourite-actions.router';
+export * from '../../api/trpc/clients/favourite-actions.client';
+export * from '../../api/trpc/routers/favourite-actions.router';

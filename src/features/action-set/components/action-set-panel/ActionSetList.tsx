@@ -7,7 +7,7 @@ import {
 import { makeStyles, Button } from '@material-ui/core';
 import { Loader, Snackbar, ListWrapper } from '../../../../components/common';
 import { useActionDispatchContext } from '../../../../store';
-import { deleteActionSet } from '../../action-set.client';
+import { deleteActionSet } from '../../../../api/trpc/clients/action-set.client';
 import { ActionSet } from '../../../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
 import { SortableActionSetListItem } from './ActionSetListItem';

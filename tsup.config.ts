@@ -2,10 +2,10 @@ import { defineConfig, type Options } from 'tsup';
 
 const commonConfig: Options = {
   clean: false,
-  treeshake: true,
-  splitting: false,
-  sourcemap: true,
   external: ['react', 'react-dom', '@storybook/icons'],
+  sourcemap: true,
+  splitting: false,
+  treeshake: true,
 };
 
 export default defineConfig((overrideOptions) => {
@@ -27,21 +27,21 @@ export default defineConfig((overrideOptions) => {
      */
     {
       ...commonConfig,
+      dts: !overrideOptions.watch,
       entry: {
-        preset: 'src/preset.ts',
-        index: 'src/index.ts',
-        'get-screenshots': 'src/get-screenshots.ts',
-        'run-image-diff': 'src/run-image-diff.ts',
-        'to-match-screenshots': 'src/to-match-screenshots.ts',
         'api/server/routes': 'src/api/server/routes.ts',
         'constants/routes': 'src/constants/routes.ts',
-        'trpc/router': 'src/trpc/router.ts',
-        'trpc/context': 'src/trpc/context.ts',
+        'get-screenshots': 'src/get-screenshots.ts',
+        index: 'src/index.ts',
+        preset: 'src/preset.ts',
+        'run-image-diff': 'src/run-image-diff.ts',
+        'to-match-screenshots': 'src/to-match-screenshots.ts',
+        'trpc/context': 'src/api/trpc/context.ts',
+        'trpc/router': 'src/api/trpc/router.ts',
       },
       format: ['cjs'],
       platform: 'node',
       target: 'node18',
-      dts: !overrideOptions.watch,
     },
   ];
 

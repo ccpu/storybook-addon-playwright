@@ -7,7 +7,7 @@ import {
   DialogProps,
   ImageDiffPreviewProps,
 } from '../../../../components/common';
-import { testScreenshot } from '../../screenshot.client';
+import { testScreenshot } from '../../../../api/trpc/clients/screenshot.client';
 import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotPreviewDialogProps

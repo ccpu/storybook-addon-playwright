@@ -1,6 +1,6 @@
 import { StoryAction } from '../../../typings';
 import { Page } from 'playwright';
-import { getActionsSchema } from '../services/get-actions-schema';
+import { getActionsSchema } from '../../services/get-actions-schema';
 import { getActionArgs, isValidAction } from '../../../utils';
 
 export const executeAction = async (page: Page, action: StoryAction) => {

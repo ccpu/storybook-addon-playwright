@@ -1,4 +1,4 @@
-import { deleteStoryScreenshots as deleteStoryScreenshotsClient } from '../screenshot.client';
+import { deleteStoryScreenshots as deleteStoryScreenshotsClient } from '../../../api/trpc/clients/screenshot.client';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useCallback } from 'react';

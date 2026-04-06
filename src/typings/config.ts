@@ -9,13 +9,14 @@ import {
 } from '../api/typings';
 import { RequestData } from './request';
 import { StoryInfo } from './story-info';
-import { TestFileScreenshots } from '../api/server/services/test-file-screenshots';
+
 import { Theme } from '@material-ui/core';
 import {
   CompareScreenshotParams,
   CompareScreenshotReturnType,
 } from './compare-screenshot';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
+import { TestFileScreenshots } from '../api/services';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 

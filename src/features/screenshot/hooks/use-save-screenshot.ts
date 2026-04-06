@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { saveScreenshot as saveScreenshotClient } from '../screenshot.client';
+import { saveScreenshot as saveScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
 import { SaveScreenshotRequest, ImageDiffResult } from '../../../api/typings';
 import { useGlobalScreenshotDispatch } from './use-global-screenshot-dispatch';

@@ -5,7 +5,7 @@ import {
   ScreenshotSetting,
   PlaywrightData,
 } from '../../../typings';
-import { setStoryOptions } from '../services/utils';
+import { setStoryOptions } from '../../services/utils';
 import { nanoid } from 'nanoid';
 
 interface ScreenshotDataV0 extends ScreenshotSetting {

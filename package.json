@@ -43,6 +43,24 @@
     "screenshot",
     "storybook-addon"
   ],
+  "scripts": {
+    "start:storybook": "pnpm run build && storybook dev -p 9002 --ci",
+    "start:storybook:dev": "pnpm run build && pnpm exec tsx .storybook/start-dev.ts",
+    "start:storybook:dev:legacy": "tsup --watch",
+    "changeset": "changeset",
+    "prepare": "husky",
+    "clean": "rimraf coverage dist/* tmp",
+    "build": "pnpm run clean && tsc -p tsconfig.release.json",
+    "format:fix": "prettier --write .",
+    "lint:fix": "eslint src __mocks__ test/manual-mocks test/configs stories setupTests.ts middleware.d.ts configs.d.ts --ext .ts,.tsx --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.release.json",
+    "watch": "tsc -w -p tsconfig.release.json",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "node ./scripts/test.mjs",
+    "test:coverage": "node ./scripts/test.mjs --coverage",
+    "test:watch": "vitest",
+    "prepack": "pnpm run lint && pnpm run build"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
@@ -98,24 +116,6 @@
   "resolutions": {
     "@types/react": "17.0.16",
     "@types/react-dom": "17.0.16"
-  },
-  "scripts": {
-    "start:storybook": "pnpm run build && storybook dev -p 9002 --ci",
-    "start:storybook:dev": "pnpm run build && pnpm exec tsx .storybook/start-dev.ts",
-    "start:storybook:dev:legacy": "tsup --watch",
-    "changeset": "changeset",
-    "prepare": "husky",
-    "clean": "rimraf coverage dist/* tmp",
-    "build": "pnpm run clean && tsc -p tsconfig.release.json",
-    "format:fix": "prettier --write .",
-    "lint:fix": "eslint src __mocks__ __manual_mocks__ __test_data__ stories setupTests.ts middleware.d.ts configs.d.ts --ext .ts,.tsx --fix",
-    "typecheck": "tsc --noEmit -p tsconfig.release.json",
-    "watch": "tsc -w -p tsconfig.release.json",
-    "lint": "eslint . --ext .ts,.tsx",
-    "test": "node ./scripts/test.mjs",
-    "test:coverage": "node ./scripts/test.mjs --coverage",
-    "test:watch": "vitest",
-    "prepack": "pnpm run lint && pnpm run build"
   },
   "license": "MIT",
   "dependencies": {

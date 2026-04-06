@@ -1,2 +1,2 @@
-export * from './fix-title.client';
-export * from './fix-title.router';
+export * from '../../api/trpc/clients/fix-title.client';
+export * from '../../api/trpc/routers/fix-title.router';

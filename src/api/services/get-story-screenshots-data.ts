@@ -5,7 +5,6 @@ import { getStoryData } from './utils';
 import { StoryInfo } from '../../schema';
 
 export const getStoryScreenshotsData = async (info: StoryInfo) => {
-  console.log(info);
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
 
   const storyData = await loadStoryData(fileInfo.path, info.storyId);

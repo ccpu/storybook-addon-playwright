@@ -2,7 +2,7 @@ import { readFile } from 'jsonfile';
 import { FavouriteActionSet } from '../../typings';
 import { FAVOURITE_ACTIONS_FILE_PATH } from './constants';
 import * as fs from 'fs';
-import { FavouriteActions } from '../typings/favourite-actions';
+import { FavouriteActionsData } from '../../schema';
 
 export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
   return new Promise((resolve, reject) => {
@@ -11,12 +11,15 @@ export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
       return;
     }
 
-    readFile(FAVOURITE_ACTIONS_FILE_PATH, (err, data?: FavouriteActions) => {
-      if (err) {
-        reject(err);
-      }
+    readFile(
+      FAVOURITE_ACTIONS_FILE_PATH,
+      (err, data?: FavouriteActionsData) => {
+        if (err) {
+          reject(err);
+        }
 
-      resolve(data.actionSets);
-    });
+        resolve(data.actionSets);
+      },
+    );
   });
 };

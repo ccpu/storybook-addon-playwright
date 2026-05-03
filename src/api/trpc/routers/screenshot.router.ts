@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { router, baseProcedure } from '../trpc';
 import { makeScreenshot } from '../../services/make-screenshot';
 import { saveScreenshot } from '../../services/save-screenshot';
@@ -10,49 +9,60 @@ import { deleteStoryScreenshots } from '../../services/delete-story-screenshots'
 import { changeScreenshotIndex } from '../../services/change-screenshot-index';
 import { testStoryScreenshots } from '../../services/test-story-screenshots';
 import { testScreenshots } from '../../services/test-screenshots-service';
-import { storyInfoSchema } from '../../../schema';
+import {
+  changeScreenshotIndexInputSchema,
+  deleteScreenshotInputSchema,
+  deleteStoryScreenshotsInputSchema,
+  saveScreenshotInputSchema,
+  storyInputSchema,
+  takeScreenshotInputSchema,
+  testScreenshotInputSchema,
+  testScreenshotsInputSchema,
+  testStoryScreenshotsInputSchema,
+  updateScreenshotInputSchema,
+} from '../../../schema';
 
 export const screenshotRouter = router({
   changeScreenshotIndex: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(changeScreenshotIndexInputSchema)
     .mutation(({ input }) => changeScreenshotIndex(input)),
 
   // mutation: deletes file from disk
   deleteScreenshot: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(deleteScreenshotInputSchema)
     .mutation(({ input }) => deleteScreenshot(input)),
 
   deleteStoryScreenshots: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(deleteStoryScreenshotsInputSchema)
     .mutation(({ input }) => deleteStoryScreenshots(input)),
 
   // mutation: reads FS as part of a stateful lookup — justified
   getStoryScreenshots: baseProcedure
-    .input(storyInfoSchema)
+    .input(storyInputSchema)
     .mutation(({ input }) => getStoryScreenshots(input)),
 
   saveScreenshot: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(saveScreenshotInputSchema)
     .mutation(({ input }) => saveScreenshot(input)),
 
   // mutation: triggers browser + returns image buffer — has side effects
   takeScreenshot: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(takeScreenshotInputSchema)
     .mutation(({ input }) => makeScreenshot(input, true)),
 
   testScreenshot: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(testScreenshotInputSchema)
     .mutation(({ input }) => testScreenshot(input)),
 
   testScreenshots: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(testScreenshotsInputSchema)
     .mutation(({ input }) => testScreenshots(input)),
 
   testStoryScreenshots: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(testStoryScreenshotsInputSchema)
     .mutation(({ input }) => testStoryScreenshots(input)),
 
   updateScreenshot: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(updateScreenshotInputSchema)
     .mutation(({ input }) => updateScreenshot(input)),
 });

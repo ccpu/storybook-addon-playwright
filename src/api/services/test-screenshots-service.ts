@@ -1,14 +1,18 @@
 import { ImageDiffResult } from '../typings/image-diff';
-import { TestScreenShots } from '../typings/test-screenshots';
 import { getPlaywrightConfigFiles } from '../../utils/get-playwright-config-files';
 import { testFileScreenshots } from './test-file-screenshots';
 import { getConfigs } from '../server/configs';
 import pLimit from 'p-limit';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
+import { TestScreenshotsInput } from '../../schema';
 
 export const testScreenshots = async (
-  data: TestScreenShots,
+  data: TestScreenshotsInput,
 ): Promise<ImageDiffResult[]> => {
+  const requestData = {
+    ...data,
+    requestId: data.requestId || '',
+  };
   const { requestType } = data;
 
   const files = await getPlaywrightConfigFiles();
@@ -18,7 +22,7 @@ export const testScreenshots = async (
   const limit = pLimit(configs.concurrencyLimit.file);
 
   if (configs.beforeAllImageDiff) {
-    await configs.beforeAllImageDiff(data);
+    await configs.beforeAllImageDiff(requestData);
   }
 
   const promises = files.reduce((arr, file) => {
@@ -53,7 +57,7 @@ export const testScreenshots = async (
   }, []) as ImageDiffResult[];
 
   if (configs.afterAllImageDiff) {
-    await configs.afterAllImageDiff(results, data);
+    await configs.afterAllImageDiff(results, requestData);
   }
 
   return results;

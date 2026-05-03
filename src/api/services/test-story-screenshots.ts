@@ -3,17 +3,20 @@ import { ImageDiffResult } from '../typings/image-diff';
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../server/utils';
 import { testScreenshotService } from './test-screenshot-service';
 import { getConfigs } from '../server/configs';
-import { RequestData } from '../../typings/request';
 import { getStoryData } from './utils';
-import { StoryInfo } from '../../schema';
+import { TestStoryScreenshotsInput } from '../../schema';
 
 export const testStoryScreenshots = async (
-  data: StoryInfo & RequestData,
+  data: TestStoryScreenshotsInput,
 ): Promise<ImageDiffResult[]> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   data.requestType = data.requestType || 'story';
+  const requestData = {
+    ...data,
+    requestId: data.requestId || '',
+  };
 
   const configs = getConfigs();
 
@@ -26,7 +29,7 @@ export const testStoryScreenshots = async (
   const diffs: ImageDiffResult[] = [];
 
   if (configs.beforeStoryImageDiff) {
-    await configs.beforeStoryImageDiff(data);
+    await configs.beforeStoryImageDiff(requestData);
   }
 
   for (let i = 0; i < story.screenshots.length; i++) {
@@ -35,7 +38,7 @@ export const testStoryScreenshots = async (
     const result = await testScreenshotService({
       fileName: data.fileName,
       filePath: data.filePath,
-      requestId: data.requestId,
+      requestId: requestData.requestId,
       requestType: data.requestType,
       screenshotId: screenshot.id,
       storyId: data.storyId,
@@ -44,7 +47,7 @@ export const testStoryScreenshots = async (
   }
 
   if (configs.afterStoryImageDiff) {
-    await configs.afterStoryImageDiff(diffs, data);
+    await configs.afterStoryImageDiff(diffs, requestData);
   }
 
   return diffs;

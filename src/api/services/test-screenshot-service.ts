@@ -2,16 +2,17 @@ import { ImageDiffResult } from '../typings/image-diff';
 import { getScreenshotData } from './utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { makeScreenshot } from './make-screenshot';
-import { ScreenshotInfo, ScreenshotImageData } from '../../typings';
-import { RequestData } from '../../typings/request';
+import { ScreenshotImageData } from '../../typings';
 import { getConfigs } from '../server/configs';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 import fs from 'fs';
 import { BaseImageInfo } from '../../typings/compare-screenshot';
+import { TestScreenshotInput } from '../../schema';
 
 export const testScreenshotService = async (
-  data: ScreenshotInfo & RequestData,
+  data: TestScreenshotInput,
 ): Promise<ImageDiffResult> => {
+  const requestId = data.requestId || '';
   const { requestType = 'story-screenshot' } = data;
   const config = getConfigs();
 
@@ -64,6 +65,7 @@ export const testScreenshotService = async (
 
       const customScreenshot = await config.compareScreenshot({
         ...data,
+        requestId,
         ...screenshotData,
         baseImage: baseImageInfo,
         screenshot: snapshotData,

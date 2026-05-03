@@ -3,11 +3,11 @@ import {
   loadStoryData,
   saveStoryFile,
 } from '../server/utils';
-import { DeleteActionSetRequest } from '../typings';
+import { DeleteActionSetInput } from '../../schema';
 import { getStoryData, deleteEmptyStory } from './utils';
 
 export const deleteActionSet = async (
-  data: DeleteActionSetRequest,
+  data: DeleteActionSetInput,
 ): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   let storyData = await loadStoryData(fileInfo.path, data.storyId);

@@ -1,4 +1,3 @@
-import { SaveScreenshotRequest } from '../typings/screenshot-request-response';
 import { ImageDiffResult } from '../typings/image-diff';
 import { loadStoryData, getStoryPlaywrightFileInfo } from '../server/utils';
 import { saveStoryFile } from '../server/utils';
@@ -6,9 +5,10 @@ import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { deleteScreenshot } from './delete-screenshot';
 import { setStoryOptions } from './utils/set-story-options';
 import { getStoryData, findScreenshotWithSameSetting } from './utils';
+import { SaveScreenshotInput } from '../../schema';
 
 export const saveScreenshot = async (
-  data: SaveScreenshotRequest,
+  data: SaveScreenshotInput,
 ): Promise<ImageDiffResult> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);

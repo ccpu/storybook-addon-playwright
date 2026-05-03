@@ -1,10 +1,10 @@
 import { ImageDiffResult } from '../typings/image-diff';
-import { UpdateScreenshot } from '../typings/screenshot-request-response';
 import { getScreenshotData } from './utils';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
+import { UpdateScreenshotInput } from '../../schema';
 
 export const updateScreenshotService = async (
-  data: UpdateScreenshot,
+  data: UpdateScreenshotInput,
 ): Promise<ImageDiffResult> => {
   const screenshotData = await getScreenshotData(data);
 

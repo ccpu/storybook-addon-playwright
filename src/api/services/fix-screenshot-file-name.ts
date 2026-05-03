@@ -1,4 +1,4 @@
-import { FixScreenshotFileName } from '../typings/screenshot-file-name';
+import { FixScreenshotFileNameInput } from '../../schema';
 import { getStoryPlaywrightDataByFileName } from './utils';
 import { getStoryPlaywrightFileInfo, saveStoryFile } from '../server/utils';
 import fs from 'fs';
@@ -15,7 +15,9 @@ interface ScreenshotFileData {
   storyTitle: string;
 }
 
-export const fixScreenshotFileName = async (info: FixScreenshotFileName) => {
+export const fixScreenshotFileName = async (
+  info: FixScreenshotFileNameInput,
+) => {
   const configFile = await getStoryPlaywrightDataByFileName(
     info.parameters.fileName,
   );

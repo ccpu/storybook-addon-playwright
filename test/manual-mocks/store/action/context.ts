@@ -31,8 +31,16 @@ vi.mock('../../../../src/features/action-set/store/actions', () => ({
     addActionSetMock(...args);
     dispatchMock(args);
   },
+  addActionSetAction: (...args: any[]) => {
+    addActionSetActionMock(...args);
+    dispatchMock(args);
+  },
   addActionSetList: (...args: any[]) => {
     addActionSetListMock(...args);
+    dispatchMock(args);
+  },
+  cancelEditActionSet: (...args: any[]) => {
+    cancelEditActionSetMock(...args);
     dispatchMock(args);
   },
   clearActionExpansion: (...args: any[]) => {
@@ -43,12 +51,12 @@ vi.mock('../../../../src/features/action-set/store/actions', () => ({
     clearCurrentActionSetsMock(...args);
     dispatchMock(args);
   },
-  cancelEditActionSet: (...args: any[]) => {
-    cancelEditActionSetMock(...args);
-    dispatchMock(args);
-  },
   deleteActionSet: (...args: any[]) => {
     deleteActionSetMock(...args);
+    dispatchMock(args);
+  },
+  deleteActionSetAction: (...args: any[]) => {
+    deleteActionSetActionMock(...args);
     dispatchMock(args);
   },
   deleteTempActionSets: (...args: any[]) => {
@@ -59,52 +67,44 @@ vi.mock('../../../../src/features/action-set/store/actions', () => ({
     editActionSetMock(...args);
     dispatchMock(args);
   },
-  addActionSetAction: (...args: any[]) => {
-    addActionSetActionMock(...args);
-    dispatchMock(args);
-  },
-  setCurrentActionSets: (...args: any[]) => {
-    setCurrentActionSetsMock(...args);
-    dispatchMock(args);
-  },
   moveActionSetAction: (...args: any[]) => {
     moveActionSetActionMock(...args);
-    dispatchMock(args);
-  },
-  setScreenShotActionSets: (...args: any[]) => {
-    setScreenShotActionSetsMock(...args);
-    dispatchMock(args);
-  },
-  deleteActionSetAction: (...args: any[]) => {
-    deleteActionSetActionMock(...args);
     dispatchMock(args);
   },
   saveActionSet: (...args: any[]) => {
     saveActionSetMock(...args);
     dispatchMock(args);
   },
-  sortActionSets: (...args: any[]) => {
-    sortActionSetsMock(...args);
-    dispatchMock(args);
-  },
   setActionOptions: (...args: any[]) => {
     setActionOptionsMock(...args);
-    dispatchMock(args);
-  },
-  toggleActionExpansion: (...args: any[]) => {
-    toggleActionExpansionMock(...args);
     dispatchMock(args);
   },
   setActionSchema: (...args: any[]) => {
     setActionSchemaMock(...args);
     dispatchMock(args);
   },
-  toggleCurrentActionSet: (...args: any[]) => {
-    toggleCurrentActionSetMock(...args);
-    dispatchMock(args);
-  },
   setActionSetTitle: (...args: any[]) => {
     setActionSetTitleMock(...args);
+    dispatchMock(args);
+  },
+  setCurrentActionSets: (...args: any[]) => {
+    setCurrentActionSetsMock(...args);
+    dispatchMock(args);
+  },
+  setScreenShotActionSets: (...args: any[]) => {
+    setScreenShotActionSetsMock(...args);
+    dispatchMock(args);
+  },
+  sortActionSets: (...args: any[]) => {
+    sortActionSetsMock(...args);
+    dispatchMock(args);
+  },
+  toggleActionExpansion: (...args: any[]) => {
+    toggleActionExpansionMock(...args);
+    dispatchMock(args);
+  },
+  toggleCurrentActionSet: (...args: any[]) => {
+    toggleCurrentActionSetMock(...args);
     dispatchMock(args);
   },
   toggleSubtitleItem: (...args: any[]) => {

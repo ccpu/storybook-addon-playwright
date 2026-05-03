@@ -1,10 +1,10 @@
-import { SaveActionSetRequest } from '../typings/save-action-set';
 import { saveStoryFile } from '../server/utils';
 import { loadStoryData, getStoryPlaywrightFileInfo } from '../server/utils';
 import { getStoryData } from './utils';
+import { SaveActionSetInput } from '../../schema';
 
 export const saveActionSet = async (
-  data: SaveActionSetRequest,
+  data: SaveActionSetInput,
 ): Promise<void> => {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);

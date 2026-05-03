@@ -1,4 +1,3 @@
-import { ScreenshotRequest } from '../typings/screenshot-request-response';
 import { constructStoryUrl } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { executeAction, installMouseHelper } from '../server/utils';
@@ -8,6 +7,7 @@ import {
   BrowserContextOptions,
   StoryAction,
 } from '../../typings';
+import { ScreenshotRequest } from '../typings/screenshot-request-response';
 import { extendPage } from '../../page-extra';
 import { ElementHandle, Page } from 'playwright';
 import joinImage from 'join-images';
@@ -21,6 +21,7 @@ import {
   releaseModifierKey,
   isInteractiveAction,
 } from './utils';
+import { TakeScreenshotInput } from '../../schema';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -29,12 +30,17 @@ interface ImageInfo {
 
 async function takeScreenshot(
   page: Page,
-  data: ScreenshotRequest,
+  data: TakeScreenshotInput,
   configs: Config<Page>,
   handler?: ElementHandle<SVGElement | HTMLElement>,
 ) {
+  const requestData = {
+    ...data,
+    requestId: data.requestId || '',
+  } as ScreenshotRequest;
+
   if (configs.beforeScreenshot) {
-    await configs.beforeScreenshot(page, data, data);
+    await configs.beforeScreenshot(page, requestData, requestData);
   }
 
   if (handler) {
@@ -45,16 +51,25 @@ async function takeScreenshot(
 }
 
 export const makeScreenshot = async (
-  data: ScreenshotRequest,
+  data: TakeScreenshotInput,
   convertToBase64?: boolean,
 ): Promise<ScreenshotImageData> => {
+  const requestData = {
+    ...data,
+    requestId: data.requestId || '',
+  } as ScreenshotRequest;
+
   const configs = getConfigs();
 
   const { screenshotOptions: defaultScreenshotOptions = {} } = configs;
 
   const browserOptions = data.browserOptions as BrowserContextOptions;
 
-  const page = await configs.getPage(data.browserType, browserOptions, data);
+  const page = await configs.getPage(
+    requestData.browserType,
+    browserOptions,
+    requestData,
+  );
 
   if (!page) {
     throw new Error('Make sure to return an instance of a page from getPage.');
@@ -69,13 +84,13 @@ export const makeScreenshot = async (
   );
 
   if (configs.afterUrlConstruction) {
-    url = configs.afterUrlConstruction(url, data);
+    url = configs.afterUrlConstruction(url, requestData);
   }
 
   await page.goto(url, configs.pageGotoOptions);
 
   if (configs.afterNavigation) {
-    await configs.afterNavigation(page, data);
+    await configs.afterNavigation(page, requestData);
   }
 
   if (browserOptions && browserOptions.cursor) {
@@ -169,7 +184,7 @@ export const makeScreenshot = async (
   }
 
   if (configs.afterScreenshot) {
-    await configs.afterScreenshot(page, data);
+    await configs.afterScreenshot(page, requestData);
   }
 
   if (imageInfos.length) {

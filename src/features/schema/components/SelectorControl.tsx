@@ -96,7 +96,6 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
       setValidate(false);
       startSelector({
         onData: (data) => {
-          console.log(data);
           if (type === 'selector' || type === 'id-selector') {
             onSelectorChange(fullObjectPath, data.path);
           } else if (isFollowedByPositionProp) {

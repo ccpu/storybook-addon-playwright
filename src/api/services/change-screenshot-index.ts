@@ -1,7 +1,7 @@
 import arrayMove from 'array-move';
 
 import { getStoryData } from './utils';
-import { ChangeScreenshotIndex } from '../typings';
+import { ChangeScreenshotIndexInput } from '../../schema';
 import { ScreenshotData } from '../../typings';
 import {
   getStoryPlaywrightFileInfo,
@@ -9,7 +9,9 @@ import {
   saveStoryFile,
 } from '../server/utils';
 
-export const changeScreenshotIndex = async (info: ChangeScreenshotIndex) => {
+export const changeScreenshotIndex = async (
+  info: ChangeScreenshotIndexInput,
+) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 

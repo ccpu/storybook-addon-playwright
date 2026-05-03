@@ -23,8 +23,3 @@ export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
 export interface UpdateScreenshot extends ScreenshotInfo {
   base64?: string;
 }
-
-export interface ChangeScreenshotIndex extends StoryInfo {
-  oldIndex: number;
-  newIndex: number;
-}

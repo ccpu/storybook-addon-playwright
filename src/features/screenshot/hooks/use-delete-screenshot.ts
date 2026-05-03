@@ -15,7 +15,7 @@ export const useDeleteScreenshot = () => {
   const deleteScreenshot = useCallback(
     async (id: string) => {
       const result = await makeCall({
-        fileName: storyData.parameters.fileName,
+        fileName: storyData.fileName,
         screenshotId: id,
         storyId: storyData.id,
       });

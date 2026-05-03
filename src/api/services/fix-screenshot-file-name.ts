@@ -18,11 +18,9 @@ interface ScreenshotFileData {
 export const fixScreenshotFileName = async (
   info: FixScreenshotFileNameInput,
 ) => {
-  const configFile = await getStoryPlaywrightDataByFileName(
-    info.parameters.fileName,
-  );
+  const configFile = await getStoryPlaywrightDataByFileName(info.fileName);
 
-  const fileInfos = getStoryPlaywrightFileInfo(info.parameters.fileName);
+  const fileInfos = getStoryPlaywrightFileInfo(info.fileName);
   const oldStoryId = kebabCase(info.previousNamedExport);
   const newStoryId = kebabCase(info.id.split('--')[1]);
   let oldTitle: string;

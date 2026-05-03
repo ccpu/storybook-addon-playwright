@@ -16,7 +16,7 @@ const Selector: React.FC = memo((props) => {
   const isActive = selectorManager && selectorManager.start;
 
   return (
-    <div ref={rootRef}>
+    <div ref={rootRef} style={{ height: '100%' }}>
       {children}
       {isActive && <SelectorOverlay iframe={iframe} />}
     </div>

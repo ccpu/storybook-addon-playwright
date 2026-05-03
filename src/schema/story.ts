@@ -38,12 +38,10 @@ export const createStoryInputSchema = <T extends z.ZodRawShape>(shape: T) =>
 export const storyInputSchema = createStoryInputSchema({});
 
 export const storyDataSchema = z.object({
+  fileName: z.string(),
+  filePath: z.string(),
   id: z.string(),
-  importPath: z.string(),
   name: z.string(),
-  parameters: z.object({
-    fileName: z.string(),
-  }),
   parent: z.string(),
 });
 

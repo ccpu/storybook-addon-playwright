@@ -18,8 +18,8 @@ export const useStoryScreenshotLoader = () => {
 
   const loadScreenShots = useCallback(async () => {
     const result = await makeCall({
-      fileName: storyData.parameters.fileName,
-      filePath: storyData.importPath,
+      fileName: storyData.fileName,
+      filePath: storyData.filePath,
       storyId: storyData.id,
     });
 
@@ -29,13 +29,7 @@ export const useStoryScreenshotLoader = () => {
   }, [makeCall, storyData]);
 
   useEffect(() => {
-    if (
-      screenshotLoaderInProgress ||
-      !storyData ||
-      !storyData.parameters ||
-      error
-    )
-      return;
+    if (screenshotLoaderInProgress || !storyData || error) return;
     if (loadedStoryId.current && loadedStoryId.current === storyData.id) {
       return;
     }

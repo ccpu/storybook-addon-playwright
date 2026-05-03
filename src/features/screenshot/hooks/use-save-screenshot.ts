@@ -62,8 +62,8 @@ export const useSaveScreenshot = () => {
         base64: base64String,
         browserOptions,
         browserType,
-        fileName: storyData.parameters.fileName,
-        filePath: storyData.importPath,
+        fileName: storyData.fileName,
+        filePath: storyData.filePath,
         id: nanoid(12),
         props: props,
         screenshotOptions:

@@ -15,8 +15,8 @@ export const useScreenshotImageDiff = (storyData: StoryData) => {
   const testScreenshot = useCallback(
     async (id: string) => {
       const result = await makeCall({
-        fileName: storyData.parameters.fileName,
-        filePath: storyData.importPath,
+        fileName: storyData.fileName,
+        filePath: storyData.filePath,
         screenshotId: id,
         storyId: storyData.id,
       });

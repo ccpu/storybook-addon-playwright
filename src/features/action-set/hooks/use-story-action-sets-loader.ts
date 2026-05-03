@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { getActionSet } from '../../../api/trpc/clients/action-set.client';
 import { addActionSetList } from '../../../store';
+import { useCurrentStoryData } from '../../../hooks';
 
 interface LoadedStory {
   [fileName: string]: {
@@ -10,29 +11,31 @@ interface LoadedStory {
 
 const __loadedFiles: LoadedStory = {};
 
-export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
+export const useStoryActionSetsLoader = () => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState<string>();
 
+  const { id: storyId, filePath: filePath } = useCurrentStoryData() || {};
+
   useEffect(() => {
     if (
       error ||
-      !fileName ||
+      !filePath ||
       !storyId ||
       loading ||
-      (__loadedFiles[fileName] && __loadedFiles[fileName][storyId])
+      (__loadedFiles[filePath] && __loadedFiles[filePath][storyId])
     )
       return;
 
     setLoading(true);
-    getActionSet({ fileName, storyId })
+    getActionSet({ filePath, storyId })
       .then((actionSets) => {
-        if (!__loadedFiles[fileName]) {
-          __loadedFiles[fileName] = {};
+        if (!__loadedFiles[filePath]) {
+          __loadedFiles[filePath] = {};
         }
 
-        __loadedFiles[fileName][storyId] = true;
+        __loadedFiles[filePath][storyId] = true;
 
         if (actionSets) {
           addActionSetList({ actionSets, storyId });
@@ -44,7 +47,7 @@ export const useStoryActionSetsLoader = (fileName: string, storyId: string) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [error, fileName, loading, storyId]);
+  }, [error, filePath, loading, storyId]);
 
   const retry = useCallback(() => {
     setError(undefined);

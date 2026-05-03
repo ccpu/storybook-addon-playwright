@@ -20,7 +20,7 @@ export const useScreenshotImageDiffResults = () => {
   const testStoryScreenShots = useCallback(
     async (type: ScreenshotTestTargetType) => {
       const results = await makeCall({
-        fileName: storyData.parameters.fileName,
+        fileName: storyData.fileName,
         requestId: nanoid(),
         requestType: type,
         storyId: storyData.id,

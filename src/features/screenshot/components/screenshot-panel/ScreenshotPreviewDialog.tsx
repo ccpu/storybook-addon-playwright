@@ -28,8 +28,8 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 
   useEffect(() => {
     makeCall({
-      fileName: storyData.parameters.fileName,
-      filePath: storyData.importPath,
+      fileName: storyData.fileName,
+      filePath: storyData.filePath,
       screenshotId: screenShotData.id,
       storyId: storyData.id,
     });
@@ -37,8 +37,8 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
     makeCall,
     screenShotData.id,
     storyData.id,
-    storyData.parameters.fileName,
-    storyData.importPath,
+    storyData.fileName,
+    storyData.filePath,
   ]);
 
   const handleClose = useCallback(() => {

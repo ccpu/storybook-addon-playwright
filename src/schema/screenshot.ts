@@ -60,7 +60,7 @@ export const deleteStoryScreenshotsInputSchema = createStoryInputSchema({});
 export const saveScreenshotInputSchema = createStoryInputSchema({
   ...screenshotDataSchema.shape,
   base64: z.string().optional(),
-  updateScreenshot: screenshotDataSchema.optional(),
+  updateScreenshot: screenshotDataSchema.omit({ actionSets: true }).optional(),
 });
 
 export const takeScreenshotInputSchema = screenshotSettingSchema

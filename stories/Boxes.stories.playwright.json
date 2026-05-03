@@ -98,10 +98,10 @@
             {
               "actions": [
                 {
-                  "name": "takeElementScreenshot",
                   "args": {
                     "selector": "#blue"
-                  }
+                  },
+                  "name": "takeElementScreenshot"
                 }
               ],
               "title": "take element screen shot"
@@ -109,10 +109,10 @@
             {
               "actions": [
                 {
-                  "name": "takeElementScreenshot",
                   "args": {
                     "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-                  }
+                  },
+                  "name": "takeElementScreenshot"
                 }
               ],
               "title": "take element screen shot"
@@ -120,11 +120,11 @@
             {
               "actions": [
                 {
-                  "name": "mouse.move",
                   "args": {
                     "x": 109,
                     "y": 96
-                  }
+                  },
+                  "name": "mouse.move"
                 }
               ],
               "title": "mouse move"
@@ -132,7 +132,7 @@
           ],
           "browserOptionsId": "Db-vUIXws6EF",
           "browserType": "chromium",
-          "id": "7CKrSH6hoRaO",
+          "id": "ZzuhpT7Bz8ww",
           "index": 1,
           "screenshotOptionsId": "fmsdQSLwg4Bi",
           "title": "should allow last screenshot if last action is not takeElementScreenshot"

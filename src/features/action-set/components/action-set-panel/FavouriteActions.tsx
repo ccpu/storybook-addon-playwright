@@ -102,7 +102,7 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
 
     const result = await saveActionSet({
       actionSet: newActionSet,
-      fileName: storyData.parameters.fileName as string,
+      fileName: storyData.fileName as string,
       storyId,
     });
 

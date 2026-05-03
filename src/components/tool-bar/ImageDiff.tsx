@@ -68,7 +68,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
   const diffResults =
     target === 'file'
       ? imageDiffResult.filter((x) =>
-          isStoryJsonFile(x.fileName, storyData.parameters.fileName),
+          isStoryJsonFile(x.fileName, storyData.fileName),
         )
       : imageDiffResult;
 
@@ -123,7 +123,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
   const title =
     target === 'file'
-      ? `Run diff test for all stories in '${storyData.parameters.fileName}' file.`
+      ? `Run diff test for all stories in '${storyData.fileName}' file.`
       : 'Run diff test for all stories';
 
   return (

@@ -42,8 +42,6 @@ const ActionSetList = SortableContainer(() => {
 
   const [error, setError] = useState<string>();
 
-  const storyId = storyData ? storyData.id : undefined;
-
   const { storyActionSets, currentActionSets, state } =
     useCurrentStoryActionSets();
 
@@ -51,17 +49,14 @@ const ActionSetList = SortableContainer(() => {
     loading,
     error: actionSetLoaderError,
     retry,
-  } = useStoryActionSetsLoader(
-    storyData && storyData.parameters && storyData.parameters.fileName,
-    storyData && storyId,
-  );
+  } = useStoryActionSetsLoader();
 
   const handleDelete = useCallback(
     async (actionSet: ActionSet) => {
       try {
         await deleteActionSet({
           actionSetId: actionSet.id,
-          fileName: storyData.parameters.fileName,
+          fileName: storyData.fileName,
           storyId: storyData.id,
         });
         deleteActionSetFromStore({

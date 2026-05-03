@@ -18,7 +18,7 @@ export const useScreenshotIndexChange = () => {
     async (e: SortEnd) => {
       changeScreenshotIndex({ newIndex: e.newIndex, oldIndex: e.oldIndex });
       const result = await makeCall({
-        fileName: storyData.parameters.fileName,
+        filePath: storyData.filePath,
         newIndex: e.newIndex,
         oldIndex: e.oldIndex,
         storyId: storyData.id,

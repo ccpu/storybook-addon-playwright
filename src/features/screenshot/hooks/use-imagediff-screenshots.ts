@@ -15,7 +15,7 @@ const getScreenshotDataFromDiffResult = (
 
   if (target === 'file') {
     return results
-      .filter((x) => isStoryJsonFile(x.fileName, storyData.parameters.fileName))
+      .filter((x) => isStoryJsonFile(x.fileName, storyData.fileName))
       .map((x) => x.screenshotData);
   }
 

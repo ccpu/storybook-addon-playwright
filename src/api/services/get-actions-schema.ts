@@ -3,6 +3,7 @@ import { getConfigs } from '../server/configs';
 import actionSchema from '../server/data/action-schema.json';
 
 export const getActionsSchema = () => {
+  console.log('Fetching actions schema');
   let schema = actionSchema as ActionSchemaList;
 
   const customSchema = getConfigs().customActionSchema;

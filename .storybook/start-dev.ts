@@ -26,6 +26,7 @@ let storybookChild: ChildProcess | null = null;
 let tsupChild: ChildProcess | null = null;
 let restartTimer: ReturnType<typeof setTimeout> | null = null;
 let isRestarting = false;
+let isStartingStorybook = false;
 let isShuttingDown = false;
 let hasSuccessfulBuild = false;
 let buildSuccessCount = 0;
@@ -194,46 +195,61 @@ function stopStorybook(): Promise<void> {
 }
 
 async function startStorybook() {
-  await cleanupStorybookPorts();
-  await waitForStorybookPortsToBeFree();
+  if (isStartingStorybook) return;
+  isStartingStorybook = true;
 
-  const storybookEnv = {
-    ...process.env,
-    STORYBOOK_DISABLE_TELEMETRY: '1',
-  };
+  try {
+    await cleanupStorybookPorts();
+    await waitForStorybookPortsToBeFree();
 
-  storybookChild = spawn(
-    NODE_BIN,
-    [
-      STORYBOOK_BIN,
-      'dev',
-      '-p',
-      PORT,
-      '--no-open',
-      '--ci',
-      '--disable-telemetry',
-    ],
-    {
-      cwd: ROOT,
-      env: storybookEnv,
-      stdio: 'inherit',
-      shell: false,
-      windowsHide: false,
-    },
-  );
+    const storybookEnv = {
+      ...process.env,
+      STORYBOOK_DISABLE_TELEMETRY: '1',
+    };
 
-  storybookChild.on('exit', (code) => {
-    if (isShuttingDown) {
-      process.exit(0);
-      return;
-    }
-    if (isRestarting) {
-      isRestarting = false;
+    storybookChild = spawn(
+      NODE_BIN,
+      [
+        STORYBOOK_BIN,
+        'dev',
+        '-p',
+        PORT,
+        '--no-open',
+        '--ci',
+        '--disable-telemetry',
+      ],
+      {
+        cwd: ROOT,
+        env: storybookEnv,
+        stdio: 'inherit',
+        shell: false,
+        windowsHide: false,
+      },
+    );
+
+    storybookChild.on('exit', (code) => {
+      if (isShuttingDown) {
+        process.exit(0);
+        return;
+      }
+      if (isRestarting) {
+        isRestarting = false;
+        void startStorybook();
+        return;
+      }
+
+      // Keep the dev runner alive and attempt recovery instead of crashing
+      // the whole `start:storybook` command on transient Storybook exits.
+      log(
+        `storybook process exited with code ${
+          code ?? 'unknown'
+        }, restarting...`,
+      );
       void startStorybook();
-      return;
-    }
-    if (code !== null) process.exit(code);
-  });
+    });
+  } finally {
+    isStartingStorybook = false;
+  }
 }
 
 async function restartStorybook() {

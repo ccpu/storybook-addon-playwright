@@ -67,7 +67,7 @@ const ActionSetMain: React.FC = () => {
       try {
         await deleteActionSet({
           actionSetId: action.id,
-          fileName: storyData.parameters.fileName,
+          fileName: storyData.fileName,
           storyId: storyId,
         });
 

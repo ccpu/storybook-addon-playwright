@@ -18,7 +18,7 @@ export const useCopyActionSet = (storyData: StoryData) => {
       copyActionSet.id = nanoid(12);
       const result = await makeCall({
         actionSet: copyActionSet,
-        fileName: storyData.parameters.fileName,
+        fileName: storyData.fileName,
         storyId: storyData.id,
       });
       if (!(result instanceof Error)) {

@@ -16,10 +16,10 @@ export const useCurrentStoryData = () => {
     const fileName = filePath.substring(filePath.lastIndexOf('/') + 1);
 
     setData({
+      fileName,
+      filePath,
       id: data.id,
-      importPath: data.importPath,
       name: data.name,
-      parameters: { ...data.parameters, fileName: fileName },
       parent: data.parent,
     });
   }, [currentStory]);

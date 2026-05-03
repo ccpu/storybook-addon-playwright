@@ -60,7 +60,7 @@ const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = forwardRef(
             </p>
 
             <p>
-              <b>File:</b> {props.imageDiff.fileName}
+              <b>File:</b> {props.imageDiff.filePath}
             </p>
           </div>
         </MenuItem>

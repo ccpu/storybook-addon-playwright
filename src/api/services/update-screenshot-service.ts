@@ -15,7 +15,6 @@ export const updateScreenshotService = async (
   const result = await diffImageToScreenshot(
     {
       browserType: screenshotData.browserType,
-      fileName: data.fileName,
       filePath: data.filePath,
       storyId: data.storyId,
       title: screenshotData.title,

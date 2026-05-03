@@ -22,7 +22,9 @@ export const testScreenshotService = async (
     throw new Error('Unable to find screenshot data.');
   }
 
-  let result: ImageDiffResult = {};
+  let result: ImageDiffResult = {
+    filePath: data.filePath,
+  };
   let snapshotData: ScreenshotImageData;
 
   try {
@@ -87,7 +89,6 @@ export const testScreenshotService = async (
       result = await diffImageToScreenshot(
         {
           browserType: screenshotData.browserType,
-          fileName: data.fileName,
           filePath: data.filePath,
           storyId: data.storyId,
           title: screenshotData.title,
@@ -107,8 +108,8 @@ export const testScreenshotService = async (
 
   result.screenshotId = data.screenshotId;
   result.storyId = data.storyId;
-  result.fileName = data.fileName;
   result.screenshotData = screenshotData;
+  result.filePath = data.filePath;
 
   return result;
 };

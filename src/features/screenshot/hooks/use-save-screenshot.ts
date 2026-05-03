@@ -4,7 +4,7 @@ import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { saveScreenshot as saveScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
-import { SaveScreenshotRequest, ImageDiffResult } from '../../../api/typings';
+import { SaveScreenshotRequest } from '../../../api/typings';
 import { removeScreenshot, addScreenshot } from '../store/actions';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
@@ -62,7 +62,6 @@ export const useSaveScreenshot = () => {
         base64: base64String,
         browserOptions,
         browserType,
-        fileName: storyData.fileName,
         filePath: storyData.filePath,
         id: nanoid(12),
         props: props,
@@ -72,15 +71,17 @@ export const useSaveScreenshot = () => {
             : undefined,
         storyId: storyData.id,
         title,
-        updateScreenshot:
-          isUpdating(browserType) && editScreenshotState.screenshotData,
       };
+
+      if (isUpdating(browserType)) {
+        data.updateScreenshot = editScreenshotState.screenshotData;
+      }
 
       const res = await makeCall(data);
 
       if (res instanceof Error) return res;
 
-      const result = (res as ImageDiffResult) || {};
+      const result = res || {};
 
       if (editScreenshotState && isUpdating(browserType)) {
         if (result.added) {

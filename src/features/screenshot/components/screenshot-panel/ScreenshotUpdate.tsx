@@ -41,7 +41,6 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
       await updateScreenshot(imageDiffResult);
     } else {
       await testScreenshot({
-        fileName: storyData.fileName,
         filePath: storyData.filePath,
         screenshotId: screenshot.id,
         storyId: storyData.id,

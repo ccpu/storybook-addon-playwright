@@ -17,7 +17,6 @@ export const saveScreenshot = async (
 
   if (data.updateScreenshot) {
     story.screenshots = await deleteScreenshot({
-      fileName: data.fileName,
       filePath: data.filePath,
       screenshotId: data.updateScreenshot.id,
       storyId: data.storyId,

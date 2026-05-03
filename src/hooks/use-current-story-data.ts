@@ -3,7 +3,7 @@ import { useStorybookApi } from '@storybook/manager-api';
 import { StoryData } from '../schema';
 
 export const useCurrentStoryData = () => {
-  const [storyData, setData] = useState<StoryData>();
+  const [storyData, setData] = useState<StoryData & { fileName: string }>();
 
   const api = useStorybookApi();
 

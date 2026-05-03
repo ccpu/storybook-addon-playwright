@@ -28,18 +28,11 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 
   useEffect(() => {
     makeCall({
-      fileName: storyData.fileName,
       filePath: storyData.filePath,
       screenshotId: screenShotData.id,
       storyId: storyData.id,
     });
-  }, [
-    makeCall,
-    screenShotData.id,
-    storyData.id,
-    storyData.fileName,
-    storyData.filePath,
-  ]);
+  }, [makeCall, screenShotData.id, storyData.id, storyData.filePath]);
 
   const handleClose = useCallback(() => {
     clearResult();

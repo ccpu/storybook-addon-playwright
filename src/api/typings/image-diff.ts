@@ -19,7 +19,7 @@ export interface ImageDiffResult {
   oldScreenShotTitle?: string;
   screenshotId?: string;
   storyId?: string;
-  fileName?: string;
+  filePath: string;
   newScreenshot?: string;
   index?: number;
   selected?: boolean;

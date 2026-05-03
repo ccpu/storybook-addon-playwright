@@ -1,44 +1,21 @@
 import z from 'zod';
 
-const storyLocatorShape = {
-  fileName: z.string().optional(),
-  filePath: z.string().optional(),
+const storyInfoShape = {
+  filePath: z.string(),
   storyId: z.string(),
 };
 
-export const storyInfoSchema = z.object({
-  fileName: z.string().optional(),
-  filePath: z.string(),
-  storyId: z.string(),
-});
+export const storyInfoSchema = z.object(storyInfoShape);
 
 export const createStoryInputSchema = <T extends z.ZodRawShape>(shape: T) =>
-  z
-    .object({
-      ...storyLocatorShape,
-      ...shape,
-    })
-    .refine(
-      (value) => {
-        const story = value as { fileName?: string; filePath?: string };
-        return Boolean(story.filePath || story.fileName);
-      },
-      {
-        message: 'Either filePath or fileName must be provided',
-      },
-    )
-    .transform((value) => {
-      const story = value as { fileName?: string; filePath?: string };
-      return {
-        ...value,
-        filePath: story.filePath ?? story.fileName!,
-      };
-    });
+  z.object({
+    ...storyInfoShape,
+    ...shape,
+  });
 
 export const storyInputSchema = createStoryInputSchema({});
 
 export const storyDataSchema = z.object({
-  fileName: z.string(),
   filePath: z.string(),
   id: z.string(),
   name: z.string(),

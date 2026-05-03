@@ -28,8 +28,8 @@ export const testScreenshots = async (
   const promises = files.reduce((arr, file) => {
     if (
       requestType !== 'all' &&
-      data.fileName &&
-      !isStoryJsonFile(file, data.fileName)
+      data.filePath &&
+      !isStoryJsonFile(file, data.filePath)
     ) {
       return arr;
     }

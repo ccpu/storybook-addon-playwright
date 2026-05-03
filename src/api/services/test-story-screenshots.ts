@@ -36,7 +36,6 @@ export const testStoryScreenshots = async (
     const screenshot = story.screenshots[i];
 
     const result = await testScreenshotService({
-      fileName: data.fileName,
       filePath: data.filePath,
       requestId: requestData.requestId,
       requestType: data.requestType,

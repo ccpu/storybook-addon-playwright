@@ -67,7 +67,7 @@ export const useActionEditor = (actionSet: ActionSet) => {
     if (!actionSet.temp) {
       result = await makeCall({
         actionSet,
-        fileName: storyData.fileName,
+        filePath: storyData.filePath,
         storyId: storyData.id,
       });
     }

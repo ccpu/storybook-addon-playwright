@@ -16,9 +16,10 @@ export const useScreenshotUpdate = (successMessage?: string) => {
 
   const updateScreenshot = useCallback(
     async (imageDiffResult: ImageDiffResult) => {
+      console.log(imageDiffResult);
       const result = await makeCall({
         base64: imageDiffResult.newScreenshot,
-        fileName: imageDiffResult.fileName,
+        filePath: imageDiffResult.filePath,
         screenshotId: imageDiffResult.screenshotId,
         storyId: imageDiffResult.storyId,
       });
@@ -27,6 +28,7 @@ export const useScreenshotUpdate = (successMessage?: string) => {
 
       const newImageDiffResult: ImageDiffResult = {
         diffSize: false,
+        filePath: imageDiffResult.filePath,
         index: imageDiffResult.index,
         newScreenshot: imageDiffResult.newScreenshot,
         pass: true,

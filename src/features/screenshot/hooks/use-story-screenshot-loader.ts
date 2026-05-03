@@ -18,7 +18,6 @@ export const useStoryScreenshotLoader = () => {
 
   const loadScreenShots = useCallback(async () => {
     const result = await makeCall({
-      fileName: storyData.fileName,
       filePath: storyData.filePath,
       storyId: storyData.id,
     });

@@ -56,7 +56,7 @@ const ActionSetList = SortableContainer(() => {
       try {
         await deleteActionSet({
           actionSetId: actionSet.id,
-          fileName: storyData.fileName,
+          filePath: storyData.filePath,
           storyId: storyData.id,
         });
         deleteActionSetFromStore({

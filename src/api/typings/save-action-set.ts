@@ -1,4 +1,5 @@
-import { ActionSet, StoryInfo } from '../../typings';
+import { ActionSet } from '../../typings';
+import { StoryInfo } from '../../schema';
 
 export interface SaveActionSetRequest extends StoryInfo {
   actionSet: ActionSet;

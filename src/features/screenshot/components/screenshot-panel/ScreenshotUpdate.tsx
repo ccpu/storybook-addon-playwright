@@ -42,6 +42,7 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
     } else {
       await testScreenshot({
         fileName: storyData.parameters.fileName,
+        filePath: storyData.importPath,
         screenshotId: screenshot.id,
         storyId: storyData.id,
       });

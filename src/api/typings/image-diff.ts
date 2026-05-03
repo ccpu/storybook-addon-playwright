@@ -1,4 +1,5 @@
-import { StoryInfo, BrowserTypes, ScreenshotData } from '../../typings';
+import { BrowserTypes, ScreenshotData } from '../../typings';
+import { StoryInfo } from '../../schema';
 
 export type DiffDirection = 'horizontal' | 'vertical';
 

@@ -5,7 +5,7 @@ import {
   MemoizedImageDiffMessage,
   Loader,
 } from '../../../../components/common';
-import { ScreenshotData, StoryData } from '../../../../typings';
+import { ScreenshotData } from '../../../../typings';
 import { removeImageDiffResult } from '../../store/index';
 import { SortableElement } from 'react-sortable-hoc';
 import {
@@ -24,6 +24,7 @@ import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../../../api/typings';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 import { ScreenshotListItemWrapper } from './ScreenshotListItemWrapper';
+import { StoryData } from '../../../../schema';
 
 const useStyles = makeStyles(
   () => {

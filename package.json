@@ -44,9 +44,7 @@
     "storybook-addon"
   ],
   "scripts": {
-    "start:storybook": "pnpm run build && storybook dev -p 9002 --ci",
-    "start:storybook:dev": "pnpm run build && pnpm exec tsx .storybook/start-dev.ts",
-    "start:storybook:dev:legacy": "tsup --watch",
+    "start:storybook": "pnpm run clean && pnpm exec tsx .storybook/start-dev.ts",
     "changeset": "changeset",
     "prepare": "husky",
     "clean": "rimraf coverage dist/* tmp",

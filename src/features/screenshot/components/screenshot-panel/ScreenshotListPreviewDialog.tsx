@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { StoryData, ScreenshotData } from '../../../../typings';
+import { ScreenshotData } from '../../../../typings';
 import {
   Dialog,
   DialogProps,
@@ -10,6 +10,7 @@ import { useScreenshotStoreState } from '../../store/index';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
 import { useKeyPressFn } from '../../../../hooks';
+import { StoryData } from '../../../../schema';
 
 const useStyles = makeStyles(
   (theme) => {

@@ -3,7 +3,7 @@ import {
   BrowserContextOptions as PlaywrightBrowserContextOptions,
 } from 'playwright';
 import { ActionSet } from './story-action';
-import { StoryInfo } from './story-info';
+import { StoryInfo } from '../schema';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 

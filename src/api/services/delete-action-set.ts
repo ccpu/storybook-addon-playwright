@@ -9,7 +9,7 @@ import { getStoryData, deleteEmptyStory } from './utils';
 export const deleteActionSet = async (
   data: DeleteActionSetRequest,
 ): Promise<void> => {
-  const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
+  const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   let storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   if (!data.actionSetId) {

@@ -1,9 +1,10 @@
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
-import { ActionSet, StoryData } from '../../../typings';
+import { ActionSet } from '../../../typings';
 import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
 import { saveActionSet } from '../../../api/trpc/clients/action-set.client';
 import { addActionSet as addActionSetToStore } from '../../../store';
+import { StoryData } from '../../../schema';
 
 export const useCopyActionSet = (storyData: StoryData) => {
   const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(

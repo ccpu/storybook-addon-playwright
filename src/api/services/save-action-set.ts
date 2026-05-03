@@ -6,7 +6,7 @@ import { getStoryData } from './utils';
 export const saveActionSet = async (
   data: SaveActionSetRequest,
 ): Promise<void> => {
-  const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
+  const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
   const story = getStoryData(storyData, data.storyId, true);

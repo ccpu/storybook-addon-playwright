@@ -1,7 +1,8 @@
 import { ScreenshotSetting } from '../../typings';
 
-import { ScreenshotData, StoryInfo, ScreenshotInfo } from '../../typings';
+import { ScreenshotData, ScreenshotInfo } from '../../typings';
 import { RequestData } from '../../typings/request';
+import { StoryInfo } from '../../schema';
 
 export interface ScreenshotRequest extends ScreenshotSetting, RequestData {
   storyId: string;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useStorybookApi } from '@storybook/manager-api';
-import { StoryData } from '../typings';
+import { StoryData } from '../schema';
 
 export const useCurrentStoryData = () => {
   const [storyData, setData] = useState<StoryData>();

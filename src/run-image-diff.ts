@@ -20,7 +20,7 @@ export const runImageDiff = async (
     const file = files[i];
 
     const result = await testFileScreenshots({
-      fileName: file,
+      filePath: file,
       requestId: options && options.requestId ? options.requestId : nanoid(),
     });
 

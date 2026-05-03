@@ -10,7 +10,7 @@ import {
 } from '../server/utils';
 
 export const changeScreenshotIndex = async (info: ChangeScreenshotIndex) => {
-  const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
+  const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
   const story = getStoryData(storyData, info.storyId, false);

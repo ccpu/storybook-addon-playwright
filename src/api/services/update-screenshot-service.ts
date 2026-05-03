@@ -16,6 +16,7 @@ export const updateScreenshotService = async (
     {
       browserType: screenshotData.browserType,
       fileName: data.fileName,
+      filePath: data.filePath,
       storyId: data.storyId,
       title: screenshotData.title,
     },

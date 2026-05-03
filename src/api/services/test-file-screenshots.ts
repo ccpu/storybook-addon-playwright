@@ -6,7 +6,7 @@ import { getConfigs } from '../server/configs';
 import { ImageDiffResult } from '../typings';
 
 export interface TestFileScreenshots extends RequestData {
-  fileName: string;
+  filePath: string;
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
   disableEvans?: boolean;
   storyId?: string;
@@ -15,10 +15,10 @@ export interface TestFileScreenshots extends RequestData {
 export const testFileScreenshots = async (
   options: TestFileScreenshots,
 ): Promise<ImageDiffResult[]> => {
-  const { fileName, onComplete, storyId, requestType } = options;
+  const { filePath, onComplete, storyId, requestType } = options;
   const configs = getConfigs();
 
-  const storiesData = await getStoryPlaywrightData(fileName);
+  const storiesData = await getStoryPlaywrightData(filePath);
 
   const storyBaseId = (
     storiesData.storyData.length > 0
@@ -40,7 +40,7 @@ export const testFileScreenshots = async (
       arr.push(
         limit(() =>
           testStoryScreenshots({
-            fileName: fileName,
+            filePath,
             requestId: options.requestId,
             requestType: options.requestType
               ? options.requestType

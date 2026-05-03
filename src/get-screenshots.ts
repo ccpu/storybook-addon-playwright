@@ -57,7 +57,7 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
 
           const paths = getScreenshotPaths({
             browserType: screenShotData.browserType,
-            fileName,
+            filePath: fileName,
             storyId: story.storyId,
             title: screenShotData.title,
           });

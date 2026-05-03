@@ -14,7 +14,8 @@ import {
 import { Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
-import { ScreenshotTestTargetType, StoryData } from '../../typings';
+import { ScreenshotTestTargetType } from '../../typings';
+import { StoryData } from '../../schema';
 
 const useStyles = makeStyles(
   (theme) => {

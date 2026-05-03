@@ -17,10 +17,13 @@ export const useStoryScreenshotLoader = () => {
   } = useAsyncApiCall(getStoryScreenshots, false);
 
   const loadScreenShots = useCallback(async () => {
+    console.log(storyData);
     const result = await makeCall({
       fileName: storyData.parameters.fileName,
+      filePath: storyData.importPath,
       storyId: storyData.id,
     });
+
     if (result instanceof Error) return;
     loadedStoryId.current = storyData.id;
     setScreenshots(result);

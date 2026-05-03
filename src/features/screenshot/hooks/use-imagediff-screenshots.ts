@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { ScreenshotTestTargetType, StoryData } from '../../../typings';
+import { ScreenshotTestTargetType } from '../../../typings';
 import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-results';
 import { ImageDiffResult } from '../../../api/typings';
 import { isStoryJsonFile } from '../../../utils';
 import { setScreenshots } from '../store/index';
+import { StoryData } from '../../../schema';
 
 const getScreenshotDataFromDiffResult = (
   results: ImageDiffResult[],

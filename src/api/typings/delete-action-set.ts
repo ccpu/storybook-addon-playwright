@@ -1,4 +1,4 @@
-import { StoryInfo } from '../../typings';
+import { StoryInfo } from '../../schema';
 
 export interface DeleteActionSetRequest extends StoryInfo {
   actionSetId: string;

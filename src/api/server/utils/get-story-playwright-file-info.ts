@@ -9,6 +9,8 @@ export interface StoryPlaywrightFileInfo {
 export const getStoryPlaywrightFileInfo = (storyRelativeFilePath: string) => {
   const absolutePath = path.resolve(storyRelativeFilePath);
   const parsedFileName = path.parse(absolutePath);
+
+  console.log(parsedFileName);
   const name =
     parsedFileName.ext === '.json'
       ? `${parsedFileName.name}.json`

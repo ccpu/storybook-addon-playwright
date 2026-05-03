@@ -13,7 +13,6 @@ export const testScreenshotService = async (
   data: ScreenshotInfo & RequestData,
 ): Promise<ImageDiffResult> => {
   const { requestType = 'story-screenshot' } = data;
-
   const config = getConfigs();
 
   const screenshotData = await getScreenshotData(data);
@@ -47,7 +46,7 @@ export const testScreenshotService = async (
         title: screenshotData.title,
       });
 
-      if (!fs.existsSync(paths.fileName)) {
+      if (!fs.existsSync(paths.filePath)) {
         throw new Error(
           `Unable to find the file for '${paths.screenshotIdentifier}' screenshot in '${paths.screenshotsDir}' directory!`,
         );
@@ -56,10 +55,10 @@ export const testScreenshotService = async (
       const baseImageInfo: BaseImageInfo = {
         ...paths,
         get base64() {
-          return fs.readFileSync(paths.fileName, { encoding: 'base64' });
+          return fs.readFileSync(paths.filePath, { encoding: 'base64' });
         },
         get buffer() {
-          return fs.readFileSync(paths.fileName);
+          return fs.readFileSync(paths.filePath);
         },
       };
 
@@ -87,6 +86,7 @@ export const testScreenshotService = async (
         {
           browserType: screenshotData.browserType,
           fileName: data.fileName,
+          filePath: data.filePath,
           storyId: data.storyId,
           title: screenshotData.title,
         },

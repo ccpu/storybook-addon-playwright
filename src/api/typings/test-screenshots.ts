@@ -1,5 +1,6 @@
 import { RequestData } from '../../typings/request';
-import { StoryInfo, ScreenshotTestTargetType } from '../../typings';
+import { ScreenshotTestTargetType } from '../../typings';
+import { StoryInfo } from '../../schema';
 
 export interface TestScreenShots extends RequestData, StoryInfo {
   requestType: ScreenshotTestTargetType;

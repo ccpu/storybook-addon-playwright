@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { addImageDiffResult } from '../store/index';
 import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { testScreenshot as testScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
-import { StoryData } from '../../../typings';
+import { StoryData } from '../../../schema';
 
 export const useScreenshotImageDiff = (storyData: StoryData) => {
   const {
@@ -16,6 +16,7 @@ export const useScreenshotImageDiff = (storyData: StoryData) => {
     async (id: string) => {
       const result = await makeCall({
         fileName: storyData.parameters.fileName,
+        filePath: storyData.importPath,
         screenshotId: id,
         storyId: storyData.id,
       });

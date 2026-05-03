@@ -8,7 +8,6 @@ import {
   TakeScreenshotOptionsParams,
 } from '../api/typings';
 import { RequestData } from './request';
-import { StoryInfo } from './story-info';
 
 import { Theme } from '@material-ui/core';
 import {
@@ -17,6 +16,7 @@ import {
 } from './compare-screenshot';
 import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import { TestFileScreenshots } from '../api/services';
+import { StoryInfo } from '../schema';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 

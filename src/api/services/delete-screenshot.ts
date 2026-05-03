@@ -12,7 +12,7 @@ import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 export const deleteScreenshot = async (
   data: ScreenshotInfo,
 ): Promise<ScreenshotData[]> => {
-  const fileInfo = getStoryPlaywrightFileInfo(data.fileName);
+  const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId, false);
 
   const story = getStoryData(storyData, data.storyId);
@@ -25,13 +25,13 @@ export const deleteScreenshot = async (
 
   const paths = getScreenshotPaths({
     browserType: screenshotInfo.browserType,
-    fileName: data.fileName,
+    filePath: data.filePath,
     storyId: data.storyId,
     title: screenshotInfo.title,
   });
 
-  if (fs.existsSync(paths.fileName)) {
-    fs.unlinkSync(paths.fileName);
+  if (fs.existsSync(paths.filePath)) {
+    fs.unlinkSync(paths.filePath);
   }
 
   story.screenshots = story.screenshots.filter(

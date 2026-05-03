@@ -1,9 +1,7 @@
 const middleware = require('../middleware');
 const { setupPlaywright } = require('./setup-playwright');
 
-(async () => {
-  await setupPlaywright();
-})();
+const setupPlaywrightPromise = setupPlaywright();
 
 // SSE endpoint used by live-reload-client.js.
 // When tsup finishes a rebuild (onSuccess), Storybook is restarted — the browser
@@ -12,6 +10,17 @@ const { setupPlaywright } = require('./setup-playwright');
 let sseClients = [];
 
 module.exports = function (router) {
+  router.all('/trpc/*', async (_req, res, next) => {
+    try {
+      await setupPlaywrightPromise;
+      next();
+    } catch (error) {
+      console.error(error);
+      res.statusCode = 500;
+      res.end('Playwright setup failed.');
+    }
+  });
+
   middleware(router);
 
   router.get('/__addon_live_reload', (req, res) => {

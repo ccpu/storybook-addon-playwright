@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { ScreenshotData, StoryData } from '../../../../typings';
+import { ScreenshotData } from '../../../../typings';
 import { useAsyncApiCall } from '../../../../hooks';
 import {
   ImageDiffPreviewDialog,
@@ -9,6 +9,7 @@ import {
 } from '../../../../components/common';
 import { testScreenshot } from '../../../../api/trpc/clients/screenshot.client';
 import { ScreenshotInfo } from './ScreenshotInfo';
+import { StoryData } from '../../../../schema';
 
 export interface ScreenshotPreviewDialogProps
   extends DialogProps,
@@ -28,6 +29,7 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
   useEffect(() => {
     makeCall({
       fileName: storyData.parameters.fileName,
+      filePath: storyData.importPath,
       screenshotId: screenShotData.id,
       storyId: storyData.id,
     });
@@ -36,6 +38,7 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
     screenShotData.id,
     storyData.id,
     storyData.parameters.fileName,
+    storyData.importPath,
   ]);
 
   const handleClose = useCallback(() => {

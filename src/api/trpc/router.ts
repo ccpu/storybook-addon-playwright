@@ -7,6 +7,7 @@ import {
   themeRouter,
 } from './routers';
 import { router } from './trpc';
+export { setConfig, getConfigs } from '../server/configs';
 
 export const appRouter = router({
   actionSet: actionSetRouter,

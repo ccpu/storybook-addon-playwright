@@ -1,4 +1,4 @@
-import { StoryData } from '../../typings';
+import { StoryData } from '../../schema';
 
 export interface FixScreenshotFileName extends StoryData {
   previousNamedExport?: string;

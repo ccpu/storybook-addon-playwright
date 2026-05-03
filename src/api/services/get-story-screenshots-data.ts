@@ -1,10 +1,13 @@
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../server/utils';
-import { StoryInfo } from '../../typings';
+
 import { setStoryScreenshotOptions } from './utils/set-story-screenshot-options';
 import { getStoryData } from './utils';
+import { StoryInfo } from '../../schema';
 
 export const getStoryScreenshotsData = async (info: StoryInfo) => {
-  const fileInfo = getStoryPlaywrightFileInfo(info.fileName);
+  console.log(info);
+  const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
+
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
   const story = getStoryData(storyData, info.storyId);

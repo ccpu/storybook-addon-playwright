@@ -10,6 +10,7 @@ import { deleteStoryScreenshots } from '../../services/delete-story-screenshots'
 import { changeScreenshotIndex } from '../../services/change-screenshot-index';
 import { testStoryScreenshots } from '../../services/test-story-screenshots';
 import { testScreenshots } from '../../services/test-screenshots-service';
+import { storyInfoSchema } from '../../../schema';
 
 export const screenshotRouter = router({
   changeScreenshotIndex: baseProcedure
@@ -27,7 +28,7 @@ export const screenshotRouter = router({
 
   // mutation: reads FS as part of a stateful lookup — justified
   getStoryScreenshots: baseProcedure
-    .input(z.any()) // TODO: replace z.any() with typed Zod schema
+    .input(storyInfoSchema)
     .mutation(({ input }) => getStoryScreenshots(input)),
 
   saveScreenshot: baseProcedure

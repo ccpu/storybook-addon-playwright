@@ -83,9 +83,9 @@ describe('ActionSetMain', () => {
       .props()
       .onSortEnd({ newIndex: 1, oldIndex: 2 } as SortEnd, {} as SortEvent);
     expect(sortActionSetsMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      oldIndex: 2,
       newIndex: 1,
+      oldIndex: 2,
+      storyId: 'story-id',
     });
   });
 
@@ -100,14 +100,14 @@ describe('ActionSetMain', () => {
     expect(cancelEditActionSetMock).toHaveBeenCalledWith('story-id');
 
     expect(addActionSetMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
       actionSet: {
         actions: [],
         id: 'id-1',
         title: 'new action set',
       },
-      selected: true,
       isNew: true,
+      selected: true,
+      storyId: 'story-id',
     });
   });
 
@@ -153,7 +153,7 @@ describe('ActionSetMain', () => {
 
     expect(deleteActionSet).toHaveBeenCalledWith({
       actionSetId: 'action-set-id',
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       storyId: 'story-id',
     });
 

@@ -8,7 +8,7 @@ vi.mock(
 describe('getScreenshotData', () => {
   it('should return nothing if not story found', async () => {
     const data = await getScreenshotData({
-      fileName: 'file-name',
+      filePath: 'file-name',
       screenshotId: 'screenshot-id',
       storyId: 'story-id-2',
     });
@@ -17,7 +17,7 @@ describe('getScreenshotData', () => {
 
   it('should return data', async () => {
     const data = await getScreenshotData({
-      fileName: 'file-name',
+      filePath: 'file-name',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });

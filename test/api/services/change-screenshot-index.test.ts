@@ -13,7 +13,7 @@ vi.mock(
 describe('changeScreenShotIndex', () => {
   it('should save to file with new index', async () => {
     await changeScreenshotIndex({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       newIndex: 1,
       oldIndex: 0,
       storyId: 'story-id',

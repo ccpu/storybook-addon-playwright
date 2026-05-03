@@ -32,10 +32,16 @@ describe('screenshotRouter', () => {
     const mockResult = { base64: 'abc' };
     (makeScreenshot as Mock).mockResolvedValue(mockResult);
 
-    const result = await caller.takeScreenshot({ storyId: 'story--name' });
+    const result = await caller.takeScreenshot({
+      browserType: 'chromium',
+      storyId: 'story--name',
+    });
 
     expect(makeScreenshot).toHaveBeenCalledWith(
-      { storyId: 'story--name' },
+      {
+        browserType: 'chromium',
+        storyId: 'story--name',
+      },
       true,
     );
     expect(result).toEqual(mockResult);
@@ -45,10 +51,24 @@ describe('screenshotRouter', () => {
     const mockResult = { pass: true };
     (saveScreenshot as Mock).mockResolvedValue(mockResult);
 
-    const result = await caller.saveScreenshot({ storyId: 'story--name' });
+    const result = await caller.saveScreenshot({
+      actionSets: [],
+      base64: 'abc',
+      browserType: 'chromium',
+      filePath: 'file.ts',
+      id: 'ss-1',
+      storyId: 'story--name',
+      title: 'title',
+    });
 
     expect(saveScreenshot).toHaveBeenCalledWith({
+      actionSets: [],
+      base64: 'abc',
+      browserType: 'chromium',
+      filePath: 'file.ts',
+      id: 'ss-1',
       storyId: 'story--name',
+      title: 'title',
     });
     expect(result).toEqual(mockResult);
   });
@@ -58,13 +78,13 @@ describe('screenshotRouter', () => {
     (deleteScreenshot as Mock).mockResolvedValue(mockResult);
 
     const result = await caller.deleteScreenshot({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
     });
 
     expect(deleteScreenshot).toHaveBeenCalledWith({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
     });
@@ -77,14 +97,14 @@ describe('screenshotRouter', () => {
 
     const result = await caller.updateScreenshot({
       base64: 'abc',
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
     });
 
     expect(updateScreenshotService).toHaveBeenCalledWith({
       base64: 'abc',
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
     });
@@ -96,13 +116,13 @@ describe('screenshotRouter', () => {
     (testScreenshotService as Mock).mockResolvedValue(mockResult);
 
     const result = await caller.testScreenshot({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
     });
 
     expect(testScreenshotService).toHaveBeenCalledWith({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
     });
@@ -114,12 +134,12 @@ describe('screenshotRouter', () => {
     (getStoryScreenshotsData as Mock).mockResolvedValue(mockResult);
 
     const result = await caller.getStoryScreenshots({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     });
 
     expect(getStoryScreenshotsData).toHaveBeenCalledWith({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     });
     expect(result).toEqual(mockResult);
@@ -129,12 +149,12 @@ describe('screenshotRouter', () => {
     (deleteStoryScreenshots as Mock).mockResolvedValue(undefined);
 
     const result = await caller.deleteStoryScreenshots({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     });
 
     expect(deleteStoryScreenshots).toHaveBeenCalledWith({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     });
     expect(result).toBeUndefined();
@@ -144,14 +164,14 @@ describe('screenshotRouter', () => {
     (changeScreenshotIndex as Mock).mockResolvedValue(undefined);
 
     const result = await caller.changeScreenshotIndex({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       newIndex: 1,
       oldIndex: 0,
       storyId: 'story--name',
     });
 
     expect(changeScreenshotIndex).toHaveBeenCalledWith({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       newIndex: 1,
       oldIndex: 0,
       storyId: 'story--name',
@@ -164,12 +184,12 @@ describe('screenshotRouter', () => {
     (testStoryScreenshots as Mock).mockResolvedValue(mockResult);
 
     const result = await caller.testStoryScreenshots({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     });
 
     expect(testStoryScreenshots).toHaveBeenCalledWith({
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     });
     expect(result).toEqual(mockResult);
@@ -180,11 +200,15 @@ describe('screenshotRouter', () => {
     (testScreenshots as Mock).mockResolvedValue(mockResult);
 
     const result = await caller.testScreenshots({
+      filePath: 'file.ts',
       requestType: 'all',
+      storyId: 'story--name',
     });
 
     expect(testScreenshots).toHaveBeenCalledWith({
+      filePath: 'file.ts',
       requestType: 'all',
+      storyId: 'story--name',
     });
     expect(result).toEqual(mockResult);
   });

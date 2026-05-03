@@ -31,14 +31,14 @@ describe('testScreenshot', () => {
   });
   it('should have result', async () => {
     const result = await testScreenshotService({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual({
       added: true,
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       newScreenshot: 'base64-image',
       screenshotData: {
         actionSets: [
@@ -63,7 +63,7 @@ describe('testScreenshot', () => {
   it('should throw if screenshot not found', async () => {
     await expect(
       testScreenshotService({
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         requestId: 'request-id',
         screenshotId: 'screenshot-id',
         storyId: 'story-id-2',
@@ -76,14 +76,14 @@ describe('testScreenshot', () => {
       throw new Error('ops');
     });
     const result = await testScreenshotService({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual({
       error: 'ops',
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       pass: false,
       screenshotData: {
         actionSets: [
@@ -123,7 +123,7 @@ describe('testScreenshot compareScreenshot', () => {
     existsSyncMock.mockReturnValueOnce(false);
 
     const result = await testScreenshotService({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
@@ -136,7 +136,7 @@ describe('testScreenshot compareScreenshot', () => {
     vi.mocked(compareScreenshotMock).mockReturnValueOnce(false);
 
     await testScreenshotService({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
@@ -159,14 +159,14 @@ describe('testScreenshot compareScreenshot', () => {
     );
 
     const result = await testScreenshotService({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
 
     expect(result).toStrictEqual({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       imgSrcString: 'imgSrcBase64',
       newScreenshot: 'base64-image',
       pass: true,

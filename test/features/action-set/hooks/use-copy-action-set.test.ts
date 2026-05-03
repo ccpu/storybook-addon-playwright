@@ -24,6 +24,7 @@ describe('useCopyActionSet', () => {
   it('should copy', async () => {
     const { result } = renderHook(() =>
       useCopyActionSet({
+        filePath: './test.stories.tsx',
         id: 'story-id',
         parameters: { fileName: 'file-name', options: {} },
       } as unknown as StoryData),
@@ -37,14 +38,14 @@ describe('useCopyActionSet', () => {
 
     expect(onSaveMock).toHaveBeenCalledWith({
       actionSet: { actions: [], id: 'id-1', title: 'action-set-title' },
-      fileName: 'file-name',
+      filePath: './test.stories.tsx',
       storyId: 'story-id',
     });
     expect(addActionSetMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
       actionSet: { actions: [], id: 'id-1', title: 'action-set-title' },
-      selected: true,
       isNew: false,
+      selected: true,
+      storyId: 'story-id',
     });
   });
 });

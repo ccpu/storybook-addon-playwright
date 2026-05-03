@@ -67,9 +67,9 @@ describe('useActionSetEditor', () => {
     result.current.handleAddAction('click');
     expect(clearActionExpansionMock).toHaveBeenCalled();
     expect(addActionSetActionMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      actionSetId: 'action-set-id',
       action: { id: 'action-id', name: 'click' },
+      actionSetId: 'action-set-id',
+      storyId: 'story-id',
     });
   });
 
@@ -84,7 +84,7 @@ describe('useActionSetEditor', () => {
         id: 'action-set-id',
         title: 'action-set-desc',
       },
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       storyId: 'story-id',
     });
   });
@@ -153,8 +153,8 @@ describe('useActionSetEditor', () => {
 
     result.current.handleDescriptionChange('new-dec');
     expect(setActionSetTitleMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
       actionSetId: 'action-set-id',
+      storyId: 'story-id',
       title: 'new-dec',
     });
   });

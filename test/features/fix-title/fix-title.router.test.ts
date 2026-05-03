@@ -15,8 +15,9 @@ describe('fixTitleRouter', () => {
     (fixScreenshotFileName as Mock).mockResolvedValue(mockResult);
 
     const input = {
+      filePath: 'file.ts',
       id: 'parent--new-name',
-      parameters: { fileName: 'file.ts' },
+      name: 'new-name',
       parent: 'parent',
       previousNamedExport: 'OldName',
     };

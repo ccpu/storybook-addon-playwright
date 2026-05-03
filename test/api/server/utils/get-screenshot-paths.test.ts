@@ -9,7 +9,7 @@ describe('getScreenshotPaths', () => {
     expect(
       getScreenshotPaths({
         browserType: 'chromium',
-        fileName: 'file-name',
+        filePath: './test.stories.tsx',
         storyId: 'story-id',
         title: 'title',
       }),

@@ -26,7 +26,7 @@ describe('deleteActionSet', () => {
     await expect(
       deleteActionSet({
         actionSetId: '',
-        fileName: 'story-file-name',
+        filePath: 'story-file-name',
         storyId: 'story-id',
       }),
     ).rejects.toThrowError();
@@ -35,7 +35,7 @@ describe('deleteActionSet', () => {
   it('should not call save if story id cannot be found', async () => {
     await deleteActionSet({
       actionSetId: 'action-set-id',
-      fileName: 'story-file-name',
+      filePath: 'story-file-name',
       storyId: 'story-id-1',
     });
     expect(saveStoryFile).toHaveBeenCalledTimes(0);
@@ -52,7 +52,7 @@ describe('deleteActionSet', () => {
 
     await deleteActionSet({
       actionSetId: 'action-set-id',
-      fileName: 'story-file-name',
+      filePath: 'story-file-name',
       storyId: 'story-id',
     });
 
@@ -62,7 +62,7 @@ describe('deleteActionSet', () => {
   it('should save', async () => {
     await deleteActionSet({
       actionSetId: 'action-set-id',
-      fileName: 'story-file-name',
+      filePath: 'story-file-name',
       storyId: 'story-id',
     });
     expect(saveStoryFileMock).toHaveBeenCalledTimes(1);
@@ -85,7 +85,7 @@ describe('deleteActionSet', () => {
 
     await deleteActionSet({
       actionSetId: 'action-set-id',
-      fileName: 'story-file-name',
+      filePath: 'story-file-name',
       storyId: 'story-id',
     });
 

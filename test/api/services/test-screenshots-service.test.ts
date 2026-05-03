@@ -57,7 +57,7 @@ describe('testAppScreenshot', () => {
 
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
-      fileName: './stories/test.stories.playwright.json',
+      filePath: './stories/test.stories.playwright.json',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -65,7 +65,7 @@ describe('testAppScreenshot', () => {
 
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
-      fileName: './stories/test-2.stories.playwright.json',
+      filePath: './stories/test-2.stories.playwright.json',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -129,7 +129,7 @@ describe('testAppScreenshot', () => {
 
   it('should test all stories in a file', async () => {
     await testScreenshots({
-      fileName: './stories/test.stories.tsx',
+      filePath: './stories/test.stories.tsx',
       requestId: 'request-id',
       requestType: 'file',
       storyId: 'story-id',
@@ -139,7 +139,7 @@ describe('testAppScreenshot', () => {
 
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
-      fileName: './stories/test.stories.playwright.json',
+      filePath: './stories/test.stories.playwright.json',
       requestId: 'request-id',
       requestType: 'file',
       storyId: 'story-id',
@@ -148,7 +148,7 @@ describe('testAppScreenshot', () => {
 
   it('should test story within file only', async () => {
     await testScreenshots({
-      fileName: './stories/test.stories.tsx',
+      filePath: './stories/test.stories.tsx',
       requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',
@@ -157,7 +157,7 @@ describe('testAppScreenshot', () => {
 
     expect(testFileScreenshots).toHaveBeenCalledWith({
       disableEvans: true,
-      fileName: './stories/test.stories.playwright.json',
+      filePath: './stories/test.stories.playwright.json',
       requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',

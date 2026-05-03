@@ -22,9 +22,7 @@ export const testScreenshotService = async (
     throw new Error('Unable to find screenshot data.');
   }
 
-  let result: ImageDiffResult = {
-    filePath: data.filePath,
-  };
+  let result: ImageDiffResult = {} as ImageDiffResult;
   let snapshotData: ScreenshotImageData;
 
   try {

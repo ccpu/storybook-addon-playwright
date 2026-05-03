@@ -18,8 +18,8 @@ describe('actionSetRouter', () => {
     (saveActionSet as Mock).mockResolvedValue(undefined);
 
     const input = {
-      actionSet: { actions: [], id: 'as-1' },
-      fileName: 'file.ts',
+      actionSet: { actions: [], id: 'as-1', title: 'title' },
+      filePath: 'file.ts',
       storyId: 'story--name',
     };
 
@@ -33,7 +33,7 @@ describe('actionSetRouter', () => {
     const mockResult = [{ actions: [], id: 'as-1' }];
     (getActionSet as Mock).mockResolvedValue(mockResult);
 
-    const input = { fileName: 'file.ts', storyId: 'story--name' };
+    const input = { filePath: 'file.ts', storyId: 'story--name' };
     const result = await caller.getActionSet(input);
 
     expect(getActionSet).toHaveBeenCalledWith(input);
@@ -45,7 +45,7 @@ describe('actionSetRouter', () => {
 
     const input = {
       actionSetId: 'as-1',
-      fileName: 'file.ts',
+      filePath: 'file.ts',
       storyId: 'story--name',
     };
 

@@ -65,14 +65,14 @@ describe('testFileScreenshots', () => {
 
   it('should have appropriate data', async () => {
     await testFileScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       onComplete: vi.fn(),
       requestId: 'request-id',
       requestType: 'all',
     });
 
     expect(testStoryScreenshots).toHaveBeenCalledWith({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -81,13 +81,13 @@ describe('testFileScreenshots', () => {
 
   it('should call callbacks', async () => {
     await testFileScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       requestType: 'all',
     });
 
     expect(beforeFileImageDiffMock).toHaveBeenCalledWith({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -102,7 +102,7 @@ describe('testFileScreenshots', () => {
         },
       ],
       {
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         requestId: 'request-id',
         requestType: 'all',
         storyId: 'story-id',
@@ -113,7 +113,7 @@ describe('testFileScreenshots', () => {
   it('should have result', async () => {
     const onCompleteMock = vi.fn();
     const result = await testFileScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       onComplete: onCompleteMock,
       requestId: 'request-id',
     });
@@ -135,7 +135,7 @@ describe('testFileScreenshots', () => {
   it('should test story within file', async () => {
     const onCompleteMock = vi.fn();
     const result = await testFileScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       onComplete: onCompleteMock,
       requestId: 'request-id',
       storyId: 'story-id',
@@ -155,7 +155,7 @@ describe('testFileScreenshots', () => {
     expect(onCompleteMock).toHaveBeenCalledWith(data);
 
     expect(testStoryScreenshots).toHaveBeenCalledWith({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',
@@ -165,7 +165,7 @@ describe('testFileScreenshots', () => {
   it('should not test if not found story within file', async () => {
     const onCompleteMock = vi.fn();
     const result = await testFileScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       onComplete: onCompleteMock,
       requestId: 'request-id',
       requestType: 'story',

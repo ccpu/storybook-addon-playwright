@@ -21,6 +21,8 @@ import {
 } from '../../../../../src/api/trpc/clients/screenshot.client';
 import { ImageDiffPreviewDialog } from '../../../../../src/components/common';
 
+let currentStoryData: { filePath: string; id: string } | undefined;
+
 vi.mock(
   '../../../../../src/features/screenshot/store/context',
   async () => await import('../../store/__mocks__/context'),
@@ -30,11 +32,13 @@ vi.mock(
   async () =>
     await import('../../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
-vi.mock(
-  '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
-);
+vi.mock('../../../../../src/hooks', async (importActual) => {
+  const actual = await importActual<any>();
+  return {
+    ...actual,
+    useCurrentStoryData: vi.fn(() => currentStoryData),
+  };
+});
 
 const testScreenshotMock = vi.mocked(testScreenshot);
 const updateScreenshotMock = vi.mocked(updateScreenshot);
@@ -42,6 +46,10 @@ const updateScreenshotMock = vi.mocked(updateScreenshot);
 describe('ScreenshotUpdate', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    currentStoryData = {
+      filePath: './test.stories.tsx',
+      id: 'story-id',
+    };
   });
 
   afterAll(() => {
@@ -83,7 +91,7 @@ describe('ScreenshotUpdate', () => {
     expect(imageDiffPreviewDialog.props().titleActions()).toBeDefined();
 
     expect(testScreenshotMock).toHaveBeenCalledWith({
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
@@ -102,7 +110,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
@@ -114,7 +122,7 @@ describe('ScreenshotUpdate', () => {
         screenshot={getScreenshotDate()}
         onStateChange={vi.fn()}
         imageDiffResult={{
-          fileName: './test.stories.tsx',
+          filePath: './test.stories.tsx',
           newScreenshot: 'base64-image',
           pass: true,
           screenshotId: 'screenshot-id',
@@ -136,7 +144,7 @@ describe('ScreenshotUpdate', () => {
 
     expect(updateScreenshotMock).toHaveBeenCalledWith({
       base64: 'base64-image',
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });

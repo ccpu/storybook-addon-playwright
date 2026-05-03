@@ -38,7 +38,7 @@ export const testScreenshots = async (
       limit(() => {
         return testFileScreenshots({
           disableEvans: true,
-          filePath: data.filePath,
+          filePath: file,
           requestId: data.requestId,
           requestType,
           storyId: data.storyId,

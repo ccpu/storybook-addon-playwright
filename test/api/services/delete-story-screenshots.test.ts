@@ -16,7 +16,7 @@ vi.mock(
 
 describe('deleteStoryScreenshots', () => {
   it('should delete all', async () => {
-    await deleteStoryScreenshots({ fileName: 'story.ts', storyId: 'story-id' });
+    await deleteStoryScreenshots({ filePath: 'story.ts', storyId: 'story-id' });
     expect(deleteScreenshot).toHaveBeenCalledTimes(2);
   });
 });

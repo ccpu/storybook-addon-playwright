@@ -68,7 +68,7 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
 describe('ImageDiff', () => {
   const imageDiffResult = [
     {
-      fileName: 'test.stories.playwright.json',
+      filePath: 'test.stories.playwright.json',
       pass: true,
       screenshotId: 'screenshot-id',
     },
@@ -154,7 +154,7 @@ describe('ImageDiff', () => {
     (useGlobalImageDiffResults as Mock).mockImplementationOnce(() => ({
       imageDiffResult: [
         {
-          fileName: 'test.stories.playwright.json',
+          filePath: 'test.stories.playwright.json',
           pass: true,
           screenshotId: 'screenshot-id',
         },

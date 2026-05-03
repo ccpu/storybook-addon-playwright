@@ -3,6 +3,15 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { getActionSet } from '../../../../src/api/trpc/clients/action-set.client';
 import { ActionSet } from '../../../../src/typings';
 
+let currentStoryData: { filePath: string; id: string } | undefined;
+
+vi.mock('../../../../src/hooks', async (importActual) => {
+  const actual = await importActual<any>();
+  return {
+    ...actual,
+    useCurrentStoryData: vi.fn(() => currentStoryData),
+  };
+});
 vi.mock(
   '../../../../src/api/trpc/clients/action-set.client',
   async () =>
@@ -14,11 +23,11 @@ describe('useStoryFileActionSets', () => {
 
   const getFileInfo = () => {
     cnt++;
-    const fileName = 'story-file-name-' + cnt + '.stories.ts';
-    const storyId = 'story-id-' + cnt;
+    const filePath = 'story-file-name-' + cnt + '.stories.ts';
+    const id = 'story-id-' + cnt;
     return {
-      fileName,
-      storyId,
+      filePath,
+      id,
     };
   };
 
@@ -39,18 +48,17 @@ describe('useStoryFileActionSets', () => {
     vi.mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
 
     const fileInfo = getFileInfo();
+    currentStoryData = fileInfo as any;
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
+      useStoryActionSetsLoader(),
     );
 
     await waitForNextUpdate();
 
     expect(result.current.loading).toBe(false);
 
-    const hook2 = renderHook(() =>
-      useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
-    );
+    const hook2 = renderHook(() => useStoryActionSetsLoader());
 
     expect(hook2.result.current.loading).toBe(false);
   });
@@ -59,9 +67,10 @@ describe('useStoryFileActionSets', () => {
     vi.mocked(getActionSet).mockRejectedValueOnce(new Error('bad url'));
 
     const fileInfo = getFileInfo();
+    currentStoryData = fileInfo as any;
 
     const { result, waitForNextUpdate } = renderHook(() =>
-      useStoryActionSetsLoader(fileInfo.fileName, fileInfo.storyId),
+      useStoryActionSetsLoader(),
     );
 
     await waitForNextUpdate();

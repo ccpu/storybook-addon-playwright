@@ -26,7 +26,7 @@ describe('useDeleteStoryScreenshot', () => {
     });
 
     expect(deleteStoryScreenshots).toHaveBeenCalledWith({
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       storyId: 'story-id',
     });
 

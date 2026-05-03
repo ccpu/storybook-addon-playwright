@@ -21,7 +21,7 @@ describe('updateScreenshot', () => {
   it('should update', async () => {
     const result = await updateScreenshotService({
       base64: 'base64-image',
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
@@ -36,7 +36,7 @@ describe('updateScreenshot', () => {
     await expect(
       updateScreenshotService({
         base64: 'base64-image',
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         screenshotId: 'invalid-screenshot-id',
         storyId: 'story-id',
       }),

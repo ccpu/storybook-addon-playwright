@@ -58,7 +58,7 @@ describe('saveScreenshot', () => {
       base64: 'base64-image',
       browserOptions: { deviceName: 'iPhone 6' },
       browserType: 'chromium',
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       id: 'screenshot-id',
       screenshotOptions: { fullPage: true },
       storyId: 'story-id',
@@ -187,7 +187,7 @@ describe('saveScreenshot', () => {
     );
     // should delete old screenshot file
     expect(vi.mocked(deleteScreenshot)).toHaveBeenCalledWith({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });

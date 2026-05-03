@@ -27,7 +27,7 @@ describe('deleteScreenshot', () => {
 
   it('should do nothing if story not available', async () => {
     const result = await deleteScreenshot({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       screenshotId: 'screenshot-id',
       storyId: 'invalid-story-id-2',
     });
@@ -36,7 +36,7 @@ describe('deleteScreenshot', () => {
 
   it('should delete', async () => {
     await deleteScreenshot({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });
@@ -73,7 +73,7 @@ describe('deleteScreenshot', () => {
     });
 
     await deleteScreenshot({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       screenshotId: 'screenshot-id',
       storyId: 'story-id',
     });

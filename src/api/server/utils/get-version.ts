@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 
 const findPackageJsonPath = (startDir: string) => {
@@ -7,8 +6,11 @@ const findPackageJsonPath = (startDir: string) => {
   while (currentDir !== path.dirname(currentDir)) {
     const packagePath = path.join(currentDir, 'package.json');
 
-    if (fs.existsSync(packagePath)) {
+    try {
+      require.resolve(packagePath);
       return packagePath;
+    } catch {
+      // Keep walking up until we reach the repository root.
     }
 
     currentDir = path.dirname(currentDir);

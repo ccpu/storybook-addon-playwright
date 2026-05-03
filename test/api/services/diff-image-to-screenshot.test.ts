@@ -22,7 +22,7 @@ const configsMock = configs as unknown as Mocked<typeof configs>;
 describe('diffImageToScreenshot', () => {
   const diffData: DiffImageToScreenShot = {
     browserType: 'chromium',
-    fileName: 'story-ts',
+    filePath: './test.stories.tsx',
     storyId: 'story-id',
     title: 'title',
   };

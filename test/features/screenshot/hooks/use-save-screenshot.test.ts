@@ -65,14 +65,13 @@ describe('useSaveScreenshot', () => {
       actionSets: [],
       browserOptions: undefined,
       browserType: 'chromium',
-      fileName: 'test.stories.tsx',
+      filePath: './test.stories.tsx',
       id: 'some-id',
       index: undefined,
       props: undefined,
       screenshotOptions: undefined,
       storyId: 'story-id',
       title: 'title',
-      updateScreenshot: false,
     });
 
     expect(result.current.result).toBeDefined();

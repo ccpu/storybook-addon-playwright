@@ -11,7 +11,7 @@ export const testScreenshots = vi.fn();
 
 vi.mocked(testScreenshot).mockImplementation(() =>
   Promise.resolve({
-    fileName: './test.stories.tsx',
+    filePath: './test.stories.tsx',
     newScreenshot: 'base64-image',
     pass: true,
     screenshotId: 'screenshot-id',

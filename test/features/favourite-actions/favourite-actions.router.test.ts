@@ -17,7 +17,7 @@ describe('favouriteActionsRouter', () => {
   it('addFavouriteAction calls addToFavourite service', async () => {
     (addToFavourite as Mock).mockResolvedValue(undefined);
 
-    const input = { actions: [], id: 'fav-1' };
+    const input = { actions: [], id: 'fav-1', title: 'fav-title' };
     const result = await caller.addFavouriteAction(input);
 
     expect(addToFavourite).toHaveBeenCalledWith(input);

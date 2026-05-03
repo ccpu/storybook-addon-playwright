@@ -27,7 +27,7 @@ describe('saveActionSet', () => {
         id: 'action-set-id',
         title: 'action-set-desc',
       },
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       storyId: 'story-id-2',
     });
     const data = saveStoryFileMock.mock.calls[0][1].stories['story-id-2'];
@@ -49,7 +49,7 @@ describe('saveActionSet', () => {
         id: 'action-set-id',
         title: 'action-set-desc',
       },
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       storyId: 'story-id',
     });
     const data =
@@ -77,7 +77,7 @@ describe('saveActionSet', () => {
         id: 'action-set-id-3',
         title: 'action-set-desc',
       },
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       storyId: 'story-id',
     });
     const data =

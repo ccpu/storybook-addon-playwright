@@ -16,7 +16,7 @@ describe('getActionSet', () => {
   });
   it('should have action set', async () => {
     const data = await getActionSet({
-      fileName: 'story-file-name',
+      filePath: 'story-file-name',
       storyId: 'story-id',
     });
 
@@ -37,7 +37,7 @@ describe('getActionSet', () => {
 
   it('should return empty array if story id not exist', async () => {
     const data = await getActionSet({
-      fileName: 'story-file-name',
+      filePath: 'story-file-name',
       storyId: 'story-id-2',
     });
 

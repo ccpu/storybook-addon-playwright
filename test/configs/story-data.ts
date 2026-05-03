@@ -1,6 +1,7 @@
-import { StoryData } from '../../src/typings';
+import { StoryData } from '../../src/schema';
 
 export const storyData: StoryData = {
+  filePath: './test.stories.tsx',
   id: 'story-id',
   importPath: './test.stories.tsx',
   isLeaf: true,

@@ -122,11 +122,11 @@ describe('FavouriteActions', () => {
     expect(saveActionSetMock).toHaveBeenCalledWith({
       actionSet: {
         actions: [{ id: 'Kj6iSI1D3BIF1yX', name: 'takeScreenshot' }],
-        adaptabilityLevel: undefined,
         id: 'id-1',
         title: 'Take screenshot',
+        visibleTo: undefined,
       },
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       storyId: 'story-id',
     });
   });

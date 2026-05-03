@@ -34,14 +34,14 @@ describe('testStoryScreenshot', () => {
 
   it('should have diff', async () => {
     const result = await testStoryScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual([
       {
         added: true,
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         newScreenshot: 'base64-image',
         screenshotData: {
           actionSets: [
@@ -63,7 +63,7 @@ describe('testStoryScreenshot', () => {
       },
       {
         added: true,
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         newScreenshot: 'base64-image',
         screenshotData: {
           actionSets: [
@@ -89,7 +89,7 @@ describe('testStoryScreenshot', () => {
   it('should throw if story not found', async () => {
     await expect(
       testStoryScreenshots({
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         requestId: 'request-id',
         storyId: 'story-id-2',
       }),
@@ -98,7 +98,7 @@ describe('testStoryScreenshot', () => {
 
   it('should call afterAllImageDiff with result', async () => {
     await testStoryScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',
@@ -107,7 +107,7 @@ describe('testStoryScreenshot', () => {
       [
         {
           added: true,
-          fileName: 'story.ts',
+          filePath: 'story.ts',
           newScreenshot: 'base64-image',
           screenshotData: {
             actionSets: [
@@ -133,7 +133,7 @@ describe('testStoryScreenshot', () => {
         },
         {
           added: true,
-          fileName: 'story.ts',
+          filePath: 'story.ts',
           newScreenshot: 'base64-image',
           screenshotData: {
             actionSets: [
@@ -159,7 +159,7 @@ describe('testStoryScreenshot', () => {
         },
       ],
       {
-        fileName: 'story.ts',
+        filePath: 'story.ts',
         requestId: 'request-id',
         requestType: 'story',
         storyId: 'story-id',
@@ -169,12 +169,12 @@ describe('testStoryScreenshot', () => {
 
   it('should call beforeStoryImageDiff with request data', async () => {
     await testStoryScreenshots({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       storyId: 'story-id',
     });
     expect(beforeStoryImageDiffMock).toHaveBeenCalledWith({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       requestId: 'request-id',
       requestType: 'story',
       storyId: 'story-id',

@@ -14,7 +14,7 @@ vi.mock(
 describe('getStoryScreenshots', () => {
   it('should have result', async () => {
     const result = await getStoryScreenshotsData({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       storyId: 'story-id',
     });
     expect(result).toStrictEqual([
@@ -53,7 +53,7 @@ describe('getStoryScreenshots', () => {
 
   it('should not have result if story id not exist', async () => {
     const result = await getStoryScreenshotsData({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       storyId: 'invalid-story-id',
     });
     expect(result).toStrictEqual(undefined);
@@ -102,7 +102,7 @@ describe('getStoryScreenshots', () => {
     });
 
     const result = await getStoryScreenshotsData({
-      fileName: 'story.ts',
+      filePath: 'story.ts',
       storyId: 'story-id',
     });
 

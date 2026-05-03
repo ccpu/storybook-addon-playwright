@@ -28,7 +28,7 @@ describe('useScreenshotImageDiffResults', () => {
     });
     expect(setImageDiffResultsMock).toHaveBeenCalledWith([{ pass: true }]);
     expect(testScreenshots).toHaveBeenCalledWith({
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       requestId: 'id-1',
       requestType: 'all',
       storyId: 'story-id',
@@ -43,7 +43,7 @@ describe('useScreenshotImageDiffResults', () => {
     expect(addImageDiffResultMock).toHaveBeenCalledWith({ pass: true });
 
     expect(testScreenshots).toHaveBeenCalledWith({
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       requestId: 'id-2',
       requestType: 'file',
       storyId: 'story-id',
@@ -57,7 +57,7 @@ describe('useScreenshotImageDiffResults', () => {
     });
     expect(addImageDiffResultMock).toHaveBeenCalledWith({ pass: true });
     expect(testScreenshots).toHaveBeenCalledWith({
-      fileName: './test.stories.tsx',
+      filePath: './test.stories.tsx',
       requestId: 'id-3',
       requestType: 'story',
       storyId: 'story-id',

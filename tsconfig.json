@@ -24,7 +24,7 @@
     "noImplicitThis": false,
     "strictNullChecks": false,
     "resolveJsonModule": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"]
   },
   "include": [
     "src/**/*",
@@ -41,7 +41,7 @@
     "stories/**/*",
     "vitest.config.ts",
     "vitest.middleware.config.ts",
-    "setupTests.ts"
+    ".storybook/**/*"
   ],
-  "exclude": ["**/.storybook/**/*", "node_modules", "**/node_modules/*"]
+  "exclude": ["node_modules", "**/node_modules/*"]
 }

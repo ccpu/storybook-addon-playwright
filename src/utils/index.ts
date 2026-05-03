@@ -14,3 +14,4 @@ export * from './get-raw-stories';
 export * from './is-story-json-file';
 export * from './get-iframe-document';
 export * from './get-iframe-scroll-position';
+export * from './toast';

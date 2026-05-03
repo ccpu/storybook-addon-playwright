@@ -45,6 +45,9 @@ importers:
       '@trpc/server':
         specifier: ^11.16.0
         version: 11.16.0(typescript@5.1.6)
+      add:
+        specifier: ^2.0.6
+        version: 2.0.6
       array-move:
         specifier: ^3.0.1
         version: 3.0.1
@@ -123,6 +126,9 @@ importers:
       react-split-pane:
         specifier: ^0.1.92
         version: 0.1.92(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      react-toastify:
+        specifier: ^11.1.0
+        version: 11.1.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       react-use:
         specifier: ^17.2.4
         version: 17.6.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
@@ -3835,6 +3841,12 @@ packages:
       }
     engines: { node: '>=0.4.0' }
     hasBin: true
+
+  add@2.0.6:
+    resolution:
+      {
+        integrity: sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==,
+      }
 
   agent-base@6.0.2:
     resolution:
@@ -8748,6 +8760,15 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  react-toastify@11.1.0:
+    resolution:
+      {
+        integrity: sha512-e9h23x3phN0wbFeB6yovmWp7lobzV4CaCH0LO8nVP6H7Y+3GbcLpIzMm9dJhcp1RXbpyfvjgpfXqO80QAmn7sg==,
+      }
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
+
   react-transition-group@4.4.5:
     resolution:
       {
@@ -13314,6 +13335,8 @@ snapshots:
 
   acorn@8.16.0: {}
 
+  add@2.0.6: {}
+
   agent-base@6.0.2:
     dependencies:
       debug: 4.4.3
@@ -16693,6 +16716,12 @@ snapshots:
       use-latest: 1.3.0(@types/react@17.0.16)(react@17.0.2)
     transitivePeerDependencies:
       - '@types/react'
+
+  react-toastify@11.1.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+    dependencies:
+      clsx: 2.1.1
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
 
   react-transition-group@4.4.5(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
     dependencies:

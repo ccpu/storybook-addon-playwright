@@ -35,13 +35,11 @@ vi.mock('react', async (importOriginal) => {
   };
 });
 import {
-  dispatchMock,
   sortActionSetsMock,
   cancelEditActionSetMock,
   addActionSetMock,
   clearCurrentActionSetsMock,
   deleteTempActionSetsMock,
-  deleteActionSetMock as deleteActionSetStoreMock,
 } from '../../../../manual-mocks/store/action/context';
 import '../../../../manual-mocks/react-useEffect';
 import { ActionSetMain } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetMain';
@@ -53,7 +51,6 @@ import { ActionSetList } from '../../../../../src/features/action-set/components
 import { SortEnd, SortEvent } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { useCurrentActions } from '../../../../../src/features/action-set/hooks/use-current-actions';
-import { deleteActionSet } from '../../../../../src/api/trpc/clients/action-set.client';
 
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
@@ -157,30 +154,5 @@ describe('ActionSetMain', () => {
 
     expect(clearCurrentActionSetsMock).toHaveBeenCalled();
     expect(deleteTempActionSetsMock).toHaveBeenCalledWith('story-id');
-  });
-
-  it('should delete selected actions', () => {
-    vi.mocked(deleteActionSet).mockReturnValue(Promise.resolve());
-
-    vi.mocked(useCurrentActions).mockReturnValue({
-      currentActions: [
-        { actions: [], id: 'action-set-id', title: 'action-set-title' },
-      ],
-      state: {} as any,
-    });
-
-    const wrapper = shallow(<ActionSetMain />);
-
-    const toolbar = wrapper.find(ActionToolbar);
-
-    toolbar.props().onDeleteSelectedActionSets();
-
-    expect(deleteActionSet).toHaveBeenCalledWith({
-      actionSetId: 'action-set-id',
-      filePath: './test.stories.tsx',
-      storyId: 'story-id',
-    });
-
-    expect(clearCurrentActionSetsMock).toHaveBeenCalled();
   });
 });

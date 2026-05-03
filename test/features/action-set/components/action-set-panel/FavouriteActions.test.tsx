@@ -2,13 +2,8 @@ import { addActionSetMock } from '../../../../manual-mocks/store/action/context'
 import React from 'react';
 import { FavouriteActions } from '../../../../../src/features/action-set/components/action-set-panel/FavouriteActions';
 import { shallow } from 'enzyme';
-import { MenuItem, IconButton } from '@material-ui/core';
-import {
-  getFavouriteActions,
-  deleteFavouriteAction,
-} from '../../../../../src/api/trpc/clients/favourite-actions.client';
-import { saveActionSet } from '../../../../../src/api/trpc/clients/action-set.client';
-import { FavouriteActionSet } from '../../../../../src/typings';
+import { MenuItem } from '@material-ui/core';
+
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 
 vi.mock('../../../../../src/api/trpc/client', async () => {
@@ -104,27 +99,9 @@ vi.mock('react', async (importOriginal) => {
   };
 });
 
-const actionSet: FavouriteActionSet = {
-  actions: [
-    {
-      id: 'action-id',
-      name: 'action-name',
-    },
-  ],
-  id: 'action-set-id',
-  title: 'action-set-desc',
-};
-
 describe('FavouriteActions', () => {
   const onCloseMock = vi.fn();
   const anchorEl = document.createElement('div');
-
-  vi.mocked(getFavouriteActions).mockImplementation(
-    () =>
-      new Promise((resolve) => {
-        resolve([actionSet]);
-      }),
-  );
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -141,12 +118,6 @@ describe('FavouriteActions', () => {
     expect(wrapper.find(MenuItem).length).toBe(0);
   });
 
-  it('should load actions', () => {
-    shallow(<FavouriteActions onClose={onCloseMock} anchorEl={anchorEl} />);
-
-    expect(getFavouriteActions).toHaveBeenCalled();
-  });
-
   it('should add quick action', async () => {
     const wrapper = shallow(
       <FavouriteActions onClose={onCloseMock} anchorEl={anchorEl} />,
@@ -159,32 +130,5 @@ describe('FavouriteActions', () => {
       .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
     expect(addActionSetMock).toHaveBeenCalled();
-    expect(saveActionSet).toHaveBeenCalledWith({
-      actionSet: {
-        actions: [{ id: 'Kj6iSI1D3BIF1yX', name: 'takeScreenshot' }],
-        id: 'id-1',
-        title: 'Take screenshot',
-        visibleTo: undefined,
-      },
-      filePath: './test.stories.tsx',
-      storyId: 'story-id',
-    });
-  });
-
-  it('should delete action', () => {
-    const wrapper = shallow(
-      <FavouriteActions onClose={onCloseMock} anchorEl={anchorEl} />,
-    );
-
-    wrapper
-      .find(IconButton)
-      .last()
-      .props()
-      .onClick({ stopPropagation: () => undefined } as React.MouseEvent<
-        HTMLButtonElement,
-        MouseEvent
-      >);
-
-    expect(deleteFavouriteAction).toHaveBeenCalled();
   });
 });

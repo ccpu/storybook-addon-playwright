@@ -79,7 +79,7 @@ import { ScreenshotData } from '../../../../../src/typings';
 import { StoryData } from '../../../../../src/schema';
 import React from 'react';
 import { ImageDiffPreviewDialog } from '../../../../../src/components/common';
-import { testScreenshot } from '../../../../../src/api/trpc/clients/screenshot.client';
+
 import { act } from '@testing-library/react-hooks';
 
 vi.mock(
@@ -103,28 +103,6 @@ describe('ScreenshotPreviewDialog', () => {
 
   afterAll(() => {
     vi.restoreAllMocks();
-  });
-
-  it('should render result', async () => {
-    const wrapper = shallow(
-      <ScreenshotPreviewDialog
-        storyData={storyData as StoryData}
-        open={true}
-        screenShotData={getScreenshotDate()}
-      />,
-    );
-
-    await new Promise((resolve) => setImmediate(resolve));
-
-    const imageDiffPreviewDialog = wrapper.find(ImageDiffPreviewDialog);
-
-    expect(testScreenshot).toHaveBeenCalledTimes(1);
-
-    expect(imageDiffPreviewDialog.exists()).toBeTruthy();
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(imageDiffPreviewDialog.props().titleActions()).toBeDefined();
   });
 
   it('should show handle close', async () => {

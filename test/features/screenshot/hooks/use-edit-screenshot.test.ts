@@ -125,7 +125,13 @@ describe('useEditScreenshot', () => {
 
     expect(result.current.isEditing('chromium')).toBe(true);
 
-    useCurrentStoryDataMock.mockReturnValueOnce({ id: 'id-2' } as StoryData);
+    useCurrentStoryDataMock.mockReturnValueOnce({
+      fileName: 'test.stories.tsx',
+      filePath: './test.stories.tsx',
+      id: 'id-2',
+      name: 'Story Name',
+      parent: 'Story Parent',
+    } as StoryData & { fileName: string });
 
     rerender();
 

@@ -1,6 +1,8 @@
 import { ActionToolbar } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
+import { IconButton } from '@storybook/components';
+import { DeleteConfirmationButton } from '../../../../../src/components/common';
 
 describe('ActionToolbar', () => {
   it('should render', () => {
@@ -13,5 +15,56 @@ describe('ActionToolbar', () => {
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
+  });
+
+  it('should invoke toolbar action callbacks', () => {
+    const onAddActionSet = vi.fn();
+    const onDeleteSelectedActionSets = vi.fn();
+    const onReset = vi.fn();
+    const onFavoriteActionsClick = vi.fn();
+
+    const wrapper = shallow(
+      <ActionToolbar
+        onAddActionSet={onAddActionSet}
+        onDeleteSelectedActionSets={onDeleteSelectedActionSets}
+        onReset={onReset}
+        onFavoriteActionsClick={onFavoriteActionsClick}
+      />,
+    );
+
+    const buttons = wrapper.find(IconButton);
+    buttons
+      .at(0)
+      .props()
+      .onClick({} as React.MouseEvent<HTMLElement>);
+    buttons
+      .at(1)
+      .props()
+      .onClick({} as React.MouseEvent<HTMLElement>);
+    buttons
+      .at(2)
+      .props()
+      .onClick({} as React.MouseEvent<HTMLElement>);
+
+    wrapper.find(DeleteConfirmationButton).props().onDelete();
+
+    expect(onFavoriteActionsClick).toHaveBeenCalledTimes(1);
+    expect(onReset).toHaveBeenCalledTimes(1);
+    expect(onAddActionSet).toHaveBeenCalledTimes(1);
+    expect(onDeleteSelectedActionSets).toHaveBeenCalledTimes(1);
+  });
+
+  it('should pass deleteDisabled to DeleteConfirmationButton', () => {
+    const wrapper = shallow(
+      <ActionToolbar
+        deleteDisabled={true}
+        onAddActionSet={vi.fn()}
+        onDeleteSelectedActionSets={vi.fn()}
+        onReset={vi.fn()}
+        onFavoriteActionsClick={vi.fn()}
+      />,
+    );
+
+    expect(wrapper.find(DeleteConfirmationButton).props().disabled).toBe(true);
   });
 });

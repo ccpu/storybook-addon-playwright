@@ -22,12 +22,13 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ScreenshotListToolbar } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListToolbar';
 import { StoryScreenshotPreview } from '../../../../../src/features/screenshot/components/screenshot-panel/StoryScreenshotPreview';
+import { Loader, Snackbar } from '../../../../../src/components/common';
 import mockConsole from 'jest-mock-console';
 import { useScreenshotImageDiffResults } from '../../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
 import { useStoryScreenshotLoader } from '../../../../../src/features/screenshot/hooks/use-story-screenshot-loader';
 import { useDeleteStoryScreenshot } from '../../../../../src/features/screenshot/hooks/use-delete-story-screenshots';
 import { useScreenshotUpdateState } from '../../../../../src/features/screenshot/hooks/use-screenshot-update-state';
-import { StoryData } from '../../../../../dist/typings';
+import { StoryData } from '../../../../../src/schema';
 
 vi.mock(
   '../../../../../src/utils/get-preview-iframe',
@@ -66,7 +67,13 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
     clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
-    storyData: {} as StoryData,
+    storyData: {
+      fileName: 'test.stories.tsx',
+      filePath: './test.stories.tsx',
+      id: 'story-id',
+      name: 'Story Name',
+      parent: 'Story Parent',
+    } as StoryData & { fileName: string },
     storyImageDiffError: '',
     testStoryScreenShots: testStoryScreenShotsMock,
   };
@@ -118,10 +125,18 @@ describe('ScreenshotPanel', () => {
 
     toolbar.props().onPreviewClick();
 
-    expect(StoryScreenshotPreview).toHaveLength(1);
+    expect(wrapper.find(StoryScreenshotPreview).exists()).toBeTruthy();
   });
 
-  it('should show StoryScreenshotPreview to preform update', async () => {
+  it('should run update on update click', async () => {
+    const runDiffTest = vi.fn();
+    vi.mocked(useScreenshotUpdateState).mockImplementationOnce(() => ({
+      handleClose: vi.fn(),
+      runDiffTest,
+      setIsLoadingFinish: vi.fn(),
+      updateInf: { reqBy: undefined, target: undefined },
+    }));
+
     const wrapper = shallow(<ScreenshotPanel />);
 
     const toolbar = wrapper.find(ScreenshotListToolbar);
@@ -130,7 +145,7 @@ describe('ScreenshotPanel', () => {
 
     toolbar.props().onUpdateClick();
 
-    expect(StoryScreenshotPreview).toHaveLength(1);
+    expect(runDiffTest).toHaveBeenCalledTimes(1);
   });
 
   it('should show StoryScreenshotPreview run diff test', async () => {
@@ -143,5 +158,49 @@ describe('ScreenshotPanel', () => {
     toolbar.props().onTestClick();
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should open loader while screenshot list is loading', () => {
+    vi.mocked(useStoryScreenshotLoader).mockImplementationOnce(() => ({
+      error: undefined,
+      loadScreenShots: vi.fn(),
+      screenshotLoaderInProgress: true,
+      storyData: undefined,
+    }));
+
+    const wrapper = shallow(<ScreenshotPanel />);
+
+    expect(wrapper.find(Loader).props().open).toBe(true);
+  });
+
+  it('should render image diff error snackbar and handle retry/close', () => {
+    const clearImageDiffError = vi.fn();
+
+    vi.mocked(useScreenshotImageDiffResults).mockImplementationOnce(() => ({
+      clearImageDiffError,
+      imageDiffTestInProgress: false,
+      storyData: {
+        fileName: 'test.stories.tsx',
+        filePath: './test.stories.tsx',
+        id: 'story-id',
+        name: 'Story Name',
+        parent: 'Story Parent',
+      } as StoryData & { fileName: string },
+      storyImageDiffError: 'image diff error',
+      testStoryScreenShots: testStoryScreenShotsMock,
+    }));
+
+    const wrapper = shallow(<ScreenshotPanel />);
+    const snackbar = wrapper.find(Snackbar);
+
+    expect(snackbar.exists()).toBe(true);
+    expect(snackbar.props().message).toBe('image diff error');
+
+    const action = snackbar.props().action as React.ReactElement;
+    action.props.onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+    snackbar.props().onClose();
+
+    expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
+    expect(clearImageDiffError).toHaveBeenCalledTimes(1);
   });
 });

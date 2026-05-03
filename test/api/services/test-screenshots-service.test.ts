@@ -50,6 +50,7 @@ describe('testAppScreenshot', () => {
 
   it('should have result', async () => {
     const result = await testScreenshots({
+      filePath: './stories/test.stories.tsx',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -89,6 +90,7 @@ describe('testAppScreenshot', () => {
 
   it('should call afterAllImageDiffMock with result', async () => {
     await testScreenshots({
+      filePath: './stories/test.stories.tsx',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
@@ -109,18 +111,25 @@ describe('testAppScreenshot', () => {
           storyId: 'story-id',
         },
       ],
-      { requestId: 'request-id', requestType: 'all', storyId: 'story-id' },
+      {
+        filePath: './stories/test.stories.tsx',
+        requestId: 'request-id',
+        requestType: 'all',
+        storyId: 'story-id',
+      },
     );
   });
 
   it('should call beforeAllImageDiff with data', async () => {
     await testScreenshots({
+      filePath: './stories/test.stories.tsx',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',
     });
 
     expect(beforeAllImageDiffMock).toHaveBeenCalledWith({
+      filePath: './stories/test.stories.tsx',
       requestId: 'request-id',
       requestType: 'all',
       storyId: 'story-id',

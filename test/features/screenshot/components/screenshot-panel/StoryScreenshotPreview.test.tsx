@@ -29,7 +29,8 @@ import { useScreenshotUpdate } from '../../../../../src/features/screenshot/hook
 import { ScreenshotListPreviewDialog } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListPreviewDialog';
 import { useImageDiffScreenshots } from '../../../../../src/features/screenshot/hooks/use-imagediff-screenshots';
 
-import { StoryData, ScreenshotData } from '../../../../../src/typings';
+import { ScreenshotData } from '../../../../../src/typings';
+import { StoryData } from '../../../../../src/schema';
 import { useScreenshotStoreState } from '../../../../../src/features/screenshot/store/selectors';
 
 import { useSnackbar } from '../../../../../src/hooks/use-snackbar';
@@ -67,7 +68,13 @@ vi.mocked(useScreenshotStoreState).mockImplementation(() => ({
 vi.mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
   loaded: true,
   loading: false,
-  storyData: {} as StoryData,
+  storyData: {
+    fileName: 'test.stories.tsx',
+    filePath: './test.stories.tsx',
+    id: 'story-id',
+    name: 'Story Name',
+    parent: 'Story Parent',
+  } as StoryData & { fileName: string },
 }));
 
 describe('StoryScreenshotPreview', () => {

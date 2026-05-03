@@ -2,14 +2,13 @@ import { setScreenshotsMock } from '../../../manual-mocks/store/screenshot/conte
 import { useImageDiffScreenshots } from '../../../../src/features/screenshot/hooks/use-imagediff-screenshots';
 import { renderHook } from '@testing-library/react-hooks';
 import { useScreenshotImageDiffResults } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
-import { StoryData } from '../../../../src/schema';
 import { ImageDiffResult } from '../../../../src/api/typings';
 
 const testStoryScreenShotsMock = vi.fn();
 
 const data = [
   {
-    fileName: 'story.ts',
+    filePath: 'story.ts',
     pass: true,
     screenshotData: { id: 'screenshot-is' },
     storyId: 'story-id',
@@ -32,9 +31,12 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
     clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {
+      fileName: 'story.ts',
+      filePath: './test.stories.tsx',
       id: 'story-id',
-      parameters: { fileName: 'story.ts' },
-    } as StoryData,
+      name: 'Story Name',
+      parent: 'Story Parent',
+    },
     storyImageDiffError: '',
     testStoryScreenShots: testStoryScreenShotsMock,
   };

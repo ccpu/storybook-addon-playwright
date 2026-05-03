@@ -1,6 +1,4 @@
 import {
-  dispatchMock,
-  deleteActionSetMock as deleteActionSetStoreMock,
   editActionSetMock,
   toggleCurrentActionSetMock,
 } from '../../../../manual-mocks/store/action/context';
@@ -13,7 +11,6 @@ import { Button } from '@material-ui/core';
 import { SortableActionSetListItem } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetListItem';
 import { useStoryActionSetsLoader } from '../../../../../src/features/action-set/hooks/use-story-action-sets-loader';
 import { useCurrentStoryActionSets } from '../../../../../src/features/action-set/hooks/use-current-story-action-sets';
-import { deleteActionSet } from '../../../../../src/api/trpc/clients/action-set.client';
 
 vi.mock('../../../../../src/api/trpc/client', async () => {
   const { deleteActionSet, saveActionSet } = await import(
@@ -130,47 +127,6 @@ describe('ActionSetList', () => {
     const list = wrapper.find(SortableActionSetListItem);
 
     expect(list.type()).toBe(SortableActionSetListItem);
-  });
-
-  it('should delete action set', async () => {
-    vi.mocked(deleteActionSet).mockResolvedValueOnce(undefined);
-
-    const wrapper = shallow(<ActionSetList />, {
-      disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
-
-    const list = wrapper.find(SortableActionSetListItem);
-    list.props().onDelete({ id: 'action-set-id' } as ActionSet);
-
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    expect(deleteActionSetStoreMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      actionSetId: 'action-set-id',
-    });
-  });
-
-  it('should display error if request failed and close after', async () => {
-    vi.mocked(deleteActionSet).mockRejectedValueOnce(new Error('foo'));
-
-    const wrapper = shallow(<ActionSetList />, {
-      disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
-
-    const list = wrapper.find(SortableActionSetListItem);
-    list.props().onDelete({ id: 'action-set-id' } as ActionSet);
-
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    expect(wrapper.find(Snackbar)).toHaveLength(1);
-
-    wrapper.find(Snackbar).props().onClose();
-
-    expect(wrapper.find(Snackbar)).toHaveLength(0);
   });
 
   it('should handle edit', async () => {

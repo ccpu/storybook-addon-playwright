@@ -45,7 +45,7 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 
   return (
     <>
-      {result?.filePath && (
+      {(result as ImageDiffResult | undefined)?.filePath && (
         <ImageDiffPreviewDialog
           title={screenShotData.title}
           imageDiffResult={result as ImageDiffResult}

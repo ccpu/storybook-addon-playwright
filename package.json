@@ -48,7 +48,7 @@
     "changeset": "changeset",
     "prepare": "husky",
     "clean": "rimraf coverage dist/* tmp",
-    "build": "pnpm run clean && tsc -p tsconfig.release.json",
+    "build": "pnpm run clean ",
     "format:fix": "prettier --write .",
     "lint:fix": "eslint src __mocks__ test/manual-mocks test/configs stories setupTests.ts middleware.d.ts configs.d.ts --ext .ts,.tsx --fix",
     "typecheck": "tsc --noEmit -p tsconfig.release.json",

@@ -43,8 +43,8 @@ describe('ScreenshotDelete', () => {
     const deleteMock = vi.fn();
     useDeleteScreenshotMock.mockImplementationOnce(() => {
       return {
-        ErrorSnackbar: () => undefined,
         deleteScreenshot: deleteMock,
+        inProgress: false,
       };
     });
 

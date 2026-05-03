@@ -1,51 +1,52 @@
-vi.mock(
-  '../../../src/api/trpc/client',
-  async () => await import('../../api/trpc/__mocks__/client'),
-);
-
-import { trpc } from '../../../src/api/trpc/client';
 import {
   addFavouriteAction,
   getFavouriteActions,
   deleteFavouriteAction,
 } from '../../../src/api/trpc/clients/favourite-actions.client';
+import { server } from '../../msw-server';
+import { trpcMswBatch, unwrapBatchInput } from '../../trpc-msw-batch';
 
 describe('favourite-actions client', () => {
   beforeEach(() => vi.clearAllMocks());
 
-  it('addFavouriteAction calls trpc.favouriteActions.addFavouriteAction.mutate', async () => {
-    (
-      trpc.favouriteActions.addFavouriteAction.mutate as Mock
-    ).mockResolvedValueOnce(undefined);
+  it('addFavouriteAction calls favouriteActions.addFavouriteAction mutation', async () => {
+    const spy = vi.fn().mockReturnValue(undefined);
+    server.use(
+      trpcMswBatch.favouriteActions.addFavouriteAction.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
+    );
 
     const input = { actions: [], id: 'fav-1' };
     await expect(addFavouriteAction(input as any)).resolves.toBeUndefined();
-    expect(
-      trpc.favouriteActions.addFavouriteAction.mutate,
-    ).toHaveBeenCalledWith(input);
+    expect(spy).toHaveBeenCalledWith(input);
   });
 
-  it('getFavouriteActions calls trpc.favouriteActions.getFavouriteActions.query', async () => {
+  it('getFavouriteActions calls favouriteActions.getFavouriteActions query', async () => {
     const mockResponse = [{ actions: [], id: 'fav-1' }];
-    (
-      trpc.favouriteActions.getFavouriteActions.query as Mock
-    ).mockResolvedValueOnce(mockResponse);
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.favouriteActions.getFavouriteActions.query(
+        () => spy() as any,
+      ),
+    );
 
     const result = await getFavouriteActions();
 
-    expect(trpc.favouriteActions.getFavouriteActions.query).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledTimes(1);
     expect(result).toEqual(mockResponse);
   });
 
-  it('deleteFavouriteAction calls trpc.favouriteActions.deleteFavouriteAction.mutate', async () => {
-    (
-      trpc.favouriteActions.deleteFavouriteAction.mutate as Mock
-    ).mockResolvedValueOnce(undefined);
+  it('deleteFavouriteAction calls favouriteActions.deleteFavouriteAction mutation', async () => {
+    const spy = vi.fn().mockReturnValue(undefined);
+    server.use(
+      trpcMswBatch.favouriteActions.deleteFavouriteAction.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
+    );
 
     const input = { actionSetId: 'fav-1' };
     await expect(deleteFavouriteAction(input as any)).resolves.toBeUndefined();
-    expect(
-      trpc.favouriteActions.deleteFavouriteAction.mutate,
-    ).toHaveBeenCalledWith(input);
+    expect(spy).toHaveBeenCalledWith(input);
   });
 });

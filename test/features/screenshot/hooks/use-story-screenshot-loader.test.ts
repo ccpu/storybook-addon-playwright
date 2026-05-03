@@ -1,16 +1,13 @@
 import { setScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
 import { useStoryScreenshotLoader } from '../../../../src/features/screenshot/hooks/use-story-screenshot-loader';
-import { renderHook, act } from '@testing-library/react-hooks';
-import { getStoryScreenshots } from '../../../../src/api/trpc/clients/screenshot.client';
+import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
-);
-vi.mock(
-  '../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
 
 describe('useStoryScreenshotLoader', () => {
@@ -19,21 +16,25 @@ describe('useStoryScreenshotLoader', () => {
   });
 
   it('should load story screenshots', async () => {
-    vi.mocked(getStoryScreenshots).mockResolvedValueOnce({
-      browserType: 'chromium',
-      id: 'screenshot-id',
-      title: 'title',
-    } as any);
+    server.use(
+      trpcMsw.screenshot.getStoryScreenshots.mutation(
+        () =>
+          ({
+            browserType: 'chromium',
+            id: 'screenshot-id',
+            title: 'title',
+          } as any),
+      ),
+    );
 
-    await act(async () => {
-      renderHook(() => useStoryScreenshotLoader());
-      await new Promise((r) => setTimeout(r, 200));
-    });
+    renderHook(() => useStoryScreenshotLoader());
 
-    expect(setScreenshotsMock).toHaveBeenCalledWith({
-      browserType: 'chromium',
-      id: 'screenshot-id',
-      title: 'title',
+    await waitFor(() => {
+      expect(setScreenshotsMock).toHaveBeenCalledWith({
+        browserType: 'chromium',
+        id: 'screenshot-id',
+        title: 'title',
+      });
     });
   });
 });

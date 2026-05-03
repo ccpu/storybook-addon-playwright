@@ -1,9 +1,8 @@
 import { setScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
-import { createElement } from 'react';
 import { useImageDiffScreenshots } from '../../../../src/features/screenshot/hooks/use-imagediff-screenshots';
 import { renderHook } from '@testing-library/react-hooks';
 import { useScreenshotImageDiffResults } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
-import { StoryData } from '../../../../src/typings';
+import { StoryData } from '../../../../src/schema';
 import { ImageDiffResult } from '../../../../src/api/typings';
 
 const testStoryScreenShotsMock = vi.fn();
@@ -30,7 +29,6 @@ vi.mock(
 
 vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
-    ErrorSnackbar: () => createElement('div'),
     clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {

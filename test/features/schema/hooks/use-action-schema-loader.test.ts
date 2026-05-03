@@ -1,20 +1,18 @@
 import { useActionSchemaLoader } from '../../../../src/features/schema/hooks/use-action-schema-loader';
 import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 import { getActionSchemaData } from '../../../configs';
-import { getActionsSchema } from '../../../../src/api/trpc/clients/schema.client';
-
-vi.mock('../../../../src/api/trpc/clients/schema.client');
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 describe('useActionSchemaLoader', () => {
   it('should test useActionSchemaLoader', async () => {
-    vi.mocked(getActionsSchema).mockResolvedValueOnce(getActionSchemaData());
-
-    const { waitForNextUpdate, result } = renderHook(() =>
-      useActionSchemaLoader(),
+    server.use(
+      trpcMsw.schema.getActionsSchema.query(() => getActionSchemaData() as any),
     );
 
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useActionSchemaLoader());
 
-    expect(result.current.loaded).toBe(true);
+    await waitFor(() => expect(result.current.loaded).toBe(true));
   });
 });

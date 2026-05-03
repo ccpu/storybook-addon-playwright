@@ -15,7 +15,6 @@ export * from '../features/screenshot/hooks/use-save-screenshot';
 export * from '../features/screenshot/hooks/use-story-screenshot-loader';
 export * from '../features/screenshot/hooks/use-delete-screenshot';
 export * from './use-browser-options';
-export * from './use-async-api-call';
 export * from './use-key-press';
 export * from './use-snackbar';
 export * from '../features/screenshot/hooks/use-screenshot-imageDiff';

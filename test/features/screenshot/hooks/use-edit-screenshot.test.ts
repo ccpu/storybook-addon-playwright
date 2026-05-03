@@ -5,7 +5,7 @@ import {
 import { useEditScreenshot } from '../../../../src/features/screenshot/hooks/use-edit-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useCurrentStoryData } from '../../../../src/hooks/use-current-story-data';
-import { StoryData } from '../../../../src/typings';
+import { StoryData } from '../../../../src/schema';
 import { useAddonState } from '../../../../src/hooks/use-addon-state';
 import { useLoadScreenshotSettings } from '../../../../src/features/screenshot/hooks/use-load-screenshot-settings';
 

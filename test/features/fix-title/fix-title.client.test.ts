@@ -1,18 +1,17 @@
-vi.mock(
-  '../../../src/api/trpc/client',
-  async () => await import('../../api/trpc/__mocks__/client'),
-);
-
-import { trpc } from '../../../src/api/trpc/client';
 import { fixScreenshotFileName } from '../../../src/api/trpc/clients/fix-title.client';
+import { server } from '../../msw-server';
+import { trpcMswBatch, unwrapBatchInput } from '../../trpc-msw-batch';
 
 describe('fix-title client', () => {
   beforeEach(() => vi.clearAllMocks());
 
-  it('fixScreenshotFileName calls trpc.fixTitle.fixScreenshotFileName.mutate', async () => {
+  it('fixScreenshotFileName calls fixTitle.fixScreenshotFileName mutation', async () => {
     const mockResponse = { renamed: true };
-    (trpc.fixTitle.fixScreenshotFileName.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.fixTitle.fixScreenshotFileName.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const input = {
@@ -24,15 +23,15 @@ describe('fix-title client', () => {
 
     const result = await fixScreenshotFileName(input as any);
 
-    expect(trpc.fixTitle.fixScreenshotFileName.mutate).toHaveBeenCalledWith(
-      input,
-    );
+    expect(spy).toHaveBeenCalledWith(input);
     expect(result).toEqual(mockResponse);
   });
 
   it('fixScreenshotFileName resolves without error', async () => {
-    (trpc.fixTitle.fixScreenshotFileName.mutate as Mock).mockResolvedValueOnce(
-      undefined,
+    server.use(
+      trpcMswBatch.fixTitle.fixScreenshotFileName.mutation(
+        () => undefined as any,
+      ),
     );
 
     await expect(

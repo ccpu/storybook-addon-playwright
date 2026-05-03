@@ -1,14 +1,10 @@
 import { addImageDiffResultMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotImageDiff } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { testScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
-import { StoryData } from '../../../../src/typings';
 
-vi.mock(
-  '../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/screenshot.client'),
-);
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
+import { StoryData } from '../../../../src/schema';
 
 describe('useScreenshotImageDiff', () => {
   beforeEach(() => {
@@ -16,14 +12,20 @@ describe('useScreenshotImageDiff', () => {
   });
 
   it('should dispatch result', async () => {
-    vi.mocked(testScreenshot).mockResolvedValueOnce({
-      newScreenshot: 'image-src',
-    } as any);
+    server.use(
+      trpcMsw.screenshot.testScreenshot.mutation(() => ({
+        filePath: './test.stories.tsx',
+        newScreenshot: 'image-src',
+        pass: true,
+        screenshotId: 'screenshot-id',
+        storyId: 'story-id',
+      })),
+    );
     const { result } = renderHook(() =>
       useScreenshotImageDiff({
         id: 'story-id',
         parameters: { fileName: 'file-name' },
-      } as StoryData),
+      } as unknown as StoryData),
     );
 
     await act(async () => {
@@ -31,7 +33,11 @@ describe('useScreenshotImageDiff', () => {
     });
 
     expect(addImageDiffResultMock).toHaveBeenCalledWith({
+      filePath: './test.stories.tsx',
       newScreenshot: 'image-src',
+      pass: true,
+      screenshotId: 'screenshot-id',
+      storyId: 'story-id',
     });
   });
 });

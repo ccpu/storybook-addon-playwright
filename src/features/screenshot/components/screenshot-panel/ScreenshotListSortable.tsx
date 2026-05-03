@@ -9,8 +9,7 @@ import { SortEnd } from 'react-sortable-hoc';
 const ScreenshotListSortable: React.FC = ({ children }) => {
   const { setDragStart } = useDragStart();
 
-  const { ChangeIndexErrorSnackbar, changeIndex, ChangeIndexInProgress } =
-    useScreenshotIndexChange();
+  const { changeIndex, ChangeIndexInProgress } = useScreenshotIndexChange();
 
   const handleDragStart = useCallback(() => {
     setDragStart(true);
@@ -33,7 +32,6 @@ const ScreenshotListSortable: React.FC = ({ children }) => {
       >
         <Loader open={ChangeIndexInProgress} />
         {children}
-        <ChangeIndexErrorSnackbar />
       </ListWrapperSortableContainer>
     </>
   );

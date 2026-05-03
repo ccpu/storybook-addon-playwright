@@ -1,28 +1,21 @@
 import { Theme } from '@material-ui/core';
 import React from 'react';
-import { getThemeData } from '../../../api/trpc/clients/theme.client';
+import { trpcClient } from '../../../api';
 
 export const useCustomTheme = () => {
   const [theme, setTheme] = React.useState<Theme>();
   const isTheme = React.useRef(false);
 
-  const fetchTheme = React.useCallback(async () => {
-    try {
-      const resp = await getThemeData();
-      if (!isTheme.current && resp) {
-        setTheme(resp);
-      }
-    } catch (error) {
-      throw new Error((error as Error).message);
-    }
-  }, []);
+  const { data } = trpcClient.theme.getThemeData.useQuery();
 
   React.useEffect(() => {
-    fetchTheme();
+    if (!isTheme.current && data) {
+      setTheme(data as Theme);
+    }
     return () => {
       isTheme.current = true;
     };
-  }, [fetchTheme]);
+  }, [data]);
 
   return { setTheme, theme };
 };

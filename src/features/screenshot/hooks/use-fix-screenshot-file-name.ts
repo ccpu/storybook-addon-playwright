@@ -1,8 +1,8 @@
 import React from 'react';
-import { fixScreenshotFileName } from '../../../api/trpc/clients/fix-title.client';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+import { trpcClient } from '../../../api';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useSnackbar } from '../../../hooks/use-snackbar';
+import { toast } from '../../../utils/toast';
 
 interface Props {
   fixFunction?: boolean;
@@ -22,12 +22,22 @@ export const useFixScreenshotFileName = (props: Props) => {
   const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] =
     React.useState<boolean>(false);
 
-  const {
-    inProgress: fixFileNamesInProgress,
-    makeCall,
-    clearError,
-    error: fixFileNamesError,
-  } = useAsyncApiCall(fixScreenshotFileName, false);
+  const [fixFileNamesError, setFixFileNamesError] = React.useState<
+    string | undefined
+  >(undefined);
+
+  const { mutateAsync, isPending: fixFileNamesInProgress } =
+    trpcClient.fixTitle.fixScreenshotFileName.useMutation({
+      onError: (error) => {
+        const message = error.message || 'Unexpected error occurred';
+        setFixFileNamesError(message);
+        toast.error(message);
+      },
+    });
+
+  const clearError = React.useCallback(() => {
+    setFixFileNamesError(undefined);
+  }, []);
 
   const fixFileNames = React.useCallback(() => {
     if (!functionName && fixFunction) {
@@ -36,12 +46,18 @@ export const useFixScreenshotFileName = (props: Props) => {
       });
       return;
     }
-    makeCall({ ...currentStoryData, previousNamedExport: functionName }).then(
-      (e) => {
-        if (!e) setReload(true);
-      },
-    );
-  }, [currentStoryData, fixFunction, functionName, makeCall, openSnackbar]);
+    setFixFileNamesError(undefined);
+    mutateAsync({
+      ...currentStoryData,
+      previousNamedExport: functionName,
+    })
+      .then(() => {
+        setReload(true);
+      })
+      .catch(() => {
+        return;
+      });
+  }, [currentStoryData, fixFunction, functionName, mutateAsync, openSnackbar]);
 
   const handleShowFixScreenshotFileDialog = React.useCallback(() => {
     setShowFixScreenshotFileDialog(true);

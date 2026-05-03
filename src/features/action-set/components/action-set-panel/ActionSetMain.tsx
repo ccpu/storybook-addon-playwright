@@ -8,7 +8,7 @@ import { useCurrentActions, useCurrentStoryData } from '../../../../hooks';
 import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { FavouriteActions } from './FavouriteActions';
-import { deleteActionSet } from '../../../../api/trpc/clients/action-set.client';
+import { trpcClient } from '../../../../api';
 import {
   cancelEditActionSet,
   addActionSet as addActionSetAction,
@@ -29,6 +29,9 @@ const ActionSetMain: React.FC = () => {
   const storyData = useCurrentStoryData();
 
   const { currentActions } = useCurrentActions(storyId);
+
+  const { mutateAsync: deleteActionSet } =
+    trpcClient.actionSet.deleteActionSet.useMutation();
 
   const toggleDescriptionDialog = useCallback(() => {
     setShowDescDialog(!showDescDialog);

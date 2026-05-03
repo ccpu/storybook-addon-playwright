@@ -2,6 +2,62 @@
 // React.useEffect doesn't intercept static ESM named imports in vitest (unlike
 // babel-jest which uses live property reads). The mock routes useEffect calls
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('../../../../../src/api/trpc/client', async () => {
+  const React = await import('react');
+  const { testScreenshot, updateScreenshot } = await import(
+    '../../../../api/trpc/clients/__mocks__/screenshot.client'
+  );
+
+  const useMutationFactory =
+    (run: (input: unknown) => unknown) =>
+    (options?: {
+      onError?: (error: Error, input: unknown, context: unknown) => void;
+      onSuccess?: (data: unknown, input: unknown, context: unknown) => void;
+    }) => {
+      const [data, setData] = React.useState<unknown>(undefined);
+
+      const mutateAsync = async (input: unknown) => {
+        try {
+          const result = await Promise.resolve(run(input));
+          setData(result);
+          options?.onSuccess?.(result, input, undefined);
+          return result;
+        } catch (error) {
+          options?.onError?.(error as Error, input, undefined);
+          throw error;
+        }
+      };
+
+      return {
+        data,
+        isPending: false,
+        mutate: (input: unknown) => {
+          void mutateAsync(input);
+        },
+        mutateAsync,
+        reset: () => setData(undefined),
+      };
+    };
+
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      screenshot: {
+        testScreenshot: {
+          useMutation: useMutationFactory((input) =>
+            testScreenshot(input as never),
+          ),
+        },
+        updateScreenshot: {
+          useMutation: useMutationFactory((input) =>
+            updateScreenshot(input as never),
+          ),
+        },
+      },
+    },
+  };
+});
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
   const hook = (fn: any, deps?: any) =>

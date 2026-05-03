@@ -165,7 +165,6 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     onSuccessClose,
     inProgress,
     getUpdatingScreenshotTitle,
-    ErrorSnackbar,
     result,
   } = useSaveScreenshot();
 
@@ -252,8 +251,6 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
           />
 
           <Loader open={inProgress && !savingWithTitle} />
-
-          <ErrorSnackbar />
 
           <ImageDiffMessage
             browserType={browserType as BrowserTypes}

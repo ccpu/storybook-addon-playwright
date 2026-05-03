@@ -82,8 +82,7 @@ function ScreenshotListItem({
 
   const [showPreview, setShowPreview] = useState(false);
 
-  const { inProgress, testScreenshot, TestScreenshotErrorSnackbar } =
-    useScreenshotImageDiff(storyData);
+  const { inProgress, testScreenshot } = useScreenshotImageDiff(storyData);
 
   const isPassesImageDiff = imageDiffResult && imageDiffResult.pass;
 
@@ -210,8 +209,6 @@ function ScreenshotListItem({
             )}
           />
         )}
-
-        <TestScreenshotErrorSnackbar />
         <ScreenshotListItemMenu
           show={(forceShowMenu || showMenu) && !dragStart}
           screenshot={screenshot}

@@ -1,2 +1,2 @@
-export * from './trpc';
+export * from './trpc/client';
 export * from './typings';

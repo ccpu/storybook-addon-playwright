@@ -1,30 +1,41 @@
-import { updateScreenshot as updateScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useCallback } from 'react';
 import { updateImageDiffResult } from '../store/index';
 import { ImageDiffResult } from '../../../api/typings';
+import { trpcClient } from '../../../api';
+import { toast } from '../../../utils/toast';
 
 export const useScreenshotUpdate = (successMessage?: string) => {
   const {
-    makeCall,
-    inProgress: updateScreenshotInProgress,
-    clearResult: updateScreenshotClearResult,
-    ErrorSnackbar: UpdateScreenshotErrorSnackbar,
-  } = useAsyncApiCall(updateScreenshotClient, false, {
-    successMessage,
+    mutateAsync,
+    isPending: updateScreenshotInProgress,
+    reset,
+  } = trpcClient.screenshot.updateScreenshot.useMutation({
+    onError: (error) => {
+      toast.error(error.message || 'Unexpected error occurred');
+    },
+    onSuccess: () => {
+      if (successMessage) {
+        toast.success(successMessage);
+      }
+    },
   });
+
+  const updateScreenshotClearResult = useCallback(() => {
+    reset();
+  }, [reset]);
 
   const updateScreenshot = useCallback(
     async (imageDiffResult: ImageDiffResult) => {
-      console.log(imageDiffResult);
-      const result = await makeCall({
-        base64: imageDiffResult.newScreenshot,
-        filePath: imageDiffResult.filePath,
-        screenshotId: imageDiffResult.screenshotId,
-        storyId: imageDiffResult.storyId,
-      });
-
-      if (result instanceof Error) return;
+      try {
+        await mutateAsync({
+          base64: imageDiffResult.newScreenshot,
+          filePath: imageDiffResult.filePath,
+          screenshotId: imageDiffResult.screenshotId,
+          storyId: imageDiffResult.storyId,
+        });
+      } catch {
+        return;
+      }
 
       const newImageDiffResult: ImageDiffResult = {
         diffSize: false,
@@ -38,11 +49,10 @@ export const useScreenshotUpdate = (successMessage?: string) => {
 
       updateImageDiffResult(newImageDiffResult);
     },
-    [makeCall],
+    [mutateAsync],
   );
 
   return {
-    UpdateScreenshotErrorSnackbar,
     updateScreenshot,
     updateScreenshotClearResult,
     updateScreenshotInProgress,

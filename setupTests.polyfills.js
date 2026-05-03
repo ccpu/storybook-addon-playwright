@@ -6,6 +6,8 @@ const {
 } = require('node:stream/web');
 const { Blob, File } = require('node:buffer');
 const { MessageChannel, MessagePort } = require('node:worker_threads');
+const React = require('react');
+const { useSyncExternalStore } = require('use-sync-external-store/shim');
 
 if (typeof globalThis.TextEncoder === 'undefined') {
   globalThis.TextEncoder = TextEncoder;
@@ -41,4 +43,8 @@ if (typeof globalThis.MessageChannel === 'undefined') {
 
 if (typeof globalThis.MessagePort === 'undefined') {
   globalThis.MessagePort = MessagePort;
+}
+
+if (typeof React.useSyncExternalStore === 'undefined') {
+  React.useSyncExternalStore = useSyncExternalStore;
 }

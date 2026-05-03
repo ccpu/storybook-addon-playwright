@@ -1,14 +1,14 @@
 import { useCallback, useRef, useEffect, useState } from 'react';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { useStorybookState, addons } from '@storybook/manager-api';
-import { getScreenshot } from '../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../api';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
 import sum from 'hash-sum';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { STORY_RENDERED } from '@storybook/core-events';
 import { nanoid } from 'nanoid';
+import { toast } from '../../../utils/toast';
 
 export const useScreenshot = (
   browserType: BrowserTypes | 'storybook',
@@ -24,8 +24,19 @@ export const useScreenshot = (
 
   const prevHash = useRef<string>();
 
-  const { error, makeCall, inProgress, result } =
-    useAsyncApiCall(getScreenshot);
+  const [error, setError] = useState<string>();
+
+  const {
+    mutate,
+    isPending: inProgress,
+    data: result,
+  } = trpcClient.screenshot.takeScreenshot.useMutation({
+    onError: (mutationError) => {
+      const message = mutationError.message || 'Unexpected error occurred';
+      setError(message);
+      toast.error(message);
+    },
+  });
 
   // Incremented each time the preview finishes rendering (including HMR).
   // Used instead of polling iframe.contentWindow.__playwright_addon_hot_reload_time__.
@@ -43,7 +54,9 @@ export const useScreenshot = (
   const getSnapshot = useCallback(() => {
     if (browserType === 'storybook') return;
 
-    makeCall({
+    setError(undefined);
+
+    mutate({
       actionSets: currentActions,
       browserOptions,
       browserType,
@@ -57,7 +70,7 @@ export const useScreenshot = (
     currentActions,
     browserOptions,
     knobs,
-    makeCall,
+    mutate,
     screenshotOptions,
     state.storyId,
   ]);

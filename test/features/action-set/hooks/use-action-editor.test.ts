@@ -10,17 +10,15 @@ import { getOrgEditingActionSet } from '../../../configs/get-org-editing-actionS
 import { useActionEditor } from '../../../../src/features/action-set/hooks/use-action-editor';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ActionSet } from '../../../../src/typings';
-import { useAsyncApiCall } from '../../../../src/hooks/use-async-api-call';
 import { validateActionList } from '../../../../src/utils/valid-action';
 import { useActionSetStoreState } from '../../../../src/features/action-set/store/selectors';
+import { TRPCError } from '@trpc/server';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
-);
-vi.mock(
-  '../../../../src/hooks/use-async-api-call',
-  async () => await import('../../../hooks/__mocks__/use-async-api-call'),
 );
 vi.mock(
   '../../../../src/utils/valid-action',
@@ -33,21 +31,11 @@ vi.mock('nanoid', () => ({
   },
 }));
 
-const onSaveMock = vi.fn();
-
-vi.mocked(useAsyncApiCall).mockImplementation(() => ({
-  ErrorSnackbar: () => null,
-  clearError: vi.fn(),
-  clearResult: vi.fn(),
-  error: undefined,
-  inProgress: false,
-  makeCall: onSaveMock,
-  result: undefined,
-}));
-
 describe('useActionSetEditor', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Default handler: saveActionSet succeeds
+    server.use(trpcMsw.actionSet.saveActionSet.mutation(() => ({} as any)));
   });
 
   const actionSet: ActionSet = {
@@ -74,11 +62,17 @@ describe('useActionSetEditor', () => {
   });
 
   it('should handle save', async () => {
+    const spy = vi.fn().mockReturnValue({});
+    server.use(
+      trpcMsw.actionSet.saveActionSet.mutation(
+        ({ input }) => spy(input) as any,
+      ),
+    );
     const { result } = renderHook(() => useActionEditor(actionSet));
     await result.current.handleSave();
     expect(saveActionSetStoreMock).toHaveBeenCalled();
 
-    expect(onSaveMock).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       actionSet: {
         actions: [],
         id: 'action-set-id',
@@ -90,6 +84,13 @@ describe('useActionSetEditor', () => {
   });
 
   it('should not save if validationFailed', async () => {
+    const spy = vi.fn();
+    server.use(
+      trpcMsw.actionSet.saveActionSet.mutation(({ input }) => {
+        spy(input);
+        return {} as any;
+      }),
+    );
     vi.mocked(validateActionList).mockImplementationOnce(() => [
       { id: 'action-id', name: 'click' },
     ]);
@@ -97,7 +98,7 @@ describe('useActionSetEditor', () => {
     await act(async () => {
       await result.current.handleSave();
     });
-    expect(onSaveMock).toHaveBeenCalledTimes(0);
+    expect(spy).toHaveBeenCalledTimes(0);
     expect(saveActionSetStoreMock).not.toHaveBeenCalled();
   });
 
@@ -123,21 +124,16 @@ describe('useActionSetEditor', () => {
   });
 
   it('should not change store if call client api failed', async () => {
-    vi.mocked(useAsyncApiCall).mockImplementation(
-      () =>
-        ({
-          makeCall: () => {
-            return new Promise((resolve) => {
-              resolve(new Error('ops'));
-            });
-          },
-        } as unknown as ReturnType<typeof useAsyncApiCall>),
+    server.use(
+      trpcMsw.actionSet.saveActionSet.mutation(() => {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'ops' });
+      }),
     );
     const { result } = renderHook(() => useActionEditor(actionSet));
     await act(async () => {
       await result.current.handleSave();
     });
-    expect(onSaveMock).toHaveBeenCalledTimes(0);
+    expect(saveActionSetStoreMock).toHaveBeenCalledTimes(0);
   });
 
   it('should handle title change', () => {
@@ -166,12 +162,19 @@ describe('useActionSetEditor', () => {
   });
 
   it('should not save temp actions', async () => {
+    const spy = vi.fn();
+    server.use(
+      trpcMsw.actionSet.saveActionSet.mutation(({ input }) => {
+        spy(input);
+        return {} as any;
+      }),
+    );
     const { result } = renderHook(() =>
       useActionEditor({ ...actionSet, temp: true }),
     );
     await result.current.handleSave();
 
-    expect(onSaveMock).toHaveBeenCalledTimes(0);
+    expect(spy).toHaveBeenCalledTimes(0);
 
     expect(saveActionSetStoreMock).toHaveBeenCalled();
   });

@@ -5,6 +5,30 @@ import React from 'react';
 import { RadioGroup, Button, TextField } from '@material-ui/core';
 import { addFavouriteAction } from '../../../../../src/api/trpc/clients/favourite-actions.client';
 
+vi.mock('../../../../../src/api/trpc/client', async () => {
+  const { addFavouriteAction } = await import(
+    '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
+  );
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      favouriteActions: {
+        addFavouriteAction: {
+          useMutation: () => ({
+            data: undefined,
+            isPending: false,
+            mutate: (input: unknown) => {
+              void addFavouriteAction(input as never);
+            },
+            mutateAsync: (input: unknown) => addFavouriteAction(input as never),
+            reset: vi.fn(),
+          }),
+        },
+      },
+    },
+  };
+});
 vi.mock(
   '../../../../../src/hooks/use-anchor-el',
   async () => await import('../../../../hooks/__mocks__/use-anchor-el'),

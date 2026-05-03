@@ -1,36 +1,32 @@
 import { useCallback } from 'react';
 import { SortEnd } from 'react-sortable-hoc';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
-import { changeScreenShotIndex } from '../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../api';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { changeScreenshotIndex } from '../store/index';
 
 export const useScreenshotIndexChange = () => {
-  const {
-    ErrorSnackbar: ChangeIndexErrorSnackbar,
-    makeCall,
-    inProgress: ChangeIndexInProgress,
-  } = useAsyncApiCall(changeScreenShotIndex, false);
+  const { mutateAsync, isPending: ChangeIndexInProgress } =
+    trpcClient.screenshot.changeScreenshotIndex.useMutation();
 
   const storyData = useCurrentStoryData();
 
   const changeIndex = useCallback(
     async (e: SortEnd) => {
       changeScreenshotIndex({ newIndex: e.newIndex, oldIndex: e.oldIndex });
-      const result = await makeCall({
-        filePath: storyData.filePath,
-        newIndex: e.newIndex,
-        oldIndex: e.oldIndex,
-        storyId: storyData.id,
-      });
-      if (result instanceof Error) {
+      try {
+        await mutateAsync({
+          filePath: storyData.filePath,
+          newIndex: e.newIndex,
+          oldIndex: e.oldIndex,
+          storyId: storyData.id,
+        });
+      } catch {
         changeScreenshotIndex({ newIndex: e.oldIndex, oldIndex: e.newIndex });
       }
     },
-    [makeCall, storyData],
+    [mutateAsync, storyData],
   );
   return {
-    ChangeIndexErrorSnackbar,
     ChangeIndexInProgress,
     changeIndex,
   };

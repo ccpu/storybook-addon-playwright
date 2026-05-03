@@ -8,17 +8,12 @@ import {
   IconButton,
   capitalize,
 } from '@material-ui/core';
-import {
-  getFavouriteActions,
-  deleteFavouriteAction,
-} from '../../../../api/trpc/clients/favourite-actions.client';
+import { trpcClient } from '../../../../api';
 import { FavouriteActionSet } from '../../../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import { addActionSet as addActionSetToStore } from '../../../../store';
 import { nanoid } from 'nanoid';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
-import { useAsyncApiCall } from '../../../../hooks/use-async-api-call';
-import { saveActionSet as saveActionSetClient } from '../../../../api/trpc/clients/action-set.client';
 import { filterFavouriteActions } from './utils/filter-favourite-actions';
 
 const useStyles = makeStyles(
@@ -68,10 +63,16 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   const [actionSets, setActionSets] =
     React.useState<FavouriteActionSet[]>(defaults);
 
-  const { makeCall: saveActionSet } = useAsyncApiCall(
-    saveActionSetClient,
-    false,
-  );
+  const { mutateAsync: saveActionSet } =
+    trpcClient.actionSet.saveActionSet.useMutation();
+
+  const { mutateAsync: deleteFavouriteAction } =
+    trpcClient.favouriteActions.deleteFavouriteAction.useMutation();
+
+  const { refetch: refetchFavouriteActions } =
+    trpcClient.favouriteActions.getFavouriteActions.useQuery(undefined, {
+      enabled: false,
+    });
 
   const storyData = useCurrentStoryData();
 
@@ -80,17 +81,16 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   const classes = useStyles();
 
   const loadActions = React.useCallback(() => {
-    if (anchorEl) {
-      getFavouriteActions().then((result) => {
-        const actions = [
-          ...defaults,
-          ...filterFavouriteActions(result, storyId),
-        ];
+    if (!anchorEl) return;
+    refetchFavouriteActions().then(({ data: result }) => {
+      const actions = [
+        ...defaults,
+        ...filterFavouriteActions(result || [], storyId),
+      ];
 
-        setActionSets(actions);
-      });
-    }
-  }, [anchorEl, storyId]);
+      setActionSets(actions);
+    });
+  }, [anchorEl, refetchFavouriteActions, storyId]);
 
   const onAddQuickAction = async (item: FavouriteActionSet) => {
     const id = nanoid(12);
@@ -100,19 +100,18 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
       visibleTo: undefined,
     };
 
-    const result = await saveActionSet({
+    await saveActionSet({
       actionSet: newActionSet,
       filePath: storyData.filePath,
       storyId,
     });
 
-    if (!(result instanceof Error))
-      addActionSetToStore({
-        actionSet: newActionSet,
-        isNew: false,
-        selected: true,
-        storyId,
-      });
+    addActionSetToStore({
+      actionSet: newActionSet,
+      isNew: false,
+      selected: true,
+      storyId,
+    });
   };
 
   const deleteAction = async (actionSetId: string) => {

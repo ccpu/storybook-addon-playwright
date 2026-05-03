@@ -1,34 +1,42 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { addImageDiffResult } from '../store/index';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
-import { testScreenshot as testScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../api';
 import { StoryData } from '../../../schema';
+import { toast } from '../../../utils/toast';
 
 export const useScreenshotImageDiff = (storyData: StoryData) => {
-  const {
-    makeCall,
-    error: testScreenshotError,
-    inProgress,
-    ErrorSnackbar,
-  } = useAsyncApiCall(testScreenshotClient, false);
+  const [testScreenshotError, setTestScreenshotError] = useState<
+    string | undefined
+  >(undefined);
+
+  const { mutateAsync, isPending: inProgress } =
+    trpcClient.screenshot.testScreenshot.useMutation({
+      onError: (error) => {
+        const message = error.message || 'Unexpected error occurred';
+        setTestScreenshotError(message);
+        toast.error(message);
+      },
+    });
 
   const testScreenshot = useCallback(
     async (id: string) => {
-      const result = await makeCall({
-        filePath: storyData.filePath,
-        screenshotId: id,
-        storyId: storyData.id,
-      });
-      if (!(result instanceof Error)) {
+      setTestScreenshotError(undefined);
+      try {
+        const result = await mutateAsync({
+          filePath: storyData.filePath,
+          screenshotId: id,
+          storyId: storyData.id,
+        });
         addImageDiffResult(result);
+        return result;
+      } catch {
+        return undefined;
       }
-      return result;
     },
-    [makeCall, storyData],
+    [mutateAsync, storyData],
   );
 
   return {
-    TestScreenshotErrorSnackbar: ErrorSnackbar,
     inProgress,
     testScreenshot,
     testScreenshotError,

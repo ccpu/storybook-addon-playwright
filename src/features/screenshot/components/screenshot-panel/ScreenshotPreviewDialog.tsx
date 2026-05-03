@@ -1,13 +1,13 @@
 import React, { useEffect, useCallback } from 'react';
 import { ScreenshotData } from '../../../../typings';
-import { useAsyncApiCall } from '../../../../hooks';
 import {
   ImageDiffPreviewDialog,
   Loader,
   DialogProps,
   ImageDiffPreviewProps,
 } from '../../../../components/common';
-import { testScreenshot } from '../../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../../api';
+import { ImageDiffResult } from '../../../../api/typings';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { StoryData } from '../../../../schema';
 
@@ -23,28 +23,32 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 ) => {
   const { storyData, screenShotData, onClose, ...rest } = props;
 
-  const { makeCall, result, inProgress, clearResult, ErrorSnackbar } =
-    useAsyncApiCall(testScreenshot);
+  const {
+    mutateAsync,
+    data: result,
+    isPending: inProgress,
+    reset,
+  } = trpcClient.screenshot.testScreenshot.useMutation();
 
   useEffect(() => {
-    makeCall({
+    mutateAsync({
       filePath: storyData.filePath,
       screenshotId: screenShotData.id,
       storyId: storyData.id,
-    });
-  }, [makeCall, screenShotData.id, storyData.id, storyData.filePath]);
+    }).catch(() => undefined);
+  }, [mutateAsync, screenShotData.id, storyData.id, storyData.filePath]);
 
   const handleClose = useCallback(() => {
-    clearResult();
+    reset();
     onClose();
-  }, [clearResult, onClose]);
+  }, [onClose, reset]);
 
   return (
     <>
-      {result && (
+      {result?.filePath && (
         <ImageDiffPreviewDialog
           title={screenShotData.title}
-          imageDiffResult={result}
+          imageDiffResult={result as ImageDiffResult}
           open={true}
           onClose={handleClose}
           titleActions={() => (
@@ -58,7 +62,6 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
         />
       )}
       <Loader open={inProgress} />
-      <ErrorSnackbar />
     </>
   );
 };

@@ -53,8 +53,6 @@ export const diffImageToScreenshot = async (
         ...options,
       } as SnapshotOptions) as ImageDiffResult;
 
-      console.log({ filePath: result.filePath });
-
       if (!result.pass) {
         fs.rmdirSync(diffDir, { recursive: true });
       }

@@ -1,7 +1,10 @@
 import { useStoryActionSetsLoader } from '../../../../src/features/action-set/hooks/use-story-action-sets-loader';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { getActionSet } from '../../../../src/api/trpc/clients/action-set.client';
+import { waitFor } from '@testing-library/react';
 import { ActionSet } from '../../../../src/typings';
+import { TRPCError } from '@trpc/server';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 let currentStoryData: { filePath: string; id: string } | undefined;
 
@@ -12,11 +15,6 @@ vi.mock('../../../../src/hooks', async (importActual) => {
     useCurrentStoryData: vi.fn(() => currentStoryData),
   };
 });
-vi.mock(
-  '../../../../src/api/trpc/clients/action-set.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/action-set.client'),
-);
 
 describe('useStoryFileActionSets', () => {
   let cnt = 0;
@@ -45,16 +43,16 @@ describe('useStoryFileActionSets', () => {
   ];
 
   it('should load once', async () => {
-    vi.mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
+    server.use(
+      trpcMsw.actionSet.getActionSet.mutation(() => actionSets as any),
+    );
 
     const fileInfo = getFileInfo();
     currentStoryData = fileInfo as any;
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useStoryActionSetsLoader(),
-    );
+    const { result } = renderHook(() => useStoryActionSetsLoader());
 
-    await waitForNextUpdate();
+    await waitFor(() => expect(result.current.loading).toBe(false));
 
     expect(result.current.loading).toBe(false);
 
@@ -64,29 +62,33 @@ describe('useStoryFileActionSets', () => {
   });
 
   it('should handle error and retry', async () => {
-    vi.mocked(getActionSet).mockRejectedValueOnce(new Error('bad url'));
+    const spy = vi
+      .fn()
+      .mockImplementationOnce(() => {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'bad url',
+        });
+      })
+      .mockImplementationOnce(() => actionSets);
+
+    server.use(
+      trpcMsw.actionSet.getActionSet.mutation(({ input }) => spy(input) as any),
+    );
 
     const fileInfo = getFileInfo();
     currentStoryData = fileInfo as any;
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useStoryActionSetsLoader(),
-    );
+    const { result } = renderHook(() => useStoryActionSetsLoader());
 
-    await waitForNextUpdate();
-
-    expect(result.current.error).toStrictEqual('bad url');
-
-    vi.mocked(getActionSet).mockResolvedValueOnce(actionSets as any);
+    await waitFor(() => expect(result.current.error).toStrictEqual('bad url'));
 
     act(() => {
       result.current.retry();
     });
 
-    expect(result.current.loading).toBe(true);
+    await waitFor(() => expect(result.current.error).toBeUndefined());
 
-    await waitForNextUpdate();
-
-    expect(result.current.loading).toBe(false);
+    expect(spy.mock.calls.length).toBeGreaterThanOrEqual(2);
   });
 });

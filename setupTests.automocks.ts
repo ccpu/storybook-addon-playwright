@@ -28,10 +28,6 @@ vi.mock('join-images');
 // jest-image-snapshot: __mocks__/jest-image-snapshot.ts provides a vi.fn() spy
 // so tests can configure mockImplementationOnce without importing the real snap.
 vi.mock('jest-image-snapshot');
-// tRPC client: src/trpc/__mocks__/client.ts provides stubs for all procedures.
-// This mirrors the moduleNameMapper that was in jest.config.js.
-// Tests that need specific return values override the mock per-test.
-vi.mock('./src/trpc/client');
 // react-use sub-path mocks (useKey, useMouseHovered, useThrottleFn).
 // Jest applied __mocks__/react-use/lib/* automatically; vitest requires explicit calls.
 vi.mock('react-use/lib/useKey');

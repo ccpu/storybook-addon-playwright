@@ -11,7 +11,7 @@ import {
   FormControl,
   TextField,
 } from '@material-ui/core';
-import { addFavouriteAction } from '../../../../api/trpc/clients/favourite-actions.client';
+import { trpcClient } from '../../../../api';
 import { useAnchorEl } from '../../../../hooks/use-anchor-el';
 import {
   DialogTitle,
@@ -38,6 +38,9 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
 
   const data = useCurrentStoryData();
   const { openSnackbar } = useSnackbar();
+
+  const { mutateAsync: addFavouriteAction } =
+    trpcClient.favouriteActions.addFavouriteAction.useMutation();
 
   const { parent = 'parent' } = data || {};
 

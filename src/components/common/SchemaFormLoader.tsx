@@ -2,11 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles, Divider, Button } from '@material-ui/core';
 import { MemoizedSchemaRenderer } from '../../features/schema/components/index';
 import { Config } from 'ts-to-json/dist/src/Config';
-import { useAsyncApiCall } from '../../hooks';
 import { Loader } from './Loader';
 import { Definition } from 'ts-to-json';
 import * as immutableObject from 'object-path-immutable';
-import { getSchema } from '../../api/trpc/clients/schema.client';
+import { trpcClient } from '../../api';
 
 const useStyles = makeStyles(
   () => {
@@ -49,12 +48,16 @@ const SchemaFormLoader: React.FC<SchemaFormProps> = ({
 
   const [reset, setReset] = useState(false);
 
-  const { makeCall, result: schema, inProgress } = useAsyncApiCall(getSchema);
+  const {
+    mutate,
+    data: schema,
+    isPending: inProgress,
+  } = trpcClient.schema.getSchema.useMutation();
 
   useEffect(() => {
     if (schema || inProgress) return;
-    makeCall({ schemaName });
-  }, [inProgress, makeCall, schema, schemaName]);
+    mutate({ schemaName });
+  }, [inProgress, mutate, schema, schemaName]);
 
   const handleSave = useCallback(() => {
     onSave(tempOptions);

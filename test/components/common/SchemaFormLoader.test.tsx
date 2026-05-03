@@ -2,6 +2,41 @@
 // React.useEffect doesn't intercept static ESM named imports in vitest (unlike
 // babel-jest which uses live property reads). The mock routes useEffect calls
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('../../../src/api/trpc/client', async () => {
+  const React = await import('react');
+  const { getSchema } = await import(
+    '../../api/trpc/clients/__mocks__/schema.client'
+  );
+
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      schema: {
+        getSchema: {
+          useMutation: () => {
+            const [data, setData] = React.useState<unknown>(undefined);
+            const mutateAsync = async (input: unknown) => {
+              const result = await getSchema(input as never);
+              setData(result);
+              return result;
+            };
+
+            return {
+              data,
+              isPending: false,
+              mutate: (input: unknown) => {
+                void mutateAsync(input);
+              },
+              mutateAsync,
+              reset: vi.fn(),
+            };
+          },
+        },
+      },
+    },
+  };
+});
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
   const hook = (fn: any, deps?: any) =>
@@ -31,10 +66,13 @@ describe('SchemaFormLoader', () => {
     vi.clearAllMocks();
   });
 
-  it('should render', () => {
+  it('should render', async () => {
     const wrapper = shallow(
       <SchemaFormLoader schemaName="MyType" onSave={vi.fn()} />,
     );
+
+    await new Promise((resolve) => setImmediate(resolve));
+
     expect(wrapper.exists()).toBeTruthy();
     expect(getSchema).toHaveBeenCalledWith({ schemaName: 'MyType' });
   });

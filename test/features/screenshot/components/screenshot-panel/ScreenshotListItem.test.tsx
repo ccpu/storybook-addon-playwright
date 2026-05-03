@@ -169,8 +169,9 @@ describe('ScreenshotListItem', () => {
 
     (useScreenshotImageDiff as Mock).mockImplementation(() => {
       return {
-        TestScreenshotErrorSnackbar: () => undefined,
+        inProgress: false,
         testScreenshot: testScreenshotMock,
+        testScreenshotError: undefined,
       };
     });
 

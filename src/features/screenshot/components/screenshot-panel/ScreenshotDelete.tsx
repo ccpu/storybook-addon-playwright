@@ -14,11 +14,7 @@ export interface ScreenshotDeleteProps {
 const ScreenshotDelete: React.FC<ScreenshotDeleteProps> = (props) => {
   const { onStateChange, screenshot, onClose, onDelete } = props;
 
-  const {
-    deleteScreenshot,
-    inProgress: deleteLoading,
-    ErrorSnackbar,
-  } = useDeleteScreenshot();
+  const { deleteScreenshot, inProgress: deleteLoading } = useDeleteScreenshot();
 
   const handleDeleteConfirmation = useCallback(() => {
     deleteScreenshot(screenshot.id);
@@ -35,7 +31,6 @@ const ScreenshotDelete: React.FC<ScreenshotDeleteProps> = (props) => {
         onClose={onClose}
         onDelete={handleDeleteConfirmation}
       />
-      <ErrorSnackbar />
     </>
   );
 };

@@ -15,6 +15,42 @@ import { useStoryActionSetsLoader } from '../../../../../src/features/action-set
 import { useCurrentStoryActionSets } from '../../../../../src/features/action-set/hooks/use-current-story-action-sets';
 import { deleteActionSet } from '../../../../../src/api/trpc/clients/action-set.client';
 
+vi.mock('../../../../../src/api/trpc/client', async () => {
+  const { deleteActionSet, saveActionSet } = await import(
+    '../../../../api/trpc/clients/__mocks__/action-set.client'
+  );
+
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      actionSet: {
+        deleteActionSet: {
+          useMutation: () => ({
+            data: undefined,
+            isPending: false,
+            mutate: (input: unknown) => {
+              void deleteActionSet(input as never);
+            },
+            mutateAsync: (input: unknown) => deleteActionSet(input as never),
+            reset: vi.fn(),
+          }),
+        },
+        saveActionSet: {
+          useMutation: () => ({
+            data: undefined,
+            isPending: false,
+            mutate: (input: unknown) => {
+              void saveActionSet(input as never);
+            },
+            mutateAsync: (input: unknown) => saveActionSet(input as never),
+            reset: vi.fn(),
+          }),
+        },
+      },
+    },
+  };
+});
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
   async () =>

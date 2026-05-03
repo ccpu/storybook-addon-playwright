@@ -1,43 +1,44 @@
 import { useEffect, useCallback, useRef } from 'react';
-import { getStoryScreenshots } from '../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../api';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { setScreenshots } from '../store/index';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+import { toast } from '../../../utils/toast';
 
 export const useStoryScreenshotLoader = () => {
   const loadedStoryId = useRef<string>();
 
   const storyData = useCurrentStoryData();
 
-  const {
-    makeCall,
-    error,
-    inProgress: screenshotLoaderInProgress,
-    ErrorSnackbar: ScreenshotLoaderErrorSnackbar,
-  } = useAsyncApiCall(getStoryScreenshots, false);
-
-  const loadScreenShots = useCallback(async () => {
-    const result = await makeCall({
-      filePath: storyData.filePath,
-      storyId: storyData.id,
+  const { mutateAsync, isPending: screenshotLoaderInProgress } =
+    trpcClient.screenshot.getStoryScreenshots.useMutation({
+      onError: (error) => {
+        toast.error(error.message || 'Unexpected error occurred');
+      },
     });
 
-    if (result instanceof Error) return;
-    loadedStoryId.current = storyData.id;
-    setScreenshots(result);
-  }, [makeCall, storyData]);
+  const loadScreenShots = useCallback(async () => {
+    try {
+      const result = await mutateAsync({
+        filePath: storyData.filePath,
+        storyId: storyData.id,
+      });
+      loadedStoryId.current = storyData.id;
+      setScreenshots(result);
+    } catch {
+      return;
+    }
+  }, [mutateAsync, storyData]);
 
   useEffect(() => {
-    if (screenshotLoaderInProgress || !storyData || error) return;
+    if (screenshotLoaderInProgress || !storyData) return;
     if (loadedStoryId.current && loadedStoryId.current === storyData.id) {
       return;
     }
     loadScreenShots();
-  }, [error, loadScreenShots, screenshotLoaderInProgress, storyData]);
+  }, [loadScreenShots, screenshotLoaderInProgress, storyData]);
 
   return {
-    ScreenshotLoaderErrorSnackbar,
-    error,
+    error: undefined,
     loadScreenShots,
     screenshotLoaderInProgress,
     storyData,

@@ -7,10 +7,61 @@ import {
   getFavouriteActions,
   deleteFavouriteAction,
 } from '../../../../../src/api/trpc/clients/favourite-actions.client';
+import { saveActionSet } from '../../../../../src/api/trpc/clients/action-set.client';
 import { FavouriteActionSet } from '../../../../../src/typings';
-import { useAsyncApiCall } from '../../../../../src/hooks/use-async-api-call';
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 
+vi.mock('../../../../../src/api/trpc/client', async () => {
+  const { getFavouriteActions, deleteFavouriteAction } = await import(
+    '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
+  );
+  const { saveActionSet } = await import(
+    '../../../../api/trpc/clients/__mocks__/action-set.client'
+  );
+
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      actionSet: {
+        saveActionSet: {
+          useMutation: () => ({
+            data: undefined,
+            isPending: false,
+            mutate: (input: unknown) => {
+              void saveActionSet(input as never);
+            },
+            mutateAsync: (input: unknown) => saveActionSet(input as never),
+            reset: vi.fn(),
+          }),
+        },
+      },
+      favouriteActions: {
+        deleteFavouriteAction: {
+          useMutation: () => ({
+            data: undefined,
+            isPending: false,
+            mutate: (input: unknown) => {
+              void deleteFavouriteAction(input as never);
+            },
+            mutateAsync: (input: unknown) =>
+              deleteFavouriteAction(input as never),
+            reset: vi.fn(),
+          }),
+        },
+        getFavouriteActions: {
+          useQuery: () => ({
+            data: undefined,
+            error: undefined,
+            isLoading: false,
+            isPending: false,
+            refetch: async () => ({ data: await getFavouriteActions() }),
+          }),
+        },
+      },
+    },
+  };
+});
 vi.mock(
   '../../../../../src/api/trpc/clients/favourite-actions.client',
   async () =>
@@ -19,26 +70,15 @@ vi.mock(
     ),
 );
 vi.mock(
-  '../../../../../src/hooks/use-async-api-call',
-  async () => await import('../../../../hooks/__mocks__/use-async-api-call'),
+  '../../../../../src/api/trpc/clients/action-set.client',
+  async () =>
+    await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
 );
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
   async () =>
     await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
-
-const saveActionSetMock = vi.fn();
-
-vi.mocked(useAsyncApiCall).mockImplementation(() => ({
-  ErrorSnackbar: () => null,
-  clearError: vi.fn(),
-  clearResult: vi.fn(),
-  error: undefined,
-  inProgress: false,
-  makeCall: saveActionSetMock,
-  result: undefined,
-}));
 
 // Changed to async factory using vi.importActual because jest.requireActual
 // does not exist in vitest (no sync equivalent; vi.importActual is async-only).
@@ -119,7 +159,7 @@ describe('FavouriteActions', () => {
       .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
     expect(addActionSetMock).toHaveBeenCalled();
-    expect(saveActionSetMock).toHaveBeenCalledWith({
+    expect(saveActionSet).toHaveBeenCalledWith({
       actionSet: {
         actions: [{ id: 'Kj6iSI1D3BIF1yX', name: 'takeScreenshot' }],
         id: 'id-1',

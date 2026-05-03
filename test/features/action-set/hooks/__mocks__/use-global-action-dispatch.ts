@@ -1,3 +1,4 @@
-export const useGlobalActionDispatch = vi.fn();
+const useGlobalActionDispatchMock = vi.fn((callBack: () => void) => callBack());
 
-useGlobalActionDispatch.mockImplementation((callBack) => callBack());
+export const useGlobalActionDispatch: (callback: () => void) => void =
+  useGlobalActionDispatchMock;

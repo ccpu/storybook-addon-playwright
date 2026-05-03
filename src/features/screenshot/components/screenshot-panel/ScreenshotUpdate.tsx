@@ -2,12 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
-import {
-  useAsyncApiCall,
-  useScreenshotUpdate,
-  useCurrentStoryData,
-} from '../../../../hooks';
-import { testScreenshot as testScreenshotClient } from '../../../../api/trpc/clients/screenshot.client';
+import { useScreenshotUpdate, useCurrentStoryData } from '../../../../hooks';
+import { trpcClient } from '../../../../api';
 import { Loader, ImageDiffPreviewDialog } from '../../../../components/common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ImageDiffResult } from '../../../../api/typings';
@@ -23,18 +19,16 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
 
   const storyData = useCurrentStoryData();
 
-  const {
-    UpdateScreenshotErrorSnackbar,
-    updateScreenshot,
-    updateScreenshotInProgress,
-  } = useScreenshotUpdate('Successfully updated.');
+  const { updateScreenshot, updateScreenshotInProgress } = useScreenshotUpdate(
+    'Successfully updated.',
+  );
 
   const {
-    makeCall: testScreenshot,
-    inProgress: testScreenshotInProgress,
-    clearResult: testScreenshotClearResult,
-    result: testScreenshotResult,
-  } = useAsyncApiCall(testScreenshotClient, true);
+    mutateAsync: testScreenshot,
+    isPending: testScreenshotInProgress,
+    reset: testScreenshotClearResult,
+    data: testScreenshotResult,
+  } = trpcClient.screenshot.testScreenshot.useMutation();
 
   const handleUpdate = useCallback(async () => {
     if (imageDiffResult) {
@@ -99,7 +93,6 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
         />
       )}
       <Loader open={updateScreenshotInProgress} />
-      <UpdateScreenshotErrorSnackbar />
     </>
   );
 };

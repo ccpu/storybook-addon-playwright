@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import { StoryInfo } from '../../schema';
 
 export const getActionSet = async (data: StoryInfo): Promise<ActionSet[]> => {
-  console.log('Fetching action set for story:', data.storyId);
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 

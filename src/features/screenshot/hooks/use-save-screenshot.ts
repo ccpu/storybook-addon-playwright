@@ -1,15 +1,15 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { saveScreenshot as saveScreenshotClient } from '../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../api';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
 import { SaveScreenshotRequest } from '../../../api/typings';
 import { removeScreenshot, addScreenshot } from '../store/actions';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { useEditScreenshot } from './use-edit-screenshot';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { nanoid } from 'nanoid';
+import { toast } from '../../../utils/toast';
 
 export const useSaveScreenshot = () => {
   const props = useKnobs();
@@ -22,15 +22,28 @@ export const useSaveScreenshot = () => {
 
   const { currentActions } = useCurrentActions(storyData && storyData.id);
 
+  const [error, setError] = useState<string | undefined>(undefined);
+
   const {
-    makeCall,
-    result,
-    clearError,
-    clearResult,
-    ErrorSnackbar,
-    inProgress,
-    error,
-  } = useAsyncApiCall(saveScreenshotClient);
+    mutateAsync,
+    data: result,
+    reset,
+    isPending: inProgress,
+  } = trpcClient.screenshot.saveScreenshot.useMutation({
+    onError: (mutationError) => {
+      const message = mutationError.message || 'Unexpected error occurred';
+      setError(message);
+      toast.error(message);
+    },
+  });
+
+  const clearError = useCallback(() => {
+    setError(undefined);
+  }, []);
+
+  const clearResult = useCallback(() => {
+    reset();
+  }, [reset]);
 
   const isUpdating = useCallback(
     (browserType: BrowserTypes) => {
@@ -77,11 +90,14 @@ export const useSaveScreenshot = () => {
         data.updateScreenshot = editScreenshotState.screenshotData;
       }
 
-      const res = await makeCall(data);
+      let result;
 
-      if (res instanceof Error) return res;
-
-      const result = res || {};
+      clearError();
+      try {
+        result = (await mutateAsync(data)) || {};
+      } catch {
+        return new Error('Unexpected error occurred');
+      }
 
       if (editScreenshotState && isUpdating(browserType)) {
         if (result.added) {
@@ -105,8 +121,9 @@ export const useSaveScreenshot = () => {
       storyData,
       isUpdating,
       editScreenshotState,
-      makeCall,
+      mutateAsync,
       clearScreenshotEdit,
+      clearError,
     ],
   );
 
@@ -115,7 +132,6 @@ export const useSaveScreenshot = () => {
   }, [clearResult]);
 
   return {
-    ErrorSnackbar,
     clearError,
     error,
     getUpdatingScreenshotTitle,

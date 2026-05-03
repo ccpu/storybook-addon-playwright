@@ -4,16 +4,12 @@ import {
 } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotImageDiffResults } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { testScreenshots } from '../../../../src/api/trpc/clients/screenshot.client';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
-);
-vi.mock(
-  '../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
 
 describe('useScreenshotImageDiffResults', () => {
@@ -22,12 +18,18 @@ describe('useScreenshotImageDiffResults', () => {
   });
 
   it('should have result', async () => {
+    const spy = vi.fn().mockReturnValue([{ pass: true }]);
+    server.use(
+      trpcMsw.screenshot.testScreenshots.mutation(
+        ({ input }) => spy(input) as any,
+      ),
+    );
     const { result } = renderHook(() => useScreenshotImageDiffResults());
     await act(async () => {
       await result.current.testStoryScreenShots('all');
     });
     expect(setImageDiffResultsMock).toHaveBeenCalledWith([{ pass: true }]);
-    expect(testScreenshots).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       filePath: './test.stories.tsx',
       requestId: 'id-1',
       requestType: 'all',
@@ -36,13 +38,19 @@ describe('useScreenshotImageDiffResults', () => {
   });
 
   it('should add story file results only', async () => {
+    const spy = vi.fn().mockReturnValue([{ pass: true }]);
+    server.use(
+      trpcMsw.screenshot.testScreenshots.mutation(
+        ({ input }) => spy(input) as any,
+      ),
+    );
     const { result } = renderHook(() => useScreenshotImageDiffResults());
     await act(async () => {
       await result.current.testStoryScreenShots('file');
     });
     expect(addImageDiffResultMock).toHaveBeenCalledWith({ pass: true });
 
-    expect(testScreenshots).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       filePath: './test.stories.tsx',
       requestId: 'id-2',
       requestType: 'file',
@@ -51,12 +59,18 @@ describe('useScreenshotImageDiffResults', () => {
   });
 
   it('should  story within story file results only', async () => {
+    const spy = vi.fn().mockReturnValue([{ pass: true }]);
+    server.use(
+      trpcMsw.screenshot.testScreenshots.mutation(
+        ({ input }) => spy(input) as any,
+      ),
+    );
     const { result } = renderHook(() => useScreenshotImageDiffResults());
     await act(async () => {
       await result.current.testStoryScreenShots('story');
     });
     expect(addImageDiffResultMock).toHaveBeenCalledWith({ pass: true });
-    expect(testScreenshots).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       filePath: './test.stories.tsx',
       requestId: 'id-3',
       requestType: 'story',

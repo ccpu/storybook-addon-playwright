@@ -1,23 +1,41 @@
 import { useEffect, useCallback } from 'react';
-import { getActionsSchema as getActionSchema } from '../../../api/trpc/clients/schema.client';
+import { trpcClient } from '../../../api';
 import {
   setActionSchema,
   useSchemaLoaded,
   setSchemaLoaded,
 } from '../../../store';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+import { toast } from '../../../utils/toast';
 
 export const useActionSchemaLoader = () => {
   const loaded = useSchemaLoaded();
 
-  const { makeCall, inProgress } = useAsyncApiCall(getActionSchema, false);
+  const {
+    data,
+    isLoading: inProgress,
+    error,
+    refetch,
+  } = trpcClient.schema.getActionsSchema.useQuery(undefined, {
+    enabled: !loaded,
+  });
+
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error.message || 'Unexpected error occurred');
+  }, [error]);
 
   const load = useCallback(async () => {
-    const result = await makeCall();
-    if (result instanceof Error) return;
-    setActionSchema(result);
+    const result = await refetch();
+    if (!result.data) return;
+    setActionSchema(result.data);
     setSchemaLoaded(true);
-  }, [makeCall]);
+  }, [refetch]);
+
+  useEffect(() => {
+    if (!data) return;
+    setActionSchema(data);
+    setSchemaLoaded(true);
+  }, [data]);
 
   useEffect(() => {
     if (inProgress || loaded) return;

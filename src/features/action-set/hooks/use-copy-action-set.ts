@@ -1,37 +1,41 @@
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
 import { ActionSet } from '../../../typings';
 import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
-import { saveActionSet } from '../../../api/trpc/clients/action-set.client';
+import { trpcClient } from '../../../api';
 import { addActionSet as addActionSetToStore } from '../../../store';
 import { StoryData } from '../../../schema';
+import { toast } from '../../../utils/toast';
 
 export const useCopyActionSet = (storyData: StoryData) => {
-  const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(
-    saveActionSet,
-    false,
-  );
+  const { mutateAsync, isPending: inProgress } =
+    trpcClient.actionSet.saveActionSet.useMutation({
+      onError: (error) => {
+        toast.error(error.message || 'Unexpected error occurred');
+      },
+    });
 
   const copyActionSet = useCallback(
     async (actionSet: ActionSet) => {
       const copyActionSet = JSON.parse(JSON.stringify(actionSet)) as ActionSet;
       copyActionSet.id = nanoid(12);
-      const result = await makeCall({
-        actionSet: copyActionSet,
-        filePath: storyData.filePath,
-        storyId: storyData.id,
-      });
-      if (!(result instanceof Error)) {
+      try {
+        await mutateAsync({
+          actionSet: copyActionSet,
+          filePath: storyData.filePath,
+          storyId: storyData.id,
+        });
         addActionSetToStore({
           actionSet: copyActionSet,
           isNew: false,
           selected: true,
           storyId: storyData.id,
         });
+      } catch {
+        return;
       }
     },
-    [storyData, makeCall],
+    [storyData, mutateAsync],
   );
 
-  return { ErrorSnackbar, copyActionSet, inProgress };
+  return { copyActionSet, inProgress };
 };

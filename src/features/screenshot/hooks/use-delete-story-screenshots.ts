@@ -1,32 +1,35 @@
-import { deleteStoryScreenshots as deleteStoryScreenshotsClient } from '../../../api/trpc/clients/screenshot.client';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+import { trpcClient } from '../../../api';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useCallback } from 'react';
 import { removeStoryScreenshots } from '../store/index';
+import { toast } from '../../../utils/toast';
 
 export const useDeleteStoryScreenshot = () => {
-  const {
-    makeCall,
-    ErrorSnackbar: DeleteScreenshotsErrorSnackbar,
-    inProgress: deleteInProgress,
-  } = useAsyncApiCall(deleteStoryScreenshotsClient, false, {
-    successMessage: 'Story screenshots deleted successfully.',
-  });
+  const { mutateAsync, isPending: deleteInProgress } =
+    trpcClient.screenshot.deleteStoryScreenshots.useMutation({
+      onError: (error) => {
+        toast.error(error.message || 'Unexpected error occurred');
+      },
+      onSuccess: () => {
+        toast.success('Story screenshots deleted successfully.');
+      },
+    });
 
   const data = useCurrentStoryData();
 
   const deleteStoryScreenshots = useCallback(async () => {
-    const result = await makeCall({
-      filePath: data.filePath,
-      storyId: data.id,
-    });
-    if (!(result instanceof Error)) {
+    try {
+      await mutateAsync({
+        filePath: data.filePath,
+        storyId: data.id,
+      });
       removeStoryScreenshots();
+    } catch {
+      return;
     }
-  }, [data, makeCall]);
+  }, [data, mutateAsync]);
 
   return {
-    DeleteScreenshotsErrorSnackbar,
     deleteInProgress,
     deleteStoryScreenshots,
   };

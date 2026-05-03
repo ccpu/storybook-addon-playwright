@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { getActionSet } from '../../../api/trpc/clients/action-set.client';
+import { trpcClient } from '../../../api';
 import { addActionSetList } from '../../../store';
 import { useCurrentStoryData } from '../../../hooks';
 
@@ -12,9 +12,10 @@ interface LoadedStory {
 const __loadedFiles: LoadedStory = {};
 
 export const useStoryActionSetsLoader = () => {
-  const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState<string>();
+
+  const { mutateAsync, isPending: loading } =
+    trpcClient.actionSet.getActionSet.useMutation();
 
   const { id: storyId, filePath: filePath } = useCurrentStoryData() || {};
 
@@ -28,8 +29,7 @@ export const useStoryActionSetsLoader = () => {
     )
       return;
 
-    setLoading(true);
-    getActionSet({ filePath, storyId })
+    mutateAsync({ filePath, storyId })
       .then((actionSets) => {
         if (!__loadedFiles[filePath]) {
           __loadedFiles[filePath] = {};
@@ -43,11 +43,8 @@ export const useStoryActionSetsLoader = () => {
       })
       .catch((error) => {
         setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
       });
-  }, [error, filePath, loading, storyId]);
+  }, [error, filePath, loading, mutateAsync, storyId]);
 
   const retry = useCallback(() => {
     setError(undefined);

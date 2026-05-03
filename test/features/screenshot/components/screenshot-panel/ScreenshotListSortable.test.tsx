@@ -41,7 +41,6 @@ describe('ScreenshotListSortable', () => {
     const sortEndMock = vi.fn();
 
     (useScreenshotIndexChange as Mock).mockImplementationOnce(() => ({
-      ChangeIndexErrorSnackbar: () => <div />,
       ChangeIndexInProgress: false,
       changeIndex: sortEndMock,
     }));

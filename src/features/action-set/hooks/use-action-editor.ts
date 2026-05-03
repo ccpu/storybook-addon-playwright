@@ -11,16 +11,18 @@ import { useCallback, useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { StoryAction, ActionSet } from '../../../typings';
 import { ActionListValidationResult, validateActionList } from '../../../utils';
-import { saveActionSet } from '../../../api/trpc/clients/action-set.client';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+import { trpcClient } from '../../../api';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import React from 'react';
+import { toast } from '../../../utils/toast';
 
 export const useActionEditor = (actionSet: ActionSet) => {
-  const { makeCall, ErrorSnackbar, inProgress } = useAsyncApiCall(
-    saveActionSet,
-    false,
-  );
+  const { mutateAsync, isPending: inProgress } =
+    trpcClient.actionSet.saveActionSet.useMutation({
+      onError: (error) => {
+        toast.error(error.message || 'Unexpected error occurred');
+      },
+    });
 
   const state = useActionSetStoreState();
 
@@ -62,20 +64,19 @@ export const useActionEditor = (actionSet: ActionSet) => {
       return;
     }
 
-    let result: void | Error;
-
     if (!actionSet.temp) {
-      result = await makeCall({
-        actionSet,
-        filePath: storyData.filePath,
-        storyId: storyData.id,
-      });
+      try {
+        await mutateAsync({
+          actionSet,
+          filePath: storyData.filePath,
+          storyId: storyData.id,
+        });
+      } catch {
+        return;
+      }
     }
-
-    if (!(result instanceof Error)) {
-      saveActionSetStore();
-    }
-  }, [actionSet, makeCall, state.actionSchema, storyData]);
+    saveActionSetStore();
+  }, [actionSet, mutateAsync, state.actionSchema, storyData]);
 
   const clearValidationResult = useCallback(() => {
     setValidationResult(undefined);
@@ -106,7 +107,6 @@ export const useActionEditor = (actionSet: ActionSet) => {
   }, [handleCancelEditActionSet, editingAction, storyId]);
 
   return {
-    ErrorSnackbar,
     cancelEditActionSet: handleCancelEditActionSet,
     clearValidationResult,
     handleAddAction,

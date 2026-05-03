@@ -1,9 +1,8 @@
 import { useCustomTheme } from '../../../../src/features/theme/hooks/use-custom-theme';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { createTheme } from '@material-ui/core/styles';
-import { getThemeData } from '../../../../src/api/trpc/clients/theme.client';
-
-vi.mock('../../../../src/api/trpc/clients/theme.client');
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 const theme = createTheme({
   palette: {
@@ -15,7 +14,8 @@ const theme = createTheme({
 
 describe('useCustomTheme', () => {
   beforeEach(() => {
-    vi.mocked(getThemeData).mockResolvedValue(undefined);
+    // Return null so the hook doesn't set a theme from the server
+    server.use(trpcMsw.theme.getThemeData.query(() => null as any));
   });
 
   it('should not have any theme', () => {

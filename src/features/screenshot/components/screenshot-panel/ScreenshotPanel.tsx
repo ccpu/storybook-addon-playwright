@@ -21,17 +21,10 @@ const ScreenshotPanel = () => {
   const reqBy = 'screenshot-panel';
   const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, 'story');
 
-  const {
-    ScreenshotLoaderErrorSnackbar,
-    loadScreenShots,
-    screenshotLoaderInProgress,
-  } = useStoryScreenshotLoader();
+  const { screenshotLoaderInProgress } = useStoryScreenshotLoader();
 
-  const {
-    DeleteScreenshotsErrorSnackbar,
-    deleteInProgress,
-    deleteStoryScreenshots,
-  } = useDeleteStoryScreenshot();
+  const { deleteInProgress, deleteStoryScreenshots } =
+    useDeleteStoryScreenshot();
 
   const state = useScreenshotStoreState();
 
@@ -76,9 +69,6 @@ const ScreenshotPanel = () => {
           }
         />
       </ScreenshotList>
-
-      <ScreenshotLoaderErrorSnackbar onRetry={loadScreenShots} />
-
       {storyImageDiffError && (
         <Snackbar
           open={true}
@@ -95,8 +85,6 @@ const ScreenshotPanel = () => {
       {showPreview && (
         <StoryScreenshotPreview onClose={toggleShowPreview} target="story" />
       )}
-
-      <DeleteScreenshotsErrorSnackbar />
     </>
   );
 };

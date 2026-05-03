@@ -18,7 +18,7 @@ import { ImageDiffResult } from '../../../src/api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
 import { useSnackbar } from '../../../src/hooks/use-snackbar';
-import { StoryData } from '../../../src/typings';
+import { StoryData } from '../../../src/schema';
 
 vi.mock(
   '../../../src/hooks/use-snackbar',
@@ -53,7 +53,6 @@ vi.mock(
 const testStoryScreenShotsMock = vi.fn();
 vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
-    ErrorSnackbar: () => React.createElement('div'),
     clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {

@@ -2,8 +2,11 @@ import { useEditScreenshot } from '../../../../src/features/screenshot/hooks/use
 import { addScreenshotMock } from '../../../manual-mocks/store/screenshot/context';
 import { useSaveScreenshot } from '../../../../src/features/screenshot/hooks/use-save-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { saveScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
+import { waitFor } from '@testing-library/react';
 import mockConsole from 'jest-mock-console';
+import { TRPCError } from '@trpc/server';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 vi.mock('nanoid', () => ({
   nanoid: () => {
@@ -18,11 +21,6 @@ vi.mock(
 vi.mock(
   '../../../../src/features/screenshot/hooks/use-edit-screenshot',
   async () => await import('./__mocks__/use-edit-screenshot'),
-);
-vi.mock(
-  '../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
 const useEditScreenshotMock = vi.mocked(useEditScreenshot);
 
@@ -53,14 +51,23 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should add', async () => {
-    vi.mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
+    server.use(
+      trpcMsw.screenshot.saveScreenshot.mutation(
+        () => ({ added: true } as any),
+      ),
+    );
 
     const { result } = renderHook(() => useSaveScreenshot());
 
+    let saveResult;
     await act(async () => {
-      await result.current.saveScreenShot('chromium', 'title', 'base64-image');
+      saveResult = await result.current.saveScreenShot(
+        'chromium',
+        'title',
+        'base64-image',
+      );
     });
-    ``;
+
     expect(addScreenshotMock).toHaveBeenCalledWith({
       actionSets: [],
       browserOptions: undefined,
@@ -73,12 +80,17 @@ describe('useSaveScreenshot', () => {
       storyId: 'story-id',
       title: 'title',
     });
+    expect(saveResult).toStrictEqual({ added: true });
 
-    expect(result.current.result).toBeDefined();
+    await waitFor(() => expect(result.current.result).toBeDefined());
   });
 
   it('should handle error', async () => {
-    vi.mocked(saveScreenshot).mockRejectedValueOnce(new Error('foo'));
+    server.use(
+      trpcMsw.screenshot.saveScreenshot.mutation(() => {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'foo' });
+      }),
+    );
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -96,7 +108,11 @@ describe('useSaveScreenshot', () => {
   });
 
   it('should clear result', async () => {
-    vi.mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
+    server.use(
+      trpcMsw.screenshot.saveScreenshot.mutation(
+        () => ({ added: true } as any),
+      ),
+    );
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -104,13 +120,13 @@ describe('useSaveScreenshot', () => {
       await result.current.saveScreenShot('chromium', 'title', 'base64-image');
     });
 
-    expect(result.current.result).toBeDefined();
+    await waitFor(() => expect(result.current.result).toBeDefined());
 
     act(() => {
       result.current.onSuccessClose();
     });
 
-    expect(result.current.result).not.toBeDefined();
+    await waitFor(() => expect(result.current.result).not.toBeDefined());
   });
 
   it('should handle editing screenshot', async () => {
@@ -131,7 +147,12 @@ describe('useSaveScreenshot', () => {
       };
     });
 
-    vi.mocked(saveScreenshot).mockResolvedValueOnce({ added: true } as any);
+    const spy = vi.fn().mockReturnValue({ added: true });
+    server.use(
+      trpcMsw.screenshot.saveScreenshot.mutation(
+        ({ input }) => spy(input) as any,
+      ),
+    );
 
     const { result } = renderHook(() => useSaveScreenshot());
 
@@ -144,7 +165,7 @@ describe('useSaveScreenshot', () => {
       await result.current.saveScreenShot('chromium', 'title', 'base64-image');
     });
 
-    const callArg = vi.mocked(saveScreenshot).mock.calls[0][0] as any;
+    const callArg = spy.mock.calls[0][0] as any;
 
     expect(callArg.updateScreenshot).toStrictEqual({
       browserType: 'chromium',

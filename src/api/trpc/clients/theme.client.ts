@@ -1,6 +1,8 @@
 import type { RouterOutput } from '../router';
-import { trpc } from '../client';
+import { createTrpcHttpClient } from '../client';
+
+const client = createTrpcHttpClient();
 
 export const getThemeData = (): Promise<
   RouterOutput['theme']['getThemeData']
-> => trpc.theme.getThemeData.query();
+> => client.theme.getThemeData.query();

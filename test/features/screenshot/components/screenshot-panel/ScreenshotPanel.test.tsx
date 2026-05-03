@@ -56,10 +56,6 @@ vi.mock(
   async () => await import('../../hooks/__mocks__/use-screenshot-update-state'),
 );
 vi.mock(
-  '../../../../../src/hooks/use-async-api-call',
-  async () => await import('../../../../hooks/__mocks__/use-async-api-call'),
-);
-vi.mock(
   '../../../../../src/hooks/use-current-story-data',
   async () =>
     await import('../../../../hooks/__mocks__/use-current-story-data'),
@@ -68,7 +64,6 @@ vi.mock(
 const testStoryScreenShotsMock = vi.fn();
 vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
-    ErrorSnackbar: () => <div />,
     clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {} as StoryData,
@@ -77,14 +72,12 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   };
 });
 vi.mocked(useStoryScreenshotLoader).mockImplementation(() => ({
-  ScreenshotLoaderErrorSnackbar: () => <div />,
   error: undefined,
   loadScreenShots: vi.fn(),
   screenshotLoaderInProgress: false,
   storyData: undefined,
 }));
 vi.mocked(useDeleteStoryScreenshot).mockImplementation(() => ({
-  DeleteScreenshotsErrorSnackbar: () => <div />,
   deleteInProgress: false,
   deleteStoryScreenshots: vi.fn(),
 }));

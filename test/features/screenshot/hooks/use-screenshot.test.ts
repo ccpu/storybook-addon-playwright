@@ -1,8 +1,10 @@
 import { useScreenshot } from '../../../../src/features/screenshot/hooks/use-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { getScreenshot } from '../../../../src/api/trpc/clients/screenshot.client';
+import { waitFor } from '@testing-library/react';
 import { addons } from '@storybook/manager-api';
 import { STORY_RENDERED } from '@storybook/core-events';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 vi.mock('../../../../src/hooks/use-knobs', () => ({
   useKnobs: () => {
@@ -14,11 +16,6 @@ vi.mock(
   '../../../../src/utils/get-preview-iframe',
   async () => await import('../../../utils/__mocks__/get-preview-iframe'),
 );
-vi.mock(
-  '../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/screenshot.client'),
-);
 
 describe('useScreenshot', () => {
   beforeEach(() => {
@@ -26,7 +23,11 @@ describe('useScreenshot', () => {
   });
 
   it('should return base64', async () => {
-    vi.mocked(getScreenshot).mockResolvedValueOnce({ base64: 'base64' } as any);
+    server.use(
+      trpcMsw.screenshot.takeScreenshot.mutation(() => ({
+        base64: 'base64',
+      })),
+    );
 
     const { result, waitForNextUpdate } = renderHook(() =>
       useScreenshot('chromium'),
@@ -39,7 +40,7 @@ describe('useScreenshot', () => {
 
     expect(result.current.loading).toBe(true);
     await waitForNextUpdate();
-    expect(result.current.loading).toBe(false);
+    await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.screenshot).toStrictEqual({ base64: 'base64' });
   });
 

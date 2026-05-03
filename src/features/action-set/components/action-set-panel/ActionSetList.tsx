@@ -11,7 +11,7 @@ import {
   editActionSet,
   toggleCurrentActionSet,
 } from '../../../../store';
-import { deleteActionSet } from '../../../../api/trpc/clients/action-set.client';
+import { trpcClient } from '../../../../api';
 import { ActionSet } from '../../../../typings';
 import { SortableContainer } from 'react-sortable-hoc';
 import { SortableActionSetListItem } from './ActionSetListItem';
@@ -34,11 +34,11 @@ const ActionSetList = SortableContainer(() => {
 
   const storyData = useCurrentStoryData();
 
-  const {
-    copyActionSet,
-    inProgress: copyInProgress,
-    ErrorSnackbar,
-  } = useCopyActionSet(storyData);
+  const { copyActionSet, inProgress: copyInProgress } =
+    useCopyActionSet(storyData);
+
+  const { mutateAsync: deleteActionSet } =
+    trpcClient.actionSet.deleteActionSet.useMutation();
 
   const [error, setError] = useState<string>();
 
@@ -124,7 +124,6 @@ const ActionSetList = SortableContainer(() => {
           </>
         </Snackbar>
       )}
-      <ErrorSnackbar />
     </ListWrapper>
   );
 });

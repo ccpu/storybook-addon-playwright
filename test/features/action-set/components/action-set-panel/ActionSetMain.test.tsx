@@ -2,6 +2,30 @@
 // React.useEffect doesn't intercept static ESM named imports in vitest (unlike
 // babel-jest which uses live property reads). The mock routes useEffect calls
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('../../../../../src/api/trpc/client', async () => {
+  const { deleteActionSet } = await import(
+    '../../../../api/trpc/clients/__mocks__/action-set.client'
+  );
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      actionSet: {
+        deleteActionSet: {
+          useMutation: () => ({
+            data: undefined,
+            isPending: false,
+            mutate: (input: unknown) => {
+              void deleteActionSet(input as never);
+            },
+            mutateAsync: (input: unknown) => deleteActionSet(input as never),
+            reset: vi.fn(),
+          }),
+        },
+      },
+    },
+  };
+});
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<object>();
   return {

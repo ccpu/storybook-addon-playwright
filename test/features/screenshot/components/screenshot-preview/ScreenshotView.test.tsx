@@ -36,7 +36,6 @@ onSaveMock.mockImplementation(() => {
 });
 
 const useSaveScreenshotMockData = () => ({
-  ErrorSnackbar: () => null,
   getUpdatingScreenshotTitle: vi.fn(),
   inProgress: false,
   onSuccessClose: vi.fn(),

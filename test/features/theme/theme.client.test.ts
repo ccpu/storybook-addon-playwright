@@ -1,26 +1,23 @@
-vi.mock(
-  '../../../src/api/trpc/client',
-  async () => await import('../../api/trpc/__mocks__/client'),
-);
-
-import { trpc } from '../../../src/api/trpc/client';
 import { getThemeData } from '../../../src/api/trpc/clients/theme.client';
+import { server } from '../../msw-server';
+import { trpcMswBatch } from '../../trpc-msw-batch';
 
 describe('theme client', () => {
   beforeEach(() => vi.clearAllMocks());
 
-  it('getThemeData calls trpc.theme.getThemeData.query', async () => {
+  it('getThemeData calls theme.getThemeData query', async () => {
     const mockResponse = { palette: { type: 'dark' } };
-    (trpc.theme.getThemeData.query as Mock).mockResolvedValueOnce(mockResponse);
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(trpcMswBatch.theme.getThemeData.query(() => spy() as any));
 
     const result = await getThemeData();
 
-    expect(trpc.theme.getThemeData.query).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledTimes(1);
     expect(result).toEqual(mockResponse);
   });
 
   it('getThemeData returns undefined when no theme', async () => {
-    (trpc.theme.getThemeData.query as Mock).mockResolvedValueOnce(undefined);
+    server.use(trpcMswBatch.theme.getThemeData.query(() => undefined as any));
 
     const result = await getThemeData();
 

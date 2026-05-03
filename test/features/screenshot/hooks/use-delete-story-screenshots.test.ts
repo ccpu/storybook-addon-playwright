@@ -1,16 +1,13 @@
 import { removeStoryScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
 import { useDeleteStoryScreenshot } from '../../../../src/features/screenshot/hooks/use-delete-story-screenshots';
-import { deleteStoryScreenshots } from '../../../../src/api/trpc/clients/screenshot.client';
 import { renderHook, act } from '@testing-library/react-hooks';
+import { TRPCError } from '@trpc/server';
+import { server } from '../../../msw-server';
+import { trpcMsw } from '../../../trpc-msw';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
-);
-vi.mock(
-  '../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
 
 describe('useDeleteStoryScreenshot', () => {
@@ -18,14 +15,20 @@ describe('useDeleteStoryScreenshot', () => {
     vi.clearAllMocks();
   });
   it('should delete', async () => {
-    vi.mocked(deleteStoryScreenshots).mockResolvedValueOnce(undefined);
+    const spy = vi.fn();
+    server.use(
+      trpcMsw.screenshot.deleteStoryScreenshots.mutation(({ input }) => {
+        spy(input);
+        return null as any;
+      }),
+    );
     const { result } = renderHook(() => useDeleteStoryScreenshot());
 
     await act(async () => {
       await result.current.deleteStoryScreenshots();
     });
 
-    expect(deleteStoryScreenshots).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       filePath: './test.stories.tsx',
       storyId: 'story-id',
     });
@@ -34,7 +37,11 @@ describe('useDeleteStoryScreenshot', () => {
   });
 
   it('should not dispatch on error', async () => {
-    vi.mocked(deleteStoryScreenshots).mockRejectedValueOnce(new Error('foo'));
+    server.use(
+      trpcMsw.screenshot.deleteStoryScreenshots.mutation(() => {
+        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'foo' });
+      }),
+    );
     const { result } = renderHook(() => useDeleteStoryScreenshot());
 
     await act(async () => {

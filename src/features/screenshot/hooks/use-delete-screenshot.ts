@@ -1,34 +1,52 @@
 import { useCallback } from 'react';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { deleteScreenshot as deleteScreenshotService } from '../../../api/trpc/clients/screenshot.client';
+import { trpcClient } from '../../../api';
 import { deleteScreenshot as deleteScreenshotFromStore } from '../store/index';
-import { useAsyncApiCall } from '../../../hooks/use-async-api-call';
+import { toast } from '../../../utils/toast';
+import { useState } from 'react';
 
 export const useDeleteScreenshot = () => {
   const storyData = useCurrentStoryData();
+  const [error, setError] = useState<string>();
 
-  const { clearError, error, inProgress, makeCall, ErrorSnackbar } =
-    useAsyncApiCall(deleteScreenshotService, false, {
-      successMessage: 'Screenshot deleted successfully.',
-    });
+  const {
+    mutateAsync,
+    reset,
+    isPending: inProgress,
+  } = trpcClient.screenshot.deleteScreenshot.useMutation({
+    onError: (mutationError) => {
+      const message = mutationError.message || 'Unexpected error occurred';
+      setError(message);
+      toast.error(message);
+    },
+    onSuccess: () => {
+      toast.success('Screenshot deleted successfully.');
+    },
+  });
+
+  const clearError = useCallback(() => {
+    setError(undefined);
+    reset();
+  }, [reset]);
 
   const deleteScreenshot = useCallback(
     async (id: string) => {
-      const result = await makeCall({
-        filePath: storyData.filePath,
-        screenshotId: id,
-        storyId: storyData.id,
-      });
-
-      if (!(result instanceof Error)) {
+      setError(undefined);
+      try {
+        await mutateAsync({
+          filePath: storyData.filePath,
+          screenshotId: id,
+          storyId: storyData.id,
+        });
         deleteScreenshotFromStore(id);
+      } catch {
+        return;
       }
     },
-    [makeCall, storyData],
+    [mutateAsync, storyData],
   );
 
   return {
-    ErrorSnackbar,
     clearError,
     deleteScreenshot,
     error,

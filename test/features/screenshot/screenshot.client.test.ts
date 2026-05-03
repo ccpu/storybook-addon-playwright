@@ -1,9 +1,3 @@
-vi.mock(
-  '../../../src/api/trpc/client',
-  async () => await import('../../api/trpc/__mocks__/client'),
-);
-
-import { trpc } from '../../../src/api/trpc/client';
 import {
   getScreenshot,
   saveScreenshot,
@@ -16,52 +10,63 @@ import {
   testStoryScreenshots,
   testScreenshots,
 } from '../../../src/api/trpc/clients/screenshot.client';
+import { server } from '../../msw-server';
+import { trpcMswBatch, unwrapBatchInput } from '../../trpc-msw-batch';
 
 describe('screenshot client', () => {
   beforeEach(() => vi.clearAllMocks());
 
-  it('getScreenshot calls trpc.screenshot.takeScreenshot.mutate', async () => {
+  it('getScreenshot calls screenshot.takeScreenshot mutation', async () => {
     const mockResponse = { base64: 'xyz' };
-    (trpc.screenshot.takeScreenshot.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.takeScreenshot.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await getScreenshot({ storyId: 'story--name' } as any);
 
-    expect(trpc.screenshot.takeScreenshot.mutate).toHaveBeenCalledWith({
-      storyId: 'story--name',
-    });
+    expect(spy).toHaveBeenCalledWith({ storyId: 'story--name' });
     expect(result).toEqual(mockResponse);
   });
 
-  it('saveScreenshot calls trpc.screenshot.saveScreenshot.mutate', async () => {
+  it('saveScreenshot calls screenshot.saveScreenshot mutation', async () => {
     const mockResponse = { pass: true };
-    (trpc.screenshot.saveScreenshot.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.saveScreenshot.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await saveScreenshot({ storyId: 'story--name' } as any);
 
-    expect(trpc.screenshot.saveScreenshot.mutate).toHaveBeenCalledWith({
-      storyId: 'story--name',
-    });
+    expect(spy).toHaveBeenCalledWith({ storyId: 'story--name' });
     expect(result).toEqual(mockResponse);
   });
 
   it('deleteScreenshot resolves without error', async () => {
-    (trpc.screenshot.deleteScreenshot.mutate as Mock).mockResolvedValueOnce(
-      undefined,
+    const spy = vi.fn().mockReturnValue(undefined);
+    server.use(
+      trpcMswBatch.screenshot.deleteScreenshot.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     await expect(
       deleteScreenshot({ storyId: 'story--name' } as any),
     ).resolves.toBeUndefined();
+    expect(spy).toHaveBeenCalledWith({ storyId: 'story--name' });
   });
 
-  it('updateScreenshot calls trpc.screenshot.updateScreenshot.mutate', async () => {
+  it('updateScreenshot calls screenshot.updateScreenshot mutation', async () => {
     const mockResponse = { pass: true };
-    (trpc.screenshot.updateScreenshot.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.updateScreenshot.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await updateScreenshot({
@@ -71,7 +76,7 @@ describe('screenshot client', () => {
       storyId: 'story--name',
     } as any);
 
-    expect(trpc.screenshot.updateScreenshot.mutate).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       base64: 'abc',
       fileName: 'file.ts',
       screenshotId: 'ss-1',
@@ -80,10 +85,13 @@ describe('screenshot client', () => {
     expect(result).toEqual(mockResponse);
   });
 
-  it('testScreenshot calls trpc.screenshot.testScreenshot.mutate', async () => {
+  it('testScreenshot calls screenshot.testScreenshot mutation', async () => {
     const mockResponse = { pass: true };
-    (trpc.screenshot.testScreenshot.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.testScreenshot.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await testScreenshot({
@@ -92,7 +100,7 @@ describe('screenshot client', () => {
       storyId: 'story--name',
     } as any);
 
-    expect(trpc.screenshot.testScreenshot.mutate).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       fileName: 'file.ts',
       screenshotId: 'ss-1',
       storyId: 'story--name',
@@ -100,10 +108,13 @@ describe('screenshot client', () => {
     expect(result).toEqual(mockResponse);
   });
 
-  it('getStoryScreenshots calls trpc.screenshot.getStoryScreenshots.mutate', async () => {
+  it('getStoryScreenshots calls screenshot.getStoryScreenshots mutation', async () => {
     const mockResponse = [{ id: '1', title: 'test' }];
-    (trpc.screenshot.getStoryScreenshots.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.getStoryScreenshots.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await getStoryScreenshots({
@@ -111,7 +122,7 @@ describe('screenshot client', () => {
       storyId: 'story--name',
     } as any);
 
-    expect(trpc.screenshot.getStoryScreenshots.mutate).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       fileName: 'file.ts',
       storyId: 'story--name',
     });
@@ -119,9 +130,12 @@ describe('screenshot client', () => {
   });
 
   it('deleteStoryScreenshots resolves without error', async () => {
-    (
-      trpc.screenshot.deleteStoryScreenshots.mutate as Mock
-    ).mockResolvedValueOnce(undefined);
+    const spy = vi.fn().mockReturnValue(undefined);
+    server.use(
+      trpcMswBatch.screenshot.deleteStoryScreenshots.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
+    );
 
     await expect(
       deleteStoryScreenshots({
@@ -129,12 +143,19 @@ describe('screenshot client', () => {
         storyId: 'story--name',
       } as any),
     ).resolves.toBeUndefined();
+    expect(spy).toHaveBeenCalledWith({
+      fileName: 'file.ts',
+      storyId: 'story--name',
+    });
   });
 
-  it('changeScreenShotIndex calls trpc.screenshot.changeScreenshotIndex.mutate', async () => {
-    (
-      trpc.screenshot.changeScreenshotIndex.mutate as Mock
-    ).mockResolvedValueOnce(undefined);
+  it('changeScreenShotIndex calls screenshot.changeScreenshotIndex mutation', async () => {
+    const spy = vi.fn().mockReturnValue(undefined);
+    server.use(
+      trpcMswBatch.screenshot.changeScreenshotIndex.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
+    );
 
     await expect(
       changeScreenShotIndex({
@@ -144,12 +165,21 @@ describe('screenshot client', () => {
         storyId: 'story--name',
       } as any),
     ).resolves.toBeUndefined();
+    expect(spy).toHaveBeenCalledWith({
+      fileName: 'file.ts',
+      newIndex: 1,
+      oldIndex: 0,
+      storyId: 'story--name',
+    });
   });
 
-  it('testStoryScreenshots calls trpc.screenshot.testStoryScreenshots.mutate', async () => {
+  it('testStoryScreenshots calls screenshot.testStoryScreenshots mutation', async () => {
     const mockResponse = [{ pass: true }];
-    (trpc.screenshot.testStoryScreenshots.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.testStoryScreenshots.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await testStoryScreenshots({
@@ -157,22 +187,25 @@ describe('screenshot client', () => {
       storyId: 'story--name',
     } as any);
 
-    expect(trpc.screenshot.testStoryScreenshots.mutate).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       fileName: 'file.ts',
       storyId: 'story--name',
     });
     expect(result).toEqual(mockResponse);
   });
 
-  it('testScreenshots calls trpc.screenshot.testScreenshots.mutate', async () => {
+  it('testScreenshots calls screenshot.testScreenshots mutation', async () => {
     const mockResponse = [{ pass: true }];
-    (trpc.screenshot.testScreenshots.mutate as Mock).mockResolvedValueOnce(
-      mockResponse,
+    const spy = vi.fn().mockReturnValue(mockResponse);
+    server.use(
+      trpcMswBatch.screenshot.testScreenshots.mutation(
+        ({ input }) => spy(unwrapBatchInput(input)) as any,
+      ),
     );
 
     const result = await testScreenshots({ requestType: 'all' } as any);
 
-    expect(trpc.screenshot.testScreenshots.mutate).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       requestType: 'all',
     });
     expect(result).toEqual(mockResponse);

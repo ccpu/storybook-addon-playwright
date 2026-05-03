@@ -2,6 +2,41 @@
 // React.useEffect doesn't intercept static ESM named imports in vitest (unlike
 // babel-jest which uses live property reads). The mock routes useEffect calls
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
+vi.mock('../../../../../src/api/trpc/client', async () => {
+  const React = await import('react');
+  const { testScreenshot } = await import(
+    '../../../../api/trpc/clients/__mocks__/screenshot.client'
+  );
+
+  return {
+    createTrpcHttpClient: () => ({}),
+    trpcClient: {
+      Provider: ({ children }: { children: unknown }) => children,
+      screenshot: {
+        testScreenshot: {
+          useMutation: () => {
+            const [data, setData] = React.useState<unknown>(undefined);
+            const mutateAsync = async (input: unknown) => {
+              const result = await testScreenshot(input as never);
+              setData(result);
+              return result;
+            };
+
+            return {
+              data,
+              isPending: false,
+              mutate: (input: unknown) => {
+                void mutateAsync(input);
+              },
+              mutateAsync,
+              reset: () => setData(undefined),
+            };
+          },
+        },
+      },
+    },
+  };
+});
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
   const hook = (fn: any, deps?: any) =>
@@ -9,15 +44,15 @@ vi.mock('react', async (importOriginal) => {
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
-// Changed: useAsyncApiCall internally calls useEffect for cleanup. With the
+// Changed: useTanstackMutation internally calls hooks that can conflict with
 // useEffect spy active, this second effect collides with the component's own
 // useEffect in the depsTracker (premature callIndex reset overwrites idx 0),
 // causing an infinite re-render loop and OOM crash. Mocking the hook prevents
 // the inner useEffect while preserving all test assertions: makeCall still
 // invokes testScreenshot, and result is pre-filled so ImageDiffPreviewDialog
 // renders immediately.
-vi.mock('../../../../../src/hooks/use-async-api-call', () => ({
-  useAsyncApiCall: (func: (...args: unknown[]) => unknown) => {
+vi.mock('../../../../../src/hooks/use-tanstack-mutation', () => ({
+  useTanstackMutation: (func: (...args: unknown[]) => unknown) => {
     const mockResult = {
       fileName: './test.stories.tsx',
       newScreenshot: 'base64-image',
@@ -26,7 +61,6 @@ vi.mock('../../../../../src/hooks/use-async-api-call', () => ({
       storyId: 'story-id',
     };
     return {
-      ErrorSnackbar: () => null,
       clearResult: () => undefined,
       inProgress: false,
       makeCall: (...args: unknown[]) => {
@@ -41,7 +75,8 @@ import '../../../../manual-mocks/react-useEffect';
 import { storyData } from '../../../../configs/story-data';
 import { ScreenshotPreviewDialog } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotPreviewDialog';
 import { shallow } from 'enzyme';
-import { ScreenshotData, StoryData } from '../../../../../src/typings';
+import { ScreenshotData } from '../../../../../src/typings';
+import { StoryData } from '../../../../../src/schema';
 import React from 'react';
 import { ImageDiffPreviewDialog } from '../../../../../src/components/common';
 import { testScreenshot } from '../../../../../src/api/trpc/clients/screenshot.client';

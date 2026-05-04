@@ -41,7 +41,6 @@ const useStyles = makeStyles(
         fontSize: 14,
         marginBottom: 4,
         position: 'relative',
-        zIndex: 10000,
       },
       secondaryColor: {
         '& svg': {

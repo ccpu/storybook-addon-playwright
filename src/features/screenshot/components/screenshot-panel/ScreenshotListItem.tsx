@@ -176,10 +176,10 @@ function ScreenshotListItem({
       ref={setNodeRef}
       style={{
         opacity: isDragging ? 0.8 : 1,
-        position: 'relative',
+        // position: 'relative',
         transform: CSS.Transform.toString(transform),
         transition,
-        zIndex: 1,
+        // zIndex: 1,
       }}
     >
       <ScreenshotListItemWrapper

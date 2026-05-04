@@ -10,7 +10,6 @@ const useStyles = makeStyles(
     return {
       root: {
         backgroundColor: color.toString(),
-        zIndex: 10000,
       },
     };
   },

@@ -66,7 +66,7 @@ const useStyles = makeStyles(
   { name: 'Preview' },
 );
 
-const DEVIDER_SIZE = 4;
+const DEVIDER_SIZE = 3;
 
 const Preview: React.FC = (props) => {
   const { children } = props;

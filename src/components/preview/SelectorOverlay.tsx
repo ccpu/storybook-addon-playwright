@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import useThrottleFn from 'react-use/lib/useThrottleFn';
 import { getSelectorPath } from '@dom-utils/selector-path';
 import useKey from 'react-use/lib/useKey';
+import { normalizeRootSelectorPath } from './utils';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -89,9 +90,9 @@ const SelectorOverlay: React.FC<Props> = (props) => {
               selector: node.id ? '#' + node.id : '',
             });
           } else {
-            const path = getSelectorPath(node, { minify: true }).replace(
-              'html>body>div:nth-child(3)',
-              'html>body>#root',
+            const path = normalizeRootSelectorPath(
+              getSelectorPath(node, { minify: true }),
+              iframe.contentWindow.document,
             );
             if (node.tagName === 'HTML') {
               setSelectorInfo({

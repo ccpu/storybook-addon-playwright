@@ -96,12 +96,45 @@ const Preview: React.FC = (props) => {
 
   if (!addonState || !addonState.previewPanelEnabled) return <>{children}</>;
 
+  const previewPaneIndex = isHorizontal ? 0 : 1;
+
+  const previewPane = (
+    <Pane
+      key="preview"
+      size={(addonState && addonState.previewPanelSize) || '30%'}
+      className={clsx('preview-main', classes.preview)}
+    >
+      <div className={classes.iframeContainer}>
+        <Selector>{children}</Selector>
+      </div>
+      <Clipper />
+      <EditScreenshotAlert />
+    </Pane>
+  );
+
+  const screenshotPane = (
+    <Pane key="screenshot" className={clsx(classes.snapshotPanel)}>
+      <Separator />
+      {addonState && addonState.previewPanelEnabled && (
+        <ScreenshotListView
+          column={isHorizontal ? undefined : 1}
+          onClose={handleClose}
+          viewPanel="main"
+        />
+      )}
+    </Pane>
+  );
+
+  const panes = isHorizontal
+    ? [previewPane, screenshotPane]
+    : [screenshotPane, previewPane];
+
   return (
     <CommonProvider>
       <div id="preview-container" className={clsx(classes.root)}>
         <SplitPane
           direction={isHorizontal ? 'vertical' : 'horizontal'}
-          onResize={(sizes) => handleResizeChange(sizes[0])}
+          onResize={(sizes) => handleResizeChange(sizes[previewPaneIndex])}
           dividerClassName={clsx(classes.splitPane)}
           dividerStyle={{
             ...(isHorizontal
@@ -109,26 +142,7 @@ const Preview: React.FC = (props) => {
               : { width: DEVIDER_SIZE }),
           }}
         >
-          <Pane
-            size={(addonState && addonState.previewPanelSize) || '30%'}
-            className={clsx('preview-main', classes.preview)}
-          >
-            <div className={classes.iframeContainer}>
-              <Selector>{children}</Selector>
-            </div>
-            <Clipper />
-            <EditScreenshotAlert />
-          </Pane>
-          <Pane className={clsx(classes.snapshotPanel)}>
-            <Separator />
-            {addonState && addonState.previewPanelEnabled && (
-              <ScreenshotListView
-                column={isHorizontal ? undefined : 1}
-                onClose={handleClose}
-                viewPanel="main"
-              />
-            )}
-          </Pane>
+          {panes}
         </SplitPane>
       </div>
     </CommonProvider>

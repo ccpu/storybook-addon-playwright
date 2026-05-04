@@ -71,44 +71,6 @@
       ],
       "screenshots": [
         {
-          "browserOptionsId": "Db-vUIXws6EF",
-          "browserType": "chromium",
-          "id": "GcAAHvFaQFyG",
-          "index": 0,
-          "screenshotOptionsId": "fmsdQSLwg4Bi",
-          "title": "l"
-        },
-        {
-          "actionSets": [
-            {
-              "actions": [
-                {
-                  "name": "takeElementScreenshot",
-                  "args": {
-                    "selector": "#blue"
-                  }
-                }
-              ],
-              "title": "take element screen shot"
-            },
-            {
-              "actions": [
-                {
-                  "name": "takeElementScreenshot",
-                  "args": {
-                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-                  }
-                }
-              ],
-              "title": "take element screen shot"
-            }
-          ],
-          "browserType": "chromium",
-          "id": "Kebe6ydEbfyt",
-          "index": 1,
-          "title": "should take screen shot by element id"
-        },
-        {
           "actionSets": [
             {
               "actions": [
@@ -148,9 +110,41 @@
           "browserOptionsId": "Db-vUIXws6EF",
           "browserType": "chromium",
           "id": "-l4K9E712aYn",
-          "index": 2,
+          "index": 0,
           "screenshotOptionsId": "fmsdQSLwg4Bi",
           "title": "should allow last screenshot if last action is not takeElementScreenshot"
+        },
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "args": {
+                    "selector": "#blue"
+                  },
+                  "name": "takeElementScreenshot"
+                }
+              ],
+              "temp": true,
+              "title": "take element screen shot"
+            },
+            {
+              "actions": [
+                {
+                  "args": {
+                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+                  },
+                  "name": "takeElementScreenshot"
+                }
+              ],
+              "title": "take element screen shot"
+            }
+          ],
+          "browserOptionsId": "dAWwQB77wqDc",
+          "browserType": "chromium",
+          "id": "YIYRQLSsbtxZ",
+          "index": 1,
+          "title": "should take screen shot by element id"
         }
       ]
     }
@@ -158,6 +152,26 @@
   "browserOptions": {
     "Db-vUIXws6EF": {
       "cursor": true
+    },
+    "dAWwQB77wqDc": {
+      "all": {
+        "all": {
+          "all": {},
+          "viewport": {
+            "height": 248,
+            "width": 823
+          }
+        },
+        "viewport": {
+          "height": 412,
+          "width": 320
+        },
+        "cursor": true
+      },
+      "viewport": {
+        "height": 334,
+        "width": 864
+      }
     }
   },
   "screenshotOptions": {

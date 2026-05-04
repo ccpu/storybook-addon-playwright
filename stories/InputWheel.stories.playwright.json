@@ -6,18 +6,6 @@
         {
           "actions": [
             {
-              "name": "waitForTimeout",
-              "args": {
-                "timeout": 200
-              }
-            }
-          ],
-          "id": "SsVfuAD0QJ6m",
-          "title": "delay 200"
-        },
-        {
-          "actions": [
-            {
               "name": "clearInput",
               "args": {
                 "selector": "#input"
@@ -26,6 +14,18 @@
           ],
           "id": "Mi5MWw3NOZDj",
           "title": "clear input"
+        },
+        {
+          "actions": [
+            {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 200
+              }
+            }
+          ],
+          "id": "SsVfuAD0QJ6m",
+          "title": "delay 200"
         }
       ],
       "screenshots": [

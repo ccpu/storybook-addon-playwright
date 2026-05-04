@@ -18,18 +18,6 @@
         {
           "actions": [
             {
-              "name": "takeElementScreenshot",
-              "args": {
-                "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-              }
-            }
-          ],
-          "id": "ShWEtROi5Dh2",
-          "title": "take element screen shot"
-        },
-        {
-          "actions": [
-            {
               "name": "mouse.move",
               "args": {
                 "x": 109,
@@ -39,6 +27,18 @@
           ],
           "id": "sUub-uW-n0cg",
           "title": "mouse move"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeElementScreenshot",
+              "args": {
+                "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+              }
+            }
+          ],
+          "id": "ShWEtROi5Dh2",
+          "title": "take element screen shot"
         },
         {
           "actions": [
@@ -83,6 +83,36 @@
             {
               "actions": [
                 {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "#blue"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            },
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            }
+          ],
+          "browserType": "chromium",
+          "id": "Kebe6ydEbfyt",
+          "index": 1,
+          "title": "should take screen shot by element id"
+        },
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
                   "args": {
                     "selector": "#blue"
                   },
@@ -118,39 +148,9 @@
           "browserOptionsId": "Db-vUIXws6EF",
           "browserType": "chromium",
           "id": "-l4K9E712aYn",
-          "index": 1,
+          "index": 2,
           "screenshotOptionsId": "fmsdQSLwg4Bi",
           "title": "should allow last screenshot if last action is not takeElementScreenshot"
-        },
-        {
-          "actionSets": [
-            {
-              "actions": [
-                {
-                  "name": "takeElementScreenshot",
-                  "args": {
-                    "selector": "#blue"
-                  }
-                }
-              ],
-              "title": "take element screen shot"
-            },
-            {
-              "actions": [
-                {
-                  "name": "takeElementScreenshot",
-                  "args": {
-                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-                  }
-                }
-              ],
-              "title": "take element screen shot"
-            }
-          ],
-          "browserType": "chromium",
-          "id": "Kebe6ydEbfyt",
-          "index": 2,
-          "title": "should take screen shot by element id"
         }
       ]
     }

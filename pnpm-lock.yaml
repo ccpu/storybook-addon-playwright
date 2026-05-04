@@ -136,8 +136,8 @@ importers:
         specifier: ^1.22.1
         version: 1.26.3
       react-split-pane:
-        specifier: ^0.1.92
-        version: 0.1.92(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        specifier: ^3.2.0
+        version: 3.2.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       react-toastify:
         specifier: ^11.1.0
         version: 11.1.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
@@ -8982,20 +8982,15 @@ packages:
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
 
-  react-split-pane@0.1.92:
+  react-split-pane@3.2.0:
     resolution:
       {
-        integrity: sha512-GfXP1xSzLMcLJI5BM36Vh7GgZBpy+U/X0no+VM3fxayv+p1Jly5HpMofZJraeaMl73b3hvlr+N9zJKvLB/uz9w==,
+        integrity: sha512-tH2SaMqBZ7Ypcmj6I/2fIR0gdeE0Q5ve66T51UyXcSqIgPGJh40bOMTVCAFjB0Q3OB5+Aw/4ECVWU+YU9SL88Q==,
       }
+    engines: { node: '>=20.0.0' }
     peerDependencies:
-      react: ^16.0.0-0
-      react-dom: ^16.0.0-0
-
-  react-style-proptype@3.2.2:
-    resolution:
-      {
-        integrity: sha512-ywYLSjNkxKHiZOqNlso9PZByNEY+FTyh3C+7uuziK0xFXu9xzdyfHwg4S9iyiRRoPCR4k2LqaBBsWVmSBwCWYQ==,
-      }
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-test-renderer@17.0.2:
     resolution:
@@ -17144,17 +17139,10 @@ snapshots:
       react: 17.0.2
       react-is: 17.0.2
 
-  react-split-pane@0.1.92(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+  react-split-pane@3.2.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
     dependencies:
-      prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
-      react-lifecycles-compat: 3.0.4
-      react-style-proptype: 3.2.2
-
-  react-style-proptype@3.2.2:
-    dependencies:
-      prop-types: 15.8.1
 
   react-test-renderer@17.0.2(react@17.0.2):
     dependencies:

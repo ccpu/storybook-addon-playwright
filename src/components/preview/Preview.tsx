@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useStorybookState } from '@storybook/manager-api';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import SplitPane from 'react-split-pane';
+import { SplitPane, Pane } from 'react-split-pane';
 import { isHorizontalPanel } from './utils';
 import { useAddonState } from '../../hooks';
 import { ScreenshotListView } from '../../features/screenshot/components/screenshot-preview/index';
@@ -18,12 +18,6 @@ const useStyles = makeStyles(
       horizontal: {
         '& $preview': {
           position: 'relative',
-        },
-        '& .Resizer': {
-          cursor: 'row-resize',
-          height: 10,
-          marginTop: -10,
-          width: '100%',
         },
       },
       iframeContainer: {
@@ -44,10 +38,6 @@ const useStyles = makeStyles(
         width: '100%',
       },
       root: {
-        '& .Resizer': {
-          backgroundColor: 'transparent',
-          zIndex: 10,
-        },
         height: '100%',
         position: 'relative',
         width: '100%',
@@ -59,15 +49,16 @@ const useStyles = makeStyles(
         height: '100%',
         width: '100%',
       },
+      splitPane: {
+        '&:hover': {
+          backgroundColor: 'rgb(2, 156, 253)',
+          transition: 'background-color 0.3s ease',
+        },
+        backgroundColor: 'transparent',
+      },
       vertical: {
         '& $preview': {
           position: 'relative',
-        },
-        '& .Resizer': {
-          cursor: 'col-resize',
-          height: '100%',
-          marginLeft: -10,
-          width: 10,
         },
       },
     };
@@ -75,10 +66,10 @@ const useStyles = makeStyles(
   { name: 'Preview' },
 );
 
+const DEVIDER_SIZE = 4;
+
 const Preview: React.FC = (props) => {
   const { children } = props;
-
-  const [isDragging, setIsDragging] = useState(false);
 
   const { addonState, setAddonState } = useAddonState();
 
@@ -91,16 +82,9 @@ const Preview: React.FC = (props) => {
     state.layout.panelPosition,
   );
 
-  const handleDragStart = useCallback(() => {
-    setIsDragging(true);
-  }, []);
-
-  const handleDragEnd = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
   const handleResizeChange = useCallback(
     (size) => {
+      console.log({ size });
       setAddonState({ ...addonState, previewPanelSize: size });
     },
     [addonState, setAddonState],
@@ -114,39 +98,28 @@ const Preview: React.FC = (props) => {
 
   return (
     <CommonProvider>
-      <div
-        id="preview-container"
-        className={clsx(classes.root, {
-          [classes.vertical]: !isHorizontal,
-          [classes.horizontal]: isHorizontal,
-        })}
-      >
+      <div id="preview-container" className={clsx(classes.root)}>
         <SplitPane
-          onDragStarted={handleDragStart}
-          onDragFinished={handleDragEnd}
-          split={isHorizontal ? 'horizontal' : 'vertical'}
-          defaultSize={(addonState && addonState.previewPanelSize) || '30%'}
-          primary="second"
-          onChange={handleResizeChange}
+          direction={isHorizontal ? 'vertical' : 'horizontal'}
+          onResize={(sizes) => handleResizeChange(sizes[0])}
+          dividerClassName={clsx(classes.splitPane)}
+          dividerStyle={{
+            ...(isHorizontal
+              ? { height: DEVIDER_SIZE }
+              : { width: DEVIDER_SIZE }),
+          }}
         >
-          <div
-            className={clsx('preview-main', classes.preview, {
-              [classes.interactive]: !isDragging,
-              [classes.notInteractive]: isDragging,
-            })}
+          <Pane
+            size={(addonState && addonState.previewPanelSize) || '30%'}
+            className={clsx('preview-main', classes.preview)}
           >
             <div className={classes.iframeContainer}>
               <Selector>{children}</Selector>
             </div>
             <Clipper />
             <EditScreenshotAlert />
-          </div>
-          <div
-            className={clsx(classes.snapshotPanel, {
-              [classes.interactive]: !isDragging,
-              [classes.notInteractive]: isDragging,
-            })}
-          >
+          </Pane>
+          <Pane className={clsx(classes.snapshotPanel)}>
             <Separator />
             {addonState && addonState.previewPanelEnabled && (
               <ScreenshotListView
@@ -155,7 +128,7 @@ const Preview: React.FC = (props) => {
                 viewPanel="main"
               />
             )}
-          </div>
+          </Pane>
         </SplitPane>
       </div>
     </CommonProvider>

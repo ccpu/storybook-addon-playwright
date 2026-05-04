@@ -160,7 +160,7 @@
     "react-json-view": "^1.19.1",
     "react-map-interaction": "^2.0.0",
     "react-selecto": "^1.22.1",
-    "react-split-pane": "^0.1.92",
+    "react-split-pane": "^3.2.0",
     "react-toastify": "^11.1.0",
     "react-use": "^17.2.4",
     "reinspect": "^1.1.0",

@@ -119,6 +119,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@dom-utils/selector-path": "^1.0.3",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
@@ -157,7 +160,6 @@
     "react-json-view": "^1.19.1",
     "react-map-interaction": "^2.0.0",
     "react-selecto": "^1.22.1",
-    "react-sortable-hoc": "^1.11.0",
     "react-split-pane": "^0.1.92",
     "react-toastify": "^11.1.0",
     "react-use": "^17.2.4",

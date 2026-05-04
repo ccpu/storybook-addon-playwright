@@ -7,7 +7,8 @@ import {
 } from '../../../../components/common';
 import { ScreenshotData } from '../../../../typings';
 import { removeImageDiffResult } from '../../store/index';
-import { SortableElement } from 'react-sortable-hoc';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import {
   ScreenshotListItemMenu,
   ScreenshotListItemMenuProps,
@@ -56,12 +57,15 @@ export interface ScreenshotListItemProps
   showPreviewOnClick?: boolean;
   pauseDeleteImageDiffResult?: boolean;
   openUpdateDialog?: boolean;
+  index?: number;
+  sortableId?: string;
 }
 
 function ScreenshotListItem({
   pauseDeleteImageDiffResult,
   showPreviewOnClick,
   screenshot,
+  sortableId,
   imageDiffResult,
   selected,
   onClick,
@@ -71,6 +75,19 @@ function ScreenshotListItem({
   storyData,
   ...rest
 }: ScreenshotListItemProps) {
+  const {
+    attributes,
+    listeners,
+    setActivatorNodeRef,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    disabled: !draggable,
+    id: sortableId ?? screenshot.id,
+  });
+
   const classes = useStyles();
 
   const [showMenu, setShowMenu] = useState(false);
@@ -155,92 +172,116 @@ function ScreenshotListItem({
   }, [loadSetting, screenshot]);
 
   return (
-    <ScreenshotListItemWrapper
-      onClick={toggleSelectedItem}
-      title={screenshot.title}
-      draggable={draggable}
-      selected={
-        selected ||
-        (editScreenshotState &&
-          editScreenshotState.screenshotData.id === screenshot.id)
-      }
-      tooltip={screenshot.title + (storyData && ` - ${storyData.id}`)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <div
+      ref={setNodeRef}
       style={{
-        cursor: 'pointer',
+        opacity: isDragging ? 0.8 : 1,
+        position: 'relative',
+        transform: CSS.Transform.toString(transform),
+        transition,
+        zIndex: 1,
       }}
     >
-      <>
-        <Loader progressSize={20} position="absolute" open={inProgress} />
+      <ScreenshotListItemWrapper
+        onClick={toggleSelectedItem}
+        title={screenshot.title}
+        draggable={draggable}
+        selected={
+          selected ||
+          (editScreenshotState &&
+            editScreenshotState.screenshotData.id === screenshot.id)
+        }
+        tooltip={screenshot.title + (storyData && ` - ${storyData.id}`)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        dragHandleProps={
+          draggable
+            ? {
+                ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
+                ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
+                setNodeRef: setActivatorNodeRef as (
+                  element: HTMLSpanElement | null,
+                ) => void,
+              }
+            : undefined
+        }
+        style={{
+          cursor: 'pointer',
+        }}
+      >
+        <>
+          <Loader progressSize={20} position="absolute" open={inProgress} />
 
-        {isPassesImageDiff && (
-          <CheckCircle
-            color="primary"
-            onClick={handleRemoveScreenShotResult}
-            className={classes.indicatorIcon}
+          {isPassesImageDiff && (
+            <CheckCircle
+              color="primary"
+              onClick={handleRemoveScreenShotResult}
+              className={classes.indicatorIcon}
+            />
+          )}
+
+          {imageDiffResult && !imageDiffResult.pass && (
+            <Error
+              color="secondary"
+              onClick={handleShowImageDiffResult}
+              className={classes.indicatorIcon}
+            />
+          )}
+
+          <BrowserIcon
+            style={{ height: 16 }}
+            browserType={screenshot.browserType}
           />
-        )}
 
-        {imageDiffResult && !imageDiffResult.pass && (
-          <Error
-            color="secondary"
-            onClick={handleShowImageDiffResult}
-            className={classes.indicatorIcon}
+          {showImageDiffResult && showImageDiffResultDialog && (
+            <MemoizedImageDiffMessage
+              result={imageDiffResult}
+              onClose={handleRemoveScreenShotResult}
+              title={screenshot.title}
+              titleActions={() => (
+                <ScreenshotInfo
+                  color="primary"
+                  size="medium"
+                  screenshotData={screenshot}
+                />
+              )}
+            />
+          )}
+          <ScreenshotListItemMenu
+            show={(forceShowMenu || showMenu) && !dragStart}
+            screenshot={screenshot}
+            onHide={handleMouseLeave}
+            onRunImageDiff={handleRunDiffTest}
+            imageDiffResult={imageDiffResult}
+            onEditClick={handleEdit}
+            onLoadSettingClick={handleLoadSetting}
+            isEditing={Boolean(editScreenshotState)}
+            onDelete={clearScreenshotEdit}
+            {...rest}
           />
-        )}
 
-        <BrowserIcon
-          style={{ height: 16 }}
-          browserType={screenshot.browserType}
-        />
-
-        {showImageDiffResult && showImageDiffResultDialog && (
-          <MemoizedImageDiffMessage
-            result={imageDiffResult}
-            onClose={handleRemoveScreenShotResult}
-            title={screenshot.title}
-            titleActions={() => (
-              <ScreenshotInfo
-                color="primary"
-                size="medium"
-                screenshotData={screenshot}
-              />
-            )}
-          />
-        )}
-        <ScreenshotListItemMenu
-          show={(forceShowMenu || showMenu) && !dragStart}
-          screenshot={screenshot}
-          onHide={handleMouseLeave}
-          onRunImageDiff={handleRunDiffTest}
-          imageDiffResult={imageDiffResult}
-          onEditClick={handleEdit}
-          onLoadSettingClick={handleLoadSetting}
-          isEditing={Boolean(editScreenshotState)}
-          onDelete={clearScreenshotEdit}
-          {...rest}
-        />
-
-        {showPreview && showPreviewOnClick && (
-          <ScreenshotPreviewDialog
-            screenShotData={screenshot}
-            storyData={storyData}
-            onClose={toggleSelectedItem}
-            open={true}
-            width="100%"
-            height="100%"
-            activeTab={!isPassesImageDiff ? 'imageDiff' : 'newScreenshot'}
-          />
-        )}
-      </>
-    </ScreenshotListItemWrapper>
+          {showPreview && showPreviewOnClick && (
+            <ScreenshotPreviewDialog
+              screenShotData={screenshot}
+              storyData={storyData}
+              onClose={toggleSelectedItem}
+              open={true}
+              width="100%"
+              height="100%"
+              activeTab={!isPassesImageDiff ? 'imageDiff' : 'newScreenshot'}
+            />
+          )}
+        </>
+      </ScreenshotListItemWrapper>
+    </div>
   );
 }
 
-const MemoizedScreenshotListItem = React.memo(ScreenshotListItem);
+const SortableScreenshotListItem: React.FC<ScreenshotListItemProps> = (
+  props,
+) => <ScreenshotListItem {...props} />;
 
-const SortableScreenshotListItem = SortableElement(MemoizedScreenshotListItem);
+SortableScreenshotListItem.displayName = 'SortableScreenshotListItem';
 
 ScreenshotListItem.displayName = 'ScreenshotListItem';
 

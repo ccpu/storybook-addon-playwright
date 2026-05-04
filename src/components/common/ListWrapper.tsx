@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
-import { SortableContainer } from 'react-sortable-hoc';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -40,7 +39,13 @@ const ListWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   );
 };
 
-const ListWrapperSortableContainer = SortableContainer(ListWrapper);
+const ListWrapperSortableContainer: React.FC<
+  React.HTMLAttributes<HTMLDivElement>
+> = (props) => {
+  return <ListWrapper {...props} />;
+};
+
+ListWrapperSortableContainer.displayName = 'ListWrapperSortableContainer';
 
 ListWrapper.displayName = 'ListWrapper';
 

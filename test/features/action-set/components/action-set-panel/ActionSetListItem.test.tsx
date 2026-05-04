@@ -4,6 +4,7 @@ import React from 'react';
 import {
   DeleteConfirmationButton,
   CheckBox,
+  ListItemWrapper,
 } from '../../../../../src/components/common';
 import { ActionSetEditor } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetEditor';
 
@@ -41,7 +42,9 @@ describe('ActionSetListItem', () => {
       />,
     );
 
-    const listItemWrapperWrapper = shallow(<div>{wrapper.props().icons}</div>);
+    const listItemWrapperWrapper = shallow(
+      <div>{wrapper.find(ListItemWrapper).props().icons}</div>,
+    );
 
     expect(listItemWrapperWrapper.exists()).toBeTruthy();
 
@@ -65,7 +68,9 @@ describe('ActionSetListItem', () => {
       />,
     );
 
-    const listItemWrapperWrapper = shallow(<div>{wrapper.props().icons}</div>);
+    const listItemWrapperWrapper = shallow(
+      <div>{wrapper.find(ListItemWrapper).props().icons}</div>,
+    );
 
     listItemWrapperWrapper.find(DeleteConfirmationButton).props().onDelete();
 
@@ -84,7 +89,9 @@ describe('ActionSetListItem', () => {
       />,
     );
 
-    const listItemWrapperWrapper = shallow(<div>{wrapper.props().icons}</div>);
+    const listItemWrapperWrapper = shallow(
+      <div>{wrapper.find(ListItemWrapper).props().icons}</div>,
+    );
 
     listItemWrapperWrapper.find(CheckBox).props().onClick();
 
@@ -120,7 +127,9 @@ describe('ActionSetListItem', () => {
       />,
     );
     expect(wrapper.find(ActionSetEditor)).toBeTruthy();
-    const listItemWrapperWrapper = shallow(<div>{wrapper.props().icons}</div>);
+    const listItemWrapperWrapper = shallow(
+      <div>{wrapper.find(ListItemWrapper).props().icons}</div>,
+    );
 
     expect(listItemWrapperWrapper.find(CheckBox).exists()).toBeTruthy();
     expect(listItemWrapperWrapper.find('.edit-button').exists()).toBeFalsy();
@@ -143,7 +152,9 @@ describe('ActionSetListItem', () => {
       />,
     );
 
-    const listItemWrapperWrapper = shallow(<div>{wrapper.props().icons}</div>);
+    const listItemWrapperWrapper = shallow(
+      <div>{wrapper.find(ListItemWrapper).props().icons}</div>,
+    );
     listItemWrapperWrapper
       .find('.copy-button')
       .props()

@@ -3,8 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useScreenshotIndexChange } from '../../../../../src/features/screenshot/hooks/use-screenshot-index-change';
 import { useDragStart } from '../../../../../src/hooks/use-drag-start';
-import { ListWrapperSortableContainer } from '../../../../../src/components/common';
-import { SortEnd, SortEvent, SortStart } from 'react-sortable-hoc';
+import { DndContext } from '@dnd-kit/core';
 
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-index-change',
@@ -17,7 +16,7 @@ vi.mock(
 
 describe('ScreenshotListSortable', () => {
   it('should render', () => {
-    const wrapper = shallow(<ScreenshotListSortable />);
+    const wrapper = shallow(<ScreenshotListSortable items={['item-1']} />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
@@ -28,11 +27,13 @@ describe('ScreenshotListSortable', () => {
       setDragStart: sortStartMock,
     }));
 
-    const wrapper = shallow(<ScreenshotListSortable />);
+    const wrapper = shallow(
+      <ScreenshotListSortable items={['item-1', 'item-2']} />,
+    );
 
-    const listWrapper = wrapper.find(ListWrapperSortableContainer);
+    const dndContext = wrapper.find(DndContext);
 
-    listWrapper.props().updateBeforeSortStart({} as SortStart, {} as SortEvent);
+    dndContext.props().onDragStart({} as never);
 
     expect(sortStartMock).toHaveBeenCalledWith(true);
   });
@@ -45,13 +46,16 @@ describe('ScreenshotListSortable', () => {
       changeIndex: sortEndMock,
     }));
 
-    const wrapper = shallow(<ScreenshotListSortable />);
+    const wrapper = shallow(
+      <ScreenshotListSortable items={['item-1', 'item-2']} />,
+    );
 
-    const listWrapper = wrapper.find(ListWrapperSortableContainer);
+    const dndContext = wrapper.find(DndContext);
 
-    listWrapper
-      .props()
-      .onSortEnd({ newIndex: 1, oldIndex: 0 } as SortEnd, {} as SortEvent);
+    dndContext.props().onDragEnd({
+      active: { id: 'item-1' },
+      over: { id: 'item-2' },
+    } as never);
 
     expect(sortEndMock).toHaveBeenCalledWith({ newIndex: 1, oldIndex: 0 });
   });

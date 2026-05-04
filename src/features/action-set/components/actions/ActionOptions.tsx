@@ -19,6 +19,7 @@ import { useEditorAction, useCurrentStoryData } from '../../../../hooks';
 import { getActionOptionValue } from './utils/index';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 import HelpIcon from '@material-ui/icons/HelpOutline';
+import { DragHandleProps } from '../../../../components/common';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -70,12 +71,14 @@ const useStyles = makeStyles(
 export interface ActionOptionsProps {
   actionId: string;
   actionName: string;
-  DragHandle: React.ComponentType;
+  DragHandle: React.ComponentType<DragHandleProps>;
   actionSetId: string;
+  dragHandleProps?: DragHandleProps;
 }
 
 const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
-  const { actionId, actionName, DragHandle, actionSetId } = props;
+  const { actionId, actionName, DragHandle, actionSetId, dragHandleProps } =
+    props;
 
   const [subtitle, setSubtitle] = useState<string[]>();
 
@@ -145,7 +148,7 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
           }}
         >
           <div className={classes.summaryInner}>
-            <DragHandle />
+            <DragHandle {...dragHandleProps} />
             <div className={classes.heading}>
               {capitalize(schema && schema.title ? schema.title : actionName)}
             </div>

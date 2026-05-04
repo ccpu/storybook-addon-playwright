@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useStoryActionSetsLoader, useCopyActionSet } from '../../../../hooks';
 import {
   useCurrentStoryData,
@@ -13,7 +13,22 @@ import {
 } from '../../../../store';
 import { trpcClient } from '../../../../api';
 import { ActionSet } from '../../../../typings';
-import { SortableContainer } from 'react-sortable-hoc';
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { SortableActionSetListItem } from './ActionSetListItem';
 import clsx from 'clsx';
 
@@ -29,7 +44,16 @@ const useStyles = makeStyles(
   { name: 'ActionSetList' },
 );
 
-const ActionSetList = SortableContainer(() => {
+interface SortableIndexChangeEvent {
+  newIndex: number;
+  oldIndex: number;
+}
+
+interface ActionSetListProps {
+  onSortEnd?: (e: SortableIndexChangeEvent) => void;
+}
+
+const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
   const classes = useStyles();
 
   const storyData = useCurrentStoryData();
@@ -84,32 +108,88 @@ const ActionSetList = SortableContainer(() => {
 
   const isEditing = state.orgEditingActionSet !== undefined;
 
+  const [localItems, setLocalItems] = useState<ActionSet[]>(storyActionSets);
+
+  useEffect(() => {
+    setLocalItems(storyActionSets);
+  }, [storyActionSets]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  const handleDragOver = useCallback(({ active, over }: DragOverEvent) => {
+    if (!over || active.id === over.id) return;
+    setLocalItems((prev) => {
+      const oldIndex = prev.findIndex((x) => x.id === active.id);
+      const newIndex = prev.findIndex((x) => x.id === over.id);
+      if (oldIndex < 0 || newIndex < 0) return prev;
+      return arrayMove(prev, oldIndex, newIndex);
+    });
+  }, []);
+
+  const handleDragCancel = useCallback(() => {
+    setLocalItems(storyActionSets);
+  }, [storyActionSets]);
+
+  const handleDragEnd = useCallback(
+    ({ active }: DragEndEvent) => {
+      const oldIndex = storyActionSets.findIndex((x) => x.id === active.id);
+      const newIndex = localItems.findIndex((x) => x.id === active.id);
+
+      if (oldIndex < 0 || newIndex < 0 || oldIndex === newIndex || !onSortEnd) {
+        setLocalItems(storyActionSets);
+        return;
+      }
+
+      onSortEnd({ newIndex, oldIndex });
+    },
+    [localItems, onSortEnd, storyActionSets],
+  );
+
   return (
     <ListWrapper>
-      {storyActionSets.length > 0 ? (
-        storyActionSets.map((actionSet, i) => (
-          <SortableActionSetListItem
-            index={i}
-            key={actionSet.id + isEditing}
-            item={actionSet}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-            onCheckBoxClick={handleCheckBox}
-            checked={currentActionSets.includes(actionSet.id)}
-            title={actionSet.title}
-            onCopy={copyActionSet}
-            isEditing={
-              isEditing && state.orgEditingActionSet.id === actionSet.id
-            }
-            hideIcons={isEditing}
-          />
-        ))
-      ) : (
-        <div className={clsx(classes.message, 'no-data')}>
-          <div>No action set to display!</div>
-          <div>Click the {"'+'"} button to create an action set.</div>
-        </div>
-      )}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragOver={handleDragOver}
+        onDragCancel={handleDragCancel}
+        onDragEnd={handleDragEnd}
+      >
+        <SortableContext
+          items={localItems.map((actionSet) => actionSet.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {localItems.length > 0 ? (
+            localItems.map((actionSet, i) => (
+              <SortableActionSetListItem
+                index={i}
+                sortableId={actionSet.id}
+                key={actionSet.id + isEditing}
+                item={actionSet}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                onCheckBoxClick={handleCheckBox}
+                checked={currentActionSets.includes(actionSet.id)}
+                title={actionSet.title}
+                onCopy={copyActionSet}
+                isEditing={
+                  isEditing && state.orgEditingActionSet.id === actionSet.id
+                }
+                hideIcons={isEditing}
+              />
+            ))
+          ) : (
+            <div className={clsx(classes.message, 'no-data')}>
+              <div>No action set to display!</div>
+              <div>Click the {"'+'"} button to create an action set.</div>
+            </div>
+          )}
+        </SortableContext>
+      </DndContext>
 
       <Loader open={loading || copyInProgress} />
       {(error || actionSetLoaderError) && (
@@ -126,7 +206,7 @@ const ActionSetList = SortableContainer(() => {
       )}
     </ListWrapper>
   );
-});
+};
 
 ActionSetList.displayName = 'ActionSetList';
 

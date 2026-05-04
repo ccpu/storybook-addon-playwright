@@ -1,8 +1,12 @@
 import { useCallback } from 'react';
-import { SortEnd } from 'react-sortable-hoc';
 import { trpcClient } from '../../../api';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { changeScreenshotIndex } from '../store/index';
+
+export interface SortableIndexChangeEvent {
+  newIndex: number;
+  oldIndex: number;
+}
 
 export const useScreenshotIndexChange = () => {
   const { mutateAsync, isPending: ChangeIndexInProgress } =
@@ -11,7 +15,7 @@ export const useScreenshotIndexChange = () => {
   const storyData = useCurrentStoryData();
 
   const changeIndex = useCallback(
-    async (e: SortEnd) => {
+    async (e: SortableIndexChangeEvent) => {
       changeScreenshotIndex({ newIndex: e.newIndex, oldIndex: e.oldIndex });
       try {
         await mutateAsync({

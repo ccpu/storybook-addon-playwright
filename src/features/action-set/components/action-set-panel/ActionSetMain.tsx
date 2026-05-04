@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import { ActionSetList } from './ActionSetList';
 import { ActionSet } from '../../../../typings';
 import { useCurrentActions, useCurrentStoryData } from '../../../../hooks';
-import { SortEnd } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { FavouriteActions } from './FavouriteActions';
 import { trpcClient } from '../../../../api';
@@ -17,6 +16,11 @@ import {
   deleteActionSet as deleteActionSetFromStore,
   sortActionSets,
 } from '../../../../store';
+
+interface SortableIndexChangeEvent {
+  newIndex: number;
+  oldIndex: number;
+}
 
 const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
@@ -32,6 +36,9 @@ const ActionSetMain: React.FC = () => {
 
   const { mutateAsync: deleteActionSet } =
     trpcClient.actionSet.deleteActionSet.useMutation();
+
+  const { mutateAsync: changeActionSetIndex } =
+    trpcClient.actionSet.changeActionSetIndex.useMutation();
 
   const toggleDescriptionDialog = useCallback(() => {
     setShowDescDialog(!showDescDialog);
@@ -86,10 +93,22 @@ const ActionSetMain: React.FC = () => {
   }, [storyId]);
 
   const handleSortEnd = useCallback(
-    (e: SortEnd) => {
+    async (e: SortableIndexChangeEvent) => {
       sortActionSets({ newIndex: e.newIndex, oldIndex: e.oldIndex, storyId });
+      try {
+        await changeActionSetIndex({
+          filePath: storyData.filePath,
+          newIndex: e.newIndex,
+          oldIndex: e.oldIndex,
+          storyId,
+        });
+      } catch (error) {
+        // revert on failure
+        sortActionSets({ newIndex: e.oldIndex, oldIndex: e.newIndex, storyId });
+        console.error(error);
+      }
     },
-    [storyId],
+    [changeActionSetIndex, storyData, storyId],
   );
 
   const onFavoriteActionsClick = React.useCallback((e) => {
@@ -110,7 +129,7 @@ const ActionSetMain: React.FC = () => {
         deleteDisabled={currentActions.length === 0}
       />
 
-      <ActionSetList onSortEnd={handleSortEnd} useDragHandle />
+      <ActionSetList onSortEnd={handleSortEnd} />
 
       <InputDialog
         onClose={toggleDescriptionDialog}

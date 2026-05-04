@@ -6,7 +6,6 @@ import {
   SortableItem,
 } from '../../../../../src/features/action-set/components/actions/ActionList';
 import { shallow } from 'enzyme';
-import { SortEnd, SortEvent } from 'react-sortable-hoc';
 
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
@@ -58,9 +57,7 @@ describe('ActionList', () => {
     );
     const sortableList = wrapper.find(SortableList);
 
-    sortableList
-      .props()
-      .onSortEnd({ newIndex: 1, oldIndex: 2 } as SortEnd, {} as SortEvent);
+    sortableList.props().onSortEnd({ newIndex: 1, oldIndex: 2 });
 
     expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
@@ -75,9 +72,7 @@ describe('ActionList', () => {
         actionSetId="action-set-id"
       />,
       { disableLifecycleMethods: true },
-    )
-      .first()
-      .shallow();
+    );
 
     const items = wrapper.find(SortableItem);
 

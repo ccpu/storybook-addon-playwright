@@ -1,7 +1,6 @@
 import { changeScreenshotIndexMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotIndexChange } from '../../../../src/features/screenshot/hooks/use-screenshot-index-change';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { SortEnd } from 'react-sortable-hoc';
 import mockConsole from 'jest-mock-console';
 import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
@@ -33,7 +32,7 @@ describe('useScreenshotIndexChange', () => {
     const { result } = renderHook(() => useScreenshotIndexChange());
 
     await act(async () => {
-      await result.current.changeIndex({ newIndex: 1, oldIndex: 2 } as SortEnd);
+      await result.current.changeIndex({ newIndex: 1, oldIndex: 2 });
     });
 
     expect(changeScreenshotIndexMock).toHaveBeenCalledWith({
@@ -51,7 +50,7 @@ describe('useScreenshotIndexChange', () => {
     const { result } = renderHook(() => useScreenshotIndexChange());
 
     await act(async () => {
-      await result.current.changeIndex({ newIndex: 1, oldIndex: 2 } as SortEnd);
+      await result.current.changeIndex({ newIndex: 1, oldIndex: 2 });
     });
 
     expect(changeScreenshotIndexMock).toHaveBeenCalledWith({

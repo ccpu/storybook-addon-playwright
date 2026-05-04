@@ -48,7 +48,6 @@ import React from 'react';
 import { ActionToolbar } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetToolbar';
 import { InputDialog } from '../../../../../src/components/common';
 import { ActionSetList } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetList';
-import { SortEnd, SortEvent } from 'react-sortable-hoc';
 import { useStorybookState } from '@storybook/manager-api';
 import { useCurrentActions } from '../../../../../src/features/action-set/hooks/use-current-actions';
 
@@ -100,9 +99,7 @@ describe('ActionSetMain', () => {
   it('should handle sort action list', () => {
     const wrapper = shallow(<ActionSetMain />);
     const actionSetList = wrapper.find(ActionSetList);
-    actionSetList
-      .props()
-      .onSortEnd({ newIndex: 1, oldIndex: 2 } as SortEnd, {} as SortEvent);
+    actionSetList.props().onSortEnd({ newIndex: 1, oldIndex: 2 });
     expect(sortActionSetsMock).toHaveBeenCalledWith({
       newIndex: 1,
       oldIndex: 2,

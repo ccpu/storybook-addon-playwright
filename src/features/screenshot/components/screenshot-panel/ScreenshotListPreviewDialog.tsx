@@ -137,11 +137,12 @@ const ScreenshotListPreviewDialog: React.FC<
     >
       <div className={classes.root}>
         <div className={classes.list}>
-          <ScreenshotListSortable>
+          <ScreenshotListSortable items={screenshots.map((x) => x.id)}>
             {currentItem &&
               screenshots.map((screenshot, i) => (
                 <SortableScreenshotListItem
                   index={i}
+                  sortableId={screenshot.id}
                   openUpdateDialog={false}
                   showPreviewOnClick={false}
                   key={screenshot.id}

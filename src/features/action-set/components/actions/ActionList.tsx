@@ -1,10 +1,23 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActionOptions } from './ActionOptions';
 import {
-  SortableContainer,
-  SortableElement,
-  SortEnd,
-} from 'react-sortable-hoc';
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  KeyboardSensor,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { moveActionSetAction } from '../../../../store';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../../../typings';
@@ -28,32 +41,138 @@ const useStyles = makeStyles(
   { name: 'ActionSetList' },
 );
 
-export const SortableItem = SortableElement(({ action, actionSetId }) => (
-  <div>
-    <ActionOptions
-      key={action.id}
-      actionName={action.name}
-      actionId={action.id}
-      DragHandle={() => <DragHandle />}
-      actionSetId={actionSetId}
-    />
-  </div>
-));
+interface SortableIndexChangeEvent {
+  newIndex: number;
+  oldIndex: number;
+}
 
-export const SortableList = SortableContainer(({ items, actionSetId }) => {
+interface SortableItemProps {
+  action: ActionSet['actions'][number];
+  actionSetId: string;
+  sortableId: string;
+}
+
+export const SortableItem: React.FC<SortableItemProps> = ({
+  action,
+  actionSetId,
+  sortableId,
+}) => {
+  const {
+    attributes,
+    listeners,
+    setActivatorNodeRef,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: sortableId });
+
   return (
-    <div>
-      {items.map((action, index) => (
-        <SortableItem
-          key={`item-${action.id}`}
-          action={action}
-          actionSetId={actionSetId}
-          index={index}
-        />
-      ))}
+    <div
+      ref={setNodeRef}
+      style={{
+        opacity: isDragging ? 0.8 : 1,
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+    >
+      <ActionOptions
+        key={action.id}
+        actionName={action.name}
+        actionId={action.id}
+        DragHandle={DragHandle}
+        actionSetId={actionSetId}
+        dragHandleProps={{
+          ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
+          ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
+          setNodeRef: setActivatorNodeRef as (
+            element: HTMLSpanElement | null,
+          ) => void,
+        }}
+      />
     </div>
   );
-});
+};
+
+interface SortableListProps {
+  actionSetId: string;
+  items: ActionSet['actions'];
+  onSortEnd?: (e: SortableIndexChangeEvent) => void;
+}
+
+export const SortableList: React.FC<SortableListProps> = ({
+  items,
+  actionSetId,
+  onSortEnd,
+}) => {
+  const [localItems, setLocalItems] = useState(items);
+
+  useEffect(() => {
+    setLocalItems(items);
+  }, [items]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  const handleDragOver = useCallback(({ active, over }: DragOverEvent) => {
+    if (!over || active.id === over.id) return;
+    setLocalItems((prev) => {
+      const oldIndex = prev.findIndex((a) => a.id === active.id);
+      const newIndex = prev.findIndex((a) => a.id === over.id);
+      if (oldIndex < 0 || newIndex < 0) return prev;
+      return arrayMove(prev, oldIndex, newIndex);
+    });
+  }, []);
+
+  const handleDragCancel = useCallback(() => {
+    setLocalItems(items);
+  }, [items]);
+
+  const handleDragEnd = useCallback(
+    ({ active }: DragEndEvent) => {
+      const oldIndex = items.findIndex((a) => a.id === active.id);
+      const newIndex = localItems.findIndex((a) => a.id === active.id);
+
+      if (oldIndex < 0 || newIndex < 0 || oldIndex === newIndex || !onSortEnd) {
+        setLocalItems(items);
+        return;
+      }
+
+      onSortEnd({ newIndex, oldIndex });
+    },
+    [items, localItems, onSortEnd],
+  );
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragOver={handleDragOver}
+      onDragCancel={handleDragCancel}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext
+        items={localItems.map((action) => action.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <div>
+          {localItems.map((action) => (
+            <SortableItem
+              key={`item-${action.id}`}
+              action={action}
+              actionSetId={actionSetId}
+              sortableId={action.id}
+            />
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
+  );
+};
 
 interface ActionListProps {
   actionSet: ActionSet;
@@ -65,7 +184,7 @@ const ActionList: React.FC<ActionListProps> = ({ actionSet }) => {
   const story = useCurrentStoryData();
 
   const handleSortEnd = useCallback(
-    (e: SortEnd) => {
+    (e: SortableIndexChangeEvent) => {
       moveActionSetAction({
         actionSetId: actionSet.id,
         newIndex: e.newIndex,
@@ -87,7 +206,6 @@ const ActionList: React.FC<ActionListProps> = ({ actionSet }) => {
   return (
     <ListWrapper>
       <SortableList
-        useDragHandle
         items={actionSet.actions}
         onSortEnd={handleSortEnd}
         actionSetId={actionSet.id}

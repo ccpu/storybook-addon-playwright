@@ -92,9 +92,7 @@ describe('ActionSetList', () => {
   it('should render', () => {
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
+    });
 
     expect(wrapper.exists()).toBeTruthy();
   });
@@ -108,9 +106,7 @@ describe('ActionSetList', () => {
 
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
+    });
 
     expect(wrapper.find('.no-data').text()).toBe(
       `No action set to display!Click the '+' button to create an action set.`,
@@ -120,9 +116,7 @@ describe('ActionSetList', () => {
   it('should show list of action sets', () => {
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
+    });
 
     const list = wrapper.find(SortableActionSetListItem);
 
@@ -132,9 +126,7 @@ describe('ActionSetList', () => {
   it('should handle edit', async () => {
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
+    });
 
     const list = wrapper.find(SortableActionSetListItem);
     list.props().onEdit({ id: 'action-set-id' } as ActionSet);
@@ -145,9 +137,7 @@ describe('ActionSetList', () => {
   it('should toggle story current action sets', () => {
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
+    });
 
     const list = wrapper.find(SortableActionSetListItem);
 
@@ -166,9 +156,7 @@ describe('ActionSetList', () => {
 
     const wrapper = shallow(<ActionSetList />, {
       disableLifecycleMethods: true,
-    })
-      .first()
-      .shallow();
+    });
 
     expect(wrapper.find(Snackbar)).toHaveLength(1);
 

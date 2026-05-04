@@ -31,9 +31,17 @@ export const saveActionSetInputSchema = createStoryInputSchema({
   actionSet: actionSetSchema,
 });
 
+export const changeActionSetIndexInputSchema = createStoryInputSchema({
+  newIndex: z.number().int().nonnegative(),
+  oldIndex: z.number().int().nonnegative(),
+});
+
 export type StoryActionInput = z.infer<typeof storyActionSchema>;
 export type ActionSetInput = z.infer<typeof actionSetSchema>;
 export type FavouriteActionSetInput = z.infer<typeof favouriteActionSetSchema>;
 export type GetActionSetInput = z.infer<typeof getActionSetInputSchema>;
 export type DeleteActionSetInput = z.infer<typeof deleteActionSetInputSchema>;
 export type SaveActionSetInput = z.infer<typeof saveActionSetInputSchema>;
+export type ChangeActionSetIndexInput = z.infer<
+  typeof changeActionSetIndexInputSchema
+>;

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from 'react';
 import { makeStyles, capitalize } from '@material-ui/core';
-import { DragHandle } from './DragHandle';
+import { DragHandle, DragHandleProps } from './DragHandle';
 import clsx from 'clsx';
 import tinycolor from 'tinycolor2';
 
@@ -68,6 +68,7 @@ export interface ListItemWrapperProps
   tooltip: string;
   icons?: React.ReactNode;
   secondaryColor?: boolean;
+  dragHandleProps?: DragHandleProps;
 }
 
 const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
@@ -81,6 +82,7 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
     tooltip,
     icons,
     secondaryColor,
+    dragHandleProps,
     ...rest
   } = props;
 
@@ -116,7 +118,7 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
             [classes.secondaryColor]: secondaryColor,
           })}
         >
-          {draggable && <DragHandle />}
+          {draggable && <DragHandle {...dragHandleProps} />}
           {capitalize(title)}
         </div>
         <div

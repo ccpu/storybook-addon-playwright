@@ -6,6 +6,18 @@
         {
           "actions": [
             {
+              "name": "waitForTimeout",
+              "args": {
+                "timeout": 50
+              }
+            }
+          ],
+          "id": "6UCUswgZ6mmh",
+          "title": "delay"
+        },
+        {
+          "actions": [
+            {
               "name": "takeElementScreenshot",
               "args": {
                 "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
@@ -40,22 +52,17 @@
         {
           "actions": [
             {
-              "name": "waitForTimeout",
-              "args": {
-                "timeout": 50
-              }
-            }
-          ],
-          "id": "6UCUswgZ6mmh",
-          "title": "delay"
-        },
-        {
-          "actions": [
-            {
-              "name": "takeElementScreenshot",
               "args": {
                 "selector": "#blue"
-              }
+              },
+              "name": "takeElementScreenshot"
+            },
+            {
+              "args": {
+                "x": 280,
+                "y": 195
+              },
+              "name": "mouse.click"
             }
           ],
           "id": "uD9-r01lb3fr",
@@ -64,34 +71,12 @@
       ],
       "screenshots": [
         {
-          "actionSets": [
-            {
-              "actions": [
-                {
-                  "name": "takeElementScreenshot",
-                  "args": {
-                    "selector": "#blue"
-                  }
-                }
-              ],
-              "title": "take element screen shot"
-            },
-            {
-              "actions": [
-                {
-                  "name": "takeElementScreenshot",
-                  "args": {
-                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-                  }
-                }
-              ],
-              "title": "take element screen shot"
-            }
-          ],
+          "browserOptionsId": "Db-vUIXws6EF",
           "browserType": "chromium",
-          "id": "Kebe6ydEbfyt",
+          "id": "GcAAHvFaQFyG",
           "index": 0,
-          "title": "should take screen shot by element id"
+          "screenshotOptionsId": "fmsdQSLwg4Bi",
+          "title": "l"
         },
         {
           "actionSets": [
@@ -138,12 +123,34 @@
           "title": "should allow last screenshot if last action is not takeElementScreenshot"
         },
         {
-          "browserOptionsId": "Db-vUIXws6EF",
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "#blue"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            },
+            {
+              "actions": [
+                {
+                  "name": "takeElementScreenshot",
+                  "args": {
+                    "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+                  }
+                }
+              ],
+              "title": "take element screen shot"
+            }
+          ],
           "browserType": "chromium",
-          "id": "GcAAHvFaQFyG",
+          "id": "Kebe6ydEbfyt",
           "index": 2,
-          "screenshotOptionsId": "fmsdQSLwg4Bi",
-          "title": "l"
+          "title": "should take screen shot by element id"
         }
       ]
     }

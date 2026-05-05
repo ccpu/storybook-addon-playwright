@@ -33,7 +33,7 @@ describe('ScreenshotListSortable', () => {
 
     const dndContext = wrapper.find(DndContext);
 
-    dndContext.props().onDragStart({} as never);
+    dndContext.props().onDragStart?.({} as never);
 
     expect(sortStartMock).toHaveBeenCalledWith(true);
   });
@@ -52,7 +52,7 @@ describe('ScreenshotListSortable', () => {
 
     const dndContext = wrapper.find(DndContext);
 
-    dndContext.props().onDragEnd({
+    dndContext.props().onDragEnd?.({
       active: { id: 'item-1' },
       over: { id: 'item-2' },
     } as never);

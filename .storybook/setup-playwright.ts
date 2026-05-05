@@ -1,3 +1,4 @@
+// @ts-ignore
 import { setConfig } from '../configs';
 import playwright, { type Page } from 'playwright';
 

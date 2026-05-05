@@ -1,6 +1,6 @@
 import { storyFileInfo } from '../../configs/story-file-info';
 
-export const loadStoryDataMock = vi.fn();
+export const loadStoryDataMock = vi.fn<(...args: unknown[]) => unknown>();
 
 vi.unmock('../../../src/api/server/utils/load-story-data');
 

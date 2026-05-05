@@ -26,6 +26,8 @@ describe('useScreenshot', () => {
     server.use(
       trpcMsw.screenshot.takeScreenshot.mutation(() => ({
         base64: 'base64',
+        browserName: 'chromium',
+        buffer: { data: [], type: 'Buffer' as const },
       })),
     );
 
@@ -41,7 +43,7 @@ describe('useScreenshot', () => {
     expect(result.current.loading).toBe(true);
     await waitForNextUpdate();
     await waitFor(() => expect(result.current.loading).toBe(false));
-    expect(result.current.screenshot).toStrictEqual({ base64: 'base64' });
+    expect(result.current.screenshot).toMatchObject({ base64: 'base64' });
   });
 
   it('should not load storybook type', async () => {

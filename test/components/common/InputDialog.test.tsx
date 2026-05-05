@@ -22,11 +22,11 @@ describe('InputDialog', () => {
     wrapper
       .find(TextField)
       .props()
-      .onChange({ target: { value: 'foo' } } as React.ChangeEvent<
+      .onChange?.({ target: { value: 'foo' } } as React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement
       >);
 
-    wrapper.find(ActionDialog).props().onPositiveAction();
+    wrapper.find(ActionDialog).props().onPositiveAction?.();
 
     expect(saveMock).toHaveBeenCalledWith('foo');
   });
@@ -40,18 +40,18 @@ describe('InputDialog', () => {
     wrapper
       .find(TextField)
       .props()
-      .onChange({ target: { value: '' } } as React.ChangeEvent<
+      .onChange?.({ target: { value: '' } } as React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement
       >);
 
-    wrapper.find(ActionDialog).props().onPositiveAction();
+    wrapper.find(ActionDialog).props().onPositiveAction?.();
 
     expect(wrapper.find(Snackbar).text()).toBe('Field is required');
 
     wrapper
       .find(Snackbar)
       .props()
-      .onClose({} as React.SyntheticEvent<unknown, Event>, 'clickaway');
+      .onClose?.({} as React.SyntheticEvent<unknown, Event>, 'clickaway');
 
     expect(wrapper.find(Snackbar).props().open).toBe(false);
   });

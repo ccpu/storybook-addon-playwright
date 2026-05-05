@@ -127,7 +127,7 @@ describe('FavouriteActions', () => {
       .find(MenuItem)
       .first()
       .props()
-      .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
     expect(addActionSetMock).toHaveBeenCalled();
   });

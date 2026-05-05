@@ -57,7 +57,7 @@ describe('ActionList', () => {
     );
     const sortableList = wrapper.find(SortableList);
 
-    sortableList.props().onSortEnd({ newIndex: 1, oldIndex: 2 });
+    sortableList.props().onSortEnd?.({ newIndex: 1, oldIndex: 2 });
 
     expect(dispatchMock).toHaveBeenCalledTimes(1);
   });

@@ -16,7 +16,7 @@ describe('ActionMenuItem', () => {
       <ActionMenuItem label="click" name="click" onChange={changeMock} />,
     );
     const item = wrapper.find(MenuItem);
-    item.props().onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+    item.props().onClick?.({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
     expect(changeMock).toHaveBeenCalledTimes(1);
   });
 });

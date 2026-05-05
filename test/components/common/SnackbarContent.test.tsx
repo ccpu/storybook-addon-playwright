@@ -37,10 +37,7 @@ describe('SnackbarContent', () => {
       />,
     );
     expect(wrapper.find(Button).exists()).toBeTruthy();
-    wrapper
-      .find(Button)
-      .props()
-      .onClick({} as never);
+    wrapper.find(Button).props().onClick!({} as never);
     expect(onRetryMock).toHaveBeenCalledTimes(1);
   });
 });

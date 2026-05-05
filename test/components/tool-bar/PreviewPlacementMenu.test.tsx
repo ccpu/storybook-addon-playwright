@@ -27,11 +27,11 @@ describe('PreviewPlacementMenu', () => {
 
     placementButton
       .props()
-      .onClick({ currentTarget: { nodeName: 'div' } } as never);
+      .onClick?.({ currentTarget: { nodeName: 'div' } } as never);
 
     expect(wrapper.find(Menu).props().anchorEl).not.toBe(null);
 
-    wrapper.find(Menu).props().onClose({}, 'backdropClick');
+    wrapper.find(Menu).props().onClose?.({}, 'backdropClick');
 
     expect(wrapper.find(Menu).props().anchorEl).toBe(null);
   });
@@ -52,14 +52,14 @@ describe('PreviewPlacementMenu', () => {
 
     placementButton
       .props()
-      .onClick({ currentTarget: { nodeName: 'div' } } as never);
+      .onClick?.({ currentTarget: { nodeName: 'div' } } as never);
 
     const menuItem = wrapper.find(MenuItem);
 
     menuItem
       .first()
       .props()
-      .onClick({
+      .onClick?.({
         currentTarget: { dataset: { placement: 'Auto' } },
       } as unknown as React.MouseEvent<HTMLLIElement, MouseEvent>);
 

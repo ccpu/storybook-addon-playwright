@@ -77,7 +77,7 @@ describe('ActionOptions', () => {
     wrapper
       .find(Accordion)
       .props()
-      .onChange({} as React.ChangeEvent<unknown>, true);
+      .onChange?.({} as React.SyntheticEvent, true);
 
     expect(toggleActionExpansionMock).toHaveBeenCalledWith('action-id');
   });
@@ -96,15 +96,15 @@ describe('ActionOptions', () => {
       .find(IconButton)
       .last()
       .props()
-      .onClick({
+      .onClick?.({
         preventDefault: vi.fn(),
         stopPropagation: vi.fn(),
       } as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(deleteActionSetActionMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      actionSetId: 'action-set-id',
       actionId: 'action-id',
+      actionSetId: 'action-set-id',
+      storyId: 'story-id',
     });
   });
 });

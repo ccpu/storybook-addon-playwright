@@ -4,7 +4,7 @@ import { useKeyPress } from '../../hooks';
 import { DiffDirection } from '../../api/typings/image-diff';
 
 export interface ImagePreviewProps {
-  imgSrcString: string;
+  imgSrcString?: string | null;
   diffDirection?: DiffDirection;
 }
 

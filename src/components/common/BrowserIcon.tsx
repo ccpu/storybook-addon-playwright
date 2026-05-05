@@ -4,7 +4,7 @@ import { Firefox, Browser, Chrome, Webkit } from '../../icons';
 import { SvgIconProps } from '@material-ui/core';
 
 export interface BrowserIconProps extends SvgIconProps {
-  browserType: BrowserTypes;
+  browserType?: BrowserTypes;
 }
 
 const BrowserIcon: React.FC<BrowserIconProps> = memo((props) => {

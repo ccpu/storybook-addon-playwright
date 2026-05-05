@@ -1,113 +1,121 @@
 import { ActionSetState } from '../../../../src/features/action-set/store/action-set-store';
 
 // Individual action spies
-export const addActionSetListMock = vi.fn();
-export const setScreenShotActionSetsMock = vi.fn();
-export const addActionSetMock = vi.fn();
-export const setCurrentActionSetsMock = vi.fn();
-export const clearCurrentActionSetsMock = vi.fn();
-export const deleteActionSetMock = vi.fn();
-export const deleteTempActionSetsMock = vi.fn();
-export const sortActionSetsMock = vi.fn();
-export const toggleCurrentActionSetMock = vi.fn();
-export const toggleActionExpansionMock = vi.fn();
-export const clearActionExpansionMock = vi.fn();
-export const setActionSchemaMock = vi.fn();
-export const cancelEditActionSetMock = vi.fn();
-export const editActionSetMock = vi.fn();
-export const setActionSetTitleMock = vi.fn();
-export const addActionSetActionMock = vi.fn();
-export const toggleSubtitleItemMock = vi.fn();
-export const moveActionSetActionMock = vi.fn();
-export const deleteActionSetActionMock = vi.fn();
-export const setActionOptionsMock = vi.fn();
-export const saveActionSetMock = vi.fn();
+export const addActionSetListMock = vi.fn<(...args: unknown[]) => unknown>();
+export const setScreenShotActionSetsMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const addActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
+export const setCurrentActionSetsMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const clearCurrentActionSetsMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const deleteActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
+export const deleteTempActionSetsMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const sortActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
+export const toggleCurrentActionSetMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const toggleActionExpansionMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const clearActionExpansionMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const setActionSchemaMock = vi.fn<(...args: unknown[]) => unknown>();
+export const cancelEditActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
+export const editActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
+export const setActionSetTitleMock = vi.fn<(...args: unknown[]) => unknown>();
+export const addActionSetActionMock = vi.fn<(...args: unknown[]) => unknown>();
+export const toggleSubtitleItemMock = vi.fn<(...args: unknown[]) => unknown>();
+export const moveActionSetActionMock = vi.fn<(...args: unknown[]) => unknown>();
+export const deleteActionSetActionMock =
+  vi.fn<(...args: unknown[]) => unknown>();
+export const setActionOptionsMock = vi.fn<(...args: unknown[]) => unknown>();
+export const saveActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
 
 // Legacy dispatchMock - catches all calls for backwards compat
-export const dispatchMock = vi.fn();
+export const dispatchMock = vi.fn<(...args: unknown[]) => unknown>();
 
 vi.mock('../../../../src/features/action-set/store/actions', () => ({
-  addActionSet: (...args: any[]) => {
+  addActionSet: (...args: unknown[]) => {
     addActionSetMock(...args);
     dispatchMock(args);
   },
-  addActionSetAction: (...args: any[]) => {
+  addActionSetAction: (...args: unknown[]) => {
     addActionSetActionMock(...args);
     dispatchMock(args);
   },
-  addActionSetList: (...args: any[]) => {
+  addActionSetList: (...args: unknown[]) => {
     addActionSetListMock(...args);
     dispatchMock(args);
   },
-  cancelEditActionSet: (...args: any[]) => {
+  cancelEditActionSet: (...args: unknown[]) => {
     cancelEditActionSetMock(...args);
     dispatchMock(args);
   },
-  clearActionExpansion: (...args: any[]) => {
+  clearActionExpansion: (...args: unknown[]) => {
     clearActionExpansionMock(...args);
     dispatchMock(args);
   },
-  clearCurrentActionSets: (...args: any[]) => {
+  clearCurrentActionSets: (...args: unknown[]) => {
     clearCurrentActionSetsMock(...args);
     dispatchMock(args);
   },
-  deleteActionSet: (...args: any[]) => {
+  deleteActionSet: (...args: unknown[]) => {
     deleteActionSetMock(...args);
     dispatchMock(args);
   },
-  deleteActionSetAction: (...args: any[]) => {
+  deleteActionSetAction: (...args: unknown[]) => {
     deleteActionSetActionMock(...args);
     dispatchMock(args);
   },
-  deleteTempActionSets: (...args: any[]) => {
+  deleteTempActionSets: (...args: unknown[]) => {
     deleteTempActionSetsMock(...args);
     dispatchMock(args);
   },
-  editActionSet: (...args: any[]) => {
+  editActionSet: (...args: unknown[]) => {
     editActionSetMock(...args);
     dispatchMock(args);
   },
-  moveActionSetAction: (...args: any[]) => {
+  moveActionSetAction: (...args: unknown[]) => {
     moveActionSetActionMock(...args);
     dispatchMock(args);
   },
-  saveActionSet: (...args: any[]) => {
+  saveActionSet: (...args: unknown[]) => {
     saveActionSetMock(...args);
     dispatchMock(args);
   },
-  setActionOptions: (...args: any[]) => {
+  setActionOptions: (...args: unknown[]) => {
     setActionOptionsMock(...args);
     dispatchMock(args);
   },
-  setActionSchema: (...args: any[]) => {
+  setActionSchema: (...args: unknown[]) => {
     setActionSchemaMock(...args);
     dispatchMock(args);
   },
-  setActionSetTitle: (...args: any[]) => {
+  setActionSetTitle: (...args: unknown[]) => {
     setActionSetTitleMock(...args);
     dispatchMock(args);
   },
-  setCurrentActionSets: (...args: any[]) => {
+  setCurrentActionSets: (...args: unknown[]) => {
     setCurrentActionSetsMock(...args);
     dispatchMock(args);
   },
-  setScreenShotActionSets: (...args: any[]) => {
+  setScreenShotActionSets: (...args: unknown[]) => {
     setScreenShotActionSetsMock(...args);
     dispatchMock(args);
   },
-  sortActionSets: (...args: any[]) => {
+  sortActionSets: (...args: unknown[]) => {
     sortActionSetsMock(...args);
     dispatchMock(args);
   },
-  toggleActionExpansion: (...args: any[]) => {
+  toggleActionExpansion: (...args: unknown[]) => {
     toggleActionExpansionMock(...args);
     dispatchMock(args);
   },
-  toggleCurrentActionSet: (...args: any[]) => {
+  toggleCurrentActionSet: (...args: unknown[]) => {
     toggleCurrentActionSetMock(...args);
     dispatchMock(args);
   },
-  toggleSubtitleItem: (...args: any[]) => {
+  toggleSubtitleItem: (...args: unknown[]) => {
     toggleSubtitleItemMock(...args);
     dispatchMock(args);
   },

@@ -22,7 +22,7 @@ describe('SchemaProp', () => {
   it('should render', () => {
     const wrapper = shallow(
       <SchemaProp
-        schema={schema['click']['parameters']['selector']}
+        schema={schema['click']['parameters']!['selector']}
         onChange={onChangeMock}
         name="click"
         nextPropName="click"
@@ -39,7 +39,7 @@ describe('SchemaProp', () => {
         getValue={getVal}
         name="selector"
         nextPropName=""
-        schema={schema['click']['parameters']['selector']}
+        schema={schema['click']['parameters']!['selector']}
         onChange={onChangeMock}
         onSelectorChange={vi.fn()}
       />,

@@ -12,7 +12,7 @@ vi.mock('../../../../src/hooks/use-selector-manager', () => ({
   useSelectorManager() {
     return {
       startSelector: (props: SelectorManageSharedProps) => {
-        props.onData({ path: 'div>div', x: 10, y: 10 });
+        props.onData?.({ path: 'div>div', x: 10, y: 10 });
       },
     };
   },
@@ -140,7 +140,7 @@ describe('SelectorControl', () => {
       wrapper
         .find('.selector-root > div')
         .prop('className')
-        .startsWith('SelectorControl-buttonWrap'),
+        ?.startsWith('SelectorControl-buttonWrap'),
     ).toBe(true);
   });
 
@@ -153,7 +153,7 @@ describe('SelectorControl', () => {
       button
         .first()
         .props()
-        .onClick({} as React.MouseEvent);
+        .onClick?.({} as React.MouseEvent);
     });
 
     expect(onSelectorChangeMock).toHaveBeenCalledWith(
@@ -177,7 +177,7 @@ describe('SelectorControl', () => {
     const button = wrapper.find('button');
 
     act(() => {
-      button.props().onClick({} as React.MouseEvent);
+      button.props().onClick?.({} as React.MouseEvent);
     });
 
     expect(onChangeMock).toHaveBeenCalledWith(10);
@@ -198,7 +198,7 @@ describe('SelectorControl', () => {
     const button = wrapper.find('button');
 
     act(() => {
-      button.props().onClick({} as React.MouseEvent);
+      button.props().onClick?.({} as React.MouseEvent);
     });
 
     expect(onChangeMock).toHaveBeenCalledWith(10);
@@ -219,7 +219,7 @@ describe('SelectorControl', () => {
     const button = wrapper.find('button');
 
     act(() => {
-      button.props().onClick({} as React.MouseEvent);
+      button.props().onClick?.({} as React.MouseEvent);
     });
 
     expect(onChangeMock).toHaveBeenCalledWith(10);
@@ -240,7 +240,7 @@ describe('SelectorControl', () => {
     const button = wrapper.find('button');
 
     act(() => {
-      button.props().onClick({} as React.MouseEvent);
+      button.props().onClick?.({} as React.MouseEvent);
     });
 
     expect(onSelectorChangeMock).toHaveBeenCalledWith('options.prop.x', 10);

@@ -36,10 +36,9 @@ describe('EditScreenshotAlert', () => {
       `Editing 'title' screenshot (chromium).Cancel`,
     );
 
-    wrapper
-      .find(Button)
-      .props()
-      .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+    wrapper.find(Button).props().onClick!(
+      {} as React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    );
 
     expect(clearScreenshotEditMock).toHaveBeenCalledTimes(1);
   });

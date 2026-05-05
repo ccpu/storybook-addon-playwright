@@ -13,7 +13,7 @@ vi.mock('react', async (importOriginal) => {
 const setPauseDeleteImageDiffResultMock = vi.fn();
 
 vi.mock('../../../../../src/features/screenshot/store/actions', () => ({
-  setPauseDeleteImageDiffResult: (...args: any[]) =>
+  setPauseDeleteImageDiffResult: (...args: unknown[]) =>
     setPauseDeleteImageDiffResultMock(...args),
 }));
 import '../../../../manual-mocks/react-useEffect';
@@ -41,11 +41,11 @@ vi.mock(
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
   async () => {
-    const { useScreenshotImageDiffResults } = await import(
-      '../../hooks/__mocks__/use-screenshot-imageDiff-results'
+    const { useGlobalImageDiffResults } = await import(
+      '../../hooks/__mocks__/use-global-imageDiff-results'
     );
     return {
-      useScreenshotDiffTestByType: useScreenshotImageDiffResults,
+      useScreenshotDiffTestByType: useGlobalImageDiffResults,
     };
   },
 );

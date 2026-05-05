@@ -36,15 +36,15 @@ describe('ActionToolbar', () => {
     buttons
       .at(0)
       .props()
-      .onClick({} as React.MouseEvent<HTMLElement>);
+      .onClick?.({} as React.MouseEvent<HTMLElement>);
     buttons
       .at(1)
       .props()
-      .onClick({} as React.MouseEvent<HTMLElement>);
+      .onClick?.({} as React.MouseEvent<HTMLElement>);
     buttons
       .at(2)
       .props()
-      .onClick({} as React.MouseEvent<HTMLElement>);
+      .onClick?.({} as React.MouseEvent<HTMLElement>);
 
     wrapper.find(DeleteConfirmationButton).props().onDelete();
 

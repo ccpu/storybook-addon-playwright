@@ -1,5 +1,7 @@
 import { useRef } from 'react';
-export const useThrottleFn = vi.fn();
+import type useThrottleFnFn from 'react-use/lib/useThrottleFn';
+
+export const useThrottleFn = vi.fn<typeof useThrottleFnFn>();
 useThrottleFn.mockImplementation((cb, _delay, data) => {
   const mounted = useRef<boolean>(false);
   if (!mounted.current) {

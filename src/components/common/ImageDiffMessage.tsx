@@ -10,7 +10,7 @@ import { toast } from '../../utils/toast';
 
 export interface ImageDiffMessageProps
   extends Partial<ImageDiffPreviewDialogProps> {
-  result: ImageDiffResult;
+  result?: ImageDiffResult;
   onClose: () => void;
   title?: string;
   browserType?: BrowserTypes;

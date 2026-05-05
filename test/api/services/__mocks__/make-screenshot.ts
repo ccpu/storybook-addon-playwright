@@ -1,9 +1,11 @@
-const makeScreenshot = vi.fn();
+import { makeScreenshot as orgMakeScreenshot } from '../../../../src/api/services/make-screenshot';
+
+const makeScreenshot = vi.fn<typeof orgMakeScreenshot>();
 makeScreenshot.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({
       base64: 'base64-image',
-      browserName: '',
+      browserName: 'chromium',
       buffer: Buffer.from('base64-image', 'utf-8'),
     });
   });

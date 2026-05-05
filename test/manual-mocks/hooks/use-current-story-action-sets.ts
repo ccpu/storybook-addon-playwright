@@ -1,6 +1,7 @@
 import { ActionSet } from '../../../src/typings';
 
-export const useCurrentStoryActionSetsMock = vi.fn();
+export const useCurrentStoryActionSetsMock =
+  vi.fn<(...args: unknown[]) => unknown>();
 
 vi.mock(
   '../../../src/features/action-set/hooks/use-current-story-action-sets',

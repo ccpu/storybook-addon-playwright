@@ -1,4 +1,6 @@
-export const getPreviewIframe = vi.fn();
+import { getPreviewIframe as orgGetPreviewIframe } from '../../../src/utils/get-preview-iframe';
+
+export const getPreviewIframe = vi.fn<typeof orgGetPreviewIframe>();
 
 const WithStory = () => true;
 const WithStory2 = () => false;
@@ -28,15 +30,26 @@ requiredFunc.resolve = (path: string) => {
   return path === './story.ts' ? './stories/story.ts' : undefined;
 };
 
-getPreviewIframe.mockImplementation(() => ({
-  contentWindow: {
-    __STORYBOOK_CLIENT_API__: {
-      raw: () => [
-        { getOriginal: () => WithStory, id: 'story-id', kind: 'story-kind' },
-        { getOriginal: () => WithStory, id: 'story-id-2', kind: 'story-kind' },
-      ],
-    },
-    __playwright_addon_hot_reload_time__: 1,
-    __playwright_addon_required_context__: [requiredFunc],
-  },
-}));
+getPreviewIframe.mockImplementation(
+  () =>
+    ({
+      contentWindow: {
+        __STORYBOOK_CLIENT_API__: {
+          raw: () => [
+            {
+              getOriginal: () => WithStory,
+              id: 'story-id',
+              kind: 'story-kind',
+            },
+            {
+              getOriginal: () => WithStory,
+              id: 'story-id-2',
+              kind: 'story-kind',
+            },
+          ],
+        },
+        __playwright_addon_hot_reload_time__: 1,
+        __playwright_addon_required_context__: [requiredFunc],
+      },
+    } as unknown as HTMLIFrameElement),
+);

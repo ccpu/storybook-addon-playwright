@@ -33,6 +33,18 @@ describe('Preview', () => {
     expect(wrapper.type()).toBe(React.Fragment);
   });
 
+  it('should nothing when preview panel is disabled', () => {
+    (useAddonState as Mock).mockImplementationOnce(() => ({
+      addonState: {
+        previewPanelEnabled: false,
+      } as AddonState,
+    }));
+
+    const wrapper = shallow(<Preview />);
+
+    expect(wrapper.type()).toBe(React.Fragment);
+  });
+
   it('should preview panel horizontal', () => {
     const wrapper = shallow(<Preview />);
 
@@ -67,7 +79,11 @@ describe('Preview', () => {
 
     const wrapper = shallow(<Preview />);
 
-    wrapper.find(SplitPane).props().onResize([50, 50]);
+    const onResize = wrapper.find(SplitPane).props().onResize as
+      | ((sizes: number[]) => void)
+      | undefined;
+
+    onResize?.([50, 50]);
 
     expect(setAddonState).toHaveBeenCalledWith({
       previewPanelEnabled: true,

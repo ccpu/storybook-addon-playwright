@@ -111,7 +111,7 @@ describe('ActionSetMain', () => {
   it('should handle sort action list', () => {
     const wrapper = shallow(<ActionSetMain />);
     const actionSetList = wrapper.find(ActionSetList);
-    actionSetList.props().onSortEnd({ newIndex: 1, oldIndex: 2 });
+    actionSetList.props().onSortEnd?.({ newIndex: 1, oldIndex: 2 });
     expect(sortActionSetsMock).toHaveBeenCalledWith({
       newIndex: 1,
       oldIndex: 2,

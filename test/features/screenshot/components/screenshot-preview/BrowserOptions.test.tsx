@@ -2,7 +2,10 @@ import '../../../../manual-mocks/react-useEffect';
 import { BrowserOptions } from '../../../../../src/features/screenshot/components/screenshot-preview/BrowserOptions';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useBrowserOptions } from '../../../../../src/hooks/use-browser-options';
+import {
+  BrowsersOption,
+  useBrowserOptions,
+} from '../../../../../src/hooks/use-browser-options';
 import { MemoizedSchemaFormLoader } from '../../../../../src/components';
 import { OptionPopover } from '../../../../../src/features/screenshot/components/screenshot-preview/OptionPopover';
 
@@ -26,16 +29,35 @@ describe('BrowserOptions', () => {
     expect(wrapper.exists()).toBeTruthy();
   });
 
-  it('should not render', () => {
+  it('should return null when browser options are missing', () => {
     vi.mocked(useBrowserOptions).mockImplementationOnce(() => ({
-      browserOptions: undefined,
+      browserOptions: undefined as unknown as BrowsersOption,
       getBrowserOptions: vi.fn(),
       hasOption: false,
       setBrowserDeviceOptions: vi.fn(),
       setBrowserOptions: setBrowserOptionsMock,
     }));
     const wrapper = shallow(<BrowserOptions browserType="all" />);
-    expect(wrapper.find(OptionPopover).exists()).toBeFalsy();
+    expect(wrapper.isEmptyRender()).toBeTruthy();
+  });
+
+  it('should pass browser options as default data', () => {
+    vi.mocked(useBrowserOptions).mockImplementationOnce(() => ({
+      browserOptions: {
+        all: { cursor: true },
+      },
+      getBrowserOptions: vi.fn(),
+      hasOption: true,
+      setBrowserDeviceOptions: vi.fn(),
+      setBrowserOptions: setBrowserOptionsMock,
+    }));
+
+    const wrapper = shallow(<BrowserOptions browserType="all" />);
+
+    expect(wrapper.find(OptionPopover).prop('active')).toBeTruthy();
+    expect(wrapper.find(MemoizedSchemaFormLoader).prop('defaultData')).toEqual({
+      cursor: true,
+    });
   });
 
   it('should handle save', () => {

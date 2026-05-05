@@ -96,7 +96,7 @@ describe('ScreenshotListPreviewDialog', () => {
     expect(items.last().props().selected).toBeFalsy();
 
     act(() => {
-      items.last().props().onClick({
+      items.last().props().onClick?.({
         browserType: 'chromium',
         id: 'screenshot-id-2',
         title: 'title',
@@ -110,7 +110,7 @@ describe('ScreenshotListPreviewDialog', () => {
   });
 
   it('should do nothing on arrow key press', async () => {
-    let keyUpEv: (ev: KeyboardEvent) => void;
+    let keyUpEv: ((ev: KeyboardEvent) => void) | undefined;
 
     vi.mocked(useKeyPressFn).mockImplementation((_keyDown, keyUp) => {
       keyUpEv = keyUp;
@@ -125,7 +125,7 @@ describe('ScreenshotListPreviewDialog', () => {
     );
 
     act(() => {
-      keyUpEv({ key: 'ArrowDown' } as KeyboardEvent);
+      keyUpEv?.({ key: 'ArrowDown' } as KeyboardEvent);
     });
 
     const items = wrapper.find(SortableScreenshotListItem);
@@ -133,7 +133,7 @@ describe('ScreenshotListPreviewDialog', () => {
   });
 
   it('should handle arrow key press', async () => {
-    let keyUpEv: (ev: KeyboardEvent) => void;
+    let keyUpEv: ((ev: KeyboardEvent) => void) | undefined;
 
     vi.mocked(useKeyPressFn).mockImplementation((_keyDown, keyUp) => {
       keyUpEv = keyUp;
@@ -151,21 +151,21 @@ describe('ScreenshotListPreviewDialog', () => {
     );
 
     act(() => {
-      keyUpEv({ key: 'ArrowDown' } as KeyboardEvent);
+      keyUpEv?.({ key: 'ArrowDown' } as KeyboardEvent);
     });
 
     let items = wrapper.find(SortableScreenshotListItem);
     expect(items.last().props().selected).toBeTruthy();
 
     act(() => {
-      keyUpEv({ key: 'ArrowUp' } as KeyboardEvent);
+      keyUpEv?.({ key: 'ArrowUp' } as KeyboardEvent);
     });
 
     items = wrapper.find(SortableScreenshotListItem);
     expect(items.first().props().selected).toBeTruthy();
 
     act(() => {
-      keyUpEv({ key: 'Enter' } as KeyboardEvent);
+      keyUpEv?.({ key: 'Enter' } as KeyboardEvent);
     });
     // no change because f enter key
     items = wrapper.find(SortableScreenshotListItem);

@@ -169,7 +169,7 @@ describe('saveScreenshot', () => {
 
     const mockData = vi.mocked(saveStoryFile).mock;
 
-    const data = mockData.calls[0][1].stories['story-id'].screenshots[1];
+    const data = mockData.calls[0][1]!.stories!['story-id'].screenshots![1];
 
     expect(data.actionSets).toBe(undefined);
     expect(data.props).toBe(undefined);
@@ -222,7 +222,8 @@ describe('saveScreenshot', () => {
     const mockData = vi.mocked(saveStoryFile).mock;
 
     const newId =
-      mockData.calls[0][1].stories['story-id'].screenshots[0].actionSets[0].id;
+      mockData.calls[0][1]!.stories!['story-id'].screenshots![0].actionSets![0]
+        .id;
 
     expect(newId === 'action-id').toBeFalsy();
   });

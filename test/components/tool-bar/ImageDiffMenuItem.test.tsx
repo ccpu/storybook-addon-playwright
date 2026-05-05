@@ -36,7 +36,7 @@ describe('ImageDiffMenuItem', () => {
     wrapper
       .find(MenuItem)
       .props()
-      .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
     expect(selectStoryMock).toHaveBeenCalledWith('story-id');

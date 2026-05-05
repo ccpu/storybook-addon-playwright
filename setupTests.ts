@@ -85,8 +85,8 @@ vi.mock('@testing-library/react-hooks', async (importOriginal) => {
 // Polyfill setImmediate for jsdom (missing in newer Node.js)
 if (typeof globalThis.setImmediate === 'undefined') {
   (globalThis as any).setImmediate = (
-    fn: (...args: any[]) => void,
-    ...args: any[]
+    fn: (...args: unknown[]) => void,
+    ...args: unknown[]
   ) => setTimeout(fn, 0, ...args);
 }
 

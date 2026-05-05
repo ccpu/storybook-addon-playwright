@@ -1,3 +1,9 @@
-const useGlobalScreenshotDispatch = vi.fn();
+type GlobalScreenshotDispatch = {
+  dispatch: (...args: unknown[]) => unknown;
+};
 
-export { useGlobalScreenshotDispatch };
+export const useGlobalScreenshotDispatch = vi
+  .fn<() => GlobalScreenshotDispatch>()
+  .mockImplementation(() => ({
+    dispatch: vi.fn(),
+  }));

@@ -73,7 +73,8 @@ describe('getStoryScreenshots', () => {
           },
         },
       });
-      data.stories['story-id'].screenshots = [
+      const stories = data.stories!;
+      stories['story-id'].screenshots = [
         {
           actionSets: [
             {

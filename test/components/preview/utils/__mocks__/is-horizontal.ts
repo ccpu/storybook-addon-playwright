@@ -1,1 +1,1 @@
-export const isHorizontal = vi.fn();
+export const isHorizontal = vi.fn<(...args: unknown[]) => unknown>();

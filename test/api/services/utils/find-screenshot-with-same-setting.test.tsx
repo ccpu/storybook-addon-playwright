@@ -46,7 +46,7 @@ describe('findScreenshotWithSameSetting', () => {
   it('should return undefined', () => {
     const screenshot = findScreenshotWithSameSetting(
       data,
-      data.stories['story-id'].screenshots,
+      data.stories!['story-id'].screenshots!,
       {
         browserType: 'chromium',
         id: 'screenshot-id',
@@ -59,7 +59,7 @@ describe('findScreenshotWithSameSetting', () => {
   it('should return screenshot with same browserOptions', () => {
     const screenshot = findScreenshotWithSameSetting(
       data,
-      data.stories['story-id'].screenshots,
+      data.stories!['story-id'].screenshots!,
       {
         browserOptions: { cursor: true },
         browserType: 'chromium',
@@ -78,7 +78,7 @@ describe('findScreenshotWithSameSetting', () => {
   it('should return screenshot with same screenshotOptions', () => {
     const screenshot = findScreenshotWithSameSetting(
       data,
-      data.stories['story-id'].screenshots,
+      data.stories!['story-id'].screenshots!,
       {
         browserType: 'chromium',
         id: 'test-screenshot-id',
@@ -97,7 +97,7 @@ describe('findScreenshotWithSameSetting', () => {
   it('should return screenshot with same actions', () => {
     const screenshot = findScreenshotWithSameSetting(
       data,
-      data.stories['story-id'].screenshots,
+      data.stories!['story-id'].screenshots!,
       {
         actionSets: [
           {

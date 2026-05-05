@@ -1,6 +1,8 @@
 import { ScreenshotData, StoryInfo } from '../../../../src/typings';
 
-const getStoryScreenshotsData = vi.fn();
+import { getStoryScreenshotsData as orgGetStoryScreenshotsData } from '../../../../src/api/services/get-story-screenshots-data';
+
+const getStoryScreenshotsData = vi.fn<typeof orgGetStoryScreenshotsData>();
 
 getStoryScreenshotsData.mockImplementation(
   (data: StoryInfo): Promise<ScreenshotData[]> => {

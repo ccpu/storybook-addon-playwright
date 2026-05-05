@@ -49,7 +49,7 @@ describe('Toolbar', () => {
     wrapper
       .find('.cursor-button')
       .props()
-      .onClick({} as React.MouseEvent<unknown, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', { cursor: true });
   });
@@ -74,7 +74,7 @@ describe('Toolbar', () => {
     wrapper
       .find('.cursor-button')
       .props()
-      .onClick({} as React.MouseEvent<unknown, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', {
       cursor: undefined,

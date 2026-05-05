@@ -75,7 +75,7 @@ describe('SchemaFormLoader', () => {
       .find(Button)
       .last()
       .props()
-      .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(onSaveMock).toHaveBeenCalledWith({ click: true });
   });
@@ -110,7 +110,7 @@ describe('SchemaFormLoader', () => {
       .find(Button)
       .first()
       .props()
-      .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(onSaveMock).toHaveBeenCalledWith({});
   });

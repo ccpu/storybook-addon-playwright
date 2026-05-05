@@ -41,7 +41,8 @@ describe('deleteScreenshot', () => {
       storyId: 'story-id',
     });
     expect(
-      vi.mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
+      vi.mocked(saveStoryFile).mock.calls[0]![1]!.stories!['story-id']
+        .screenshots,
     ).toStrictEqual([
       {
         actionSets: [
@@ -65,9 +66,8 @@ describe('deleteScreenshot', () => {
     vi.mocked(loadStoryData).mockImplementationOnce(() => {
       const data = storyFileInfo();
       return new Promise((resolve) => {
-        data.stories['story-id'].screenshots = [
-          data.stories['story-id'].screenshots[0],
-        ];
+        const stories = data.stories!;
+        stories['story-id'].screenshots = [stories['story-id'].screenshots![0]];
         resolve(data);
       });
     });
@@ -79,7 +79,8 @@ describe('deleteScreenshot', () => {
     });
 
     expect(
-      vi.mocked(saveStoryFile).mock.calls[0][1].stories['story-id'].screenshots,
+      vi.mocked(saveStoryFile).mock.calls[0]![1]!.stories!['story-id']
+        .screenshots,
     ).toStrictEqual(undefined);
 
     expect(unlinkSyncMock).toBeCalledTimes(1);

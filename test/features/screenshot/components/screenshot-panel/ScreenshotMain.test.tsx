@@ -34,10 +34,10 @@ describe('ScreenshotMain', () => {
     expect(preview.exists()).toBeTruthy();
     expect(wrapper.find(ScreenshotPanel).exists()).toBeTruthy();
 
-    preview.props().onLoad();
+    preview.props().onLoad?.();
     expect(wrapper.find(ScreenshotPanel).exists()).toBeFalsy();
 
-    preview.props().onClose();
+    preview.props().onClose?.();
     expect(wrapper.find(ScreenshotPanel).exists()).toBeTruthy();
   });
 });

@@ -1,5 +1,5 @@
-export const useScreenshotMock = vi.fn();
-export const getSnapshotMock = vi.fn();
+export const useScreenshotMock = vi.fn<(...args: unknown[]) => unknown>();
+export const getSnapshotMock = vi.fn<(...args: unknown[]) => unknown>();
 
 vi.mock('../../../src/features/screenshot/hooks/use-screenshot', () => ({
   useScreenshot: useScreenshotMock,

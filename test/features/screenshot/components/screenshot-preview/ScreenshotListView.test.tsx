@@ -66,7 +66,7 @@ describe('ScreenshotList', () => {
     let screenshotView = wrapper.find(ScreenshotView);
     expect(screenshotView.first().props().refresh).toBeTruthy();
 
-    screenshotView.first().props().onRefreshEnd();
+    screenshotView.first().props().onRefreshEnd?.();
     screenshotView = wrapper.find(ScreenshotView);
     expect(screenshotView.first().props().refresh).toBeFalsy();
   });
@@ -77,7 +77,7 @@ describe('ScreenshotList', () => {
     );
     const toolbar = wrapper.find(Toolbar);
 
-    toolbar.props().onSave();
+    toolbar.props().onSave?.();
 
     expect(wrapper.find(InputDialog).props().open).toBeTruthy();
   });
@@ -98,7 +98,7 @@ describe('ScreenshotList', () => {
     );
     const toolbar = wrapper.find(Toolbar);
 
-    toolbar.props().onSave();
+    toolbar.props().onSave?.();
 
     wrapper.find(InputDialog).props().onSave('title');
 
@@ -106,7 +106,7 @@ describe('ScreenshotList', () => {
 
     expect(chromium.props().savingWithTitle).toBe('title');
 
-    chromium.props().onSaveComplete('chromium');
+    chromium.props().onSaveComplete?.('chromium');
 
     expect(wrapper.find(ScreenshotView).first().props().savingWithTitle).toBe(
       undefined,
@@ -118,7 +118,7 @@ describe('ScreenshotList', () => {
     const firefox = wrapper.find(ScreenshotView).last();
     expect(firefox.props().savingWithTitle).toBe('title');
 
-    firefox.props().onSaveComplete('firefox');
+    firefox.props().onSaveComplete?.('firefox');
 
     expect(wrapper.find(ScreenshotView).last().props().savingWithTitle).toBe(
       undefined,

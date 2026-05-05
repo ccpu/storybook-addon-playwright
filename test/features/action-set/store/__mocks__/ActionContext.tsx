@@ -1,7 +1,7 @@
 import { getActionSchemaData } from '../../../../configs';
 import type { ActionSetState } from '../../../../../src/features/action-set/store/action-set-store';
 
-export const useActionSetStoreState = vi.fn();
+export const useActionSetStoreState = vi.fn<(...args: unknown[]) => unknown>();
 
 const mockData = {
   actionSchema: getActionSchemaData(),

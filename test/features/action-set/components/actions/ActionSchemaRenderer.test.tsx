@@ -69,10 +69,10 @@ describe('ActionSchemaRenderer', () => {
     wrapper.find(MemoizedSchemaRenderer).props().onChange('opt.path', 1);
 
     expect(setActionOptionsMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      actionSetId: 'action-set-id',
       actionId: 'action-id',
+      actionSetId: 'action-set-id',
       objPath: 'opt.path',
+      storyId: 'story-id',
       val: 1,
     });
   });
@@ -105,13 +105,13 @@ describe('ActionSchemaRenderer', () => {
     wrapper
       .find(MemoizedSchemaRenderer)
       .props()
-      .onAppendValueToTitle('opt.path');
+      .onAppendValueToTitle?.('opt.path');
 
     expect(toggleSubtitleItemMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      actionSetId: 'action-set-id',
       actionId: 'action-id',
       actionOptionPath: 'opt.path',
+      actionSetId: 'action-set-id',
+      storyId: 'story-id',
     });
   });
 
@@ -127,7 +127,7 @@ describe('ActionSchemaRenderer', () => {
     const val = wrapper
       .find(MemoizedSchemaRenderer)
       .props()
-      .shouldAppendToTitle('opt.path');
+      .shouldAppendToTitle?.('opt.path');
 
     expect(val).toBe(undefined);
   });
@@ -144,13 +144,13 @@ describe('ActionSchemaRenderer', () => {
     wrapper
       .find(MemoizedSchemaRenderer)
       .props()
-      .onSelectorChange('opt.path', 1);
+      .onSelectorChange?.('opt.path', 1);
 
     expect(setActionOptionsMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
-      actionSetId: 'action-set-id',
       actionId: 'action-id',
+      actionSetId: 'action-set-id',
       objPath: 'opt.path',
+      storyId: 'story-id',
       val: 1,
     });
   });

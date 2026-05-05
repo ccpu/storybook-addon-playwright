@@ -1,5 +1,11 @@
-export const useActionSchemaLoader = vi.fn();
+import { useActionSchemaLoader as orgUseActionSchemaLoader } from '../../../../../src/features/schema/hooks/use-action-schema-loader';
 
-useActionSchemaLoader.mockImplementation(() => ({
-  loading: false,
-}));
+export const useActionSchemaLoader = vi.fn<typeof orgUseActionSchemaLoader>();
+
+useActionSchemaLoader.mockImplementation(
+  () =>
+    ({
+      loaded: false,
+      loading: false,
+    } as ReturnType<typeof orgUseActionSchemaLoader>),
+);

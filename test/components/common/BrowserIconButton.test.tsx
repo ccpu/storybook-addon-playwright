@@ -29,10 +29,7 @@ describe('BrowserIcon', () => {
         onClick={clickMock}
       />,
     );
-    wrapper
-      .find(IconButton)
-      .props()
-      .onClick({} as never);
+    wrapper.find(IconButton).props().onClick!({} as never);
 
     expect(clickMock).toHaveBeenCalledWith('chromium');
   });

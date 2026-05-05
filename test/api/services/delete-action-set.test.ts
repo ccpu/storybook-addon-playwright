@@ -45,7 +45,8 @@ describe('deleteActionSet', () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         const data = storyFileInfo();
-        delete data.stories['story-id'].actionSets;
+        const stories = data.stories!;
+        delete stories['story-id'].actionSets;
         resolve(data);
       });
     });
@@ -72,7 +73,8 @@ describe('deleteActionSet', () => {
     loadStoryDataMock.mockImplementationOnce(() => {
       return new Promise((resolve) => {
         const data = storyFileInfo();
-        data.stories['story-id'].actionSets = [
+        const stories = data.stories!;
+        stories['story-id'].actionSets = [
           {
             actions: [],
             id: 'action-set-id',
@@ -90,7 +92,7 @@ describe('deleteActionSet', () => {
     });
 
     const actionSets =
-      saveStoryFileMock.mock.calls[0][1].stories['story-id'].actionSets;
+      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
     expect(actionSets).toStrictEqual(undefined);
   });
 });

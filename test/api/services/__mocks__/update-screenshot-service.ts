@@ -1,6 +1,8 @@
 import { ImageDiffResult, UpdateScreenshot } from '../../../../src/api/typings';
 
-const updateScreenshotService = vi.fn();
+import { updateScreenshotService as orgUpdateScreenshotService } from '../../../../src/api/services/update-screenshot-service';
+
+const updateScreenshotService = vi.fn<typeof orgUpdateScreenshotService>();
 
 updateScreenshotService.mockImplementation(
   (data: UpdateScreenshot): Promise<ImageDiffResult> => {

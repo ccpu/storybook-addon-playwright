@@ -14,9 +14,9 @@ vi.mock(
     await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 vi.mock(
-  '../../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results',
+  '../../../../../src/features/screenshot/hooks/use-global-imageDiff-results',
   async () =>
-    await import('../../hooks/__mocks__/use-screenshot-imageDiff-results'),
+    await import('../../hooks/__mocks__/use-global-imageDiff-results'),
 );
 
 const useScreenshotStoreStateMock = vi.mocked(useScreenshotStoreState);

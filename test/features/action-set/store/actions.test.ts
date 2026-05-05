@@ -216,7 +216,7 @@ describe('action-set zustand store', () => {
       title: 'desc-2',
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].title,
+      useActionSetStore.getState().stories[storyId].actionSets![0].title,
     ).toStrictEqual('desc-2');
   });
 
@@ -246,7 +246,7 @@ describe('action-set zustand store', () => {
       storyId,
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].actions[0],
+      useActionSetStore.getState().stories[storyId].actionSets![0].actions[0],
     ).toStrictEqual({
       id: 'action-id',
       name: 'action-name',
@@ -282,7 +282,7 @@ describe('action-set zustand store', () => {
       storyId,
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].actions[0],
+      useActionSetStore.getState().stories[storyId].actionSets![0].actions[0],
     ).toStrictEqual({
       id: 'action-id',
       name: 'action-name',
@@ -299,7 +299,7 @@ describe('action-set zustand store', () => {
       storyId,
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].actions,
+      useActionSetStore.getState().stories[storyId].actionSets![0].actions,
     ).toStrictEqual([
       { id: 'action-id-2', name: 'action-name-2' },
       { id: 'action-id', name: 'action-name' },
@@ -314,7 +314,7 @@ describe('action-set zustand store', () => {
       storyId,
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].actions,
+      useActionSetStore.getState().stories[storyId].actionSets![0].actions,
     ).toStrictEqual([{ id: 'action-id-2', name: 'action-name-2' }]);
   });
 
@@ -326,7 +326,7 @@ describe('action-set zustand store', () => {
       storyId,
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].actions,
+      useActionSetStore.getState().stories[storyId].actionSets![0].actions,
     ).toStrictEqual([
       { id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
@@ -344,7 +344,7 @@ describe('action-set zustand store', () => {
       val: 'div',
     });
     expect(
-      useActionSetStore.getState().stories[storyId].actionSets[0].actions,
+      useActionSetStore.getState().stories[storyId].actionSets![0].actions,
     ).toStrictEqual([
       { args: { selector: 'div' }, id: 'action-id', name: 'action-name' },
       { id: 'action-id-2', name: 'action-name-2' },
@@ -463,13 +463,11 @@ describe('action-set zustand store', () => {
     useActionSetStore.setState({
       stories: getStoryData(storyId),
     });
-    const actionSet = getActionSetData();
-    delete actionSet.id;
-    actionSet.actions = actionSet.actions.map((action) => {
-      delete action.id;
-      return action;
+    const { id: _actionSetId, actions, ...actionSet } = getActionSetData();
+    setScreenShotActionSets({
+      actionSets: [{ ...actionSet, actions, id: _actionSetId }],
+      storyId,
     });
-    setScreenShotActionSets({ actionSets: [actionSet], storyId });
     expect(
       useActionSetStore.getState().stories[storyId].actionSets,
     ).toStrictEqual([

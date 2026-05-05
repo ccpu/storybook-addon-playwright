@@ -4,6 +4,7 @@ export * from './knobs';
 export * from './screenshot';
 export * from './selector';
 export * from './story-action';
+export * from './story-info';
 export * from './action-schema';
 export * from './story-data';
 export * from './config';

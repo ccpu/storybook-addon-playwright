@@ -30,7 +30,7 @@ describe('saveActionSet', () => {
       filePath: 'story.ts',
       storyId: 'story-id-2',
     });
-    const data = saveStoryFileMock.mock.calls[0][1].stories['story-id-2'];
+    const data = saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id-2'];
     expect(data).toStrictEqual({
       actionSets: [
         {
@@ -53,7 +53,7 @@ describe('saveActionSet', () => {
       storyId: 'story-id',
     });
     const data =
-      saveStoryFileMock.mock.calls[0][1].stories['story-id'].actionSets;
+      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
     expect(data).toStrictEqual([
       {
         actions: [
@@ -81,7 +81,7 @@ describe('saveActionSet', () => {
       storyId: 'story-id',
     });
     const data =
-      saveStoryFileMock.mock.calls[0][1].stories['story-id'].actionSets;
+      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
     expect(data).toHaveLength(3);
   });
 });

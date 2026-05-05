@@ -15,17 +15,13 @@ describe('DeviceList', () => {
 
     expect(wrapper.find(Menu).props().anchorEl).toBe(null);
 
-    wrapper
-      .find(Button)
-      .props()
-      .onClick({ currentTarget: {} } as React.MouseEvent<
-        HTMLButtonElement,
-        MouseEvent
-      >);
+    wrapper.find(Button).props().onClick!({
+      currentTarget: {},
+    } as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(wrapper.find(Menu).props().anchorEl).toBeDefined();
 
-    wrapper.find(Menu).props().onClose({}, 'backdropClick');
+    wrapper.find(Menu).props().onClose!({}, 'backdropClick');
 
     expect(wrapper.find(Menu).props().anchorEl).toBe(null);
   });

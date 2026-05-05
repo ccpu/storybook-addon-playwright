@@ -32,10 +32,9 @@ describe('DeviceListItem', () => {
         viewportSize={{ height: 200, width: 200 }}
       />,
     );
-    wrapper
-      .find(MenuItem)
-      .props()
-      .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+    wrapper.find(MenuItem).props().onClick!(
+      {} as React.MouseEvent<HTMLLIElement, MouseEvent>,
+    );
     expect(onClickMock).toHaveBeenCalledWith('bar');
   });
 });

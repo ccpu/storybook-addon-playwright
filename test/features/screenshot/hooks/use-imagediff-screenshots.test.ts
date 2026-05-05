@@ -24,11 +24,11 @@ vi.mocked(testStoryScreenShotsMock).mockImplementation(() => {
 vi.mock(
   '../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
   async () => {
-    const { useScreenshotImageDiffResults } = await import(
-      './__mocks__/use-screenshot-imageDiff-results'
+    const { useGlobalImageDiffResults } = await import(
+      './__mocks__/use-global-imageDiff-results'
     );
     return {
-      useScreenshotDiffTestByType: useScreenshotImageDiffResults,
+      useScreenshotDiffTestByType: useGlobalImageDiffResults,
     };
   },
 );

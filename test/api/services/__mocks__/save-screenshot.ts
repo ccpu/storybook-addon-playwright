@@ -3,7 +3,9 @@ import {
   SaveScreenshotRequest,
 } from '../../../../src/api/typings';
 
-const saveScreenshot = vi.fn();
+import { saveScreenshot as orgSaveScreenshot } from '../../../../src/api/services/save-screenshot';
+
+const saveScreenshot = vi.fn<typeof orgSaveScreenshot>();
 saveScreenshot.mockImplementation(
   (data: SaveScreenshotRequest): Promise<ImageDiffResult> => {
     return new Promise((resolve) => {

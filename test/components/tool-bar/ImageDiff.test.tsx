@@ -48,11 +48,11 @@ vi.mock(
 vi.mock(
   '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
   async () => {
-    const { useScreenshotImageDiffResults } = await import(
-      '../../features/screenshot/hooks/__mocks__/use-screenshot-imageDiff-results'
+    const { useScreenshotDiffTestByType } = await import(
+      '../../features/screenshot/hooks/__mocks__/use-screenshot-diff-test-by-type'
     );
     return {
-      useScreenshotDiffTestByType: useScreenshotImageDiffResults,
+      useScreenshotDiffTestByType,
     };
   },
 );

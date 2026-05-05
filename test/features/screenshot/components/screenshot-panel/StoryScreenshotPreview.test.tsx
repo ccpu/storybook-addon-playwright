@@ -15,10 +15,10 @@ const setPauseDeleteImageDiffResultMock = vi.fn();
 const removePassedImageDiffResultMock = vi.fn();
 
 vi.mock('../../../../../src/features/screenshot/store/actions', () => ({
-  setPauseDeleteImageDiffResult: (...args: any[]) =>
-    setPauseDeleteImageDiffResultMock(...args),
-  removePassedImageDiffResult: (...args: any[]) =>
+  removePassedImageDiffResult: (...args: unknown[]) =>
     removePassedImageDiffResultMock(...args),
+  setPauseDeleteImageDiffResult: (...args: unknown[]) =>
+    setPauseDeleteImageDiffResultMock(...args),
 }));
 
 import { useEffectCleanup } from '../../../../manual-mocks/react-useEffect';

@@ -24,7 +24,7 @@ describe('ScreenshotInfo', () => {
 
     button
       .props()
-      .onClick({ currentTarget: {} } as React.MouseEvent<
+      .onClick?.({ currentTarget: {} } as React.MouseEvent<
         HTMLButtonElement,
         MouseEvent
       >);
@@ -66,7 +66,7 @@ describe('ScreenshotInfo', () => {
 
     button
       .props()
-      .onClick({ currentTarget: {} } as React.MouseEvent<
+      .onClick?.({ currentTarget: {} } as React.MouseEvent<
         HTMLButtonElement,
         MouseEvent
       >);
@@ -105,12 +105,12 @@ describe('ScreenshotInfo', () => {
 
     button
       .props()
-      .onClick({ currentTarget: {} } as React.MouseEvent<
+      .onClick?.({ currentTarget: {} } as React.MouseEvent<
         HTMLButtonElement,
         MouseEvent
       >);
 
-    wrapper.find(Popover).props().onClose({}, 'backdropClick');
+    wrapper.find(Popover).props().onClose?.({}, 'backdropClick');
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });

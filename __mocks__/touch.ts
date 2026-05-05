@@ -1,1 +1,2 @@
-export const touch = vi.fn();
+export const touch =
+  vi.fn<(path: string, options?: Record<string, unknown>) => Promise<void>>();

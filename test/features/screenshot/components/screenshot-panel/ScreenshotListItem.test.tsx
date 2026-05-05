@@ -52,7 +52,7 @@ import { ScreenshotListItemWrapper } from '../../../../../src/features/screensho
 
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-imageDiff',
-  async () => await import('../../hooks/__mocks__/use-screenshot-imageDiff'),
+  async () => await import('../../hooks/__mocks__/use-screenshot-diff-test'),
 );
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-edit-screenshot',
@@ -61,10 +61,10 @@ vi.mock(
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test',
   async () => {
-    const { useScreenshotImageDiff } = await import(
-      '../../hooks/__mocks__/use-screenshot-imageDiff'
+    const { useScreenshotDiffTest } = await import(
+      '../../hooks/__mocks__/use-screenshot-diff-test'
     );
-    return { useScreenshotDiffTest: useScreenshotImageDiff };
+    return { useScreenshotDiffTest: useScreenshotDiffTest };
   },
 );
 

@@ -36,7 +36,7 @@ vi.mocked(useActionEditor).mockImplementation(
 
 describe('ActionSetEditor', () => {
   const actionSet: ActionSet =
-    storyFileInfo().stories['story-id'].actionSets[0];
+    storyFileInfo().stories!['story-id'].actionSets![0];
 
   afterEach(() => {
     vi.clearAllMocks();

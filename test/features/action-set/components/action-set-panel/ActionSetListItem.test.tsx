@@ -52,7 +52,9 @@ describe('ActionSetListItem', () => {
 
     expect(editButton.exists()).toBeTruthy();
 
-    editButton.props().onClick({} as React.MouseEvent<unknown, MouseEvent>);
+    editButton
+      .props()
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(editMock).toHaveBeenCalledTimes(1);
   });
@@ -158,7 +160,7 @@ describe('ActionSetListItem', () => {
     listItemWrapperWrapper
       .find('.copy-button')
       .props()
-      .onClick({} as never);
+      .onClick?.({} as never);
 
     expect(copyMock).toHaveBeenCalledWith({
       actions: [],

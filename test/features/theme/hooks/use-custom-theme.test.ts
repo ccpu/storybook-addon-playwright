@@ -33,6 +33,6 @@ describe('useCustomTheme', () => {
       result.current.setTheme(theme);
     });
 
-    expect(result.current.theme.palette.primary.main).toEqual('#000000');
+    expect(result.current!.theme!.palette.primary.main).toEqual('#000000');
   });
 });

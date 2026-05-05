@@ -16,7 +16,7 @@ describe('OptionPopover', () => {
     wrapper
       .find(SIconButton)
       .props()
-      .onClick({ target: {} } as never);
+      .onClick?.({ target: {} } as never);
     expect(wrapper.find(Popover).props().anchorEl).toBeDefined();
   });
 
@@ -25,7 +25,7 @@ describe('OptionPopover', () => {
     wrapper
       .find(IconButton)
       .props()
-      .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
     expect(wrapper.find(Popover).props().anchorEl).not.toBeDefined();
   });
 });

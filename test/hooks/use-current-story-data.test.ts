@@ -10,7 +10,7 @@ describe('useCurrentStoryData', () => {
   it('should return story data', () => {
     const { result } = renderHook(() => useCurrentStoryData());
 
-    expect(result.current.id).toBe('story-id');
+    expect(result.current!.id).toBe('story-id');
   });
 
   it('should do nothing if story data not available yet', () => {

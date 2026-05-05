@@ -122,7 +122,7 @@ describe('ScreenshotPreviewDialog', () => {
     const imageDiffPreviewDialog = wrapper.find(ImageDiffPreviewDialog);
 
     act(() => {
-      imageDiffPreviewDialog.props().onClose();
+      imageDiffPreviewDialog.props().onClose?.();
     });
 
     expect(onCLoseMock).toHaveBeenCalledTimes(1);

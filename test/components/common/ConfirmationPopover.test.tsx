@@ -19,7 +19,7 @@ describe('ConfirmationPopover', () => {
     const wrapper = shallow(
       <ConfirmationPopover onConfirm={vi.fn()} onClose={onCloseMock} />,
     );
-    wrapper.find(ActionPopover).props().onClose();
+    wrapper.find(ActionPopover).props().onClose!({}, 'backdropClick');
     expect(onCloseMock).toHaveBeenCalledTimes(1);
   });
 
@@ -31,7 +31,7 @@ describe('ConfirmationPopover', () => {
         onCancel={onCancelMock}
       />,
     );
-    wrapper.find(ActionPopover).props().onClose();
+    wrapper.find(ActionPopover).props().onClose!({}, 'backdropClick');
     expect(onCancelMock).toHaveBeenCalledTimes(1);
   });
 });

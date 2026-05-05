@@ -139,7 +139,7 @@ describe('ActionSetList', () => {
 
     const list = wrapper.find(SortableActionSetListItem);
 
-    list.props().onCheckBoxClick({ id: 'action-set-id' } as ActionSet);
+    list.props().onCheckBoxClick?.({ id: 'action-set-id' } as ActionSet);
 
     expect(toggleCurrentActionSetMock).toHaveBeenCalledWith('action-set-id');
   });

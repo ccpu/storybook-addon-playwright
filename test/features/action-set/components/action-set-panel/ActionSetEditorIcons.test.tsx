@@ -35,8 +35,8 @@ describe('ActionSetEditorIcons', () => {
     wrapper
       .find('.open-action-menu')
       .props()
-      .onClick({ currentTarget: {} } as React.MouseEvent<
-        undefined,
+      .onClick?.({ currentTarget: {} } as React.MouseEvent<
+        HTMLButtonElement,
         MouseEvent
       >);
 

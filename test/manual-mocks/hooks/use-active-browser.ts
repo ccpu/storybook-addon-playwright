@@ -1,6 +1,6 @@
-export const useActiveBrowserMock = vi.fn();
-export const isDisabledMock = vi.fn();
-export const toggleBrowserMock = vi.fn();
+export const useActiveBrowserMock = vi.fn<(...args: unknown[]) => unknown>();
+export const isDisabledMock = vi.fn<(...args: unknown[]) => unknown>();
+export const toggleBrowserMock = vi.fn<(...args: unknown[]) => unknown>();
 
 vi.mock('../../../src/hooks/use-active-browser', () => ({
   useActiveBrowsers: useActiveBrowserMock,

@@ -1,4 +1,5 @@
-export const useStoryActionSetsLoaderMock = vi.fn();
+export const useStoryActionSetsLoaderMock =
+  vi.fn<(...args: unknown[]) => unknown>();
 
 vi.mock(
   '../../../src/features/action-set/hooks/use-story-action-sets-loader',
@@ -7,7 +8,8 @@ vi.mock(
   }),
 );
 
-export const useStoryActionSetsLoaderRetryMock = vi.fn();
+export const useStoryActionSetsLoaderRetryMock =
+  vi.fn<(...args: unknown[]) => unknown>();
 
 useStoryActionSetsLoaderMock.mockImplementation(() => ({
   error: undefined,

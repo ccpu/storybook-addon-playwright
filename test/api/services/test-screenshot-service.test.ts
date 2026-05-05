@@ -129,7 +129,7 @@ describe('testScreenshot compareScreenshot', () => {
       storyId: 'story-id',
     });
 
-    expect(result.error.startsWith('Unable to find the file for ')).toBe(true);
+    expect(result.error!.startsWith('Unable to find the file for ')).toBe(true);
   });
 
   it('should use diffImageToScreenshot if compareScreenshot return false', async () => {

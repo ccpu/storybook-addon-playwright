@@ -1,9 +1,13 @@
-export const useCurrentStoryActionSets: () => {
-  currentActionSets: string[];
-  state: Record<string, unknown>;
-  storyActionSets: unknown[];
-} = vi.fn().mockImplementation(() => ({
-  currentActionSets: [],
-  state: {},
-  storyActionSets: [],
-}));
+export const useCurrentStoryActionSets = vi
+  .fn<
+    () => {
+      currentActionSets: string[];
+      state: Record<string, unknown>;
+      storyActionSets: unknown[];
+    }
+  >()
+  .mockImplementation(() => ({
+    currentActionSets: [],
+    state: {},
+    storyActionSets: [],
+  }));

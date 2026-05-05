@@ -1,9 +1,8 @@
 import path from 'path';
 import { spawn, type ChildProcess } from 'child_process';
 import { rm } from 'fs/promises';
-import { fileURLToPath } from 'url';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const ROOT = path.resolve(__dirname, '..');
 const PORT = '9002';
 const EXTRA_PORTS_TO_CLEAN = ['9003'];
 const NODE_BIN = process.execPath;

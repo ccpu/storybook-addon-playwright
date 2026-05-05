@@ -31,6 +31,6 @@ describe('getThemeData', () => {
   it('should include custom theme', () => {
     const theme = getThemeData();
 
-    expect(theme['palette']).toBeDefined();
+    expect(theme?.palette).toBeDefined();
   });
 });

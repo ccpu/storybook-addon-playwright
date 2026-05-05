@@ -20,17 +20,19 @@ import { StoryInfo } from '../schema';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 
+export type ConfigGetPage = (
+  browserType: BrowserTypes,
+  options: BrowserContextOptions,
+  requestData: ScreenshotRequest,
+) => Promise<Page>;
+
 export interface Config<T = Page> {
   storybookEndpoint: string;
   customActionSchema?: ActionSchemaList;
   // pageMethods?: PageMethodKeys[];
   pageGotoOptions?: PageGotoOptions;
   releaseModifierKey?: boolean;
-  getPage: (
-    browserType: BrowserTypes,
-    options: BrowserContextOptions,
-    requestData: ScreenshotRequest,
-  ) => Promise<T>;
+  getPage: ConfigGetPage;
   beforeScreenshot?: (
     page: T,
     data: ScreenshotRequest,

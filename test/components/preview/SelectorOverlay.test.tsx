@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // Changed: vi.mock must be in test file for vitest hoisting. jest.spyOn on
 // React.useEffect doesn't intercept static ESM named imports in vitest (unlike
 // babel-jest which uses live property reads). The mock routes useEffect calls
@@ -103,6 +104,7 @@ describe('SelectorOverlay', () => {
     });
     shallow(<SelectorOverlay />);
     expect(useKey).toHaveBeenCalled();
+    // @ts-ignore
     callback();
     expect(stopSelectorMock).toHaveBeenCalledTimes(1);
   });
@@ -114,8 +116,10 @@ describe('SelectorOverlay', () => {
 
     useThrottleFnCallback(10, 10);
 
-    expect(wrapper.find('.selector-preview').props().style.height).toBe('100%');
-    expect(wrapper.find('.selector-preview').props().style.width).toBe('100%');
+    expect(wrapper.find('.selector-preview').props().style?.height).toBe(
+      '100%',
+    );
+    expect(wrapper.find('.selector-preview').props().style?.width).toBe('100%');
   });
 
   it('should set style of target element to preview', () => {
@@ -141,10 +145,10 @@ describe('SelectorOverlay', () => {
 
     useThrottleFnCallback(10, 10);
 
-    expect(wrapper.find('.selector-preview').props().style.height).toBe(20);
-    expect(wrapper.find('.selector-preview').props().style.width).toBe(20);
-    expect(wrapper.find('.selector-preview').props().style.top).toBe(100);
-    expect(wrapper.find('.selector-preview').props().style.left).toBe(100);
+    expect(wrapper.find('.selector-preview').props().style?.height).toBe(20);
+    expect(wrapper.find('.selector-preview').props().style?.width).toBe(20);
+    expect(wrapper.find('.selector-preview').props().style?.top).toBe(100);
+    expect(wrapper.find('.selector-preview').props().style?.left).toBe(100);
   });
 
   it('should start position selector and show info', () => {

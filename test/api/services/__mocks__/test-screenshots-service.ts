@@ -1,6 +1,8 @@
 import { ImageDiffResult } from '../../../../src/api/typings';
 
-const testScreenshots = vi.fn();
+import { testScreenshots as orgTestScreenshots } from '../../../../src/api/services/test-screenshots-service';
+
+const testScreenshots = vi.fn<typeof orgTestScreenshots>();
 
 testScreenshots.mockImplementation((): Promise<ImageDiffResult[]> => {
   return new Promise((resolve) => {

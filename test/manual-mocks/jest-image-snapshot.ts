@@ -9,5 +9,6 @@ vi.mock('jest-image-snapshot/src/diff-snapshot', () => ({
 runDiffImageToSnapshotMock.mockImplementation(() => {
   return {
     added: true,
+    pass: false,
   };
 });

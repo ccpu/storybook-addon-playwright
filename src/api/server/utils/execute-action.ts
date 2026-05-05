@@ -19,14 +19,24 @@ export const executeAction = async (page: Page, action: StoryAction) => {
 
   for (let i = 0; i < actionNames.length; i++) {
     const name = actionNames[i];
-    if (!pageObj[name]) break;
-    pageObj = pageObj[name];
+
+    if (
+      (typeof pageObj !== 'object' && typeof pageObj !== 'function') ||
+      pageObj === null
+    ) {
+      break;
+    }
+
+    const nextPageObj = (pageObj as Record<string, unknown>)[name];
+    if (nextPageObj === undefined) break;
+
+    pageObj = nextPageObj;
     pageObjects.push(pageObj);
   }
 
   if (pageObjects.length === 1) return;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  if (typeof pageObj !== 'function') return;
+
   return await pageObj.call(pageObjects[pageObjects.length - 2], ...args);
 };

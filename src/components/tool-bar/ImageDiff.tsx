@@ -5,7 +5,6 @@ import Compare from '@material-ui/icons/Compare';
 import {
   useGlobalImageDiffResults,
   useScreenshotImageDiffResults,
-  useSnackbar,
 } from '../../hooks';
 import {
   removeImageDiffResult,
@@ -16,6 +15,7 @@ import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
 import { ScreenshotTestTargetType } from '../../typings';
 import { StoryData } from '../../schema';
+import { toast } from '../../utils/toast';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -48,7 +48,7 @@ interface ImageDiffStyleProps {
     button?: string;
   };
   target: ScreenshotTestTargetType;
-  storyData: StoryData;
+  storyData?: StoryData;
 }
 
 const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
@@ -60,15 +60,13 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
   const { imageDiffResult } = useGlobalImageDiffResults();
 
-  const { openSnackbar } = useSnackbar();
-
-  const { testStoryScreenShots, imageDiffTestInProgress, clearImageDiffError } =
+  const { testStoryScreenShots, imageDiffTestInProgress } =
     useScreenshotImageDiffResults();
 
   const diffResults =
-    target === 'file'
+    target === 'file' && storyData
       ? imageDiffResult.filter((x) =>
-          isStoryJsonFile(x.filePath, storyData.filePath),
+          x.filePath ? isStoryJsonFile(x.filePath, storyData.filePath) : false,
         )
       : imageDiffResult;
 
@@ -80,30 +78,20 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
         setAnchorEl(event.currentTarget as HTMLElement);
       } else {
         const result = await testStoryScreenShots(target);
-        if (result instanceof Error) {
-          openSnackbar(result.message, {
-            autoHideDuration: null,
-            variant: 'error',
-          });
-          return;
-        }
 
-        if (result && !result.find((x) => !x.pass)) {
-          openSnackbar('All screenshot tests are passed successfully.', {
-            autoHideDuration: null,
-            onClose: clearImageDiffError,
+        if (!Array.isArray(result)) return;
+
+        const imageDiffResults = result as Array<{ pass?: boolean }>;
+
+        if (!imageDiffResults.find((x) => !x.pass)) {
+          toast.success('All screenshot tests are passed successfully.', {
+            autoClose: false,
+            toastId: 'image-diff:all-passed',
           });
         }
       }
     },
-    [
-      anchorEl,
-      clearImageDiffError,
-      diffResults.length,
-      openSnackbar,
-      target,
-      testStoryScreenShots,
-    ],
+    [anchorEl, diffResults.length, target, testStoryScreenShots],
   );
 
   const handleClose = useCallback(() => {
@@ -114,7 +102,9 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
     setAnchorEl(null);
     if (target === 'file') {
       diffResults.forEach((sc) => {
-        removeImageDiffResult(sc.screenshotId);
+        if (sc.screenshotId) {
+          removeImageDiffResult(sc.screenshotId);
+        }
       });
     } else {
       setImageDiffResults([]);
@@ -122,7 +112,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
   }, [diffResults, target]);
 
   const title =
-    target === 'file'
+    target === 'file' && storyData
       ? `Run diff test for all stories in '${storyData.filePath}' file.`
       : 'Run diff test for all stories';
 
@@ -158,7 +148,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
               )
               .map((diff) => (
                 <ImageDiffMenuItem
-                  key={diff.storyId + diff.screenshotId}
+                  key={`${diff.storyId || ''}${diff.screenshotId || ''}`}
                   imageDiff={diff}
                   onClick={handleClose}
                 />

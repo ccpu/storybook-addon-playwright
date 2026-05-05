@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../../../typings';
-import { useDeleteScreenshot } from '../../../../hooks';
+import { useDeleteScreenshot } from '../../hooks/use-delete-screenshot';
 import { DeleteConfirmationButton } from '../../../../components/common';
 
 export interface ScreenshotDeleteProps {

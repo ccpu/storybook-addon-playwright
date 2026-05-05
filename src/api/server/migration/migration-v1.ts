@@ -48,9 +48,15 @@ export const migrateToV1 = (data: V0, version: string) => {
     if (storyData.actionSets && storyData.actionSets.length) {
       newStoryData[storyId].actionSets = storyData.actionSets.map(
         (actionSet) => {
-          (actionSet as ActionSet).title = actionSet.description;
-          delete actionSet.description;
-          return actionSet as ActionSet;
+          const migratedActionSet = actionSet as ActionSet & {
+            description?: string;
+          };
+
+          const { description, ...rest } = migratedActionSet;
+          return {
+            ...rest,
+            title: description ?? rest.title,
+          } as ActionSet;
         },
       );
     }
@@ -62,31 +68,45 @@ export const migrateToV1 = (data: V0, version: string) => {
             ? screenshot.props.reduce((obj, prop) => {
                 obj[prop.name] = prop.value;
                 return obj;
-              }, {})
+              }, {} as Record<string, unknown>)
             : undefined;
 
-          if (screenshot.options) {
-            const cursor = screenshot.options.cursor;
-            delete screenshot.options.cursor;
-            screenshot.screenshotOptionsId = setStoryOptions(
+          const screenshotWithOptionalFields =
+            screenshot as ScreenshotDataV0 & {
+              hash?: string;
+              options?: ScreenshotOptions & { cursor?: boolean };
+            };
+
+          const {
+            hash: _hash,
+            options,
+            ...restScreenshot
+          } = screenshotWithOptionalFields;
+
+          let screenshotOptionsId: string | undefined;
+          let browserOptionsId: string | undefined;
+
+          if (options) {
+            const { cursor, ...screenshotOptions } = options;
+            screenshotOptionsId = setStoryOptions(
               newData,
               'screenshotOptions',
-              screenshot.options,
+              screenshotOptions,
             );
+
             if (cursor) {
-              screenshot.browserOptionsId = setStoryOptions(
-                newData,
-                'browserOptions',
-                { cursor: true },
-              );
+              browserOptionsId = setStoryOptions(newData, 'browserOptions', {
+                cursor: true,
+              });
             }
-            delete screenshot.options;
           }
-          delete screenshot.hash;
+
           return {
-            ...screenshot,
+            ...restScreenshot,
+            browserOptionsId,
             id: nanoid(15),
             props,
+            screenshotOptionsId,
           };
         },
       );

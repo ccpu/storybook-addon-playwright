@@ -10,18 +10,27 @@ export const useEditorAction = (
   const state = useActionSetStoreState();
 
   useEffect(() => {
+    const story = storyId ? state.stories?.[storyId] : undefined;
+
     if (
       !storyId ||
-      !state.stories ||
-      !state.stories[storyId].actionSets ||
-      !state.stories[storyId].actionSets.length
+      !story ||
+      !story.actionSets ||
+      !story.actionSets.length ||
+      !state.orgEditingActionSet
     ) {
       setAction(undefined);
       return;
     }
 
-    const actionSet = state.stories[storyId].actionSets.find(
-      (x) => x.id === state.orgEditingActionSet.id,
+    const editingActionSet = state.orgEditingActionSet;
+    if (!editingActionSet) {
+      setAction(undefined);
+      return;
+    }
+
+    const actionSet = story.actionSets.find(
+      (x) => x.id === editingActionSet.id,
     );
 
     if (!actionSet) {

@@ -11,11 +11,14 @@ export const getStoryScreenshotsData = async (info: StoryInfo) => {
 
   const story = getStoryData(storyData, info.storyId);
 
-  if (!story || !story.screenshots || !story.screenshots.length)
+  if (!story || !story.screenshots || !story.screenshots.length) {
     return undefined;
+  }
 
   return story.screenshots.map((screenshot) => {
-    setStoryScreenshotOptions(storyData, screenshot);
+    if (storyData) {
+      setStoryScreenshotOptions(storyData, screenshot);
+    }
     return screenshot;
   });
 };

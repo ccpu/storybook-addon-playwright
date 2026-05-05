@@ -16,7 +16,6 @@ export * from '../features/screenshot/hooks/use-story-screenshot-loader';
 export * from '../features/screenshot/hooks/use-delete-screenshot';
 export * from './use-browser-options';
 export * from './use-key-press';
-export * from './use-snackbar';
 export * from '../features/screenshot/hooks/use-screenshot-imageDiff';
 export * from '../features/screenshot/hooks/use-screenshot-imageDiff-results';
 export * from '../features/screenshot/hooks/use-global-imageDiff-results';

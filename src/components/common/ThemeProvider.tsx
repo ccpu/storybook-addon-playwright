@@ -30,7 +30,7 @@ const ThemeProvider: React.FC = memo((props) => {
         fontFamily: storyBookTheme.fontBase,
       },
     },
-    customTheme,
+    customTheme || {},
   );
 
   return <MuThemeProvider theme={theme}>{children}</MuThemeProvider>;

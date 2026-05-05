@@ -1,25 +1,14 @@
 import { useFixScreenshotFileName } from '../../../../src/features/screenshot/hooks/use-fix-screenshot-file-name';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
-import { useSnackbar } from '../../../../src/hooks/use-snackbar';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
-
-vi.mock(
-  '../../../../src/hooks/use-snackbar',
-  async () => await import('../../../hooks/__mocks__/use-snackbar'),
-);
+import { toast } from '../../../../src/utils/toast';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
 );
-
-const openSnackbarMock = vi.fn();
-
-vi.mocked(useSnackbar).mockImplementation(() => ({
-  openSnackbar: openSnackbarMock,
-}));
 
 describe('useFixScreenshotFileName', () => {
   it('should be defined', () => {
@@ -82,11 +71,8 @@ describe('useFixScreenshotFileName', () => {
       result.current.fixFileNames();
     });
 
-    expect(openSnackbarMock).toHaveBeenCalledWith(
+    expect(toast.error).toHaveBeenCalledWith(
       'Enter previous name export function.',
-      {
-        variant: 'error',
-      },
     );
   });
 });

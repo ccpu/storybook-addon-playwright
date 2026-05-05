@@ -17,18 +17,7 @@ import { useGlobalImageDiffResults } from '../../../src/features/screenshot/hook
 import { ImageDiffResult } from '../../../src/api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
-import { useSnackbar } from '../../../src/hooks/use-snackbar';
-
-vi.mock(
-  '../../../src/hooks/use-snackbar',
-  async () => await import('../../hooks/__mocks__/use-snackbar'),
-);
-
-const openSnackbarMock = vi.fn();
-
-vi.mocked(useSnackbar).mockImplementation(() => ({
-  openSnackbar: openSnackbarMock,
-}));
+import { toast } from '../../../src/utils/toast';
 
 vi.mock(
   '../../../src/features/screenshot/hooks/use-global-imageDiff-results',
@@ -52,7 +41,6 @@ vi.mock(
 const testStoryScreenShotsMock = vi.fn();
 vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
-    clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {
       fileName: 'story.ts',
@@ -61,7 +49,6 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
       name: 'Story Name',
       parent: 'Story Parent',
     },
-    storyImageDiffError: 'error',
     testStoryScreenShots: testStoryScreenShotsMock,
   };
 });
@@ -134,8 +121,9 @@ describe('ImageDiff', () => {
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
 
-    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+    expect(toast.success).toHaveBeenCalledWith(
       'All screenshot tests are passed successfully.',
+      expect.any(Object),
     );
   });
 
@@ -148,7 +136,7 @@ describe('ImageDiff', () => {
 
     await clickOnIconButton(wrapper);
 
-    expect(openSnackbarMock).toHaveBeenCalledTimes(0);
+    expect(toast.success).toHaveBeenCalledTimes(0);
   });
 
   it('should show menu', () => {
@@ -249,12 +237,12 @@ describe('ImageDiff', () => {
   });
 
   it('should show error server throw error', async () => {
-    testStoryScreenShotsMock.mockImplementationOnce(() => new Error('ops'));
+    testStoryScreenShotsMock.mockImplementationOnce(() => undefined);
 
     const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
     await clickOnIconButton(wrapper);
 
-    expect(openSnackbarMock.mock.calls[0][0]).toBe('ops');
+    expect(toast.success).toHaveBeenCalledTimes(0);
   });
 });

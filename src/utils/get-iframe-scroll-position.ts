@@ -2,11 +2,18 @@ import { getIframeDocument } from './get-iframe-document';
 
 export const getIframeScrollPosition = (iframe: HTMLIFrameElement) => {
   const iframeDocument = getIframeDocument(iframe);
+
+  if (!iframeDocument) {
+    return { scrollLeft: 0, scrollTop: 0 };
+  }
+
+  const frameWindow = iframeDocument.defaultView;
+
   const scrollTop =
-    iframeDocument.defaultView.pageYOffset ||
+    (frameWindow ? frameWindow.pageYOffset : 0) ||
     iframeDocument.documentElement.scrollTop;
   const scrollLeft =
-    iframeDocument.defaultView.pageXOffset ||
+    (frameWindow ? frameWindow.pageXOffset : 0) ||
     iframeDocument.documentElement.scrollLeft;
 
   return { scrollLeft, scrollTop };

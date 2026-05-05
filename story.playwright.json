@@ -1,0 +1,14 @@
+{
+  "version": "4",
+  "stories": {
+    "story-id": {
+      "actionSets": [
+        {
+          "actions": [],
+          "id": "id",
+          "title": "desc"
+        }
+      ]
+    }
+  }
+}

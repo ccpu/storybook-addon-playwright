@@ -1,4 +1,4 @@
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useCallback } from 'react';
 import { removeStoryScreenshots } from '../store/index';
@@ -18,6 +18,8 @@ export const useDeleteStoryScreenshot = () => {
   const data = useCurrentStoryData();
 
   const deleteStoryScreenshots = useCallback(async () => {
+    if (!data) return;
+
     try {
       await mutateAsync({
         filePath: data.filePath,

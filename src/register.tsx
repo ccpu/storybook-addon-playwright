@@ -38,7 +38,7 @@ addons.register(ADDON_ID, () => {
 
   addons.add(ACTIONS_PANEL_ID, {
     render: ({ active }) => (
-      <AddonPanel active={active}>
+      <AddonPanel active={active ?? false}>
         <ActionPanel />
       </AddonPanel>
     ),
@@ -48,7 +48,7 @@ addons.register(ADDON_ID, () => {
 
   addons.add(SCREENSHOT_PANEL_ID, {
     render: ({ active }) => (
-      <AddonPanel active={active}>
+      <AddonPanel active={active ?? false}>
         <ScreenshotPanel />
       </AddonPanel>
     ),

@@ -23,7 +23,6 @@
     "noUnusedParameters": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "strictNullChecks": false,
     "resolveJsonModule": true,
     "types": ["vitest/globals", "node"],
     "noEmit": true

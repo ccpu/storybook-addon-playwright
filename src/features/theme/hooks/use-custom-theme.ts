@@ -1,6 +1,6 @@
 import { Theme } from '@material-ui/core';
 import React from 'react';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 
 export const useCustomTheme = () => {
   const [theme, setTheme] = React.useState<Theme>();

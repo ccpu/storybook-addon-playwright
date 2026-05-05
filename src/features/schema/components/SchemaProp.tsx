@@ -45,8 +45,12 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
   const appendToTile =
     shouldAppendToTitle && shouldAppendToTitle(optionObjectPath);
 
+  const shouldAppend = Boolean(appendToTile);
+
   const handleOnAppendValueToTitle = useCallback(() => {
-    onAppendValueToTitle(optionObjectPath);
+    if (onAppendValueToTitle) {
+      onAppendValueToTitle(optionObjectPath);
+    }
   }, [onAppendValueToTitle, optionObjectPath]);
 
   if (
@@ -63,13 +67,11 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
         selectorType={name === 'selector' ? 'selector' : 'position'}
         value={value}
         description={schema.description}
-        onAppendValueToTitle={
-          onAppendValueToTitle && handleOnAppendValueToTitle
-        }
-        appendValueToTitle={appendToTile}
+        onAppendValueToTitle={handleOnAppendValueToTitle}
+        appendValueToTitle={shouldAppend}
         isFollowedByPositionProp={nextPropName === 'x' || nextPropName === 'y'}
         fullObjectPath={optionObjectPath}
-        isRequired={isRequired}
+        isRequired={Boolean(isRequired)}
         onSelectorChange={onSelectorChange}
         defaultValue={schema.default}
       />
@@ -85,11 +87,9 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
         options={schema.enum as string[]}
         value={value}
         description={schema.description}
-        onAppendValueToTitle={
-          onAppendValueToTitle && handleOnAppendValueToTitle
-        }
-        appendValueToTitle={appendToTile}
-        isRequired={isRequired}
+        onAppendValueToTitle={handleOnAppendValueToTitle}
+        appendValueToTitle={shouldAppend}
+        isRequired={Boolean(isRequired)}
         defaultValue={schema.default}
       />
     );
@@ -105,11 +105,9 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
           onChange={handleChange}
           value={value}
           description={schema.description}
-          onAppendValueToTitle={
-            onAppendValueToTitle && handleOnAppendValueToTitle
-          }
-          appendValueToTitle={appendToTile}
-          isRequired={isRequired}
+          onAppendValueToTitle={handleOnAppendValueToTitle}
+          appendValueToTitle={shouldAppend}
+          isRequired={Boolean(isRequired)}
           defaultValue={schema.default}
         />
       );
@@ -122,11 +120,9 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
           onChange={handleChange}
           value={value}
           description={schema.description}
-          onAppendValueToTitle={
-            onAppendValueToTitle && handleOnAppendValueToTitle
-          }
-          appendValueToTitle={appendToTile}
-          isRequired={isRequired}
+          onAppendValueToTitle={handleOnAppendValueToTitle}
+          appendValueToTitle={shouldAppend}
+          isRequired={Boolean(isRequired)}
           defaultValue={schema.default}
         />
       );
@@ -138,11 +134,9 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
           onChange={handleChange}
           value={value}
           description={schema.description}
-          onAppendValueToTitle={
-            onAppendValueToTitle && handleOnAppendValueToTitle
-          }
-          appendValueToTitle={appendToTile}
-          isRequired={isRequired}
+          onAppendValueToTitle={handleOnAppendValueToTitle}
+          appendValueToTitle={shouldAppend}
+          isRequired={Boolean(isRequired)}
           defaultValue={schema.default}
         />
       );
@@ -159,11 +153,9 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
           options={items as string[]}
           value={value}
           description={schema.description}
-          onAppendValueToTitle={
-            onAppendValueToTitle && handleOnAppendValueToTitle
-          }
-          appendValueToTitle={appendToTile}
-          isRequired={isRequired}
+          onAppendValueToTitle={handleOnAppendValueToTitle}
+          appendValueToTitle={shouldAppend}
+          isRequired={Boolean(isRequired)}
           defaultValue={schema.default}
         />
       );
@@ -180,7 +172,7 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
           </p>
           <div style={{ paddingLeft: 12 }}>
             <SchemaRenderer
-              schemaProps={schema.properties}
+              schemaProps={(schema.properties || {}) as ActionSchema}
               parents={[...parents, name]}
               required={schema.required}
               onChange={onChange}

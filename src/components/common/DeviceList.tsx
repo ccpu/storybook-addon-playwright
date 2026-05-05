@@ -31,7 +31,7 @@ const DeviceList: React.FC<DeviceListProps> = (props) => {
   }, []);
 
   const handleSelection = useCallback(
-    (name: string) => {
+    (name?: string) => {
       setAnchorEl(null);
       onDeviceSelect(name);
     },
@@ -61,9 +61,9 @@ const DeviceList: React.FC<DeviceListProps> = (props) => {
             key={deviceName}
             viewportSize={selectedDevice && selectedDevice.viewport}
             onClick={handleSelection}
-            selected={
-              selectedDevice && selectedDevice.deviceName === deviceName
-            }
+            selected={Boolean(
+              selectedDevice && selectedDevice.deviceName === deviceName,
+            )}
             value={deviceName}
           />
         ))}

@@ -1,17 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useStoryActionSetsLoader, useCopyActionSet } from '../../../../hooks';
-import {
-  useCurrentStoryData,
-  useCurrentStoryActionSets,
-} from '../../../../hooks';
-import { makeStyles, Button } from '@material-ui/core';
-import { Loader, Snackbar, ListWrapper } from '../../../../components/common';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { makeStyles } from '@material-ui/core';
+import { Loader, ListWrapper } from '../../../../components/common';
 import {
   deleteActionSet as deleteActionSetFromStore,
   editActionSet,
   toggleCurrentActionSet,
-} from '../../../../store';
-import { trpcClient } from '../../../../api';
+} from '../../store/actions';
+import { trpcClient } from '../../../../api/trpc/client';
 import { ActionSet } from '../../../../typings';
 import {
   DndContext,
@@ -31,6 +27,10 @@ import {
 } from '@dnd-kit/sortable';
 import { SortableActionSetListItem } from './ActionSetListItem';
 import clsx from 'clsx';
+import { toast } from '../../../../utils/toast';
+import { useCopyActionSet } from '../../hooks/use-copy-action-set';
+import { useCurrentStoryActionSets } from '../../hooks/use-current-story-action-sets';
+import { useStoryActionSetsLoader } from '../../hooks/use-story-action-sets-loader';
 
 const useStyles = makeStyles(
   () => {
@@ -64,19 +64,15 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
   const { mutateAsync: deleteActionSet } =
     trpcClient.actionSet.deleteActionSet.useMutation();
 
-  const [error, setError] = useState<string>();
-
   const { storyActionSets, currentActionSets, state } =
     useCurrentStoryActionSets();
 
-  const {
-    loading,
-    error: actionSetLoaderError,
-    retry,
-  } = useStoryActionSetsLoader();
+  const { loading } = useStoryActionSetsLoader();
 
   const handleDelete = useCallback(
     async (actionSet: ActionSet) => {
+      if (!storyData) return;
+
       try {
         await deleteActionSet({
           actionSetId: actionSet.id,
@@ -88,18 +84,18 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
           storyId: storyData.id,
         });
       } catch (error) {
-        setError((error as { message: string }).message);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Failed to delete action set',
+        );
       }
     },
-    [storyData],
+    [deleteActionSet, storyData],
   );
 
   const handleEdit = useCallback((actionSet: ActionSet) => {
     editActionSet(actionSet);
-  }, []);
-
-  const handleErrorClose = useCallback(() => {
-    setError(undefined);
   }, []);
 
   const handleCheckBox = useCallback((actionSet: ActionSet) => {
@@ -177,7 +173,9 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
                 title={actionSet.title}
                 onCopy={copyActionSet}
                 isEditing={
-                  isEditing && state.orgEditingActionSet.id === actionSet.id
+                  isEditing &&
+                  state.orgEditingActionSet &&
+                  state.orgEditingActionSet.id === actionSet.id
                 }
                 hideIcons={isEditing}
               />
@@ -190,20 +188,7 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
           )}
         </SortableContext>
       </DndContext>
-
       <Loader open={loading || copyInProgress} />
-      {(error || actionSetLoaderError) && (
-        <Snackbar variant="error" open={true} onClose={handleErrorClose}>
-          <>
-            {error || actionSetLoaderError}
-            {actionSetLoaderError && (
-              <Button color="inherit" size="small" onClick={retry}>
-                Retry
-              </Button>
-            )}
-          </>
-        </Snackbar>
-      )}
     </ListWrapper>
   );
 };

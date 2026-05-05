@@ -7,8 +7,14 @@ export const deleteStoryScreenshots = async (
 ): Promise<void> => {
   const screenshots = await getStoryScreenshotsData(storyInfo);
 
+  if (!screenshots || !screenshots.length) {
+    return;
+  }
+
   for (let i = 0; i < screenshots.length; i++) {
     const screenshot = screenshots[i];
+    if (!screenshot) continue;
+
     await deleteScreenshot({
       filePath: storyInfo.filePath,
       screenshotId: screenshot.id,

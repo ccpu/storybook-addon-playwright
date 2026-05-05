@@ -47,6 +47,7 @@ vi.mocked(testStoryScreenshots).mockImplementation(() => {
       {
         added: true,
         newScreenshot: 'base64-image',
+        pass: false,
         screenshotId: 'screenshot-id',
         storyId: 'story-id',
       },

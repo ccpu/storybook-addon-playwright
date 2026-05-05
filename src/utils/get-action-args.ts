@@ -13,7 +13,10 @@ export const getActionArgs = (
     );
   }
 
-  const args = Object.keys(schema.parameters).reduce((arr, actionName) => {
+  const parameters =
+    (schema.parameters as Record<string, unknown> | undefined) || {};
+
+  const args = Object.keys(parameters).reduce<unknown[]>((arr, actionName) => {
     const isRequired = schema.required && schema.required.includes(actionName);
 
     if (action && action.args && action.args[actionName] !== undefined) {

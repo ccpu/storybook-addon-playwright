@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useScreenshotIndexChange, useDragStart } from '../../../../hooks';
+import { useDragStart } from '../../../../hooks/use-drag-start';
 import {
   Loader,
   ListWrapperSortableContainer,
@@ -18,6 +18,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useScreenshotIndexChange } from '../../hooks/use-screenshot-index-change';
 
 interface ScreenshotListSortableProps {
   items: Array<string | number>;

@@ -42,7 +42,9 @@ export const useSelectorManager = () => {
 
   const setSelectorData = useCallback(
     (data: SelectorState) => {
-      selectorManager.onData(data);
+      if (selectorManager.onData) {
+        selectorManager.onData(data);
+      }
     },
     [selectorManager],
   );

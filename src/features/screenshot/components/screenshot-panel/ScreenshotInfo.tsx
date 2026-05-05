@@ -20,18 +20,14 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const getInfo = useCallback(() => {
-    const data = { ...screenshotData };
-
-    delete data.id;
-    delete data.index;
-
+    const { id: _id, index: _index, ...data } = screenshotData;
     return data;
   }, [screenshotData]);
 
   const togglePopover = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       if (onClose && anchorEl) onClose();
-      setAnchorEl(anchorEl ? undefined : event.currentTarget);
+      setAnchorEl(anchorEl ? null : event.currentTarget);
     },
     [anchorEl, onClose],
   );

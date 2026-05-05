@@ -13,7 +13,9 @@ import {
   changeScreenshotIndexInputSchema,
   deleteScreenshotInputSchema,
   deleteStoryScreenshotsInputSchema,
+  imageDiffResultOutputSchema,
   saveScreenshotInputSchema,
+  saveScreenshotOutputSchema,
   storyInputSchema,
   takeScreenshotInputSchema,
   testScreenshotInputSchema,
@@ -43,6 +45,7 @@ export const screenshotRouter = router({
 
   saveScreenshot: baseProcedure
     .input(saveScreenshotInputSchema)
+    .output(saveScreenshotOutputSchema)
     .mutation(({ input }) => saveScreenshot(input)),
 
   // mutation: triggers browser + returns image buffer — has side effects
@@ -52,14 +55,17 @@ export const screenshotRouter = router({
 
   testScreenshot: baseProcedure
     .input(testScreenshotInputSchema)
+    .output(imageDiffResultOutputSchema)
     .mutation(({ input }) => testScreenshot(input)),
 
   testScreenshots: baseProcedure
     .input(testScreenshotsInputSchema)
+    .output(imageDiffResultOutputSchema.array())
     .mutation(({ input }) => testScreenshots(input)),
 
   testStoryScreenshots: baseProcedure
     .input(testStoryScreenshotsInputSchema)
+    .output(imageDiffResultOutputSchema.array())
     .mutation(({ input }) => testStoryScreenshots(input)),
 
   updateScreenshot: baseProcedure

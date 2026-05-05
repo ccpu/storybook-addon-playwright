@@ -26,12 +26,12 @@ const ScreenshotUpdateIcon: React.FC<ScreenshotUpdateIconProps> = ({
       title={title}
       onClick={runDiffTest}
       style={{ position: 'relative' }}
-      disabled={updateInf.inProgress}
+      disabled={Boolean(updateInf.inProgress)}
     >
       <Update viewBox="1.5 1 20 20" />
       <Loader
         position="absolute"
-        open={updateInf.reqBy === reqBy && updateInf.inProgress}
+        open={updateInf.reqBy === reqBy && Boolean(updateInf.inProgress)}
         progressSize={15}
       />
     </IconButton>

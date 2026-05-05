@@ -15,6 +15,6 @@ export async function clearInput(
   }
 
   if (timeout) {
-    await this.waitForTimeout(options.timeout);
+    await this.waitForTimeout(timeout);
   }
 }

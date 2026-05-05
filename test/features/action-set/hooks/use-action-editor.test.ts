@@ -15,6 +15,7 @@ import { useActionSetStoreState } from '../../../../src/features/action-set/stor
 import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
+import { toast } from '../../../../src/utils/toast';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
@@ -92,7 +93,7 @@ describe('useActionSetEditor', () => {
       }),
     );
     vi.mocked(validateActionList).mockImplementationOnce(() => [
-      { id: 'action-id', name: 'click' },
+      { id: 'action-id', name: 'click', required: ['foo'] },
     ]);
     const { result } = renderHook(() => useActionEditor(actionSet));
     await act(async () => {
@@ -100,27 +101,14 @@ describe('useActionSetEditor', () => {
     });
     expect(spy).toHaveBeenCalledTimes(0);
     expect(saveActionSetStoreMock).not.toHaveBeenCalled();
-  });
-
-  it('should clare validation result', async () => {
-    vi.mocked(validateActionList).mockImplementationOnce(() => [
-      { id: 'action-id', name: 'click' },
-    ]);
-    const { result } = renderHook(() => useActionEditor(actionSet));
-
-    await act(async () => {
-      await result.current.handleSave();
-    });
-
-    expect(result.current.validationResult).toStrictEqual([
-      { id: 'action-id', name: 'click' },
-    ]);
-
-    await act(async () => {
-      result.current.clearValidationResult();
-    });
-
-    expect(result.current.validationResult).toStrictEqual(undefined);
+    expect(vi.mocked(toast.error)).toHaveBeenCalledWith(
+      'Action name: click\nRequired: foo',
+      expect.objectContaining({
+        autoClose: 60000,
+        closeButton: true,
+        toastId: 'action-set-editor-validation',
+      }),
+    );
   });
 
   it('should not change store if call client api failed', async () => {

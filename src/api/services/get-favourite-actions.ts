@@ -16,9 +16,10 @@ export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
       (err, data?: FavouriteActionsData) => {
         if (err) {
           reject(err);
+          return;
         }
 
-        resolve(data.actionSets);
+        resolve(data?.actionSets ?? []);
       },
     );
   });

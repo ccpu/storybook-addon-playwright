@@ -2,8 +2,9 @@ import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
-import { useScreenshotUpdate, useCurrentStoryData } from '../../../../hooks';
-import { trpcClient } from '../../../../api';
+import { useCurrentStoryData } from '../../../../hooks';
+import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
+import { trpcClient } from '../../../../api/trpc/client';
 import { Loader, ImageDiffPreviewDialog } from '../../../../components/common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ImageDiffResult } from '../../../../api/typings';
@@ -34,6 +35,8 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
     if (imageDiffResult) {
       await updateScreenshot(imageDiffResult);
     } else {
+      if (!storyData) return;
+
       await testScreenshot({
         filePath: storyData.filePath,
         screenshotId: screenshot.id,
@@ -49,6 +52,8 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
   ]);
 
   const handleSaveScreenshotClick = useCallback(async () => {
+    if (!testScreenshotResult) return;
+
     await updateScreenshot(testScreenshotResult);
     testScreenshotClearResult();
   }, [testScreenshotClearResult, testScreenshotResult, updateScreenshot]);

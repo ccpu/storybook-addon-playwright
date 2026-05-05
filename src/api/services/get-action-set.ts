@@ -10,7 +10,7 @@ export const getActionSet = async (data: StoryInfo): Promise<ActionSet[]> => {
 
   const story = getStoryData(storyData, data.storyId);
 
-  if (!story) return undefined;
+  if (!story) return [];
 
   return story.actionSets
     ? story.actionSets.map((actionSet) => {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { useSnackbar } from '../../../hooks/use-snackbar';
 import { toast } from '../../../utils/toast';
 
 interface Props {
@@ -16,8 +15,6 @@ export const useFixScreenshotFileName = (props: Props) => {
   const [reload, setReload] = React.useState<boolean>(false);
 
   const [functionName, setFunctionName] = React.useState<string>('');
-
-  const { openSnackbar } = useSnackbar();
 
   const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] =
     React.useState<boolean>(false);
@@ -41,11 +38,15 @@ export const useFixScreenshotFileName = (props: Props) => {
 
   const fixFileNames = React.useCallback(() => {
     if (!functionName && fixFunction) {
-      openSnackbar('Enter previous name export function.', {
-        variant: 'error',
-      });
+      toast.error('Enter previous name export function.');
       return;
     }
+
+    if (!currentStoryData) {
+      toast.error('Unable to find current story data.');
+      return;
+    }
+
     setFixFileNamesError(undefined);
     mutateAsync({
       ...currentStoryData,
@@ -57,7 +58,7 @@ export const useFixScreenshotFileName = (props: Props) => {
       .catch(() => {
         return;
       });
-  }, [currentStoryData, fixFunction, functionName, mutateAsync, openSnackbar]);
+  }, [currentStoryData, fixFunction, functionName, mutateAsync]);
 
   const handleShowFixScreenshotFileDialog = React.useCallback(() => {
     setShowFixScreenshotFileDialog(true);

@@ -95,6 +95,10 @@ export const testScreenshotService = async (
       );
     }
 
+    if (result.added && result.pass === false) {
+      delete (result as { pass?: boolean }).pass;
+    }
+
     result.newScreenshot = snapshotData.base64;
   } catch (error) {
     result.pass = false;

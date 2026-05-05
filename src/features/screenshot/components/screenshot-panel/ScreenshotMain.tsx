@@ -2,7 +2,7 @@ import React from 'react';
 import { ScreenshotPanel } from './ScreenshotPanel';
 import { CommonProvider } from '../../../../components/common';
 import { MemoizedStoryScreenshotPreview } from './StoryScreenshotPreview';
-import { useScreenshotUpdateState } from '../../../../hooks';
+import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
 
 export interface ScreenshotMainProps {
   showPanel: boolean;
@@ -32,7 +32,7 @@ const ScreenshotMain: React.FC<ScreenshotMainProps> = ({ showPanel }) => {
         <MemoizedStoryScreenshotPreview
           onClose={handleOnClose}
           updating={true}
-          target={updateInf.target}
+          target={updateInf.target ?? 'story'}
           onLoad={handleOnLoad}
         />
       )}

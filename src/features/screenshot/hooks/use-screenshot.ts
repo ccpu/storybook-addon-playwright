@@ -1,7 +1,7 @@
 import { useCallback, useRef, useEffect, useState } from 'react';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { useStorybookState, addons } from '@storybook/manager-api';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
 import sum from 'hash-sum';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';

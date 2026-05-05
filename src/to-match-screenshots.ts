@@ -15,11 +15,13 @@ export async function toMatchScreenshots(
   const testDirParsed = path.parse(testPath);
   const testDir = testDirParsed.dir;
 
-  const resolvedPath = path.resolve(path.join(testDir, playwrightJsonPath));
+  const resolvedPath = playwrightJsonPath
+    ? path.resolve(path.join(testDir, playwrightJsonPath))
+    : undefined;
 
-  const configRelative = path
-    .relative(process.cwd(), resolvedPath)
-    .replace(/\\/g, '/');
+  const configRelative = resolvedPath
+    ? path.relative(process.cwd(), resolvedPath).replace(/\\/g, '/')
+    : undefined;
 
   try {
     await getScreenshots({

@@ -6,17 +6,19 @@ import { getVersion } from './get-version';
 
 export const saveStoryFile = (
   fileInfo: StoryPlaywrightFileInfo,
-  data: PlaywrightData,
+  data?: PlaywrightData,
 ) => {
-  if (data && data.stories) {
-    Object.keys(data.stories).forEach((key) => {
-      if (!Object.keys(data.stories[key]).length) {
-        delete data.stories[key];
+  const stories = data?.stories;
+
+  if (stories) {
+    Object.keys(stories).forEach((key) => {
+      if (!Object.keys(stories[key] || {}).length) {
+        delete stories[key];
       }
     });
   }
 
-  if (data && data.stories && Object.keys(data.stories).length > 0) {
+  if (data && stories && Object.keys(stories).length > 0) {
     const newData: PlaywrightData = {
       version: getVersion(),
       ...data,
@@ -26,6 +28,10 @@ export const saveStoryFile = (
       spaces: 2,
     });
   } else {
-    fs.unlinkSync(fileInfo.path);
+    try {
+      fs.unlinkSync(fileInfo.path);
+    } catch {
+      // Ignore missing file errors when there is nothing to persist.
+    }
   }
 };

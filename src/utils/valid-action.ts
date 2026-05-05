@@ -16,7 +16,8 @@ export const validAction = (
 ): ValidationResult => {
   const actionSchema = getActionSchema(schema, action.name);
 
-  if (!actionSchema.required || !actionSchema.required.length) return {};
+  if (!actionSchema || !actionSchema.required || !actionSchema.required.length)
+    return {};
 
   if (!action.args) {
     return { required: actionSchema.required };
@@ -56,7 +57,7 @@ export const validateActionList = (
   schema: ActionSchemaList,
   actions: StoryAction[],
 ) => {
-  const result = actions.reduce((arr, action) => {
+  const result = actions.reduce<ActionListValidationResult[]>((arr, action) => {
     const res = validAction(schema, action);
     if (res.required) {
       arr.push({
@@ -66,6 +67,6 @@ export const validateActionList = (
       });
     }
     return arr;
-  }, [] as ActionListValidationResult[]);
+  }, []);
   return result.length === 0 ? undefined : result;
 };

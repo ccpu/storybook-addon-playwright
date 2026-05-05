@@ -34,7 +34,9 @@ export const useEditScreenshot = () => {
   const api = useStorybookApi();
 
   const clearScreenshotEdit = useCallback(() => {
-    deleteTempActionSets(storyData.id);
+    if (storyData?.id) {
+      deleteTempActionSets(storyData.id);
+    }
 
     clearCurrentActionSets();
 
@@ -59,6 +61,8 @@ export const useEditScreenshot = () => {
 
   const editScreenshot = useCallback(
     (screenshotData: ScreenshotData) => {
+      if (!storyData) return;
+
       clearScreenshotEdit();
       setEditScreenshotState({
         currentBrowserOptions: browserOptions.all,

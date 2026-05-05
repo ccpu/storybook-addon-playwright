@@ -6,10 +6,10 @@ import {
   ImageDiffPreview,
 } from '../../../../components/common';
 import { makeStyles, capitalize } from '@material-ui/core';
-import { useScreenshotStoreState } from '../../store/index';
+import { useScreenshotStoreState } from '../../store/selectors';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
-import { useKeyPressFn } from '../../../../hooks';
+import { useKeyPressFn } from '../../../../hooks/use-key-press-fn';
 import { StoryData } from '../../../../schema';
 
 const useStyles = makeStyles(
@@ -101,7 +101,12 @@ const ScreenshotListPreviewDialog: React.FC<
       !currentItem
     ) {
       if (selectedItem) {
-        handleItemClick(screenshots.find((x) => x.id === selectedItem));
+        const selectedScreenshot = screenshots.find(
+          (x) => x.id === selectedItem,
+        );
+        if (selectedScreenshot) {
+          handleItemClick(selectedScreenshot);
+        }
       } else if (screenshots[0]) {
         handleItemClick(screenshots[0]);
       }

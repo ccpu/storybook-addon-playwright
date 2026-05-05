@@ -27,7 +27,7 @@ const FixScreenshotFileDialog: React.FC<Props> = ({ fixFunction }) => {
   return (
     <>
       <IconButton onClick={handleShowFixScreenshotFileDialog}>
-        <FixIcon style={fixFunction && { width: 14 }} />
+        <FixIcon style={fixFunction ? { width: 14 } : undefined} />
       </IconButton>
       <Dialog
         open={showFixScreenshotFileDialog}

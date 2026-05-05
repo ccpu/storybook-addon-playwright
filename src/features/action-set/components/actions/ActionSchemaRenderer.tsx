@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import { ActionSchema } from '../../../../typings';
 import { Definition } from 'ts-to-json';
 import { MemoizedSchemaRenderer } from '../../../schema/components/index';
-import { setActionOptions, toggleSubtitleItem } from '../../../../store';
-import { useCurrentStoryData, useEditorAction } from '../../../../hooks';
+import { setActionOptions, toggleSubtitleItem } from '../../store/actions';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { useEditorAction } from '../../hooks/use-editor-action';
 import { getActionOptionValue } from './utils/index';
 
 export interface ActionSchemaRendererProps {
@@ -16,24 +17,28 @@ const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
   const { schema, actionId, actionSetId } = props;
 
   const story = useCurrentStoryData();
+  const storyId = story?.id;
 
-  const action = useEditorAction(story && story.id, actionId);
+  const action = useEditorAction(storyId || '', actionId);
 
   const handleChange = useCallback(
     (objPath, val) => {
+      if (!storyId) return;
+
       setActionOptions({
         actionId,
         actionSetId,
         objPath,
-        storyId: story.id,
+        storyId,
         val,
       });
     },
-    [actionId, actionSetId, story],
+    [actionId, actionSetId, storyId],
   );
 
   const handleGetValue = useCallback(
     (optionObjectPath: string, schema: ActionSchema) => {
+      if (!action) return undefined;
       const val = getActionOptionValue(action, optionObjectPath, schema);
       return val;
     },
@@ -42,38 +47,42 @@ const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
 
   const shouldAppendToTitle = useCallback(
     (optionObjectPath: string) => {
-      return (
-        action &&
-        action.subtitleItems &&
-        action.subtitleItems.includes(optionObjectPath)
-      );
+      if (!action || !action.subtitleItems) {
+        return undefined;
+      }
+
+      return action.subtitleItems.includes(optionObjectPath);
     },
     [action],
   );
 
   const handleOnAppendValueToTitle = useCallback(
     (optionObjectPath) => {
+      if (!storyId) return;
+
       toggleSubtitleItem({
         actionId,
         actionOptionPath: optionObjectPath,
         actionSetId,
-        storyId: story.id,
+        storyId,
       });
     },
-    [actionId, actionSetId, story],
+    [actionId, actionSetId, storyId],
   );
 
   const handleSelectorChange = useCallback(
     (objPath: string, val: unknown) => {
+      if (!storyId) return;
+
       setActionOptions({
         actionId,
         actionSetId,
         objPath,
-        storyId: story.id,
+        storyId,
         val,
       });
     },
-    [actionId, actionSetId, story],
+    [actionId, actionSetId, storyId],
   );
 
   if (!action) return null;
@@ -85,7 +94,9 @@ const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
         required={schema.required}
         onChange={handleChange}
         getValue={handleGetValue}
-        shouldAppendToTitle={shouldAppendToTitle}
+        shouldAppendToTitle={
+          shouldAppendToTitle as (optionObjectPath: string) => boolean
+        }
         onAppendValueToTitle={handleOnAppendValueToTitle}
         onSelectorChange={handleSelectorChange}
       />

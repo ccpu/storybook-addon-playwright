@@ -18,11 +18,11 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { moveActionSetAction } from '../../../../store';
+import { moveActionSetAction } from '../../store/actions';
 import { makeStyles } from '@material-ui/core';
 import { ActionSet } from '../../../../typings';
 import { DragHandle, ListWrapper } from '../../../../components/common';
-import { useCurrentStoryData } from '../../../../hooks';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -185,6 +185,8 @@ const ActionList: React.FC<ActionListProps> = ({ actionSet }) => {
 
   const handleSortEnd = useCallback(
     (e: SortableIndexChangeEvent) => {
+      if (!story) return;
+
       moveActionSetAction({
         actionSetId: actionSet.id,
         newIndex: e.newIndex,

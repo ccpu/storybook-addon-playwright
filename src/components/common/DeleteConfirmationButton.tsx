@@ -29,7 +29,7 @@ const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
 
   const closeDeleteConfirmation = useCallback(() => {
     if (onClose) onClose();
-    setConfirmAnchorEl(undefined);
+    setConfirmAnchorEl(null);
   }, [onClose]);
 
   const handleDeleteConfirmation = useCallback(() => {

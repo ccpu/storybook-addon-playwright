@@ -6,7 +6,7 @@ import {
   DialogProps,
   ImageDiffPreviewProps,
 } from '../../../../components/common';
-import { trpcClient } from '../../../../api';
+import { trpcClient } from '../../../../api/trpc/client';
 import { ImageDiffResult } from '../../../../api/typings';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { StoryData } from '../../../../schema';
@@ -21,7 +21,7 @@ export interface ScreenshotPreviewDialogProps
 const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
   props,
 ) => {
-  const { storyData, screenShotData, onClose, ...rest } = props;
+  const { storyData, screenShotData, onClose, open = true, ...rest } = props;
 
   const {
     mutateAsync,
@@ -40,7 +40,7 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 
   const handleClose = useCallback(() => {
     reset();
-    onClose();
+    onClose?.();
   }, [onClose, reset]);
 
   return (
@@ -49,7 +49,7 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
         <ImageDiffPreviewDialog
           title={screenShotData.title}
           imageDiffResult={result as ImageDiffResult}
-          open={true}
+          open={open}
           onClose={handleClose}
           titleActions={() => (
             <ScreenshotInfo

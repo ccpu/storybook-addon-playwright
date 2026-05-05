@@ -6,7 +6,7 @@ import { Toolbar as CommonToolbar } from '../../../../components/common';
 import RefreshSharp from '@material-ui/icons/RefreshSharp';
 import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
-import { useBrowserOptions } from '../../../../hooks';
+import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { Tooltip } from '@material-ui/core';
 import NearMeIcon from '@material-ui/icons/NearMe';
 import { BrowserOptions } from './BrowserOptions';

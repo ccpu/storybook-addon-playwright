@@ -34,6 +34,7 @@ mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({
       added: true,
+      pass: false,
     });
   });
 });

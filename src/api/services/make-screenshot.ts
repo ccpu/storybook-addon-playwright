@@ -99,9 +99,9 @@ export const makeScreenshot = async (
 
   const imageInfos: ImageInfo[] = [];
 
-  let screenshotOptionAction: StoryAction;
+  let screenshotOptionAction: StoryAction | undefined;
 
-  let lastAction: StoryAction;
+  let lastAction: StoryAction | undefined;
 
   if (data.actionSets) {
     const actions = data.actionSets.reduce((arr, actionSet) => {
@@ -144,7 +144,12 @@ export const makeScreenshot = async (
           const elementHandle = await page.$(action.args.selector as string);
 
           imageInfos.push({
-            buffer: await takeScreenshot(page, data, configs, elementHandle),
+            buffer: await takeScreenshot(
+              page,
+              data,
+              configs,
+              elementHandle || undefined,
+            ),
             options: action.args as unknown as TakeScreenshotParams,
           });
         }
@@ -164,7 +169,7 @@ export const makeScreenshot = async (
       if (shouldTakeScreenshot(filterActions, i, Boolean(takeScreenshotAll))) {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
-          options: takeScreenshotAll.args as unknown as TakeScreenshotParams,
+          options: takeScreenshotAll?.args || {},
         });
       }
     }
@@ -175,12 +180,14 @@ export const makeScreenshot = async (
     (lastAction.name === 'takeElementScreenshot' ||
       lastAction.name === 'takeScreenshot');
 
-  let buffer =
-    !isTakeElementScreenshotAtLast &&
-    (await takeScreenshot(page, data, configs));
+  let buffer: Buffer | undefined;
+
+  if (!isTakeElementScreenshotAtLast) {
+    buffer = await takeScreenshot(page, data, configs);
+  }
 
   if (configs.releaseModifierKey) {
-    await releaseModifierKey(page, data.actionSets);
+    await releaseModifierKey(page, data.actionSets || []);
   }
 
   if (configs.afterScreenshot) {
@@ -227,24 +234,41 @@ export const makeScreenshot = async (
         .toFormat(format)
         .toBuffer();
     } else {
-      buffer = await sharp(buffer)
-        .composite(
-          imageInfos.map((x) => {
-            return {
-              blend: 'multiply',
-              input: x.buffer,
-              ...options.overlayOptions,
-              ...(x.options ? x.options.stitchOptions : {}),
-            } as sharp.OverlayOptions;
-          }),
-        )
+      const baseBuffer = buffer || imageInfos[0]?.buffer;
+
+      if (!baseBuffer) {
+        throw new Error('Unable to create screenshot image buffer.');
+      }
+
+      const overlaySources =
+        buffer === undefined && imageInfos.length === 1
+          ? imageInfos
+          : imageInfos.filter(
+              (_, index) => !(buffer === undefined && index === 0),
+            );
+
+      const overlays = overlaySources.map((x) => {
+        return {
+          blend: 'multiply',
+          input: x.buffer,
+          ...options.overlayOptions,
+          ...(x.options ? x.options.stitchOptions : {}),
+        } as sharp.OverlayOptions;
+      });
+
+      buffer = await sharp(baseBuffer)
+        .composite(overlays)
         .toFormat(format)
         .toBuffer();
     }
   }
 
+  if (!buffer) {
+    throw new Error('Unable to create screenshot image buffer.');
+  }
+
   return {
-    base64: convertToBase64 && buffer.toString('base64'),
+    base64: convertToBase64 ? buffer.toString('base64') : undefined,
     browserName: data.browserType,
     buffer,
   };

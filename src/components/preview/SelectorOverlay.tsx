@@ -81,8 +81,9 @@ const SelectorOverlay: React.FC<Props> = (props) => {
 
   useThrottleFn(
     (x, y) => {
-      if (iframe) {
-        const node = iframe.contentWindow.document.elementFromPoint(x, y);
+      if (iframe && iframe.contentWindow) {
+        const iframeDocument = iframe.contentWindow.document;
+        const node = iframeDocument.elementFromPoint(x, y);
         if (node) {
           if (isIdSelector) {
             setSelectorInfo({
@@ -92,7 +93,7 @@ const SelectorOverlay: React.FC<Props> = (props) => {
           } else {
             const path = normalizeRootSelectorPath(
               getSelectorPath(node, { minify: true }),
-              iframe.contentWindow.document,
+              iframeDocument,
             );
             if (node.tagName === 'HTML') {
               setSelectorInfo({
@@ -117,7 +118,9 @@ const SelectorOverlay: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (mouseupRef) {
-      const isInBoundary = selectorRef.current.contains(mouseupRef);
+      const isInBoundary = selectorRef.current
+        ? selectorRef.current.contains(mouseupRef)
+        : false;
 
       stopSelector();
       setSelectorData({

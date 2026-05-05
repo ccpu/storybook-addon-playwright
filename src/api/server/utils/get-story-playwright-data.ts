@@ -7,13 +7,17 @@ export interface StoryPlaywrightData {
 }
 
 export const getStoryPlaywrightData = async (fileName: string) => {
-  const playWrightData = await loadStoryData(fileName, '*');
+  const playWrightData = (await loadStoryData(fileName, '*')) || {
+    stories: {},
+  };
 
-  const stories = Object.keys(playWrightData.stories);
+  const storiesData = playWrightData.stories || {};
+
+  const stories = Object.keys(storiesData);
 
   const storyData: StoryPlaywrightData[] = stories.map((story) => {
     return {
-      data: playWrightData.stories[story],
+      data: storiesData[story],
       storyId: story,
     };
   });

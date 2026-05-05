@@ -15,18 +15,7 @@ import '../../manual-mocks/react-useEffect';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ImageDiffPreviewDialog } from '../../../src/components/common/ImageDiffPreviewDialog';
-import { useSnackbar } from '../../../src/hooks/use-snackbar';
-
-vi.mock(
-  '../../../src/hooks/use-snackbar',
-  async () => await import('../../hooks/__mocks__/use-snackbar'),
-);
-
-const openSnackbarMock = vi.fn();
-
-vi.mocked(useSnackbar).mockImplementation(() => ({
-  openSnackbar: openSnackbarMock,
-}));
+import { toast } from '../../../src/utils/toast';
 
 describe('ImageDiffMessage', () => {
   beforeEach(() => {
@@ -38,16 +27,20 @@ describe('ImageDiffMessage', () => {
       <ImageDiffMessage result={undefined} onClose={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
-    expect(openSnackbarMock).toHaveBeenCalledTimes(0);
+    expect(toast.success).toHaveBeenCalledTimes(0);
+    expect(toast.error).toHaveBeenCalledTimes(0);
     expect(wrapper.find(ImageDiffPreviewDialog)).toHaveLength(0);
   });
 
   it('should show message for added screenshot', () => {
     const wrapper = shallow(
-      <ImageDiffMessage result={{ added: true }} onClose={vi.fn()} />,
+      <ImageDiffMessage
+        result={{ added: true, pass: false }}
+        onClose={vi.fn()}
+      />,
     );
     expect(wrapper.exists()).toBeTruthy();
-    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+    expect(vi.mocked(toast.success).mock.calls[0][0]).toBe(
       'Screenshot  saved successfully.',
     );
   });
@@ -55,7 +48,7 @@ describe('ImageDiffMessage', () => {
   it('should screenshot image diff successfully passed snackbar', () => {
     shallow(<ImageDiffMessage result={{ pass: true }} onClose={vi.fn()} />);
 
-    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+    expect(vi.mocked(toast.success).mock.calls[0][0]).toBe(
       'Testing existing screenshot were successful, no change has been detected.',
     );
   });
@@ -77,7 +70,7 @@ describe('ImageDiffMessage', () => {
       />,
     );
 
-    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+    expect(vi.mocked(toast.error).mock.calls[0][0]).toBe(
       'Expected image to be the same size as the snapshot (20x20), but was different (10x10).',
     );
   });

@@ -28,7 +28,6 @@ vi.mock(
 
 vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   return {
-    clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
     storyData: {
       fileName: 'story.ts',
@@ -37,7 +36,6 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
       name: 'Story Name',
       parent: 'Story Parent',
     },
-    storyImageDiffError: '',
     testStoryScreenShots: testStoryScreenShotsMock,
   };
 });
@@ -82,7 +80,8 @@ describe('useStoryScreenshotsDiff', () => {
 
   it('should not load', () => {
     (useScreenshotImageDiffResults as Mock).mockImplementationOnce(() => ({
-      storyInfo: undefined,
+      imageDiffTestInProgress: false,
+      storyData: undefined,
       testStoryScreenShots: testStoryScreenShotsMock,
     }));
 

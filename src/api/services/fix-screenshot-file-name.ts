@@ -20,18 +20,28 @@ export const fixScreenshotFileName = async (
 ) => {
   const configFile = await getStoryPlaywrightDataByFileName(info.filePath);
 
+  if (!configFile) {
+    throw new Error('Unable to load screenshot config file data.');
+  }
+
   const fileInfos = getStoryPlaywrightFileInfo(info.filePath);
   const oldStoryId = kebabCase(info.previousNamedExport);
-  const newStoryId = kebabCase(info.id.split('--')[1]);
-  let oldTitle: string;
-  let newTitle: string;
+  const newStoryName = info.id.split('--')[1];
+  const newStoryId = newStoryName ? kebabCase(newStoryName) : '';
+  let oldTitle = '';
+  let newTitle = '';
   let storyScreenshots: ScreenshotFileData[] = [];
   let foundOldStoryId = false;
+  const stories = configFile.stories || {};
 
-  Object.keys(configFile.stories).forEach((key) => {
-    const storyData = configFile.stories[key];
+  if (!configFile.stories) {
+    configFile.stories = stories;
+  }
+
+  Object.keys(stories).forEach((key) => {
+    const storyData = stories[key];
     const nameParts = key.split('--');
-    const currentStoryId = nameParts[1];
+    const currentStoryId = nameParts[1] || '';
 
     // take first only as its more recent
     if (!oldTitle) oldTitle = nameParts[0];
@@ -47,7 +57,7 @@ export const fixScreenshotFileName = async (
       ...storyScreenshots,
       ...(storyData.screenshots || []).map((x) => ({
         browser: x.browserType,
-        newStoryId: hasNewStoryId && newStoryId,
+        newStoryId: hasNewStoryId ? newStoryId : undefined,
         screenshotTitle: x.title,
         storyId: currentStoryId,
         storyTitle: oldTitle,
@@ -61,15 +71,13 @@ export const fixScreenshotFileName = async (
     }
 
     const newName = nameParts.join('--');
-    const newData = configFile.stories[newName];
+    const newData = stories[newName];
 
     if (newName !== key) {
-      delete configFile.stories[key];
-      delete configFile.stories[newName];
+      delete stories[key];
+      delete stories[newName];
 
-      configFile.stories[newName] = newData
-        ? deepmerge(storyData, newData)
-        : storyData;
+      stories[newName] = newData ? deepmerge(storyData, newData) : storyData;
     }
   }, {});
 

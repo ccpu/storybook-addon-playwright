@@ -27,6 +27,8 @@ export const useLoadScreenshotSettings = (): ReturnType => {
 
   const dispatchActions = useCallback(
     (screenshotData: ScreenshotData) => {
+      if (!storyData) return;
+
       if (!screenshotData.actionSets || !screenshotData.actionSets.length)
         return;
       setScreenShotActionSets({
@@ -38,6 +40,8 @@ export const useLoadScreenshotSettings = (): ReturnType => {
   );
   const loadSetting = useCallback(
     (screenshotData: ScreenshotData, force = false) => {
+      if (!storyData) return;
+
       api.emit(RESET_STORY_ARGS, { storyId: storyData?.id });
       if (screenshotData.props && Object.keys(screenshotData.props).length) {
         api.emit(UPDATE_STORY_ARGS, {

@@ -11,7 +11,7 @@ import {
   FormControl,
   TextField,
 } from '@material-ui/core';
-import { trpcClient } from '../../../../api';
+import { trpcClient } from '../../../../api/trpc/client';
 import { useAnchorEl } from '../../../../hooks/use-anchor-el';
 import {
   DialogTitle,
@@ -21,7 +21,7 @@ import {
   DialogContent,
 } from '@material-ui/core';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
-import { useSnackbar } from '../../../../hooks/use-snackbar';
+import { toast } from '../../../../utils/toast';
 
 export interface AddFavouriteActionProps {
   item: FavouriteActionSet;
@@ -37,7 +37,6 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
   const [radioValue, setRadioValue] = React.useState('*');
 
   const data = useCurrentStoryData();
-  const { openSnackbar } = useSnackbar();
 
   const { mutateAsync: addFavouriteAction } =
     trpcClient.favouriteActions.addFavouriteAction.useMutation();
@@ -49,19 +48,19 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
     clearAnchorEl();
     try {
       await addFavouriteAction(item);
-      openSnackbar(
+      toast.success(
         // prettier-ignore
         `Successfully added action to favourites`,
-        { autoHideDuration: 5000 },
+        { autoClose: 5000 },
       );
     } catch (error) {
-      openSnackbar(
+      toast.error(
         // prettier-ignore
         `An error has occurred:\n ${(error as any).message}`,
-        { autoHideDuration: 5000, variant: 'error' },
+        { autoClose: 5000 },
       );
     }
-  }, [clearAnchorEl, input, item, openSnackbar]);
+  }, [addFavouriteAction, clearAnchorEl, input, item]);
 
   const handleRadioChange = (
     _event: React.ChangeEvent<HTMLInputElement>,

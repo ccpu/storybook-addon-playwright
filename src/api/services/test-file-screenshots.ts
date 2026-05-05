@@ -21,18 +21,20 @@ export const testFileScreenshots = async (
   const storiesData = await getStoryPlaywrightData(filePath);
 
   const storyBaseId = (
-    storiesData.storyData.length > 0
-      ? storiesData.storyData[0].storyId
-      : storyId
+    storiesData.storyData[0]?.storyId ??
+    storyId ??
+    ''
   ).split('--')[0];
 
-  const limit = pLimit(configs.concurrencyLimit.story);
+  const limit = pLimit(configs.concurrencyLimit?.story ?? 1);
 
   if (configs.beforeFileImageDiff) {
     await configs.beforeFileImageDiff({ ...options, storyId: storyBaseId });
   }
 
-  const promisees = storiesData.storyData.reduce((arr, story) => {
+  const promisees = storiesData.storyData.reduce<
+    Array<Promise<ImageDiffResult[]>>
+  >((arr, story) => {
     if (requestType === 'story' && storyId && story.storyId !== storyId)
       return arr;
 
@@ -56,9 +58,18 @@ export const testFileScreenshots = async (
   }, []);
 
   const res = await Promise.all(promisees);
-  const results = res.reduce((arr, d) => {
-    arr = [...arr, ...d];
-    return arr;
+  const results = res.reduce<ImageDiffResult[]>((arr, d) => {
+    const normalized = d.map((diff) => {
+      if (diff.added && diff.pass === false) {
+        const rest = { ...diff } as ImageDiffResult;
+        delete (rest as { pass?: boolean }).pass;
+        return rest;
+      }
+
+      return diff;
+    });
+
+    return [...arr, ...normalized];
   }, []);
 
   if (configs.afterFileImageDiff) {
@@ -68,7 +79,7 @@ export const testFileScreenshots = async (
     });
   }
 
-  if (onComplete) onComplete(results);
+  if (onComplete) await onComplete(results);
 
   return results;
 };

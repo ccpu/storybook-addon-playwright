@@ -57,6 +57,10 @@ export const diffImageToScreenshot = async (
         fs.rmdirSync(diffDir, { recursive: true });
       }
 
+      if (result.added && result.pass === false) {
+        delete (result as { pass?: boolean }).pass;
+      }
+
       result.diffDirection = config.diffDirection;
       if (imageDiffOptions.allowSizeMismatch) {
         result.diffSize = false;

@@ -4,8 +4,10 @@ export const filterFavouriteActions = (
   actions: FavouriteActionSet[],
   storyId: string,
 ) => {
-  return actions.reduce((arr, item) => {
-    if (item.visibleTo === '*' || new RegExp(item.visibleTo).test(storyId)) {
+  return actions.reduce<FavouriteActionSet[]>((arr, item) => {
+    const visibleTo = item.visibleTo || '*';
+
+    if (visibleTo === '*' || new RegExp(visibleTo).test(storyId)) {
       arr.push(item);
     }
     return arr;

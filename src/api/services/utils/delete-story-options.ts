@@ -3,18 +3,22 @@ import { PlaywrightData, StoryOptions } from '../../../typings';
 export const deleteStoryOptions = (
   storyData: PlaywrightData,
   optionsProp: keyof StoryOptions,
-  optionsId: string,
+  optionsId?: string,
 ) => {
   const screenShotOptionId = `${optionsProp}Id`;
 
-  if (!optionsId || !storyData[optionsProp]) return storyData;
+  const options = storyData[optionsProp];
+
+  if (!optionsId || !options) return storyData;
 
   let usingOption = false;
 
-  const storyKeys = Object.keys(storyData.stories);
+  const stories = storyData.stories || {};
+
+  const storyKeys = Object.keys(stories);
 
   for (let i = 0; i < storyKeys.length; i++) {
-    const story = storyData.stories[storyKeys[i]];
+    const story = stories[storyKeys[i]];
     if (
       story.screenshots &&
       story.screenshots.find((x) => x[screenShotOptionId] === optionsId)
@@ -24,11 +28,11 @@ export const deleteStoryOptions = (
     }
   }
 
-  if (!usingOption && storyData[optionsProp][optionsId]) {
-    delete storyData[optionsProp][optionsId];
+  if (!usingOption && options[optionsId]) {
+    delete options[optionsId];
   }
 
-  if (!Object.keys(storyData[optionsProp]).length) {
+  if (!Object.keys(options).length) {
     delete storyData[optionsProp];
   }
 

@@ -23,8 +23,11 @@ interface RequiredContext {
 }
 
 export const getRawStories = (): StoryItem[] | undefined => {
-  const iframeWindow = getPreviewIframe()
-    .contentWindow as unknown as RequiredContext;
+  const previewIframe = getPreviewIframe();
+  const iframeWindow = previewIframe?.contentWindow as
+    | (Window & RequiredContext)
+    | undefined;
+
   if (!iframeWindow) return undefined;
 
   // Storybook 8+ uses __STORYBOOK_PREVIEW__

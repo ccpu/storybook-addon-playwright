@@ -9,6 +9,15 @@ export async function mouseFromTo(
 ) {
   const { skipMouseUp, steps = 1 } = options || {};
 
+  if (
+    from.x === undefined ||
+    from.y === undefined ||
+    to.x === undefined ||
+    to.y === undefined
+  ) {
+    throw new Error('mouseFromTo requires from/to coordinates (x and y).');
+  }
+
   // move mouse to center of element or specified point
   await this.mouse.move(from.x, from.y, { steps });
 

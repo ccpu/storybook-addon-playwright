@@ -36,12 +36,14 @@ function updateStoryEditingActionSet(
   actionSetId: string,
   updater: (actionSet: ActionSet) => ActionSet,
 ): Partial<ActionSetState> {
+  const storyActionSets = state.stories[storyId]?.actionSets || [];
+
   return {
     stories: {
       ...state.stories,
       [storyId]: {
         ...state.stories[storyId],
-        actionSets: state.stories[storyId].actionSets.map((act) => {
+        actionSets: storyActionSets.map((act) => {
           if (act.id !== actionSetId) return act;
           return updater(act);
         }),
@@ -55,10 +57,12 @@ function removeActionSet(
   storyId: string,
   actionSetId: string,
 ): Partial<ActionSetState> {
+  const storyActionSets = state.stories[storyId]?.actionSets || [];
+
   const updated = updateStoryActionSet(
     state,
     storyId,
-    state.stories[storyId].actionSets.filter((x) => x.id !== actionSetId),
+    storyActionSets.filter((x) => x.id !== actionSetId),
   );
   return {
     ...updated,
@@ -87,11 +91,11 @@ export function setScreenShotActionSets({
   actionSets: ActionSet[];
 }) {
   const state = getState();
-  const storyActionSets = state.stories[storyId].actionSets;
+  const storyActionSets = state.stories[storyId]?.actionSets || [];
 
   const matched = actionSets.reduce((arr, actionSet) => {
-    if (storyActionSets) {
-      let storyActionSet: ActionSet = undefined;
+    if (storyActionSets.length) {
+      let storyActionSet: ActionSet | undefined;
 
       for (let i = 0; i < storyActionSets.length; i++) {
         const act = storyActionSets[i];
@@ -117,6 +121,16 @@ export function setScreenShotActionSets({
           temp: true,
         });
       }
+    } else {
+      arr.push({
+        ...actionSet,
+        actions: actionSet.actions.map((action) => {
+          action.id = nanoid(12);
+          return action;
+        }),
+        id: nanoid(12),
+        temp: true,
+      });
     }
     return arr;
   }, [] as ActionSet[]);
@@ -148,7 +162,9 @@ export function addActionSet({
   const state = getState();
   const newAction = [
     ...(state.stories[storyId]
-      ? state.stories[storyId].actionSets.filter((x) => x.id !== actionSet.id)
+      ? (state.stories[storyId].actionSets || []).filter(
+          (x) => x.id !== actionSet.id,
+        )
       : []),
     actionSet,
   ];
@@ -211,9 +227,11 @@ export function sortActionSets({
   newIndex: number;
 }) {
   const state = getState();
+  const storyActionSets = state.stories[storyId]?.actionSets || [];
+
   setState(
     updateStoryActionSet(state, storyId, [
-      ...arrayMove(state.stories[storyId].actionSets, oldIndex, newIndex),
+      ...arrayMove(storyActionSets, oldIndex, newIndex),
     ]),
   );
 }
@@ -249,17 +267,19 @@ export function setActionSchema(actionSchema: ActionSchemaList) {
 
 export function cancelEditActionSet(storyId: string) {
   const state = getState();
-  if (!state.orgEditingActionSet) return;
+  const orgEditingActionSet = state.orgEditingActionSet;
 
-  const { isNew, ...rest } = state.orgEditingActionSet;
+  if (!orgEditingActionSet) return;
+
+  const { isNew, ...rest } = orgEditingActionSet;
 
   if (isNew) {
-    setState(removeActionSet(state, storyId, state.orgEditingActionSet.id));
+    setState(removeActionSet(state, storyId, orgEditingActionSet.id));
   } else {
     const updated = updateStoryEditingActionSet(
       state,
       storyId,
-      state.orgEditingActionSet.id,
+      orgEditingActionSet.id,
       (actionSet) => ({ ...actionSet, ...rest }),
     );
     setState({

@@ -32,6 +32,7 @@ describe('useScreenshotUpdate', () => {
     await act(async () => {
       await result.current.updateScreenshot({
         filePath: './test.stories.tsx',
+        pass: false,
         screenshotId: 'screenshot-id',
         storyId: 'story-id',
       });
@@ -59,6 +60,7 @@ describe('useScreenshotUpdate', () => {
     await act(async () => {
       await result.current.updateScreenshot({
         filePath: './test.stories.tsx',
+        pass: false,
         screenshotId: 'screenshot-id',
         storyId: 'story-id',
       });

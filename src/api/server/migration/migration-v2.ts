@@ -29,8 +29,9 @@ export const migrationV2 = (data: V1PlaywrightData, version: string) => {
 
       if (story.actionSets) {
         story.actionSets.forEach((actionSet) => {
-          actionSet.actions.forEach((action) => {
-            delete action.id;
+          actionSet.actions = actionSet.actions.map((action) => {
+            const { id: _id, ...rest } = action;
+            return rest as StoryAction;
           });
         });
       }
@@ -41,14 +42,18 @@ export const migrationV2 = (data: V1PlaywrightData, version: string) => {
             screenshot.actionSets = [
               {
                 actions: screenshot.actions.map((action) => {
-                  delete action.id;
-                  return action;
+                  const { id: _id, ...rest } = action;
+                  return rest as StoryAction;
                 }),
                 id: nanoid(12),
                 title: `${screenshot.title} actions`,
               },
             ];
-            delete screenshot.actions;
+            const screenshotWithOptionalActions =
+              screenshot as ScreenshotData & {
+                actions?: StoryAction[];
+              };
+            delete screenshotWithOptionalActions.actions;
           }
         });
       }

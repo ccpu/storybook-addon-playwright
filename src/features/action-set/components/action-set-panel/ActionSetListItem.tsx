@@ -59,7 +59,9 @@ export function ActionSetListItem({
   }, [item, onEdit]);
 
   const handleCheckStateChanged = useCallback(() => {
-    onCheckBoxClick(item);
+    if (onCheckBoxClick) {
+      onCheckBoxClick(item);
+    }
   }, [item, onCheckBoxClick]);
 
   const handleDeleteConfirmation = useCallback(() => {
@@ -67,7 +69,9 @@ export function ActionSetListItem({
   }, [item, onDelete]);
 
   const handleCopyActionSet = useCallback(() => {
-    onCopy(item);
+    if (onCopy) {
+      onCopy(item);
+    }
   }, [item, onCopy]);
 
   if (isEditing) {
@@ -129,7 +133,10 @@ export function ActionSetListItem({
             </IconButton>
 
             {!hideIcons && <AddFavouriteAction item={item} />}
-            <CheckBox onClick={handleCheckStateChanged} checked={checked} />
+            <CheckBox
+              onClick={handleCheckStateChanged}
+              checked={Boolean(checked)}
+            />
             {!hideIcons && (
               <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
             )}

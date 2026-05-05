@@ -6,7 +6,7 @@ import {
   Loader,
 } from '../../../../components/common';
 import { ScreenshotData } from '../../../../typings';
-import { removeImageDiffResult } from '../../store/index';
+import { removeImageDiffResult } from '../../store/actions';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -15,11 +15,9 @@ import {
 } from './ScreenshotListItemMenu';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
-import {
-  useScreenshotImageDiff,
-  useDragStart,
-  useEditScreenshot,
-} from '../../../../hooks';
+import { useDragStart } from '../../../../hooks/use-drag-start';
+import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
+import { useScreenshotImageDiff } from '../../hooks/use-screenshot-imageDiff';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../../../api/typings';
@@ -105,7 +103,11 @@ function ScreenshotListItem({
 
   const handleRemoveScreenShotResult = useCallback(() => {
     setShowImageDiffResult(false);
-    if (!pauseDeleteImageDiffResult && isPassesImageDiff) {
+    if (
+      !pauseDeleteImageDiffResult &&
+      isPassesImageDiff &&
+      imageDiffResult?.screenshotId
+    ) {
       removeImageDiffResult(imageDiffResult.screenshotId);
     } else {
       window.clearTimeout(timer.current);
@@ -233,20 +235,22 @@ function ScreenshotListItem({
             browserType={screenshot.browserType}
           />
 
-          {showImageDiffResult && showImageDiffResultDialog && (
-            <MemoizedImageDiffMessage
-              result={imageDiffResult}
-              onClose={handleRemoveScreenShotResult}
-              title={screenshot.title}
-              titleActions={() => (
-                <ScreenshotInfo
-                  color="primary"
-                  size="medium"
-                  screenshotData={screenshot}
-                />
-              )}
-            />
-          )}
+          {showImageDiffResult &&
+            showImageDiffResultDialog &&
+            imageDiffResult && (
+              <MemoizedImageDiffMessage
+                result={imageDiffResult}
+                onClose={handleRemoveScreenShotResult}
+                title={screenshot.title}
+                titleActions={() => (
+                  <ScreenshotInfo
+                    color="primary"
+                    size="medium"
+                    screenshotData={screenshot}
+                  />
+                )}
+              />
+            )}
           <ScreenshotListItemMenu
             show={(forceShowMenu || showMenu) && !dragStart}
             screenshot={screenshot}
@@ -277,12 +281,6 @@ function ScreenshotListItem({
   );
 }
 
-const SortableScreenshotListItem: React.FC<ScreenshotListItemProps> = (
-  props,
-) => <ScreenshotListItem {...props} />;
-
-SortableScreenshotListItem.displayName = 'SortableScreenshotListItem';
-
 ScreenshotListItem.displayName = 'ScreenshotListItem';
 
-export { SortableScreenshotListItem, ScreenshotListItem };
+export { ScreenshotListItem as SortableScreenshotListItem };

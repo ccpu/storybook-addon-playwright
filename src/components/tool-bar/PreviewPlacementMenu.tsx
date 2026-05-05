@@ -21,6 +21,8 @@ const PreviewPlacementMenu: React.FC = () => {
     (event: React.MouseEvent<HTMLElement>) => {
       setAnchorEl(null);
       const { placement } = event.currentTarget.dataset;
+      if (!placement) return;
+
       setAddonState({ ...addonState, placement });
     },
     [setAddonState, addonState],

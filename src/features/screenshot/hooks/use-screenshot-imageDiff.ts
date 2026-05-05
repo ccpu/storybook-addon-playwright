@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { addImageDiffResult } from '../store/index';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { StoryData } from '../../../schema';
 import { toast } from '../../../utils/toast';
 

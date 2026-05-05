@@ -6,6 +6,7 @@ import { deleteScreenshot } from './delete-screenshot';
 import { setStoryOptions } from './utils/set-story-options';
 import { getStoryData, findScreenshotWithSameSetting } from './utils';
 import { SaveScreenshotInput } from '../../schema';
+import { normalizeScreenshotActionIds } from './utils/normalize-screenshot-action-ids';
 
 export const saveScreenshot = async (
   data: SaveScreenshotInput,
@@ -13,7 +14,15 @@ export const saveScreenshot = async (
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
+  if (!storyData) {
+    throw new Error('Unable to load story data.');
+  }
+
   const story = getStoryData(storyData, data.storyId, true);
+
+  if (!story) {
+    throw new Error('Story not found');
+  }
 
   if (data.updateScreenshot) {
     story.screenshots = await deleteScreenshot({
@@ -25,6 +34,10 @@ export const saveScreenshot = async (
 
   if (!story.screenshots) {
     story.screenshots = [];
+  }
+
+  if (!data.base64) {
+    throw new Error('Unable to save screenshot without image data.');
   }
 
   const oldScreenshotData = story.screenshots.find((x) => x.id === data.id);
@@ -63,21 +76,18 @@ export const saveScreenshot = async (
     Buffer.from(data.base64, 'base64'),
   );
 
+  if (result.added && result.pass === false) {
+    delete (result as { pass?: boolean }).pass;
+  }
+
   if (!oldScreenshotData) {
     const index = data.updateScreenshot
       ? data.updateScreenshot.index
       : story.screenshots.length;
     story.screenshots.push({
-      actionSets:
-        data.actionSets && data.actionSets.length
-          ? data.actionSets.map((actionSet) => {
-              delete actionSet.id;
-              actionSet.actions.forEach((action) => {
-                delete action.id;
-              });
-              return actionSet;
-            })
-          : undefined,
+      actionSets: normalizeScreenshotActionIds(data.actionSets, {
+        regenerateIds: true,
+      }),
       browserOptionsId: setStoryOptions(
         storyData,
         'browserOptions',

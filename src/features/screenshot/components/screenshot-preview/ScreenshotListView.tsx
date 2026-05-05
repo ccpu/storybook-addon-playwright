@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ScreenshotView } from './ScreenshotView';
-import { useStoryUrl, useActiveBrowsers } from '../../../../hooks';
+import { useStoryUrl } from '../../../../hooks/use-story-url';
+import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
 import { ScreenShotViewPanel } from '../../../../typings';
 import { Toolbar } from './Toolbar';
 import useMeasure from 'react-use/lib/useMeasure';
@@ -60,10 +61,10 @@ const ScreenshotListView: React.FC<Props> = (props) => {
   const [showTitleDialog, setShowTitleDialog] = useState(false);
 
   const [saveScreenshot, setSaveScreenshot] = useState<{
-    [browser: string]: string;
+    [browser: string]: string | undefined;
   }>();
 
-  const [ref, rect] = useMeasure();
+  const [ref, rect] = useMeasure<HTMLDivElement>();
 
   const { activeBrowsers, toggleBrowser, browserTypes } =
     useActiveBrowsers(viewPanel);
@@ -118,7 +119,9 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const handleSaveScreenshot = useCallback(
     (title: string) => {
-      const browsers = activeBrowsers.reduce((obj, b) => {
+      const browsers = activeBrowsers.reduce<
+        Record<string, string | undefined>
+      >((obj, b) => {
         obj[b] = undefined;
         return obj;
       }, {});

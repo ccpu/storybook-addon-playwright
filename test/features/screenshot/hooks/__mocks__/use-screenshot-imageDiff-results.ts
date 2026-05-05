@@ -2,9 +2,14 @@ const useScreenshotImageDiffResults = vi.fn();
 
 useScreenshotImageDiffResults.mockImplementation(() => {
   return {
-    clearImageDiffError: vi.fn(),
     imageDiffTestInProgress: false,
-    storyImageDiffError: undefined,
+    storyData: {
+      fileName: 'test.stories.tsx',
+      filePath: './test.stories.tsx',
+      id: 'story-id',
+      name: 'Story Name',
+      parent: 'Story Parent',
+    },
     testStoryScreenShots: vi.fn(),
   };
 });

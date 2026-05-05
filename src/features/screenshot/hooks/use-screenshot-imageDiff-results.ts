@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { trpcClient } from '../../../api';
+import { useCallback } from 'react';
+import { trpcClient } from '../../../api/trpc/client';
 import { addImageDiffResult, setImageDiffResults } from '../store/actions';
 import { nanoid } from 'nanoid';
 import { ScreenshotTestTargetType } from '../../../typings';
@@ -9,26 +9,20 @@ import { toast } from '../../../utils/toast';
 export const useScreenshotImageDiffResults = () => {
   const storyData = useCurrentStoryData();
 
-  const [storyImageDiffError, setStoryImageDiffError] = useState<
-    string | undefined
-  >(undefined);
-
   const { mutateAsync, isPending: imageDiffTestInProgress } =
     trpcClient.screenshot.testScreenshots.useMutation({
       onError: (error) => {
         const message = error.message || 'Unexpected error occurred';
-        setStoryImageDiffError(message);
         toast.error(message);
       },
     });
 
-  const clearImageDiffError = useCallback(() => {
-    setStoryImageDiffError(undefined);
-  }, []);
-
   const testStoryScreenShots = useCallback(
     async (type: ScreenshotTestTargetType) => {
-      setStoryImageDiffError(undefined);
+      if (!storyData) {
+        return undefined;
+      }
+
       try {
         const results = await mutateAsync({
           filePath: storyData.filePath,
@@ -52,10 +46,8 @@ export const useScreenshotImageDiffResults = () => {
   );
 
   return {
-    clearImageDiffError,
     imageDiffTestInProgress,
     storyData,
-    storyImageDiffError,
     testStoryScreenShots,
   };
 };

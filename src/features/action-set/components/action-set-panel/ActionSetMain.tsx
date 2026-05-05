@@ -4,10 +4,10 @@ import { InputDialog } from '../../../../components/common';
 import { nanoid } from 'nanoid';
 import { ActionSetList } from './ActionSetList';
 import { ActionSet } from '../../../../typings';
-import { useCurrentActions, useCurrentStoryData } from '../../../../hooks';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { useStorybookState } from '@storybook/manager-api';
 import { FavouriteActions } from './FavouriteActions';
-import { trpcClient } from '../../../../api';
+import { trpcClient } from '../../../../api/trpc/client';
 import {
   cancelEditActionSet,
   addActionSet as addActionSetAction,
@@ -15,7 +15,8 @@ import {
   deleteTempActionSets,
   deleteActionSet as deleteActionSetFromStore,
   sortActionSets,
-} from '../../../../store';
+} from '../../store/actions';
+import { useCurrentActions } from '../../hooks/use-current-actions';
 
 interface SortableIndexChangeEvent {
   newIndex: number;
@@ -26,7 +27,7 @@ const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = useState(false);
 
   const [addToFavouriteAnchor, setAddToFavouriteAnchor] =
-    useState<HTMLElement>();
+    useState<HTMLElement | null>(null);
 
   const { storyId } = useStorybookState();
 
@@ -73,6 +74,8 @@ const ActionSetMain: React.FC = () => {
   }, [storyId]);
 
   const handleDeleteSelectedActionSets = useCallback(async () => {
+    if (!storyData) return;
+
     for (const action of currentActions) {
       try {
         await deleteActionSet({
@@ -94,6 +97,8 @@ const ActionSetMain: React.FC = () => {
 
   const handleSortEnd = useCallback(
     async (e: SortableIndexChangeEvent) => {
+      if (!storyData) return;
+
       sortActionSets({ newIndex: e.newIndex, oldIndex: e.oldIndex, storyId });
       try {
         await changeActionSetIndex({

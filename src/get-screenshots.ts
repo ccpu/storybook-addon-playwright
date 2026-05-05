@@ -26,23 +26,24 @@ interface GetScreenshot {
 export const getScreenshots = async (options: RunImageDiffOptions) => {
   const { onScreenshotReady, playwrightJsonPath, requestId } = options;
 
-  const files = fs.existsSync(playwrightJsonPath)
-    ? [playwrightJsonPath]
-    : await getPlaywrightConfigFiles(playwrightJsonPath);
+  const files =
+    playwrightJsonPath && fs.existsSync(playwrightJsonPath)
+      ? [playwrightJsonPath]
+      : await getPlaywrightConfigFiles(playwrightJsonPath);
 
   const results: GetScreenshot[] = [];
 
-  for (let i = 0; i < files.length; i++) {
-    const fileName = files[i];
+  for (const fileName of files) {
+    if (!fileName) continue;
 
     const storiesData = await getStoryPlaywrightData(fileName);
 
-    for (let i = 0; i < storiesData.storyData.length; i++) {
-      const story = storiesData.storyData[i];
+    for (const story of storiesData.storyData) {
+      if (!story) continue;
 
       if (story.data.screenshots && story.data.screenshots.length) {
-        for (let s = 0; s < story.data.screenshots.length; s++) {
-          const screenShotData = story.data.screenshots[s];
+        for (const screenShotData of story.data.screenshots) {
+          if (!screenShotData) continue;
 
           setStoryScreenshotOptions(storiesData.playWrightData, screenShotData);
 

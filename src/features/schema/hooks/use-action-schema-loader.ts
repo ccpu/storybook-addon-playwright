@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from 'react';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
+import { ActionSchemaList } from '../../../typings';
 import {
   setActionSchema,
   useSchemaLoaded,
@@ -27,13 +28,13 @@ export const useActionSchemaLoader = () => {
   const load = useCallback(async () => {
     const result = await refetch();
     if (!result.data) return;
-    setActionSchema(result.data);
+    setActionSchema(result.data as unknown as ActionSchemaList);
     setSchemaLoaded(true);
   }, [refetch]);
 
   useEffect(() => {
     if (!data) return;
-    setActionSchema(data);
+    setActionSchema(data as unknown as ActionSchemaList);
     setSchemaLoaded(true);
   }, [data]);
 

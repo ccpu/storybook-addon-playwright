@@ -78,7 +78,7 @@ describe('screenshot zustand store', () => {
 
   it('should removeScreenshot and remove from imageDiffResults', () => {
     useScreenshotStore.setState({
-      imageDiffResults: [{ screenshotId: 'screenshot-id' }],
+      imageDiffResults: [{ pass: false, screenshotId: 'screenshot-id' }],
       screenshots: [getScreenshotData()],
     });
     removeScreenshot('screenshot-id');

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { IconButton, Separator } from '@storybook/components';
+import { IconButton, Separator, Form } from '@storybook/components';
 import { makeStyles } from '@material-ui/core';
 import { CommonProvider } from '../common';
 import { PreviewDialog } from '../../features/screenshot/components/screenshot-preview/index';
@@ -14,6 +14,9 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import { useResetSetting } from '../../hooks/use-reset-setting';
 import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
 import { FixScreenshotFileDialog } from '../common';
+// import { FlexBar, IconButton } from 'storybook/internal/components';
+
+Form.Input;
 
 const useStyles = makeStyles(() => ({
   asterisk: {

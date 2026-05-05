@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useBrowserOptions, BrowsersOption } from '../../../../hooks';
+import { useBrowserOptions } from '../../../../hooks/use-browser-options';
+import { BrowsersOption } from '../../../../hooks/use-browser-options';
 import { OptionPopover } from './OptionPopover';
 import SettingIcon from '@material-ui/icons/Settings';
 import {

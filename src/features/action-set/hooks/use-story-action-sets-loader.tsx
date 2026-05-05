@@ -1,7 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
-import { trpcClient } from '../../../api';
+import { useEffect } from 'react';
+import { trpcClient } from '../../../api/trpc/client';
 import { addActionSetList } from '../../../store';
 import { useCurrentStoryData } from '../../../hooks';
+import { toast } from '../../../utils';
 
 interface LoadedStory {
   [fileName: string]: {
@@ -12,8 +13,6 @@ interface LoadedStory {
 const __loadedFiles: LoadedStory = {};
 
 export const useStoryActionSetsLoader = () => {
-  const [error, setError] = useState<string>();
-
   const { mutateAsync, isPending: loading } =
     trpcClient.actionSet.getActionSet.useMutation();
 
@@ -21,7 +20,6 @@ export const useStoryActionSetsLoader = () => {
 
   useEffect(() => {
     if (
-      error ||
       !filePath ||
       !storyId ||
       loading ||
@@ -42,13 +40,15 @@ export const useStoryActionSetsLoader = () => {
         }
       })
       .catch((error) => {
-        setError(error.message);
+        const message =
+          error instanceof Error ? error.message : 'Failed to load action sets';
+
+        toast.error(message, {
+          autoClose: false,
+          toastId: `action-set-list:${message}`,
+        });
       });
-  }, [error, filePath, loading, mutateAsync, storyId]);
+  }, [filePath, loading, mutateAsync, storyId]);
 
-  const retry = useCallback(() => {
-    setError(undefined);
-  }, []);
-
-  return { error, loading, retry };
+  return { loading };
 };

@@ -12,6 +12,10 @@ export const updateScreenshotService = async (
     throw new Error('Unable to find screenshot data.');
   }
 
+  if (!data.base64) {
+    throw new Error('Unable to update screenshot without image data.');
+  }
+
   const result = await diffImageToScreenshot(
     {
       browserType: screenshotData.browserType,
@@ -26,8 +30,17 @@ export const updateScreenshotService = async (
     },
   );
 
-  result.screenshotId = data.screenshotId;
-  result.storyId = data.storyId;
+  const normalizedResult =
+    result.added && result.pass === false
+      ? (() => {
+          const rest = { ...result } as ImageDiffResult;
+          delete (rest as { pass?: boolean }).pass;
+          return rest;
+        })()
+      : result;
 
-  return result;
+  normalizedResult.screenshotId = data.screenshotId;
+  normalizedResult.storyId = data.storyId;
+
+  return normalizedResult;
 };

@@ -5,7 +5,7 @@ import { ActionPanelProps, ActionPanel } from './ActionPanel';
 export interface ActionPopoverProps
   extends ActionPanelProps,
     Omit<PopoverProps, 'open' | 'onClose'> {
-  onClose: (event?: never) => void;
+  onClose?: PopoverProps['onClose'];
 }
 
 const ActionPopover: React.FC<ActionPopoverProps> = memo(

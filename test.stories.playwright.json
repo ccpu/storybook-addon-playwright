@@ -1,0 +1,35 @@
+{
+  "version": "4",
+  "stories": {
+    "new-title": {
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "id": "action-id",
+                  "name": "action-name"
+                }
+              ],
+              "id": "action-set-id",
+              "title": "action-set-title"
+            }
+          ],
+          "base64": "base64-image",
+          "browserOptions": {
+            "deviceName": "iPhone 6"
+          },
+          "browserType": "chromium",
+          "filePath": "story.ts",
+          "id": "screenshot-id",
+          "screenshotOptions": {
+            "fullPage": true
+          },
+          "storyId": "story-id",
+          "title": "screenshot-title"
+        }
+      ]
+    }
+  }
+}

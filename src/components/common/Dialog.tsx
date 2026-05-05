@@ -57,8 +57,8 @@ export interface DialogProps extends MuDialogProps, StyleProps {
   title?: string;
   subtitle?: string;
   onClose?: () => void;
-  footerActions?: React.ComponentType;
-  titleActions?: React.ComponentType;
+  footerActions?: React.ComponentType | undefined;
+  titleActions?: React.ComponentType | undefined;
   enableCloseButton?: boolean;
 }
 
@@ -71,6 +71,7 @@ const Dialog: React.FC<DialogProps> = ({
   footerActions,
   subtitle,
   titleActions,
+  open = false,
   enableCloseButton = true,
   ...rest
 }) => {
@@ -115,7 +116,7 @@ const Dialog: React.FC<DialogProps> = ({
       )}
 
       {children}
-      {footerActions && (
+      {ActionsComponent && (
         <DialogActions>
           <ActionsComponent />
         </DialogActions>

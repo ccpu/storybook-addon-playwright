@@ -4,7 +4,7 @@ import React from 'react';
 import { useAddonState } from '../../../src/hooks/use-addon-state';
 import { AddonState } from '../../../src/typings';
 import { ScreenshotListView } from '../../../src/features/screenshot/components/screenshot-preview/index';
-import SplitPane from 'react-split-pane';
+import { SplitPane } from 'react-split-pane';
 
 vi.mock(
   '../../../src/hooks/use-addon-state',
@@ -57,33 +57,23 @@ describe('Preview', () => {
 
   it('should be notInteractive when split pane drag', () => {
     const wrapper = shallow(<Preview />);
+    const getClassNames = () =>
+      String(wrapper.find('.preview-main').props().className || '').split(' ');
 
     expect(
-      wrapper
-        .find('.preview-main')
-        .props()
-        .className.split(' ')
-        .find((x) => x.indexOf('interactive') !== -1),
+      getClassNames().find((x) => x.indexOf('interactive') !== -1),
     ).toBeTruthy();
 
     wrapper.find(SplitPane).props().onDragStarted();
 
     expect(
-      wrapper
-        .find('.preview-main')
-        .props()
-        .className.split(' ')
-        .find((x) => x.indexOf('notInteractive') !== -1),
+      getClassNames().find((x) => x.indexOf('notInteractive') !== -1),
     ).toBeTruthy();
 
     wrapper.find(SplitPane).props().onDragFinished(2);
 
     expect(
-      wrapper
-        .find('.preview-main')
-        .props()
-        .className.split(' ')
-        .find((x) => x.indexOf('interactive') !== -1),
+      getClassNames().find((x) => x.indexOf('interactive') !== -1),
     ).toBeTruthy();
   });
 

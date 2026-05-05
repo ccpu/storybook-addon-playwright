@@ -1,19 +1,14 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import {
-  useStoryScreenshotLoader,
-  useScreenshotImageDiffResults,
-  useDeleteStoryScreenshot,
-  useScreenshotUpdateState,
-} from '../../../../hooks';
-import {
-  useScreenshotStoreState,
-  setPauseDeleteImageDiffResult,
-} from '../../store/index';
-import { Loader, Snackbar } from '../../../../components/common';
+import { useScreenshotStoreState } from '../../store/selectors';
+import { setPauseDeleteImageDiffResult } from '../../store/actions';
+import { Loader } from '../../../../components/common';
 import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotList } from './ScreenshotList';
-import { Button } from '@material-ui/core';
+import { useDeleteStoryScreenshot } from '../../hooks/use-delete-story-screenshots';
+import { useScreenshotImageDiffResults } from '../../hooks/use-screenshot-imageDiff-results';
+import { useStoryScreenshotLoader } from '../../hooks/use-story-screenshot-loader';
+import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
 
 const ScreenshotPanel = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -28,12 +23,8 @@ const ScreenshotPanel = () => {
 
   const state = useScreenshotStoreState();
 
-  const {
-    testStoryScreenShots,
-    clearImageDiffError,
-    imageDiffTestInProgress,
-    storyImageDiffError,
-  } = useScreenshotImageDiffResults();
+  const { testStoryScreenShots, imageDiffTestInProgress } =
+    useScreenshotImageDiffResults();
 
   const toggleShowPreview = useCallback(() => {
     setShowPreview(!showPreview);
@@ -69,19 +60,6 @@ const ScreenshotPanel = () => {
           }
         />
       </ScreenshotList>
-      {storyImageDiffError && (
-        <Snackbar
-          open={true}
-          action={
-            <Button color="inherit" onClick={handleStoryImgDiff}>
-              Retry
-            </Button>
-          }
-          variant="error"
-          message={storyImageDiffError}
-          onClose={clearImageDiffError}
-        />
-      )}
       {showPreview && (
         <StoryScreenshotPreview onClose={toggleShowPreview} target="story" />
       )}

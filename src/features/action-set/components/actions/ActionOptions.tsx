@@ -11,11 +11,12 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
 import { capitalize, getActionSchema } from '../../../../utils';
 import {
-  useActionSetStoreState,
   toggleActionExpansion,
   deleteActionSetAction,
-} from '../../../../store';
-import { useEditorAction, useCurrentStoryData } from '../../../../hooks';
+} from '../../store/actions';
+import { useActionSetStoreState } from '../../store/selectors';
+import { useEditorAction } from '../../hooks/use-editor-action';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { getActionOptionValue } from './utils/index';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
 import HelpIcon from '@material-ui/icons/HelpOutline';
@@ -83,9 +84,10 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
   const [subtitle, setSubtitle] = useState<string[]>();
 
   const story = useCurrentStoryData();
+  const storyId = story?.id;
   const state = useActionSetStoreState();
 
-  const action = useEditorAction(story && story.id, actionId);
+  const action = useEditorAction(storyId || '', actionId);
   const schema = getActionSchema(state.actionSchema, actionName);
 
   const classes = useStyles();
@@ -96,7 +98,7 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
 
   useEffect(() => {
     if (!action || !action.subtitleItems) return;
-    const titles = action.subtitleItems.reduce((arr, path) => {
+    const titles = action.subtitleItems.reduce<string[]>((arr, path) => {
       const label = path.split('.').pop();
       const value = getActionOptionValue(action, path);
       if (value) {
@@ -112,13 +114,15 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       e.preventDefault();
       e.stopPropagation();
+      if (!storyId) return;
+
       deleteActionSetAction({
         actionId,
         actionSetId,
-        storyId: story.id,
+        storyId,
       });
     },
-    [actionId, actionSetId, story],
+    [actionId, actionSetId, storyId],
   );
 
   const hasParameters =

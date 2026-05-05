@@ -8,10 +8,10 @@ import {
   IconButton,
   capitalize,
 } from '@material-ui/core';
-import { trpcClient } from '../../../../api';
+import { trpcClient } from '../../../../api/trpc/client';
 import { FavouriteActionSet } from '../../../../typings';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
-import { addActionSet as addActionSetToStore } from '../../../../store';
+import { addActionSet as addActionSetToStore } from '../../store/actions';
 import { nanoid } from 'nanoid';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { filterFavouriteActions } from './utils/filter-favourite-actions';
@@ -82,10 +82,11 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
 
   const loadActions = React.useCallback(() => {
     if (!anchorEl) return;
+
     refetchFavouriteActions().then(({ data: result }) => {
       const actions = [
         ...defaults,
-        ...filterFavouriteActions(result || [], storyId),
+        ...filterFavouriteActions(result || [], storyId ?? ''),
       ];
 
       setActionSets(actions);
@@ -93,6 +94,8 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   }, [anchorEl, refetchFavouriteActions, storyId]);
 
   const onAddQuickAction = async (item: FavouriteActionSet) => {
+    if (!storyData || !storyId) return;
+
     const id = nanoid(12);
     const newActionSet: FavouriteActionSet = {
       ...item,

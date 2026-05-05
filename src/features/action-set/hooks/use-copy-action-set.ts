@@ -1,12 +1,12 @@
 import { ActionSet } from '../../../typings';
 import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { addActionSet as addActionSetToStore } from '../../../store';
 import { StoryData } from '../../../schema';
 import { toast } from '../../../utils/toast';
 
-export const useCopyActionSet = (storyData: StoryData) => {
+export const useCopyActionSet = (storyData?: StoryData) => {
   const { mutateAsync, isPending: inProgress } =
     trpcClient.actionSet.saveActionSet.useMutation({
       onError: (error) => {
@@ -16,6 +16,8 @@ export const useCopyActionSet = (storyData: StoryData) => {
 
   const copyActionSet = useCallback(
     async (actionSet: ActionSet) => {
+      if (!storyData) return;
+
       const copyActionSet = JSON.parse(JSON.stringify(actionSet)) as ActionSet;
       copyActionSet.id = nanoid(12);
       try {

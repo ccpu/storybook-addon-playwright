@@ -12,6 +12,8 @@ interface ControlKnob {
 }
 
 const convertOptions = (options?: string[]) => {
+  if (!options) return undefined;
+
   return options.reduce((obj, key) => {
     obj[key] = key;
     return obj;
@@ -19,7 +21,7 @@ const convertOptions = (options?: string[]) => {
 };
 
 const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
-  if (defVal) return defVal;
+  if (defVal !== undefined) return defVal;
   switch (type) {
     case 'boolean':
       return false;

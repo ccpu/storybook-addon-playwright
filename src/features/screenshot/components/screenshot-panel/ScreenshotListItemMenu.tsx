@@ -128,7 +128,7 @@ const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> =
             )}
 
             <ScreenshotDelete
-              onClose={onHide}
+              onClose={onHide || (() => undefined)}
               onStateChange={setWorking}
               screenshot={screenshot}
               onDelete={onDelete}

@@ -9,7 +9,6 @@ vi.mock('react', async (importOriginal) => {
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
-import { useEffectCleanup } from '../../manual-mocks/react-useEffect';
 import { CommonProvider } from '../../../src/components/common/CommonProvider';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -22,16 +21,5 @@ describe('CommonProvider', () => {
       </CommonProvider>,
     );
     expect(wrapper.exists()).toBeTruthy();
-  });
-
-  it('should remove root element when unmounted', () => {
-    const spy = vi.spyOn(document.body, 'removeChild');
-    shallow(
-      <CommonProvider>
-        <div>test</div>
-      </CommonProvider>,
-    );
-    useEffectCleanup();
-    expect(spy).toHaveBeenCalledTimes(1);
   });
 });

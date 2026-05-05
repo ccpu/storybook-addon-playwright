@@ -17,8 +17,8 @@ const useStyles = makeStyles(
 
 export interface DeviceListItemProps {
   name: string;
-  viewportSize?: ViewportSize;
-  onClick: (deviceName: string) => void;
+  viewportSize?: ViewportSize | null;
+  onClick: (deviceName?: string) => void;
   selected?: boolean;
   value?: string;
 }

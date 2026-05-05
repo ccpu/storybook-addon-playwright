@@ -52,10 +52,15 @@ import React from 'react';
 
 import { Button } from '@material-ui/core';
 import { MemoizedSchemaRenderer } from '../../../src/features/schema/components/index';
+import { getSchema } from '../../api/trpc/clients/__mocks__/schema.client';
 
 vi.mock('../../../src/api/trpc/clients/schema.client');
 
 describe('SchemaFormLoader', () => {
+  beforeEach(() => {
+    vi.mocked(getSchema).mockResolvedValue({} as never);
+  });
+
   it('should change value and save', async () => {
     const onSaveMock = vi.fn();
     const wrapper = shallow(

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { BrowserTypes, BrowserContextOptions } from '../../../typings';
 import { SaveScreenshotRequest } from '../../../api/typings';
 import { removeScreenshot, addScreenshot } from '../store/actions';
@@ -10,8 +10,15 @@ import { useEditScreenshot } from './use-edit-screenshot';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { nanoid } from 'nanoid';
 import { toast } from '../../../utils/toast';
+import { getImageDiffMessages } from '../../../utils';
 
-export const useSaveScreenshot = () => {
+interface Options {
+  title?: string;
+  browserType?: BrowserTypes;
+}
+
+export const useSaveScreenshot = (options?: Options) => {
+  const { title, browserType } = options || {};
   const props = useKnobs();
 
   const { screenshotOptions } = useScreenshotOptions();
@@ -20,13 +27,13 @@ export const useSaveScreenshot = () => {
 
   const { editScreenshotState, clearScreenshotEdit } = useEditScreenshot();
 
-  const { currentActions } = useCurrentActions(storyData && storyData.id);
+  const { currentActions } = useCurrentActions(storyData?.id ?? '');
 
   const [error, setError] = useState<string | undefined>(undefined);
 
   const {
     mutateAsync,
-    data: result,
+    data: mutationResult,
     reset,
     isPending: inProgress,
   } = trpcClient.screenshot.saveScreenshot.useMutation({
@@ -35,7 +42,57 @@ export const useSaveScreenshot = () => {
       setError(message);
       toast.error(message);
     },
+    onSettled(result, error) {
+      if (error) {
+        toast.error(
+          error.message || 'Unexpected error occurred in saving screenshot',
+        );
+        return;
+      }
+      if (!result) return;
+      const titleMsg = title || result.oldScreenShotTitle;
+      if (result.added) {
+        toast.success(
+          // prettier-ignore
+          `Screenshot ${ `${browserType ? ` for '${browserType}'` : ''}` } saved successfully.`,
+          {
+            autoClose: 5000,
+            onClose: () => {
+              reset();
+            },
+            toastId: `image-diff-message:added:${browserType || 'default'}`,
+          },
+        );
+      } else if (result.pass) {
+        const message =
+          // prettier-ignore
+          `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`;
+
+        toast.success(message, {
+          autoClose: 5000,
+          onClose: () => {
+            reset();
+          },
+          toastId: `image-diff-message:pass:${message}`,
+        });
+
+        return;
+      } else if (result.diffSize || result.error) {
+        const message = getImageDiffMessages(result);
+
+        toast.error(message, {
+          autoClose: false,
+          onClose: () => {
+            reset();
+          },
+          toastId: `image-diff-message:error:${message}`,
+        });
+        return;
+      }
+    },
   });
+
+  console.log(inProgress);
 
   const clearError = useCallback(() => {
     setError(undefined);
@@ -66,6 +123,14 @@ export const useSaveScreenshot = () => {
       base64String?: string,
       deviceDescriptor?: BrowserContextOptions,
     ) => {
+      if (!storyData) {
+        return new Error('Unable to find story data');
+      }
+
+      if (!base64String) {
+        return new Error('Unable to find screenshot image data');
+      }
+
       const browserOptions = deviceDescriptor
         ? { ...deviceDescriptor }
         : undefined;
@@ -86,33 +151,33 @@ export const useSaveScreenshot = () => {
         title,
       };
 
-      if (isUpdating(browserType)) {
+      if (editScreenshotState && isUpdating(browserType)) {
         data.updateScreenshot = editScreenshotState.screenshotData;
       }
 
-      let result;
+      let saveResult;
 
       clearError();
       try {
-        result = (await mutateAsync(data)) || {};
+        saveResult = await mutateAsync(data);
       } catch {
         return new Error('Unexpected error occurred');
       }
 
       if (editScreenshotState && isUpdating(browserType)) {
-        if (result.added) {
+        if (saveResult.added) {
           removeScreenshot(editScreenshotState.screenshotData.id);
         }
         clearScreenshotEdit();
       }
 
-      if (result.added) {
-        data.index = result.index;
+      if (saveResult.added) {
+        data.index = saveResult.index;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { base64, ...rest } = data;
         addScreenshot(rest);
       }
-      return result;
+      return saveResult;
     },
     [
       currentActions,
@@ -138,7 +203,7 @@ export const useSaveScreenshot = () => {
     inProgress,
     isUpdating,
     onSuccessClose,
-    result,
+    result: mutationResult,
     saveScreenShot,
   };
 };

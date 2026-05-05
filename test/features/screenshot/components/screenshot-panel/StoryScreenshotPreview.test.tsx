@@ -32,19 +32,7 @@ import { useImageDiffScreenshots } from '../../../../../src/features/screenshot/
 import { ScreenshotData } from '../../../../../src/typings';
 import { StoryData } from '../../../../../src/schema';
 import { useScreenshotStoreState } from '../../../../../src/features/screenshot/store/selectors';
-
-import { useSnackbar } from '../../../../../src/hooks/use-snackbar';
-
-vi.mock(
-  '../../../../../src/hooks/use-snackbar',
-  async () => await import('../../../../hooks/__mocks__/use-snackbar'),
-);
-
-const openSnackbarMock = vi.fn();
-
-vi.mocked(useSnackbar).mockImplementation(() => ({
-  openSnackbar: openSnackbarMock,
-}));
+import { toast } from '../../../../../src/utils/toast';
 
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-update',
@@ -146,7 +134,7 @@ describe('StoryScreenshotPreview', () => {
 
     await footerActions[1].props.onClick();
 
-    expect(openSnackbarMock.mock.calls[0][0]).toBe(
+    expect(vi.mocked(toast.error).mock.calls[0][0]).toBe(
       `Unable to find image diff result for 'title' screenshot.`,
     );
   });

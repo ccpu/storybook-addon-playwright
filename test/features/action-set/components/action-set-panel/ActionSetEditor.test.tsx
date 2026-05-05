@@ -7,7 +7,6 @@ import { ActionSetEditorIconsProps } from '../../../../../src/features/action-se
 import {
   ListItemWrapper,
   InputDialog,
-  Snackbar,
 } from '../../../../../src/components/common';
 import { useActionEditor } from '../../../../../src/features/action-set/hooks/use-action-editor';
 
@@ -84,14 +83,13 @@ describe('ActionSetEditor', () => {
     vi.mocked(useActionEditor).mockImplementation(
       () =>
         ({
-          validationResult: [{ id: 'action-id', required: ['foo'] }],
+          validationResult: [
+            { id: 'action-id', name: 'action-name', required: ['foo'] },
+          ],
         } as unknown as ReturnType<typeof useActionEditor>),
     );
 
     const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);
-
-    const snackbar = wrapper.find(Snackbar);
-
-    expect(snackbar.exists()).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
   });
 });

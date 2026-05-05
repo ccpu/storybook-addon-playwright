@@ -6,7 +6,7 @@ import {
   ImageDiffPreviewDialogProps,
 } from './ImageDiffPreviewDialog';
 import { BrowserTypes } from '../../typings';
-import { useSnackbar } from '../../hooks/use-snackbar';
+import { toast } from '../../utils/toast';
 
 export interface ImageDiffMessageProps
   extends Partial<ImageDiffPreviewDialogProps> {
@@ -19,43 +19,40 @@ export interface ImageDiffMessageProps
 const ImageDiffMessage: React.FC<ImageDiffMessageProps> = (props) => {
   const { title, result, onClose, browserType, ...rest } = props;
 
-  const { openSnackbar } = useSnackbar();
-
   const titleMsg = title || (result && result.oldScreenShotTitle);
 
   React.useEffect(() => {
     if (!result) return;
 
     if (result.added) {
-      openSnackbar(
+      toast.success(
         // prettier-ignore
         `Screenshot ${ `${browserType ? ` for '${browserType}'` : ''}` } saved successfully.`,
-        { autoHideDuration: 5000, onClose },
+        { autoClose: 5000, onClose },
       );
     }
-  }, [browserType, onClose, openSnackbar, result]);
+  }, [browserType, onClose, result]);
 
   React.useEffect(() => {
     if (!result) return;
 
     if (result.pass) {
-      openSnackbar(
+      toast.success(
         // prettier-ignore
         `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`,
-        { autoHideDuration: 5000, onClose },
+        { autoClose: 5000, onClose },
       );
       return;
     }
 
     if (result.diffSize || result.error) {
-      openSnackbar(getImageDiffMessages(result), {
-        autoHideDuration: null,
+      toast.error(getImageDiffMessages(result), {
+        autoClose: false,
         onClose,
-        variant: 'error',
       });
       return;
     }
-  }, [browserType, onClose, openSnackbar, result, titleMsg]);
+  }, [browserType, onClose, result, titleMsg]);
 
   if (!result || result.pass || result.added || result.diffSize || result.error)
     return null;

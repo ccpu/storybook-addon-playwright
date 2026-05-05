@@ -9,3 +9,4 @@ export * from './should-take-screenshot';
 export * from './get-story-playwright-data-by-file-name';
 export * from './release-modifier-Key';
 export * from './is-interactive-action';
+export * from './normalize-screenshot-action-ids';

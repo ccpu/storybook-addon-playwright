@@ -14,7 +14,9 @@ export const useResetSetting = () => {
   const reset = () => {
     api.emit(RESET_STORY_ARGS, { storyId: data?.id });
     clearCurrentActionSets();
-    deleteTempActionSets(data.id);
+    if (data?.id) {
+      deleteTempActionSets(data.id);
+    }
   };
 
   return reset;

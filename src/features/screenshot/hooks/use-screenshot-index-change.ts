@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { changeScreenshotIndex } from '../store/index';
 
@@ -16,6 +16,8 @@ export const useScreenshotIndexChange = () => {
 
   const changeIndex = useCallback(
     async (e: SortableIndexChangeEvent) => {
+      if (!storyData) return;
+
       changeScreenshotIndex({ newIndex: e.newIndex, oldIndex: e.oldIndex });
       try {
         await mutateAsync({

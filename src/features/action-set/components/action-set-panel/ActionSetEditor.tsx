@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { ActionList } from '../actions/ActionList';
 import { ActionSet } from '../../../../typings';
 import {
-  Snackbar,
   Loader,
   ListItemWrapper,
   InputDialog,
@@ -41,8 +40,6 @@ const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
     handleAddAction,
     handleDescriptionChange,
     handleSave,
-    clearValidationResult,
-    validationResult,
     cancelEditActionSet,
   } = useActionEditor(actionSet);
 
@@ -83,34 +80,6 @@ const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
       <div className={classes.root}>
         <Divider className={classes.divider} />
         <ActionList actionSet={actionSet} />
-
-        {validationResult && (
-          <Snackbar
-            open={true}
-            onClose={clearValidationResult}
-            variant="error"
-            anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-            autoHideDuration={60000}
-            closeIcon={true}
-          >
-            <div style={{ width: 300 }}>
-              {validationResult.map((result) => {
-                return (
-                  <div key={result.id}>
-                    {result.required && (
-                      <div key={result.id}>
-                        <div>Action name: {result.name}</div>
-                        <div style={{ fontSize: 12, marginLeft: 5 }}>
-                          Required: {result.required.join(',')}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </Snackbar>
-        )}
         <Loader open={loading} />
         {editDescription && (
           <InputDialog

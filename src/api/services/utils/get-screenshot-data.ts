@@ -5,10 +5,15 @@ import {
 } from '../../../api/server/utils';
 import { setStoryScreenshotOptions } from './set-story-screenshot-options';
 import { getStoryData } from './get-story-data';
+import { normalizeScreenshotActionIds } from './normalize-screenshot-action-ids';
 
 export const getScreenshotData = async (info: ScreenshotInfo) => {
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
+
+  if (!storyData) {
+    return undefined;
+  }
 
   const story = getStoryData(storyData, info.storyId);
 
@@ -20,6 +25,10 @@ export const getScreenshotData = async (info: ScreenshotInfo) => {
 
   if (screenShot) {
     setStoryScreenshotOptions(storyData, screenShot);
+    return {
+      ...screenShot,
+      actionSets: normalizeScreenshotActionIds(screenShot.actionSets),
+    };
   }
 
   return screenShot;

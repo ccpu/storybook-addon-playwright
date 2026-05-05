@@ -19,7 +19,9 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = memo(
   }) => {
     const handleCancel = useCallback(() => {
       if (onCancel) onCancel();
-      onClose();
+      if (onClose) {
+        onClose({} as never, 'backdropClick');
+      }
     }, [onCancel, onClose]);
 
     return (

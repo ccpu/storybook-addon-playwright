@@ -49,6 +49,8 @@ const ImageDiffPreview: React.FC<ImageDiffPreviewProps> = (props) => {
       ? imageDiffResult.newScreenshot
       : imageDiffResult.imgSrcString;
 
+  const safeCurrentImage = currentImage || '';
+
   const error = getImageDiffMessages(imageDiffResult);
 
   const toggleScreenshotDiff = useCallback(
@@ -85,7 +87,7 @@ const ImageDiffPreview: React.FC<ImageDiffPreviewProps> = (props) => {
       )}
       <div className={classes.preview}>
         <ImagePreview
-          imgSrcString={currentImage}
+          imgSrcString={safeCurrentImage}
           diffDirection={imageDiffResult.diffDirection}
         />
       </div>

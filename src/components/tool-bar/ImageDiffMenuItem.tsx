@@ -41,13 +41,17 @@ const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = forwardRef(
 
     const classes = useStyles();
 
-    const data = api.getData(imageDiff.storyId);
+    const storyId = imageDiff.storyId;
+
+    const data = storyId ? api.getData(storyId) : undefined;
 
     const handleLoadStory = useCallback(() => {
+      if (!storyId) return;
+
       onClick();
-      api.selectStory(imageDiff.storyId);
+      api.selectStory(storyId);
       api.setSelectedPanel(SCREENSHOT_PANEL_ID);
-    }, [api, imageDiff.storyId, onClick]);
+    }, [api, onClick, storyId]);
 
     if (!data) {
       return (

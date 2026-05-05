@@ -22,10 +22,6 @@ declare global {
   type Mock<T extends (...args: any[]) => any = (...args: any[]) => any> =
     VitestMock<T>;
   type Mocked<T> = VitestMocked<T>;
-
-  interface Window {
-    __visible_snackbar_messages__: { [message: string]: boolean };
-  }
 }
 
 export type _VitestAssertion = Assertion;

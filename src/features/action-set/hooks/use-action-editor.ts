@@ -7,11 +7,11 @@ import {
   setActionSetTitle,
   cancelEditActionSet,
 } from '../../../store';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { StoryAction, ActionSet } from '../../../typings';
-import { ActionListValidationResult, validateActionList } from '../../../utils';
-import { trpcClient } from '../../../api';
+import { validateActionList } from '../../../utils';
+import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import React from 'react';
 import { toast } from '../../../utils/toast';
@@ -28,11 +28,10 @@ export const useActionEditor = (actionSet: ActionSet) => {
 
   const storyData = useCurrentStoryData();
 
-  const [validationResult, setValidationResult] =
-    useState<ActionListValidationResult[]>();
-
   const handleAddAction = useCallback(
     (actionName: string) => {
+      if (!storyData) return;
+
       const actionId = nanoid(10);
       const newAction: StoryAction = {
         id: actionId,
@@ -60,11 +59,32 @@ export const useActionEditor = (actionSet: ActionSet) => {
     );
 
     if (validateResult) {
-      setValidationResult(validateResult);
-      return;
+      const message = validateResult
+        .map((result) => {
+          if (!result.required || result.required.length === 0)
+            return undefined;
+
+          return `Action name: ${result.name}\nRequired: ${result.required.join(
+            ',',
+          )}`;
+        })
+        .filter(Boolean)
+        .join('\n\n');
+
+      if (message) {
+        toast.error(message, {
+          autoClose: 60000,
+          closeButton: true,
+
+          toastId: 'action-set-editor-validation',
+        });
+        return;
+      }
     }
 
     if (!actionSet.temp) {
+      if (!storyData) return;
+
       try {
         await mutateAsync({
           actionSet,
@@ -78,12 +98,14 @@ export const useActionEditor = (actionSet: ActionSet) => {
     saveActionSetStore();
   }, [actionSet, mutateAsync, state.actionSchema, storyData]);
 
-  const clearValidationResult = useCallback(() => {
-    setValidationResult(undefined);
-  }, []);
+  // const clearValidationResult = useCallback(() => {
+  //   setValidationResult(undefined);
+  // }, []);
 
   const handleDescriptionChange = useCallback(
     (title: string) => {
+      if (!storyData || !state.orgEditingActionSet) return;
+
       setActionSetTitle({
         actionSetId: state.orgEditingActionSet.id,
         storyId: storyData.id,
@@ -94,6 +116,8 @@ export const useActionEditor = (actionSet: ActionSet) => {
   );
 
   const handleCancelEditActionSet = useCallback(() => {
+    if (!storyData) return;
+
     cancelEditActionSet(storyData.id);
   }, [storyData]);
 
@@ -108,12 +132,11 @@ export const useActionEditor = (actionSet: ActionSet) => {
 
   return {
     cancelEditActionSet: handleCancelEditActionSet,
-    clearValidationResult,
+
     handleAddAction,
     handleDescriptionChange,
     handleSave,
     inProgress,
     state,
-    validationResult,
   };
 };

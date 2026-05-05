@@ -15,7 +15,6 @@ vi.mock('@storybook/addons');
 vi.mock('@storybook/components');
 vi.mock('@storybook/core-events');
 vi.mock('@storybook/theming');
-vi.mock('notistack');
 vi.mock('react-toastify');
 vi.mock('reinspect');
 vi.mock('nanoid');

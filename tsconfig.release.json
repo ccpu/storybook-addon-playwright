@@ -5,10 +5,11 @@
     "outDir": "dist",
     "removeComments": false
   },
-  "include": ["src/**/*", "typings/**/*", "test/**/*"],
+  "include": ["src/**/*", "typings/**/*"],
   "exclude": [
     "node_modules",
     "**/node_modules/*",
+    "test/**/*",
     "**/__tests__/*",
     "**/__mocks__/*"
   ]

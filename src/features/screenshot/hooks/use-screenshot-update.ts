@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { updateImageDiffResult } from '../store/index';
 import { ImageDiffResult } from '../../../api/typings';
-import { trpcClient } from '../../../api';
+import { trpcClient } from '../../../api/trpc/client';
 import { toast } from '../../../utils/toast';
 
 export const useScreenshotUpdate = (successMessage?: string) => {
@@ -26,6 +26,14 @@ export const useScreenshotUpdate = (successMessage?: string) => {
 
   const updateScreenshot = useCallback(
     async (imageDiffResult: ImageDiffResult) => {
+      if (
+        !imageDiffResult.filePath ||
+        !imageDiffResult.screenshotId ||
+        !imageDiffResult.storyId
+      ) {
+        return;
+      }
+
       try {
         await mutateAsync({
           base64: imageDiffResult.newScreenshot,

@@ -40,6 +40,8 @@ export const useBrowserOptions = (browserName?: BrowsersOptionTypes) => {
   );
 
   const hasOption = useMemo(() => {
+    if (!browserName) return false;
+
     const hasOpt =
       browserOptions &&
       browserOptions[browserName] &&

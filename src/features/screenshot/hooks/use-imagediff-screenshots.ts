@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ScreenshotTestTargetType } from '../../../typings';
-import { useScreenshotImageDiffResults } from './use-screenshot-imageDiff-results';
+import { useScreenshotDiffTestByType } from './use-screenshot-diff-test-by-type';
 import { ImageDiffResult } from '../../../api/typings';
 import { isStoryJsonFile } from '../../../utils';
 import { setScreenshots } from '../store/index';
@@ -36,7 +36,7 @@ export const useImageDiffScreenshots = (
   onLoaded?: () => void,
 ) => {
   const { imageDiffTestInProgress, testStoryScreenShots, storyData } =
-    useScreenshotImageDiffResults();
+    useScreenshotDiffTestByType();
 
   const [loaded, setLoaded] = React.useState<boolean>(false);
 

@@ -4,7 +4,7 @@ import { IconButton } from '@storybook/components';
 import Compare from '@material-ui/icons/Compare';
 import {
   useGlobalImageDiffResults,
-  useScreenshotImageDiffResults,
+  useScreenshotDiffTestByType,
 } from '../../hooks';
 import {
   removeImageDiffResult,
@@ -61,7 +61,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
   const { imageDiffResult } = useGlobalImageDiffResults();
 
   const { testStoryScreenShots, imageDiffTestInProgress } =
-    useScreenshotImageDiffResults();
+    useScreenshotDiffTestByType();
 
   const diffResults =
     target === 'file' && storyData

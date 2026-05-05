@@ -4,14 +4,38 @@ import { removeImageDiffResultMock } from '../../../../manual-mocks/store/screen
 // babel-jest which uses live property reads). The mock routes useEffect calls
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('react', async (importOriginal) => {
-  const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
-  const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
+  const actual = await importOriginal<typeof import('react')>();
+  const actualWithDefault = actual as typeof actual & {
+    default?: typeof React;
+  };
+  const hook = (fn: React.EffectCallback, deps?: React.DependencyList) =>
+    (
+      globalThis as typeof globalThis & {
+        __useEffectSpy?: (
+          effect: React.EffectCallback,
+          dependencies?: React.DependencyList,
+        ) => void;
+      }
+    ).__useEffectSpy?.(fn, deps);
+  const patchedDefault = {
+    ...(actualWithDefault.default ?? actualWithDefault),
+    useEffect: hook,
+  };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
+
+const invokeHandler = <Args extends unknown[], Result>(
+  handler: ((...args: Args) => Result) | undefined,
+  ...args: Args
+): Result => {
+  if (!handler) {
+    throw new globalThis.Error('Expected handler to be defined');
+  }
+
+  return handler(...args);
+};
 import { useEffectCleanup } from '../../../../manual-mocks/react-useEffect';
-import { ScreenshotListItem } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListItem';
+import { SortableScreenshotListItem } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListItem';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { storyData } from '../../../../configs/story-data';
@@ -20,7 +44,7 @@ import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
 import { ImageDiffMessage } from '../../../../../src/components/common';
 import { ScreenshotListItemMenu } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListItemMenu';
-import { useScreenshotImageDiff } from '../../../../../src/features/screenshot/hooks/use-screenshot-imageDiff';
+import { useScreenshotDiffTest } from '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test';
 import { ScreenshotPreviewDialog } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotPreviewDialog';
 import { ScreenshotInfo } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotInfo';
 import { useEditScreenshot } from '../../../../../src/features/screenshot/hooks/use-edit-screenshot';
@@ -33,6 +57,15 @@ vi.mock(
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-edit-screenshot',
   async () => await import('../../hooks/__mocks__/use-edit-screenshot'),
+);
+vi.mock(
+  '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test',
+  async () => {
+    const { useScreenshotImageDiff } = await import(
+      '../../hooks/__mocks__/use-screenshot-imageDiff'
+    );
+    return { useScreenshotDiffTest: useScreenshotImageDiff };
+  },
 );
 
 const loadSettingMock = vi.fn();
@@ -59,7 +92,7 @@ describe('ScreenshotListItem', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
       />,
@@ -71,7 +104,7 @@ describe('ScreenshotListItem', () => {
   it('should remove screenshot result on mount when it passed', () => {
     vi.useFakeTimers();
     shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
@@ -84,17 +117,17 @@ describe('ScreenshotListItem', () => {
 
   it('should remove result from imageDiffResults when pressing on check icon', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
       />,
     );
 
-    wrapper
-      .find(CheckCircle)
-      .props()
-      .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
+    invokeHandler(
+      wrapper.find(CheckCircle).props().onClick,
+      {} as React.MouseEvent<SVGSVGElement, MouseEvent>,
+    );
 
     expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
   });
@@ -103,7 +136,7 @@ describe('ScreenshotListItem', () => {
     const clearTimeoutMock = vi.fn();
     window.clearTimeout = clearTimeoutMock;
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
@@ -111,10 +144,10 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    wrapper
-      .find(CheckCircle)
-      .props()
-      .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
+    invokeHandler(
+      wrapper.find(CheckCircle).props().onClick,
+      {} as React.MouseEvent<SVGSVGElement, MouseEvent>,
+    );
 
     expect(removeImageDiffResultMock).toHaveBeenCalledTimes(0);
     expect(clearTimeoutMock).toHaveBeenCalledTimes(1);
@@ -123,7 +156,7 @@ describe('ScreenshotListItem', () => {
 
   it('should ImageDiffMessage when image diff not passed', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
@@ -131,17 +164,17 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    wrapper
-      .find(Error)
-      .props()
-      .onClick({} as React.MouseEvent<SVGSVGElement, MouseEvent>);
+    invokeHandler(
+      wrapper.find(Error).props().onClick,
+      {} as React.MouseEvent<SVGSVGElement, MouseEvent>,
+    );
 
     expect(ImageDiffMessage).toHaveLength(1);
   });
 
   it('should show/hide menu', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
@@ -151,15 +184,17 @@ describe('ScreenshotListItem', () => {
 
     const itemWrapper = wrapper.find(ScreenshotListItemWrapper);
 
-    itemWrapper
-      .props()
-      .onMouseEnter({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
+    invokeHandler(
+      itemWrapper.props().onMouseEnter,
+      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
+    );
 
     expect(wrapper.find(ScreenshotListItemMenu).props().show).toBeTruthy();
 
-    itemWrapper
-      .props()
-      .onMouseLeave({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
+    invokeHandler(
+      itemWrapper.props().onMouseLeave,
+      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
+    );
 
     expect(wrapper.find(ScreenshotListItemMenu).props().show).toBeFalsy();
   });
@@ -167,7 +202,7 @@ describe('ScreenshotListItem', () => {
   it('should run image diff', async () => {
     const testScreenshotMock = vi.fn();
 
-    (useScreenshotImageDiff as Mock).mockImplementation(() => {
+    (useScreenshotDiffTest as Mock).mockImplementation(() => {
       return {
         inProgress: false,
         testScreenshot: testScreenshotMock,
@@ -176,7 +211,7 @@ describe('ScreenshotListItem', () => {
     });
 
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
@@ -184,7 +219,9 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    await wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff();
+    await invokeHandler(
+      wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff,
+    );
 
     expect(wrapper.find(ImageDiffMessage)).toHaveLength(1);
 
@@ -201,7 +238,7 @@ describe('ScreenshotListItem', () => {
     const onClickMock = vi.fn();
 
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         onClick={onClickMock}
         screenshot={getScreenshotDate()}
@@ -210,10 +247,10 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    wrapper
-      .find(ScreenshotListItemWrapper)
-      .props()
-      .onClick({} as React.MouseEvent<HTMLDivElement, MouseEvent>);
+    invokeHandler(
+      wrapper.find(ScreenshotListItemWrapper).props().onClick,
+      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
+    );
 
     // await new Promise((resolve) => setImmediate(resolve));
 
@@ -224,7 +261,7 @@ describe('ScreenshotListItem', () => {
 
   it('should handle edit screenshot', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
@@ -232,7 +269,7 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    wrapper.find(ScreenshotListItemMenu).props().onEditClick();
+    invokeHandler(wrapper.find(ScreenshotListItemMenu).props().onEditClick);
 
     expect(editMock).toHaveBeenCalledWith({
       browserType: 'chromium',
@@ -243,7 +280,7 @@ describe('ScreenshotListItem', () => {
 
   it('should handle load screenshot settings', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}
@@ -251,7 +288,9 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    wrapper.find(ScreenshotListItemMenu).props().onLoadSettingClick();
+    invokeHandler(
+      wrapper.find(ScreenshotListItemMenu).props().onLoadSettingClick,
+    );
 
     expect(loadSettingMock).toHaveBeenCalledWith({
       browserType: 'chromium',
@@ -263,7 +302,7 @@ describe('ScreenshotListItem', () => {
   it('should clearTimeout', () => {
     const spyOnClearTimeout = vi.spyOn(window, 'clearTimeout');
     shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: true, screenshotId: 'screenshot-id' }}
@@ -277,7 +316,7 @@ describe('ScreenshotListItem', () => {
 
   it('should cancel screenshot edit mode when screenshot removed', () => {
     const wrapper = shallow(
-      <ScreenshotListItem
+      <SortableScreenshotListItem
         storyData={storyData}
         screenshot={getScreenshotDate()}
         imageDiffResult={{ pass: false, screenshotId: 'screenshot-id' }}

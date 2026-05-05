@@ -2,9 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../../../typings';
 import Update from '@material-ui/icons/Update';
 import { IconButton, Button } from '@material-ui/core';
-import { useCurrentStoryData } from '../../../../hooks';
+import { useCurrentStoryData, useScreenshotDiffTest } from '../../../../hooks';
 import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
-import { trpcClient } from '../../../../api/trpc/client';
 import { Loader, ImageDiffPreviewDialog } from '../../../../components/common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ImageDiffResult } from '../../../../api/typings';
@@ -25,11 +24,11 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
   );
 
   const {
-    mutateAsync: testScreenshot,
-    isPending: testScreenshotInProgress,
+    testScreenshot,
+    inProgress: testScreenshotInProgress,
     reset: testScreenshotClearResult,
-    data: testScreenshotResult,
-  } = trpcClient.screenshot.testScreenshot.useMutation();
+    result: testScreenshotResult,
+  } = useScreenshotDiffTest();
 
   const handleUpdate = useCallback(async () => {
     if (imageDiffResult) {
@@ -37,11 +36,7 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
     } else {
       if (!storyData) return;
 
-      await testScreenshot({
-        filePath: storyData.filePath,
-        screenshotId: screenshot.id,
-        storyId: storyData.id,
-      });
+      await testScreenshot({ ...storyData, screenshotId: screenshot.id });
     }
   }, [
     imageDiffResult,

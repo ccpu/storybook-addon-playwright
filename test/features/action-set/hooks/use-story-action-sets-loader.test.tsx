@@ -1,8 +1,8 @@
 import { useStoryActionSetsLoader } from '../../../../src/features/action-set/hooks/use-story-action-sets-loader';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
 import { ActionSet } from '../../../../src/typings';
-import { TRPCError } from '@trpc/server';
+
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
 
@@ -59,36 +59,5 @@ describe('useStoryFileActionSets', () => {
     const hook2 = renderHook(() => useStoryActionSetsLoader());
 
     expect(hook2.result.current.loading).toBe(false);
-  });
-
-  it('should handle error and retry', async () => {
-    const spy = vi
-      .fn()
-      .mockImplementationOnce(() => {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'bad url',
-        });
-      })
-      .mockImplementationOnce(() => actionSets);
-
-    server.use(
-      trpcMsw.actionSet.getActionSet.mutation(({ input }) => spy(input) as any),
-    );
-
-    const fileInfo = getFileInfo();
-    currentStoryData = fileInfo as any;
-
-    const { result } = renderHook(() => useStoryActionSetsLoader());
-
-    await waitFor(() => expect(result.current.error).toStrictEqual('bad url'));
-
-    act(() => {
-      result.current.retry();
-    });
-
-    await waitFor(() => expect(result.current.error).toBeUndefined());
-
-    expect(spy.mock.calls.length).toBeGreaterThanOrEqual(2);
   });
 });

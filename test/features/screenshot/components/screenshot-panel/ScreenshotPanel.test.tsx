@@ -24,7 +24,7 @@ import { ScreenshotListToolbar } from '../../../../../src/features/screenshot/co
 import { StoryScreenshotPreview } from '../../../../../src/features/screenshot/components/screenshot-panel/StoryScreenshotPreview';
 import { Loader } from '../../../../../src/components/common';
 import mockConsole from 'jest-mock-console';
-import { useScreenshotImageDiffResults } from '../../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
+import { useScreenshotDiffTestByType } from '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
 import { useStoryScreenshotLoader } from '../../../../../src/features/screenshot/hooks/use-story-screenshot-loader';
 import { useDeleteStoryScreenshot } from '../../../../../src/features/screenshot/hooks/use-delete-story-screenshots';
 import { useScreenshotUpdateState } from '../../../../../src/features/screenshot/hooks/use-screenshot-update-state';
@@ -39,9 +39,15 @@ vi.mock(
   async () => await import('../../store/__mocks__/context'),
 );
 vi.mock(
-  '../../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results',
-  async () =>
-    await import('../../hooks/__mocks__/use-screenshot-imageDiff-results'),
+  '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
+  async () => {
+    const { useScreenshotImageDiffResults } = await import(
+      '../../hooks/__mocks__/use-screenshot-imageDiff-results'
+    );
+    return {
+      useScreenshotDiffTestByType: useScreenshotImageDiffResults,
+    };
+  },
 );
 // Changed: mock complex hooks to prevent their useEffect chains from triggering
 // cascading enzyme state updates (infinite re-render loop in vitest).
@@ -63,7 +69,7 @@ vi.mock(
 );
 
 const testStoryScreenShotsMock = vi.fn();
-vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
+vi.mocked(useScreenshotDiffTestByType).mockImplementation(() => {
   return {
     imageDiffTestInProgress: false,
     storyData: {

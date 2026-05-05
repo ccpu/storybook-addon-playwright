@@ -2,7 +2,7 @@ import {
   setImageDiffResultsMock,
   addImageDiffResultMock,
 } from '../../../manual-mocks/store/screenshot/context';
-import { useScreenshotImageDiffResults } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
+import { useScreenshotDiffTestByType } from '../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
@@ -12,7 +12,7 @@ vi.mock(
   async () => await import('../../../hooks/__mocks__/use-current-story-data'),
 );
 
-describe('useScreenshotImageDiffResults', () => {
+describe('useScreenshotDiffTestByType', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -24,7 +24,7 @@ describe('useScreenshotImageDiffResults', () => {
         ({ input }) => spy(input) as any,
       ),
     );
-    const { result } = renderHook(() => useScreenshotImageDiffResults());
+    const { result } = renderHook(() => useScreenshotDiffTestByType());
     await act(async () => {
       await result.current.testStoryScreenShots('all');
     });
@@ -44,7 +44,7 @@ describe('useScreenshotImageDiffResults', () => {
         ({ input }) => spy(input) as any,
       ),
     );
-    const { result } = renderHook(() => useScreenshotImageDiffResults());
+    const { result } = renderHook(() => useScreenshotDiffTestByType());
     await act(async () => {
       await result.current.testStoryScreenShots('file');
     });
@@ -65,7 +65,7 @@ describe('useScreenshotImageDiffResults', () => {
         ({ input }) => spy(input) as any,
       ),
     );
-    const { result } = renderHook(() => useScreenshotImageDiffResults());
+    const { result } = renderHook(() => useScreenshotDiffTestByType());
     await act(async () => {
       await result.current.testStoryScreenShots('story');
     });

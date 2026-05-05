@@ -1,7 +1,7 @@
 import { setScreenshotsMock } from '../../../manual-mocks/store/screenshot/context';
 import { useImageDiffScreenshots } from '../../../../src/features/screenshot/hooks/use-imagediff-screenshots';
 import { renderHook } from '@testing-library/react-hooks';
-import { useScreenshotImageDiffResults } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
+import { useScreenshotDiffTestByType } from '../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
 import { ImageDiffResult } from '../../../../src/api/typings';
 
 const testStoryScreenShotsMock = vi.fn();
@@ -22,11 +22,18 @@ vi.mocked(testStoryScreenShotsMock).mockImplementation(() => {
 });
 
 vi.mock(
-  '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results',
-  async () => await import('./__mocks__/use-screenshot-imageDiff-results'),
+  '../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
+  async () => {
+    const { useScreenshotImageDiffResults } = await import(
+      './__mocks__/use-screenshot-imageDiff-results'
+    );
+    return {
+      useScreenshotDiffTestByType: useScreenshotImageDiffResults,
+    };
+  },
 );
 
-vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
+vi.mocked(useScreenshotDiffTestByType).mockImplementation(() => {
   return {
     imageDiffTestInProgress: false,
     storyData: {
@@ -40,7 +47,7 @@ vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
   };
 });
 
-describe('useStoryScreenshotsDiff', () => {
+describe('useStoryScreenshotDiffTest', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -79,7 +86,7 @@ describe('useStoryScreenshotsDiff', () => {
   });
 
   it('should not load', () => {
-    (useScreenshotImageDiffResults as Mock).mockImplementationOnce(() => ({
+    (useScreenshotDiffTestByType as Mock).mockImplementationOnce(() => ({
       imageDiffTestInProgress: false,
       storyData: undefined,
       testStoryScreenShots: testStoryScreenShotsMock,

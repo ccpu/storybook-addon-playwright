@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { ScreenshotData } from '../../../../typings';
 import {
   ImageDiffPreviewDialog,
@@ -6,10 +6,10 @@ import {
   DialogProps,
   ImageDiffPreviewProps,
 } from '../../../../components/common';
-import { trpcClient } from '../../../../api/trpc/client';
 import { ImageDiffResult } from '../../../../api/typings';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { StoryData } from '../../../../schema';
+import { useScreenshotDiffTest } from '../../hooks';
 
 export interface ScreenshotPreviewDialogProps
   extends DialogProps,
@@ -23,25 +23,11 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 ) => {
   const { storyData, screenShotData, onClose, open = true, ...rest } = props;
 
-  const {
-    mutateAsync,
-    data: result,
-    isPending: inProgress,
-    reset,
-  } = trpcClient.screenshot.testScreenshot.useMutation();
+  const { testScreenshot, inProgress, result } = useScreenshotDiffTest();
 
   useEffect(() => {
-    mutateAsync({
-      filePath: storyData.filePath,
-      screenshotId: screenShotData.id,
-      storyId: storyData.id,
-    }).catch(() => undefined);
-  }, [mutateAsync, screenShotData.id, storyData.id, storyData.filePath]);
-
-  const handleClose = useCallback(() => {
-    reset();
-    onClose?.();
-  }, [onClose, reset]);
+    testScreenshot({ ...storyData, screenshotId: screenShotData.id });
+  }, [storyData, screenShotData.id, testScreenshot]);
 
   return (
     <>
@@ -50,7 +36,7 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
           title={screenShotData.title}
           imageDiffResult={result as ImageDiffResult}
           open={open}
-          onClose={handleClose}
+          onClose={onClose}
           titleActions={() => (
             <ScreenshotInfo
               color="primary"

@@ -6,7 +6,7 @@ import { ScreenshotListToolbar } from './ScreenshotListToolbar';
 import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 import { ScreenshotList } from './ScreenshotList';
 import { useDeleteStoryScreenshot } from '../../hooks/use-delete-story-screenshots';
-import { useScreenshotImageDiffResults } from '../../hooks/use-screenshot-imageDiff-results';
+import { useScreenshotDiffTestByType } from '../../hooks/use-screenshot-diff-test-by-type';
 import { useStoryScreenshotLoader } from '../../hooks/use-story-screenshot-loader';
 import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
 
@@ -24,7 +24,7 @@ const ScreenshotPanel = () => {
   const state = useScreenshotStoreState();
 
   const { testStoryScreenShots, imageDiffTestInProgress } =
-    useScreenshotImageDiffResults();
+    useScreenshotDiffTestByType();
 
   const toggleShowPreview = useCallback(() => {
     setShowPreview(!showPreview);

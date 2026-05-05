@@ -4,40 +4,47 @@ import { trpcClient } from '../../../api/trpc/client';
 import { StoryData } from '../../../schema';
 import { toast } from '../../../utils/toast';
 
-export const useScreenshotImageDiff = (storyData: StoryData) => {
+export const useScreenshotDiffTest = () => {
   const [testScreenshotError, setTestScreenshotError] = useState<
     string | undefined
   >(undefined);
 
-  const { mutateAsync, isPending: inProgress } =
-    trpcClient.screenshot.testScreenshot.useMutation({
-      onError: (error) => {
-        const message = error.message || 'Unexpected error occurred';
-        setTestScreenshotError(message);
-        toast.error(message);
-      },
-    });
+  const {
+    mutateAsync,
+    isPending: inProgress,
+    reset,
+    data,
+  } = trpcClient.screenshot.testScreenshot.useMutation({
+    onError: (error) => {
+      const message = error.message || 'Unexpected error occurred';
+      setTestScreenshotError(message);
+      toast.error(message);
+    },
+  });
 
   const testScreenshot = useCallback(
-    async (id: string) => {
+    async (storyData: StoryData & { screenshotId: string }) => {
       setTestScreenshotError(undefined);
       try {
         const result = await mutateAsync({
-          filePath: storyData.filePath,
-          screenshotId: id,
+          ...storyData,
+          screenshotId: storyData.screenshotId,
           storyId: storyData.id,
         });
         addImageDiffResult(result);
         return result;
       } catch {
+        7;
         return undefined;
       }
     },
-    [mutateAsync, storyData],
+    [mutateAsync],
   );
 
   return {
     inProgress,
+    reset,
+    result: data,
     testScreenshot,
     testScreenshotError,
   };

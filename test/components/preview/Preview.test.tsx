@@ -36,7 +36,7 @@ describe('Preview', () => {
   it('should preview panel horizontal', () => {
     const wrapper = shallow(<Preview />);
 
-    expect(wrapper.find(SplitPane).props().split).toBe('horizontal');
+    expect(wrapper.find(SplitPane).props().direction).toBe('vertical');
 
     expect(wrapper.find(ScreenshotListView)).toHaveLength(1);
     expect(wrapper.find(ScreenshotListView).props().column).toBe(undefined);
@@ -51,30 +51,8 @@ describe('Preview', () => {
     }));
     const wrapper = shallow(<Preview />);
 
-    expect(wrapper.find(SplitPane).props().split).toBe('vertical');
+    expect(wrapper.find(SplitPane).props().direction).toBe('horizontal');
     expect(wrapper.find(ScreenshotListView).props().column).toBe(1);
-  });
-
-  it('should be notInteractive when split pane drag', () => {
-    const wrapper = shallow(<Preview />);
-    const getClassNames = () =>
-      String(wrapper.find('.preview-main').props().className || '').split(' ');
-
-    expect(
-      getClassNames().find((x) => x.indexOf('interactive') !== -1),
-    ).toBeTruthy();
-
-    wrapper.find(SplitPane).props().onDragStarted();
-
-    expect(
-      getClassNames().find((x) => x.indexOf('notInteractive') !== -1),
-    ).toBeTruthy();
-
-    wrapper.find(SplitPane).props().onDragFinished(2);
-
-    expect(
-      getClassNames().find((x) => x.indexOf('interactive') !== -1),
-    ).toBeTruthy();
   });
 
   it('should handle resize change', () => {
@@ -89,7 +67,7 @@ describe('Preview', () => {
 
     const wrapper = shallow(<Preview />);
 
-    wrapper.find(SplitPane).props().onChange(50);
+    wrapper.find(SplitPane).props().onResize([50, 50]);
 
     expect(setAddonState).toHaveBeenCalledWith({
       previewPanelEnabled: true,

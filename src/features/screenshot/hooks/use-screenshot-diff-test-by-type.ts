@@ -6,7 +6,7 @@ import { ScreenshotTestTargetType } from '../../../typings';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { toast } from '../../../utils/toast';
 
-export const useScreenshotImageDiffResults = () => {
+export const useScreenshotDiffTestByType = () => {
   const storyData = useCurrentStoryData();
 
   const { mutateAsync, isPending: imageDiffTestInProgress } =

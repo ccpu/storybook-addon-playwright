@@ -1,12 +1,10 @@
 import { addImageDiffResultMock } from '../../../manual-mocks/store/screenshot/context';
-import { useScreenshotImageDiff } from '../../../../src/features/screenshot/hooks/use-screenshot-imageDiff';
+import { useScreenshotDiffTest } from '../../../../src/features/screenshot/hooks/use-screenshot-diff-test';
 import { renderHook, act } from '@testing-library/react-hooks';
-
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
-import { StoryData } from '../../../../src/schema';
 
-describe('useScreenshotImageDiff', () => {
+describe('useScreenshotDiffTest', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -21,15 +19,16 @@ describe('useScreenshotImageDiff', () => {
         storyId: 'story-id',
       })),
     );
-    const { result } = renderHook(() =>
-      useScreenshotImageDiff({
-        id: 'story-id',
-        parameters: { fileName: 'file-name' },
-      } as unknown as StoryData),
-    );
+    const { result } = renderHook(() => useScreenshotDiffTest());
 
     await act(async () => {
-      await result.current.testScreenshot('screenshot-id');
+      await result.current.testScreenshot({
+        filePath: './test.stories.tsx',
+        id: 'story-id',
+        name: 'screenshot-name',
+        parent: 'screenshot-parent',
+        screenshotId: 'screenshot-id',
+      });
     });
 
     expect(addImageDiffResultMock).toHaveBeenCalledWith({

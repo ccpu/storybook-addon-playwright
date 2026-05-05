@@ -1,9 +1,28 @@
-const removeImageDiffResultMock = vi.fn();
-const setImageDiffResultsMock = vi.fn();
+const { removeImageDiffResultMock, setImageDiffResultsMock } = vi.hoisted(
+  () => ({
+    removeImageDiffResultMock: vi.fn(),
+    setImageDiffResultsMock: vi.fn(),
+  }),
+);
+
+function invokeMock<Args extends unknown[]>(mock: (...args: Args) => unknown) {
+  return (...args: Args) => mock(...args);
+}
+
+function invokeHandler<Args extends unknown[], Result>(
+  handler: ((...args: Args) => Result) | undefined,
+  ...args: Args
+): Result {
+  if (!handler) {
+    throw new globalThis.Error('Expected handler to be defined');
+  }
+
+  return handler(...args);
+}
 
 vi.mock('../../../src/features/screenshot/store/actions', () => ({
-  removeImageDiffResult: (...args: any[]) => removeImageDiffResultMock(...args),
-  setImageDiffResults: (...args: any[]) => setImageDiffResultsMock(...args),
+  removeImageDiffResult: invokeMock(removeImageDiffResultMock),
+  setImageDiffResults: invokeMock(setImageDiffResultsMock),
 }));
 
 import '../../manual-mocks/react-useEffect';
@@ -12,7 +31,7 @@ import { ImageDiff } from '../../../src/components/tool-bar/ImageDiff';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { useScreenshotImageDiffResults } from '../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results';
+import { useScreenshotDiffTestByType } from '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
 import { useGlobalImageDiffResults } from '../../../src/features/screenshot/hooks/use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../src/api/typings';
 import { Menu, MenuItem } from '@material-ui/core';
@@ -27,11 +46,15 @@ vi.mock(
     ),
 );
 vi.mock(
-  '../../../src/features/screenshot/hooks/use-screenshot-imageDiff-results',
-  async () =>
-    await import(
+  '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
+  async () => {
+    const { useScreenshotImageDiffResults } = await import(
       '../../features/screenshot/hooks/__mocks__/use-screenshot-imageDiff-results'
-    ),
+    );
+    return {
+      useScreenshotDiffTestByType: useScreenshotImageDiffResults,
+    };
+  },
 );
 vi.mock(
   '../../../src/hooks/use-current-story-data',
@@ -39,7 +62,7 @@ vi.mock(
 );
 
 const testStoryScreenShotsMock = vi.fn();
-vi.mocked(useScreenshotImageDiffResults).mockImplementation(() => {
+vi.mocked(useScreenshotDiffTestByType).mockImplementation(() => {
   return {
     imageDiffTestInProgress: false,
     storyData: {
@@ -77,10 +100,9 @@ describe('ImageDiff', () => {
       React.Component<unknown, unknown, unknown>
     >,
   ) {
-    await wrapper
-      .find(IconButton)
-      .props()
-      .onClick({ currentTarget: { tagName: 'button' } } as never);
+    await invokeHandler(wrapper.find(IconButton).props().onClick, {
+      currentTarget: { tagName: 'button' },
+    } as never);
   }
 
   it('should render', () => {
@@ -172,9 +194,10 @@ describe('ImageDiff', () => {
 
     expect(clearItem.text()).toBe('Clear results');
 
-    clearItem
-      .props()
-      .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+    invokeHandler(
+      clearItem.props().onClick,
+      {} as React.MouseEvent<HTMLLIElement, MouseEvent>,
+    );
 
     expect(wrapper.find(Menu)).toHaveLength(0);
   });
@@ -229,9 +252,10 @@ describe('ImageDiff', () => {
 
     expect(clearItem.text()).toBe('Clear results');
 
-    clearItem
-      .props()
-      .onClick({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+    invokeHandler(
+      clearItem.props().onClick,
+      {} as React.MouseEvent<HTMLLIElement, MouseEvent>,
+    );
 
     expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
   });

@@ -17,7 +17,7 @@ import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
 import { useDragStart } from '../../../../hooks/use-drag-start';
 import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
-import { useScreenshotImageDiff } from '../../hooks/use-screenshot-imageDiff';
+import { useScreenshotDiffTest } from '../../hooks/use-screenshot-diff-test';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../../../api/typings';
@@ -97,7 +97,7 @@ function ScreenshotListItem({
 
   const [showPreview, setShowPreview] = useState(false);
 
-  const { inProgress, testScreenshot } = useScreenshotImageDiff(storyData);
+  const { inProgress, testScreenshot } = useScreenshotDiffTest();
 
   const isPassesImageDiff = imageDiffResult && imageDiffResult.pass;
 
@@ -146,9 +146,9 @@ function ScreenshotListItem({
   }, []);
 
   const handleRunDiffTest = useCallback(async () => {
-    await testScreenshot(screenshot.id);
+    await testScreenshot({ ...storyData, screenshotId: screenshot.id });
     setShowImageDiffResult(true);
-  }, [screenshot.id, testScreenshot]);
+  }, [screenshot.id, storyData, testScreenshot]);
 
   const toggleSelectedItem = useCallback(() => {
     if (onClick) onClick(screenshot);

@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
 import { IconButton } from '@storybook/components';
-import Compare from '@material-ui/icons/Compare';
 import {
   useGlobalImageDiffResults,
   useScreenshotDiffTestByType,
@@ -16,6 +15,7 @@ import { isStoryJsonFile } from '../../utils/is-story-json-file';
 import { ScreenshotTestTargetType } from '../../typings';
 import { StoryData } from '../../schema';
 import { toast } from '../../utils/toast';
+import { ContrastIcon } from '@storybook/icons';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -132,7 +132,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
           overlap="rectangular"
         />
 
-        <Compare viewBox="1.5 1 20 20" />
+        <ContrastIcon />
 
         {diffResults.length > 0 && (
           <Menu

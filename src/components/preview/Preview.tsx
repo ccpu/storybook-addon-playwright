@@ -84,7 +84,6 @@ const Preview: React.FC = (props) => {
 
   const handleResizeChange = useCallback(
     (size) => {
-      console.log({ size });
       setAddonState({ ...addonState, previewPanelSize: size });
     },
     [addonState, setAddonState],
@@ -96,7 +95,8 @@ const Preview: React.FC = (props) => {
 
   if (!addonState || !addonState.previewPanelEnabled) return <>{children}</>;
 
-  const previewPaneIndex = isHorizontal ? 0 : 1;
+  console.log(addonState);
+  const previewPaneIndex = 0;
 
   const previewPane = (
     <Pane
@@ -125,9 +125,7 @@ const Preview: React.FC = (props) => {
     </Pane>
   );
 
-  const panes = isHorizontal
-    ? [previewPane, screenshotPane]
-    : [screenshotPane, previewPane];
+  const panes = [previewPane, screenshotPane];
 
   return (
     <CommonProvider>

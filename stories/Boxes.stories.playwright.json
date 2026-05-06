@@ -67,6 +67,18 @@
           ],
           "id": "uD9-r01lb3fr",
           "title": "take element screen shot"
+        },
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+              },
+              "name": "takeElementScreenshot"
+            }
+          ],
+          "id": "RnpBPm0zT181",
+          "title": "take element screen shot"
         }
       ],
       "screenshots": [

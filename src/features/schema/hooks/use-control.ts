@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useCallback } from 'react';
 import { ControlTypes, ControlProps } from '../../../typings';
+import { Form } from '@storybook/components';
 
 interface ControlKnob {
   defaultValue?: unknown;
@@ -39,31 +40,41 @@ const SimpleControl: React.FC<{
   onChange: (val: unknown) => void;
   knob: ControlKnob;
 }> = ({ onChange, knob }) => {
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
+  const handleInputChange: React.FormEventHandler<HTMLInputElement> = (e) => {
     const value =
       knob.type === 'boolean'
-        ? (e.target as HTMLInputElement).checked
+        ? e.currentTarget.checked
         : knob.type === 'number'
-        ? Number(e.target.value)
-        : e.target.value;
+        ? Number(e.currentTarget.value)
+        : e.currentTarget.value;
+    onChange(value);
+  };
+
+  const handleSelectChange: React.FormEventHandler<HTMLSelectElement> = (e) => {
+    onChange(e.currentTarget.value);
+  };
+
+  const handleTextareaChange: React.FormEventHandler<HTMLTextAreaElement> = (
+    e,
+  ) => {
+    const value =
+      knob.type === 'number'
+        ? Number(e.currentTarget.value)
+        : e.currentTarget.value;
     onChange(value);
   };
 
   if (knob.type === 'boolean') {
-    return React.createElement('input', {
+    return React.createElement(Form.Input, {
       checked: Boolean(knob.value),
-      onChange: handleChange,
+      onChange: handleInputChange,
       type: 'checkbox',
     });
   }
 
   if (knob.type === 'number') {
-    return React.createElement('input', {
-      onChange: handleChange,
+    return React.createElement(Form.Input, {
+      onChange: handleInputChange,
       type: 'number',
       value: knob.value as number,
     });
@@ -71,8 +82,8 @@ const SimpleControl: React.FC<{
 
   if (knob.type === 'select' && Array.isArray(knob.options)) {
     return React.createElement(
-      'select',
-      { onChange: handleChange, value: knob.value as string },
+      Form.Select,
+      { onChange: handleSelectChange, value: knob.value as string },
       (knob.options as string[]).map((opt) =>
         React.createElement('option', { key: opt, value: opt }, opt),
       ),
@@ -86,8 +97,8 @@ const SimpleControl: React.FC<{
   ) {
     const opts = knob.options as Record<string, string>;
     return React.createElement(
-      'select',
-      { onChange: handleChange, value: knob.value as string },
+      Form.Select,
+      { onChange: handleSelectChange, value: knob.value as string },
       Object.entries(opts).map(([key, val]) =>
         React.createElement('option', { key, value: val }, key),
       ),
@@ -95,14 +106,17 @@ const SimpleControl: React.FC<{
   }
 
   // Default: text/textarea input
-  return React.createElement('textarea', {
-    onChange: handleChange,
+  return React.createElement(Form.Textarea, {
+    onChange: handleTextareaChange,
     value: (knob.value as string) || '',
   });
 };
 
 // Factory that returns the control component for compatibility with previous API
-const getControl = (_type: string) => SimpleControl;
+const getControl = (_type: string) => {
+  void _type;
+  return SimpleControl;
+};
 
 export const useControl = (props: ControlProps) => {
   const { label, type, onChange, value, options, display } = props;

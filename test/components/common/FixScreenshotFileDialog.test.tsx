@@ -29,7 +29,9 @@ import { FixScreenshotFileDialog } from '../../../src/components/common/FixScree
 
 describe('FixScreenshotFileDialog', () => {
   it('should be defined', () => {
-    const wrapper = shallow(<FixScreenshotFileDialog />);
+    const wrapper = shallow(
+      <FixScreenshotFileDialog onClose={() => undefined} open={true} />,
+    );
 
     expect(wrapper).toBeDefined();
   });

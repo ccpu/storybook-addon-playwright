@@ -8,6 +8,7 @@ import {
   DeleteConfirmationButton,
   FixScreenshotFileDialog,
 } from '../../../../components/common';
+import { WrenchIcon } from '@storybook/icons';
 
 export interface ScreenshotListToolbarProps {
   onTestClick: () => void;
@@ -28,13 +29,25 @@ const ScreenshotListToolbar: React.FC<ScreenshotListToolbarProps> = (props) => {
     onDelete,
   } = props;
 
+  const [openFixDialog, setOpenFixDialog] = React.useState<boolean>(false);
+
   return (
     <Toolbar border={['bottom']}>
       <div className="left">
         <div title={title}>Story Screenshots</div>
       </div>
       <div className="right">
-        <FixScreenshotFileDialog fixFunction={true} />
+        <FixScreenshotFileDialog
+          fixFunction={true}
+          onClose={setOpenFixDialog}
+          open={openFixDialog}
+        />
+        <IconButton
+          onClick={() => setOpenFixDialog(true)}
+          title="Fix screenshot name"
+        >
+          <WrenchIcon />
+        </IconButton>
         {hasScreenShot && (
           <>
             <IconButton

@@ -21,6 +21,5 @@ export * from './ImageDiffMessage';
 export * from './BrowserIcon';
 export * from './CommonProvider';
 export * from './SchemaFormLoader';
-export * from './SnackbarContent';
 export * from './FixScreenshotFileDialog';
 export * from './IframeOverlay';

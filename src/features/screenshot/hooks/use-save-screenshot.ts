@@ -92,8 +92,6 @@ export const useSaveScreenshot = (options?: Options) => {
     },
   });
 
-  console.log(inProgress);
-
   const clearError = useCallback(() => {
     setError(undefined);
   }, []);

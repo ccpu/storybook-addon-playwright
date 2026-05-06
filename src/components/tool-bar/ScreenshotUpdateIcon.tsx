@@ -1,9 +1,9 @@
 import React from 'react';
 import { ScreenshotTestTargetType } from '../../typings';
-import Update from '@material-ui/icons/Update';
 import { IconButton } from '@storybook/components';
 import { Loader } from '../common';
 import { useScreenshotUpdateState } from '../../features/screenshot/hooks/use-screenshot-update-state';
+import { RefreshIcon } from '@storybook/icons';
 
 export interface ScreenshotUpdateIconProps {
   target: ScreenshotTestTargetType;
@@ -28,7 +28,7 @@ const ScreenshotUpdateIcon: React.FC<ScreenshotUpdateIconProps> = ({
       style={{ position: 'relative' }}
       disabled={Boolean(updateInf.inProgress)}
     >
-      <Update viewBox="1.5 1 20 20" />
+      <RefreshIcon />
       <Loader
         position="absolute"
         open={updateInf.reqBy === reqBy && Boolean(updateInf.inProgress)}

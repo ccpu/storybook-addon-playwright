@@ -1,30 +1,43 @@
 import React, { useState, useCallback } from 'react';
-import { IconButton, Separator, Form } from '@storybook/components';
+import {
+  IconButton,
+  ListItem,
+  Separator,
+  TooltipLinkList,
+  WithTooltip,
+} from '@storybook/components';
 import { makeStyles } from '@material-ui/core';
 import { CommonProvider } from '../common';
 import { PreviewDialog } from '../../features/screenshot/components/screenshot-preview/index';
-import WebOutlined from '@material-ui/icons/Launch';
 import { useAddonState, useCurrentStoryData } from '../../hooks';
-import { LayoutRight, LayoutBottom } from '../../icons';
-import { PreviewPlacementMenu } from './PreviewPlacementMenu';
-import { useStorybookState } from '@storybook/manager-api';
-import { isHorizontalPanel } from '../preview/utils';
 import { ImageDiff } from './ImageDiff';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import { useResetSetting } from '../../hooks/use-reset-setting';
+import {
+  PREVIEW_PANEL_SIZE,
+  useResetSetting,
+} from '../../hooks/use-reset-setting';
 import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
 import { FixScreenshotFileDialog } from '../common';
-// import { FlexBar, IconButton } from 'storybook/internal/components';
-
-Form.Input;
+import {
+  CogIcon,
+  RefreshIcon,
+  BottomBarIcon,
+  SidebarAltIcon,
+  SyncIcon,
+  ChevronRightIcon,
+  ShareAltIcon,
+  EyeCloseIcon,
+  WrenchIcon,
+  EyeIcon,
+} from '@storybook/icons';
+import { DisplayPlacement } from '../../typings';
 
 const useStyles = makeStyles(() => ({
   asterisk: {
     height: 2,
-    left: -3,
+    left: -6,
     margin: 0,
     position: 'relative',
-    top: 4,
+    top: 1,
     width: 1,
   },
 
@@ -45,16 +58,11 @@ const Tool: React.FC = () => {
 
   const { setAddonState, addonState } = useAddonState();
 
+  const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] =
+    React.useState<boolean>(false);
   const storyData = useCurrentStoryData();
 
-  const state = useStorybookState();
-
   const resetSetting = useResetSetting();
-
-  const isHorizontal = isHorizontalPanel(
-    addonState,
-    state.layout.panelPosition,
-  );
 
   const isEnablePreviewPanelEnabled =
     addonState && addonState.previewPanelEnabled;
@@ -76,37 +84,120 @@ const Tool: React.FC = () => {
 
   const classes = useStyles();
 
+  const handlePlacementChange = useCallback(
+    (placement: DisplayPlacement) => {
+      console.log({ placement });
+
+      setAddonState({
+        ...addonState,
+        placement: placement,
+        previewPanelSize: PREVIEW_PANEL_SIZE,
+      });
+    },
+    [setAddonState, addonState],
+  );
+  const placement = addonState ? addonState.placement : 'auto';
   return (
     <CommonProvider>
       <Separator />
-      <PreviewPlacementMenu />
-      <IconButton
-        onClick={handleOpen}
-        title="Multi view"
-        className={classes.button}
+      <WithTooltip
+        placement="bottom"
+        trigger="click"
+        closeOnOutsideClick
+        tooltip={
+          <div onMouseDown={(e) => e.stopPropagation()}>
+            <TooltipLinkList
+              links={[
+                {
+                  icon: <WrenchIcon />,
+                  id: 'fix-screenshot-file-name',
+                  onClick: () => setShowFixScreenshotFileDialog(true),
+                  title: 'Fix screenshot file name',
+                },
+                {
+                  icon: <ShareAltIcon />,
+                  id: 'full-screen',
+                  onClick: handleOpen,
+                  title: 'Full screen view',
+                },
+                {
+                  icon: addonState.previewPanelEnabled ? (
+                    <EyeCloseIcon />
+                  ) : (
+                    <EyeIcon />
+                  ),
+                  id: 'panel-toggle',
+                  onClick: handleBowserClose,
+                  title: addonState.previewPanelEnabled
+                    ? 'Hide panel'
+                    : 'Show panel',
+                },
+                {
+                  content: (
+                    <WithTooltip
+                      trigger="click"
+                      placement="right-start"
+                      closeOnOutsideClick
+                      tooltip={
+                        <div onMouseDown={(e) => e.stopPropagation()}>
+                          <TooltipLinkList
+                            links={[
+                              {
+                                icon: <SidebarAltIcon />,
+                                id: 'right',
+                                onClick: () => handlePlacementChange('right'),
+                                title: 'Right',
+                              },
+                              {
+                                icon: <BottomBarIcon />,
+                                id: 'bottom',
+                                onClick: () => handlePlacementChange('bottom'),
+                                title: 'Bottom',
+                              },
+                              {
+                                icon: <SyncIcon />,
+                                id: 'auto',
+                                onClick: () => handlePlacementChange('auto'),
+                                title: 'Auto',
+                              },
+                            ]}
+                          />
+                        </div>
+                      }
+                    >
+                      <ListItem
+                        title="Placement"
+                        icon={
+                          placement === 'right' ? (
+                            <SidebarAltIcon />
+                          ) : placement === 'bottom' ? (
+                            <BottomBarIcon />
+                          ) : (
+                            <SyncIcon />
+                          )
+                        }
+                        right={<ChevronRightIcon />}
+                      />
+                    </WithTooltip>
+                  ),
+                  id: 'position',
+                  title: 'Position',
+                },
+                {
+                  icon: <RefreshIcon />,
+                  id: 'reset',
+                  onClick: resetSetting,
+                  title: 'Reset Settings',
+                },
+              ]}
+            />
+          </div>
+        }
       >
-        <WebOutlined viewBox="1.5 1 20 20" />
-      </IconButton>
-      <IconButton
-        onClick={handleBowserClose}
-        title="Show panel"
-        className={classes.button}
-        active={isEnablePreviewPanelEnabled}
-      >
-        {isHorizontal ? (
-          <LayoutBottom viewBox="1.5 1 20 20" />
-        ) : (
-          <LayoutRight viewBox="1.5 1 20 20" />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={resetSetting}
-        title="Reset settings"
-        className={classes.button}
-      >
-        <RefreshIcon viewBox="1.5 1 20 20" />
-      </IconButton>
-
+        <IconButton aria-label="Open menu" title="Open menu">
+          <CogIcon />
+        </IconButton>
+      </WithTooltip>
       {storyData && (
         <>
           <Separator />
@@ -124,7 +215,11 @@ const Tool: React.FC = () => {
             target="file"
           />
           <ScreenshotUpdateIcon target="file" />
-          <FixScreenshotFileDialog />
+
+          <FixScreenshotFileDialog
+            onClose={setShowFixScreenshotFileDialog}
+            open={showFixScreenshotFileDialog}
+          />
         </>
       )}
 

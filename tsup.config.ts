@@ -9,15 +9,22 @@ const commonConfig: Options = {
 };
 
 export default defineConfig((overrideOptions) => {
+  const isWatchMode = Boolean(overrideOptions.watch);
+
   const configs: Options[] = [
     /*
      * Manager entry: src/register.tsx → dist/register.js
      * Loaded by Storybook's esbuild as the addon manager UI.
+     * @storybook/icons is ESM-only so it must NOT be external here — tsup/esbuild
+     * inlines it as CJS. Marking it external would leave a require('@storybook/icons')
+     * call in the output which Storybook's ESM manager builder cannot handle.
      */
     {
       ...commonConfig,
       entry: { register: 'src/register.tsx' },
+      external: ['react', 'react-dom'],
       format: ['cjs'],
+      minify: !isWatchMode,
       platform: 'browser',
       target: 'es2020',
     },
@@ -40,6 +47,7 @@ export default defineConfig((overrideOptions) => {
         'trpc/router': 'src/api/trpc/router.ts',
       },
       format: ['cjs'],
+      minify: !isWatchMode,
       platform: 'node',
       target: 'node18',
     },

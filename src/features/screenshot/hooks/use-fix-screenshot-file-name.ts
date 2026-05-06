@@ -16,9 +16,6 @@ export const useFixScreenshotFileName = (props: Props) => {
 
   const [functionName, setFunctionName] = React.useState<string>('');
 
-  const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] =
-    React.useState<boolean>(false);
-
   const [fixFileNamesError, setFixFileNamesError] = React.useState<
     string | undefined
   >(undefined);
@@ -60,15 +57,6 @@ export const useFixScreenshotFileName = (props: Props) => {
       });
   }, [currentStoryData, fixFunction, functionName, mutateAsync]);
 
-  const handleShowFixScreenshotFileDialog = React.useCallback(() => {
-    setShowFixScreenshotFileDialog(true);
-  }, []);
-
-  const handleHideFixScreenshotFileDialog = React.useCallback(() => {
-    setShowFixScreenshotFileDialog(false);
-    clearError();
-  }, [clearError]);
-
   const handleReload = React.useCallback(() => {
     document.location.reload();
   }, []);
@@ -78,16 +66,14 @@ export const useFixScreenshotFileName = (props: Props) => {
   }, []);
 
   return {
+    clearError,
     fixFileNames,
     fixFileNamesError,
     fixFileNamesInProgress,
     functionName,
     handleFunctionNameInput,
-    handleHideFixScreenshotFileDialog,
     handleReload,
-    handleShowFixScreenshotFileDialog,
+
     reload,
-    setShowFixScreenshotFileDialog,
-    showFixScreenshotFileDialog,
   };
 };

@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
 import tinycolor from 'tinycolor2';
+import { getHighestZindex } from '@pixpilot/dom';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -27,10 +28,12 @@ const Loader: React.FC<LoaderProps> = memo((props) => {
 
   const classes = useStyles();
 
+  if (!open) return null;
+
   return (
     <Backdrop
-      className={classes.root}
-      style={{ position: position }}
+      className={classes.root + ' loader-backdrop'}
+      style={{ position: position, zIndex: getHighestZindex() }}
       open={open}
     >
       {open && <CircularProgress size={progressSize} />}

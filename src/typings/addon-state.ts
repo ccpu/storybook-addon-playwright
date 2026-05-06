@@ -10,8 +10,10 @@ export type DisabledBrowserView = {
   [key in ScreenShotViewPanel]?: ActiveBrowser;
 };
 
+export type DisplayPlacement = 'auto' | 'bottom' | 'right';
+
 export interface AddonState {
-  placement: 'auto' | 'bottom' | 'right' | string;
+  placement: DisplayPlacement;
   previewPanelSize: number;
   disabledBrowser: DisabledBrowserView;
   previewPanelEnabled: boolean;

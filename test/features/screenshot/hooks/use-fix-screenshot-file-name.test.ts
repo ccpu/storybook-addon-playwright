@@ -25,24 +25,6 @@ describe('useFixScreenshotFileName', () => {
     expect(result.current.functionName).toBe('foo');
   });
 
-  it('should trigger show/hide', () => {
-    const { result } = renderHook(() => useFixScreenshotFileName({}));
-
-    act(() => {
-      result.current.handleShowFixScreenshotFileDialog();
-    });
-
-    expect(result.current.showFixScreenshotFileDialog).toBeTruthy();
-
-    act(() => {
-      result.current.handleHideFixScreenshotFileDialog();
-    });
-
-    expect(result.current.showFixScreenshotFileDialog).toBeFalsy();
-
-    expect(result.current.fixFileNamesError).toBeUndefined();
-  });
-
   it('should call to fix file names', async () => {
     const spy = vi.fn();
     server.use(

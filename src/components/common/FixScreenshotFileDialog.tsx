@@ -2,36 +2,40 @@ import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
 import { Button, TextField, DialogActions } from '@material-ui/core';
 import { Dialog } from '../common';
-import { IconButton } from '@storybook/components';
-import FixIcon from '@material-ui/icons/BuildSharp';
 import { Loader } from '../common';
 
 interface Props {
   fixFunction?: boolean;
+  onClose: (open: boolean) => void;
+  open: boolean;
 }
 
-const FixScreenshotFileDialog: React.FC<Props> = ({ fixFunction }) => {
+const FixScreenshotFileDialog: React.FC<Props> = ({
+  fixFunction,
+  onClose,
+  open,
+}) => {
   const {
     fixFileNames,
-    showFixScreenshotFileDialog,
+    clearError,
     fixFileNamesError,
     fixFileNamesInProgress,
-    handleHideFixScreenshotFileDialog,
-    handleShowFixScreenshotFileDialog,
     handleReload,
     reload,
     functionName,
     handleFunctionNameInput,
   } = useFixScreenshotFileName({ fixFunction });
+  console.log({ open });
+  const handleClose = React.useCallback(() => {
+    clearError();
+    onClose(false);
+  }, [onClose, clearError]);
 
   return (
     <>
-      <IconButton onClick={handleShowFixScreenshotFileDialog}>
-        <FixIcon style={fixFunction ? { width: 14 } : undefined} />
-      </IconButton>
       <Dialog
-        open={showFixScreenshotFileDialog}
-        onClose={handleHideFixScreenshotFileDialog}
+        open={open}
+        onClose={handleClose}
         title={'Fix Screenshot File Name'}
         width="400px"
       >
@@ -78,10 +82,7 @@ const FixScreenshotFileDialog: React.FC<Props> = ({ fixFunction }) => {
               </Button>
             ) : (
               <>
-                <Button
-                  onClick={handleHideFixScreenshotFileDialog}
-                  color="primary"
-                >
+                <Button onClick={handleClose} color="primary">
                   Cancel
                 </Button>
                 <Button onClick={fixFileNames} color="primary" autoFocus>

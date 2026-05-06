@@ -30,6 +30,7 @@ import {
   EyeIcon,
 } from '@storybook/icons';
 import { DisplayPlacement } from '../../typings';
+import { Toaster } from 'sonner';
 
 const useStyles = makeStyles(() => ({
   asterisk: {
@@ -86,8 +87,6 @@ const Tool: React.FC = () => {
 
   const handlePlacementChange = useCallback(
     (placement: DisplayPlacement) => {
-      console.log({ placement });
-
       setAddonState({
         ...addonState,
         placement: placement,
@@ -99,6 +98,7 @@ const Tool: React.FC = () => {
   const placement = addonState ? addonState.placement : 'auto';
   return (
     <CommonProvider>
+      <Toaster position="bottom-left" />
       <Separator />
       <WithTooltip
         placement="bottom"

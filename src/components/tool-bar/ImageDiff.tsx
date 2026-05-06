@@ -82,7 +82,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
     if (!imageDiffResults.find((x) => !x.pass)) {
       toast.success('All screenshot tests are passed successfully.', {
-        toastId: 'image-diff:all-passed',
+        id: 'image-diff:all-passed',
       });
     }
   }, [diffResults.length, target, testStoryScreenShots]);

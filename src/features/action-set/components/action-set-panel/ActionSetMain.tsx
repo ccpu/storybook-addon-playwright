@@ -24,7 +24,6 @@ interface SortableIndexChangeEvent {
 
 const ActionSetMain: React.FC = () => {
   const [showDescDialog, setShowDescDialog] = React.useState(false);
-
   const { storyId } = useStorybookState();
 
   const storyData = useCurrentStoryData();

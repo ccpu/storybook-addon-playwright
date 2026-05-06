@@ -73,10 +73,9 @@ export const useActionEditor = (actionSet: ActionSet) => {
 
       if (message) {
         toast.error(message, {
-          autoClose: 60000,
           closeButton: true,
-
-          toastId: 'action-set-editor-validation',
+          duration: 60000,
+          id: 'action-set-editor-validation',
         });
         return;
       }

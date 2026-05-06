@@ -50,13 +50,13 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
       toast.success(
         // prettier-ignore
         `Successfully added action to favourites`,
-        { autoClose: 5000 },
+        { duration: 5000 },
       );
     } catch (error) {
       toast.error(
         // prettier-ignore
         `An error has occurred:\n ${(error as any).message}`,
-        { autoClose: 5000 },
+        { duration: 5000 },
       );
     }
   }, [addFavouriteAction, clearAnchorEl, input, item]);

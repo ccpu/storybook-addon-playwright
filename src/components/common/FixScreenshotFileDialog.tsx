@@ -25,7 +25,7 @@ const FixScreenshotFileDialog: React.FC<Props> = ({
     functionName,
     handleFunctionNameInput,
   } = useFixScreenshotFileName({ fixFunction });
-  console.log({ open });
+
   const handleClose = React.useCallback(() => {
     clearError();
     onClose(false);

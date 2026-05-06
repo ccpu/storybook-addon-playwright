@@ -53,8 +53,8 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
 
       await Promise.all(promises);
       toast.success('Successfully updated.', {
-        autoClose: false,
-        toastId: 'story-screenshot-preview:updated',
+        duration: Infinity,
+        id: 'story-screenshot-preview:updated',
       });
     } catch (error) {
       toast.error((error as { message: string }).message);

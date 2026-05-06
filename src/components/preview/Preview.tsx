@@ -95,7 +95,6 @@ const Preview: React.FC = (props) => {
 
   if (!addonState || !addonState.previewPanelEnabled) return <>{children}</>;
 
-  console.log(addonState);
   const previewPaneIndex = 0;
 
   const previewPane = (

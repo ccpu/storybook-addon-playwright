@@ -49,9 +49,8 @@ export const useTanstackMutation = <T extends AnyFn>(
 
         if (successMessage) {
           toast.success(successMessage, {
-            onClose: clearResultOnSuccess
-              ? () => setResult(undefined)
-              : undefined,
+            onAutoClose: clearResultOnSuccess ? clearResult : undefined,
+            onDismiss: clearResultOnSuccess ? clearResult : undefined,
           });
         }
 
@@ -67,7 +66,13 @@ export const useTanstackMutation = <T extends AnyFn>(
         setInProgress(false);
       }
     },
-    [clearResultOnSuccess, func, setResponseResult, successMessage],
+    [
+      clearResult,
+      clearResultOnSuccess,
+      func,
+      setResponseResult,
+      successMessage,
+    ],
   );
 
   return {

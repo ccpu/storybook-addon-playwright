@@ -104,9 +104,9 @@ describe('useActionSetEditor', () => {
     expect(vi.mocked(toast.error)).toHaveBeenCalledWith(
       'Action name: click\nRequired: foo',
       expect.objectContaining({
-        autoClose: 60000,
         closeButton: true,
-        toastId: 'action-set-editor-validation',
+        duration: 60000,
+        id: 'action-set-editor-validation',
       }),
     );
   });

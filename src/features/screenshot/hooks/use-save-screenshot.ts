@@ -56,11 +56,10 @@ export const useSaveScreenshot = (options?: Options) => {
           // prettier-ignore
           `Screenshot ${ `${browserType ? ` for '${browserType}'` : ''}` } saved successfully.`,
           {
-            autoClose: 5000,
-            onClose: () => {
-              reset();
-            },
-            toastId: `image-diff-message:added:${browserType || 'default'}`,
+            duration: 5000,
+            id: `image-diff-message:added:${browserType || 'default'}`,
+            onAutoClose: reset,
+            onDismiss: reset,
           },
         );
       } else if (result.pass) {
@@ -69,11 +68,10 @@ export const useSaveScreenshot = (options?: Options) => {
           `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`;
 
         toast.success(message, {
-          autoClose: 5000,
-          onClose: () => {
-            reset();
-          },
-          toastId: `image-diff-message:pass:${message}`,
+          duration: 5000,
+          id: `image-diff-message:pass:${message}`,
+          onAutoClose: reset,
+          onDismiss: reset,
         });
 
         return;
@@ -81,11 +79,9 @@ export const useSaveScreenshot = (options?: Options) => {
         const message = getImageDiffMessages(result);
 
         toast.error(message, {
-          autoClose: false,
-          onClose: () => {
-            reset();
-          },
-          toastId: `image-diff-message:error:${message}`,
+          duration: Infinity,
+          id: `image-diff-message:error:${message}`,
+          onDismiss: reset,
         });
         return;
       }

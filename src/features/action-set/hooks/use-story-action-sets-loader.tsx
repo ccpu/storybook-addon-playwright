@@ -44,8 +44,8 @@ export const useStoryActionSetsLoader = () => {
           error instanceof Error ? error.message : 'Failed to load action sets';
 
         toast.error(message, {
-          autoClose: false,
-          toastId: `action-set-list:${message}`,
+          duration: Infinity,
+          id: `action-set-list:${message}`,
         });
       });
   }, [filePath, loading, mutateAsync, storyId]);

@@ -28,7 +28,11 @@ const ImageDiffMessage: React.FC<ImageDiffMessageProps> = (props) => {
       toast.success(
         // prettier-ignore
         `Screenshot ${ `${browserType ? ` for '${browserType}'` : ''}` } saved successfully.`,
-        { autoClose: 5000, onClose },
+        {
+          duration: 5000,
+          onAutoClose: onClose,
+          onDismiss: onClose,
+        },
       );
     }
   }, [browserType, onClose, result]);
@@ -40,15 +44,19 @@ const ImageDiffMessage: React.FC<ImageDiffMessageProps> = (props) => {
       toast.success(
         // prettier-ignore
         `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`,
-        { autoClose: 5000, onClose },
+        {
+          duration: 5000,
+          onAutoClose: onClose,
+          onDismiss: onClose,
+        },
       );
       return;
     }
 
     if (result.diffSize || result.error) {
       toast.error(getImageDiffMessages(result), {
-        autoClose: false,
-        onClose,
+        duration: Infinity,
+        onDismiss: onClose,
       });
       return;
     }

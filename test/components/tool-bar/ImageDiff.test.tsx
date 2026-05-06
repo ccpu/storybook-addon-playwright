@@ -30,11 +30,10 @@ import { storyData } from '../../configs/story-data';
 import { ImageDiff } from '../../../src/components/tool-bar/ImageDiff';
 import { shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
-import { IconButton } from '@storybook/components';
+import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { useScreenshotDiffTestByType } from '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
 import { useGlobalImageDiffResults } from '../../../src/features/screenshot/hooks/use-global-imageDiff-results';
 import { ImageDiffResult } from '../../../src/api/typings';
-import { Menu, MenuItem } from '@material-ui/core';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
 import { toast } from '../../../src/utils/toast';
 
@@ -86,11 +85,12 @@ describe('ImageDiff', () => {
   ] as ImageDiffResult[];
 
   beforeEach(() => {
+    vi.clearAllMocks();
+
+    (useGlobalImageDiffResults as Mock).mockReset();
     (useGlobalImageDiffResults as Mock).mockImplementation(() => {
       return { imageDiffResult: [] };
     });
-
-    vi.clearAllMocks();
   });
 
   async function clickOnIconButton(
@@ -103,6 +103,23 @@ describe('ImageDiff', () => {
     await invokeHandler(wrapper.find(IconButton).props().onClick, {
       currentTarget: { tagName: 'button' },
     } as never);
+  }
+
+  function getTooltipWrapper(
+    wrapper: ShallowWrapper<
+      unknown,
+      Readonly<unknown>,
+      React.Component<unknown, unknown, unknown>
+    >,
+    onHide = vi.fn(),
+  ) {
+    const tooltipProp = wrapper.find(WithTooltip).props().tooltip as (args: {
+      onHide: () => void;
+    }) => React.ReactNode;
+
+    const tooltip = tooltipProp({ onHide });
+
+    return shallow(<div>{tooltip}</div>);
   }
 
   it('should render', () => {
@@ -121,14 +138,15 @@ describe('ImageDiff', () => {
 
     const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
-    clickOnIconButton(wrapper);
+    await clickOnIconButton(wrapper);
 
-    expect(wrapper.find(Menu)).toHaveLength(1);
+    expect(wrapper.find(WithTooltip).props().trigger).toBe('click');
 
-    //should do nothing if anchor set, fixes
-    clickOnIconButton(wrapper);
+    const tooltipWrapper = getTooltipWrapper(wrapper);
 
-    expect(wrapper.find(Menu)).toHaveLength(1);
+    expect(tooltipWrapper.find(ListItem)).toHaveLength(1);
+    expect(tooltipWrapper.find(ImageDiffMenuItem)).toHaveLength(1);
+
     expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(0);
   });
 
@@ -172,7 +190,12 @@ describe('ImageDiff', () => {
       ] as ImageDiffResult[],
     }));
     const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-    expect(wrapper.find(Menu)).toHaveLength(1);
+
+    expect(wrapper.find(WithTooltip).props().trigger).toBe('click');
+
+    const tooltipWrapper = getTooltipWrapper(wrapper);
+
+    expect(tooltipWrapper.find(ListItem)).toHaveLength(1);
   });
 
   it('should clear result', async () => {
@@ -188,18 +211,19 @@ describe('ImageDiff', () => {
 
     await clickOnIconButton(wrapper);
 
-    expect(wrapper.find(Menu)).toHaveLength(1);
+    const onHideMock = vi.fn();
+    const tooltipWrapper = getTooltipWrapper(wrapper, onHideMock);
 
-    const clearItem = wrapper.find(MenuItem).first();
+    const clearItem = tooltipWrapper.find(ListItem).first();
 
-    expect(clearItem.text()).toBe('Clear results');
+    expect(clearItem.props().title).toBe('Clear results');
 
     invokeHandler(
       clearItem.props().onClick,
-      {} as React.MouseEvent<HTMLLIElement, MouseEvent>,
+      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
     );
 
-    expect(wrapper.find(Menu)).toHaveLength(0);
+    expect(onHideMock).toHaveBeenCalledTimes(1);
   });
 
   it('should hide menu on item click', async () => {
@@ -218,11 +242,12 @@ describe('ImageDiff', () => {
 
     await clickOnIconButton(wrapper);
 
-    expect(wrapper.find(Menu).props().anchorEl).not.toBe(null);
+    const onHideMock = vi.fn();
+    const tooltipWrapper = getTooltipWrapper(wrapper, onHideMock);
 
-    wrapper.find(ImageDiffMenuItem).last().props().onClick();
+    tooltipWrapper.find(ImageDiffMenuItem).last().props().onClick();
 
-    expect(wrapper.find(Menu).props().anchorEl).toBe(null);
+    expect(onHideMock).toHaveBeenCalledTimes(1);
   });
 
   it('should test story file', () => {
@@ -246,18 +271,20 @@ describe('ImageDiff', () => {
 
     await clickOnIconButton(wrapper);
 
-    expect(wrapper.find(Menu)).toHaveLength(1);
+    const onHideMock = vi.fn();
+    const tooltipWrapper = getTooltipWrapper(wrapper, onHideMock);
 
-    const clearItem = wrapper.find(MenuItem).first();
+    const clearItem = tooltipWrapper.find(ListItem).first();
 
-    expect(clearItem.text()).toBe('Clear results');
+    expect(clearItem.props().title).toBe('Clear results');
 
     invokeHandler(
       clearItem.props().onClick,
-      {} as React.MouseEvent<HTMLLIElement, MouseEvent>,
+      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
     );
 
     expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
+    expect(onHideMock).toHaveBeenCalledTimes(1);
   });
 
   it('should show error server throw error', async () => {

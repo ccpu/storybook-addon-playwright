@@ -101,6 +101,7 @@ const Preview: React.FC = (props) => {
   const previewPane = (
     <Pane
       key="preview"
+      minSize={50}
       size={(addonState && addonState.previewPanelSize) || '30%'}
       className={clsx('preview-main', classes.preview)}
     >
@@ -113,7 +114,7 @@ const Preview: React.FC = (props) => {
   );
 
   const screenshotPane = (
-    <Pane key="screenshot" className={clsx(classes.snapshotPanel)}>
+    <Pane key="screenshot" minSize={50} className={clsx(classes.snapshotPanel)}>
       <Separator />
       {addonState && addonState.previewPanelEnabled && (
         <ScreenshotListView

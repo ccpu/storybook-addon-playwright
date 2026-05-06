@@ -17,7 +17,7 @@ const useStyles = makeStyles(
 
 export interface ActionMenuProps {
   onChange: (actionKey: string) => void;
-  anchorEl: null | HTMLElement;
+  anchorEl: null | Element;
   onClose: () => void;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ActionToolbar } from './ActionSetToolbar';
 import { InputDialog } from '../../../../components/common';
 import { nanoid } from 'nanoid';
@@ -6,7 +6,6 @@ import { ActionSetList } from './ActionSetList';
 import { ActionSet } from '../../../../typings';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { useStorybookState } from '@storybook/manager-api';
-import { FavouriteActions } from './FavouriteActions';
 import { trpcClient } from '../../../../api/trpc/client';
 import {
   cancelEditActionSet,
@@ -24,14 +23,13 @@ interface SortableIndexChangeEvent {
 }
 
 const ActionSetMain: React.FC = () => {
-  const [showDescDialog, setShowDescDialog] = useState(false);
-
-  const [addToFavouriteAnchor, setAddToFavouriteAnchor] =
-    useState<HTMLElement | null>(null);
+  const [showDescDialog, setShowDescDialog] = React.useState(false);
 
   const { storyId } = useStorybookState();
 
   const storyData = useCurrentStoryData();
+
+  const ref = React.useRef<HTMLDivElement>(null);
 
   const { currentActions } = useCurrentActions(storyId);
 
@@ -89,7 +87,7 @@ const ActionSetMain: React.FC = () => {
         console.error(error);
       }
     }
-  }, [currentActions, storyData, storyId]);
+  }, [currentActions, deleteActionSet, storyData, storyId]);
 
   useEffect(() => {
     clearCurrentActionSets();
@@ -116,22 +114,18 @@ const ActionSetMain: React.FC = () => {
     [changeActionSetIndex, storyData, storyId],
   );
 
-  const onFavoriteActionsClick = React.useCallback((e) => {
-    setAddToFavouriteAnchor(e.target);
-  }, []);
-
-  const onFavoriteActionsClose = React.useCallback(() => {
-    setAddToFavouriteAnchor(null);
+  const getContainerHeight = React.useCallback(() => {
+    return ref.current?.offsetHeight ?? undefined;
   }, []);
 
   return (
-    <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
+    <div style={{ height: 'calc(100% - 55px)', transform: 'none' }} ref={ref}>
       <ActionToolbar
         onAddActionSet={toggleDescriptionDialog}
         onReset={handleReset}
-        onFavoriteActionsClick={onFavoriteActionsClick}
         onDeleteSelectedActionSets={handleDeleteSelectedActionSets}
         deleteDisabled={currentActions.length === 0}
+        getContainerHeight={getContainerHeight}
       />
 
       <ActionSetList onSortEnd={handleSortEnd} />
@@ -142,11 +136,6 @@ const ActionSetMain: React.FC = () => {
         open={showDescDialog}
         onSave={createNewActionSet}
         required
-      />
-
-      <FavouriteActions
-        anchorEl={addToFavouriteAnchor}
-        onClose={onFavoriteActionsClose}
       />
     </div>
   );

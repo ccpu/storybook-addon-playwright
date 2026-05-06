@@ -104,20 +104,26 @@ const Tool: React.FC = () => {
         placement="bottom"
         trigger="click"
         closeOnOutsideClick
-        tooltip={
+        tooltip={({ onHide }) => (
           <div onMouseDown={(e) => e.stopPropagation()}>
             <TooltipLinkList
               links={[
                 {
                   icon: <WrenchIcon />,
                   id: 'fix-screenshot-file-name',
-                  onClick: () => setShowFixScreenshotFileDialog(true),
+                  onClick: () => {
+                    setShowFixScreenshotFileDialog(true);
+                    onHide();
+                  },
                   title: 'Fix screenshot file name',
                 },
                 {
                   icon: <ShareAltIcon />,
                   id: 'full-screen',
-                  onClick: handleOpen,
+                  onClick: () => {
+                    handleOpen();
+                    onHide();
+                  },
                   title: 'Full screen view',
                 },
                 {
@@ -127,10 +133,12 @@ const Tool: React.FC = () => {
                     <EyeIcon />
                   ),
                   id: 'panel-toggle',
-                  onClick: handleBowserClose,
+                  onClick: () => {
+                    handleBowserClose();
+                  },
                   title: addonState.previewPanelEnabled
-                    ? 'Hide panel'
-                    : 'Show panel',
+                    ? 'Hide Preview Panel'
+                    : 'Show Preview Panel',
                 },
                 {
                   content: (
@@ -138,35 +146,41 @@ const Tool: React.FC = () => {
                       trigger="click"
                       placement="right-start"
                       closeOnOutsideClick
-                      tooltip={
+                      tooltip={() => (
                         <div onMouseDown={(e) => e.stopPropagation()}>
                           <TooltipLinkList
                             links={[
                               {
                                 icon: <SidebarAltIcon />,
                                 id: 'right',
-                                onClick: () => handlePlacementChange('right'),
+                                onClick: () => {
+                                  handlePlacementChange('right');
+                                },
                                 title: 'Right',
                               },
                               {
                                 icon: <BottomBarIcon />,
                                 id: 'bottom',
-                                onClick: () => handlePlacementChange('bottom'),
+                                onClick: () => {
+                                  handlePlacementChange('bottom');
+                                },
                                 title: 'Bottom',
                               },
                               {
                                 icon: <SyncIcon />,
                                 id: 'auto',
-                                onClick: () => handlePlacementChange('auto'),
+                                onClick: () => {
+                                  handlePlacementChange('auto');
+                                },
                                 title: 'Auto',
                               },
                             ]}
                           />
                         </div>
-                      }
+                      )}
                     >
                       <ListItem
-                        title="Placement"
+                        title="Preview Panel Placement"
                         icon={
                           placement === 'right' ? (
                             <SidebarAltIcon />
@@ -186,13 +200,16 @@ const Tool: React.FC = () => {
                 {
                   icon: <RefreshIcon />,
                   id: 'reset',
-                  onClick: resetSetting,
+                  onClick: () => {
+                    resetSetting();
+                    onHide();
+                  },
                   title: 'Reset Settings',
                 },
               ]}
             />
           </div>
-        }
+        )}
       >
         <IconButton aria-label="Open menu" title="Open menu">
           <CogIcon />

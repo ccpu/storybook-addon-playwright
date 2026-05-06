@@ -2,7 +2,8 @@ import { ScreenshotInfo } from '../../../../../src/features/screenshot/component
 import { shallow } from 'enzyme';
 import { getScreenshotDate } from '../../../../configs/get-screenshot-date';
 import React from 'react';
-import { IconButton, Popover } from '@material-ui/core';
+import { IconButton } from '@storybook/components';
+import { Popover } from '@material-ui/core';
 import ReactJson from 'react-json-view';
 
 describe('ScreenshotInfo', () => {
@@ -28,6 +29,8 @@ describe('ScreenshotInfo', () => {
         HTMLButtonElement,
         MouseEvent
       >);
+
+    wrapper.update();
 
     const reactJsonComp = wrapper.find(ReactJson);
 
@@ -71,6 +74,8 @@ describe('ScreenshotInfo', () => {
         MouseEvent
       >);
 
+    wrapper.update();
+
     const reactJsonComp = wrapper.find(ReactJson);
 
     expect(reactJsonComp).toHaveLength(1);
@@ -110,6 +115,7 @@ describe('ScreenshotInfo', () => {
         MouseEvent
       >);
 
+    wrapper.update();
     wrapper.find(Popover).props().onClose?.({}, 'backdropClick');
 
     expect(onCloseMock).toHaveBeenCalledTimes(1);

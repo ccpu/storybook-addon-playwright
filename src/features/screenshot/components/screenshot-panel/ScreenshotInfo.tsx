@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
-import Settings from '@material-ui/icons/Settings';
-import { IconButton, Popover } from '@material-ui/core';
+
+import { Popover } from '@material-ui/core';
 import { ScreenshotData } from '../../../../typings';
 import ReactJson from 'react-json-view';
+import { IconButton } from '@storybook/components';
+import { CogIcon } from '@storybook/icons';
 
 export interface ScreenshotInfoProps {
   screenshotData: ScreenshotData;
@@ -17,7 +19,7 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
   color,
   onClose,
 }) => {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 
   const getInfo = useCallback(() => {
     const { id: _id, index: _index, ...data } = screenshotData;
@@ -25,7 +27,7 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
   }, [screenshotData]);
 
   const togglePopover = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    (event: React.SyntheticEvent<Element, Event>) => {
       if (onClose && anchorEl) onClose();
       setAnchorEl(anchorEl ? null : event.currentTarget);
     },
@@ -35,7 +37,7 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
   return (
     <>
       <IconButton color={color} onClick={togglePopover} size={size}>
-        <Settings />
+        <CogIcon />
       </IconButton>
       <Popover
         anchorEl={anchorEl}

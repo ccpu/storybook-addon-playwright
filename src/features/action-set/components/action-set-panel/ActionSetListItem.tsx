@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from 'react';
-import { IconButton } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/EditSharp';
+
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -12,14 +11,16 @@ import {
 import { ActionSet } from '../../../../typings';
 import { ActionSetEditor } from './ActionSetEditor';
 import { TEMP_ACTION_SET } from '../../../../constants';
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+
 import { AddFavouriteAction } from './AddFavouriteAction';
+import { CopyIcon, EditIcon } from '@storybook/icons';
+import { IconButton } from '@storybook/components';
 
 export interface ActionSetActionSetListItemProps {
   onEdit: (item: ActionSet) => void;
   onDelete: (item: ActionSet) => void;
   onCheckBoxClick?: (item: ActionSet) => void;
-  onCopy?: (item: ActionSet) => void;
+  onDuplicate?: (item: ActionSet) => void;
   item: ActionSet;
   checked?: boolean;
   title: string;
@@ -38,7 +39,7 @@ export function ActionSetListItem({
   title,
   isEditing,
   hideIcons,
-  onCopy,
+  onDuplicate,
   sortableId,
 }: ActionSetActionSetListItemProps) {
   const {
@@ -68,11 +69,11 @@ export function ActionSetListItem({
     onDelete(item);
   }, [item, onDelete]);
 
-  const handleCopyActionSet = useCallback(() => {
-    if (onCopy) {
-      onCopy(item);
+  const handleDuplicateActionSet = useCallback(() => {
+    if (onDuplicate) {
+      onDuplicate(item);
     }
-  }, [item, onCopy]);
+  }, [item, onDuplicate]);
 
   if (isEditing) {
     return (
@@ -124,12 +125,12 @@ export function ActionSetListItem({
               </IconButton>
             )}
             <IconButton
-              className="copy-button"
-              onClick={handleCopyActionSet}
+              className="duplicate-button"
+              onClick={handleDuplicateActionSet}
               size="small"
-              title="Copy"
+              title="Duplicate Action"
             >
-              <FileCopyOutlinedIcon />
+              <CopyIcon />
             </IconButton>
 
             {!hideIcons && <AddFavouriteAction item={item} />}

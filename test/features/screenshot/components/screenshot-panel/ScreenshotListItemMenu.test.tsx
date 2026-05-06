@@ -2,10 +2,8 @@ import { ScreenshotListItemMenu } from '../../../../../src/features/screenshot/c
 import { shallow } from 'enzyme';
 import React from 'react';
 import { getScreenshotDate } from '../../../../configs/get-screenshot-date';
-import EditIcon from '@material-ui/icons/Edit';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import { EditIcon, OutboxIcon, ContrastIcon } from '@storybook/icons';
 import { ScreenshotUpdate } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotUpdate';
-import Compare from '@material-ui/icons/Compare';
 import { ScreenshotDelete } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotDelete';
 import { ScreenshotInfo } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotInfo';
 
@@ -66,7 +64,7 @@ describe('ScreenshotListItemMenu', () => {
         enableLoadSetting
       />,
     );
-    const icon = wrapper.find(SystemUpdateAltIcon);
+    const icon = wrapper.find(OutboxIcon);
 
     expect(icon).toHaveLength(1);
 
@@ -103,7 +101,7 @@ describe('ScreenshotListItemMenu', () => {
       />,
     );
 
-    const icon = wrapper.find(Compare);
+    const icon = wrapper.find(ContrastIcon);
 
     expect(icon).toHaveLength(1);
 

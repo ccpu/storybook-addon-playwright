@@ -1,21 +1,19 @@
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import AddIcon from '@material-ui/icons/AddSharp';
-import RestoreIcon from '@material-ui/icons/Restore';
-import StarIcon from '@material-ui/icons/Star';
-
 import {
   DeleteConfirmationButton,
   Toolbar,
 } from '../../../../components/common';
+import { StarIcon, PlusIcon, RefreshIcon } from '@storybook/icons';
+import { FavouriteActions } from './FavouriteActions';
 
 export interface ActionToolbarProps {
   onAddActionSet: () => void;
   onReset: () => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onFavoriteActionsClick: (e: any) => void;
+  onFavoriteActionsClick?: () => void;
   onDeleteSelectedActionSets: () => void;
   deleteDisabled?: boolean;
+  getContainerHeight?: () => number | undefined;
 }
 
 const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
@@ -25,6 +23,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
     onFavoriteActionsClick,
     onDeleteSelectedActionSets,
     deleteDisabled,
+    getContainerHeight,
   } = props;
 
   return (
@@ -34,14 +33,16 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
           <span>Action Sets</span>
         </div>
         <div className="right">
-          <IconButton
-            onClick={onFavoriteActionsClick}
-            title="Favourite Actions"
-          >
-            <StarIcon />
-          </IconButton>
+          <FavouriteActions getContainerHeight={getContainerHeight}>
+            <IconButton
+              onClick={onFavoriteActionsClick}
+              title="Favourite Actions"
+            >
+              <StarIcon />
+            </IconButton>
+          </FavouriteActions>
           <IconButton onClick={onReset} title="Reset">
-            <RestoreIcon />
+            <RefreshIcon />
           </IconButton>
 
           <DeleteConfirmationButton
@@ -51,7 +52,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
           />
 
           <IconButton onClick={onAddActionSet} title="Add Action Set">
-            <AddIcon />
+            <PlusIcon />
           </IconButton>
         </div>
       </Toolbar>

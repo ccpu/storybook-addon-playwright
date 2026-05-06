@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { Menu, makeStyles, Badge, MenuItem } from '@material-ui/core';
-import { IconButton } from '@storybook/components';
+import { makeStyles, Badge } from '@material-ui/core';
+import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import {
   useGlobalImageDiffResults,
   useScreenshotDiffTestByType,
@@ -20,7 +20,9 @@ import { ContrastIcon } from '@storybook/icons';
 const useStyles = makeStyles(
   (theme) => {
     return {
-      button: {},
+      button: {
+        overflow: 'visible !important',
+      },
       imageDiffBadge: {
         '& span': {
           fontSize: '.6rem',
@@ -30,7 +32,8 @@ const useStyles = makeStyles(
         },
         position: 'absolute',
         right: -2,
-        top: 10,
+        top: 5,
+        zIndex: 1,
       },
       successIcon: {
         color: theme.palette.primary.main,
@@ -56,8 +59,6 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
   const classes = useStyles({ classes: props.classes });
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
   const { imageDiffResult } = useGlobalImageDiffResults();
 
   const { testStoryScreenShots, imageDiffTestInProgress } =
@@ -70,36 +71,23 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
         )
       : imageDiffResult;
 
-  const handleImageDiffClick = useCallback(
-    async (event: React.SyntheticEvent) => {
-      //fixes menu close
-      if (anchorEl) return;
-      if (diffResults.length > 0) {
-        setAnchorEl(event.currentTarget as HTMLElement);
-      } else {
-        const result = await testStoryScreenShots(target);
+  const handleImageDiffClick = useCallback(async () => {
+    if (diffResults.length > 0) return;
 
-        if (!Array.isArray(result)) return;
+    const result = await testStoryScreenShots(target);
 
-        const imageDiffResults = result as Array<{ pass?: boolean }>;
+    if (!Array.isArray(result)) return;
 
-        if (!imageDiffResults.find((x) => !x.pass)) {
-          toast.success('All screenshot tests are passed successfully.', {
-            autoClose: false,
-            toastId: 'image-diff:all-passed',
-          });
-        }
-      }
-    },
-    [anchorEl, diffResults.length, target, testStoryScreenShots],
-  );
+    const imageDiffResults = result as Array<{ pass?: boolean }>;
 
-  const handleClose = useCallback(() => {
-    setAnchorEl(null);
-  }, []);
+    if (!imageDiffResults.find((x) => !x.pass)) {
+      toast.success('All screenshot tests are passed successfully.', {
+        toastId: 'image-diff:all-passed',
+      });
+    }
+  }, [diffResults.length, target, testStoryScreenShots]);
 
   const handleClearAllResults = useCallback(() => {
-    setAnchorEl(null);
     if (target === 'file') {
       diffResults.forEach((sc) => {
         if (sc.screenshotId) {
@@ -116,53 +104,77 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
       ? `Run diff test for all stories in '${storyData.filePath}' file.`
       : 'Run diff test for all stories';
 
-  return (
-    <>
-      <IconButton
-        title={title}
-        className={classes.button}
-        onClick={handleImageDiffClick}
-        style={{ position: 'relative' }}
-        disabled={imageDiffTestInProgress}
-      >
+  const hasFailedDiff =
+    diffResults.length > 0 && diffResults.some((x) => x.pass === false);
+
+  const iconButton = (
+    <IconButton
+      title={title}
+      className={classes.button}
+      onClick={handleImageDiffClick}
+      style={{ position: 'relative' }}
+      disabled={imageDiffTestInProgress}
+    >
+      {hasFailedDiff && (
         <Badge
           badgeContent={diffResults.length}
           color="secondary"
           className={classes.imageDiffBadge}
           overlap="rectangular"
         />
+      )}
+      <ContrastIcon />
 
-        <ContrastIcon />
+      <Loader
+        position="absolute"
+        open={imageDiffTestInProgress}
+        progressSize={15}
+      />
+    </IconButton>
+  );
 
-        {diffResults.length > 0 && (
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClearAllResults}>Clear results</MenuItem>
-            {diffResults
-              .filter(
-                (x, index, self) =>
-                  index === self.findIndex((t) => t.storyId === x.storyId),
-              )
-              .map((diff) => (
-                <ImageDiffMenuItem
-                  key={`${diff.storyId || ''}${diff.screenshotId || ''}`}
-                  imageDiff={diff}
-                  onClick={handleClose}
-                />
-              ))}
-          </Menu>
-        )}
+  if (diffResults.length === 0) {
+    return iconButton;
+  }
 
-        <Loader
-          position="absolute"
-          open={imageDiffTestInProgress}
-          progressSize={15}
-        />
-      </IconButton>
-    </>
+  return (
+    <WithTooltip
+      closeOnOutsideClick
+      placement="bottom"
+      trigger="click"
+      tooltip={({ onHide }) => (
+        <div
+          style={{
+            maxHeight: '60vh',
+            overflowY: 'auto',
+          }}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <ListItem
+            title="Clear results"
+            onClick={() => {
+              handleClearAllResults();
+              onHide();
+            }}
+          ></ListItem>
+
+          {diffResults
+            .filter(
+              (x, index, self) =>
+                index === self.findIndex((t) => t.storyId === x.storyId),
+            )
+            .map((diff) => (
+              <ImageDiffMenuItem
+                key={`${diff.storyId || ''}${diff.screenshotId || ''}`}
+                imageDiff={diff}
+                onClick={onHide}
+              />
+            ))}
+        </div>
+      )}
+    >
+      {iconButton}
+    </WithTooltip>
   );
 };
 

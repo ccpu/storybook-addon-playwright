@@ -147,7 +147,7 @@ describe('ActionSetListItem', () => {
         item={{ actions: [], id: 'action-set-id', title: 'desc' }}
         onDelete={deleteMock}
         onEdit={editMock}
-        onCopy={copyMock}
+        onDuplicate={copyMock}
         onCheckBoxClick={onCheckMock}
         index={0}
         title="title"
@@ -158,7 +158,7 @@ describe('ActionSetListItem', () => {
       <div>{wrapper.find(ListItemWrapper).props().icons}</div>,
     );
     listItemWrapperWrapper
-      .find('.copy-button')
+      .find('.duplicate-button')
       .props()
       .onClick?.({} as never);
 

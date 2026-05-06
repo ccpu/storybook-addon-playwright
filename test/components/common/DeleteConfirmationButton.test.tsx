@@ -1,7 +1,7 @@
 import { DeleteConfirmationButton } from '../../../src/components/common/DeleteConfirmationButton';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@storybook/components';
 import { ConfirmationPopover } from '../../../src/components/common/ConfirmationPopover';
 
 describe('DeleteConfirmationButton', () => {
@@ -19,6 +19,7 @@ describe('DeleteConfirmationButton', () => {
       currentTarget: {},
       stopPropagation: () => true,
     } as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+    wrapper.update();
     wrapper.find(ConfirmationPopover).props().onConfirm();
     expect(onDeleteMock).toHaveBeenCalledTimes(1);
   });

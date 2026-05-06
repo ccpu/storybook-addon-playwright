@@ -7,7 +7,7 @@ import {
 } from '../features/action-set/store/actions';
 import { useAddonState } from './use-addon-state';
 
-export const PREVIEW_PANEL_SIZE = 250;
+export const PREVIEW_PANEL_SIZE = 200;
 
 export const useResetSetting = () => {
   const api = useStorybookApi();

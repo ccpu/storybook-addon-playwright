@@ -171,7 +171,7 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
                 onCheckBoxClick={handleCheckBox}
                 checked={currentActionSets.includes(actionSet.id)}
                 title={actionSet.title}
-                onCopy={copyActionSet}
+                onDuplicate={copyActionSet}
                 isEditing={
                   isEditing &&
                   state.orgEditingActionSet &&

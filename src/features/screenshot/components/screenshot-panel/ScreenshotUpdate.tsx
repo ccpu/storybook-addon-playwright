@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { ScreenshotData } from '../../../../typings';
-import Update from '@material-ui/icons/Update';
-import { IconButton, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { useCurrentStoryData, useScreenshotDiffTest } from '../../../../hooks';
 import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
 import { Loader, ImageDiffPreviewDialog } from '../../../../components/common';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ImageDiffResult } from '../../../../api/typings';
+import { IconButton } from '@storybook/components';
+import { RefreshIcon } from '@storybook/icons';
 
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;
@@ -60,7 +61,7 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
   return (
     <>
       <IconButton onClick={handleUpdate} size="small" title="Update screenshot">
-        <Update />
+        <RefreshIcon />
       </IconButton>
       {testScreenshotResult && (
         <ImageDiffPreviewDialog

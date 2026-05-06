@@ -1,10 +1,7 @@
 import React from 'react';
 import { FavouriteActionSet } from '../../../../typings';
-import StarIcon from '@material-ui/icons/Star';
-// import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import {
   capitalize,
-  IconButton,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -22,6 +19,8 @@ import {
 } from '@material-ui/core';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { toast } from '../../../../utils/toast';
+import { StarIcon } from '@storybook/icons';
+import { IconButton } from '@storybook/components';
 
 export interface AddFavouriteActionProps {
   item: FavouriteActionSet;

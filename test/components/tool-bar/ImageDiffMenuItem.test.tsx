@@ -2,7 +2,7 @@ import { getStoryData } from '../../configs/story-data';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { MenuItem } from '@material-ui/core';
+import { ListItem } from '@storybook/components';
 import { useStorybookApi } from '@storybook/manager-api';
 
 describe('ImageDiffMenuItem', () => {
@@ -34,9 +34,9 @@ describe('ImageDiffMenuItem', () => {
     );
 
     wrapper
-      .find(MenuItem)
+      .find(ListItem)
       .props()
-      .onClick?.({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+      .onClick?.({} as React.MouseEvent);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
     expect(selectStoryMock).toHaveBeenCalledWith('story-id');
@@ -65,9 +65,9 @@ describe('ImageDiffMenuItem', () => {
       />,
     );
 
-    expect(wrapper.find(MenuItem).props().onClick).toBeUndefined();
+    expect(wrapper.find(ListItem).props().onClick).toBeUndefined();
 
-    expect(wrapper.find(MenuItem).find('b').first().text()).toBe(
+    expect(wrapper.find(ListItem).props().title).toBe(
       'Unable to locate story!',
     );
   });

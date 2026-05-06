@@ -1,9 +1,7 @@
 import { ScreenshotListToolbar } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import Compare from '@material-ui/icons/Compare';
-import Visibility from '@material-ui/icons/Visibility';
-import Update from '@material-ui/icons/Update';
+import { ContrastIcon, PhotoIcon, RefreshIcon } from '@storybook/icons';
 import {
   DeleteConfirmationButton,
   FixScreenshotFileDialog,
@@ -61,9 +59,9 @@ describe('ScreenshotListToolbar', () => {
       />,
     );
 
-    wrapper.find(Compare).parent().props().onClick();
-    wrapper.find(Visibility).parent().props().onClick();
-    wrapper.find(Update).parent().props().onClick();
+    wrapper.find(RefreshIcon).parent().props().onClick();
+    wrapper.find(ContrastIcon).parent().props().onClick();
+    wrapper.find(PhotoIcon).parent().props().onClick();
     wrapper.find(DeleteConfirmationButton).props().onDelete();
 
     expect(onTestClickMock).toHaveBeenCalledTimes(1);

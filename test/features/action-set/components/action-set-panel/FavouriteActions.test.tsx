@@ -2,7 +2,7 @@ import { addActionSetMock } from '../../../../manual-mocks/store/action/context'
 import React from 'react';
 import { FavouriteActions } from '../../../../../src/features/action-set/components/action-set-panel/FavouriteActions';
 import { shallow } from 'enzyme';
-import { MenuItem } from '@material-ui/core';
+import { ListItem, WithTooltip } from '@storybook/components';
 
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 
@@ -100,9 +100,6 @@ vi.mock('react', async (importOriginal) => {
 });
 
 describe('FavouriteActions', () => {
-  const onCloseMock = vi.fn();
-  const anchorEl = document.createElement('div');
-
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -112,22 +109,34 @@ describe('FavouriteActions', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(<FavouriteActions onClose={onCloseMock} />);
+    const wrapper = shallow(
+      <FavouriteActions>
+        <button type="button">Open</button>
+      </FavouriteActions>,
+    );
 
     expect(wrapper.exists()).toBeTruthy();
-    expect(wrapper.find(MenuItem).length).toBe(0);
+    expect(wrapper.find(WithTooltip).length).toBe(1);
   });
 
   it('should add quick action', async () => {
     const wrapper = shallow(
-      <FavouriteActions onClose={onCloseMock} anchorEl={anchorEl} />,
+      <FavouriteActions>
+        <button type="button">Open</button>
+      </FavouriteActions>,
     );
 
-    await wrapper
-      .find(MenuItem)
-      .first()
-      .props()
-      .onClick?.({} as React.MouseEvent<HTMLLIElement, MouseEvent>);
+    const tooltipProp = wrapper.find(WithTooltip).props().tooltip as (args: {
+      onHide: () => void;
+    }) => React.ReactNode;
+
+    const tooltipWrapper = shallow(
+      <div>{tooltipProp({ onHide: vi.fn() })}</div>,
+    );
+
+    const firstItem = tooltipWrapper.find(ListItem).first();
+
+    await firstItem.props().onClick?.({} as never);
 
     expect(addActionSetMock).toHaveBeenCalled();
   });

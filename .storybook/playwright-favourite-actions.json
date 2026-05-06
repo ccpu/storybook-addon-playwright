@@ -1,18 +1,3 @@
 {
-  "actionSets": [
-    {
-      "actions": [
-        {
-          "args": {
-            "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-          },
-          "id": "Z0GnENShlbWfis_e6BH5G",
-          "name": "takeElementScreenshot"
-        }
-      ],
-      "id": "rp8sKcabTMS2qDR",
-      "title": "take element screen shot",
-      "visibleTo": "*"
-    }
-  ]
+  "actionSets": []
 }

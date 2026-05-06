@@ -1,11 +1,5 @@
 import React, { memo, useCallback, useState, useEffect } from 'react';
-import {
-  AccordionDetails,
-  makeStyles,
-  Chip,
-  IconButton,
-  Tooltip,
-} from '@material-ui/core';
+import { AccordionDetails, makeStyles, Chip, Tooltip } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
@@ -18,9 +12,10 @@ import { useActionSetStoreState } from '../../store/selectors';
 import { useEditorAction } from '../../hooks/use-editor-action';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { getActionOptionValue } from './utils/index';
-import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
-import HelpIcon from '@material-ui/icons/HelpOutline';
+
 import { DragHandleProps } from '../../../../components/common';
+import { QuestionIcon, TrashIcon } from '@storybook/icons';
+import { IconButton } from '@storybook/components';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -111,7 +106,7 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
   }, [action, actionName]);
 
   const handleDeleteAction = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    (e: React.SyntheticEvent) => {
       e.preventDefault();
       e.stopPropagation();
       if (!storyId) return;
@@ -179,16 +174,12 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
                   : 'Not Available!'
               }
             >
-              <IconButton size="small">
-                <HelpIcon className={classes.icon} />
+              <IconButton>
+                <QuestionIcon className={classes.icon} />
               </IconButton>
             </Tooltip>
-            <IconButton
-              size="small"
-              color="inherit"
-              onClick={handleDeleteAction}
-            >
-              <DeleteIcon className={classes.icon} />
+            <IconButton onClick={handleDeleteAction}>
+              <TrashIcon className={classes.icon} />
             </IconButton>
           </div>
         </AccordionSummary>

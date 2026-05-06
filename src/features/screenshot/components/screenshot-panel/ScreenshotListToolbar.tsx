@@ -1,14 +1,16 @@
 import React from 'react';
 import { Toolbar } from '../../../../components/common';
-import Compare from '@material-ui/icons/Compare';
 import { IconButton } from '@storybook/components';
-import Visibility from '@material-ui/icons/Visibility';
-import Update from '@material-ui/icons/Update';
 import {
   DeleteConfirmationButton,
   FixScreenshotFileDialog,
 } from '../../../../components/common';
-import { WrenchIcon } from '@storybook/icons';
+import {
+  ContrastIcon,
+  PhotoIcon,
+  RefreshIcon,
+  WrenchIcon,
+} from '@storybook/icons';
 
 export interface ScreenshotListToolbarProps {
   onTestClick: () => void;
@@ -54,19 +56,19 @@ const ScreenshotListToolbar: React.FC<ScreenshotListToolbarProps> = (props) => {
               onClick={onUpdateClick}
               title="Update story screenshots"
             >
-              <Update />
+              <RefreshIcon />
             </IconButton>
             <IconButton
               onClick={onTestClick}
               title="Run diff test for story screenshots"
             >
-              <Compare viewBox="0 -1 27 27" />
+              <ContrastIcon />
             </IconButton>
             <IconButton
               onClick={onPreviewClick}
               title="Display story screenshots"
             >
-              <Visibility />
+              <PhotoIcon />
             </IconButton>
             <DeleteConfirmationButton
               IconButton={IconButton}

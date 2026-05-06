@@ -33,6 +33,10 @@ const useStyles = makeStyles(
         padding: '5px 8px',
         paddingLeft: 16,
       },
+      icons: {
+        display: 'flex',
+        gap: 2,
+      },
       root: {
         border: '1px solid ' + divider,
         color: text.primary,
@@ -121,7 +125,7 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
           {capitalize(title)}
         </div>
         <div
-          className={clsx('clickable', classes.column, {
+          className={clsx('clickable', classes.column, classes.icons, {
             [classes.secondaryColor]: secondaryColor,
           })}
         >

@@ -11,7 +11,6 @@ describe('ActionToolbar', () => {
         onAddActionSet={vi.fn()}
         onDeleteSelectedActionSets={vi.fn()}
         onReset={vi.fn()}
-        onFavoriteActionsClick={vi.fn()}
       />,
     );
     expect(wrapper.exists()).toBeTruthy();
@@ -21,34 +20,29 @@ describe('ActionToolbar', () => {
     const onAddActionSet = vi.fn();
     const onDeleteSelectedActionSets = vi.fn();
     const onReset = vi.fn();
-    const onFavoriteActionsClick = vi.fn();
 
     const wrapper = shallow(
       <ActionToolbar
         onAddActionSet={onAddActionSet}
         onDeleteSelectedActionSets={onDeleteSelectedActionSets}
         onReset={onReset}
-        onFavoriteActionsClick={onFavoriteActionsClick}
       />,
     );
 
     const buttons = wrapper.find(IconButton);
     buttons
+      .filterWhere((node) => node.prop('title') === 'Reset')
       .at(0)
       .props()
       .onClick?.({} as React.MouseEvent<HTMLElement>);
     buttons
-      .at(1)
-      .props()
-      .onClick?.({} as React.MouseEvent<HTMLElement>);
-    buttons
-      .at(2)
+      .filterWhere((node) => node.prop('title') === 'Add Action Set')
+      .at(0)
       .props()
       .onClick?.({} as React.MouseEvent<HTMLElement>);
 
     wrapper.find(DeleteConfirmationButton).props().onDelete();
 
-    expect(onFavoriteActionsClick).toHaveBeenCalledTimes(1);
     expect(onReset).toHaveBeenCalledTimes(1);
     expect(onAddActionSet).toHaveBeenCalledTimes(1);
     expect(onDeleteSelectedActionSets).toHaveBeenCalledTimes(1);
@@ -61,7 +55,6 @@ describe('ActionToolbar', () => {
         onAddActionSet={vi.fn()}
         onDeleteSelectedActionSets={vi.fn()}
         onReset={vi.fn()}
-        onFavoriteActionsClick={vi.fn()}
       />,
     );
 

@@ -1,12 +1,9 @@
 import React, { useCallback } from 'react';
-import AddIcon from '@material-ui/icons/AddSharp';
-import CloseIcon from '@material-ui/icons/CloseSharp';
-import SaveIcon from '@material-ui/icons/SaveSharp';
-import EditIcon from '@material-ui/icons/EditSharp';
-import { IconButton } from '@material-ui/core';
 import { ActionMenu } from './ActionMenu';
 import { useActionSchemaLoader } from '../../../../hooks';
 import { Loader } from '../../../../components/common';
+import { EditIcon, SaveIcon, PlusIcon, CrossIcon } from '@storybook/icons';
+import { IconButton } from '@storybook/components';
 
 export interface ActionSetEditorIconsProps {
   onSave: () => void;
@@ -25,12 +22,10 @@ const ActionSetEditorIcons: React.FC<ActionSetEditorIconsProps> = (props) => {
 
   const { loading } = useActionSchemaLoader();
 
-  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
-    null,
-  );
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | Element>(null);
 
   const handleMenuOpen = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
+    (event: React.SyntheticEvent<Element, Event>) => {
       setMenuAnchorEl(event.currentTarget);
     },
     [],
@@ -65,7 +60,7 @@ const ActionSetEditorIcons: React.FC<ActionSetEditorIconsProps> = (props) => {
         onClick={handleMenuOpen}
         title="Add Actions"
       >
-        <AddIcon />
+        <PlusIcon />
       </IconButton>
       <IconButton
         size="small"
@@ -81,7 +76,7 @@ const ActionSetEditorIcons: React.FC<ActionSetEditorIconsProps> = (props) => {
         title="Cancel"
         onClick={onCancel}
       >
-        <CloseIcon />
+        <CrossIcon />
       </IconButton>
       <ActionMenu
         onClose={handleMenuClose}

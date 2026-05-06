@@ -1,7 +1,7 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
-import CheckBoxUnchecked from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxChecked from '@material-ui/icons/CheckBox';
+
+import { FormIcon, StopAltHollowIcon } from '@storybook/icons';
+import { IconButton } from '@storybook/components';
 
 export interface CheckBoxProps {
   onClick: () => void;
@@ -14,11 +14,11 @@ const CheckBox: React.FC<CheckBoxProps> = (props) => {
   return (
     <IconButton
       className="check-box"
-      color={checked ? 'primary' : 'default'}
       onClick={onClick}
       size="small"
+      active={checked}
     >
-      {checked ? <CheckBoxChecked /> : <CheckBoxUnchecked />}
+      {checked ? <FormIcon /> : <StopAltHollowIcon />}
     </IconButton>
   );
 };

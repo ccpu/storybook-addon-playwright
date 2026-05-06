@@ -5,8 +5,9 @@ import {
 import React from 'react';
 import { ActionOptions } from '../../../../../src/features/action-set/components/actions/ActionOptions';
 import { mount } from 'enzyme';
-import { Chip, IconButton } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
+import { IconButton } from '@storybook/components';
 import { useEditorAction } from '../../../../../src/features/action-set/hooks/use-editor-action';
 
 vi.mock(

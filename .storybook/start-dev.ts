@@ -1,6 +1,5 @@
 import path from 'path';
 import { spawn, type ChildProcess } from 'child_process';
-import { rm } from 'fs/promises';
 
 const ROOT = path.resolve(__dirname, '..');
 const PORT = '9002';
@@ -265,10 +264,10 @@ async function restartStorybook() {
   log('addon rebuild finished, restarting Storybook...');
   if (isRestarting) return;
   isRestarting = true;
-  await rm(path.join(ROOT, 'node_modules', '.cache', 'storybook'), {
-    recursive: true,
-    force: true,
-  }).catch(() => {});
+  // Do NOT clear the storybook webpack cache on every restart.
+  // The cache only covers the preview (stories) webpack build; Storybook's
+  // esbuild manager builder runs fresh regardless.  Keeping the cache lets
+  // webpack use its persistent layer and cuts restart time significantly.
   await stopStorybook();
 }
 

@@ -1,20 +1,13 @@
 import React from 'react';
-import {
-  MenuList,
-  makeStyles,
-  ListItemText,
-  MenuItem,
-  Menu,
-  IconButton,
-  capitalize,
-} from '@material-ui/core';
+import { makeStyles, capitalize } from '@material-ui/core';
 import { trpcClient } from '../../../../api/trpc/client';
 import { FavouriteActionSet } from '../../../../typings';
-import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { addActionSet as addActionSetToStore } from '../../store/actions';
 import { nanoid } from 'nanoid';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { filterFavouriteActions } from './utils/filter-favourite-actions';
+import { TrashIcon } from '@storybook/icons';
 
 const useStyles = makeStyles(
   () => {
@@ -28,8 +21,8 @@ const useStyles = makeStyles(
 );
 
 export interface FavouriteActionsProps {
-  anchorEl?: null | HTMLElement;
-  onClose: () => void;
+  children?: React.ReactNode;
+  getContainerHeight?: () => number | undefined;
 }
 
 const defaults: FavouriteActionSet[] = [
@@ -58,7 +51,7 @@ const defaults: FavouriteActionSet[] = [
 ];
 
 const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
-  const { anchorEl, onClose } = props;
+  const { children, getContainerHeight } = props;
 
   const [actionSets, setActionSets] =
     React.useState<FavouriteActionSet[]>(defaults);
@@ -81,8 +74,6 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   const classes = useStyles();
 
   const loadActions = React.useCallback(() => {
-    if (!anchorEl) return;
-
     refetchFavouriteActions().then(({ data: result }) => {
       const actions = [
         ...defaults,
@@ -91,7 +82,7 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
 
       setActionSets(actions);
     });
-  }, [anchorEl, refetchFavouriteActions, storyId]);
+  }, [refetchFavouriteActions, storyId]);
 
   const onAddQuickAction = async (item: FavouriteActionSet) => {
     if (!storyData || !storyId) return;
@@ -127,45 +118,51 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   }, [loadActions]);
 
   return (
-    <>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={onClose}
-        className={classes.menu}
-      >
-        <MenuList dense>
-          {anchorEl &&
-            actionSets.map((item) => {
+    <WithTooltip
+      closeOnOutsideClick
+      placement="bottom-start"
+      trigger="click"
+      tooltip={({ onHide }) => {
+        const containerHeight = getContainerHeight?.();
+        return (
+          <div
+            className={classes.menu}
+            style={{
+              maxHeight: containerHeight ? `${containerHeight - 50}px` : '50vh',
+              overflowY: 'auto',
+            }}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            {actionSets.map((item) => {
               return (
-                <MenuItem
+                <ListItem
                   key={item.id}
-                  value={item.id}
-                  style={{ paddingBlock: 3 }}
+                  title={capitalize(item.title)}
+                  right={
+                    <IconButton
+                      disabled={item.id.endsWith('--default')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        void deleteAction(item.id);
+                        onHide();
+                      }}
+                    >
+                      <TrashIcon fontSize="small" />
+                    </IconButton>
+                  }
                   onClick={async () => {
                     await onAddQuickAction(item);
+                    onHide();
                   }}
-                >
-                  <ListItemText>{capitalize(item.title)}</ListItemText>
-
-                  <IconButton
-                    disabled={item.id.endsWith('--default')}
-                    style={{ marginLeft: 20, padding: 6 }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteAction(item.id);
-                    }}
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </MenuItem>
+                />
               );
             })}
-        </MenuList>
-      </Menu>
-    </>
+          </div>
+        );
+      }}
+    >
+      {children}
+    </WithTooltip>
   );
 };
 

@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, forwardRef, Ref } from 'react';
-import { IconButton } from '@material-ui/core';
-import Compare from '@material-ui/icons/Compare';
+
 import { Loader } from '../../../../components/common';
 import { ScreenshotData } from '../../../../typings';
-import EditIcon from '@material-ui/icons/Edit';
+
 import { ScreenshotUpdate } from './ScreenshotUpdate';
 import { ScreenshotInfo } from './ScreenshotInfo';
 import { ScreenshotDelete } from './ScreenshotDelete';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { ImageDiffResult } from '../../../../api/typings';
+import { OutboxIcon, ContrastIcon, EditIcon } from '@storybook/icons';
+import { IconButton } from '@storybook/components';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -29,8 +30,8 @@ const useStyles = makeStyles(
         },
         display: 'none',
         position: 'absolute',
-        right: 25,
-        top: 12,
+        right: 30,
+        top: 10,
       },
       visible: {
         display: 'block',
@@ -90,11 +91,7 @@ const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> =
             className={clsx(classes.menu, { [classes.visible]: show })}
           >
             {!isEditing && enableEditScreenshot && (
-              <IconButton
-                onClick={onEditClick}
-                size="small"
-                title="Edit screenshot"
-              >
+              <IconButton onClick={onEditClick} title="Edit screenshot">
                 <EditIcon />
               </IconButton>
             )}
@@ -102,10 +99,9 @@ const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> =
             {enableLoadSetting && (
               <IconButton
                 onClick={onLoadSettingClick}
-                size="small"
                 title="Load screenshot settings"
               >
-                <SystemUpdateAltIcon />
+                <OutboxIcon />
               </IconButton>
             )}
 
@@ -118,12 +114,8 @@ const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> =
             )}
 
             {enableImageDiff && (
-              <IconButton
-                onClick={onRunImageDiff}
-                size="small"
-                title="Run diff test"
-              >
-                <Compare style={{ fontSize: 16 }} />
+              <IconButton onClick={onRunImageDiff} title="Run diff test">
+                <ContrastIcon />
               </IconButton>
             )}
 

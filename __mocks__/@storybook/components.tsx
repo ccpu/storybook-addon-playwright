@@ -60,6 +60,11 @@ export const TooltipNote = (props: any) =>
 export const WithTooltip = (props: any) =>
   React.createElement('div', props, props.children);
 
+export const ListItem = React.forwardRef<any, any>((props, ref) =>
+  React.createElement('button', { ...props, ref }, props.title, props.children),
+);
+ListItem.displayName = 'ListItem';
+
 export const TooltipLinkList = (props: any) =>
   React.createElement('div', props, props.children);
 

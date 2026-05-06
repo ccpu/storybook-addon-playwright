@@ -1,18 +1,18 @@
 import React, { useCallback } from 'react';
-import { IconButton as MuIconButton } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/DeleteOutlineSharp';
+import { IconButton as StorybookIconButton } from '@storybook/components';
 import { ConfirmationPopover } from '../common';
+import { TrashIcon } from '@storybook/icons';
 
 export interface DeleteConfirmationButtonProps {
   onDelete: () => void;
-  IconButton?: React.ComponentType;
+  IconButton?: React.ComponentType<any>;
   onClose?: () => void;
   disabled?: boolean;
 }
 
 const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
   onDelete,
-  IconButton = MuIconButton,
+  IconButton = StorybookIconButton,
   onClose,
   disabled,
 }) => {
@@ -20,9 +20,9 @@ const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
     React.useState<HTMLButtonElement | null>(null);
 
   const handleDelete = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    (e: React.SyntheticEvent<Element, Event>) => {
       e.stopPropagation();
-      setConfirmAnchorEl(e.currentTarget);
+      setConfirmAnchorEl(e.currentTarget as HTMLButtonElement);
     },
     [],
   );
@@ -45,7 +45,7 @@ const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
         title="Delete Item"
         size="small"
       >
-        <DeleteIcon />
+        <TrashIcon />
       </IconButton>
 
       {confirmAnchorEl && (

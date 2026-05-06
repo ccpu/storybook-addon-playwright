@@ -14,7 +14,7 @@ An addon to visually test the stories in the multiple browsers within storybook 
 
 | Package    | Version |
 | ---------- | ------- |
-| storybook  | ~6.4    |
+| storybook  | ~8.6    |
 | playwright | ~1.17   |
 
 ## Motivation
@@ -30,11 +30,13 @@ Being able to make components that feel and look same in all browser were always
 Required packages:
 
 - storybook-addon-playwright
-- @storybook/addon-knobs
+- @storybook/addon-essentials (or @storybook/addon-controls)
 
 ```js
-pnpm add -D storybook-addon-playwright @storybook/addon-knobs
+pnpm add -D storybook-addon-playwright @storybook/addon-essentials
 ```
+
+> Legacy knob-based stories are still supported for now, but knobs support is deprecated and will be removed in a future release.
 
 ## Configuration
 
@@ -44,14 +46,12 @@ within `.storybook/main.js`
 module.exports = {
   stories: ['../**/*.stories.[tj]sx'],
   addons: [
-    '@storybook/addon-knobs/register',
+    '@storybook/addon-essentials',
     'storybook-addon-playwright/preset',
     'storybook-addon-playwright/register',
   ],
 };
 ```
-
-> If story book complain that it can not find `register` in `@storybook/addon-knobs/register` path you may need to point it to destination folder: `@storybook/addon-knobs/dist/register`
 
 within `.storybook/main.js` OR `.storybook/middleware.js`:
 
@@ -195,6 +195,14 @@ This add-on consist of there parts:
 - Action list panel
 - Screenshots list panel
 - Screenshots preview panel
+
+### Args and legacy knobs
+
+The addon now stores Storybook controls state in `args` inside screenshot settings.
+
+- New screenshots save `args` (Record<string, any>) and use it to rebuild the `args` query string when loading stories in Playwright.
+- Existing screenshot files with legacy `props` are still read as a fallback.
+- During transition, `props` remains supported but is deprecated.
 
 ### Action list panel:
 

@@ -2,6 +2,14 @@ import { constructStoryUrl } from '../../src/utils/construct-story-url';
 import { ScreenshotProp } from '../../src/typings';
 
 describe('constructStoryUrl', () => {
+  it('should construct url with args query', () => {
+    expect(
+      constructStoryUrl('http://localhost:3000', 'story-id', undefined, {
+        prop: 'val',
+      }),
+    ).toBe('http://localhost:3000/iframe.html?id=story-id&args=prop:val');
+  });
+
   it('should construct http url', () => {
     expect(
       constructStoryUrl('http://localhost:3000', 'story-id', { prop: 'val' }),

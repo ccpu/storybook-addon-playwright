@@ -1,4 +1,5 @@
 import { constructStoryUrl } from '../../utils';
+import { getScreenshotArgs } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { executeAction, installMouseHelper } from '../server/utils';
 import {
@@ -77,10 +78,13 @@ export const makeScreenshot = async (
 
   extendPage(page);
 
+  const args = getScreenshotArgs(data);
+
   let url = constructStoryUrl(
     configs.storybookEndpoint,
     data.storyId,
     data.props,
+    args,
   );
 
   if (configs.afterUrlConstruction) {

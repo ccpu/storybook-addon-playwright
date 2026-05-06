@@ -1,0 +1,63 @@
+{
+  "version": "4",
+  "stories": {
+    "controls-arg-patterns--story-level-args-override": {
+      "screenshots": [
+        {
+          "args": {
+            "accentColor": "#b45309",
+            "advanced": false,
+            "avatar": [],
+            "contact": "phone",
+            "contactMethods": ["email", "phone"],
+            "countries": ["Canada"],
+            "country": "USA",
+            "createdAt": 1778094620957,
+            "debugSecret": "sensitive-token",
+            "disabled": true,
+            "elevation": 4,
+            "footer": "Footer from custom args",
+            "icon": "none",
+            "internalOnly": "hidden-from-table",
+            "label": "Story-level args override",
+            "margin": 8,
+            "padding": 10,
+            "tags": ["alpha", "beta"],
+            "themeNote": "Theme note from custom args",
+            "user": {
+              "name": "Storybook User",
+              "role": "admin"
+            },
+            "variant": "secondary",
+            "width": 420
+          },
+          "browserOptionsId": "HQ00UJyI2-Fy",
+          "browserType": "chromium",
+          "id": "qrfNOluYvmXo",
+          "index": 0,
+          "screenshotOptionsId": "yGl-6HebH7Fi",
+          "title": "Test args"
+        }
+      ]
+    }
+  },
+  "browserOptions": {
+    "HQ00UJyI2-Fy": {
+      "all": {},
+      "viewport": {
+        "height": 480,
+        "width": 950
+      }
+    }
+  },
+  "screenshotOptions": {
+    "yGl-6HebH7Fi": {
+      "clip": {
+        "height": 400,
+        "width": 319,
+        "x": 247,
+        "y": 44
+      }
+    }
+  }
+}

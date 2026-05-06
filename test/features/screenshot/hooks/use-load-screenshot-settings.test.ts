@@ -65,7 +65,6 @@ describe('useLoadScreenshotSettings', () => {
       result.current.loadSetting(getData());
     });
     expect(setScreenShotActionSetsMock).toHaveBeenCalledWith({
-      storyId: 'story-id',
       actionSets: [
         {
           actions: [{ id: 'action-id', name: 'action-name' }],
@@ -73,6 +72,7 @@ describe('useLoadScreenshotSettings', () => {
           title: 'action-set-title',
         },
       ],
+      storyId: 'story-id',
     });
   });
 
@@ -93,7 +93,7 @@ describe('useLoadScreenshotSettings', () => {
 
     act(() => {
       const data = getData();
-      data.props = { prop: 'prop-val' };
+      data.args = { prop: 'arg-val' };
       result.current.loadSetting(data);
     });
 
@@ -102,7 +102,22 @@ describe('useLoadScreenshotSettings', () => {
     });
     expect(emitMock).toHaveBeenCalledWith('updateStoryArgs', {
       storyId: 'story-id',
-      updatedArgs: { prop: 'prop-val' },
+      updatedArgs: { prop: 'arg-val' },
+    });
+  });
+
+  it('should fallback to legacy props when args missing', () => {
+    const { result } = renderHook(() => useLoadScreenshotSettings());
+
+    act(() => {
+      const data = getData();
+      data.props = { prop: 'legacy-prop-val' };
+      result.current.loadSetting(data);
+    });
+
+    expect(emitMock).toHaveBeenCalledWith('updateStoryArgs', {
+      storyId: 'story-id',
+      updatedArgs: { prop: 'legacy-prop-val' },
     });
   });
 

@@ -68,6 +68,7 @@ vi.mocked(useImageDiffScreenshots).mockImplementationOnce(() => ({
 describe('StoryScreenshotPreview', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
   });
 
   it('should render', () => {

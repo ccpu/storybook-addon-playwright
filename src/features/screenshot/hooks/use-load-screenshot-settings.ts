@@ -10,6 +10,7 @@ import {
 } from '../../../hooks/use-browser-options';
 import { useScreenshotOptions } from './use-screenshot-options';
 import { BrowserContextOptions } from 'playwright';
+import { getScreenshotArgs } from '../../../utils';
 
 interface ReturnType {
   browserOptions: BrowsersOption;
@@ -43,10 +44,11 @@ export const useLoadScreenshotSettings = (): ReturnType => {
       if (!storyData) return;
 
       api.emit(RESET_STORY_ARGS, { storyId: storyData?.id });
-      if (screenshotData.props && Object.keys(screenshotData.props).length) {
+      const args = getScreenshotArgs(screenshotData);
+      if (args && Object.keys(args).length) {
         api.emit(UPDATE_STORY_ARGS, {
           storyId: storyData?.id,
-          updatedArgs: screenshotData.props,
+          updatedArgs: args,
         });
       }
       dispatchActions(screenshotData);
@@ -60,7 +62,7 @@ export const useLoadScreenshotSettings = (): ReturnType => {
         setScreenshotOptions(screenshotData.screenshotOptions);
       }
     },
-    [api, dispatchActions, setBrowserOptions, setScreenshotOptions],
+    [api, dispatchActions, setBrowserOptions, setScreenshotOptions, storyData],
   );
 
   return { browserOptions, loadSetting, screenshotOptions };

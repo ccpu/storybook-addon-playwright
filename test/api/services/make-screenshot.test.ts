@@ -57,6 +57,7 @@ const getConfigsMock = vi.mocked(getConfigs);
 const getPageMock = vi.fn();
 
 const screenshotMock = vi.fn();
+const gotoMock = vi.fn();
 
 screenshotMock.mockImplementation(() => {
   return new Promise((resolve) => {
@@ -67,7 +68,7 @@ screenshotMock.mockImplementation(() => {
 getPageMock.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({
-      goto: vi.fn(),
+      goto: gotoMock,
       screenshot: screenshotMock,
     } as unknown as Page);
   });
@@ -115,6 +116,17 @@ describe('makeScreenshot', () => {
       storyId: 'story-id',
     });
     expect(screenshot.buffer).toBeDefined();
+  });
+
+  it('should pass args into story url', async () => {
+    await makeScreenshot({
+      args: { label: 'Hello' },
+      browserType: 'chromium',
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    expect(gotoMock.mock.calls[0][0]).toContain('&args=label:Hello');
   });
 
   it('should call to release modifier keys after screenshot', async () => {

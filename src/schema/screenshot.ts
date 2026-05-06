@@ -30,6 +30,7 @@ export const screenshotOptionsSchema = z.custom<ScreenshotOptions>(
 
 export const screenshotSettingSchema = z.object({
   actionSets: z.array(actionSetSchema).optional(),
+  args: looseObjectSchema.optional(),
   browserOptions: browserOptionsSchema.optional(),
   browserOptionsId: z.string().optional(),
   browserType: browserTypeSchema,
@@ -68,6 +69,7 @@ export const saveScreenshotInputSchema = createStoryInputSchema({
 // TypeScript's Serialize<> depth limit (those types have 50+ nested Playwright properties).
 export const screenshotDataOutputSchema = z.object({
   actionSets: z.array(actionSetSchema).optional(),
+  args: looseObjectSchema.optional(),
   browserOptions: z.unknown().optional(),
   browserOptionsId: z.string().optional(),
   browserType: browserTypeSchema,

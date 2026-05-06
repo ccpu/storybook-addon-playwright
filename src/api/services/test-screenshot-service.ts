@@ -8,6 +8,7 @@ import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 import fs from 'fs';
 import { BaseImageInfo } from '../../typings/compare-screenshot';
 import { TestScreenshotInput } from '../../schema';
+import { getScreenshotArgs } from '../../utils';
 
 export const testScreenshotService = async (
   data: TestScreenshotInput,
@@ -29,6 +30,7 @@ export const testScreenshotService = async (
     snapshotData = await makeScreenshot(
       {
         actionSets: screenshotData.actionSets,
+        args: getScreenshotArgs(screenshotData),
         browserOptions: screenshotData.browserOptions,
         browserType: screenshotData.browserType,
         props: screenshotData.props,

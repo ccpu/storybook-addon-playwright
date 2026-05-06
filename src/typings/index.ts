@@ -1,6 +1,5 @@
 export * from './addon-state';
 export * from './control';
-export * from './knobs';
 export * from './screenshot';
 export * from './selector';
 export * from './story-action';

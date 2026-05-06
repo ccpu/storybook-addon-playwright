@@ -20,6 +20,8 @@ import { toast } from '../../../src/utils/toast';
 describe('ImageDiffMessage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
+    vi.spyOn(toast, 'success').mockImplementation(() => 'toast-id');
   });
 
   it('should do nothing if result undefined', () => {

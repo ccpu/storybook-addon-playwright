@@ -4,10 +4,10 @@ import { ScreenshotProp } from '../typings';
 import { addons } from '@storybook/manager-api';
 
 export const useKnobs = () => {
-  const [props, setProps] = useState<ScreenshotProp>();
+  const [args, setArgs] = useState<ScreenshotProp>();
 
   useEffect(() => {
-    setProps(undefined);
+    setArgs(undefined);
     const channel = addons.getChannel();
     const setArgsStore = (data: {
       storyId: string;
@@ -21,11 +21,11 @@ export const useKnobs = () => {
         return obj;
       }, {} as ScreenshotProp);
 
-      setProps(Object.keys(propObj).length > 0 ? propObj : undefined);
+      setArgs(Object.keys(propObj).length > 0 ? propObj : undefined);
     };
 
     const storyChange = () => {
-      setProps(undefined);
+      setArgs(undefined);
     };
 
     channel.on(STORY_ARGS_UPDATED, setArgsStore);
@@ -38,5 +38,5 @@ export const useKnobs = () => {
     };
   }, []);
 
-  return props;
+  return args;
 };

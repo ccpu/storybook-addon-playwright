@@ -7,6 +7,7 @@ import { setStoryOptions } from './utils/set-story-options';
 import { getStoryData, findScreenshotWithSameSetting } from './utils';
 import { SaveScreenshotInput } from '../../schema';
 import { normalizeScreenshotActionIds } from './utils/normalize-screenshot-action-ids';
+import { getScreenshotArgs } from '../../utils';
 
 export const saveScreenshot = async (
   data: SaveScreenshotInput,
@@ -76,6 +77,12 @@ export const saveScreenshot = async (
     Buffer.from(data.base64, 'base64'),
   );
 
+  const args = getScreenshotArgs(data);
+  const legacyProps =
+    !data.args && data.props && Object.keys(data.props).length > 0
+      ? data.props
+      : undefined;
+
   if (result.added && result.pass === false) {
     delete (result as { pass?: boolean }).pass;
   }
@@ -88,6 +95,7 @@ export const saveScreenshot = async (
       actionSets: normalizeScreenshotActionIds(data.actionSets, {
         regenerateIds: true,
       }),
+      args,
       browserOptionsId: setStoryOptions(
         storyData,
         'browserOptions',
@@ -96,10 +104,7 @@ export const saveScreenshot = async (
       browserType: data.browserType,
       id: data.id,
       index: index,
-      props:
-        data.props && Object.keys(data.props).length > 0
-          ? data.props
-          : undefined,
+      props: legacyProps,
       screenshotOptionsId: setStoryOptions(
         storyData,
         'screenshotOptions',

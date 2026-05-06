@@ -1,12 +1,14 @@
 import { ScreenshotProp } from '../typings';
 
 import normalize from 'normalize-url';
+import { argsToQuerystring } from './args-to-querystring';
 import { knobsToQuerystring } from './knobs-to-querystring';
 
 export const constructStoryUrl = (
   endpoint: string,
   id: string,
   props?: ScreenshotProp,
+  args?: ScreenshotProp,
 ) => {
   let normalized: string;
 
@@ -24,8 +26,18 @@ export const constructStoryUrl = (
 
   let storyUrl = `${normalized}/iframe.html?id=${id}`;
 
+  if (args) {
+    const argsQuery = argsToQuerystring(args);
+    if (argsQuery) {
+      storyUrl = `${storyUrl}&args=${argsQuery}`;
+    }
+  }
+
   if (props) {
-    storyUrl = `${storyUrl}&${knobsToQuerystring(props)}`;
+    const propsQuery = knobsToQuerystring(props);
+    if (propsQuery) {
+      storyUrl = `${storyUrl}&${propsQuery}`;
+    }
   }
 
   return storyUrl.replace(/\\/g, '/');

@@ -160,6 +160,7 @@ describe('saveScreenshot', () => {
     await saveScreenshot(
       getData({
         actionSets: [],
+        args: {},
         browserOptions: {} as BrowserContextOptions,
         id: 'screenshot-id-3',
         props: {},
@@ -172,8 +173,27 @@ describe('saveScreenshot', () => {
     const data = mockData.calls[0][1]!.stories!['story-id'].screenshots![1];
 
     expect(data.actionSets).toBe(undefined);
+    expect(data.args).toBe(undefined);
     expect(data.props).toBe(undefined);
     expect(data.browserOptions).toBe(undefined);
+  });
+
+  it('should save args as primary setting and omit deprecated props when args provided', async () => {
+    await saveScreenshot(
+      getData({
+        args: { text: 'arg-val' },
+        id: 'screenshot-id-3',
+        props: { text: 'legacy-val' },
+        title: 'new title',
+      }),
+    );
+
+    const mockData = vi.mocked(saveStoryFile).mock;
+
+    const data = mockData.calls[0][1]!.stories!['story-id'].screenshots![1];
+
+    expect(data.args).toStrictEqual({ text: 'arg-val' });
+    expect(data.props).toBe(undefined);
   });
 
   it('should update screenshot', async () => {

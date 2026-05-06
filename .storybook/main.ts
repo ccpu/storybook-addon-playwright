@@ -3,7 +3,11 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 
 const config: StorybookConfig = {
   stories: ['../**/*.stories.tsx'],
-  addons: ['storybook-dark-mode', path.resolve(__dirname, '../preset.js')],
+  addons: [
+    '@storybook/addon-essentials',
+    'storybook-dark-mode',
+    path.resolve(__dirname, '../preset.js'),
+  ],
 
   framework: {
     name: '@storybook/react-webpack5',

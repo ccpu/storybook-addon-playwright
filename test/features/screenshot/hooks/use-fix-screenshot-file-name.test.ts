@@ -11,6 +11,11 @@ vi.mock(
 );
 
 describe('useFixScreenshotFileName', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
+  });
+
   it('should be defined', () => {
     expect(useFixScreenshotFileName).toBeDefined();
   });

@@ -19,7 +19,7 @@ interface Options {
 
 export const useSaveScreenshot = (options?: Options) => {
   const { title, browserType } = options || {};
-  const props = useKnobs();
+  const args = useKnobs();
 
   const { screenshotOptions } = useScreenshotOptions();
 
@@ -131,12 +131,13 @@ export const useSaveScreenshot = (options?: Options) => {
 
       const data: SaveScreenshotRequest = {
         actionSets: currentActions,
+        args,
         base64: base64String,
         browserOptions,
         browserType,
         filePath: storyData.filePath,
         id: nanoid(12),
-        props: props,
+        props: args,
         screenshotOptions:
           screenshotOptions && Object.keys(screenshotOptions).length
             ? screenshotOptions
@@ -175,7 +176,7 @@ export const useSaveScreenshot = (options?: Options) => {
     },
     [
       currentActions,
-      props,
+      args,
       screenshotOptions,
       storyData,
       isUpdating,

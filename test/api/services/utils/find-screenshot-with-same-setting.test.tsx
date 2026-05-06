@@ -22,6 +22,14 @@ describe('findScreenshotWithSameSetting', () => {
             title: 'title',
           },
           {
+            args: {
+              variant: 'primary',
+            },
+            browserType: 'chromium',
+            id: 'screenshot-id-4',
+            title: 'title',
+          },
+          {
             actionSets: [
               {
                 actions: [
@@ -126,6 +134,52 @@ describe('findScreenshotWithSameSetting', () => {
       ],
       browserType: 'chromium',
       id: 'screenshot-id-3',
+      title: 'title',
+    });
+  });
+
+  it('should return screenshot with same args', () => {
+    const screenshot = findScreenshotWithSameSetting(
+      data,
+      data.stories!['story-id'].screenshots!,
+      {
+        args: {
+          variant: 'primary',
+        },
+        browserType: 'chromium',
+        id: 'test-screenshot-id',
+        title: 'title',
+      },
+    );
+    expect(screenshot).toStrictEqual({
+      args: {
+        variant: 'primary',
+      },
+      browserType: 'chromium',
+      id: 'screenshot-id-4',
+      title: 'title',
+    });
+  });
+
+  it('should match args with legacy props fallback', () => {
+    const screenshot = findScreenshotWithSameSetting(
+      data,
+      data.stories!['story-id'].screenshots!,
+      {
+        browserType: 'chromium',
+        id: 'test-screenshot-id',
+        props: {
+          variant: 'primary',
+        },
+        title: 'title',
+      },
+    );
+    expect(screenshot).toStrictEqual({
+      args: {
+        variant: 'primary',
+      },
+      browserType: 'chromium',
+      id: 'screenshot-id-4',
       title: 'title',
     });
   });

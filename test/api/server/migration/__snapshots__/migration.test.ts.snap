@@ -49,6 +49,10 @@ exports[`migration > should migrate from v0 to v1 1`] = `
               "name": "click",
             },
           ],
+          "args": {
+            "color": "red",
+            "size": 20,
+          },
           "browserOptionsId": "id-2",
           "browserType": "chromium",
           "id": "id-3",
@@ -120,6 +124,10 @@ exports[`migration > should migrate from v0 to v2 1`] = `
               "title": "should apply styles actions",
             },
           ],
+          "args": {
+            "color": "red",
+            "size": 20,
+          },
           "browserOptionsId": "id-6",
           "browserType": "chromium",
           "id": "id-7",

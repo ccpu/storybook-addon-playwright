@@ -64,7 +64,7 @@ export const migrateToV1 = (data: V0, version: string) => {
     if (storyData.screenshots) {
       newStoryData[storyId].screenshots = storyData.screenshots.map(
         (screenshot) => {
-          const props = screenshot.props
+          const args = screenshot.props
             ? screenshot.props.reduce((obj, prop) => {
                 obj[prop.name] = prop.value;
                 return obj;
@@ -102,10 +102,11 @@ export const migrateToV1 = (data: V0, version: string) => {
           }
 
           return {
+            args,
             ...restScreenshot,
             browserOptionsId,
             id: nanoid(15),
-            props,
+            props: args,
             screenshotOptionsId,
           };
         },

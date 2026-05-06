@@ -35,6 +35,7 @@ vi.mock('nanoid', () => ({
 describe('useActionSetEditor', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
     // Default handler: saveActionSet succeeds
     server.use(trpcMsw.actionSet.saveActionSet.mutation(() => ({} as any)));
   });

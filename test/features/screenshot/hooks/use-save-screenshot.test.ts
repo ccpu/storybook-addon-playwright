@@ -70,6 +70,7 @@ describe('useSaveScreenshot', () => {
 
     expect(addScreenshotMock).toHaveBeenCalledWith({
       actionSets: [],
+      args: undefined,
       browserOptions: undefined,
       browserType: 'chromium',
       filePath: './test.stories.tsx',

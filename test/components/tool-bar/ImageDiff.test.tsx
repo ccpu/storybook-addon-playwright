@@ -86,6 +86,8 @@ describe('ImageDiff', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
+    vi.spyOn(toast, 'success').mockImplementation(() => 'toast-id');
 
     (useGlobalImageDiffResults as Mock).mockReset();
     (useGlobalImageDiffResults as Mock).mockImplementation(() => {

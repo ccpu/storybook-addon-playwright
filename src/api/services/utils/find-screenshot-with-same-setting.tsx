@@ -2,6 +2,7 @@
 import { ScreenshotData, PlaywrightData } from '../../../typings';
 import equal from 'fast-deep-equal';
 import { getOptionsKey } from './get-options-key';
+import { getScreenshotArgs } from '../../../utils';
 
 export const findScreenshotWithSameSetting = (
   data: PlaywrightData,
@@ -18,6 +19,7 @@ export const findScreenshotWithSameSetting = (
     'screenshotOptions',
     screenshot.screenshotOptions,
   );
+  const screenshotArgs = getScreenshotArgs(screenshot);
 
   const removeActionId = (scrShot: ScreenshotData) => {
     const newAction =
@@ -38,7 +40,7 @@ export const findScreenshotWithSameSetting = (
       sc.screenshotOptionsId === screenshotOptionsId &&
       sc.browserType === screenshot.browserType &&
       equal(removeActionId(sc), removeActionId(screenshot)) &&
-      equal(sc.props, screenshot.props)
+      equal(getScreenshotArgs(sc), screenshotArgs)
     ) {
       return sc;
     }

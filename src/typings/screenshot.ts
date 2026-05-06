@@ -39,7 +39,11 @@ export interface ScreenshotClip {
 }
 
 export interface ScreenshotSetting {
+  args?: ScreenshotProp;
   browserType: BrowserTypes;
+  /**
+   * @deprecated Use args instead. This will be removed in a future release.
+   */
   props?: ScreenshotProp;
   actionSets?: ActionSet[];
   browserOptions?: BrowserContextOptions;

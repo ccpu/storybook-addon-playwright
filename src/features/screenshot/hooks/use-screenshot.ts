@@ -14,7 +14,7 @@ export const useScreenshot = (
   browserType: BrowserTypes | 'storybook',
   browserOptions?: BrowserContextOptions,
 ) => {
-  const knobs = useKnobs();
+  const args = useKnobs();
 
   const state = useStorybookState();
 
@@ -58,9 +58,10 @@ export const useScreenshot = (
 
     mutate({
       actionSets: currentActions,
+      args,
       browserOptions,
       browserType,
-      props: knobs,
+      props: args,
       requestId: nanoid(),
       screenshotOptions,
       storyId: state.storyId,
@@ -68,8 +69,8 @@ export const useScreenshot = (
   }, [
     browserType,
     currentActions,
+    args,
     browserOptions,
-    knobs,
     mutate,
     screenshotOptions,
     state.storyId,
@@ -79,10 +80,10 @@ export const useScreenshot = (
     if (inProgress || renderCount === 0) return;
 
     const currentHash = sum({
+      args,
       browserOptions,
       currentActions,
       id: state.storyId,
-      knobs,
       renderCount,
       screenshotOptions,
     });
@@ -97,7 +98,7 @@ export const useScreenshot = (
   }, [
     currentActions,
     getSnapshot,
-    knobs,
+    args,
     browserOptions,
     state.storyId,
     screenshotOptions,

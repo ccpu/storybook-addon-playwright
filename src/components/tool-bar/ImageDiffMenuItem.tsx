@@ -71,12 +71,7 @@ const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = (props) => {
     );
   }
 
-  return (
-    <ListItem
-      onClick={handleLoadStory}
-      title={`${data.parent}--${data.name}`}
-    />
-  );
+  return <ListItem onClick={handleLoadStory} title={`${data.parent}--${data.name}`} />;
 };
 
 ImageDiffMenuItem.displayName = 'ImageDiffMenuItem';

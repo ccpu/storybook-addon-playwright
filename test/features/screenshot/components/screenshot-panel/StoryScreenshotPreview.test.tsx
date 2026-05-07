@@ -5,8 +5,7 @@
 // Also patch the default export so React.useEffect() calls are intercepted too.
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -72,9 +71,7 @@ describe('StoryScreenshotPreview', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <StoryScreenshotPreview target="all" onClose={vi.fn()} />,
-    );
+    const wrapper = shallow(<StoryScreenshotPreview target="all" onClose={vi.fn()} />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
@@ -117,9 +114,7 @@ describe('StoryScreenshotPreview', () => {
     vi.mocked(useScreenshotStoreState).mockImplementation(() => ({
       imageDiffResults: [{ pass: true, screenshotId: 'screenshot-id-2' }],
       pauseDeleteImageDiffResult: false,
-      screenshots: [
-        { id: 'screenshot-id', title: 'title' },
-      ] as ScreenshotData[],
+      screenshots: [{ id: 'screenshot-id', title: 'title' }] as ScreenshotData[],
     }));
 
     const wrapper = shallow(

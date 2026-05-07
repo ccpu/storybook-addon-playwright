@@ -67,8 +67,6 @@ describe('ImageDiffMenuItem', () => {
 
     expect(wrapper.find(ListItem).props().onClick).toBeUndefined();
 
-    expect(wrapper.find(ListItem).props().title).toBe(
-      'Unable to locate story!',
-    );
+    expect(wrapper.find(ListItem).props().title).toBe('Unable to locate story!');
   });
 });

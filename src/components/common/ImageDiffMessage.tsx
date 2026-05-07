@@ -6,8 +6,7 @@ import { getImageDiffMessages } from '../../utils';
 import { toast } from '../../utils/toast';
 import { ImageDiffPreviewDialog } from './ImageDiffPreviewDialog';
 
-export interface ImageDiffMessageProps
-  extends Partial<ImageDiffPreviewDialogProps> {
+export interface ImageDiffMessageProps extends Partial<ImageDiffPreviewDialogProps> {
   result?: ImageDiffResult;
   onClose: () => void;
   title?: string;

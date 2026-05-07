@@ -5,9 +5,9 @@ import { toast } from '../../../utils/toast';
 import { addImageDiffResult } from '../store/index';
 
 export function useScreenshotDiffTest() {
-  const [testScreenshotError, setTestScreenshotError] = useState<
-    string | undefined
-  >(undefined);
+  const [testScreenshotError, setTestScreenshotError] = useState<string | undefined>(
+    undefined,
+  );
 
   const {
     mutateAsync,

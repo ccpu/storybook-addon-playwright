@@ -75,12 +75,7 @@ describe('InputDialog', () => {
 
   it('should have default value', () => {
     const wrapper = shallow(
-      <InputDialog
-        onClose={vi.fn()}
-        open={true}
-        onSave={vi.fn()}
-        value={'val'}
-      />,
+      <InputDialog onClose={vi.fn()} open={true} onSave={vi.fn()} value={'val'} />,
     );
 
     expect(wrapper.find(TextField).props().value).toBe('val');

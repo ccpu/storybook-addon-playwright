@@ -8,9 +8,7 @@ function hasQuerySelector(
   return typeof documentNode.querySelector === 'function';
 }
 
-function getRootSelector(
-  documentNode: Document | Partial<Document>,
-): string | undefined {
+function getRootSelector(documentNode: Document | Partial<Document>): string | undefined {
   if (!hasQuerySelector(documentNode)) return undefined;
 
   if (documentNode.querySelector(ROOT_SELECTOR)) return ROOT_SELECTOR;

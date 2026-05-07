@@ -19,9 +19,7 @@ import {
 import { ScreenshotData } from '../../../../src/typings';
 
 describe('screenshot zustand store', () => {
-  const getScreenshotData = (
-    data?: Partial<ScreenshotData>,
-  ): ScreenshotData => ({
+  const getScreenshotData = (data?: Partial<ScreenshotData>): ScreenshotData => ({
     browserType: 'chromium',
     id: 'screenshot-id',
     index: 0,
@@ -184,9 +182,7 @@ describe('screenshot zustand store', () => {
 
   it('should pauseDeleteImageDiffResult', () => {
     setPauseDeleteImageDiffResult(true);
-    expect(
-      useScreenshotStore.getState().pauseDeleteImageDiffResult,
-    ).toStrictEqual(true);
+    expect(useScreenshotStore.getState().pauseDeleteImageDiffResult).toStrictEqual(true);
   });
 
   it('should removeImageDiffResult', () => {

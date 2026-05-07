@@ -6,9 +6,7 @@ import {
 } from '../server/utils';
 import { deleteEmptyStory, getStoryData } from './utils';
 
-export async function deleteActionSet(
-  data: DeleteActionSetInput,
-): Promise<void> {
+export async function deleteActionSet(data: DeleteActionSetInput): Promise<void> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   let storyData = await loadStoryData(fileInfo.path, data.storyId);
 

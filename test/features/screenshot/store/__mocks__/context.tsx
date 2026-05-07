@@ -1,7 +1,6 @@
 import { ScreenshotState } from '../../../../../src/features/screenshot/store/screenshot-store';
 
-export const ScreenshotDispatchContext =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const ScreenshotDispatchContext = vi.fn<(...args: unknown[]) => unknown>();
 
 const useScreenshotStoreState = vi.fn<(...args: unknown[]) => unknown>();
 
@@ -23,8 +22,6 @@ const StateData: Partial<ScreenshotState> = {
   ],
 };
 
-useScreenshotStoreState.mockImplementation(
-  (): Partial<ScreenshotState> => StateData,
-);
+useScreenshotStoreState.mockImplementation((): Partial<ScreenshotState> => StateData);
 
 export { useScreenshotStoreState };

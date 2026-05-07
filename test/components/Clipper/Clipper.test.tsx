@@ -1,10 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import {
-  Clipper,
-  useClipperState,
-} from '../../../src/components/Clipper/Clipper';
+import { Clipper, useClipperState } from '../../../src/components/Clipper/Clipper';
 import {
   useBrowserOptions,
   useKeyPressFn,
@@ -84,18 +81,17 @@ vi.mock('../../../src/utils', () => ({
 }));
 
 vi.mock('../../../src/components/common/IframeOverlay', () => ({
-  IframeOverlay: React.forwardRef<
-    HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
-  >((props, ref) => {
-    if (typeof ref === 'function') {
-      ref(overlayElement);
-    } else if (ref) {
-      ref.current = overlayElement;
-    }
+  IframeOverlay: React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+    (props, ref) => {
+      if (typeof ref === 'function') {
+        ref(overlayElement);
+      } else if (ref) {
+        ref.current = overlayElement;
+      }
 
-    return <div>{props.children}</div>;
-  }),
+      return <div>{props.children}</div>;
+    },
+  ),
 }));
 
 vi.mock('react-selecto', () => ({

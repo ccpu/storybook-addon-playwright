@@ -140,11 +140,7 @@ export interface PlaywrightPageWithExtra {
    * This method fetches an element with `selector`, set the height and with.
    * If there's no element matching `selector`, the method waits until a matching element appears in the DOM.
    */
-  setSelectorSize: (
-    selector: string,
-    width?: string,
-    height?: string,
-  ) => Promise<void>;
+  setSelectorSize: (selector: string, width?: string, height?: string) => Promise<void>;
 
   /**
    * This method fetches an element with `selector`, and dispatch WheelEvent.

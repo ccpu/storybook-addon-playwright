@@ -57,14 +57,12 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
 
   const storyData = useCurrentStoryData();
 
-  const { copyActionSet, inProgress: copyInProgress } =
-    useCopyActionSet(storyData);
+  const { copyActionSet, inProgress: copyInProgress } = useCopyActionSet(storyData);
 
   const { mutateAsync: deleteActionSet } =
     trpcClient.actionSet.deleteActionSet.useMutation();
 
-  const { storyActionSets, currentActionSets, state } =
-    useCurrentStoryActionSets();
+  const { storyActionSets, currentActionSets, state } = useCurrentStoryActionSets();
 
   const { loading } = useStoryActionSetsLoader();
 
@@ -84,9 +82,7 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
         });
       } catch (error) {
         toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Failed to delete action set',
+          error instanceof Error ? error.message : 'Failed to delete action set',
         );
       }
     },

@@ -28,9 +28,7 @@ describe('useAction', () => {
   });
 
   it('should have action', () => {
-    const { result } = renderHook(() =>
-      useEditorAction('story-id', 'action-id'),
-    );
+    const { result } = renderHook(() => useEditorAction('story-id', 'action-id'));
 
     expect(result.current).toStrictEqual({
       args: { selector: 'html' },
@@ -44,9 +42,7 @@ describe('useAction', () => {
       editorActionSet: undefined,
     } as unknown as ActionSetState);
 
-    const { result } = renderHook(() =>
-      useEditorAction('story-id', 'action-id'),
-    );
+    const { result } = renderHook(() => useEditorAction('story-id', 'action-id'));
 
     expect(result.current).toStrictEqual(undefined);
   });
@@ -62,9 +58,7 @@ describe('useAction', () => {
         } as unknown as ActionSetState),
     );
 
-    const { result } = renderHook(() =>
-      useEditorAction('story-id', 'action-id'),
-    );
+    const { result } = renderHook(() => useEditorAction('story-id', 'action-id'));
 
     expect(result.current).toStrictEqual(undefined);
   });

@@ -4,8 +4,7 @@
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -104,9 +103,7 @@ describe('ScreenshotListPreviewDialog', () => {
     });
 
     await new Promise((resolve) => setImmediate(resolve));
-    expect(
-      wrapper.find(SortableScreenshotListItem).last().props().selected,
-    ).toBeTruthy();
+    expect(wrapper.find(SortableScreenshotListItem).last().props().selected).toBeTruthy();
   });
 
   it('should do nothing on arrow key press', async () => {
@@ -117,11 +114,7 @@ describe('ScreenshotListPreviewDialog', () => {
     });
 
     const wrapper = shallow(
-      <ScreenshotListPreviewDialog
-        open={true}
-        screenshots={[]}
-        storyData={storyData}
-      />,
+      <ScreenshotListPreviewDialog open={true} screenshots={[]} storyData={storyData} />,
     );
 
     act(() => {

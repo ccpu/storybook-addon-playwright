@@ -56,9 +56,9 @@ describe('filterFavouriteActions', () => {
       actionSet,
     );
 
-    expect(
-      filterFavouriteActions(actionSet, 'parent--story-id-2'),
-    ).toStrictEqual(actionSet);
+    expect(filterFavouriteActions(actionSet, 'parent--story-id-2')).toStrictEqual(
+      actionSet,
+    );
   });
 
   it('should not have action for stories that story id not start with visibleTo', () => {
@@ -80,12 +80,12 @@ describe('filterFavouriteActions', () => {
       },
     ];
 
-    expect(
-      filterFavouriteActions(actionSet, 'parent1--story-id'),
-    ).toStrictEqual(actionSet);
+    expect(filterFavouriteActions(actionSet, 'parent1--story-id')).toStrictEqual(
+      actionSet,
+    );
 
-    expect(
-      filterFavouriteActions(actionSet, 'parent2--story-id-2'),
-    ).toStrictEqual(actionSet);
+    expect(filterFavouriteActions(actionSet, 'parent2--story-id-2')).toStrictEqual(
+      actionSet,
+    );
   });
 });

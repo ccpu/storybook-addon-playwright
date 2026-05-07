@@ -50,16 +50,12 @@ describe('useFixScreenshotFileName', () => {
   });
 
   it('should throw error if appling exported function name but old function not provided', async () => {
-    const { result } = renderHook(() =>
-      useFixScreenshotFileName({ fixFunction: true }),
-    );
+    const { result } = renderHook(() => useFixScreenshotFileName({ fixFunction: true }));
 
     act(() => {
       result.current.fixFileNames();
     });
 
-    expect(toast.error).toHaveBeenCalledWith(
-      'Enter previous name export function.',
-    );
+    expect(toast.error).toHaveBeenCalledWith('Enter previous name export function.');
   });
 });

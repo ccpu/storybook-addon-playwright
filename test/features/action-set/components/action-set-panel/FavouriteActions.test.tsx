@@ -39,8 +39,7 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
             mutate: (input: unknown) => {
               void deleteFavouriteAction(input as never);
             },
-            mutateAsync: (input: unknown) =>
-              deleteFavouriteAction(input as never),
+            mutateAsync: (input: unknown) => deleteFavouriteAction(input as never),
             reset: vi.fn(),
           }),
         },
@@ -60,19 +59,15 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
 vi.mock(
   '../../../../../src/api/trpc/clients/favourite-actions.client',
   async () =>
-    await import(
-      '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
-    ),
+    await import('../../../../api/trpc/clients/__mocks__/favourite-actions.client'),
 );
 vi.mock(
   '../../../../../src/api/trpc/clients/action-set.client',
-  async () =>
-    await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
+  async () => await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
 );
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 
 // Changed to async factory using vi.importActual because jest.requireActual
@@ -130,9 +125,7 @@ describe('FavouriteActions', () => {
       onHide: () => void;
     }) => React.ReactNode;
 
-    const tooltipWrapper = shallow(
-      <div>{tooltipProp({ onHide: vi.fn() })}</div>,
-    );
+    const tooltipWrapper = shallow(<div>{tooltipProp({ onHide: vi.fn() })}</div>);
 
     const firstItem = tooltipWrapper.find(ListItem).first();
 

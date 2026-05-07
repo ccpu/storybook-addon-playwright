@@ -42,6 +42,4 @@ export type FavouriteActionSetInput = z.infer<typeof favouriteActionSetSchema>;
 export type GetActionSetInput = z.infer<typeof getActionSetInputSchema>;
 export type DeleteActionSetInput = z.infer<typeof deleteActionSetInputSchema>;
 export type SaveActionSetInput = z.infer<typeof saveActionSetInputSchema>;
-export type ChangeActionSetIndexInput = z.infer<
-  typeof changeActionSetIndexInputSchema
->;
+export type ChangeActionSetIndexInput = z.infer<typeof changeActionSetIndexInputSchema>;

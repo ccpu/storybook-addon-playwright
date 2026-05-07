@@ -18,8 +18,7 @@ const createToastMock = () =>
     },
   );
 
-export const toast =
-  createToastMock() as unknown as typeof import('sonner').toast;
+export const toast = createToastMock() as unknown as typeof import('sonner').toast;
 
 export const Toaster = () => null;
 

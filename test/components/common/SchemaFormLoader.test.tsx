@@ -4,9 +4,7 @@
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('../../../src/api/trpc/client', async () => {
   const React = await import('react');
-  const { getSchema } = await import(
-    '../../api/trpc/clients/__mocks__/schema.client'
-  );
+  const { getSchema } = await import('../../api/trpc/clients/__mocks__/schema.client');
 
   return {
     createTrpcHttpClient: () => ({}),
@@ -39,8 +37,7 @@ vi.mock('../../../src/api/trpc/client', async () => {
 });
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -63,9 +60,7 @@ describe('SchemaFormLoader', () => {
 
   it('should change value and save', async () => {
     const onSaveMock = vi.fn();
-    const wrapper = shallow(
-      <SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />,
-    );
+    const wrapper = shallow(<SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />);
 
     await new Promise((resolve) => setImmediate(resolve));
 
@@ -82,25 +77,18 @@ describe('SchemaFormLoader', () => {
 
   it('should get value', async () => {
     const onSaveMock = vi.fn();
-    const wrapper = shallow(
-      <SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />,
-    );
+    const wrapper = shallow(<SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />);
 
     await new Promise((resolve) => setImmediate(resolve));
     wrapper.find(MemoizedSchemaRenderer).props().onChange('click', true);
-    const val = wrapper
-      .find(MemoizedSchemaRenderer)
-      .props()
-      .getValue('click', {});
+    const val = wrapper.find(MemoizedSchemaRenderer).props().getValue('click', {});
 
     expect(val).toBe(true);
   });
 
   it('should handle clear', async () => {
     const onSaveMock = vi.fn();
-    const wrapper = shallow(
-      <SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />,
-    );
+    const wrapper = shallow(<SchemaFormLoader schemaName="MyType" onSave={onSaveMock} />);
 
     await new Promise((resolve) => setImmediate(resolve));
 

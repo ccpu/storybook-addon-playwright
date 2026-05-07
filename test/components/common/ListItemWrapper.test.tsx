@@ -5,9 +5,7 @@ import { DragHandle } from '../../../src/components/common/DragHandle';
 
 describe('ListItemWrapper', () => {
   it('should render', () => {
-    const wrapper = shallow(
-      <ListItemWrapper tooltip="foo-tooltip" title="foo" />,
-    );
+    const wrapper = shallow(<ListItemWrapper tooltip="foo-tooltip" title="foo" />);
     expect(wrapper.exists()).toBeTruthy();
   });
   it('should have drag handle', () => {
@@ -25,9 +23,7 @@ describe('ListItemWrapper', () => {
       </ListItemWrapper>,
     );
 
-    wrapper
-      .props()
-      .onClick({ target: { classList: { contains: () => true } } } as never);
+    wrapper.props().onClick({ target: { classList: { contains: () => true } } } as never);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });

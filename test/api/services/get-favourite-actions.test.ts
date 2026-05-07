@@ -21,10 +21,7 @@ const favouriteActions: FavouriteActions = {
 const spyOnFs = vi.spyOn(fs, 'existsSync');
 
 vi.mock('jsonfile', () => ({
-  readFile: (
-    _file: string,
-    callBack: (err?: string, data?: unknown) => void,
-  ) => {
+  readFile: (_file: string, callBack: (err?: string, data?: unknown) => void) => {
     callBack(undefined, favouriteActions);
   },
 }));

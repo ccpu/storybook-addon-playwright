@@ -5,21 +5,15 @@ vi.unmock('../../../../src/features/screenshot/store/selectors');
 // Individual action spies
 export const addScreenshotMock = vi.fn<(...args: unknown[]) => unknown>();
 export const removeScreenshotMock = vi.fn<(...args: unknown[]) => unknown>();
-export const changeScreenshotIndexMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const removeStoryScreenshotsMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const changeScreenshotIndexMock = vi.fn<(...args: unknown[]) => unknown>();
+export const removeStoryScreenshotsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const setScreenshotsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const setImageDiffResultsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const addImageDiffResultMock = vi.fn<(...args: unknown[]) => unknown>();
-export const updateImageDiffResultMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const setPauseDeleteImageDiffResultMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const removeImageDiffResultMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const removePassedImageDiffResultMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const updateImageDiffResultMock = vi.fn<(...args: unknown[]) => unknown>();
+export const setPauseDeleteImageDiffResultMock = vi.fn<(...args: unknown[]) => unknown>();
+export const removeImageDiffResultMock = vi.fn<(...args: unknown[]) => unknown>();
+export const removePassedImageDiffResultMock = vi.fn<(...args: unknown[]) => unknown>();
 export const deleteScreenshotMock = vi.fn<(...args: unknown[]) => unknown>();
 
 // Legacy dispatchMock - catches all calls for backwards compat
@@ -29,9 +23,9 @@ const mockData: Partial<ScreenshotState> = {
   screenshots: [],
 };
 
-export const useScreenshotStoreStateMock = vi.fn<
-  (...args: unknown[]) => unknown
->(() => mockData);
+export const useScreenshotStoreStateMock = vi.fn<(...args: unknown[]) => unknown>(
+  () => mockData,
+);
 
 vi.mock('../../../../src/features/screenshot/store/selectors', () => ({
   getScreenshotState: () => mockData,

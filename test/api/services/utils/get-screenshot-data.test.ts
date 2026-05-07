@@ -27,9 +27,7 @@ describe('getScreenshotData', () => {
     expect(data).toStrictEqual({
       actionSets: [
         {
-          actions: [
-            { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-          ],
+          actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
           id: 'action-set-id',
           title: 'click',
         },

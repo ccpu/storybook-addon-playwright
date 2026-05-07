@@ -4,10 +4,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionSet } from '../../../../../src/typings';
 import { ActionSetEditorIconsProps } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetEditorIcons';
-import {
-  ListItemWrapper,
-  InputDialog,
-} from '../../../../../src/components/common';
+import { ListItemWrapper, InputDialog } from '../../../../../src/components/common';
 import { useActionEditor } from '../../../../../src/features/action-set/hooks/use-action-editor';
 
 vi.mock(
@@ -15,14 +12,11 @@ vi.mock(
   async () => await import('../../hooks/__mocks__/use-action-editor'),
 );
 
-vi.mock(
-  '../../../../../src/features/schema/hooks/use-action-schema-loader',
-  () => ({
-    useActionSchemaLoader: () => {
-      return { loading: false };
-    },
-  }),
-);
+vi.mock('../../../../../src/features/schema/hooks/use-action-schema-loader', () => ({
+  useActionSchemaLoader: () => {
+    return { loading: false };
+  },
+}));
 
 const handleAddActionMock = vi.fn();
 const handleDescriptionChangeMock = vi.fn();
@@ -35,8 +29,7 @@ vi.mocked(useActionEditor).mockImplementation(
 );
 
 describe('ActionSetEditor', () => {
-  const actionSet: ActionSet =
-    storyFileInfo().stories!['story-id'].actionSets![0];
+  const actionSet: ActionSet = storyFileInfo().stories!['story-id'].actionSets![0];
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -83,9 +76,7 @@ describe('ActionSetEditor', () => {
     vi.mocked(useActionEditor).mockImplementation(
       () =>
         ({
-          validationResult: [
-            { id: 'action-id', name: 'action-name', required: ['foo'] },
-          ],
+          validationResult: [{ id: 'action-id', name: 'action-name', required: ['foo'] }],
         } as unknown as ReturnType<typeof useActionEditor>),
     );
 

@@ -69,10 +69,7 @@ export async function saveScreenshot(
     }
   }
 
-  const result = await diffImageToScreenshot(
-    data,
-    Buffer.from(data.base64, 'base64'),
-  );
+  const result = await diffImageToScreenshot(data, Buffer.from(data.base64, 'base64'));
 
   const args = getScreenshotArgs(data);
   const legacyProps =
@@ -93,11 +90,7 @@ export async function saveScreenshot(
         regenerateIds: true,
       }),
       args,
-      browserOptionsId: setStoryOptions(
-        storyData,
-        'browserOptions',
-        data.browserOptions,
-      ),
+      browserOptionsId: setStoryOptions(storyData, 'browserOptions', data.browserOptions),
       browserType: data.browserType,
       id: data.id,
       index,

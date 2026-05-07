@@ -9,8 +9,7 @@ import { shallow } from 'enzyme';
 
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 
 describe('ActionList', () => {

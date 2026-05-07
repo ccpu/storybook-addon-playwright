@@ -16,11 +16,7 @@ import { extendPage } from '../../page-extra';
 import { constructStoryUrl, getScreenshotArgs } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { executeAction, installMouseHelper } from '../server/utils';
-import {
-  isInteractiveAction,
-  releaseModifierKey,
-  shouldTakeScreenshot,
-} from './utils';
+import { isInteractiveAction, releaseModifierKey, shouldTakeScreenshot } from './utils';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -78,12 +74,7 @@ export async function makeScreenshot(
 
   const args = getScreenshotArgs(data);
 
-  let url = constructStoryUrl(
-    configs.storybookEndpoint,
-    data.storyId,
-    data.props,
-    args,
-  );
+  let url = constructStoryUrl(configs.storybookEndpoint, data.storyId, data.props, args);
 
   if (configs.afterUrlConstruction) {
     url = configs.afterUrlConstruction(url, requestData);
@@ -113,13 +104,9 @@ export async function makeScreenshot(
 
     lastAction = actions.slice(-1)[0];
 
-    const takeScreenshotAll = actions.find(
-      (x) => x.name === 'takeScreenshotAll',
-    );
+    const takeScreenshotAll = actions.find((x) => x.name === 'takeScreenshotAll');
 
-    screenshotOptionAction = actions.find(
-      (a) => a.name === 'takeScreenshotOptions',
-    );
+    screenshotOptionAction = actions.find((a) => a.name === 'takeScreenshotOptions');
 
     const filterActions = actions.filter(
       (a) => !['takeScreenshotAll', 'takeScreenshotOptions'].includes(a.name),
@@ -146,12 +133,7 @@ export async function makeScreenshot(
           const elementHandle = await page.$(action.args.selector as string);
 
           imageInfos.push({
-            buffer: await takeScreenshot(
-              page,
-              data,
-              configs,
-              elementHandle || undefined,
-            ),
+            buffer: await takeScreenshot(page, data, configs, elementHandle || undefined),
             options: action.args,
           });
         }
@@ -179,8 +161,7 @@ export async function makeScreenshot(
 
   const isTakeElementScreenshotAtLast =
     lastAction &&
-    (lastAction.name === 'takeElementScreenshot' ||
-      lastAction.name === 'takeScreenshot');
+    (lastAction.name === 'takeElementScreenshot' || lastAction.name === 'takeScreenshot');
 
   let buffer: Buffer | undefined;
 
@@ -245,9 +226,7 @@ export async function makeScreenshot(
       const overlaySources =
         buffer === undefined && imageInfos.length === 1
           ? imageInfos
-          : imageInfos.filter(
-              (_, index) => !(buffer === undefined && index === 0),
-            );
+          : imageInfos.filter((_, index) => !(buffer === undefined && index === 0));
 
       const overlays = overlaySources.map((x) => ({
         blend: 'multiply' as const,
@@ -256,10 +235,7 @@ export async function makeScreenshot(
         ...(x.options ? x.options.stitchOptions : {}),
       }));
 
-      buffer = await sharp(baseBuffer)
-        .composite(overlays)
-        .toFormat(format)
-        .toBuffer();
+      buffer = await sharp(baseBuffer).composite(overlays).toFormat(format).toBuffer();
     }
   }
 

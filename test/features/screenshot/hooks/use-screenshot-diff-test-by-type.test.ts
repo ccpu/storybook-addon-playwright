@@ -20,9 +20,7 @@ describe('useScreenshotDiffTestByType', () => {
   it('should have result', async () => {
     const spy = vi.fn().mockReturnValue([{ pass: true }]);
     server.use(
-      trpcMsw.screenshot.testScreenshots.mutation(
-        ({ input }) => spy(input) as any,
-      ),
+      trpcMsw.screenshot.testScreenshots.mutation(({ input }) => spy(input) as any),
     );
     const { result } = renderHook(() => useScreenshotDiffTestByType());
     await act(async () => {
@@ -40,9 +38,7 @@ describe('useScreenshotDiffTestByType', () => {
   it('should add story file results only', async () => {
     const spy = vi.fn().mockReturnValue([{ pass: true }]);
     server.use(
-      trpcMsw.screenshot.testScreenshots.mutation(
-        ({ input }) => spy(input) as any,
-      ),
+      trpcMsw.screenshot.testScreenshots.mutation(({ input }) => spy(input) as any),
     );
     const { result } = renderHook(() => useScreenshotDiffTestByType());
     await act(async () => {
@@ -61,9 +57,7 @@ describe('useScreenshotDiffTestByType', () => {
   it('should  story within story file results only', async () => {
     const spy = vi.fn().mockReturnValue([{ pass: true }]);
     server.use(
-      trpcMsw.screenshot.testScreenshots.mutation(
-        ({ input }) => spy(input) as any,
-      ),
+      trpcMsw.screenshot.testScreenshots.mutation(({ input }) => spy(input) as any),
     );
     const { result } = renderHook(() => useScreenshotDiffTestByType());
     await act(async () => {

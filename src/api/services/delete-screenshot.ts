@@ -23,9 +23,7 @@ export async function deleteScreenshot(
 
   if (!story || !story.screenshots || !story.screenshots.length) return [];
 
-  const screenshotInfo = story.screenshots.find(
-    (x) => x.id === data.screenshotId,
-  );
+  const screenshotInfo = story.screenshots.find((x) => x.id === data.screenshotId);
 
   if (!screenshotInfo) {
     return story.screenshots;
@@ -42,24 +40,14 @@ export async function deleteScreenshot(
     fs.unlinkSync(paths.filePath);
   }
 
-  story.screenshots = story.screenshots.filter(
-    (x) => x.id !== data.screenshotId,
-  );
+  story.screenshots = story.screenshots.filter((x) => x.id !== data.screenshotId);
 
   if (!story.screenshots.length) {
     delete story.screenshots;
   }
 
-  deleteStoryOptions(
-    storyData,
-    'browserOptions',
-    screenshotInfo.browserOptionsId,
-  );
-  deleteStoryOptions(
-    storyData,
-    'screenshotOptions',
-    screenshotInfo.screenshotOptionsId,
-  );
+  deleteStoryOptions(storyData, 'browserOptions', screenshotInfo.browserOptionsId);
+  deleteStoryOptions(storyData, 'screenshotOptions', screenshotInfo.screenshotOptionsId);
 
   await saveStoryFile(fileInfo, storyData);
 

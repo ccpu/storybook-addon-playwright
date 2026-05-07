@@ -48,23 +48,19 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
 });
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 vi.mock(
   '../../../../../src/features/action-set/hooks/use-story-action-sets-loader',
-  async () =>
-    await import('../../hooks/__mocks__/use-story-action-sets-loader'),
+  async () => await import('../../hooks/__mocks__/use-story-action-sets-loader'),
 );
 vi.mock(
   '../../../../../src/features/action-set/hooks/use-current-story-action-sets',
-  async () =>
-    await import('../../hooks/__mocks__/use-current-story-action-sets'),
+  async () => await import('../../hooks/__mocks__/use-current-story-action-sets'),
 );
 vi.mock(
   '../../../../../src/api/trpc/clients/action-set.client',
-  async () =>
-    await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
+  async () => await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
 );
 
 const useCurrentStoryActionSetsData = {

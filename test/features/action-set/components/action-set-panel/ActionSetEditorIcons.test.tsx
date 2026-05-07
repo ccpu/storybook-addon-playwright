@@ -5,8 +5,7 @@ import { ActionMenu } from '../../../../../src/features/action-set/components/ac
 
 vi.mock(
   '../../../../../src/features/schema/hooks/use-action-schema-loader',
-  async () =>
-    await import('../../../schema/hooks/__mocks__/use-action-schema-loader'),
+  async () => await import('../../../schema/hooks/__mocks__/use-action-schema-loader'),
 );
 
 describe('ActionSetEditorIcons', () => {

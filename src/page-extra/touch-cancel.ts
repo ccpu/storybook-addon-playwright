@@ -10,13 +10,5 @@ export async function touchCancel(
   client?: Position,
   options?: PageExtraTouchOptions,
 ) {
-  await dispatchTouchEvent(
-    this,
-    'touchcancel',
-    selector,
-    page,
-    screen,
-    client,
-    options,
-  );
+  await dispatchTouchEvent(this, 'touchcancel', selector, page, screen, client, options);
 }

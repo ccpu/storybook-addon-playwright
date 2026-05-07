@@ -77,10 +77,7 @@ const Preview: React.FC = (props) => {
 
   const classes = useStyles();
 
-  const isHorizontal = isHorizontalPanel(
-    addonState,
-    state.layout.panelPosition,
-  );
+  const isHorizontal = isHorizontalPanel(addonState, state.layout.panelPosition);
 
   const handleResizeChange = useCallback(
     (size) => {
@@ -135,9 +132,7 @@ const Preview: React.FC = (props) => {
           onResize={(sizes) => handleResizeChange(sizes[previewPaneIndex])}
           dividerClassName={clsx(classes.splitPane)}
           dividerStyle={{
-            ...(isHorizontal
-              ? { height: DEVIDER_SIZE }
-              : { width: DEVIDER_SIZE }),
+            ...(isHorizontal ? { height: DEVIDER_SIZE } : { width: DEVIDER_SIZE }),
           }}
         >
           {panes}

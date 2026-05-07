@@ -1,10 +1,7 @@
 import type { ActionSchemaList, StoryAction } from '../typings';
 import { getActionSchema } from './get-schema';
 
-export function getActionArgs(
-  action: StoryAction,
-  actionSchema: ActionSchemaList,
-) {
+export function getActionArgs(action: StoryAction, actionSchema: ActionSchemaList) {
   const schema = getActionSchema(actionSchema, action.name);
 
   if (!schema) {
@@ -13,8 +10,7 @@ export function getActionArgs(
     );
   }
 
-  const parameters =
-    (schema.parameters as Record<string, unknown> | undefined) || {};
+  const parameters = (schema.parameters as Record<string, unknown> | undefined) || {};
 
   const args = Object.keys(parameters).reduce<unknown[]>((arr, actionName) => {
     const isRequired = schema.required && schema.required.includes(actionName);

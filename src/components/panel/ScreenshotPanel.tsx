@@ -5,9 +5,7 @@ import { ScreenshotMain } from '../../features/screenshot/components/screenshot-
 
 const ScreenshotPanel: React.FC = () => {
   const state = useStorybookState();
-  return (
-    <ScreenshotMain showPanel={state.selectedPanel === SCREENSHOT_PANEL_ID} />
-  );
+  return <ScreenshotMain showPanel={state.selectedPanel === SCREENSHOT_PANEL_ID} />;
 };
 
 ScreenshotPanel.displayName = 'ScreenshotPanel';

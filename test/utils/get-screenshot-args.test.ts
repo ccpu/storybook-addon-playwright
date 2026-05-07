@@ -11,9 +11,7 @@ describe('getScreenshotArgs', () => {
   });
 
   it('should fallback to props', () => {
-    expect(
-      getScreenshotArgs({ props: { text: 'legacy-prop-val' } }),
-    ).toStrictEqual({
+    expect(getScreenshotArgs({ props: { text: 'legacy-prop-val' } })).toStrictEqual({
       text: 'legacy-prop-val',
     });
   });

@@ -27,11 +27,7 @@ describe('ActionDialog', () => {
   it('should handle cancel', () => {
     const onCancelMock = vi.fn();
     const wrapper = shallow(
-      <ActionDialog
-        open={true}
-        onClose={onCloseMock}
-        onCancel={onCancelMock}
-      />,
+      <ActionDialog open={true} onClose={onCloseMock} onCancel={onCancelMock} />,
     );
     wrapper.find(Dialog).props().onClose!();
 

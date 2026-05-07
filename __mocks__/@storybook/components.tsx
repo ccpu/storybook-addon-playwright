@@ -25,11 +25,9 @@ export const Placeholder = (props: any) =>
 export const TabsState = (props: any) =>
   React.createElement('div', props, props.children);
 
-export const Tabs = (props: any) =>
-  React.createElement('div', props, props.children);
+export const Tabs = (props: any) => React.createElement('div', props, props.children);
 
-export const Link = (props: any) =>
-  React.createElement('a', props, props.children);
+export const Link = (props: any) => React.createElement('a', props, props.children);
 
 export const Form = {
   Button: (props: any) => React.createElement('button', props, props.children),
@@ -48,11 +46,9 @@ export const Form = {
 export const ActionBar = (props: any) =>
   React.createElement('div', props, props.children);
 
-export const Spaced = (props: any) =>
-  React.createElement('div', props, props.children);
+export const Spaced = (props: any) => React.createElement('div', props, props.children);
 
-export const Loader = (props: any) =>
-  React.createElement('div', props, props.children);
+export const Loader = (props: any) => React.createElement('div', props, props.children);
 
 export const TooltipNote = (props: any) =>
   React.createElement('div', props, props.children);
@@ -68,8 +64,7 @@ ListItem.displayName = 'ListItem';
 export const TooltipLinkList = (props: any) =>
   React.createElement('div', props, props.children);
 
-export const Badge = (props: any) =>
-  React.createElement('span', props, props.children);
+export const Badge = (props: any) => React.createElement('span', props, props.children);
 
 export const Button = (props: any) =>
   React.createElement('button', props, props.children);

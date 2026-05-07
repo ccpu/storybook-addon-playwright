@@ -64,8 +64,7 @@ const useStyles = makeStyles(
   { name: 'ListItemWrapper' },
 );
 
-export interface ListItemWrapperProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface ListItemWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   draggable?: boolean;
   selected?: boolean;
@@ -94,10 +93,7 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      if (
-        onClick &&
-        (e.target as HTMLDivElement).classList.contains('clickable')
-      ) {
+      if (onClick && (e.target as HTMLDivElement).classList.contains('clickable')) {
         onClick(e);
       }
     },

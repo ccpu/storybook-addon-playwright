@@ -35,8 +35,7 @@ export interface ImageDiffPreviewProps {
 const ImageDiffPreview: React.FC<ImageDiffPreviewProps> = (props) => {
   const { imageDiffResult, activeTab } = props;
 
-  const shouldShowDiff =
-    activeTab === 'imageDiff' || imageDiffResult.error !== undefined;
+  const shouldShowDiff = activeTab === 'imageDiff' || imageDiffResult.error !== undefined;
 
   const [value, setValue] = React.useState(shouldShowDiff ? 1 : 0);
 

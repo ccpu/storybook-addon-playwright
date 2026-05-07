@@ -1,9 +1,5 @@
 import type { ExternalToast, ToastT } from 'sonner';
-import type {
-  AlertBaseProps,
-  AlertToastProps,
-  AlertVariant,
-} from './AlertToast';
+import type { AlertBaseProps, AlertToastProps, AlertVariant } from './AlertToast';
 import { simpleHash } from '@pixpilot/hash';
 import React from 'react';
 import { toast as sonnerToast } from 'sonner';
@@ -14,12 +10,7 @@ export const DEFAULT_ALERT_DURATION = 10_000;
 interface ToastOwnProps
   extends Pick<
     ToastT,
-    | 'dismissible'
-    | 'duration'
-    | 'position'
-    | 'onAutoClose'
-    | 'onDismiss'
-    | 'closeButton'
+    'dismissible' | 'duration' | 'position' | 'onAutoClose' | 'onDismiss' | 'closeButton'
   > {
   id?: string;
 }
@@ -47,19 +38,13 @@ export interface ToastFunction {
   success: (message: ToastMessage, options?: ToastOwnProps) => string;
   warning: (message: ToastMessage, options?: ToastOwnProps) => string;
   info: (message: ToastMessage, options?: ToastOwnProps) => string;
-  custom: (
-    component: ToastCustomContent,
-    options?: ExternalToast,
-  ) => string | number;
+  custom: (component: ToastCustomContent, options?: ExternalToast) => string | number;
   dismiss: (id: string | number) => void;
   dismissAll: () => void;
 }
 
 // Track toast instances with counter
-const toastInstances = new Map<
-  string,
-  { currentId: string; counter: number }
->();
+const toastInstances = new Map<string, { currentId: string; counter: number }>();
 
 function getToastId(baseId: string) {
   // Get or initialize the instance tracker

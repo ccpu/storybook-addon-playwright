@@ -11,10 +11,7 @@ import { CommonProvider } from '../common';
 import { PreviewDialog } from '../../features/screenshot/components/screenshot-preview/index';
 import { useAddonState, useCurrentStoryData } from '../../hooks';
 import { ImageDiff } from './ImageDiff';
-import {
-  PREVIEW_PANEL_SIZE,
-  useResetSetting,
-} from '../../hooks/use-reset-setting';
+import { PREVIEW_PANEL_SIZE, useResetSetting } from '../../hooks/use-reset-setting';
 import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
 import { FixScreenshotFileDialog } from '../common';
 import {
@@ -64,8 +61,7 @@ const Tool: React.FC = () => {
 
   const resetSetting = useResetSetting();
 
-  const isEnablePreviewPanelEnabled =
-    addonState && addonState.previewPanelEnabled;
+  const isEnablePreviewPanelEnabled = addonState && addonState.previewPanelEnabled;
 
   const handleOpen = () => {
     setOpen(true);
@@ -125,11 +121,7 @@ const Tool: React.FC = () => {
                   title: 'Full screen view',
                 },
                 {
-                  icon: addonState.previewPanelEnabled ? (
-                    <EyeCloseIcon />
-                  ) : (
-                    <EyeIcon />
-                  ),
+                  icon: addonState.previewPanelEnabled ? <EyeCloseIcon /> : <EyeIcon />,
                   id: 'panel-toggle',
                   onClick: () => {
                     handleBowserClose();

@@ -70,8 +70,7 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
   return (
     <div
       className={
-        clsx(classes.root) +
-        (border && border.map((x) => ` border-${x}`).join(' '))
+        clsx(classes.root) + (border && border.map((x) => ` border-${x}`).join(' '))
       }
     >
       <div className={classes.toolbar}>{children}</div>

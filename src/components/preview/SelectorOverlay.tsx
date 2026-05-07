@@ -53,8 +53,7 @@ const defaultRect = {
 
 const SelectorOverlay: React.FC<Props> = (props) => {
   const { iframe } = props;
-  const { stopSelector, selectorManager, setSelectorData } =
-    useSelectorManager();
+  const { stopSelector, selectorManager, setSelectorData } = useSelectorManager();
 
   const [mouseupRef, setMouseupRef] = useState<HTMLElement>();
 
@@ -127,14 +126,7 @@ const SelectorOverlay: React.FC<Props> = (props) => {
         y: Math.round(elY),
       });
     }
-  }, [
-    elX,
-    elY,
-    setSelectorData,
-    mouseupRef,
-    selectorInfo.selector,
-    stopSelector,
-  ]);
+  }, [elX, elY, setSelectorData, mouseupRef, selectorInfo.selector, stopSelector]);
 
   useEffect(() => {
     const mouseup = (e: MouseEvent): void => {

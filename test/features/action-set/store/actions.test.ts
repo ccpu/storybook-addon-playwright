@@ -134,26 +134,19 @@ describe('action-set zustand store', () => {
   it('should deleteActionSet', () => {
     useActionSetStore.setState({ stories: getStoryData() });
     deleteActionSet({ actionSetId: 'action-set-id', storyId });
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([]);
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([]);
   });
 
   it('should sortActionSets', () => {
     useActionSetStore.setState({
       stories: {
         [storyId]: {
-          actionSets: [
-            getActionSetData(),
-            getActionSetData({ id: 'action-set-id-2' }),
-          ],
+          actionSets: [getActionSetData(), getActionSetData({ id: 'action-set-id-2' })],
         },
       },
     });
     sortActionSets({ newIndex: 1, oldIndex: 0, storyId });
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
@@ -223,9 +216,7 @@ describe('action-set zustand store', () => {
   it('should saveActionSet', () => {
     useActionSetStore.setState({ stories: getStoryData() });
     saveActionSet();
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
@@ -369,9 +360,7 @@ describe('action-set zustand store', () => {
       },
     });
     cancelEditActionSet(storyId);
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([]);
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([]);
   });
 
   it('should cancelEditActionSet (revert change if editing existing action-set)', () => {
@@ -387,9 +376,7 @@ describe('action-set zustand store', () => {
       },
     });
     cancelEditActionSet(storyId);
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
@@ -407,9 +394,7 @@ describe('action-set zustand store', () => {
       stories: getStoryData(),
     });
     cancelEditActionSet(storyId);
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
@@ -444,9 +429,7 @@ describe('action-set zustand store', () => {
       stories: getStoryData(storyId, { temp: true }),
     });
     deleteTempActionSets(storyId);
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([]);
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([]);
   });
 
   it('should setCurrentActionSets', () => {
@@ -454,9 +437,7 @@ describe('action-set zustand store', () => {
       stories: getStoryData(storyId, { temp: true }),
     });
     setCurrentActionSets(['id-1']);
-    expect(useActionSetStore.getState().currentActionSets).toStrictEqual([
-      'id-1',
-    ]);
+    expect(useActionSetStore.getState().currentActionSets).toStrictEqual(['id-1']);
   });
 
   it('should setScreenShotActionSets but use existing action set', () => {
@@ -468,9 +449,7 @@ describe('action-set zustand store', () => {
       actionSets: [{ ...actionSet, actions, id: _actionSetId }],
       storyId,
     });
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
@@ -486,23 +465,15 @@ describe('action-set zustand store', () => {
     useActionSetStore.setState({
       stories: {
         [storyId]: {
-          actionSets: [
-            getActionSetData({ id: '1' }),
-            getActionSetData({ id: '2' }),
-          ],
+          actionSets: [getActionSetData({ id: '1' }), getActionSetData({ id: '2' })],
         },
       },
     });
     setScreenShotActionSets({
-      actionSets: [
-        getActionSetData({ id: '1' }),
-        getActionSetData({ id: '2' }),
-      ],
+      actionSets: [getActionSetData({ id: '1' }), getActionSetData({ id: '2' })],
       storyId,
     });
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [
           { id: 'action-id', name: 'action-name' },
@@ -539,9 +510,7 @@ describe('action-set zustand store', () => {
       ],
       storyId,
     });
-    expect(
-      useActionSetStore.getState().stories[storyId].actionSets,
-    ).toStrictEqual([
+    expect(useActionSetStore.getState().stories[storyId].actionSets).toStrictEqual([
       {
         actions: [{ id: 'id-1', name: 'dbClick' }],
         id: 'id-2',

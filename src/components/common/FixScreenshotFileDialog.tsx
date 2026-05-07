@@ -9,11 +9,7 @@ interface Props {
   open: boolean;
 }
 
-const FixScreenshotFileDialog: React.FC<Props> = ({
-  fixFunction,
-  onClose,
-  open,
-}) => {
+const FixScreenshotFileDialog: React.FC<Props> = ({ fixFunction, onClose, open }) => {
   const {
     fixFileNames,
     clearError,
@@ -46,14 +42,13 @@ const FixScreenshotFileDialog: React.FC<Props> = ({
           ) : (
             <>
               <p>
-                Screenshot file name consist of the story title and story
-                function name, when the title or function name changes, plugin
-                is no longer able to detect the screenshots, hence it wont list
-                the screenshots in the panel.
+                Screenshot file name consist of the story title and story function name,
+                when the title or function name changes, plugin is no longer able to
+                detect the screenshots, hence it wont list the screenshots in the panel.
               </p>
               <p>
-                This utility will apply changes to the screenshot file name and
-                playwright config file.
+                This utility will apply changes to the screenshot file name and playwright
+                config file.
               </p>
             </>
           )}
@@ -69,9 +64,7 @@ const FixScreenshotFileDialog: React.FC<Props> = ({
             />
           )}
 
-          {fixFileNamesError && (
-            <p style={{ color: 'red' }}>{fixFileNamesError}</p>
-          )}
+          {fixFileNamesError && <p style={{ color: 'red' }}>{fixFileNamesError}</p>}
         </div>
         <DialogActions>
           <>

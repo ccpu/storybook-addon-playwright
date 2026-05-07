@@ -22,9 +22,7 @@ describe('knobsToQuerystring', () => {
   });
 
   it('should handle array of string', () => {
-    expect(knobsToQuerystring({ prop1: ['foo', 'bar'] })).toBe(
-      'knob-prop1=foo,bar',
-    );
+    expect(knobsToQuerystring({ prop1: ['foo', 'bar'] })).toBe('knob-prop1=foo,bar');
   });
 
   it('should handle array of object', () => {

@@ -42,15 +42,12 @@ describe('deleteScreenshot', () => {
       storyId: 'story-id',
     });
     expect(
-      vi.mocked(saveStoryFile).mock.calls[0]![1]!.stories!['story-id']
-        .screenshots,
+      vi.mocked(saveStoryFile).mock.calls[0]![1]!.stories!['story-id'].screenshots,
     ).toStrictEqual([
       {
         actionSets: [
           {
-            actions: [
-              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-            ],
+            actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
             id: 'action-set-id-2',
             title: 'click',
           },
@@ -80,8 +77,7 @@ describe('deleteScreenshot', () => {
     });
 
     expect(
-      vi.mocked(saveStoryFile).mock.calls[0]![1]!.stories!['story-id']
-        .screenshots,
+      vi.mocked(saveStoryFile).mock.calls[0]![1]!.stories!['story-id'].screenshots,
     ).toStrictEqual(undefined);
 
     expect(unlinkSyncMock).toBeCalledTimes(1);

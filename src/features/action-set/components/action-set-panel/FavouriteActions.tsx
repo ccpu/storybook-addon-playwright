@@ -53,11 +53,9 @@ const defaults: FavouriteActionSet[] = [
 const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   const { children, getContainerHeight } = props;
 
-  const [actionSets, setActionSets] =
-    React.useState<FavouriteActionSet[]>(defaults);
+  const [actionSets, setActionSets] = React.useState<FavouriteActionSet[]>(defaults);
 
-  const { mutateAsync: saveActionSet } =
-    trpcClient.actionSet.saveActionSet.useMutation();
+  const { mutateAsync: saveActionSet } = trpcClient.actionSet.saveActionSet.useMutation();
 
   const { mutateAsync: deleteFavouriteAction } =
     trpcClient.favouriteActions.deleteFavouriteAction.useMutation();

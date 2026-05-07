@@ -9,44 +9,38 @@ describe('releaseModifierKey', () => {
   it('should release modifier key', () => {
     const keyboardUpMock = vi.fn();
 
-    releaseModifierKey(
-      { keyboard: { up: keyboardUpMock } } as unknown as Page,
-      [
-        {
-          actions: [
-            {
-              args: { key: 'Control' },
-              id: 'action-id',
-              name: 'keyboard.down',
-            },
-          ],
-          id: 'id',
-          title: 'keyup',
-        },
-      ],
-    );
+    releaseModifierKey({ keyboard: { up: keyboardUpMock } } as unknown as Page, [
+      {
+        actions: [
+          {
+            args: { key: 'Control' },
+            id: 'action-id',
+            name: 'keyboard.down',
+          },
+        ],
+        id: 'id',
+        title: 'keyup',
+      },
+    ]);
     expect(keyboardUpMock).toHaveBeenCalledTimes(1);
   });
 
   it('should do nothing for keys other than modifier key', () => {
     const keyboardUpMock = vi.fn();
 
-    releaseModifierKey(
-      { keyboard: { up: keyboardUpMock } } as unknown as Page,
-      [
-        {
-          actions: [
-            {
-              args: { key: 'A' },
-              id: 'action-id',
-              name: 'keyboard.down',
-            },
-          ],
-          id: 'id',
-          title: 'keyup',
-        },
-      ],
-    );
+    releaseModifierKey({ keyboard: { up: keyboardUpMock } } as unknown as Page, [
+      {
+        actions: [
+          {
+            args: { key: 'A' },
+            id: 'action-id',
+            name: 'keyboard.down',
+          },
+        ],
+        id: 'id',
+        title: 'keyup',
+      },
+    ]);
     expect(keyboardUpMock).toHaveBeenCalledTimes(0);
   });
 });

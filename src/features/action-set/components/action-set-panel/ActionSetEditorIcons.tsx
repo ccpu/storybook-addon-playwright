@@ -13,23 +13,15 @@ export interface ActionSetEditorIconsProps {
 }
 
 const ActionSetEditorIcons: React.FC<ActionSetEditorIconsProps> = (props) => {
-  const {
-    onSave,
-    onEditTitle: onEditDescription,
-    onCancel,
-    onAddAction,
-  } = props;
+  const { onSave, onEditTitle: onEditDescription, onCancel, onAddAction } = props;
 
   const { loading } = useActionSchemaLoader();
 
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | Element>(null);
 
-  const handleMenuOpen = useCallback(
-    (event: React.SyntheticEvent<Element, Event>) => {
-      setMenuAnchorEl(event.currentTarget);
-    },
-    [],
-  );
+  const handleMenuOpen = useCallback((event: React.SyntheticEvent<Element, Event>) => {
+    setMenuAnchorEl(event.currentTarget);
+  }, []);
 
   const handleMenuClose = useCallback(() => {
     setMenuAnchorEl(null);
@@ -70,12 +62,7 @@ const ActionSetEditorIcons: React.FC<ActionSetEditorIconsProps> = (props) => {
       >
         <SaveIcon />
       </IconButton>
-      <IconButton
-        size="small"
-        className="Cancel"
-        title="Cancel"
-        onClick={onCancel}
-      >
+      <IconButton size="small" className="Cancel" title="Cancel" onClick={onCancel}>
         <CrossIcon />
       </IconButton>
       <ActionMenu

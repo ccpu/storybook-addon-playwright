@@ -1,11 +1,7 @@
 import path from 'node:path';
 import glob from 'fast-glob';
 import { readFileSync } from 'jsonfile';
-import {
-  getStoryPlaywrightFileInfo,
-  getVersion,
-  saveStoryFile,
-} from '../utils';
+import { getStoryPlaywrightFileInfo, getVersion, saveStoryFile } from '../utils';
 import { migrateToV1 } from './migration-v1';
 import { migrationV2 } from './migration-v2';
 import { migrationV3 } from './migration-v3';

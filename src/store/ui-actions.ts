@@ -8,9 +8,7 @@ import type {
 } from './ui-store';
 import { useUIStore } from './ui-store';
 
-function setState(
-  partial: Partial<UIState> | ((state: UIState) => Partial<UIState>),
-) {
+function setState(partial: Partial<UIState> | ((state: UIState) => Partial<UIState>)) {
   return useUIStore.setState(partial);
 }
 
@@ -22,9 +20,7 @@ export function setBrowserOptions(browserOptions: BrowsersOption) {
   setState({ browserOptions });
 }
 
-export function setScreenshotOptionsState(
-  screenshotOptions: ScreenshotOptions,
-) {
+export function setScreenshotOptionsState(screenshotOptions: ScreenshotOptions) {
   setState({ screenshotOptions });
 }
 
@@ -36,9 +32,7 @@ export function setSelectorManager(selectorManager: SelectorManger) {
   setState({ selectorManager });
 }
 
-export function setScreenshotUpdateState(
-  screenshotUpdateState: ScreenshotUpdateOptions,
-) {
+export function setScreenshotUpdateState(screenshotUpdateState: ScreenshotUpdateOptions) {
   setState({ screenshotUpdateState });
 }
 

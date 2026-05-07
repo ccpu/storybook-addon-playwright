@@ -1,9 +1,6 @@
 import type { ScreenshotTestTargetType } from '../../../typings';
 import React from 'react';
-import {
-  setScreenshotUpdateState,
-  useScreenshotUpdateStateValue,
-} from '../../../store';
+import { setScreenshotUpdateState, useScreenshotUpdateStateValue } from '../../../store';
 
 export function useScreenshotUpdateState(
   reqBy: string,

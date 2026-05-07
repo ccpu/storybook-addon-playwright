@@ -12,10 +12,7 @@ const ClipperButton: React.FC = () => {
 
   return (
     <IconButton active={clipping} onClick={handleClick}>
-      <Tooltip
-        placement="top"
-        title={clipping ? 'Stop Clipping' : 'Start Clipping'}
-      >
+      <Tooltip placement="top" title={clipping ? 'Stop Clipping' : 'Start Clipping'}>
         <svg
           className="MuiSvgIcon-root"
           focusable="false"

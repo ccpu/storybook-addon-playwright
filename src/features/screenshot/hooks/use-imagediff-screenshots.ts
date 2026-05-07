@@ -1,9 +1,6 @@
 import type { ImageDiffResult } from '../../../api/typings';
 import type { StoryData } from '../../../schema';
-import type {
-  ScreenshotData,
-  ScreenshotTestTargetType,
-} from '../../../typings';
+import type { ScreenshotData, ScreenshotTestTargetType } from '../../../typings';
 import React, { useEffect } from 'react';
 import { isStoryJsonFile } from '../../../utils';
 import { setScreenshots } from '../store/index';
@@ -28,9 +25,7 @@ function getScreenshotDataFromDiffResult(
 
   if (!storyData) return [];
 
-  return results
-    .filter((x) => x.storyId === storyData.id)
-    .map((x) => x.screenshotData);
+  return results.filter((x) => x.storyId === storyData.id).map((x) => x.screenshotData);
 }
 
 export function useImageDiffScreenshots(
@@ -47,8 +42,7 @@ export function useImageDiffScreenshots(
     if (Array.isArray(results))
       setScreenshots(
         getScreenshotDataFromDiffResult(results, target, storyData).filter(
-          (screenshotData): screenshotData is ScreenshotData =>
-            Boolean(screenshotData),
+          (screenshotData): screenshotData is ScreenshotData => Boolean(screenshotData),
         ),
       );
     if (onLoaded) onLoaded();

@@ -61,9 +61,7 @@ function rewriteRelative(importPath, oldDir, newDir) {
 
 function findMockFile(resolvedModuleAbs) {
   const dir = path.dirname(resolvedModuleAbs);
-  const base = path
-    .basename(resolvedModuleAbs)
-    .replace(/\.(ts|tsx|js|jsx)$/, '');
+  const base = path.basename(resolvedModuleAbs).replace(/\.(ts|tsx|js|jsx)$/, '');
   const mockDir = path.join(dir, '__mocks__');
   for (const ext of ['.ts', '.tsx', '.js', '.jsx']) {
     const candidate = path.join(mockDir, base + ext);
@@ -137,9 +135,7 @@ function transformContent(content, oldAbs, newAbs, isTest) {
         if (!mockFileSrc) return _match;
 
         const mockFileTest = newMockPath(mockFileSrc);
-        const relToMock = ensureRelative(
-          fwd(path.relative(newDir, mockFileTest)),
-        );
+        const relToMock = ensureRelative(fwd(path.relative(newDir, mockFileTest)));
         const relToMockNoExt = relToMock.replace(/\.(ts|tsx)$/, '');
         const cleanPath = transformedPath.replace(/\.ts$/, '');
 

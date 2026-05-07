@@ -9,10 +9,7 @@ const usage =
 function isPropsToArgsCommand(args: string[]) {
   const [first, second] = args;
 
-  return (
-    first === 'props-to-args' ||
-    (first === 'migrate' && second === 'props-to-args')
-  );
+  return first === 'props-to-args' || (first === 'migrate' && second === 'props-to-args');
 }
 
 export function runCli(args: string[]) {

@@ -16,16 +16,14 @@ const DeleteConfirmationButton: React.FC<DeleteConfirmationButtonProps> = ({
   onClose,
   disabled,
 }) => {
-  const [confirmAnchorEl, setConfirmAnchorEl] =
-    React.useState<HTMLButtonElement | null>(null);
-
-  const handleDelete = useCallback(
-    (e: React.SyntheticEvent<Element, Event>) => {
-      e.stopPropagation();
-      setConfirmAnchorEl(e.currentTarget as HTMLButtonElement);
-    },
-    [],
+  const [confirmAnchorEl, setConfirmAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null,
   );
+
+  const handleDelete = useCallback((e: React.SyntheticEvent<Element, Event>) => {
+    e.stopPropagation();
+    setConfirmAnchorEl(e.currentTarget as HTMLButtonElement);
+  }, []);
 
   const closeDeleteConfirmation = useCallback(() => {
     if (onClose) onClose();

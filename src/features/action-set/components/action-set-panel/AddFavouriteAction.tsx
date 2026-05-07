@@ -60,10 +60,7 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
     }
   }, [addFavouriteAction, clearAnchorEl, input, item]);
 
-  const handleRadioChange = (
-    _event: React.ChangeEvent<HTMLInputElement>,
-    v,
-  ) => {
+  const handleRadioChange = (_event: React.ChangeEvent<HTMLInputElement>, v) => {
     setInput(v);
     setRadioValue(v);
   };

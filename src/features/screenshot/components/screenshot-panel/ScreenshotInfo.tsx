@@ -39,11 +39,7 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
       <IconButton color={color} onClick={togglePopover} size={size}>
         <CogIcon />
       </IconButton>
-      <Popover
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={togglePopover}
-      >
+      <Popover anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={togglePopover}>
         <div>
           {anchorEl && (
             <ReactJson

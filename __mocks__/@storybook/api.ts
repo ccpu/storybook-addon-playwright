@@ -76,19 +76,17 @@ export const useStorybookState = vi
     };
   });
 
-export const useStorybookApi = vi
-  .fn<() => StorybookApi>()
-  .mockImplementation(() => ({
-    emit: vi.fn(),
-    getCurrentStoryData: () => {
-      return getStoryData();
-    },
-    getCurrentVersion: () => ({
-      version: '8.6.18',
-    }),
-    getData: () => {
-      return getStoryData();
-    },
-    selectStory: vi.fn(),
-    setSelectedPanel: vi.fn(),
-  }));
+export const useStorybookApi = vi.fn<() => StorybookApi>().mockImplementation(() => ({
+  emit: vi.fn(),
+  getCurrentStoryData: () => {
+    return getStoryData();
+  },
+  getCurrentVersion: () => ({
+    version: '8.6.18',
+  }),
+  getData: () => {
+    return getStoryData();
+  },
+  selectStory: vi.fn(),
+  setSelectedPanel: vi.fn(),
+}));

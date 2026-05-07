@@ -43,9 +43,7 @@ describe('useStoryFileActionSets', () => {
   ];
 
   it('should load once', async () => {
-    server.use(
-      trpcMsw.actionSet.getActionSet.mutation(() => actionSets as any),
-    );
+    server.use(trpcMsw.actionSet.getActionSet.mutation(() => actionSets as any));
 
     const fileInfo = getFileInfo();
     currentStoryData = fileInfo as any;

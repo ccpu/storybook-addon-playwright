@@ -12,10 +12,6 @@ export const favouriteActionsDataSchema = z.object({
   actionSets: z.array(favouriteActionSetSchema),
 });
 
-export type AddFavouriteActionInput = z.infer<
-  typeof addFavouriteActionInputSchema
->;
-export type DeleteFavouriteActionInput = z.infer<
-  typeof deleteFavouriteActionInputSchema
->;
+export type AddFavouriteActionInput = z.infer<typeof addFavouriteActionInputSchema>;
+export type DeleteFavouriteActionInput = z.infer<typeof deleteFavouriteActionInputSchema>;
 export type FavouriteActionsData = z.infer<typeof favouriteActionsDataSchema>;

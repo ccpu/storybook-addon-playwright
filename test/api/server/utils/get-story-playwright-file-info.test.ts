@@ -8,9 +8,7 @@ describe('getStoryFileInfo', () => {
   });
 
   it('should handle playwright json file', () => {
-    const fileInfo = getStoryPlaywrightFileInfo(
-      './stories/story.playwright.json',
-    );
+    const fileInfo = getStoryPlaywrightFileInfo('./stories/story.playwright.json');
     expect(fileInfo.name).toBe('story.playwright.json');
     expect(fileInfo.path.endsWith('story.playwright.json')).toBeTruthy();
   });

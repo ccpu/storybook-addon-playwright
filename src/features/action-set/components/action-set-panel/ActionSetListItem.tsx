@@ -132,10 +132,7 @@ export function ActionSetListItem({
             </IconButton>
 
             {!hideIcons && <AddFavouriteAction item={item} />}
-            <CheckBox
-              onClick={handleCheckStateChanged}
-              checked={Boolean(checked)}
-            />
+            <CheckBox onClick={handleCheckStateChanged} checked={Boolean(checked)} />
             {!hideIcons && (
               <DeleteConfirmationButton onDelete={handleDeleteConfirmation} />
             )}
@@ -148,9 +145,9 @@ export function ActionSetListItem({
 
 ActionSetListItem.displayName = 'ActionSetListItem';
 
-const SortableActionSetListItem: React.FC<ActionSetActionSetListItemProps> = (
-  props,
-) => <ActionSetListItem {...props} />;
+const SortableActionSetListItem: React.FC<ActionSetActionSetListItemProps> = (props) => (
+  <ActionSetListItem {...props} />
+);
 
 SortableActionSetListItem.displayName = 'SortableActionSetListItem';
 

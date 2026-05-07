@@ -39,9 +39,9 @@ const ListWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   );
 };
 
-const ListWrapperSortableContainer: React.FC<
-  React.HTMLAttributes<HTMLDivElement>
-> = (props) => {
+const ListWrapperSortableContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = (
+  props,
+) => {
   return <ListWrapper {...props} />;
 };
 

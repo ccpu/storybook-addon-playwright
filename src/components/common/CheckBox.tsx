@@ -12,12 +12,7 @@ const CheckBox: React.FC<CheckBoxProps> = (props) => {
   const { onClick, checked } = props;
 
   return (
-    <IconButton
-      className="check-box"
-      onClick={onClick}
-      size="small"
-      active={checked}
-    >
+    <IconButton className="check-box" onClick={onClick} size="small" active={checked}>
       {checked ? <FormIcon /> : <StopAltHollowIcon />}
     </IconButton>
   );

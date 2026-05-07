@@ -14,16 +14,13 @@ describe('deleteStory', () => {
   });
 
   it('should delete story if empty', () => {
-    expect(
-      deleteEmptyStory({ stories: { 'story-id': {} } }, 'story-id'),
-    ).toStrictEqual({ stories: {} });
+    expect(deleteEmptyStory({ stories: { 'story-id': {} } }, 'story-id')).toStrictEqual({
+      stories: {},
+    });
   });
   it('should not delete story if not empty', () => {
     expect(
-      deleteEmptyStory(
-        { stories: { 'story-id': { actionSets: [] } } },
-        'story-id',
-      ),
+      deleteEmptyStory({ stories: { 'story-id': { actionSets: [] } } }, 'story-id'),
     ).toStrictEqual({ stories: { 'story-id': { actionSets: [] } } });
   });
 });

@@ -10,8 +10,7 @@ const Selector: React.FC = memo((props) => {
   const [iframe, setIframe] = useState<HTMLIFrameElement | undefined>();
 
   useEffect(() => {
-    if (rootRef.current)
-      setIframe(rootRef.current.querySelector('iframe') || undefined);
+    if (rootRef.current) setIframe(rootRef.current.querySelector('iframe') || undefined);
   }, []);
 
   const isActive = selectorManager && selectorManager.start;

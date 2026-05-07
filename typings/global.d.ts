@@ -19,8 +19,7 @@ declare module 'vitest' {
 }
 
 declare global {
-  type Mock<T extends (...args: any[]) => any = (...args: any[]) => any> =
-    VitestMock<T>;
+  type Mock<T extends (...args: any[]) => any = (...args: any[]) => any> = VitestMock<T>;
   type Mocked<T> = VitestMocked<T>;
 }
 

@@ -5,11 +5,7 @@ import { useAddonState } from './use-addon-state';
 export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
   const { addonState, setAddonState } = useAddonState();
   const [activeBrowsers, setActiveBrowsers] = useState<BrowserTypes[]>([]);
-  const [browserTypes] = useState<BrowserTypes[]>([
-    'chromium',
-    'firefox',
-    'webkit',
-  ]);
+  const [browserTypes] = useState<BrowserTypes[]>(['chromium', 'firefox', 'webkit']);
 
   const isDisabled = useCallback(
     (browserType: BrowserTypes) => {
@@ -27,11 +23,7 @@ export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
   );
 
   const setBrowserState = useCallback(
-    (
-      browserType: BrowserTypes,
-      activePanel: ScreenShotViewPanel,
-      disable: boolean,
-    ) => {
+    (browserType: BrowserTypes, activePanel: ScreenShotViewPanel, disable: boolean) => {
       if (!addonState.disabledBrowser) addonState.disabledBrowser = {};
       setAddonState({
         ...addonState,

@@ -34,9 +34,7 @@ vi.mock(
 vi.mock(
   '../../../../../src/api/trpc/clients/favourite-actions.client',
   async () =>
-    await import(
-      '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
-    ),
+    await import('../../../../api/trpc/clients/__mocks__/favourite-actions.client'),
 );
 
 const actionSet: FavouriteActionSet = {

@@ -10,13 +10,5 @@ export async function touchEnd(
   client?: Position,
   options?: PageExtraTouchOptions,
 ) {
-  await dispatchTouchEvent(
-    this,
-    'touchend',
-    selector,
-    page,
-    screen,
-    client,
-    options,
-  );
+  await dispatchTouchEvent(this, 'touchend', selector, page, screen, client, options);
 }

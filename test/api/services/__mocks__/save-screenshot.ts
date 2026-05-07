@@ -1,7 +1,4 @@
-import {
-  ImageDiffResult,
-  SaveScreenshotRequest,
-} from '../../../../src/api/typings';
+import { ImageDiffResult, SaveScreenshotRequest } from '../../../../src/api/typings';
 
 import { saveScreenshot as orgSaveScreenshot } from '../../../../src/api/services/save-screenshot';
 

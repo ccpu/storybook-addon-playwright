@@ -7,16 +7,13 @@ import { useCustomTheme } from '../../../src/features/theme/hooks/use-custom-the
 
 vi.mock(
   '../../../src/features/theme/hooks/use-custom-theme',
-  async () =>
-    await import('../../features/theme/hooks/__mocks__/use-custom-theme'),
+  async () => await import('../../features/theme/hooks/__mocks__/use-custom-theme'),
 );
 const useCustomThemeMock = useCustomTheme as Mock;
 
 describe('ThemeProvider', () => {
   it('should have light theme', () => {
-    (useStorybookState as Mock).mockImplementationOnce(() =>
-      getStorybookState('light'),
-    );
+    (useStorybookState as Mock).mockImplementationOnce(() => getStorybookState('light'));
     useCustomThemeMock.mockImplementationOnce(() => {
       return {
         theme: undefined,
@@ -32,9 +29,7 @@ describe('ThemeProvider', () => {
   });
 
   it('should have dark theme', () => {
-    (useStorybookState as Mock).mockImplementationOnce(() =>
-      getStorybookState('dark'),
-    );
+    (useStorybookState as Mock).mockImplementationOnce(() => getStorybookState('dark'));
 
     useCustomThemeMock.mockImplementationOnce(() => {
       return {
@@ -52,9 +47,7 @@ describe('ThemeProvider', () => {
   });
 
   it('should override theme using useCustomTheme', () => {
-    (useStorybookState as Mock).mockImplementationOnce(() =>
-      getStorybookState('light'),
-    );
+    (useStorybookState as Mock).mockImplementationOnce(() => getStorybookState('light'));
 
     useCustomThemeMock.mockImplementationOnce(() => {
       return {

@@ -1,9 +1,6 @@
 import { selectorMouseWheel } from '../../src/page-extra/selector-mouse-wheel';
 import { pagePropsMock, PageProps } from '../manual-mocks/playwright';
-import {
-  ExtendedPage,
-  SelectorMouseWheelOptions,
-} from '../../src/page-extra/typings';
+import { ExtendedPage, SelectorMouseWheelOptions } from '../../src/page-extra/typings';
 
 const pageMock = (): Promise<PageProps> => {
   return new Promise<PageProps>((resolvePage) => {

@@ -5,8 +5,7 @@
 // Also patches React.default.useEffect for components using React.useEffect().
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -25,9 +24,7 @@ describe('ImageDiffMessage', () => {
   });
 
   it('should do nothing if result undefined', () => {
-    const wrapper = shallow(
-      <ImageDiffMessage result={undefined} onClose={vi.fn()} />,
-    );
+    const wrapper = shallow(<ImageDiffMessage result={undefined} onClose={vi.fn()} />);
     expect(wrapper.exists()).toBeTruthy();
     expect(toast.success).toHaveBeenCalledTimes(0);
     expect(toast.error).toHaveBeenCalledTimes(0);
@@ -36,10 +33,7 @@ describe('ImageDiffMessage', () => {
 
   it('should show message for added screenshot', () => {
     const wrapper = shallow(
-      <ImageDiffMessage
-        result={{ added: true, pass: false }}
-        onClose={vi.fn()}
-      />,
+      <ImageDiffMessage result={{ added: true, pass: false }} onClose={vi.fn()} />,
     );
     expect(wrapper.exists()).toBeTruthy();
     expect(vi.mocked(toast.success).mock.calls[0][0]).toBe(

@@ -16,11 +16,9 @@ export async function mouseDownOnSelector(
   const mouseDownRelativeY = getPointByDirection(box.height / 2, 'y', point);
 
   // move mouse to center on selector
-  await this.mouse.move(
-    box.x + mouseDownRelativeX,
-    box.y + mouseDownRelativeY,
-    { steps },
-  );
+  await this.mouse.move(box.x + mouseDownRelativeX, box.y + mouseDownRelativeY, {
+    steps,
+  });
 
   await this.mouse.down();
 }

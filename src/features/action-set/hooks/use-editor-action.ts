@@ -29,9 +29,7 @@ export function useEditorAction(
       return;
     }
 
-    const actionSet = story.actionSets.find(
-      (x) => x.id === editingActionSet.id,
-    );
+    const actionSet = story.actionSets.find((x) => x.id === editingActionSet.id);
 
     if (!actionSet) {
       setAction(undefined);

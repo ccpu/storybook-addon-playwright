@@ -39,13 +39,7 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
 
       await testScreenshot({ ...storyData, screenshotId: screenshot.id });
     }
-  }, [
-    imageDiffResult,
-    screenshot.id,
-    storyData,
-    testScreenshot,
-    updateScreenshot,
-  ]);
+  }, [imageDiffResult, screenshot.id, storyData, testScreenshot, updateScreenshot]);
 
   const handleSaveScreenshotClick = useCallback(async () => {
     if (!testScreenshotResult) return;
@@ -71,22 +65,14 @@ const ScreenshotUpdate: React.FC<ScreenshotUpdateProps> = (props) => {
           onClose={testScreenshotClearResult}
           open={true}
           titleActions={() => (
-            <ScreenshotInfo
-              color="primary"
-              size="medium"
-              screenshotData={screenshot}
-            />
+            <ScreenshotInfo color="primary" size="medium" screenshotData={screenshot} />
           )}
           footerActions={() => (
             <>
               <Button onClick={testScreenshotClearResult} color="primary">
                 No
               </Button>
-              <Button
-                onClick={handleSaveScreenshotClick}
-                color="primary"
-                autoFocus
-              >
+              <Button onClick={handleSaveScreenshotClick} color="primary" autoFocus>
                 Yes
               </Button>
             </>

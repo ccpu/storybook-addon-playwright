@@ -8,9 +8,7 @@ describe('useScreenshotListUpdateDialog', () => {
   });
 
   it('should run test', () => {
-    const { result } = renderHook(() =>
-      useScreenshotUpdateState('req-id', 'all'),
-    );
+    const { result } = renderHook(() => useScreenshotUpdateState('req-id', 'all'));
 
     act(() => {
       result.current.runDiffTest();
@@ -24,9 +22,7 @@ describe('useScreenshotListUpdateDialog', () => {
   });
 
   it('should change state of in progress', () => {
-    const { result } = renderHook(() =>
-      useScreenshotUpdateState('req-id', 'all'),
-    );
+    const { result } = renderHook(() => useScreenshotUpdateState('req-id', 'all'));
 
     act(() => {
       result.current.runDiffTest();
@@ -44,9 +40,7 @@ describe('useScreenshotListUpdateDialog', () => {
   });
 
   it('should clear all', () => {
-    const { result } = renderHook(() =>
-      useScreenshotUpdateState('req-id', 'all'),
-    );
+    const { result } = renderHook(() => useScreenshotUpdateState('req-id', 'all'));
 
     act(() => {
       result.current.runDiffTest();

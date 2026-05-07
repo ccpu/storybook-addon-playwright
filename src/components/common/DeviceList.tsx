@@ -11,13 +11,9 @@ export interface DeviceListProps {
 
 const DeviceList: React.FC<DeviceListProps> = (props) => {
   const { onDeviceSelect, selectedDevice } = props;
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLButtonElement>(
-    null,
-  );
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLButtonElement>(null);
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -60,9 +56,7 @@ const DeviceList: React.FC<DeviceListProps> = (props) => {
             key={deviceName}
             viewportSize={selectedDevice && selectedDevice.viewport}
             onClick={handleSelection}
-            selected={Boolean(
-              selectedDevice && selectedDevice.deviceName === deviceName,
-            )}
+            selected={Boolean(selectedDevice && selectedDevice.deviceName === deviceName)}
             value={deviceName}
           />
         ))}

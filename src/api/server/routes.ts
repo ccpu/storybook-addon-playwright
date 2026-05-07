@@ -29,10 +29,7 @@ export default function middleware(router: RouterLike) {
       createContext: () => createContext({ req, res }),
       endpoint: '/trpc',
       onError: ({ error, path }) => {
-        console.error(
-          `[storybook-addon-playwright] tRPC error on "${path}"`,
-          error,
-        );
+        console.error(`[storybook-addon-playwright] tRPC error on "${path}"`, error);
       },
       req: request,
       router: appRouter,

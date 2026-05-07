@@ -43,9 +43,7 @@ describe('testScreenshot', () => {
       screenshotData: {
         actionSets: [
           {
-            actions: [
-              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-            ],
+            actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
             id: 'action-set-id',
             title: 'click',
           },
@@ -88,9 +86,7 @@ describe('testScreenshot', () => {
       screenshotData: {
         actionSets: [
           {
-            actions: [
-              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-            ],
+            actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
             id: 'action-set-id',
             title: 'click',
           },
@@ -173,9 +169,7 @@ describe('testScreenshot compareScreenshot', () => {
       screenshotData: {
         actionSets: [
           {
-            actions: [
-              { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-            ],
+            actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
             id: 'action-set-id',
             title: 'click',
           },

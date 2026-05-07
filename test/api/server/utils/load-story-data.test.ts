@@ -12,10 +12,7 @@ spyOnFs.mockImplementation((file: any) => {
 });
 
 vi.mock('jsonfile', () => ({
-  readFile: (
-    file: string,
-    callBack: (err?: string, data?: unknown) => void,
-  ) => {
+  readFile: (file: string, callBack: (err?: string, data?: unknown) => void) => {
     if (file.includes('story-error.playwright.json')) {
       callBack('some-error');
     } else if (file.includes('no-story-id.playwright.json')) {

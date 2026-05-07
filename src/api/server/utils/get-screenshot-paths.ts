@@ -19,10 +19,7 @@ export function getScreenshotPaths(data: DiffImageToScreenShot) {
 
   const diffDir = path.join(fileInfo.screenShotsDir, '__diff_output__');
 
-  const filePath = path.join(
-    fileInfo.screenShotsDir,
-    `${screenshotIdentifier}-snap.png`,
-  );
+  const filePath = path.join(fileInfo.screenShotsDir, `${screenshotIdentifier}-snap.png`);
 
   return {
     diffDir,

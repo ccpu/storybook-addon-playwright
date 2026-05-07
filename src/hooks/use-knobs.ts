@@ -14,10 +14,7 @@ export function useKnobs() {
   useEffect(() => {
     setArgs(undefined);
     const channel = addons.getChannel();
-    const setArgsStore = (data: {
-      storyId: string;
-      args: Record<string, unknown>;
-    }) => {
+    const setArgsStore = (data: { storyId: string; args: Record<string, unknown> }) => {
       if (!data || !data.args) return;
       const currentStoryData = apiRef.current.getCurrentStoryData() as
         | { initialArgs?: Record<string, unknown> }

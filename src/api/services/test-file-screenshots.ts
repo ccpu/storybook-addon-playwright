@@ -20,11 +20,7 @@ export async function testFileScreenshots(
 
   const storiesData = await getStoryPlaywrightData(filePath);
 
-  const storyBaseId = (
-    storiesData.storyData[0]?.storyId ??
-    storyId ??
-    ''
-  ).split('--')[0];
+  const storyBaseId = (storiesData.storyData[0]?.storyId ?? storyId ?? '').split('--')[0];
 
   const limit = pLimit(configs.concurrencyLimit?.story ?? 1);
 
@@ -32,30 +28,30 @@ export async function testFileScreenshots(
     await configs.beforeFileImageDiff({ ...options, storyId: storyBaseId });
   }
 
-  const promisees = storiesData.storyData.reduce<
-    Array<Promise<ImageDiffResult[]>>
-  >((arr, story) => {
-    if (requestType === 'story' && storyId && story.storyId !== storyId)
-      return arr;
+  const promisees = storiesData.storyData.reduce<Array<Promise<ImageDiffResult[]>>>(
+    (arr, story) => {
+      if (requestType === 'story' && storyId && story.storyId !== storyId) return arr;
 
-    if (story.data.screenshots && story.data.screenshots.length) {
-      arr.push(
-        limit(async () =>
-          testStoryScreenshots({
-            filePath,
-            requestId: options.requestId,
-            requestType: options.requestType
-              ? options.requestType
-              : storyId
-              ? 'story'
-              : 'file',
-            storyId: story.storyId,
-          }),
-        ),
-      );
-    }
-    return arr;
-  }, []);
+      if (story.data.screenshots && story.data.screenshots.length) {
+        arr.push(
+          limit(async () =>
+            testStoryScreenshots({
+              filePath,
+              requestId: options.requestId,
+              requestType: options.requestType
+                ? options.requestType
+                : storyId
+                ? 'story'
+                : 'file',
+              storyId: story.storyId,
+            }),
+          ),
+        );
+      }
+      return arr;
+    },
+    [],
+  );
 
   const res = await Promise.all(promisees);
   const results = res.reduce<ImageDiffResult[]>((arr, d) => {

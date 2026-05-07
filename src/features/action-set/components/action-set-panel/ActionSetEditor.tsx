@@ -1,11 +1,7 @@
 import type { ActionSet } from '../../../../typings';
 import { Divider, makeStyles } from '@material-ui/core';
 import React, { useCallback } from 'react';
-import {
-  InputDialog,
-  ListItemWrapper,
-  Loader,
-} from '../../../../components/common';
+import { InputDialog, ListItemWrapper, Loader } from '../../../../components/common';
 import { TEMP_ACTION_SET } from '../../../../constants';
 import { useActionEditor, useActionSchemaLoader } from '../../../../hooks';
 import { ActionList } from '../actions/ActionList';
@@ -36,12 +32,8 @@ interface Props {
 const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
   const [editDescription, setEditDescription] = React.useState(false);
 
-  const {
-    handleAddAction,
-    handleDescriptionChange,
-    handleSave,
-    cancelEditActionSet,
-  } = useActionEditor(actionSet);
+  const { handleAddAction, handleDescriptionChange, handleSave, cancelEditActionSet } =
+    useActionEditor(actionSet);
 
   const classes = useStyles();
 
@@ -61,9 +53,7 @@ const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
 
   return (
     <ListItemWrapper
-      tooltip={
-        actionSet.temp ? actionSet.title + TEMP_ACTION_SET : actionSet.title
-      }
+      tooltip={actionSet.temp ? actionSet.title + TEMP_ACTION_SET : actionSet.title}
       title={actionSet.temp ? `${actionSet.title} *` : actionSet.title}
       draggable={true}
       selected={true}

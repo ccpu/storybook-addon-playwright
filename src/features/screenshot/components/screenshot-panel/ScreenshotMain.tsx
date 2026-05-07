@@ -11,8 +11,7 @@ export interface ScreenshotMainProps {
 const ScreenshotMain: React.FC<ScreenshotMainProps> = ({ showPanel }) => {
   const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
-  const { updateInf, handleClose, setIsLoadingFinish } =
-    useScreenshotUpdateState('');
+  const { updateInf, handleClose, setIsLoadingFinish } = useScreenshotUpdateState('');
 
   const handleOnLoad = React.useCallback(() => {
     setDialogOpen(true);

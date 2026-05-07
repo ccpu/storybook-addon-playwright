@@ -1,9 +1,7 @@
-const { removeImageDiffResultMock, setImageDiffResultsMock } = vi.hoisted(
-  () => ({
-    removeImageDiffResultMock: vi.fn(),
-    setImageDiffResultsMock: vi.fn(),
-  }),
-);
+const { removeImageDiffResultMock, setImageDiffResultsMock } = vi.hoisted(() => ({
+  removeImageDiffResultMock: vi.fn(),
+  setImageDiffResultsMock: vi.fn(),
+}));
 
 function invokeMock<Args extends unknown[]>(mock: (...args: Args) => unknown) {
   return (...args: Args) => mock(...args);

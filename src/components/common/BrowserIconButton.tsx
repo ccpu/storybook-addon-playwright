@@ -18,11 +18,7 @@ const BrowserIconButton: React.FC<BrowserIconProps> = (props) => {
   }, [browserType, onClick]);
 
   return (
-    <IconButton
-      onClick={handleClick}
-      active={active}
-      title={capitalize(browserType)}
-    >
+    <IconButton onClick={handleClick} active={active} title={capitalize(browserType)}>
       <BrowserIcon browserType={browserType} />
     </IconButton>
   );

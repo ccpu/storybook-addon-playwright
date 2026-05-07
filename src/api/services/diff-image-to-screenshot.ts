@@ -1,8 +1,5 @@
 import type { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import type {
-  DiffImageToScreenShot,
-  ImageDiffResult,
-} from '../typings/image-diff';
+import type { DiffImageToScreenShot, ImageDiffResult } from '../typings/image-diff';
 import * as fs from 'node:fs';
 // import { nanoid } from 'nanoid';
 import path from 'node:path';
@@ -27,8 +24,7 @@ export async function diffImageToScreenshot(
       const paths = getScreenshotPaths(data);
       const config = getConfigs();
 
-      const imageDiffOptions: Partial<SnapshotOptions> =
-        config.imageDiffOptions ?? {};
+      const imageDiffOptions: Partial<SnapshotOptions> = config.imageDiffOptions ?? {};
 
       const diffDir = path.resolve(
         process.cwd(),
@@ -42,9 +38,7 @@ export async function diffImageToScreenshot(
       const result = runDiffImageToSnapshot({
         blur: 0,
         diffDir,
-        diffDirection: config.diffDirection
-          ? config.diffDirection
-          : 'horizontal',
+        diffDirection: config.diffDirection ? config.diffDirection : 'horizontal',
         failureThreshold: 0,
         failureThresholdType: 'pixel',
         receivedImageBuffer: imageBuffer,

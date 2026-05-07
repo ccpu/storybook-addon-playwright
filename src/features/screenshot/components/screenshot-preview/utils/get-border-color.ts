@@ -5,7 +5,5 @@ export const getBorderColor = (
   color: string,
   coefficient = 0.1,
 ) => {
-  return type === 'dark'
-    ? lighten(color, coefficient)
-    : darken(color, coefficient);
+  return type === 'dark' ? lighten(color, coefficient) : darken(color, coefficient);
 };

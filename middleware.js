@@ -21,10 +21,7 @@ module.exports = function (router) {
       router: appRouter,
       createContext: () => createContext({ req, res }),
       onError: ({ error, path }) => {
-        console.error(
-          `[storybook-addon-playwright] tRPC error on "${path}"`,
-          error,
-        );
+        console.error(`[storybook-addon-playwright] tRPC error on "${path}"`, error);
       },
     });
 

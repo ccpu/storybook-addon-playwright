@@ -42,8 +42,7 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
 
   const value = schema.type !== 'object' && getValue(optionObjectPath, schema);
 
-  const appendToTile =
-    shouldAppendToTitle && shouldAppendToTitle(optionObjectPath);
+  const appendToTile = shouldAppendToTitle && shouldAppendToTitle(optionObjectPath);
 
   const shouldAppend = Boolean(appendToTile);
 

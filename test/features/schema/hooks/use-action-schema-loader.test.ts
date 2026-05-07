@@ -7,9 +7,7 @@ import { trpcMsw } from '../../../trpc-msw';
 
 describe('useActionSchemaLoader', () => {
   it('should test useActionSchemaLoader', async () => {
-    server.use(
-      trpcMsw.schema.getActionsSchema.query(() => getActionSchemaData() as any),
-    );
+    server.use(trpcMsw.schema.getActionsSchema.query(() => getActionSchemaData() as any));
 
     const { result } = renderHook(() => useActionSchemaLoader());
 

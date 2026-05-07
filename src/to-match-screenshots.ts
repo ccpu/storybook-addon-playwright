@@ -1,7 +1,4 @@
-import {
-  MatchImageSnapshotOptions,
-  toMatchImageSnapshot,
-} from 'jest-image-snapshot';
+import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot';
 import path from 'node:path';
 import { nanoid } from 'nanoid';
 import { getScreenshots } from './get-screenshots';
@@ -31,8 +28,7 @@ export async function toMatchScreenshots(
         try {
           expect(screenshotBuffer).toMatchImageSnapshot({
             ...options,
-            customSnapshotIdentifier:
-              baselineScreenshotPath.screenshotIdentifier,
+            customSnapshotIdentifier: baselineScreenshotPath.screenshotIdentifier,
             customSnapshotsDir: baselineScreenshotPath.screenshotsDir,
           });
         } catch (error) {

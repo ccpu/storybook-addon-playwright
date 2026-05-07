@@ -25,10 +25,7 @@ export { useStyles as useInputDialogStyles };
 
 export interface InputDialogProps
   extends StyleProps,
-    Omit<
-      ActionDialogDialogProps,
-      'onNegativeAction' | 'onPositiveAction' | 'onClose'
-    > {
+    Omit<ActionDialogDialogProps, 'onNegativeAction' | 'onPositiveAction' | 'onClose'> {
   onSave: (content: string) => void;
   onCancel?: () => void;
   onClose: (closed?: true) => void;
@@ -56,12 +53,9 @@ const InputDialog: React.FC<InputDialogProps> = ({
 
   const classes = useStyles({ width });
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value);
-    },
-    [],
-  );
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+  }, []);
 
   const handleClose = useCallback(() => {
     onClose(true);

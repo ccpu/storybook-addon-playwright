@@ -7,10 +7,7 @@ import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 const trpcDir = 'dist/trpc';
 if (!existsSync(trpcDir)) mkdirSync(trpcDir, { recursive: true });
 if (!existsSync(`${trpcDir}/router.js`))
-  writeFileSync(
-    `${trpcDir}/router.js`,
-    'module.exports={appRouter:{_def:{}}};',
-  );
+  writeFileSync(`${trpcDir}/router.js`, 'module.exports={appRouter:{_def:{}}};');
 if (!existsSync(`${trpcDir}/context.js`))
   writeFileSync(
     `${trpcDir}/context.js`,

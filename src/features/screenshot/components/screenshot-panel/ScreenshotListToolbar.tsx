@@ -1,10 +1,5 @@
 import { IconButton } from '@storybook/components';
-import {
-  ContrastIcon,
-  PhotoIcon,
-  RefreshIcon,
-  WrenchIcon,
-} from '@storybook/icons';
+import { ContrastIcon, PhotoIcon, RefreshIcon, WrenchIcon } from '@storybook/icons';
 import React from 'react';
 import {
   DeleteConfirmationButton,
@@ -22,14 +17,8 @@ export interface ScreenshotListToolbarProps {
 }
 
 const ScreenshotListToolbar: React.FC<ScreenshotListToolbarProps> = (props) => {
-  const {
-    hasScreenShot,
-    title,
-    onTestClick,
-    onPreviewClick,
-    onUpdateClick,
-    onDelete,
-  } = props;
+  const { hasScreenShot, title, onTestClick, onPreviewClick, onUpdateClick, onDelete } =
+    props;
 
   const [openFixDialog, setOpenFixDialog] = React.useState<boolean>(false);
 
@@ -44,36 +33,21 @@ const ScreenshotListToolbar: React.FC<ScreenshotListToolbarProps> = (props) => {
           onClose={setOpenFixDialog}
           open={openFixDialog}
         />
-        <IconButton
-          onClick={() => setOpenFixDialog(true)}
-          title="Fix screenshot name"
-        >
+        <IconButton onClick={() => setOpenFixDialog(true)} title="Fix screenshot name">
           <WrenchIcon />
         </IconButton>
         {hasScreenShot && (
           <>
-            <IconButton
-              onClick={onUpdateClick}
-              title="Update story screenshots"
-            >
+            <IconButton onClick={onUpdateClick} title="Update story screenshots">
               <RefreshIcon />
             </IconButton>
-            <IconButton
-              onClick={onTestClick}
-              title="Run diff test for story screenshots"
-            >
+            <IconButton onClick={onTestClick} title="Run diff test for story screenshots">
               <ContrastIcon />
             </IconButton>
-            <IconButton
-              onClick={onPreviewClick}
-              title="Display story screenshots"
-            >
+            <IconButton onClick={onPreviewClick} title="Display story screenshots">
               <PhotoIcon />
             </IconButton>
-            <DeleteConfirmationButton
-              IconButton={IconButton}
-              onDelete={onDelete}
-            />
+            <DeleteConfirmationButton IconButton={IconButton} onDelete={onDelete} />
           </>
         )}
       </div>

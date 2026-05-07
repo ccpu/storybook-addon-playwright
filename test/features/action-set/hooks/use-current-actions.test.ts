@@ -29,9 +29,7 @@ describe('useCurrentActions', () => {
 
     expect(result.current.currentActions).toStrictEqual([
       {
-        actions: [
-          { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-        ],
+        actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
         id: 'action-set-id',
         title: 'click',
       },

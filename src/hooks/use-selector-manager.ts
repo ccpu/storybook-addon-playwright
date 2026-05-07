@@ -2,11 +2,7 @@ import type { SelectorState } from '../typings/selector';
 import { useCallback } from 'react';
 import { setSelectorManager, useSelectorManagerValue } from '../store';
 
-export type {
-  SelectorManageSharedProps,
-  SelectorManger,
-  SelectorType,
-} from '../store';
+export type { SelectorManageSharedProps, SelectorManger, SelectorType } from '../store';
 
 export function useSelectorManager() {
   const selectorManager = useSelectorManagerValue();

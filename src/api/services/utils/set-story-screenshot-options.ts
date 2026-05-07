@@ -5,8 +5,7 @@ export function setStoryScreenshotOptions(
   screenshot: ScreenshotData,
 ) {
   if (storyData.browserOptions && screenshot.browserOptionsId) {
-    screenshot.browserOptions =
-      storyData.browserOptions[screenshot.browserOptionsId];
+    screenshot.browserOptions = storyData.browserOptions[screenshot.browserOptionsId];
   }
   if (storyData.screenshotOptions && screenshot.screenshotOptionsId) {
     screenshot.screenshotOptions =

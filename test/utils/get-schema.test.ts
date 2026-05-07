@@ -7,9 +7,7 @@ describe('getActionSchema', () => {
   });
 
   it('should return nothing if invalid path given', () => {
-    expect(
-      getActionSchema(getActionSchemaData(), 'invalid-key'),
-    ).not.toBeDefined();
+    expect(getActionSchema(getActionSchemaData(), 'invalid-key')).not.toBeDefined();
   });
 
   it('should return action', () => {

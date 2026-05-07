@@ -1,10 +1,7 @@
 import type { BrowsersOption } from '../../../../hooks/use-browser-options';
 import SettingIcon from '@material-ui/icons/Settings';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  DeviceList,
-  MemoizedSchemaFormLoader,
-} from '../../../../components/common';
+import { DeviceList, MemoizedSchemaFormLoader } from '../../../../components/common';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { OptionPopover } from './OptionPopover';
@@ -47,19 +44,13 @@ const BrowserOptions: React.FC<BrowserOptionsProps> = ({ browserType }) => {
   if (!browserOptions) return null;
 
   return (
-    <OptionPopover
-      title="Browser Options"
-      Icon={SettingIconComponent}
-      active={isActive}
-    >
+    <OptionPopover title="Browser Options" Icon={SettingIconComponent} active={isActive}>
       {!reset && (
         <MemoizedSchemaFormLoader
           onSave={handleSave}
           schemaName="browser-options"
           defaultData={browserOptions && browserOptions[browserType]}
-          FooterComponent={
-            <DeviceList onDeviceSelect={handleDeviceSelection} />
-          }
+          FooterComponent={<DeviceList onDeviceSelect={handleDeviceSelection} />}
         />
       )}
     </OptionPopover>

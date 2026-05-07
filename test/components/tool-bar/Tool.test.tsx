@@ -16,8 +16,9 @@ vi.mock(
 );
 
 const getTooltipWrapper = (wrapper: ReturnType<typeof shallow>) => {
-  const tooltipProp = wrapper.find(WithTooltip).at(0).props()
-    .tooltip as (args: { onHide: () => void }) => React.ReactNode;
+  const tooltipProp = wrapper.find(WithTooltip).at(0).props().tooltip as (args: {
+    onHide: () => void;
+  }) => React.ReactNode;
 
   return shallow(<div>{tooltipProp({ onHide: vi.fn() })}</div>);
 };

@@ -10,13 +10,5 @@ export async function touchMove(
   client?: Position,
   options?: PageExtraTouchOptions,
 ) {
-  await dispatchTouchEvent(
-    this,
-    'touchmove',
-    selector,
-    page,
-    screen,
-    client,
-    options,
-  );
+  await dispatchTouchEvent(this, 'touchmove', selector, page, screen, client, options);
 }

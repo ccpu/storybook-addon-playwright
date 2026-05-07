@@ -13,10 +13,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import React, { useCallback } from 'react';
-import {
-  ListWrapperSortableContainer,
-  Loader,
-} from '../../../../components/common';
+import { ListWrapperSortableContainer, Loader } from '../../../../components/common';
 import { useDragStart } from '../../../../hooks/use-drag-start';
 import { useScreenshotIndexChange } from '../../hooks/use-screenshot-index-change';
 

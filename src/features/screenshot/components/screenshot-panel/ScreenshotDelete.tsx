@@ -27,10 +27,7 @@ const ScreenshotDelete: React.FC<ScreenshotDeleteProps> = (props) => {
 
   return (
     <>
-      <DeleteConfirmationButton
-        onClose={onClose}
-        onDelete={handleDeleteConfirmation}
-      />
+      <DeleteConfirmationButton onClose={onClose} onDelete={handleDeleteConfirmation} />
     </>
   );
 };

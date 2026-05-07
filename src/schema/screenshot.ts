@@ -144,9 +144,7 @@ export type RequestDataInput = z.infer<typeof requestDataSchema>;
 export type ScreenshotSettingInput = z.infer<typeof screenshotSettingSchema>;
 export type ScreenshotDataInput = z.infer<typeof screenshotDataSchema>;
 export type ScreenshotInfoInput = z.infer<typeof screenshotInfoSchema>;
-export type ChangeScreenshotIndexInput = z.infer<
-  typeof changeScreenshotIndexInputSchema
->;
+export type ChangeScreenshotIndexInput = z.infer<typeof changeScreenshotIndexInputSchema>;
 export type DeleteScreenshotInput = z.infer<typeof deleteScreenshotInputSchema>;
 export type DeleteStoryScreenshotsInput = z.infer<
   typeof deleteStoryScreenshotsInputSchema
@@ -157,8 +155,6 @@ export type ImageDiffResultOutput = z.infer<typeof imageDiffResultOutputSchema>;
 export type ScreenshotDataOutput = z.infer<typeof screenshotDataOutputSchema>;
 export type TakeScreenshotInput = z.infer<typeof takeScreenshotInputSchema>;
 export type TestScreenshotInput = z.infer<typeof testScreenshotInputSchema>;
-export type TestStoryScreenshotsInput = z.infer<
-  typeof testStoryScreenshotsInputSchema
->;
+export type TestStoryScreenshotsInput = z.infer<typeof testStoryScreenshotsInputSchema>;
 export type TestScreenshotsInput = z.infer<typeof testScreenshotsInputSchema>;
 export type UpdateScreenshotInput = z.infer<typeof updateScreenshotInputSchema>;

@@ -28,8 +28,7 @@ export function useLoadScreenshotSettings(): ReturnType {
     (screenshotData: ScreenshotData) => {
       if (!storyData) return;
 
-      if (!screenshotData.actionSets || !screenshotData.actionSets.length)
-        return;
+      if (!screenshotData.actionSets || !screenshotData.actionSets.length) return;
       setScreenShotActionSets({
         actionSets: screenshotData.actionSets,
         storyId: storyData.id,
@@ -51,10 +50,7 @@ export function useLoadScreenshotSettings(): ReturnType {
       }
       dispatchActions(screenshotData);
       if (screenshotData.browserOptions || force) {
-        setBrowserOptions(
-          'all',
-          screenshotData.browserOptions as BrowserContextOptions,
-        );
+        setBrowserOptions('all', screenshotData.browserOptions as BrowserContextOptions);
       }
       if (screenshotData.screenshotOptions || force) {
         setScreenshotOptions(screenshotData.screenshotOptions);

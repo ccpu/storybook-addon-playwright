@@ -108,9 +108,7 @@ describe('ScreenshotList', () => {
 
     chromium.props().onSaveComplete?.('chromium');
 
-    expect(wrapper.find(ScreenshotView).first().props().savingWithTitle).toBe(
-      undefined,
-    );
+    expect(wrapper.find(ScreenshotView).first().props().savingWithTitle).toBe(undefined);
 
     // Loader should be visible until all screenshot processed
     expect(wrapper.find(Loader).props().open).toBeTruthy();
@@ -120,9 +118,7 @@ describe('ScreenshotList', () => {
 
     firefox.props().onSaveComplete?.('firefox');
 
-    expect(wrapper.find(ScreenshotView).last().props().savingWithTitle).toBe(
-      undefined,
-    );
+    expect(wrapper.find(ScreenshotView).last().props().savingWithTitle).toBe(undefined);
 
     expect(wrapper.find(Loader).props().open).toBeFalsy();
   });

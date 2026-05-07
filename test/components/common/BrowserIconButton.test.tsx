@@ -12,22 +12,14 @@ describe('BrowserIcon', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <BrowserIconButton
-        active={false}
-        browserType="chromium"
-        onClick={clickMock}
-      />,
+      <BrowserIconButton active={false} browserType="chromium" onClick={clickMock} />,
     );
     expect(wrapper.find(BrowserIcon)).toHaveLength(1);
   });
 
   it('should handle click', () => {
     const wrapper = shallow(
-      <BrowserIconButton
-        active={false}
-        browserType="chromium"
-        onClick={clickMock}
-      />,
+      <BrowserIconButton active={false} browserType="chromium" onClick={clickMock} />,
     );
     wrapper.find(IconButton).props().onClick!({} as never);
 

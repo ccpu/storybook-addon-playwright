@@ -15,22 +15,14 @@ export async function dispatchTouchEvent(
     (el, options) => {
       const rect = el.getBoundingClientRect();
 
-      const {
-        client = {},
-        page = {},
-        screen = {},
-        type,
-        options: touchOpt,
-      } = options;
+      const { client = {}, page = {}, screen = {}, type, options: touchOpt } = options;
 
       const touchObj = new Touch({
         clientX: client.x,
         clientY: client.y,
         identifier: Date.now(),
-        pageX:
-          page.x || (client.x !== undefined ? rect.left + client.x : undefined),
-        pageY:
-          page.y || (client.y !== undefined ? rect.top + client.y : undefined),
+        pageX: page.x || (client.x !== undefined ? rect.left + client.x : undefined),
+        pageY: page.y || (client.y !== undefined ? rect.top + client.y : undefined),
         screenX: screen.x,
         screenY: screen.y,
         target: el,

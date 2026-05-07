@@ -46,9 +46,7 @@ describe('testStoryScreenshot', () => {
         screenshotData: {
           actionSets: [
             {
-              actions: [
-                { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-              ],
+              actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
               id: 'action-set-id',
               title: 'click',
             },
@@ -68,9 +66,7 @@ describe('testStoryScreenshot', () => {
         screenshotData: {
           actionSets: [
             {
-              actions: [
-                { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-              ],
+              actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
               id: 'action-set-id-2',
               title: 'click',
             },

@@ -44,9 +44,7 @@ export function useSaveScreenshot(options?: Options) {
     },
     onSettled(result, error) {
       if (error) {
-        toast.error(
-          error.message || 'Unexpected error occurred in saving screenshot',
-        );
+        toast.error(error.message || 'Unexpected error occurred in saving screenshot');
         return;
       }
       if (!result) return;
@@ -96,8 +94,7 @@ export function useSaveScreenshot(options?: Options) {
   const isUpdating = useCallback(
     (browserType: BrowserTypes) => {
       if (!editScreenshotState) return false;
-      if (editScreenshotState.screenshotData.browserType === browserType)
-        return true;
+      if (editScreenshotState.screenshotData.browserType === browserType) return true;
       return false;
     },
     [editScreenshotState],
@@ -123,9 +120,7 @@ export function useSaveScreenshot(options?: Options) {
         return new Error('Unable to find screenshot image data');
       }
 
-      const browserOptions = deviceDescriptor
-        ? { ...deviceDescriptor }
-        : undefined;
+      const browserOptions = deviceDescriptor ? { ...deviceDescriptor } : undefined;
 
       const data: SaveScreenshotRequest = {
         actionSets: currentActions,

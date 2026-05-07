@@ -33,8 +33,7 @@ async function setupPlaywright() {
       afterNavigation: async (page) => {
         await page.waitForFunction(() => {
           const root =
-            document.getElementById('storybook-root') ||
-            document.getElementById('root');
+            document.getElementById('storybook-root') || document.getElementById('root');
 
           return (root?.childNodes.length ?? 0) > 0;
         });

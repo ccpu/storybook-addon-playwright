@@ -51,10 +51,9 @@ export function migrationV2(data: V1PlaywrightData, version: string) {
                 title: `${screenshot.title} actions`,
               },
             ];
-            const screenshotWithOptionalActions =
-              screenshot as ScreenshotData & {
-                actions?: StoryAction[];
-              };
+            const screenshotWithOptionalActions = screenshot as ScreenshotData & {
+              actions?: StoryAction[];
+            };
             delete screenshotWithOptionalActions.actions;
           }
         });

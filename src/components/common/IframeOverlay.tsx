@@ -23,13 +23,11 @@ const useStyles = makeStyles(
 
 export type IframeOverlayProps = React.HTMLAttributes<HTMLDivElement>;
 
-const IframeOverlay = forwardRef<HTMLDivElement, IframeOverlayProps>(
-  (props, ref) => {
-    const classes = useStyles();
+const IframeOverlay = forwardRef<HTMLDivElement, IframeOverlayProps>((props, ref) => {
+  const classes = useStyles();
 
-    return <div {...props} className={clsx(classes.overlay)} ref={ref}></div>;
-  },
-);
+  return <div {...props} className={clsx(classes.overlay)} ref={ref}></div>;
+});
 
 IframeOverlay.displayName = 'IframeOverlay';
 

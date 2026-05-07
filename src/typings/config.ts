@@ -39,9 +39,7 @@ export interface Config<T = Page> {
     requestData: RequestData,
   ) => Promise<void>;
   afterScreenshot?: (page: T, data: ScreenshotRequest) => Promise<void>;
-  beforeStoryImageDiff?: (
-    requestData: StoryInfo & RequestData,
-  ) => Promise<void>;
+  beforeStoryImageDiff?: (requestData: StoryInfo & RequestData) => Promise<void>;
   beforeAllImageDiff?: (data: RequestData) => Promise<void>;
   beforeFileImageDiff?: (data: TestFileScreenshots) => Promise<void>;
   afterFileImageDiff?: (
@@ -70,9 +68,6 @@ export interface Config<T = Page> {
   theme?: Theme;
   imageDiffOptions?: Pick<
     MatchImageSnapshotOptions,
-    | 'allowSizeMismatch'
-    | 'comparisonMethod'
-    | 'diffDirection'
-    | 'customDiffConfig'
+    'allowSizeMismatch' | 'comparisonMethod' | 'diffDirection' | 'customDiffConfig'
   >;
 }

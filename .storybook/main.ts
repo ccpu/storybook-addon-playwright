@@ -8,23 +8,12 @@ type LocalStorybookConfig = StorybookConfig & {
 const config: LocalStorybookConfig = {
   stories: ['../**/*.stories.tsx'],
   addons: ['@storybook/addon-essentials', 'storybook-dark-mode'],
-  managerEntries: (entry = []) => [
-    ...entry,
-    path.resolve(__dirname, '../register.js'),
-  ],
+  managerEntries: (entry = []) => [...entry, path.resolve(__dirname, '../register.js')],
 
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
   },
-
-  // The manager is built by Storybook's esbuild at startup.
-  // We inject live-reload-client.js so the browser auto-reloads when the server
-  // restarts after a tsup rebuild (see tsup.config.ts / onSuccess: restartStorybook).
-  // managerEntries: (entry = []) => [
-  //   ...entry,
-  //   path.resolve(__dirname, 'live-reload-client.js'),
-  // ],
 
   webpackFinal: async (config) => {
     config.module!.rules!.push({

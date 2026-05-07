@@ -31,9 +31,7 @@ describe('useScreenshot', () => {
       })),
     );
 
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useScreenshot('chromium'),
-    );
+    const { result, waitForNextUpdate } = renderHook(() => useScreenshot('chromium'));
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

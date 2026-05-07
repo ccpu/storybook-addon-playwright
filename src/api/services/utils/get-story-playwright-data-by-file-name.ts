@@ -1,7 +1,4 @@
-import {
-  getStoryPlaywrightFileInfo,
-  loadStoryData,
-} from '../../../api/server/utils';
+import { getStoryPlaywrightFileInfo, loadStoryData } from '../../../api/server/utils';
 
 export async function getStoryPlaywrightDataByFileName(filePath: string) {
   const fileInfo = getStoryPlaywrightFileInfo(filePath);

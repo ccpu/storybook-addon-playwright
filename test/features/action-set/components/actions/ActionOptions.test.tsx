@@ -10,12 +10,9 @@ import Accordion from '@material-ui/core/Accordion';
 import { IconButton } from '@storybook/components';
 import { useEditorAction } from '../../../../../src/features/action-set/hooks/use-editor-action';
 
-vi.mock(
-  '../../../../../src/features/action-set/hooks/use-editor-action',
-  () => ({
-    useEditorAction: vi.fn(),
-  }),
-);
+vi.mock('../../../../../src/features/action-set/hooks/use-editor-action', () => ({
+  useEditorAction: vi.fn(),
+}));
 
 const defaultMockData = {
   args: { selector: 'html' },

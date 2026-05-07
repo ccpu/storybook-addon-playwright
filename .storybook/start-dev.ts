@@ -5,20 +5,8 @@ const ROOT = path.resolve(__dirname, '..');
 const PORT = '9002';
 const EXTRA_PORTS_TO_CLEAN = ['9003'];
 const NODE_BIN = process.execPath;
-const STORYBOOK_BIN = path.join(
-  ROOT,
-  'node_modules',
-  'storybook',
-  'bin',
-  'index.cjs',
-);
-const TSUP_BIN = path.join(
-  ROOT,
-  'node_modules',
-  'tsup',
-  'dist',
-  'cli-default.js',
-);
+const STORYBOOK_BIN = path.join(ROOT, 'node_modules', 'storybook', 'bin', 'index.cjs');
+const TSUP_BIN = path.join(ROOT, 'node_modules', 'tsup', 'dist', 'cli-default.js');
 
 let storybookChild: ChildProcess | null = null;
 let tsupChild: ChildProcess | null = null;
@@ -99,11 +87,7 @@ async function cleanupStorybookPorts() {
     const filteredPids = pids.filter((pid) => pid !== process.pid);
     if (!filteredPids.length) continue;
 
-    log(
-      `terminating stale process(es) on port ${port}: ${filteredPids.join(
-        ', ',
-      )}`,
-    );
+    log(`terminating stale process(es) on port ${port}: ${filteredPids.join(', ')}`);
 
     await Promise.all(filteredPids.map((pid) => killProcessTree(pid)));
   }
@@ -207,15 +191,7 @@ async function startStorybook() {
 
     storybookChild = spawn(
       NODE_BIN,
-      [
-        STORYBOOK_BIN,
-        'dev',
-        '-p',
-        PORT,
-        '--no-open',
-        '--ci',
-        '--disable-telemetry',
-      ],
+      [STORYBOOK_BIN, 'dev', '-p', PORT, '--no-open', '--ci', '--disable-telemetry'],
       {
         cwd: ROOT,
         env: storybookEnv,
@@ -238,11 +214,7 @@ async function startStorybook() {
 
       // Keep the dev runner alive and attempt recovery instead of crashing
       // the whole `start:storybook` command on transient Storybook exits.
-      log(
-        `storybook process exited with code ${
-          code ?? 'unknown'
-        }, restarting...`,
-      );
+      log(`storybook process exited with code ${code ?? 'unknown'}, restarting...`);
       void startStorybook();
     });
   } finally {

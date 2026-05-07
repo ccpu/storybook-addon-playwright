@@ -10,9 +10,7 @@ import {
   useScreenshotOptions,
 } from '../../hooks';
 import { getIframeScrollPosition, toast } from '../../utils';
-import AlertToast, {
-  ToastMessageContainer,
-} from '../../utils/toast/AlertToast';
+import AlertToast, { ToastMessageContainer } from '../../utils/toast/AlertToast';
 import { IframeOverlay } from '../common/IframeOverlay';
 
 export interface ClipperProps {
@@ -60,8 +58,7 @@ const Clipper: React.FC = () => {
 
       const { height, width, top, left } = e.rect as DOMRect;
 
-      const iframeDocument =
-        iframe.contentDocument ?? iframe.contentWindow?.document;
+      const iframeDocument = iframe.contentDocument ?? iframe.contentWindow?.document;
       const iframeHeight = iframeDocument
         ? Math.max(
             iframeDocument.body?.scrollHeight || 0,
@@ -72,10 +69,8 @@ const Clipper: React.FC = () => {
           )
         : iframe.getBoundingClientRect().height;
       const iframeRect = iframe.getBoundingClientRect();
-      const iframeViewportWidth =
-        iframe.contentWindow?.innerWidth ?? iframeRect.width;
-      const iframeViewportHeight =
-        iframe.contentWindow?.innerHeight ?? iframeRect.height;
+      const iframeViewportWidth = iframe.contentWindow?.innerWidth ?? iframeRect.width;
+      const iframeViewportHeight = iframe.contentWindow?.innerHeight ?? iframeRect.height;
       const iframeClientWidth =
         iframeDocument?.documentElement?.clientWidth ?? iframeRect.width;
       const iframeClientHeight =
@@ -86,13 +81,9 @@ const Clipper: React.FC = () => {
       const previewBottom = iframeRect.top + previewHeight;
 
       const rawScaleX = previewWidth ? iframeViewportWidth / previewWidth : 1;
-      const rawScaleY = previewHeight
-        ? iframeViewportHeight / previewHeight
-        : 1;
-      const scaleX =
-        Number.isFinite(rawScaleX) && rawScaleX > 0 ? rawScaleX : 1;
-      const scaleY =
-        Number.isFinite(rawScaleY) && rawScaleY > 0 ? rawScaleY : 1;
+      const rawScaleY = previewHeight ? iframeViewportHeight / previewHeight : 1;
+      const scaleX = Number.isFinite(rawScaleX) && rawScaleX > 0 ? rawScaleX : 1;
+      const scaleY = Number.isFinite(rawScaleY) && rawScaleY > 0 ? rawScaleY : 1;
 
       const selectionRight = left + width;
       const selectionBottom = top + height;
@@ -117,8 +108,7 @@ const Clipper: React.FC = () => {
       });
 
       const clipperPos = {
-        left:
-          iframeScroll.scrollLeft + (boundedLeft - iframeRect.left) * scaleX,
+        left: iframeScroll.scrollLeft + (boundedLeft - iframeRect.left) * scaleX,
         top: iframeScroll.scrollTop + (boundedTop - iframeRect.top) * scaleY,
       };
 
@@ -137,11 +127,10 @@ const Clipper: React.FC = () => {
         toast.custom(({ dismiss }) => (
           <AlertToast variant="info" onClose={dismiss}>
             <ToastMessageContainer style={{ fontSize: 14 }}>
-              Clipping may differ from the Storybook preview when browser zoom
-              is not 100%, OS display scaling (DPI) is different, fonts or line
-              height differ, text wraps differently, the preview is resized or
-              transformed, or scrollbar behavior differs from the Playwright
-              viewport.
+              Clipping may differ from the Storybook preview when browser zoom is not
+              100%, OS display scaling (DPI) is different, fonts or line height differ,
+              text wraps differently, the preview is resized or transformed, or scrollbar
+              behavior differs from the Playwright viewport.
             </ToastMessageContainer>
             <div
               style={{

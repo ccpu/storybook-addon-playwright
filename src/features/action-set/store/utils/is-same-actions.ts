@@ -9,10 +9,7 @@ function actionsWithoutId(actions: Partial<StoryAction>[]) {
   });
 }
 
-export function isSameActions(
-  a: Partial<StoryAction>[],
-  b: Partial<StoryAction>[],
-) {
+export function isSameActions(a: Partial<StoryAction>[], b: Partial<StoryAction>[]) {
   if (a.length !== b.length) return false;
 
   const newA = actionsWithoutId(a);

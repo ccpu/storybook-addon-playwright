@@ -25,32 +25,25 @@ export async function testScreenshots(
     await configs.beforeAllImageDiff(requestData);
   }
 
-  const promises = files.reduce<Array<Promise<ImageDiffResult[]>>>(
-    (arr, file) => {
-      if (
-        requestType !== 'all' &&
-        data.filePath &&
-        !isStoryJsonFile(file, data.filePath)
-      ) {
-        return arr;
-      }
-
-      arr.push(
-        limit(async () =>
-          testFileScreenshots({
-            disableEvans: true,
-            filePath: file,
-            requestId: data.requestId ?? '',
-            requestType,
-            storyId: data.storyId,
-          }),
-        ),
-      );
-
+  const promises = files.reduce<Array<Promise<ImageDiffResult[]>>>((arr, file) => {
+    if (requestType !== 'all' && data.filePath && !isStoryJsonFile(file, data.filePath)) {
       return arr;
-    },
-    [],
-  );
+    }
+
+    arr.push(
+      limit(async () =>
+        testFileScreenshots({
+          disableEvans: true,
+          filePath: file,
+          requestId: data.requestId ?? '',
+          requestType,
+          storyId: data.storyId,
+        }),
+      ),
+    );
+
+    return arr;
+  }, []);
 
   const res = await Promise.all(promises);
 

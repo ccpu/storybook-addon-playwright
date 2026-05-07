@@ -219,9 +219,7 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    await invokeHandler(
-      wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff,
-    );
+    await invokeHandler(wrapper.find(ScreenshotListItemMenu).props().onRunImageDiff);
 
     expect(wrapper.find(ImageDiffMessage)).toHaveLength(1);
 
@@ -288,9 +286,7 @@ describe('ScreenshotListItem', () => {
       />,
     );
 
-    invokeHandler(
-      wrapper.find(ScreenshotListItemMenu).props().onLoadSettingClick,
-    );
+    invokeHandler(wrapper.find(ScreenshotListItemMenu).props().onLoadSettingClick);
 
     expect(loadSettingMock).toHaveBeenCalledWith({
       browserType: 'chromium',

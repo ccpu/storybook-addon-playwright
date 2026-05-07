@@ -9,9 +9,7 @@ export interface ScreenshotUpdateIconProps {
   target: ScreenshotTestTargetType;
 }
 
-const ScreenshotUpdateIcon: React.FC<ScreenshotUpdateIconProps> = ({
-  target,
-}) => {
+const ScreenshotUpdateIcon: React.FC<ScreenshotUpdateIconProps> = ({ target }) => {
   const reqBy = `tool-${target}`;
 
   const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, target);

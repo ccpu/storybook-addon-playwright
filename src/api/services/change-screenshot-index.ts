@@ -15,11 +15,7 @@ export async function changeScreenshotIndex(info: ChangeScreenshotIndexInput) {
 
   if (!story || !story.screenshots) return;
 
-  const screenshots = arrayMove(
-    story.screenshots,
-    info.oldIndex,
-    info.newIndex,
-  );
+  const screenshots = arrayMove(story.screenshots, info.oldIndex, info.newIndex);
 
   story.screenshots = screenshots.map((screenshot, index) => {
     screenshot.index = index;

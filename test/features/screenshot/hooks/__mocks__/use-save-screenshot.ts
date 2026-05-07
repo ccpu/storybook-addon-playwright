@@ -1,7 +1,4 @@
-import type {
-  BrowserContextOptions,
-  BrowserTypes,
-} from '../../../../../src/typings';
+import type { BrowserContextOptions, BrowserTypes } from '../../../../../src/typings';
 
 type SaveScreenshotResult = {
   clearError: () => void;

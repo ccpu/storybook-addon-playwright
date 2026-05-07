@@ -74,8 +74,7 @@ export async function testScreenshotService(
       });
 
       if (customScreenshot !== false) {
-        const { diffImageString, ...restOfCustomScreenshotResult } =
-          customScreenshot;
+        const { diffImageString, ...restOfCustomScreenshotResult } = customScreenshot;
 
         result = {
           imgSrcString: diffImageString,
@@ -105,9 +104,7 @@ export async function testScreenshotService(
   } catch (error) {
     result.pass = false;
     result.error =
-      typeof error === 'string'
-        ? error
-        : (error as { message: string }).message;
+      typeof error === 'string' ? error : (error as { message: string }).message;
   }
 
   result.screenshotId = data.screenshotId;

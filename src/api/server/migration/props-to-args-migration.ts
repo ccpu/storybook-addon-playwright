@@ -47,9 +47,7 @@ export function migratePropsToArgsData(data: PlaywrightData) {
   return changed;
 }
 
-export function runPropsToArgsMigration(
-  cwd = process.cwd(),
-): PropsToArgsMigrationResult {
+export function runPropsToArgsMigration(cwd = process.cwd()): PropsToArgsMigrationResult {
   const files = glob.sync(['**/*.playwright.json', '!node_modules/**'], {
     absolute: true,
     cwd,

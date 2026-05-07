@@ -1,9 +1,5 @@
 const { TextDecoder, TextEncoder } = require('node:util');
-const {
-  ReadableStream,
-  TransformStream,
-  WritableStream,
-} = require('node:stream/web');
+const { ReadableStream, TransformStream, WritableStream } = require('node:stream/web');
 const { Blob, File } = require('node:buffer');
 const { MessageChannel, MessagePort } = require('node:worker_threads');
 const React = require('react');

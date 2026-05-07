@@ -217,9 +217,7 @@ const meta: Meta<ControlsStoryArgs> = {
       <p style={{ margin: '8px auto', maxWidth: 420 }}>{footer}</p>
       <p style={{ margin: '8px auto', maxWidth: 420 }}>{themeNote}</p>
       <p style={{ margin: '8px auto', maxWidth: 420 }}>
-        {debugSecret
-          ? 'Debug secret exists (control disabled)'
-          : 'No debug secret'}
+        {debugSecret ? 'Debug secret exists (control disabled)' : 'No debug secret'}
       </p>
       <p style={{ margin: '8px auto', maxWidth: 420 }}>
         Internal row hidden: {internalOnly ? 'yes' : 'no'}

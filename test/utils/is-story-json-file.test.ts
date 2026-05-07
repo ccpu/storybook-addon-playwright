@@ -16,8 +16,6 @@ describe('isStoryJsonFile', () => {
   });
 
   it('should be valid if file names are strictly equal', () => {
-    expect(
-      isStoryJsonFile('test.stories.tsx', 'test.stories.tsx'),
-    ).toBeTruthy();
+    expect(isStoryJsonFile('test.stories.tsx', 'test.stories.tsx')).toBeTruthy();
   });
 });

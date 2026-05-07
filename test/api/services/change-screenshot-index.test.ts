@@ -24,16 +24,12 @@ describe('changeScreenShotIndex', () => {
         'story-id': {
           actionSets: [
             {
-              actions: [
-                { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-              ],
+              actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
               id: 'action-set-id',
               title: 'click',
             },
             {
-              actions: [
-                { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-              ],
+              actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
               id: 'action-set-id-2',
               title: 'click',
             },

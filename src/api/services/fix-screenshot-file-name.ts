@@ -106,10 +106,7 @@ export async function fixScreenshotFileName(info: FixScreenshotFileNameInput) {
       const olsFilePath = path.join(fileInfos.screenShotsDir, oldFileName);
 
       if (fs.existsSync(olsFilePath))
-        fs.renameSync(
-          olsFilePath,
-          path.join(fileInfos.screenShotsDir, newFileName),
-        );
+        fs.renameSync(olsFilePath, path.join(fileInfos.screenShotsDir, newFileName));
     }
   }
 

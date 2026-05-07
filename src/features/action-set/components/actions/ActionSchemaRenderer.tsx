@@ -94,9 +94,7 @@ const ActionSchemaRenderer: React.FC<ActionSchemaRendererProps> = (props) => {
         required={schema.required}
         onChange={handleChange}
         getValue={handleGetValue}
-        shouldAppendToTitle={
-          shouldAppendToTitle as (optionObjectPath: string) => boolean
-        }
+        shouldAppendToTitle={shouldAppendToTitle as (optionObjectPath: string) => boolean}
         onAppendValueToTitle={handleOnAppendValueToTitle}
         onSelectorChange={handleSelectorChange}
       />

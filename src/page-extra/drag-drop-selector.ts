@@ -30,11 +30,9 @@ export async function dragDropSelector(
   const mouseMoveY = getPointByDirection(0, 'y', to);
 
   // move mouse to center of element or specified point
-  await this.mouse.move(
-    box.x + mouseDownRelativeX,
-    box.y + mouseDownRelativeY,
-    { steps },
-  );
+  await this.mouse.move(box.x + mouseDownRelativeX, box.y + mouseDownRelativeY, {
+    steps,
+  });
 
   await this.mouse.down();
 

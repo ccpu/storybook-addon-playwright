@@ -66,9 +66,7 @@ describe('useActionSetEditor', () => {
   it('should handle save', async () => {
     const spy = vi.fn().mockReturnValue({});
     server.use(
-      trpcMsw.actionSet.saveActionSet.mutation(
-        ({ input }) => spy(input) as any,
-      ),
+      trpcMsw.actionSet.saveActionSet.mutation(({ input }) => spy(input) as any),
     );
     const { result } = renderHook(() => useActionEditor(actionSet));
     await result.current.handleSave();
@@ -158,9 +156,7 @@ describe('useActionSetEditor', () => {
         return {} as any;
       }),
     );
-    const { result } = renderHook(() =>
-      useActionEditor({ ...actionSet, temp: true }),
-    );
+    const { result } = renderHook(() => useActionEditor({ ...actionSet, temp: true }));
     await result.current.handleSave();
 
     expect(spy).toHaveBeenCalledTimes(0);

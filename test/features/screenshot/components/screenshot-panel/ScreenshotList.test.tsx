@@ -10,13 +10,11 @@ vi.mock(
 );
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-global-imageDiff-results',
-  async () =>
-    await import('../../hooks/__mocks__/use-global-imageDiff-results'),
+  async () => await import('../../hooks/__mocks__/use-global-imageDiff-results'),
 );
 
 const useScreenshotStoreStateMock = vi.mocked(useScreenshotStoreState);
@@ -49,8 +47,6 @@ describe('ScreenshotList', () => {
     }));
     const wrapper = shallow(<ScreenshotList />);
 
-    expect(wrapper.find('div').first().text()).toBe(
-      'No screenshot has been found!',
-    );
+    expect(wrapper.find('div').first().text()).toBe('No screenshot has been found!');
   });
 });

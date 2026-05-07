@@ -5,10 +5,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useActiveBrowsers } from '../../../hooks/use-active-browser';
 import { useAddonState } from '../../../hooks/use-addon-state';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import {
-  setEditScreenshotState,
-  useEditScreenshotStateValue,
-} from '../../../store';
+import { setEditScreenshotState, useEditScreenshotStateValue } from '../../../store';
 import {
   clearCurrentActionSets,
   deleteTempActionSets,
@@ -26,8 +23,7 @@ export function useEditScreenshot() {
 
   const { setBrowserState } = useActiveBrowsers('dialog');
 
-  const { loadSetting, screenshotOptions, browserOptions } =
-    useLoadScreenshotSettings();
+  const { loadSetting, screenshotOptions, browserOptions } = useLoadScreenshotSettings();
 
   const unmounted = useRef<boolean>(false);
 

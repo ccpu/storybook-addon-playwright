@@ -21,9 +21,7 @@ afterAll(() => server.close());
 vi.mock('@testing-library/react-hooks', async (importOriginal) => {
   const actual = (await importOriginal()) as any;
   const React = await import('react');
-  const { QueryClient, QueryClientProvider } = await import(
-    '@tanstack/react-query'
-  );
+  const { QueryClient, QueryClientProvider } = await import('@tanstack/react-query');
   const { httpLink } = await import('@trpc/client');
   // Real tRPC client — HTTP requests are intercepted by MSW in hook tests.
   const { trpcClient } = await import('./src/api');
@@ -50,15 +48,10 @@ vi.mock('@testing-library/react-hooks', async (importOriginal) => {
       React.createElement(
         trpcClient.Provider as any,
         { client: trpcHttpClient, queryClient },
-        React.createElement(
-          QueryClientProvider,
-          { client: queryClient },
-          children,
-        ),
+        React.createElement(QueryClientProvider, { client: queryClient }, children),
       );
 
-    const userWrapper = (options as { wrapper?: React.ComponentType<any> })
-      .wrapper;
+    const userWrapper = (options as { wrapper?: React.ComponentType<any> }).wrapper;
 
     const wrapper = userWrapper
       ? ({ children }) =>

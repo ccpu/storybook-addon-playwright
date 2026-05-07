@@ -4,8 +4,7 @@
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -82,9 +81,7 @@ describe('ScreenshotView', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <ScreenshotView browserType="chromium" height={200} />,
-    );
+    const wrapper = shallow(<ScreenshotView browserType="chromium" height={200} />);
     expect(wrapper.exists()).toBe(true);
     expect(wrapper.find('img').type()).toBe('img');
   });
@@ -97,9 +94,7 @@ describe('ScreenshotView', () => {
       },
     }));
 
-    const wrapper = shallow(
-      <ScreenshotView browserType="chromium" height={200} />,
-    );
+    const wrapper = shallow(<ScreenshotView browserType="chromium" height={200} />);
     const errorPanel = wrapper.find(ErrorPanel);
     expect(errorPanel).toHaveLength(1);
   });
@@ -109,9 +104,7 @@ describe('ScreenshotView', () => {
       ...useScreenshotMockData(),
       screenshot: undefined,
     }));
-    const wrapper = shallow(
-      <ScreenshotView browserType="storybook" height={200} />,
-    );
+    const wrapper = shallow(<ScreenshotView browserType="storybook" height={200} />);
 
     expect(wrapper.find('iframe')).toHaveLength(1);
   });
@@ -131,17 +124,13 @@ describe('ScreenshotView', () => {
   });
 
   it('should open/close image in full screen', () => {
-    const wrapper = shallow(
-      <ScreenshotView browserType="firefox" height={200} />,
-    );
+    const wrapper = shallow(<ScreenshotView browserType="firefox" height={200} />);
     wrapper.find(ScreenShotViewToolbar).props().onFullScreen();
     expect(wrapper.find(Dialog).props().open).toBe(true);
   });
 
   it('should show screenshot options dialog on save and close', () => {
-    const wrapper = shallow(
-      <ScreenshotView browserType="firefox" height={200} />,
-    );
+    const wrapper = shallow(<ScreenshotView browserType="firefox" height={200} />);
     const toolbar = wrapper.find(ScreenShotViewToolbar);
 
     expect(toolbar).toHaveLength(1);
@@ -157,11 +146,7 @@ describe('ScreenshotView', () => {
 
   it('should save screenshot', async () => {
     const wrapper = shallow(
-      <ScreenshotView
-        browserType="chromium"
-        height={200}
-        onSaveComplete={vi.fn()}
-      />,
+      <ScreenshotView browserType="chromium" height={200} onSaveComplete={vi.fn()} />,
     );
     wrapper.find(ScreenShotViewToolbar).props().onSave();
 

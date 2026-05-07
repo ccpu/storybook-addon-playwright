@@ -62,9 +62,7 @@ async function main() {
       const lineClean = hasCR ? line.slice(0, -1) : line;
 
       // Match bare side-effect imports: import './...' or import '../...'
-      const m = lineClean.match(
-        /^(import\s+)(["'])(\.\.?\/[^"']+)\2(\s*;?.*)$/,
-      );
+      const m = lineClean.match(/^(import\s+)(["'])(\.\.?\/[^"']+)\2(\s*;?.*)$/);
       if (!m) return line;
       const [, prefix, quote, importPath, suffix] = m;
 
@@ -77,18 +75,14 @@ async function main() {
       if (!currentAbsFwd.startsWith(rootFwd)) {
         // Compute correct path using oldDirAsIfInTests as origin
         const correctAbs = path.resolve(oldDirAsIfInTests, importPath);
-        const correctRel = ensureRelative(
-          fwd(path.relative(newDir, correctAbs)),
-        );
+        const correctRel = ensureRelative(fwd(path.relative(newDir, correctAbs)));
         if (correctRel !== ensureRelative(fwd(importPath))) {
           changed = true;
           fixCount++;
           const oldFwd = fwd(importPath);
           const file = fwd(path.relative(ROOT, testAbs));
           console.log(`  ${file}: '${oldFwd}' -> '${correctRel}'`);
-          return (
-            prefix + quote + correctRel + quote + suffix + (hasCR ? '\r' : '')
-          );
+          return prefix + quote + correctRel + quote + suffix + (hasCR ? '\r' : '');
         }
       }
 

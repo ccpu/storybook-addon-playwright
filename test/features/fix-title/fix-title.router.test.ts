@@ -32,9 +32,7 @@ describe('fixTitleRouter', () => {
     const error = new Error('rename failed');
     (fixScreenshotFileName as Mock).mockRejectedValue(error);
 
-    await expect(caller.fixScreenshotFileName(input)).rejects.toThrow(
-      'rename failed',
-    );
+    await expect(caller.fixScreenshotFileName(input)).rejects.toThrow('rename failed');
   });
 
   it('should validate input before calling service', async () => {

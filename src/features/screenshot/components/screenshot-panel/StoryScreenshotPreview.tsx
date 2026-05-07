@@ -19,9 +19,7 @@ export interface StoryScreenshotPreviewProps {
   onLoad?: () => void;
 }
 
-const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
-  props,
-) => {
+const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (props) => {
   const { onClose, updating, target, onLoad } = props;
 
   const { loading, storyData } = useImageDiffScreenshots(target, onLoad);
@@ -35,21 +33,18 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
   const handleSave = useCallback(async () => {
     setUpdateInProgress(true);
     try {
-      const promises = state.screenshots.reduce<Array<Promise<void>>>(
-        (arr, s) => {
-          const imageDiffResult = state.imageDiffResults.find(
-            (x) => x.screenshotId === s.id,
+      const promises = state.screenshots.reduce<Array<Promise<void>>>((arr, s) => {
+        const imageDiffResult = state.imageDiffResults.find(
+          (x) => x.screenshotId === s.id,
+        );
+        if (!imageDiffResult) {
+          throw new Error(
+            `Unable to find image diff result for '${s.title}' screenshot.`,
           );
-          if (!imageDiffResult) {
-            throw new Error(
-              `Unable to find image diff result for '${s.title}' screenshot.`,
-            );
-          }
-          arr.push(updateScreenshot(imageDiffResult));
-          return arr;
-        },
-        [],
-      );
+        }
+        arr.push(updateScreenshot(imageDiffResult));
+        return arr;
+      }, []);
 
       await Promise.all(promises);
       toast.success('Successfully updated.', {
@@ -84,9 +79,7 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
           screenshots={state.screenshots}
           onClose={onClose}
           open={true}
-          storyData={
-            storyData || { filePath: '', id: '', name: '', parent: '' }
-          }
+          storyData={storyData || { filePath: '', id: '', name: '', parent: '' }}
           draggable={target === 'story' && !updateInProgress}
           footerActions={
             updating

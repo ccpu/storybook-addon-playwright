@@ -45,9 +45,7 @@ describe('shouldTakeScreenshot', () => {
   });
 
   it('should not take screenshot if only 1 action available', () => {
-    expect(
-      shouldTakeScreenshot([{ id: 'id', name: 'click' }], 0, true),
-    ).toBeFalsy();
+    expect(shouldTakeScreenshot([{ id: 'id', name: 'click' }], 0, true)).toBeFalsy();
   });
 
   it('should not take screenshot for specified properties', () => {

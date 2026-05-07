@@ -27,9 +27,7 @@ describe('ScreenshotListSortable', () => {
       setDragStart: sortStartMock,
     }));
 
-    const wrapper = shallow(
-      <ScreenshotListSortable items={['item-1', 'item-2']} />,
-    );
+    const wrapper = shallow(<ScreenshotListSortable items={['item-1', 'item-2']} />);
 
     const dndContext = wrapper.find(DndContext);
 
@@ -46,9 +44,7 @@ describe('ScreenshotListSortable', () => {
       changeIndex: sortEndMock,
     }));
 
-    const wrapper = shallow(
-      <ScreenshotListSortable items={['item-1', 'item-2']} />,
-    );
+    const wrapper = shallow(<ScreenshotListSortable items={['item-1', 'item-2']} />);
 
     const dndContext = wrapper.find(DndContext);
 

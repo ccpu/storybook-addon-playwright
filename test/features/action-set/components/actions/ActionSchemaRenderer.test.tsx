@@ -15,8 +15,7 @@ vi.mock(
 );
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 
 const defaultMockData = {
@@ -102,10 +101,7 @@ describe('ActionSchemaRenderer', () => {
       />,
     );
 
-    wrapper
-      .find(MemoizedSchemaRenderer)
-      .props()
-      .onAppendValueToTitle?.('opt.path');
+    wrapper.find(MemoizedSchemaRenderer).props().onAppendValueToTitle?.('opt.path');
 
     expect(toggleSubtitleItemMock).toHaveBeenCalledWith({
       actionId: 'action-id',
@@ -141,10 +137,7 @@ describe('ActionSchemaRenderer', () => {
       />,
     );
 
-    wrapper
-      .find(MemoizedSchemaRenderer)
-      .props()
-      .onSelectorChange?.('opt.path', 1);
+    wrapper.find(MemoizedSchemaRenderer).props().onSelectorChange?.('opt.path', 1);
 
     expect(setActionOptionsMock).toHaveBeenCalledWith({
       actionId: 'action-id',

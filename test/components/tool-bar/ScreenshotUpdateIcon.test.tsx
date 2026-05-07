@@ -8,9 +8,7 @@ import { Loader } from '../../../src/components/common';
 vi.mock(
   '../../../src/features/screenshot/hooks/use-screenshot-update-state',
   async () =>
-    await import(
-      '../../features/screenshot/hooks/__mocks__/use-screenshot-update-state'
-    ),
+    await import('../../features/screenshot/hooks/__mocks__/use-screenshot-update-state'),
 );
 
 describe('ScreenshotUpdateIcon', () => {

@@ -1,7 +1,6 @@
 import { useScreenshotDiffTestByType as orgUseScreenshotDiffTestByType } from '../../../../../src/hooks';
 
-const useScreenshotDiffTestByType =
-  vi.fn<typeof orgUseScreenshotDiffTestByType>();
+const useScreenshotDiffTestByType = vi.fn<typeof orgUseScreenshotDiffTestByType>();
 
 useScreenshotDiffTestByType.mockImplementation(() => {
   return {

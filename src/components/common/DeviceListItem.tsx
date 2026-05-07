@@ -41,9 +41,7 @@ const DeviceListItem: React.FC<DeviceListItemProps> = memo(
         className={classes.root}
       >
         <div>{name}</div>
-        <div>
-          {viewportSize && `${viewportSize.width}x${viewportSize.height}`}
-        </div>
+        <div>{viewportSize && `${viewportSize.width}x${viewportSize.height}`}</div>
       </MenuItem>
     );
   }),

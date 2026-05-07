@@ -1,7 +1,4 @@
-import {
-  createTheme,
-  ThemeProvider as MuThemeProvider,
-} from '@material-ui/core/styles';
+import { createTheme, ThemeProvider as MuThemeProvider } from '@material-ui/core/styles';
 import { useStorybookState } from '@storybook/manager-api';
 import React, { memo } from 'react';
 import { useCustomTheme } from '../../features/theme/hooks/use-custom-theme';

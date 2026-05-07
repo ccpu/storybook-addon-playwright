@@ -18,8 +18,7 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
             mutate: (input: unknown) => {
               void changeActionSetIndex(input as never);
             },
-            mutateAsync: (input: unknown) =>
-              changeActionSetIndex(input as never),
+            mutateAsync: (input: unknown) => changeActionSetIndex(input as never),
             reset: vi.fn(),
           }),
         },
@@ -42,8 +41,7 @@ vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<object>();
   return {
     ...actual,
-    useEffect: (fn: any, deps?: any) =>
-      (globalThis as any).__useEffectSpy?.(fn, deps),
+    useEffect: (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps),
   };
 });
 import {
@@ -65,8 +63,7 @@ import { useCurrentActions } from '../../../../../src/features/action-set/hooks/
 
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 vi.mock(
   '../../../../../src/features/action-set/hooks/use-current-actions',
@@ -74,8 +71,7 @@ vi.mock(
 );
 vi.mock(
   '../../../../../src/api/trpc/clients/action-set.client',
-  async () =>
-    await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
+  async () => await import('../../../../api/trpc/clients/__mocks__/action-set.client'),
 );
 
 describe('ActionSetMain', () => {

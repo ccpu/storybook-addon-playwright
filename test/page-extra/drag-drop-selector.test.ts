@@ -53,11 +53,7 @@ describe('dragDropSelector', () => {
     page.mouse.down = downMock;
     page.mouse.up = upMock;
 
-    await page.dragDropSelector(
-      '#selector',
-      { x: 50, y: 50 },
-      { x: 10, y: 10 },
-    );
+    await page.dragDropSelector('#selector', { x: 50, y: 50 }, { x: 10, y: 10 });
 
     expect(moveMock.mock.calls[0]).toMatchObject([
       10,

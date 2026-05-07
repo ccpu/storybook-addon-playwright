@@ -70,18 +70,14 @@ export interface PlaywrightPage extends Page, PlaywrightPageWithExtra {
    *
    * @param stitchOptions
    */
-  takeScreenshot: (
-    stitchOptions?: TakeScreenshotOverlayOptions,
-  ) => Promise<void>;
+  takeScreenshot: (stitchOptions?: TakeScreenshotOverlayOptions) => Promise<void>;
 
   /**
    * This method will take a screenshot after each action, its useful for looking at over all action execution. In the end the screenshots will be merged.
    *
    * @param stitchOptions
    */
-  takeScreenshotAll: (
-    stitchOptions?: TakeScreenshotOverlayOptions,
-  ) => Promise<void>;
+  takeScreenshotAll: (stitchOptions?: TakeScreenshotOverlayOptions) => Promise<void>;
 
   /**
    * This method will take a screenshot of an element.
@@ -114,8 +110,7 @@ export interface TakeScreenshotOptionsParams {
   overlayOptions?: TakeScreenshotOverlayOptions;
 }
 
-export interface PlaywrightBrowserContextOptionSchema
-  extends BrowserContextOptions {
+export interface PlaywrightBrowserContextOptionSchema extends BrowserContextOptions {
   viewport?: ViewportSize;
   cursor?: boolean;
 }

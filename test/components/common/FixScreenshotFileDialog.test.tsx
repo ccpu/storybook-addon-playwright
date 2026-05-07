@@ -14,8 +14,7 @@ vi.mock('../../../src/api/trpc/client', async () => {
             mutate: (input: unknown) => {
               void fixScreenshotFileName(input as never);
             },
-            mutateAsync: (input: unknown) =>
-              fixScreenshotFileName(input as never),
+            mutateAsync: (input: unknown) => fixScreenshotFileName(input as never),
             reset: vi.fn(),
           }),
         },

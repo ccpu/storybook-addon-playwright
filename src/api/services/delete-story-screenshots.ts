@@ -2,9 +2,7 @@ import type { StoryInfo } from '../../schema';
 import { deleteScreenshot } from './delete-screenshot';
 import { getStoryScreenshotsData } from './get-story-screenshots-data';
 
-export async function deleteStoryScreenshots(
-  storyInfo: StoryInfo,
-): Promise<void> {
+export async function deleteStoryScreenshots(storyInfo: StoryInfo): Promise<void> {
   const screenshots = await getStoryScreenshotsData(storyInfo);
 
   if (!screenshots || !screenshots.length) {

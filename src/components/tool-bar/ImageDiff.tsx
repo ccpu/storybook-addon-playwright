@@ -8,10 +8,7 @@ import {
   removeImageDiffResult,
   setImageDiffResults,
 } from '../../features/screenshot/store/actions';
-import {
-  useGlobalImageDiffResults,
-  useScreenshotDiffTestByType,
-} from '../../hooks';
+import { useGlobalImageDiffResults, useScreenshotDiffTestByType } from '../../hooks';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
 import { toast } from '../../utils/toast';
 import { Loader } from '../common';
@@ -61,8 +58,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
 
   const { imageDiffResult } = useGlobalImageDiffResults();
 
-  const { testStoryScreenShots, imageDiffTestInProgress } =
-    useScreenshotDiffTestByType();
+  const { testStoryScreenShots, imageDiffTestInProgress } = useScreenshotDiffTestByType();
 
   const diffResults =
     target === 'file' && storyData
@@ -125,11 +121,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
       )}
       <ContrastIcon />
 
-      <Loader
-        position="absolute"
-        open={imageDiffTestInProgress}
-        progressSize={15}
-      />
+      <Loader position="absolute" open={imageDiffTestInProgress} progressSize={15} />
     </IconButton>
   );
 

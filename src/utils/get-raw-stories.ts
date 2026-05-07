@@ -12,9 +12,7 @@ interface StoryItem {
 interface RequiredContext {
   __STORYBOOK_PREVIEW__?: {
     storyStore?: {
-      extract: (options?: {
-        includeDocsOnly?: boolean;
-      }) => Record<string, StoryItem>;
+      extract: (options?: { includeDocsOnly?: boolean }) => Record<string, StoryItem>;
     };
   };
   __STORYBOOK_CLIENT_API__?: {

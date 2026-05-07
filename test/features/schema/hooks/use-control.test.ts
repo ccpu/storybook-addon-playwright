@@ -37,9 +37,7 @@ describe('useControl', () => {
       result: {
         current: { Control, knob },
       },
-    } = renderHook(() =>
-      useControl({ ...getControlOptions(), type: 'number' }),
-    );
+    } = renderHook(() => useControl({ ...getControlOptions(), type: 'number' }));
     expect(Control).toBeDefined();
     expect(knob.value).toBe('');
   });
@@ -49,9 +47,7 @@ describe('useControl', () => {
       result: {
         current: { Control, knob },
       },
-    } = renderHook(() =>
-      useControl({ ...getControlOptions(), type: 'boolean' }),
-    );
+    } = renderHook(() => useControl({ ...getControlOptions(), type: 'boolean' }));
     expect(Control).toBeDefined();
     expect(knob.value).toBe(false);
   });

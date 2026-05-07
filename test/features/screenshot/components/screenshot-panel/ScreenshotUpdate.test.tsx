@@ -46,14 +46,10 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
       Provider: ({ children }: { children: unknown }) => children,
       screenshot: {
         testScreenshot: {
-          useMutation: useMutationFactory((input) =>
-            testScreenshot(input as never),
-          ),
+          useMutation: useMutationFactory((input) => testScreenshot(input as never)),
         },
         updateScreenshot: {
-          useMutation: useMutationFactory((input) =>
-            updateScreenshot(input as never),
-          ),
+          useMutation: useMutationFactory((input) => updateScreenshot(input as never)),
         },
       },
     },
@@ -61,8 +57,7 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
 });
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -80,8 +75,7 @@ vi.mock(
 );
 vi.mock(
   '../../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../../api/trpc/clients/__mocks__/screenshot.client'),
+  async () => await import('../../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
 vi.mock('../../../../../src/hooks', async (importActual) => {
   const actual = await importActual<any>();

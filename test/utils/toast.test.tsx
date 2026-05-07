@@ -8,9 +8,7 @@ describe('toast', () => {
   });
 
   it('passes dismiss into custom toast render callbacks', () => {
-    const renderCustomToast = vi.fn(({ dismiss }) => (
-      <div onClick={dismiss}>custom</div>
-    ));
+    const renderCustomToast = vi.fn(({ dismiss }) => <div onClick={dismiss}>custom</div>);
 
     const toastId = toast.custom(renderCustomToast, { id: 123 });
 

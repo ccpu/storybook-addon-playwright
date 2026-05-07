@@ -53,13 +53,9 @@ const SimpleControl: React.FC<{
     onChange(e.currentTarget.value);
   };
 
-  const handleTextareaChange: React.FormEventHandler<HTMLTextAreaElement> = (
-    e,
-  ) => {
+  const handleTextareaChange: React.FormEventHandler<HTMLTextAreaElement> = (e) => {
     const value =
-      knob.type === 'number'
-        ? Number(e.currentTarget.value)
-        : e.currentTarget.value;
+      knob.type === 'number' ? Number(e.currentTarget.value) : e.currentTarget.value;
     onChange(value);
   };
 
@@ -89,11 +85,7 @@ const SimpleControl: React.FC<{
     );
   }
 
-  if (
-    knob.type === 'options' &&
-    knob.options &&
-    typeof knob.options === 'object'
-  ) {
+  if (knob.type === 'options' && knob.options && typeof knob.options === 'object') {
     const opts = knob.options as Record<string, string>;
     return React.createElement(
       Form.Select,
@@ -123,12 +115,7 @@ export function useControl(props: ControlProps) {
   const [knob, setKnob] = useState<ControlKnob>({
     defaultValue: value,
     name: label,
-    options:
-      type === 'select'
-        ? options
-        : options
-        ? convertOptions(options)
-        : undefined,
+    options: type === 'select' ? options : options ? convertOptions(options) : undefined,
     optionsObj: { display },
     type,
     value: getDefault(type, value),

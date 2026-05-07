@@ -1,7 +1,4 @@
-import {
-  setScreenshotOptionsState,
-  useScreenshotOptionsValue,
-} from '../../../store';
+import { setScreenshotOptionsState, useScreenshotOptionsValue } from '../../../store';
 
 export function useScreenshotOptions() {
   const screenshotOptions = useScreenshotOptionsValue();

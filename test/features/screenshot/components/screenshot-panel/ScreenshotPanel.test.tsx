@@ -4,8 +4,7 @@
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -52,20 +51,15 @@ vi.mock(
 // Changed: mock complex hooks to prevent their useEffect chains from triggering
 // cascading enzyme state updates (infinite re-render loop in vitest).
 // The test only checks ScreenshotPanel's own rendering, not these hooks.
-vi.mock(
-  '../../../../../src/features/screenshot/hooks/use-story-screenshot-loader',
-);
-vi.mock(
-  '../../../../../src/features/screenshot/hooks/use-delete-story-screenshots',
-);
+vi.mock('../../../../../src/features/screenshot/hooks/use-story-screenshot-loader');
+vi.mock('../../../../../src/features/screenshot/hooks/use-delete-story-screenshots');
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-update-state',
   async () => await import('../../hooks/__mocks__/use-screenshot-update-state'),
 );
 vi.mock(
   '../../../../../src/hooks/use-current-story-data',
-  async () =>
-    await import('../../../../hooks/__mocks__/use-current-story-data'),
+  async () => await import('../../../../hooks/__mocks__/use-current-story-data'),
 );
 
 const testStoryScreenShotsMock = vi.fn();

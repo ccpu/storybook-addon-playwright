@@ -66,8 +66,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const [ref, rect] = useMeasure<HTMLDivElement>();
 
-  const { activeBrowsers, toggleBrowser, browserTypes } =
-    useActiveBrowsers(viewPanel);
+  const { activeBrowsers, toggleBrowser, browserTypes } = useActiveBrowsers(viewPanel);
 
   const [refresh, setRefresh] = useState(false);
 
@@ -117,12 +116,13 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const handleSaveScreenshot = useCallback(
     (title: string) => {
-      const browsers = activeBrowsers.reduce<
-        Record<string, string | undefined>
-      >((obj, b) => {
-        obj[b] = undefined;
-        return obj;
-      }, {});
+      const browsers = activeBrowsers.reduce<Record<string, string | undefined>>(
+        (obj, b) => {
+          obj[b] = undefined;
+          return obj;
+        },
+        {},
+      );
 
       // to take screenshot in sequent we set title one at the time, it will prevent file  overwriting problem
       browsers[activeBrowsers[0]] = title;

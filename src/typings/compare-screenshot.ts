@@ -1,11 +1,7 @@
 import type { ScreenshotPathInfo } from '../api/server/utils/get-screenshot-paths';
 import type { ImageDiffResult } from '../api/typings';
 import type { RequestData } from './request';
-import type {
-  BrowserTypes,
-  ScreenshotImageData,
-  ScreenshotInfo,
-} from './screenshot';
+import type { BrowserTypes, ScreenshotImageData, ScreenshotInfo } from './screenshot';
 
 export interface BaseImageInfo extends ScreenshotPathInfo {
   buffer: Buffer;

@@ -98,9 +98,7 @@ const ScreenshotListPreviewDialog: React.FC<
       !currentItem
     ) {
       if (selectedItem) {
-        const selectedScreenshot = screenshots.find(
-          (x) => x.id === selectedItem,
-        );
+        const selectedScreenshot = screenshots.find((x) => x.id === selectedItem);
         if (selectedScreenshot) {
           handleItemClick(selectedScreenshot);
         }
@@ -108,27 +106,17 @@ const ScreenshotListPreviewDialog: React.FC<
         handleItemClick(screenshots[0]);
       }
     }
-  }, [
-    currentItem,
-    handleItemClick,
-    screenshots,
-    selectedItem,
-    state.imageDiffResults,
-  ]);
+  }, [currentItem, handleItemClick, screenshots, selectedItem, state.imageDiffResults]);
 
   const diffResult =
-    currentItem &&
-    state.imageDiffResults.find((x) => x.screenshotId === currentItem.id);
+    currentItem && state.imageDiffResults.find((x) => x.screenshotId === currentItem.id);
 
   return (
     <Dialog
       width="100%"
-      title={
-        title || (currentItem ? capitalize(currentItem.title) : 'Loading ...')
-      }
+      title={title || (currentItem ? capitalize(currentItem.title) : 'Loading ...')}
       subtitle={
-        (title && currentItem && currentItem.title) +
-        (storyData && ` (${storyData.id})`)
+        (title && currentItem && currentItem.title) + (storyData && ` (${storyData.id})`)
       }
       height="100%"
       {...rest}

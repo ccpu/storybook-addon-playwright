@@ -39,9 +39,7 @@ mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementation(() => {
 });
 
 describe('saveScreenshot', () => {
-  const getData = (
-    data?: Partial<SaveScreenshotRequest>,
-  ): SaveScreenshotRequest => {
+  const getData = (data?: Partial<SaveScreenshotRequest>): SaveScreenshotRequest => {
     return {
       actionSets: [
         {
@@ -123,9 +121,7 @@ describe('saveScreenshot', () => {
       });
     });
 
-    await expect(
-      saveScreenshot(getData({ title: 'foo' })),
-    ).rejects.toThrowError();
+    await expect(saveScreenshot(getData({ title: 'foo' }))).rejects.toThrowError();
   });
 
   it('should not have screenshot with the same setting', async () => {
@@ -135,15 +131,13 @@ describe('saveScreenshot', () => {
   });
 
   it('should not save if dealing with existing screenshot', async () => {
-    mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementationOnce(
-      () => {
-        return new Promise((resolve) => {
-          resolve({
-            pass: true,
-          });
+    mockDiffImageToScreenshot.diffImageToScreenshot.mockImplementationOnce(() => {
+      return new Promise((resolve) => {
+        resolve({
+          pass: true,
         });
-      },
-    );
+      });
+    });
 
     const result = await saveScreenshot(getData());
 
@@ -241,8 +235,7 @@ describe('saveScreenshot', () => {
     const mockData = vi.mocked(saveStoryFile).mock;
 
     const newId =
-      mockData.calls[0][1]!.stories!['story-id'].screenshots![0].actionSets![0]
-        .id;
+      mockData.calls[0][1]!.stories!['story-id'].screenshots![0].actionSets![0].id;
 
     expect(newId === 'action-id').toBeFalsy();
   });

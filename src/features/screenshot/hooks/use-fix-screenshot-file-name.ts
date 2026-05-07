@@ -16,9 +16,9 @@ export function useFixScreenshotFileName(props: Props) {
 
   const [functionName, setFunctionName] = React.useState<string>('');
 
-  const [fixFileNamesError, setFixFileNamesError] = React.useState<
-    string | undefined
-  >(undefined);
+  const [fixFileNamesError, setFixFileNamesError] = React.useState<string | undefined>(
+    undefined,
+  );
 
   const { mutateAsync, isPending: fixFileNamesInProgress } =
     trpcClient.fixTitle.fixScreenshotFileName.useMutation({

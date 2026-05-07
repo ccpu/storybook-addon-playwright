@@ -51,9 +51,9 @@ function getVariantIconColor(variant: AlertVariant, isDarkMode: boolean) {
   }
 }
 
-export const ToastMessageContainer: React.FC<
-  React.HTMLAttributes<HTMLDivElement>
-> = (props) => {
+export const ToastMessageContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = (
+  props,
+) => {
   return (
     <div
       {...props}
@@ -88,12 +88,8 @@ const AlertToast: React.FC<AlertToastProps> = ({
   const borderColor = isLightMode
     ? 'rgba(255, 255, 255, 0.08)'
     : 'rgba(255, 255, 255, 0.1)';
-  const textColor = isLightMode
-    ? 'rgba(255, 255, 255, 0.88)'
-    : 'rgba(34, 36, 37, 0.75)';
-  const titleColor = isLightMode
-    ? 'rgba(255, 255, 255, 0.96)'
-    : 'rgb(115, 130, 140)';
+  const textColor = isLightMode ? 'rgba(255, 255, 255, 0.88)' : 'rgba(34, 36, 37, 0.75)';
+  const titleColor = isLightMode ? 'rgba(255, 255, 255, 0.96)' : 'rgb(115, 130, 140)';
   const closeButtonColor = isLightMode
     ? 'rgba(255, 255, 255, 0.72)'
     : 'rgba(34, 36, 37, 0.6)';
@@ -133,9 +129,7 @@ const AlertToast: React.FC<AlertToastProps> = ({
 
   return (
     <div style={containerStyle} {...rest}>
-      {variantIcon && (
-        <div style={{ color: variantIconColor }}>{variantIcon}</div>
-      )}
+      {variantIcon && <div style={{ color: variantIconColor }}>{variantIcon}</div>}
 
       <div style={{ flex: 1, minWidth: 0 }}>
         {title && (

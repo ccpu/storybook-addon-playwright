@@ -10,9 +10,7 @@ import { getStoryPlaywrightFileInfo } from '../../../src/api/server/utils/get-st
 vi.mock('node:fs');
 const existsSyncMock = vi.spyOn(fs, 'existsSync');
 
-vi.mock(
-  '../../../src/api/services/utils/get-story-playwright-data-by-file-name',
-);
+vi.mock('../../../src/api/services/utils/get-story-playwright-data-by-file-name');
 vi.mock(
   '../../../src/api/server/utils/save-story-file',
   async () => await import('../server/utils/__mocks__/save-story-file'),
@@ -61,9 +59,7 @@ describe('fixScreenshotFileName', () => {
     it('should apply change', async () => {
       vi.mocked(existsSyncMock).mockReturnValueOnce(true);
       await fixScreenshotFileName({ ...storyData, parent: 'new-title' });
-      expect(getStoryPlaywrightDataByFileName).toHaveBeenCalledWith(
-        './test.stories.tsx',
-      );
+      expect(getStoryPlaywrightDataByFileName).toHaveBeenCalledWith('./test.stories.tsx');
       expect(vi.mocked(saveStoryFile).mock.calls[0][1]).toStrictEqual({
         stories: {
           'new-title--func-name': {

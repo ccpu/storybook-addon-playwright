@@ -46,71 +46,62 @@ export function migrateToV1(data: V0, version: string) {
     newStoryData[storyId] = {};
 
     if (storyData.actionSets && storyData.actionSets.length) {
-      newStoryData[storyId].actionSets = storyData.actionSets.map(
-        (actionSet) => {
-          const migratedActionSet = actionSet as ActionSet & {
-            description?: string;
-          };
+      newStoryData[storyId].actionSets = storyData.actionSets.map((actionSet) => {
+        const migratedActionSet = actionSet as ActionSet & {
+          description?: string;
+        };
 
-          const { description, ...rest } = migratedActionSet;
-          return {
-            ...rest,
-            title: description ?? rest.title,
-          };
-        },
-      );
+        const { description, ...rest } = migratedActionSet;
+        return {
+          ...rest,
+          title: description ?? rest.title,
+        };
+      });
     }
 
     if (storyData.screenshots) {
-      newStoryData[storyId].screenshots = storyData.screenshots.map(
-        (screenshot) => {
-          const args = screenshot.props
-            ? screenshot.props.reduce((obj, prop) => {
-                obj[prop.name] = prop.value;
-                return obj;
-              }, {} as Record<string, unknown>)
-            : undefined;
+      newStoryData[storyId].screenshots = storyData.screenshots.map((screenshot) => {
+        const args = screenshot.props
+          ? screenshot.props.reduce((obj, prop) => {
+              obj[prop.name] = prop.value;
+              return obj;
+            }, {} as Record<string, unknown>)
+          : undefined;
 
-          const screenshotWithOptionalFields =
-            screenshot as ScreenshotDataV0 & {
-              hash?: string;
-              options?: ScreenshotOptions & { cursor?: boolean };
-            };
+        const screenshotWithOptionalFields = screenshot as ScreenshotDataV0 & {
+          hash?: string;
+          options?: ScreenshotOptions & { cursor?: boolean };
+        };
 
-          const {
-            hash: _hash,
-            options,
-            ...restScreenshot
-          } = screenshotWithOptionalFields;
+        const { hash: _hash, options, ...restScreenshot } = screenshotWithOptionalFields;
 
-          let screenshotOptionsId: string | undefined;
-          let browserOptionsId: string | undefined;
+        let screenshotOptionsId: string | undefined;
+        let browserOptionsId: string | undefined;
 
-          if (options) {
-            const { cursor, ...screenshotOptions } = options;
-            screenshotOptionsId = setStoryOptions(
-              newData,
-              'screenshotOptions',
-              screenshotOptions,
-            );
+        if (options) {
+          const { cursor, ...screenshotOptions } = options;
+          screenshotOptionsId = setStoryOptions(
+            newData,
+            'screenshotOptions',
+            screenshotOptions,
+          );
 
-            if (cursor) {
-              browserOptionsId = setStoryOptions(newData, 'browserOptions', {
-                cursor: true,
-              });
-            }
+          if (cursor) {
+            browserOptionsId = setStoryOptions(newData, 'browserOptions', {
+              cursor: true,
+            });
           }
+        }
 
-          return {
-            args,
-            ...restScreenshot,
-            browserOptionsId,
-            id: nanoid(15),
-            props: args,
-            screenshotOptionsId,
-          };
-        },
-      );
+        return {
+          args,
+          ...restScreenshot,
+          browserOptionsId,
+          id: nanoid(15),
+          props: args,
+          screenshotOptionsId,
+        };
+      });
     }
 
     return newStoryData;

@@ -1,11 +1,7 @@
 import type { ActionSchemaList } from '../../../typings';
 import { useCallback, useEffect } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
-import {
-  setActionSchema,
-  setSchemaLoaded,
-  useSchemaLoaded,
-} from '../../../store';
+import { setActionSchema, setSchemaLoaded, useSchemaLoaded } from '../../../store';
 import { toast } from '../../../utils/toast';
 
 export function useActionSchemaLoader() {

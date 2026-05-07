@@ -20,8 +20,7 @@ import { getBorderColor } from './utils/index';
 
 const useStyles = makeStyles(
   (theme) => {
-    const getBackgroundColor =
-      theme.palette.type === 'light' ? lighten : darken;
+    const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
     const { palette } = theme;
     const { background } = palette;
 
@@ -34,11 +33,7 @@ const useStyles = makeStyles(
         },
         '& .os-scrollbar-track': {
           '& .os-scrollbar-handle': {
-            backgroundColor: getBorderColor(
-              palette.type,
-              background.paper,
-              0.6,
-            ),
+            backgroundColor: getBorderColor(palette.type, background.paper, 0.6),
           },
           backgroundColor: 'transparent',
           visibility: 'visible !important',
@@ -66,11 +61,7 @@ const useStyles = makeStyles(
       },
 
       fakeBorder: {
-        border: `10px solid ${getBorderColor(
-          palette.type,
-          background.paper,
-          0.1,
-        )}`,
+        border: `10px solid ${getBorderColor(palette.type, background.paper, 0.1)}`,
         borderTop: 0,
         bottom: 0,
         left: 0,
@@ -146,10 +137,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
   const containerHeight = height - 30;
 
   const handleShowTitleDialog = useCallback(() => setShowTitleDialog(true), []);
-  const handleCloseTitleDialog = useCallback(
-    () => setShowTitleDialog(false),
-    [],
-  );
+  const handleCloseTitleDialog = useCallback(() => setShowTitleDialog(false), []);
 
   const isValidToSave =
     Boolean(screenshot && screenshot.base64) && browserType !== 'storybook';
@@ -158,14 +146,12 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     setOpenFullScreen(!openFullScreen);
   }, [openFullScreen]);
 
-  const errorMessage =
-    error || (screenshot as { error?: string } | undefined)?.error;
+  const errorMessage = error || (screenshot as { error?: string } | undefined)?.error;
 
-  const { saveScreenShot, inProgress, getUpdatingScreenshotTitle } =
-    useSaveScreenshot({
-      browserType: browserType === 'storybook' ? undefined : browserType,
-      title: savingWithTitle,
-    });
+  const { saveScreenShot, inProgress, getUpdatingScreenshotTitle } = useSaveScreenshot({
+    browserType: browserType === 'storybook' ? undefined : browserType,
+    title: savingWithTitle,
+  });
 
   const handleSave = useCallback(
     async (title: string) => {
@@ -174,12 +160,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
       }
 
       isSaving.current = true;
-      await saveScreenShot(
-        browserType,
-        title,
-        screenshot.base64,
-        browserOptions,
-      );
+      await saveScreenShot(browserType, title, screenshot.base64, browserOptions);
       onSaveComplete?.(browserType);
       handleCloseTitleDialog();
       isSaving.current = false;

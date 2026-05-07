@@ -25,19 +25,11 @@ const ResizeBrowserToPreview: React.FC = () => {
         clip: undefined,
       });
     }
-  }, [
-    browserOptions,
-    screenshotOptions,
-    setBrowserOptions,
-    setScreenshotOptions,
-  ]);
+  }, [browserOptions, screenshotOptions, setBrowserOptions, setScreenshotOptions]);
 
   return (
     <IconButton onClick={handleClick}>
-      <Tooltip
-        placement="top"
-        title="Adjust the browser size to match the preview."
-      >
+      <Tooltip placement="top" title="Adjust the browser size to match the preview.">
         <svg
           className="MuiSvgIcon-root"
           focusable="false"

@@ -7,23 +7,17 @@ import { Alert } from '@material-ui/lab';
 
 describe('ImageDiffPreview', () => {
   it('should render', () => {
-    const wrapper = shallow(
-      <ImageDiffPreview imageDiffResult={{ pass: true }} />,
-    );
+    const wrapper = shallow(<ImageDiffPreview imageDiffResult={{ pass: true }} />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should not have Tabs if image diff passed', () => {
-    const wrapper = shallow(
-      <ImageDiffPreview imageDiffResult={{ pass: true }} />,
-    );
+    const wrapper = shallow(<ImageDiffPreview imageDiffResult={{ pass: true }} />);
     expect(wrapper.find(Tabs)).toHaveLength(0);
   });
 
   it('should have tabs when image diff not passed', () => {
-    const wrapper = shallow(
-      <ImageDiffPreview imageDiffResult={{ pass: false }} />,
-    );
+    const wrapper = shallow(<ImageDiffPreview imageDiffResult={{ pass: false }} />);
     expect(wrapper.find(Tabs)).toHaveLength(1);
   });
 

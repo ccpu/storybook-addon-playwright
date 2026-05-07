@@ -117,11 +117,7 @@ function ScreenshotListItem({
   }, [pauseDeleteImageDiffResult, isPassesImageDiff, imageDiffResult]);
 
   useEffect(() => {
-    if (
-      !pauseDeleteImageDiffResult &&
-      imageDiffResult &&
-      imageDiffResult.pass
-    ) {
+    if (!pauseDeleteImageDiffResult && imageDiffResult && imageDiffResult.pass) {
       timer.current = window.setTimeout(() => {
         handleRemoveScreenShotResult();
       }, 10000);
@@ -129,11 +125,7 @@ function ScreenshotListItem({
     return () => {
       window.clearTimeout(timer.current);
     };
-  }, [
-    pauseDeleteImageDiffResult,
-    handleRemoveScreenShotResult,
-    imageDiffResult,
-  ]);
+  }, [pauseDeleteImageDiffResult, handleRemoveScreenShotResult, imageDiffResult]);
 
   const handleShowImageDiffResult = useCallback(() => {
     setShowImageDiffResult(true);
@@ -159,12 +151,8 @@ function ScreenshotListItem({
     }
   }, [onClick, screenshot, showPreview, showPreviewOnClick]);
 
-  const {
-    editScreenshot,
-    loadSetting,
-    editScreenshotState,
-    clearScreenshotEdit,
-  } = useEditScreenshot();
+  const { editScreenshot, loadSetting, editScreenshotState, clearScreenshotEdit } =
+    useEditScreenshot();
 
   const handleEdit = useCallback(
     () => editScreenshot(screenshot),
@@ -190,8 +178,7 @@ function ScreenshotListItem({
         draggable={draggable}
         selected={
           selected ||
-          (editScreenshotState &&
-            editScreenshotState.screenshotData.id === screenshot.id)
+          (editScreenshotState && editScreenshotState.screenshotData.id === screenshot.id)
         }
         tooltip={screenshot.title + (storyData && ` - ${storyData.id}`)}
         onMouseEnter={handleMouseEnter}
@@ -228,27 +215,22 @@ function ScreenshotListItem({
             />
           )}
 
-          <BrowserIcon
-            style={{ height: 16 }}
-            browserType={screenshot.browserType}
-          />
+          <BrowserIcon style={{ height: 16 }} browserType={screenshot.browserType} />
 
-          {showImageDiffResult &&
-            showImageDiffResultDialog &&
-            imageDiffResult && (
-              <MemoizedImageDiffMessage
-                result={imageDiffResult}
-                onClose={handleRemoveScreenShotResult}
-                title={screenshot.title}
-                titleActions={() => (
-                  <ScreenshotInfo
-                    color="primary"
-                    size="medium"
-                    screenshotData={screenshot}
-                  />
-                )}
-              />
-            )}
+          {showImageDiffResult && showImageDiffResultDialog && imageDiffResult && (
+            <MemoizedImageDiffMessage
+              result={imageDiffResult}
+              onClose={handleRemoveScreenShotResult}
+              title={screenshot.title}
+              titleActions={() => (
+                <ScreenshotInfo
+                  color="primary"
+                  size="medium"
+                  screenshotData={screenshot}
+                />
+              )}
+            />
+          )}
           <ScreenshotListItemMenu
             show={(forceShowMenu || showMenu) && !dragStart}
             screenshot={screenshot}

@@ -1,8 +1,5 @@
 import type { BrowsersOption } from '../../../../../src/hooks/use-browser-options';
-import type {
-  ScreenshotData,
-  ScreenshotOptions,
-} from '../../../../../src/typings';
+import type { ScreenshotData, ScreenshotOptions } from '../../../../../src/typings';
 
 interface LoadScreenshotSettingsResult {
   browserOptions: BrowsersOption;

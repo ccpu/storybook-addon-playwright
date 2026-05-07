@@ -156,10 +156,7 @@ describe('SelectorControl', () => {
         .onClick?.({} as React.MouseEvent);
     });
 
-    expect(onSelectorChangeMock).toHaveBeenCalledWith(
-      'options.prop.selector',
-      'div>div',
-    );
+    expect(onSelectorChangeMock).toHaveBeenCalledWith('options.prop.selector', 'div>div');
   });
 
   it('should set x position', () => {

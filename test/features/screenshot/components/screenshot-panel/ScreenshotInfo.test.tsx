@@ -8,16 +8,12 @@ import ReactJson from 'react-json-view';
 
 describe('ScreenshotInfo', () => {
   it('should render', () => {
-    const wrapper = shallow(
-      <ScreenshotInfo screenshotData={getScreenshotDate()} />,
-    );
+    const wrapper = shallow(<ScreenshotInfo screenshotData={getScreenshotDate()} />);
     expect(wrapper.exists()).toBeTruthy();
   });
 
   it('should show info', () => {
-    const wrapper = shallow(
-      <ScreenshotInfo screenshotData={getScreenshotDate()} />,
-    );
+    const wrapper = shallow(<ScreenshotInfo screenshotData={getScreenshotDate()} />);
 
     const button = wrapper.find(IconButton);
 
@@ -98,10 +94,7 @@ describe('ScreenshotInfo', () => {
     const onCloseMock = vi.fn();
 
     const wrapper = shallow(
-      <ScreenshotInfo
-        onClose={onCloseMock}
-        screenshotData={getScreenshotDate()}
-      />,
+      <ScreenshotInfo onClose={onCloseMock} screenshotData={getScreenshotDate()} />,
     );
 
     const button = wrapper.find(IconButton);

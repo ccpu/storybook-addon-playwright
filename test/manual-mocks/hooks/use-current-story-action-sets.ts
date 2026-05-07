@@ -1,14 +1,10 @@
 import { ActionSet } from '../../../src/typings';
 
-export const useCurrentStoryActionSetsMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const useCurrentStoryActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
 
-vi.mock(
-  '../../../src/features/action-set/hooks/use-current-story-action-sets',
-  () => ({
-    useCurrentStoryActionSets: useCurrentStoryActionSetsMock,
-  }),
-);
+vi.mock('../../../src/features/action-set/hooks/use-current-story-action-sets', () => ({
+  useCurrentStoryActionSets: useCurrentStoryActionSetsMock,
+}));
 
 useCurrentStoryActionSetsMock.mockImplementation(() => ({
   currentActionSets: ['action-set-id'],

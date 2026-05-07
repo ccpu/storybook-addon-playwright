@@ -52,9 +52,7 @@ describe('ActionSetListItem', () => {
 
     expect(editButton.exists()).toBeTruthy();
 
-    editButton
-      .props()
-      .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
+    editButton.props().onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
 
     expect(editMock).toHaveBeenCalledTimes(1);
   });
@@ -135,9 +133,7 @@ describe('ActionSetListItem', () => {
 
     expect(listItemWrapperWrapper.find(CheckBox).exists()).toBeTruthy();
     expect(listItemWrapperWrapper.find('.edit-button').exists()).toBeFalsy();
-    expect(
-      listItemWrapperWrapper.find(DeleteConfirmationButton).exists(),
-    ).toBeFalsy();
+    expect(listItemWrapperWrapper.find(DeleteConfirmationButton).exists()).toBeFalsy();
   });
 
   it('should catt copy action set', () => {

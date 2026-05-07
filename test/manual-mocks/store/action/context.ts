@@ -2,23 +2,16 @@ import { ActionSetState } from '../../../../src/features/action-set/store/action
 
 // Individual action spies
 export const addActionSetListMock = vi.fn<(...args: unknown[]) => unknown>();
-export const setScreenShotActionSetsMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const setScreenShotActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const addActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
-export const setCurrentActionSetsMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const clearCurrentActionSetsMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const setCurrentActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
+export const clearCurrentActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const deleteActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
-export const deleteTempActionSetsMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const deleteTempActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const sortActionSetsMock = vi.fn<(...args: unknown[]) => unknown>();
-export const toggleCurrentActionSetMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const toggleActionExpansionMock =
-  vi.fn<(...args: unknown[]) => unknown>();
-export const clearActionExpansionMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const toggleCurrentActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
+export const toggleActionExpansionMock = vi.fn<(...args: unknown[]) => unknown>();
+export const clearActionExpansionMock = vi.fn<(...args: unknown[]) => unknown>();
 export const setActionSchemaMock = vi.fn<(...args: unknown[]) => unknown>();
 export const cancelEditActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
 export const editActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
@@ -26,8 +19,7 @@ export const setActionSetTitleMock = vi.fn<(...args: unknown[]) => unknown>();
 export const addActionSetActionMock = vi.fn<(...args: unknown[]) => unknown>();
 export const toggleSubtitleItemMock = vi.fn<(...args: unknown[]) => unknown>();
 export const moveActionSetActionMock = vi.fn<(...args: unknown[]) => unknown>();
-export const deleteActionSetActionMock =
-  vi.fn<(...args: unknown[]) => unknown>();
+export const deleteActionSetActionMock = vi.fn<(...args: unknown[]) => unknown>();
 export const setActionOptionsMock = vi.fn<(...args: unknown[]) => unknown>();
 export const saveActionSetMock = vi.fn<(...args: unknown[]) => unknown>();
 
@@ -122,9 +114,7 @@ vi.mock('../../../../src/features/action-set/store/actions', () => ({
 }));
 
 vi.mock('../../../../src/features/action-set/store/selectors', async () => {
-  const mock = await import(
-    '../../../features/action-set/store/__mocks__/ActionContext'
-  );
+  const mock = await import('../../../features/action-set/store/__mocks__/ActionContext');
   return {
     ...mock,
   };

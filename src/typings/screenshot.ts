@@ -50,8 +50,4 @@ export interface ScreenshotProp {
   [prop: string]: any;
 }
 
-export type ScreenshotTestTargetType =
-  | 'file'
-  | 'story'
-  | 'all'
-  | 'story-screenshot';
+export type ScreenshotTestTargetType = 'file' | 'story' | 'all' | 'story-screenshot';

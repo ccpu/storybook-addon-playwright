@@ -44,12 +44,7 @@ export default defineConfig({
       reportsDirectory: './coverage',
     },
     environment: 'jsdom',
-    exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/stories/**',
-      'middleware.test.js',
-    ],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/stories/**', 'middleware.test.js'],
     globals: true,
     pool: 'vmThreads',
     useAtomics: true,

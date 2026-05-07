@@ -16,10 +16,7 @@ describe('ScreenshotListItemMenu', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <ScreenshotListItemMenu
-        screenshot={getScreenshotDate()}
-        onDelete={onDeleteMock}
-      />,
+      <ScreenshotListItemMenu screenshot={getScreenshotDate()} onDelete={onDeleteMock} />,
     );
     expect(wrapper.exists()).toBeTruthy();
 
@@ -115,10 +112,7 @@ describe('ScreenshotListItemMenu', () => {
 
   it('should call on delete', () => {
     const wrapper = shallow(
-      <ScreenshotListItemMenu
-        screenshot={getScreenshotDate()}
-        onDelete={onDeleteMock}
-      />,
+      <ScreenshotListItemMenu screenshot={getScreenshotDate()} onDelete={onDeleteMock} />,
     );
     expect(wrapper.exists()).toBeTruthy();
 

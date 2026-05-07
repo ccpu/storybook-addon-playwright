@@ -11,9 +11,7 @@ export function useCurrentActions(storyId: string) {
     const storyData = state.stories[storyId];
     if (!storyData?.actionSets) return [];
 
-    return storyData.actionSets.filter((x) =>
-      state.currentActionSets.includes(x.id),
-    );
+    return storyData.actionSets.filter((x) => state.currentActionSets.includes(x.id));
   }, [state.currentActionSets, state.initialised, state.stories, storyId]);
 
   return { currentActions, state };

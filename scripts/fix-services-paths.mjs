@@ -20,9 +20,7 @@ function walkDir(dir, pred, results = []) {
 
 const TARGET = path.join(ROOT, 'test', 'api', 'services');
 
-const testFiles = walkDir(TARGET, (name) =>
-  /\.(test|spec)\.(ts|tsx)$/.test(name),
-);
+const testFiles = walkDir(TARGET, (name) => /\.(test|spec)\.(ts|tsx)$/.test(name));
 
 console.log(`Found ${testFiles.length} test files in test/api/services/`);
 
@@ -83,17 +81,12 @@ for (const filePath of testFiles) {
     if (content.includes(from)) {
       content = content.split(from).join(to);
       changed = true;
-      console.log(
-        `  [path] ${from} -> ${to} in ${path.relative(ROOT, filePath)}`,
-      );
+      console.log(`  [path] ${from} -> ${to} in ${path.relative(ROOT, filePath)}`);
     }
   }
 
   // Apply factory injections based on depth
-  const relPath = path.relative(
-    path.join(ROOT, 'test', 'api', 'services'),
-    filePath,
-  );
+  const relPath = path.relative(path.join(ROOT, 'test', 'api', 'services'), filePath);
   const depth = relPath.split(path.sep).length;
   const factoryReplacements =
     depth === 1 ? factoryReplacementsDepth3 : factoryReplacementsDepth4;
@@ -103,10 +96,7 @@ for (const filePath of testFiles) {
       content = content.split(from).join(to);
       changed = true;
       console.log(
-        `  [factory] ${from.slice(0, 60)}... in ${path.relative(
-          ROOT,
-          filePath,
-        )}`,
+        `  [factory] ${from.slice(0, 60)}... in ${path.relative(ROOT, filePath)}`,
       );
     }
   }

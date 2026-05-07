@@ -105,9 +105,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
             onSelectorChange(fullObjectPath, data.path);
           } else if (isFollowedByPositionProp) {
             const objPath =
-              fullObjectPath.length === 1
-                ? ''
-                : `${fullObjectPath.slice(0, -2)}.`;
+              fullObjectPath.length === 1 ? '' : `${fullObjectPath.slice(0, -2)}.`;
             onSelectorChange(`${objPath}x`, Math.round(data.x ?? 0));
             onSelectorChange(`${objPath}y`, Math.round(data.y ?? 0));
           } else {
@@ -161,8 +159,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
   );
 
   const handleBlur = useCallback(
-    (e: React.FocusEvent<HTMLDivElement>) =>
-      setValidate(e.target.tagName === 'TEXTAREA'),
+    (e: React.FocusEvent<HTMLDivElement>) => setValidate(e.target.tagName === 'TEXTAREA'),
     [],
   );
 

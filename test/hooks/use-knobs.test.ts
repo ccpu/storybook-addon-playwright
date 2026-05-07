@@ -49,10 +49,7 @@ describe('useKnobs', () => {
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (addons as any).__setEvent(
-        STORY_ARGS_UPDATED,
-        getArgs({ text: undefined }),
-      );
+      (addons as any).__setEvent(STORY_ARGS_UPDATED, getArgs({ text: undefined }));
     });
 
     expect(result.current).toStrictEqual(undefined);
@@ -68,10 +65,7 @@ describe('useKnobs', () => {
 
     act(() => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (addons as any).__setEvent(
-        STORY_ARGS_UPDATED,
-        getArgs({ countries: ['Canada'] }),
-      );
+      (addons as any).__setEvent(STORY_ARGS_UPDATED, getArgs({ countries: ['Canada'] }));
     });
 
     expect(result.current).toStrictEqual({

@@ -33,9 +33,7 @@ export function useTanstackMutation<T extends AnyFn>(
   }, []);
 
   const makeCall = useCallback(
-    async (
-      ...args: ArgsType<T>
-    ): Promise<MutationReturnType<T> | Error | undefined> => {
+    async (...args: ArgsType<T>): Promise<MutationReturnType<T> | Error | undefined> => {
       setError(undefined);
       setResult(undefined);
       setInProgress(true);
@@ -57,8 +55,7 @@ export function useTanstackMutation<T extends AnyFn>(
         return data;
       } catch (mutationError) {
         const message =
-          (mutationError as { message?: string }).message ||
-          'Unexpected error occurred';
+          (mutationError as { message?: string }).message || 'Unexpected error occurred';
         setError(message);
         toast.error(message);
         return new Error(message);
@@ -66,13 +63,7 @@ export function useTanstackMutation<T extends AnyFn>(
         setInProgress(false);
       }
     },
-    [
-      clearResult,
-      clearResultOnSuccess,
-      func,
-      setResponseResult,
-      successMessage,
-    ],
+    [clearResult, clearResultOnSuccess, func, setResponseResult, successMessage],
   );
 
   return {

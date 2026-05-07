@@ -1,7 +1,4 @@
-import type {
-  DialogProps,
-  ImageDiffPreviewProps,
-} from '../../../../components/common';
+import type { DialogProps, ImageDiffPreviewProps } from '../../../../components/common';
 import type { StoryData } from '../../../../schema';
 import type { ScreenshotData } from '../../../../typings';
 import React, { useEffect } from 'react';
@@ -16,9 +13,7 @@ export interface ScreenshotPreviewDialogProps
   storyData: StoryData;
 }
 
-const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
-  props,
-) => {
+const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (props) => {
   const { storyData, screenShotData, onClose, open = true, ...rest } = props;
 
   const { testScreenshot, inProgress, result } = useScreenshotDiffTest();

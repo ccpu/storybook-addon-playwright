@@ -59,80 +59,73 @@ export interface ScreenshotListItemMenuProps {
   onDelete: () => void;
 }
 
-const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> =
-  forwardRef(
-    (
-      {
-        enableLoadSetting,
-        openUpdateDialog,
-        screenshot,
-        enableImageDiff,
-        enableUpdate,
-        enableEditScreenshot,
-        show,
-        onHide,
-        onRunImageDiff,
-        imageDiffResult,
-        onLoadSettingClick,
-        onEditClick,
-        isEditing,
-        onDelete,
-      },
-      ref: Ref<HTMLDivElement>,
-    ) => {
-      const [working, setWorking] = useState(false);
+const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> = forwardRef(
+  (
+    {
+      enableLoadSetting,
+      openUpdateDialog,
+      screenshot,
+      enableImageDiff,
+      enableUpdate,
+      enableEditScreenshot,
+      show,
+      onHide,
+      onRunImageDiff,
+      imageDiffResult,
+      onLoadSettingClick,
+      onEditClick,
+      isEditing,
+      onDelete,
+    },
+    ref: Ref<HTMLDivElement>,
+  ) => {
+    const [working, setWorking] = useState(false);
 
-      const classes = useStyles();
+    const classes = useStyles();
 
-      return (
-        <>
-          <Loader progressSize={20} position="absolute" open={working} />
-          <div
-            ref={ref}
-            className={clsx(classes.menu, { [classes.visible]: show })}
-          >
-            {!isEditing && enableEditScreenshot && (
-              <IconButton onClick={onEditClick} title="Edit screenshot">
-                <EditIcon />
-              </IconButton>
-            )}
+    return (
+      <>
+        <Loader progressSize={20} position="absolute" open={working} />
+        <div ref={ref} className={clsx(classes.menu, { [classes.visible]: show })}>
+          {!isEditing && enableEditScreenshot && (
+            <IconButton onClick={onEditClick} title="Edit screenshot">
+              <EditIcon />
+            </IconButton>
+          )}
 
-            {enableLoadSetting && (
-              <IconButton
-                onClick={onLoadSettingClick}
-                title="Load screenshot settings"
-              >
-                <OutboxIcon />
-              </IconButton>
-            )}
+          {enableLoadSetting && (
+            <IconButton onClick={onLoadSettingClick} title="Load screenshot settings">
+              <OutboxIcon />
+            </IconButton>
+          )}
 
-            {enableUpdate && (
-              <ScreenshotUpdate
-                onStateChange={setWorking}
-                screenshot={screenshot}
-                imageDiffResult={openUpdateDialog ? undefined : imageDiffResult}
-              />
-            )}
-
-            {enableImageDiff && (
-              <IconButton onClick={onRunImageDiff} title="Run diff test">
-                <ContrastIcon />
-              </IconButton>
-            )}
-
-            <ScreenshotDelete
-              onClose={onHide || (() => undefined)}
+          {enableUpdate && (
+            <ScreenshotUpdate
               onStateChange={setWorking}
               screenshot={screenshot}
-              onDelete={onDelete}
+              imageDiffResult={openUpdateDialog ? undefined : imageDiffResult}
             />
+          )}
 
-            <ScreenshotInfo onClose={onHide} screenshotData={screenshot} />
-          </div>
-        </>
-      );
-    },
-  );
+          {enableImageDiff && (
+            <IconButton onClick={onRunImageDiff} title="Run diff test">
+              <ContrastIcon />
+            </IconButton>
+          )}
+
+          <ScreenshotDelete
+            onClose={onHide || (() => undefined)}
+            onStateChange={setWorking}
+            screenshot={screenshot}
+            onDelete={onDelete}
+          />
+
+          <ScreenshotInfo onClose={onHide} screenshotData={screenshot} />
+        </div>
+      </>
+    );
+  },
+);
 
 ScreenshotListItemMenu.displayName = 'ScreenshotListItemMenu';
 

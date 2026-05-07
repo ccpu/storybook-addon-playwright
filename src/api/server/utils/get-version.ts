@@ -23,9 +23,7 @@ export function getVersion() {
   const packagePath = findPackageJsonPath(process.cwd());
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const version = (require(packagePath).version as string)
-    .split('.')[0]
-    .toString();
+  const version = (require(packagePath).version as string).split('.')[0].toString();
 
   return version;
 }

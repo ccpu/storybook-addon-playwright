@@ -1,14 +1,9 @@
-import type {
-  DeleteFavouriteActionInput,
-  FavouriteActionsData,
-} from '../../schema';
+import type { DeleteFavouriteActionInput, FavouriteActionsData } from '../../schema';
 import { writeFileSync } from 'jsonfile';
 import { FAVOURITE_ACTIONS_FILE_PATH } from './constants';
 import { getFavouriteActions } from './get-favourite-actions';
 
-export async function deleteFavouriteAction(
-  actionSet: DeleteFavouriteActionInput,
-) {
+export async function deleteFavouriteAction(actionSet: DeleteFavouriteActionInput) {
   const actionSets = await getFavouriteActions();
 
   const favouriteActions: FavouriteActionsData = {

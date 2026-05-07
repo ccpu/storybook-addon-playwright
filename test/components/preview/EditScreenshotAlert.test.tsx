@@ -8,9 +8,7 @@ import { Button } from '@material-ui/core';
 vi.mock(
   '../../../src/features/screenshot/hooks/use-edit-screenshot',
   async () =>
-    await import(
-      '../../features/screenshot/hooks/__mocks__/use-edit-screenshot'
-    ),
+    await import('../../features/screenshot/hooks/__mocks__/use-edit-screenshot'),
 );
 
 describe('EditScreenshotAlert', () => {

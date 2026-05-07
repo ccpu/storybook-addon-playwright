@@ -45,10 +45,7 @@ within `.storybook/main.js`
 ```js
 module.exports = {
   stories: ['../**/*.stories.[tj]sx'],
-  addons: [
-    '@storybook/addon-essentials',
-    'storybook-addon-playwright/register',
-  ],
+  addons: ['@storybook/addon-essentials', 'storybook-addon-playwright/register'],
 };
 ```
 

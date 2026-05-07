@@ -1,10 +1,6 @@
 import type { StoryInfo } from '../../schema';
 
-import type {
-  ScreenshotData,
-  ScreenshotInfo,
-  ScreenshotSetting,
-} from '../../typings';
+import type { ScreenshotData, ScreenshotInfo, ScreenshotSetting } from '../../typings';
 import type { RequestData } from '../../typings/request';
 
 export interface ScreenshotRequest extends ScreenshotSetting, RequestData {

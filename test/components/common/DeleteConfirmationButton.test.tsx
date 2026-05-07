@@ -12,9 +12,7 @@ describe('DeleteConfirmationButton', () => {
 
   it('should handle delete', () => {
     const onDeleteMock = vi.fn();
-    const wrapper = shallow(
-      <DeleteConfirmationButton onDelete={onDeleteMock} />,
-    );
+    const wrapper = shallow(<DeleteConfirmationButton onDelete={onDeleteMock} />);
     wrapper.find(IconButton).props().onClick!({
       currentTarget: {},
       stopPropagation: () => true,

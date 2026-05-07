@@ -10,13 +10,5 @@ export async function touchStart(
   client?: Position,
   options?: PageExtraTouchOptions,
 ) {
-  await dispatchTouchEvent(
-    this,
-    'touchstart',
-    selector,
-    page,
-    screen,
-    client,
-    options,
-  );
+  await dispatchTouchEvent(this, 'touchstart', selector, page, screen, client, options);
 }

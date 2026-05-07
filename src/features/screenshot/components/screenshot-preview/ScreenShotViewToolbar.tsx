@@ -62,14 +62,7 @@ export interface PreviewItemProps {
 }
 
 const ScreenShotViewToolbar: React.FC<PreviewItemProps> = (props) => {
-  const {
-    browserType,
-    onSave,
-    showSaveButton,
-    loading,
-    onRefresh,
-    onFullScreen,
-  } = props;
+  const { browserType, onSave, showSaveButton, loading, onRefresh, onFullScreen } = props;
 
   const classes = useStyles();
 
@@ -100,9 +93,7 @@ const ScreenShotViewToolbar: React.FC<PreviewItemProps> = (props) => {
             <RefreshOutlinedIcon />
           </Tooltip>
         </IconButton>
-        {browserType !== 'storybook' && (
-          <BrowserOptions browserType={browserType} />
-        )}
+        {browserType !== 'storybook' && <BrowserOptions browserType={browserType} />}
 
         <IconButton onClick={onFullScreen}>
           <Tooltip placement="top" title="Full screen">

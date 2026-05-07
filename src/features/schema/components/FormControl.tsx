@@ -99,28 +99,16 @@ const FormControl: React.FC<ControlFormProps> = memo((props) => {
       <div className={classes.iconWrapper}>
         <div>
           {description && (
-            <Tooltip
-              placement="top"
-              interactive
-              enterDelay={800}
-              title={description}
-            >
+            <Tooltip placement="top" interactive enterDelay={800} title={description}>
               <HelpOutlineSharpIcon className={classes.icons} />
             </Tooltip>
           )}
         </div>
         {onAppendValueToTitle && (
           <div onClick={onAppendValueToTitle}>
-            <Tooltip
-              placement="top"
-              enterDelay={800}
-              title="Append value to title"
-            >
+            <Tooltip placement="top" enterDelay={800} title="Append value to title">
               {appendValueToTitle ? (
-                <CheckSelectedIcon
-                  style={{ opacity: 1 }}
-                  className={classes.icons}
-                />
+                <CheckSelectedIcon style={{ opacity: 1 }} className={classes.icons} />
               ) : (
                 <CheckNotSelectedIcon className={classes.icons} />
               )}

@@ -29,9 +29,9 @@ describe('normalizeRootSelectorPath', () => {
     appendDiv();
     appendDiv('storybook-root');
 
-    expect(
-      normalizeRootSelectorPath('html>body>div:nth-child(2)>span', document),
-    ).toBe('html>body>#storybook-root>span');
+    expect(normalizeRootSelectorPath('html>body>div:nth-child(2)>span', document)).toBe(
+      'html>body>#storybook-root>span',
+    );
   });
 
   it('should not replace when no supported root selector exists', () => {
@@ -39,18 +39,18 @@ describe('normalizeRootSelectorPath', () => {
     appendDiv();
     appendDiv();
 
-    expect(
-      normalizeRootSelectorPath('html>body>div:nth-child(3)>span', document),
-    ).toBe('html>body>div:nth-child(3)>span');
+    expect(normalizeRootSelectorPath('html>body>div:nth-child(3)>span', document)).toBe(
+      'html>body>div:nth-child(3)>span',
+    );
   });
 
   it('should not replace when nth-child selector does not point to the root element', () => {
     appendDiv();
     appendDiv('root');
 
-    expect(
-      normalizeRootSelectorPath('html>body>div:nth-child(1)>span', document),
-    ).toBe('html>body>div:nth-child(1)>span');
+    expect(normalizeRootSelectorPath('html>body>div:nth-child(1)>span', document)).toBe(
+      'html>body>div:nth-child(1)>span',
+    );
   });
 
   it('should evaluate legacy selectors up to nth-child(8)', () => {
@@ -59,9 +59,9 @@ describe('normalizeRootSelectorPath', () => {
     }
     appendDiv('root');
 
-    expect(
-      normalizeRootSelectorPath('html>body>div:nth-child(8)>span', document),
-    ).toBe('html>body>#root>span');
+    expect(normalizeRootSelectorPath('html>body>div:nth-child(8)>span', document)).toBe(
+      'html>body>#root>span',
+    );
   });
 
   it('should not replace selectors outside nth-child(1..8)', () => {
@@ -70,8 +70,8 @@ describe('normalizeRootSelectorPath', () => {
     }
     appendDiv('root');
 
-    expect(
-      normalizeRootSelectorPath('html>body>div:nth-child(9)>span', document),
-    ).toBe('html>body>div:nth-child(9)>span');
+    expect(normalizeRootSelectorPath('html>body>div:nth-child(9)>span', document)).toBe(
+      'html>body>div:nth-child(9)>span',
+    );
   });
 });

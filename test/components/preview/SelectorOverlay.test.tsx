@@ -10,8 +10,7 @@
 const events = vi.hoisted(() => ({} as Record<string, (e?: any) => void>));
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = {
     ...(actual.default ?? actual),
     useEffect: hook,
@@ -62,8 +61,7 @@ const getIframe = (elementFromPointEl?: HTMLElement) => {
   return {
     contentWindow: {
       document: {
-        elementFromPoint: (x: number) =>
-          x === -1 ? undefined : elementFromPointEl,
+        elementFromPoint: (x: number) => (x === -1 ? undefined : elementFromPointEl),
       },
     },
   } as unknown as HTMLIFrameElement;
@@ -83,9 +81,7 @@ describe('SelectorOverlay', () => {
         eventListenerCallback = cb;
       });
 
-    (useSelectorManager as Mock).mockImplementation(() =>
-      useSelectorManagerMockData(),
-    );
+    (useSelectorManager as Mock).mockImplementation(() => useSelectorManagerMockData());
 
     (useThrottleFn as Mock).mockImplementation((cb: () => void) => {
       useThrottleFnCallback = cb;
@@ -116,9 +112,7 @@ describe('SelectorOverlay', () => {
 
     useThrottleFnCallback(10, 10);
 
-    expect(wrapper.find('.selector-preview').props().style?.height).toBe(
-      '100%',
-    );
+    expect(wrapper.find('.selector-preview').props().style?.height).toBe('100%');
     expect(wrapper.find('.selector-preview').props().style?.width).toBe('100%');
   });
 

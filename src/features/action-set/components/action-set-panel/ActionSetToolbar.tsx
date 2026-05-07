@@ -1,10 +1,7 @@
 import { IconButton } from '@storybook/components';
 import { PlusIcon, RefreshIcon, StarIcon } from '@storybook/icons';
 import React from 'react';
-import {
-  DeleteConfirmationButton,
-  Toolbar,
-} from '../../../../components/common';
+import { DeleteConfirmationButton, Toolbar } from '../../../../components/common';
 import { FavouriteActions } from './FavouriteActions';
 
 export interface ActionToolbarProps {
@@ -34,10 +31,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
         </div>
         <div className="right">
           <FavouriteActions getContainerHeight={getContainerHeight}>
-            <IconButton
-              onClick={onFavoriteActionsClick}
-              title="Favourite Actions"
-            >
+            <IconButton onClick={onFavoriteActionsClick} title="Favourite Actions">
               <StarIcon />
             </IconButton>
           </FavouriteActions>

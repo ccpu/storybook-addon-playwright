@@ -10,8 +10,7 @@ export const getScreenshotArgs = (
 ): ScreenshotProp | undefined => {
   if (!data) return undefined;
 
-  const args =
-    data.args && Object.keys(data.args).length ? data.args : undefined;
+  const args = data.args && Object.keys(data.args).length ? data.args : undefined;
 
   if (args) return args;
 

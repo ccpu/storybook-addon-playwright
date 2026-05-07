@@ -11,16 +11,13 @@ export async function getFavouriteActions(): Promise<FavouriteActionSet[]> {
       return;
     }
 
-    readFile(
-      FAVOURITE_ACTIONS_FILE_PATH,
-      (err, data?: FavouriteActionsData) => {
-        if (err) {
-          reject(err);
-          return;
-        }
+    readFile(FAVOURITE_ACTIONS_FILE_PATH, (err, data?: FavouriteActionsData) => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-        resolve(data?.actionSets ?? []);
-      },
-    );
+      resolve(data?.actionSets ?? []);
+    });
   });
 }

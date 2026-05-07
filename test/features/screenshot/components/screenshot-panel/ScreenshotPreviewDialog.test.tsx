@@ -39,8 +39,7 @@ vi.mock('../../../../../src/api/trpc/client', async () => {
 });
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
-  const hook = (fn: any, deps?: any) =>
-    (globalThis as any).__useEffectSpy?.(fn, deps);
+  const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
@@ -84,8 +83,7 @@ import { act } from '@testing-library/react-hooks';
 
 vi.mock(
   '../../../../../src/api/trpc/clients/screenshot.client',
-  async () =>
-    await import('../../../../api/trpc/clients/__mocks__/screenshot.client'),
+  async () => await import('../../../../api/trpc/clients/__mocks__/screenshot.client'),
 );
 
 describe('ScreenshotPreviewDialog', () => {

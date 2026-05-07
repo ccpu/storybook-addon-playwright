@@ -4,10 +4,7 @@ import * as fs from 'node:fs';
 import { writeFileSync } from 'jsonfile';
 import { getVersion } from './get-version';
 
-export function saveStoryFile(
-  fileInfo: StoryPlaywrightFileInfo,
-  data?: PlaywrightData,
-) {
+export function saveStoryFile(fileInfo: StoryPlaywrightFileInfo, data?: PlaywrightData) {
   const stories = data?.stories;
 
   if (stories) {

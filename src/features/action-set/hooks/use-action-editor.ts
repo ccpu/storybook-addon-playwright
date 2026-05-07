@@ -50,20 +50,14 @@ export function useActionEditor(actionSet: ActionSet) {
   useEffect(() => () => clearActionExpansion(), []);
 
   const handleSave = useCallback(async () => {
-    const validateResult = validateActionList(
-      state.actionSchema,
-      actionSet.actions,
-    );
+    const validateResult = validateActionList(state.actionSchema, actionSet.actions);
 
     if (validateResult) {
       const message = validateResult
         .map((result) => {
-          if (!result.required || result.required.length === 0)
-            return undefined;
+          if (!result.required || result.required.length === 0) return undefined;
 
-          return `Action name: ${result.name}\nRequired: ${result.required.join(
-            ',',
-          )}`;
+          return `Action name: ${result.name}\nRequired: ${result.required.join(',')}`;
         })
         .filter(Boolean)
         .join('\n\n');

@@ -1,8 +1,4 @@
-import type {
-  ActionSchemaList,
-  ActionSet,
-  StoryAction,
-} from '../../../typings';
+import type { ActionSchemaList, ActionSet, StoryAction } from '../../../typings';
 import type { ActionSetState } from './action-set-store';
 import arrayMove from 'array-move';
 import { nanoid } from 'nanoid';
@@ -12,9 +8,7 @@ import { isSameActions } from './utils/index';
 
 const getState = () => useActionSetStore.getState();
 function setState(
-  partial:
-    | Partial<ActionSetState>
-    | ((state: ActionSetState) => Partial<ActionSetState>),
+  partial: Partial<ActionSetState> | ((state: ActionSetState) => Partial<ActionSetState>),
 ) {
   return useActionSetStore.setState(partial);
 }
@@ -169,9 +163,7 @@ export function addActionSet({
   const state = getState();
   const newAction = [
     ...(state.stories[storyId]
-      ? (state.stories[storyId].actionSets || []).filter(
-          (x) => x.id !== actionSet.id,
-        )
+      ? (state.stories[storyId].actionSets || []).filter((x) => x.id !== actionSet.id)
       : []),
     actionSet,
   ];
@@ -181,10 +173,7 @@ export function addActionSet({
   setState({
     ...updated,
     currentActionSets: selected
-      ? [
-          ...(state.currentActionSets ? state.currentActionSets : []),
-          actionSet.id,
-        ]
+      ? [...(state.currentActionSets ? state.currentActionSets : []), actionSet.id]
       : state.currentActionSets,
     orgEditingActionSet: isNew ? { ...actionSet, isNew: true } : undefined,
   });
@@ -358,8 +347,7 @@ export function toggleSubtitleItem({
       actions: actionSet.actions.map((act) => {
         if (act.id === actionId) {
           const hasItem =
-            act.subtitleItems &&
-            act.subtitleItems.find((x) => x === actionOptionPath);
+            act.subtitleItems && act.subtitleItems.find((x) => x === actionOptionPath);
           return {
             ...act,
             subtitleItems:

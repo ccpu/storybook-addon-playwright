@@ -100,9 +100,7 @@ describe('makeScreenshot', () => {
         requestId: 'request-id',
         storyId: 'story-id',
       }),
-    ).rejects.toThrowError(
-      'Make sure to return an instance of a page from getPage.',
-    );
+    ).rejects.toThrowError('Make sure to return an instance of a page from getPage.');
   });
 
   it('should make screenshot', async () => {
@@ -388,9 +386,7 @@ describe('makeScreenshot', () => {
       true,
     );
 
-    expect(compositeMock).toHaveBeenCalledWith([
-      { blend: 'add', input: 'buffer-data' },
-    ]);
+    expect(compositeMock).toHaveBeenCalledWith([{ blend: 'add', input: 'buffer-data' }]);
   });
 
   it('should apply config default screenshot options', async () => {
@@ -425,9 +421,7 @@ describe('makeScreenshot', () => {
       true,
     );
 
-    expect(compositeMock).toHaveBeenCalledWith([
-      { blend: 'xor', input: 'buffer-data' },
-    ]);
+    expect(compositeMock).toHaveBeenCalledWith([{ blend: 'xor', input: 'buffer-data' }]);
   });
 
   it('should overwrite config default screenshot options', async () => {

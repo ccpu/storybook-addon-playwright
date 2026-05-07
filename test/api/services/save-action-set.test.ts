@@ -52,13 +52,10 @@ describe('saveActionSet', () => {
       filePath: 'story.ts',
       storyId: 'story-id',
     });
-    const data =
-      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
+    const data = saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
     expect(data).toStrictEqual([
       {
-        actions: [
-          { args: { selector: 'html' }, id: 'action-id', name: 'click' },
-        ],
+        actions: [{ args: { selector: 'html' }, id: 'action-id', name: 'click' }],
         id: 'action-set-id-2',
         title: 'click',
       },
@@ -80,8 +77,7 @@ describe('saveActionSet', () => {
       filePath: 'story.ts',
       storyId: 'story-id',
     });
-    const data =
-      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
+    const data = saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
     expect(data).toHaveLength(3);
   });
 });

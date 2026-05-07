@@ -18,13 +18,11 @@ function ScreenshotPanel() {
 
   const { screenshotLoaderInProgress } = useStoryScreenshotLoader();
 
-  const { deleteInProgress, deleteStoryScreenshots } =
-    useDeleteStoryScreenshot();
+  const { deleteInProgress, deleteStoryScreenshots } = useDeleteStoryScreenshot();
 
   const state = useScreenshotStoreState();
 
-  const { testStoryScreenShots, imageDiffTestInProgress } =
-    useScreenshotDiffTestByType();
+  const { testStoryScreenShots, imageDiffTestInProgress } = useScreenshotDiffTestByType();
 
   const toggleShowPreview = useCallback(() => {
     setShowPreview(!showPreview);

@@ -8,10 +8,7 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { capitalize, getActionSchema } from '../../../../utils';
 import { useEditorAction } from '../../hooks/use-editor-action';
-import {
-  deleteActionSetAction,
-  toggleActionExpansion,
-} from '../../store/actions';
+import { deleteActionSetAction, toggleActionExpansion } from '../../store/actions';
 
 import { useActionSetStoreState } from '../../store/selectors';
 import { ActionSchemaRenderer } from './ActionSchemaRenderer';
@@ -73,8 +70,7 @@ export interface ActionOptionsProps {
 }
 
 const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
-  const { actionId, actionName, DragHandle, actionSetId, dragHandleProps } =
-    props;
+  const { actionId, actionName, DragHandle, actionSetId, dragHandleProps } = props;
 
   const [subtitle, setSubtitle] = useState<string[]>();
 
@@ -168,11 +164,7 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
           </div>
           <div>
             <Tooltip
-              title={
-                schema && schema.description
-                  ? schema.description
-                  : 'Not Available!'
-              }
+              title={schema && schema.description ? schema.description : 'Not Available!'}
             >
               <IconButton>
                 <QuestionIcon className={classes.icon} />
@@ -184,15 +176,13 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
           </div>
         </AccordionSummary>
         <AccordionDetails className={classes.detailPanel}>
-          {state.expandedActions &&
-            state.expandedActions[actionId] &&
-            hasParameters && (
-              <ActionSchemaRenderer
-                schema={schema}
-                actionId={actionId}
-                actionSetId={actionSetId}
-              />
-            )}
+          {state.expandedActions && state.expandedActions[actionId] && hasParameters && (
+            <ActionSchemaRenderer
+              schema={schema}
+              actionId={actionId}
+              actionSetId={actionSetId}
+            />
+          )}
         </AccordionDetails>
       </Accordion>
     </div>

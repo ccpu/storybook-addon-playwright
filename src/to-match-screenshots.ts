@@ -1,8 +1,10 @@
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import { getScreenshots } from './get-screenshots';
-import path from 'path';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import {
+  MatchImageSnapshotOptions,
+  toMatchImageSnapshot,
+} from 'jest-image-snapshot';
+import path from 'node:path';
 import { nanoid } from 'nanoid';
+import { getScreenshots } from './get-screenshots';
 
 expect.extend({ toMatchImageSnapshot });
 

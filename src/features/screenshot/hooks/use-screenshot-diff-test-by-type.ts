@@ -1,12 +1,12 @@
+import type { ScreenshotTestTargetType } from '../../../typings';
+import { nanoid } from 'nanoid';
 import { useCallback } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
-import { addImageDiffResult, setImageDiffResults } from '../store/actions';
-import { nanoid } from 'nanoid';
-import { ScreenshotTestTargetType } from '../../../typings';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { toast } from '../../../utils/toast';
+import { addImageDiffResult, setImageDiffResults } from '../store/actions';
 
-export const useScreenshotDiffTestByType = () => {
+export function useScreenshotDiffTestByType() {
   const storyData = useCurrentStoryData();
 
   const { mutateAsync, isPending: imageDiffTestInProgress } =
@@ -50,4 +50,4 @@ export const useScreenshotDiffTestByType = () => {
     storyData,
     testStoryScreenShots,
   };
-};
+}

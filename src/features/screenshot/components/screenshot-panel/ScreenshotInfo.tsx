@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import type { ScreenshotData } from '../../../../typings';
 
 import { Popover } from '@material-ui/core';
-import { ScreenshotData } from '../../../../typings';
-import ReactJson from 'react-json-view';
 import { IconButton } from '@storybook/components';
 import { CogIcon } from '@storybook/icons';
+import React, { useCallback } from 'react';
+import ReactJson from 'react-json-view';
 
 export interface ScreenshotInfoProps {
   screenshotData: ScreenshotData;

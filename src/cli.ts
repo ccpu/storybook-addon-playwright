@@ -6,16 +6,16 @@ const usage =
   'Usage: storybook-addon-playwright migrate props-to-args\n' +
   '   or: storybook-addon-playwright props-to-args';
 
-const isPropsToArgsCommand = (args: string[]) => {
+function isPropsToArgsCommand(args: string[]) {
   const [first, second] = args;
 
   return (
     first === 'props-to-args' ||
     (first === 'migrate' && second === 'props-to-args')
   );
-};
+}
 
-export const runCli = (args: string[]) => {
+export function runCli(args: string[]) {
   if (!isPropsToArgsCommand(args)) {
     console.log(usage);
     return 1;
@@ -31,7 +31,7 @@ export const runCli = (args: string[]) => {
   }
 
   return 0;
-};
+}
 
 if (require.main === module) {
   process.exitCode = runCli(process.argv.slice(2));

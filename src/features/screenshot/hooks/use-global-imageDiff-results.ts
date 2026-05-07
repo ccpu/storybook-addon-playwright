@@ -1,13 +1,13 @@
-import { ImageDiffResult } from '../../../api/typings';
-import { useImageDiffResults } from '../store/selectors';
+import type { ImageDiffResult } from '../../../api/typings';
 import { setImageDiffResults } from '../store/actions';
+import { useImageDiffResults } from '../store/selectors';
 
 export interface UseGlobalImageDiffResults {
   imageDiffResult: ImageDiffResult[];
   setImageDiffResult: (results: ImageDiffResult[]) => void;
 }
 
-export const useGlobalImageDiffResults = (): UseGlobalImageDiffResults => {
+export function useGlobalImageDiffResults(): UseGlobalImageDiffResults {
   const imageDiffResult = useImageDiffResults();
   return { imageDiffResult, setImageDiffResult: setImageDiffResults };
-};
+}

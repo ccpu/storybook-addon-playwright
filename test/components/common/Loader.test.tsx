@@ -1,6 +1,7 @@
 import { Loader } from '../../../src/components/common/Loader';
 import { shallow } from 'enzyme';
 import React from 'react';
+
 describe('Loader', () => {
   it('should render', () => {
     const wrapper = shallow(<Loader open={true} />);

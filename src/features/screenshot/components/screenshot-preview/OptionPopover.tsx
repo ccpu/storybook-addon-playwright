@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from 'react';
-
 import {
+  Divider,
+  IconButton,
+  makeStyles,
   Popover,
   Tooltip,
-  makeStyles,
-  IconButton,
-  Divider,
 } from '@material-ui/core';
-import { IconButton as SIconButton } from '@storybook/components';
+
 import CloseIcon from '@material-ui/icons/Close';
+import { IconButton as SIconButton } from '@storybook/components';
+import React, { useCallback, useState } from 'react';
 
 const useStyles = makeStyles(
   () => {

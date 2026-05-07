@@ -1,8 +1,8 @@
-import {
+import type {
   Page,
   BrowserContextOptions as PlaywrightBrowserContextOptions,
 } from 'playwright';
-import { ScreenshotSettingInput, StoryInfo } from '../schema';
+import type { ScreenshotSettingInput, StoryInfo } from '../schema';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
@@ -46,7 +46,9 @@ export interface ScreenshotData extends ScreenshotSetting {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ScreenshotProp = { [prop: string]: any };
+export interface ScreenshotProp {
+  [prop: string]: any;
+}
 
 export type ScreenshotTestTargetType =
   | 'file'

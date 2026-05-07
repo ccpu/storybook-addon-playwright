@@ -1,13 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import type { ScreenShotViewPanel } from '../../../../typings';
 import { makeStyles } from '@material-ui/core/styles';
-import { ScreenshotView } from './ScreenshotView';
-import { useStoryUrl } from '../../../../hooks/use-story-url';
-import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
-import { ScreenShotViewPanel } from '../../../../typings';
-import { Toolbar } from './Toolbar';
-import useMeasure from 'react-use/lib/useMeasure';
 import clsx from 'clsx';
+import React, { useCallback, useState } from 'react';
+import useMeasure from 'react-use/lib/useMeasure';
 import { InputDialog, Loader } from '../../../../components/common';
+import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
+import { useStoryUrl } from '../../../../hooks/use-story-url';
+import { ScreenshotView } from './ScreenshotView';
+import { Toolbar } from './Toolbar';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flexFlow: ' row wrap',
   },
   preview: {
-    boxShadow: theme.palette.divider + ' 0 1px 0 0 inset',
+    boxShadow: `${theme.palette.divider} 0 1px 0 0 inset`,
     height: '100%',
     overflow: 'hidden',
     padding: 5,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   vertical: {
-    borderLeft: '1px solid ' + theme.palette.divider,
+    borderLeft: `1px solid ${theme.palette.divider}`,
   },
 }));
 
@@ -87,9 +87,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
     setShowTitleDialog(!showTitleDialog);
   }, [showTitleDialog]);
 
-  const width = `calc(${
-    100 / (column ? column : activeBrowsers.length)
-  }% - 2px)`;
+  const width = `calc(${100 / (column || activeBrowsers.length)}% - 2px)`;
 
   const itemHeight =
     column === 1

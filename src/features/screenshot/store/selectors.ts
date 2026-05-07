@@ -1,4 +1,5 @@
-import { useScreenshotStore, ScreenshotState } from './screenshot-store';
+import type { ScreenshotState } from './screenshot-store';
+import { useScreenshotStore } from './screenshot-store';
 
 export function getScreenshotState(): ScreenshotState {
   return useScreenshotStore.getState();

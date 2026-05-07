@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useRef } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useSelectorManager } from '../../hooks';
 import { SelectorOverlay } from './SelectorOverlay';
 

@@ -1,11 +1,10 @@
-import React, { memo } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { capitalize } from '../../../utils';
-import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
-import { Tooltip } from '@material-ui/core';
+import { makeStyles, Tooltip } from '@material-ui/core';
 import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';
+import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
 import CheckNotSelected from '@material-ui/icons/RadioButtonUncheckedRounded';
 import clsx from 'clsx';
+import React, { memo } from 'react';
+import { capitalize } from '../../../utils';
 
 const useStyles = makeStyles(
   (theme) => {

@@ -1,5 +1,5 @@
 import { getFavouriteActions } from '../../../src/api/services/get-favourite-actions';
-import fs from 'fs';
+import fs from 'node:fs';
 import { FavouriteActions } from '../../../src/api/typings/favourite-actions';
 import { FavouriteActionSet } from '../../../src/typings';
 

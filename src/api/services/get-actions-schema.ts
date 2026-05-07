@@ -1,8 +1,8 @@
-import { ActionSchemaList } from '../../typings';
+import type { ActionSchemaList } from '../../typings';
 import { getConfigs } from '../server/configs';
 import actionSchema from '../server/data/action-schema.json';
 
-export const getActionsSchema = () => {
+export function getActionsSchema() {
   let schema = actionSchema as ActionSchemaList;
 
   const customSchema = getConfigs().customActionSchema;
@@ -11,4 +11,4 @@ export const getActionsSchema = () => {
     schema = { ...schema, ...customSchema };
   }
   return schema;
-};
+}

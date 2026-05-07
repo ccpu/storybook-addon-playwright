@@ -1,17 +1,17 @@
-import * as fs from 'fs';
+import type { ScreenshotData, ScreenshotInfo } from '../../typings';
 
-import { deleteStoryOptions, getStoryData } from './utils';
-import { ScreenshotData, ScreenshotInfo } from '../../typings';
+import * as fs from 'node:fs';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,
   saveStoryFile,
 } from '../server/utils';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
+import { deleteStoryOptions, getStoryData } from './utils';
 
-export const deleteScreenshot = async (
+export async function deleteScreenshot(
   data: ScreenshotInfo,
-): Promise<ScreenshotData[] | undefined> => {
+): Promise<ScreenshotData[] | undefined> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId, false);
 
@@ -64,4 +64,4 @@ export const deleteScreenshot = async (
   await saveStoryFile(fileInfo, storyData);
 
   return story.screenshots || [];
-};
+}

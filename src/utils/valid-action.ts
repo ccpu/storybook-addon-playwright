@@ -1,4 +1,4 @@
-import { StoryAction, ActionSchemaList } from '../typings';
+import type { ActionSchemaList, StoryAction } from '../typings';
 import { getActionSchema } from './get-schema';
 
 export interface ValidationResult {
@@ -10,10 +10,10 @@ export interface ActionListValidationResult extends ValidationResult {
   name: string;
 }
 
-export const validAction = (
+export function validAction(
   schema: ActionSchemaList,
   action: StoryAction,
-): ValidationResult => {
+): ValidationResult {
   const actionSchema = getActionSchema(schema, action.name);
 
   if (!actionSchema || !actionSchema.required || !actionSchema.required.length)
@@ -42,21 +42,18 @@ export const validAction = (
   return {
     required: requiredParams.length === 0 ? undefined : requiredParams,
   };
-};
+}
 
-export const isValidAction = (
-  schema: ActionSchemaList,
-  action: StoryAction,
-) => {
+export function isValidAction(schema: ActionSchemaList, action: StoryAction) {
   const result = validAction(schema, action);
 
   return result.required === undefined;
-};
+}
 
-export const validateActionList = (
+export function validateActionList(
   schema: ActionSchemaList,
   actions: StoryAction[],
-) => {
+) {
   const result = actions.reduce<ActionListValidationResult[]>((arr, action) => {
     const res = validAction(schema, action);
     if (res.required) {
@@ -69,4 +66,4 @@ export const validateActionList = (
     return arr;
   }, []);
   return result.length === 0 ? undefined : result;
-};
+}

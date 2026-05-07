@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
 import { IconButton as StorybookIconButton } from '@storybook/components';
-import { ConfirmationPopover } from '../common';
 import { TrashIcon } from '@storybook/icons';
+import React, { useCallback } from 'react';
+import { ConfirmationPopover } from '../common';
 
 export interface DeleteConfirmationButtonProps {
   onDelete: () => void;
-  IconButton?: React.ComponentType<any>;
+  IconButton?: React.ComponentType<unknown>;
   onClose?: () => void;
   disabled?: boolean;
 }

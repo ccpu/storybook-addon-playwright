@@ -1,4 +1,4 @@
-import { ExtendedPage, SelectorMouseWheelOptions } from './typings';
+import type { ExtendedPage, SelectorMouseWheelOptions } from './typings';
 
 export async function selectorMouseWheel(
   this: ExtendedPage,
@@ -10,7 +10,7 @@ export async function selectorMouseWheel(
   const result = await this.$eval(
     selector,
     (el, opt) => {
-      const event = new WheelEvent('wheel', opt as WheelEventInit);
+      const event = new WheelEvent('wheel', opt);
       el.dispatchEvent(event);
     },
     eventInitDict,

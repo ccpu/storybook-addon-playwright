@@ -1,6 +1,8 @@
+import type { PopoverProps } from '@material-ui/core';
+import type { ActionPanelProps } from './ActionPanel';
+import { Popover } from '@material-ui/core';
 import React, { memo } from 'react';
-import { Popover, PopoverProps } from '@material-ui/core';
-import { ActionPanelProps, ActionPanel } from './ActionPanel';
+import { ActionPanel } from './ActionPanel';
 
 export interface ActionPopoverProps
   extends ActionPanelProps,

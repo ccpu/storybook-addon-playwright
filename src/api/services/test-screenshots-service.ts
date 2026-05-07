@@ -1,14 +1,14 @@
-import { ImageDiffResult } from '../typings/image-diff';
-import { getPlaywrightConfigFiles } from '../../utils/get-playwright-config-files';
-import { testFileScreenshots } from './test-file-screenshots';
-import { getConfigs } from '../server/configs';
+import type { TestScreenshotsInput } from '../../schema';
+import type { ImageDiffResult } from '../typings/image-diff';
 import pLimit from 'p-limit';
+import { getPlaywrightConfigFiles } from '../../utils/get-playwright-config-files';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
-import { TestScreenshotsInput } from '../../schema';
+import { getConfigs } from '../server/configs';
+import { testFileScreenshots } from './test-file-screenshots';
 
-export const testScreenshots = async (
+export async function testScreenshots(
   data: TestScreenshotsInput,
-): Promise<ImageDiffResult[]> => {
+): Promise<ImageDiffResult[]> {
   const requestData = {
     ...data,
     requestId: data.requestId || '',
@@ -36,15 +36,15 @@ export const testScreenshots = async (
       }
 
       arr.push(
-        limit(() => {
-          return testFileScreenshots({
+        limit(async () =>
+          testFileScreenshots({
             disableEvans: true,
             filePath: file,
             requestId: data.requestId ?? '',
             requestType,
             storyId: data.storyId,
-          });
-        }),
+          }),
+        ),
       );
 
       return arr;
@@ -57,7 +57,7 @@ export const testScreenshots = async (
   const results = res.reduce<ImageDiffResult[]>((arr, d) => {
     const normalized = d.map((diff) => {
       if (diff.added && diff.pass === false) {
-        const rest = { ...diff } as ImageDiffResult;
+        const rest = { ...diff };
         delete (rest as { pass?: boolean }).pass;
         return rest;
       }
@@ -73,4 +73,4 @@ export const testScreenshots = async (
   }
 
   return results;
-};
+}

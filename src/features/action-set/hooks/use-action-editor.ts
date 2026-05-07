@@ -1,22 +1,21 @@
-import {
-  useActionSetStoreState,
-  clearActionExpansion,
-  addActionSetAction,
-  toggleActionExpansion,
-  saveActionSet as saveActionSetStore,
-  setActionSetTitle,
-  cancelEditActionSet,
-} from '../../../store';
-import { useCallback, useEffect } from 'react';
+import type { ActionSet, StoryAction } from '../../../typings';
 import { nanoid } from 'nanoid';
-import { StoryAction, ActionSet } from '../../../typings';
-import { validateActionList } from '../../../utils';
+import React, { useCallback, useEffect } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import React from 'react';
+import {
+  addActionSetAction,
+  cancelEditActionSet,
+  clearActionExpansion,
+  saveActionSet as saveActionSetStore,
+  setActionSetTitle,
+  toggleActionExpansion,
+  useActionSetStoreState,
+} from '../../../store';
+import { validateActionList } from '../../../utils';
 import { toast } from '../../../utils/toast';
 
-export const useActionEditor = (actionSet: ActionSet) => {
+export function useActionEditor(actionSet: ActionSet) {
   const { mutateAsync, isPending: inProgress } =
     trpcClient.actionSet.saveActionSet.useMutation({
       onError: (error) => {
@@ -48,9 +47,7 @@ export const useActionEditor = (actionSet: ActionSet) => {
     [storyData, actionSet.id],
   );
 
-  useEffect(() => {
-    return () => clearActionExpansion();
-  }, []);
+  useEffect(() => () => clearActionExpansion(), []);
 
   const handleSave = useCallback(async () => {
     const validateResult = validateActionList(
@@ -123,11 +120,12 @@ export const useActionEditor = (actionSet: ActionSet) => {
   const editingAction = actionSet !== undefined;
   const storyId = storyData && storyData.id;
 
-  React.useEffect(() => {
-    return () => {
+  React.useEffect(
+    () => () => {
       if (editingAction && storyId) handleCancelEditActionSet();
-    };
-  }, [handleCancelEditActionSet, editingAction, storyId]);
+    },
+    [handleCancelEditActionSet, editingAction, storyId],
+  );
 
   return {
     cancelEditActionSet: handleCancelEditActionSet,
@@ -138,4 +136,4 @@ export const useActionEditor = (actionSet: ActionSet) => {
     inProgress,
     state,
   };
-};
+}

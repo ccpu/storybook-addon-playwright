@@ -1,13 +1,13 @@
-import { ActionSchema } from '../typings';
+import type { ActionSchema } from '../typings';
 import { get } from 'object-path-immutable';
 
-export const getActionSchema = (
+export function getActionSchema(
   schema: ActionSchema,
   key: string,
-): ActionSchema | undefined => {
+): ActionSchema | undefined {
   if (!key) return undefined;
 
   const extendedKey = key.split('.').join('.properties.');
   const actionSchema = get(schema, extendedKey);
   return actionSchema;
-};
+}

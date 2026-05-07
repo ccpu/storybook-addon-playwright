@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles, capitalize } from '@material-ui/core';
-import { trpcClient } from '../../../../api/trpc/client';
-import { FavouriteActionSet } from '../../../../typings';
+import type { FavouriteActionSet } from '../../../../typings';
+import { capitalize, makeStyles } from '@material-ui/core';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
-import { addActionSet as addActionSetToStore } from '../../store/actions';
-import { nanoid } from 'nanoid';
-import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
-import { filterFavouriteActions } from './utils/filter-favourite-actions';
 import { TrashIcon } from '@storybook/icons';
+import { nanoid } from 'nanoid';
+import React from 'react';
+import { trpcClient } from '../../../../api/trpc/client';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { addActionSet as addActionSetToStore } from '../../store/actions';
+import { filterFavouriteActions } from './utils/filter-favourite-actions';
 
 const useStyles = makeStyles(
   () => {

@@ -1,5 +1,5 @@
-import { Page } from 'playwright';
-import { ClearInputOptions } from './typings';
+import type { Page } from 'playwright';
+import type { ClearInputOptions } from './typings';
 
 export async function clearInput(
   this: Page,

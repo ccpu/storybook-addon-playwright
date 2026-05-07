@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as path from 'node:path';
 
 export interface StoryPlaywrightFileInfo {
   name: string;
@@ -6,7 +6,7 @@ export interface StoryPlaywrightFileInfo {
   dir: string;
 }
 
-export const getStoryPlaywrightFileInfo = (storyRelativeFilePath: string) => {
+export function getStoryPlaywrightFileInfo(storyRelativeFilePath: string) {
   const absolutePath = path.resolve(storyRelativeFilePath);
   const parsedFileName = path.parse(absolutePath);
 
@@ -16,8 +16,8 @@ export const getStoryPlaywrightFileInfo = (storyRelativeFilePath: string) => {
       : `${parsedFileName.name}.playwright.json`;
   return {
     dir: parsedFileName.dir,
-    name: name,
+    name,
     path: path.join(path.dirname(absolutePath), name),
     screenShotsDir: path.join(parsedFileName.dir, '__screenshots__'),
   };
-};
+}

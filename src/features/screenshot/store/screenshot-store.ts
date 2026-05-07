@@ -1,6 +1,6 @@
+import type { ImageDiffResult } from '../../../api/typings';
+import type { ScreenshotData } from '../../../typings';
 import { create } from 'zustand';
-import { ScreenshotData } from '../../../typings';
-import { ImageDiffResult } from '../../../api/typings';
 
 export interface ScreenshotState {
   screenshots: ScreenshotData[];

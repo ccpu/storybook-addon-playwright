@@ -22,7 +22,7 @@ interface RequiredContext {
   };
 }
 
-export const getRawStories = (): StoryItem[] | undefined => {
+export function getRawStories(): StoryItem[] | undefined {
   const previewIframe = getPreviewIframe();
   const iframeWindow = previewIframe?.contentWindow as
     | (Window & RequiredContext)
@@ -42,4 +42,4 @@ export const getRawStories = (): StoryItem[] | undefined => {
   }
 
   return undefined;
-};
+}

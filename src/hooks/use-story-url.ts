@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
 import { useStorybookState } from '@storybook/manager-api';
+import { useEffect, useState } from 'react';
 import { constructStoryUrl } from '../utils';
 
-export const useStoryUrl = () => {
+export function useStoryUrl() {
   const state = useStorybookState();
   const [url, setUrl] = useState<string>();
 
@@ -16,11 +16,11 @@ export const useStoryUrl = () => {
 
         return `${key}=${val}`;
       });
-      newUrl += '&' + query.join('&');
+      newUrl += `&${query.join('&')}`;
     }
 
     setUrl(newUrl);
   }, [state.customQueryParams, state.storyId]);
 
   return url;
-};
+}

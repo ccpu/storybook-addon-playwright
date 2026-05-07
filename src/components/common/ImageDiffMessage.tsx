@@ -1,12 +1,10 @@
+import type { ImageDiffResult } from '../../api/typings';
+import type { BrowserTypes } from '../../typings';
+import type { ImageDiffPreviewDialogProps } from './ImageDiffPreviewDialog';
 import React from 'react';
-import { ImageDiffResult } from '../../api/typings';
 import { getImageDiffMessages } from '../../utils';
-import {
-  ImageDiffPreviewDialog,
-  ImageDiffPreviewDialogProps,
-} from './ImageDiffPreviewDialog';
-import { BrowserTypes } from '../../typings';
 import { toast } from '../../utils/toast';
+import { ImageDiffPreviewDialog } from './ImageDiffPreviewDialog';
 
 export interface ImageDiffMessageProps
   extends Partial<ImageDiffPreviewDialogProps> {
@@ -43,7 +41,7 @@ const ImageDiffMessage: React.FC<ImageDiffMessageProps> = (props) => {
     if (result.pass) {
       toast.success(
         // prettier-ignore
-        `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`,
+        `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ${  browserType}` : '' }`,
         {
           duration: 5000,
           onAutoClose: onClose,
@@ -58,7 +56,6 @@ const ImageDiffMessage: React.FC<ImageDiffMessageProps> = (props) => {
         duration: Infinity,
         onDismiss: onClose,
       });
-      return;
     }
   }, [browserType, onClose, result, titleMsg]);
 

@@ -8,12 +8,10 @@ interface Data {
   browser: string;
 }
 
-export const constructScreenshotFileName = (data: Data) => {
+export function constructScreenshotFileName(data: Data) {
   const { screenshotTitle, storyId, storyTitle, browser } = data;
 
-  return (
-    kebabCase(
-      storyTitle + ' ' + storyId + ' ' + ' ' + screenshotTitle + ' ' + browser,
-    ) + '-snap.png'
-  );
-};
+  return `${kebabCase(
+    `${storyTitle} ${storyId} ` + ` ${screenshotTitle} ${browser}`,
+  )}-snap.png`;
+}

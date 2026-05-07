@@ -1,7 +1,7 @@
-import { Definition } from 'ts-to-json';
+import type { Definition } from 'ts-to-json';
 
 export type ActionSchema = Definition;
 
-export type ActionSchemaList = {
+export interface ActionSchemaList {
   [key: string]: ActionSchema;
-};
+}

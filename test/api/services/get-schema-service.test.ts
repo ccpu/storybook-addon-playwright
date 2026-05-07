@@ -16,7 +16,6 @@ describe('getSchemaService', () => {
   });
 
   it('should return nothing', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const schema = getSchemaService('invalid' as any);
     expect(schema).not.toBeDefined();
   });

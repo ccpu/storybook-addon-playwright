@@ -77,7 +77,7 @@ describe('Control', () => {
       <Control
         onChange={onChangeMock}
         label="foo"
-        value={''}
+        value=""
         type="text"
         appendValueToTitle={false}
         onAppendValueToTitle={onAppendValueToTitleMock}

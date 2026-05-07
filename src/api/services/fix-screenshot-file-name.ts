@@ -1,11 +1,14 @@
-import { FixScreenshotFileNameInput } from '../../schema';
-import { getStoryPlaywrightDataByFileName } from './utils';
-import { getStoryPlaywrightFileInfo, saveStoryFile } from '../server/utils';
-import fs from 'fs';
-import path from 'path';
+import type { FixScreenshotFileNameInput } from '../../schema';
+import fs from 'node:fs';
+import path from 'node:path';
 import deepmerge from 'deepmerge';
 import kebabCase from 'lodash/kebabCase';
-import { constructScreenshotFileName } from '../server/utils';
+import {
+  constructScreenshotFileName,
+  getStoryPlaywrightFileInfo,
+  saveStoryFile,
+} from '../server/utils';
+import { getStoryPlaywrightDataByFileName } from './utils';
 
 interface ScreenshotFileData {
   browser: string;
@@ -15,9 +18,7 @@ interface ScreenshotFileData {
   storyTitle: string;
 }
 
-export const fixScreenshotFileName = async (
-  info: FixScreenshotFileNameInput,
-) => {
+export async function fixScreenshotFileName(info: FixScreenshotFileNameInput) {
   const configFile = await getStoryPlaywrightDataByFileName(info.filePath);
 
   if (!configFile) {
@@ -113,4 +114,4 @@ export const fixScreenshotFileName = async (
   }
 
   await saveStoryFile(fileInfos, configFile);
-};
+}

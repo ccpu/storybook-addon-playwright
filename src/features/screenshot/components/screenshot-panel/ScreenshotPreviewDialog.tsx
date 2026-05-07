@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
-import { ScreenshotData } from '../../../../typings';
-import {
-  ImageDiffPreviewDialog,
-  Loader,
+import type {
   DialogProps,
   ImageDiffPreviewProps,
 } from '../../../../components/common';
-import { ImageDiffResult } from '../../../../api/typings';
-import { ScreenshotInfo } from './ScreenshotInfo';
-import { StoryData } from '../../../../schema';
+import type { StoryData } from '../../../../schema';
+import type { ScreenshotData } from '../../../../typings';
+import React, { useEffect } from 'react';
+import { ImageDiffPreviewDialog, Loader } from '../../../../components/common';
 import { useScreenshotDiffTest } from '../../hooks';
+import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotPreviewDialogProps
   extends DialogProps,
@@ -31,10 +29,10 @@ const ScreenshotPreviewDialog: React.FC<ScreenshotPreviewDialogProps> = (
 
   return (
     <>
-      {(result as ImageDiffResult | undefined)?.filePath && (
+      {result?.filePath && (
         <ImageDiffPreviewDialog
           title={screenShotData.title}
-          imageDiffResult={result as ImageDiffResult}
+          imageDiffResult={result}
           open={open}
           onClose={onClose}
           titleActions={() => (

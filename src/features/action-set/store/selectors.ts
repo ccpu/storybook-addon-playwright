@@ -1,4 +1,5 @@
-import { useActionSetStore, ActionSetState } from './action-set-store';
+import type { ActionSetState } from './action-set-store';
+import { useActionSetStore } from './action-set-store';
 
 export function getActionSetState(): ActionSetState {
   return useActionSetStore.getState();

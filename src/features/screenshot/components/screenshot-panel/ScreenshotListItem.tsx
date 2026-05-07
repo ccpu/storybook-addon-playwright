@@ -1,29 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useState, useEffect, useRef } from 'react';
-import {
-  BrowserIcon,
-  MemoizedImageDiffMessage,
-  Loader,
-} from '../../../../components/common';
-import { ScreenshotData } from '../../../../typings';
-import { removeImageDiffResult } from '../../store/actions';
+import type { ImageDiffResult } from '../../../../api/typings';
+import type { StoryData } from '../../../../schema';
+import type { ScreenshotData } from '../../../../typings';
+import type { ScreenshotListItemMenuProps } from './ScreenshotListItemMenu';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-  ScreenshotListItemMenu,
-  ScreenshotListItemMenuProps,
-} from './ScreenshotListItemMenu';
+import { makeStyles } from '@material-ui/core';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Error from '@material-ui/icons/Error';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  BrowserIcon,
+  Loader,
+  MemoizedImageDiffMessage,
+} from '../../../../components/common';
 import { useDragStart } from '../../../../hooks/use-drag-start';
 import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
 import { useScreenshotDiffTest } from '../../hooks/use-screenshot-diff-test';
+import { removeImageDiffResult } from '../../store/actions';
 import { ScreenshotInfo } from './ScreenshotInfo';
-import { makeStyles } from '@material-ui/core';
-import { ImageDiffResult } from '../../../../api/typings';
-import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
+import { ScreenshotListItemMenu } from './ScreenshotListItemMenu';
 import { ScreenshotListItemWrapper } from './ScreenshotListItemWrapper';
-import { StoryData } from '../../../../schema';
+import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
 
 const useStyles = makeStyles(
   () => {
@@ -199,9 +197,7 @@ function ScreenshotListItem({
             ? {
                 ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
                 ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
-                setNodeRef: setActivatorNodeRef as (
-                  element: HTMLSpanElement | null,
-                ) => void,
+                setNodeRef: setActivatorNodeRef,
               }
             : undefined
         }

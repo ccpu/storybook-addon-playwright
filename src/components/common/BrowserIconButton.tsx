@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
-import { BrowserTypes } from '../../typings';
-import { IconButton } from '@storybook/components';
-import { BrowserIcon } from '../common/BrowserIcon';
+import type { BrowserTypes } from '../../typings';
 import { capitalize } from '@material-ui/core';
+import { IconButton } from '@storybook/components';
+import React, { useCallback } from 'react';
+import { BrowserIcon } from '../common/BrowserIcon';
 
 export interface BrowserIconProps {
   browserType: BrowserTypes;

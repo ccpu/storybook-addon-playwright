@@ -1,4 +1,4 @@
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
 
 export type ControlTypes =
   | 'text'
@@ -14,7 +14,10 @@ export type ControlTypes =
   | 'object'
   | 'array';
 
-export type StoryActionPosition = { x: number; y: number };
+export interface StoryActionPosition {
+  x: number;
+  y: number;
+}
 
 export interface StoryAction<T = Page> {
   id: string;

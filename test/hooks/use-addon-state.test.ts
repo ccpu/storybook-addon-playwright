@@ -5,6 +5,9 @@ describe('useAddonState', () => {
   it('should be object', () => {
     const { result } = renderHook(() => useAddonState());
 
-    expect(result.current.addonState).toStrictEqual({});
+    expect(result.current.addonState).toStrictEqual({
+      clippingWarningDismissed: false,
+      previewPanelEnabled: true,
+    });
   });
 });

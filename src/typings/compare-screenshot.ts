@@ -1,7 +1,7 @@
-import { ScreenshotPathInfo } from '../api/server/utils/get-screenshot-paths';
-import { ImageDiffResult } from '../api/typings';
-import { RequestData } from './request';
-import {
+import type { ScreenshotPathInfo } from '../api/server/utils/get-screenshot-paths';
+import type { ImageDiffResult } from '../api/typings';
+import type { RequestData } from './request';
+import type {
   BrowserTypes,
   ScreenshotImageData,
   ScreenshotInfo,

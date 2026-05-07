@@ -1,21 +1,21 @@
-import React, { useCallback, useEffect } from 'react';
-import { ActionToolbar } from './ActionSetToolbar';
-import { InputDialog } from '../../../../components/common';
-import { nanoid } from 'nanoid';
-import { ActionSetList } from './ActionSetList';
-import { ActionSet } from '../../../../typings';
-import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import type { ActionSet } from '../../../../typings';
 import { useStorybookState } from '@storybook/manager-api';
+import { nanoid } from 'nanoid';
+import React, { useCallback, useEffect } from 'react';
 import { trpcClient } from '../../../../api/trpc/client';
+import { InputDialog } from '../../../../components/common';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { useCurrentActions } from '../../hooks/use-current-actions';
 import {
-  cancelEditActionSet,
   addActionSet as addActionSetAction,
+  cancelEditActionSet,
   clearCurrentActionSets,
-  deleteTempActionSets,
   deleteActionSet as deleteActionSetFromStore,
+  deleteTempActionSets,
   sortActionSets,
 } from '../../store/actions';
-import { useCurrentActions } from '../../hooks/use-current-actions';
+import { ActionSetList } from './ActionSetList';
+import { ActionToolbar } from './ActionSetToolbar';
 
 interface SortableIndexChangeEvent {
   newIndex: number;
@@ -78,7 +78,7 @@ const ActionSetMain: React.FC = () => {
         await deleteActionSet({
           actionSetId: action.id,
           filePath: storyData.filePath,
-          storyId: storyId,
+          storyId,
         });
 
         deleteActionSetFromStore({ actionSetId: action.id, storyId });

@@ -1,6 +1,8 @@
+import type { ActionPanelProps } from './ActionPanel';
+import type { DialogProps } from './Dialog';
 import React, { memo, useCallback } from 'react';
-import { Dialog, DialogProps } from './Dialog';
-import { ActionPanel, ActionPanelProps } from './ActionPanel';
+import { ActionPanel } from './ActionPanel';
+import { Dialog } from './Dialog';
 
 interface StyleProps {
   width?: number | string;

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable ts/no-explicit-any */
 import path from 'path';
 import * as orgFs from 'fs';
 

@@ -1,8 +1,8 @@
-import React from 'react';
-import { IconButton } from '@storybook/components';
 import { Tooltip } from '@material-ui/core';
-import { getPreviewIframe } from '../../utils';
+import { IconButton } from '@storybook/components';
+import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
+import { getPreviewIframe } from '../../utils';
 
 const ResizeBrowserToPreview: React.FC = () => {
   const { setBrowserOptions, browserOptions } = useBrowserOptions();
@@ -36,7 +36,7 @@ const ResizeBrowserToPreview: React.FC = () => {
     <IconButton onClick={handleClick}>
       <Tooltip
         placement="top"
-        title={'Adjust the browser size to match the preview.'}
+        title="Adjust the browser size to match the preview."
       >
         <svg
           className="MuiSvgIcon-root"

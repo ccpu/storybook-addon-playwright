@@ -1,11 +1,10 @@
-import { useCallback } from 'react';
-import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
+import { useCallback, useState } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
-import { deleteScreenshot as deleteScreenshotFromStore } from '../store/index';
+import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { toast } from '../../../utils/toast';
-import { useState } from 'react';
+import { deleteScreenshot as deleteScreenshotFromStore } from '../store/index';
 
-export const useDeleteScreenshot = () => {
+export function useDeleteScreenshot() {
   const storyData = useCurrentStoryData();
   const [error, setError] = useState<string>();
 
@@ -41,9 +40,7 @@ export const useDeleteScreenshot = () => {
           storyId: storyData.id,
         });
         deleteScreenshotFromStore(id);
-      } catch {
-        return;
-      }
+      } catch {}
     },
     [mutateAsync, storyData],
   );
@@ -54,4 +51,4 @@ export const useDeleteScreenshot = () => {
     error,
     inProgress,
   };
-};
+}

@@ -1,5 +1,5 @@
+import { act, renderHook } from '@testing-library/react-hooks';
 import { useBrowserOptions } from '../../src/hooks/use-browser-options';
-import { renderHook, act } from '@testing-library/react-hooks';
 
 describe('useBrowserDevice', () => {
   it('should have empty object', () => {

@@ -1,16 +1,16 @@
-import React from 'react';
+import { AddonPanel } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
+import React from 'react';
+import { ActionPanel, ScreenshotPanel } from './components/panel';
+import { Preview } from './components/preview';
+import { Tool } from './components/tool-bar';
 import {
-  ADDON_ID,
   ACTIONS_PANEL_ID,
-  TOOL_ID,
+  ADDON_ID,
   PREVIEW_ID,
   SCREENSHOT_PANEL_ID,
+  TOOL_ID,
 } from './constants';
-import { Tool } from './components/tool-bar';
-import { ActionPanel, ScreenshotPanel } from './components/panel';
-import { AddonPanel } from '@storybook/components';
-import { Preview } from './components/preview';
 // Register the PREVIEW wrapper at module load time (before React renders).
 // In Storybook 8, initModules/loadAddons runs in a useEffect (after first render).
 // The Canvas component captures `wrappers` as a closure on first render and never

@@ -1,16 +1,23 @@
-import { StoryAction, ActionSchemaList, ActionSet } from '../../../typings';
-import * as immutableObject from 'object-path-immutable';
+import type {
+  ActionSchemaList,
+  ActionSet,
+  StoryAction,
+} from '../../../typings';
+import type { ActionSetState } from './action-set-store';
 import arrayMove from 'array-move';
 import { nanoid } from 'nanoid';
+import * as immutableObject from 'object-path-immutable';
+import { useActionSetStore } from './action-set-store';
 import { isSameActions } from './utils/index';
-import { useActionSetStore, ActionSetState } from './action-set-store';
 
 const getState = () => useActionSetStore.getState();
-const setState = (
+function setState(
   partial:
     | Partial<ActionSetState>
     | ((state: ActionSetState) => Partial<ActionSetState>),
-) => useActionSetStore.setState(partial);
+) {
+  return useActionSetStore.setState(partial);
+}
 
 // --- helpers ---
 
@@ -139,7 +146,7 @@ export function setScreenShotActionSets({
 
   const updated = updateStoryActionSet(state, storyId, [
     ...matched,
-    ...storyActionSets.filter((x) => currentActionSets.indexOf(x.id) === -1),
+    ...storyActionSets.filter((x) => !currentActionSets.includes(x.id)),
   ]);
 
   setState({
@@ -267,7 +274,7 @@ export function setActionSchema(actionSchema: ActionSchemaList) {
 
 export function cancelEditActionSet(storyId: string) {
   const state = getState();
-  const orgEditingActionSet = state.orgEditingActionSet;
+  const { orgEditingActionSet } = state;
 
   if (!orgEditingActionSet) return;
 

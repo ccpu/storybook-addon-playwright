@@ -1,5 +1,5 @@
 import { addToFavourite } from '../../../src/api/services/add-to-favourite';
-import fs from 'fs';
+import fs from 'node:fs';
 import jsonfile from 'jsonfile';
 import { FavouriteActions } from '../../../src/api/typings/favourite-actions';
 import { FavouriteActionSet } from '../../../src/typings';

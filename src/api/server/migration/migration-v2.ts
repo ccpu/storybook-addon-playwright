@@ -1,6 +1,6 @@
-import {
-  PlaywrightData,
+import type {
   ActionSet,
+  PlaywrightData,
   ScreenshotData,
   StoryAction,
 } from '../../../typings';
@@ -15,13 +15,15 @@ export interface PlaywrightStoryData {
   screenshots?: V1ScreenshotData[];
 }
 
-export type PlaywrightDataStories = { [id: string]: PlaywrightStoryData };
+export interface PlaywrightDataStories {
+  [id: string]: PlaywrightStoryData;
+}
 
 interface V1PlaywrightData extends PlaywrightData {
   stories?: PlaywrightDataStories;
 }
 
-export const migrationV2 = (data: V1PlaywrightData, version: string) => {
+export function migrationV2(data: V1PlaywrightData, version: string) {
   data.version = version;
   if (data.stories) {
     for (const storyKey in data.stories) {
@@ -61,4 +63,4 @@ export const migrationV2 = (data: V1PlaywrightData, version: string) => {
   }
 
   return data;
-};
+}

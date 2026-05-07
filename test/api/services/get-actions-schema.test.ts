@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { getActionsSchema } from '../../../src/api/services/get-actions-schema';
 
 vi.mock(
@@ -19,6 +18,6 @@ describe('getActionsSchema', () => {
   it('should include custom schema', () => {
     const schema = getActionsSchema();
 
-    expect(schema['clickSelector']).toBeDefined();
+    expect(schema.clickSelector).toBeDefined();
   });
 });

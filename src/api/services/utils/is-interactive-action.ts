@@ -1,5 +1,5 @@
-import { StoryAction } from '../../../typings';
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
+import type { StoryAction } from '../../../typings';
 
 const waitActions = [
   'waitForSelector',
@@ -9,6 +9,6 @@ const waitActions = [
   'takeScreenshotOptions',
 ];
 
-export const isInteractiveAction = (action: StoryAction<Page>) => {
+export function isInteractiveAction(action: StoryAction<Page>) {
   return !waitActions.includes(action.name);
-};
+}

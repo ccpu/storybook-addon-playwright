@@ -1,13 +1,11 @@
-import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
+import type { ScreenshotPathInfo } from './api/server/utils/get-screenshot-paths';
+import type { RequestData } from './typings/request';
+import fs from 'node:fs';
 import { getStoryPlaywrightData } from './api/server/utils';
+import { getScreenshotPaths } from './api/server/utils/get-screenshot-paths';
 import { makeScreenshot } from './api/services';
-import {
-  getScreenshotPaths,
-  ScreenshotPathInfo,
-} from './api/server/utils/get-screenshot-paths';
-import fs from 'fs';
-import { RequestData } from './typings/request';
 import { setStoryScreenshotOptions } from './api/services/utils/set-story-screenshot-options';
+import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 
 interface RunImageDiffOptions extends RequestData {
   onScreenshotReady?: (
@@ -23,7 +21,7 @@ interface GetScreenshot {
   configFile: string;
 }
 
-export const getScreenshots = async (options: RunImageDiffOptions) => {
+export async function getScreenshots(options: RunImageDiffOptions) {
   const { onScreenshotReady, playwrightJsonPath, requestId } = options;
 
   const files =
@@ -49,7 +47,7 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
 
           const screenShot = await makeScreenshot(
             {
-              requestId: requestId,
+              requestId,
               storyId: story.storyId,
               ...screenShotData,
             },
@@ -78,4 +76,4 @@ export const getScreenshots = async (options: RunImageDiffOptions) => {
   }
 
   return results;
-};
+}

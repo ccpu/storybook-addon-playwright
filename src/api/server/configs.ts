@@ -1,9 +1,9 @@
-import { Config } from '../../typings';
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
+import type { Config } from '../../typings';
 
 let configs: Config<Page>;
 
-export const setConfig = <T = Page>(conf: Config<T>) => {
+export function setConfig<T = Page>(conf: Config<T>) {
   configs = {
     ...(conf as unknown as Config<Page>),
     concurrencyLimit: {
@@ -12,12 +12,12 @@ export const setConfig = <T = Page>(conf: Config<T>) => {
       ...conf.concurrencyLimit,
     },
   };
-};
+}
 
-export const getConfigs = () => {
+export function getConfigs() {
   if (!configs) {
     throw new Error('Configuration has not been set.');
   }
 
   return configs;
-};
+}

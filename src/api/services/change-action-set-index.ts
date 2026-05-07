@@ -1,14 +1,14 @@
-import arrayMove from 'array-move';
+import type { ChangeActionSetIndexInput } from '../../schema';
 
-import { getStoryData } from './utils';
-import { ChangeActionSetIndexInput } from '../../schema';
+import arrayMove from 'array-move';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,
   saveStoryFile,
 } from '../server/utils';
+import { getStoryData } from './utils';
 
-export const changeActionSetIndex = async (info: ChangeActionSetIndexInput) => {
+export async function changeActionSetIndex(info: ChangeActionSetIndexInput) {
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
@@ -19,4 +19,4 @@ export const changeActionSetIndex = async (info: ChangeActionSetIndexInput) => {
   story.actionSets = arrayMove(story.actionSets, info.oldIndex, info.newIndex);
 
   await saveStoryFile(fileInfo, storyData);
-};
+}

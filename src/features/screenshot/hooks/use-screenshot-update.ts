@@ -1,10 +1,10 @@
+import type { ImageDiffResult } from '../../../api/typings';
 import { useCallback } from 'react';
-import { updateImageDiffResult } from '../store/index';
-import { ImageDiffResult } from '../../../api/typings';
 import { trpcClient } from '../../../api/trpc/client';
 import { toast } from '../../../utils/toast';
+import { updateImageDiffResult } from '../store/index';
 
-export const useScreenshotUpdate = (successMessage?: string) => {
+export function useScreenshotUpdate(successMessage?: string) {
   const {
     mutateAsync,
     isPending: updateScreenshotInProgress,
@@ -65,4 +65,4 @@ export const useScreenshotUpdate = (successMessage?: string) => {
     updateScreenshotClearResult,
     updateScreenshotInProgress,
   };
-};
+}

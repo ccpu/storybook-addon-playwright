@@ -2,6 +2,7 @@ import { ConfirmationPopover } from '../../../src/components/common/Confirmation
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionPopover } from '../../../src/components/common/ActionPopover';
+
 describe('ConfirmationPopover', () => {
   const onCancelMock = vi.fn();
   const onCloseMock = vi.fn();

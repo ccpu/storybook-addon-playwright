@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import type { ScreenshotProp } from '../typings';
 import { STORY_ARGS_UPDATED, STORY_CHANGED } from '@storybook/core-events';
-import { ScreenshotProp } from '../typings';
 import { addons, useStorybookApi } from '@storybook/manager-api';
 import equal from 'fast-deep-equal';
+import { useEffect, useRef, useState } from 'react';
 
-export const useKnobs = () => {
+export function useKnobs() {
   const [args, setArgs] = useState<ScreenshotProp>();
   const api = useStorybookApi();
   const apiRef = useRef(api);
@@ -50,4 +50,4 @@ export const useKnobs = () => {
   }, []);
 
   return args;
-};
+}

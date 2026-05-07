@@ -1,12 +1,12 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { useBrowserOptions } from '../../../../hooks/use-browser-options';
-import { BrowsersOption } from '../../../../hooks/use-browser-options';
-import { OptionPopover } from './OptionPopover';
+import type { BrowsersOption } from '../../../../hooks/use-browser-options';
 import SettingIcon from '@material-ui/icons/Settings';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  MemoizedSchemaFormLoader,
   DeviceList,
+  MemoizedSchemaFormLoader,
 } from '../../../../components/common';
+import { useBrowserOptions } from '../../../../hooks/use-browser-options';
+import { OptionPopover } from './OptionPopover';
 
 export interface BrowserOptionsProps {
   browserType: keyof BrowsersOption;
@@ -48,7 +48,7 @@ const BrowserOptions: React.FC<BrowserOptionsProps> = ({ browserType }) => {
       {!reset && (
         <MemoizedSchemaFormLoader
           onSave={handleSave}
-          schemaName={'browser-options'}
+          schemaName="browser-options"
           defaultData={browserOptions && browserOptions[browserType]}
           FooterComponent={
             <DeviceList onDeviceSelect={handleDeviceSelection} />

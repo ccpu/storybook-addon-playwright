@@ -1,4 +1,4 @@
-import { loadStoryData } from '../../../src/api/server/utils';
+import { loadStoryData, saveStoryFile } from '../../../src/api/server/utils';
 import { saveScreenshot } from '../../../src/api/services/save-screenshot';
 import { SaveScreenshotRequest } from '../../../src/api/typings';
 import { setConfig } from '../../../src/api/server/configs';
@@ -6,7 +6,6 @@ import { Page } from 'playwright';
 import * as diffImageToScreenshot from '../../../src/api/services/diff-image-to-screenshot';
 import { deleteScreenshot } from '../../../src/api/services/delete-screenshot';
 import { BrowserContextOptions } from '../../../src/typings';
-import { saveStoryFile } from '../../../src/api/server/utils';
 
 vi.mock(
   '../../../src/api/services/diff-image-to-screenshot',

@@ -1,6 +1,6 @@
-import { ImageDiffResult } from '../api/typings';
+import type { ImageDiffResult } from '../api/typings';
 
-export const getImageDiffMessages = (result: ImageDiffResult) => {
+export function getImageDiffMessages(result: ImageDiffResult) {
   if (result.error) return result.error;
 
   if (result.diffSize && result.imageDimensions) {
@@ -12,4 +12,4 @@ export const getImageDiffMessages = (result: ImageDiffResult) => {
     return `Expected image to match or be a close match to snapshot but was ${differencePercentage}% different from snapshot (${result.diffPixelCount} differing pixels).`;
   }
   return '';
-};
+}

@@ -1,14 +1,14 @@
-import { useEffect, useCallback } from 'react';
+import type { ActionSchemaList } from '../../../typings';
+import { useCallback, useEffect } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
-import { ActionSchemaList } from '../../../typings';
 import {
   setActionSchema,
-  useSchemaLoaded,
   setSchemaLoaded,
+  useSchemaLoaded,
 } from '../../../store';
 import { toast } from '../../../utils/toast';
 
-export const useActionSchemaLoader = () => {
+export function useActionSchemaLoader() {
   const loaded = useSchemaLoaded();
 
   const {
@@ -44,4 +44,4 @@ export const useActionSchemaLoader = () => {
   }, [inProgress, load, loaded]);
 
   return { loaded, loading: inProgress };
-};
+}

@@ -1,28 +1,27 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { ActionOptions } from './ActionOptions';
+import type { DragEndEvent, DragOverEvent } from '@dnd-kit/core';
+import type { ActionSet } from '../../../../typings';
 import {
+  closestCenter,
   DndContext,
-  DragEndEvent,
-  DragOverEvent,
   KeyboardSensor,
   PointerSensor,
-  closestCenter,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
 import {
-  SortableContext,
   arrayMove,
+  SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { moveActionSetAction } from '../../store/actions';
 import { makeStyles } from '@material-ui/core';
-import { ActionSet } from '../../../../typings';
+import React, { useCallback, useEffect, useState } from 'react';
 import { DragHandle, ListWrapper } from '../../../../components/common';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { moveActionSetAction } from '../../store/actions';
+import { ActionOptions } from './ActionOptions';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -85,9 +84,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({
         dragHandleProps={{
           ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
           ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
-          setNodeRef: setActivatorNodeRef as (
-            element: HTMLSpanElement | null,
-          ) => void,
+          setNodeRef: setActivatorNodeRef,
         }}
       />
     </div>
@@ -200,7 +197,7 @@ const ActionList: React.FC<ActionListProps> = ({ actionSet }) => {
   if (!actionSet || !actionSet.actions.length) {
     return (
       <div className={classes.noActionMessage}>
-        <div>Click the {"'+'"} button to create an action.</div>
+        <div>Click the '+' button to create an action.</div>
       </div>
     );
   }

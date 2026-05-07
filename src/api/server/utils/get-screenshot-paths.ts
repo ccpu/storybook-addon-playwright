@@ -1,7 +1,7 @@
-import path from 'path';
+import type { DiffImageToScreenShot } from '../../typings';
+import path from 'node:path';
 import kebabCase from 'lodash/kebabCase';
 import { getStoryPlaywrightFileInfo } from './get-story-playwright-file-info';
-import { DiffImageToScreenShot } from '../../typings';
 
 export interface ScreenshotPathInfo {
   diffDir: string;
@@ -10,7 +10,7 @@ export interface ScreenshotPathInfo {
   screenshotsDir: string;
 }
 
-export const getScreenshotPaths = (data: DiffImageToScreenShot) => {
+export function getScreenshotPaths(data: DiffImageToScreenShot) {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
 
   const screenshotIdentifier = kebabCase(
@@ -21,7 +21,7 @@ export const getScreenshotPaths = (data: DiffImageToScreenShot) => {
 
   const filePath = path.join(
     fileInfo.screenShotsDir,
-    screenshotIdentifier + '-snap.png',
+    `${screenshotIdentifier}-snap.png`,
   );
 
   return {
@@ -30,4 +30,4 @@ export const getScreenshotPaths = (data: DiffImageToScreenShot) => {
     screenshotIdentifier,
     screenshotsDir: fileInfo.screenShotsDir,
   };
-};
+}

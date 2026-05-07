@@ -1,4 +1,4 @@
-import { ScreenshotTestTargetType } from './screenshot';
+import type { ScreenshotTestTargetType } from './screenshot';
 
 export interface RequestData {
   requestId: string;

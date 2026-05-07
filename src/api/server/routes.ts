@@ -1,5 +1,5 @@
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import type { IncomingMessage, ServerResponse } from 'http';
 import { createContext } from '../trpc/context';
 import { appRouter } from '../trpc/router';
 
@@ -14,12 +14,12 @@ function toWebRequest(req: IncomingMessage) {
   } as RequestInit);
 }
 
-type RouterLike = {
+interface RouterLike {
   all: (
     path: string,
     handler: (req: IncomingMessage, res: ServerResponse) => Promise<void>,
   ) => void;
-};
+}
 
 export default function middleware(router: RouterLike) {
   router.all('/trpc/*', async (req, res) => {

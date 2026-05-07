@@ -7,7 +7,7 @@ interface Props {
   fixFunction?: boolean;
 }
 
-export const useFixScreenshotFileName = (props: Props) => {
+export function useFixScreenshotFileName(props: Props) {
   const { fixFunction } = props;
 
   const currentStoryData = useCurrentStoryData();
@@ -52,9 +52,7 @@ export const useFixScreenshotFileName = (props: Props) => {
       .then(() => {
         setReload(true);
       })
-      .catch(() => {
-        return;
-      });
+      .catch(() => {});
   }, [currentStoryData, fixFunction, functionName, mutateAsync]);
 
   const handleReload = React.useCallback(() => {
@@ -76,4 +74,4 @@ export const useFixScreenshotFileName = (props: Props) => {
 
     reload,
   };
-};
+}

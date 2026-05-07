@@ -1,16 +1,16 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { useScreenshotStoreState } from '../../store/selectors';
-import { setPauseDeleteImageDiffResult } from '../../store/actions';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Loader } from '../../../../components/common';
-import { ScreenshotListToolbar } from './ScreenshotListToolbar';
-import { StoryScreenshotPreview } from './StoryScreenshotPreview';
-import { ScreenshotList } from './ScreenshotList';
 import { useDeleteStoryScreenshot } from '../../hooks/use-delete-story-screenshots';
 import { useScreenshotDiffTestByType } from '../../hooks/use-screenshot-diff-test-by-type';
-import { useStoryScreenshotLoader } from '../../hooks/use-story-screenshot-loader';
 import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
+import { useStoryScreenshotLoader } from '../../hooks/use-story-screenshot-loader';
+import { setPauseDeleteImageDiffResult } from '../../store/actions';
+import { useScreenshotStoreState } from '../../store/selectors';
+import { ScreenshotList } from './ScreenshotList';
+import { ScreenshotListToolbar } from './ScreenshotListToolbar';
+import { StoryScreenshotPreview } from './StoryScreenshotPreview';
 
-const ScreenshotPanel = () => {
+function ScreenshotPanel() {
   const [showPreview, setShowPreview] = useState(false);
 
   const reqBy = 'screenshot-panel';
@@ -65,7 +65,7 @@ const ScreenshotPanel = () => {
       )}
     </>
   );
-};
+}
 
 ScreenshotPanel.displayName = 'ScreenshotPanel';
 

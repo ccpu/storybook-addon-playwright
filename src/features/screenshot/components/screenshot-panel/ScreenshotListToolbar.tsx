@@ -1,16 +1,16 @@
-import React from 'react';
-import { Toolbar } from '../../../../components/common';
 import { IconButton } from '@storybook/components';
-import {
-  DeleteConfirmationButton,
-  FixScreenshotFileDialog,
-} from '../../../../components/common';
 import {
   ContrastIcon,
   PhotoIcon,
   RefreshIcon,
   WrenchIcon,
 } from '@storybook/icons';
+import React from 'react';
+import {
+  DeleteConfirmationButton,
+  FixScreenshotFileDialog,
+  Toolbar,
+} from '../../../../components/common';
 
 export interface ScreenshotListToolbarProps {
   onTestClick: () => void;

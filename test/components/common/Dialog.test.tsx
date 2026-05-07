@@ -1,6 +1,7 @@
 import { Dialog } from '../../../src/components/common/Dialog';
 import { shallow } from 'enzyme';
 import React from 'react';
+
 describe('Dialog', () => {
   it('should render', () => {
     const wrapper = shallow(<Dialog open={true} />);

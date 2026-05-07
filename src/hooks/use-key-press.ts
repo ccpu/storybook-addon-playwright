@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useKeyPressFn } from './use-key-press-fn';
 
 export function useKeyPress(targetKey, disable = false) {

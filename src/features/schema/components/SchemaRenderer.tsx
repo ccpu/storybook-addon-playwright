@@ -1,5 +1,5 @@
+import type { ActionSchema } from '../../../typings';
 import React from 'react';
-import { ActionSchema } from '../../../typings';
 import { MemoizedSchemaProp } from './SchemaProp';
 
 export interface SchemaRendererProps {
@@ -34,7 +34,7 @@ const SchemaRenderer: React.FC<SchemaRendererProps> = ({
             schema={param}
             parents={parents}
             nextPropName={array[i + 1]}
-            isRequired={required && required.indexOf(name) !== -1}
+            isRequired={required && required.includes(name)}
             onChange={onChange}
             getValue={getValue}
             shouldAppendToTitle={shouldAppendToTitle}
@@ -50,4 +50,4 @@ const SchemaRenderer: React.FC<SchemaRendererProps> = ({
 SchemaRenderer.displayName = 'SchemaRenderer';
 
 const MemoizedSchemaRenderer = React.memo(SchemaRenderer);
-export { SchemaRenderer, MemoizedSchemaRenderer };
+export { MemoizedSchemaRenderer, SchemaRenderer };

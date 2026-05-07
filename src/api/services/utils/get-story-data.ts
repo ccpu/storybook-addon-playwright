@@ -1,10 +1,10 @@
-import { PlaywrightData } from '../../../typings';
+import type { PlaywrightData } from '../../../typings';
 
-export const getStoryData = (
+export function getStoryData(
   data: PlaywrightData | undefined,
   storyId: string,
   create = false,
-) => {
+) {
   if (!data) {
     return undefined;
   }
@@ -24,4 +24,4 @@ export const getStoryData = (
   if (!data.stories[storyId]) data.stories[storyId] = {};
 
   return data.stories[storyId];
-};
+}

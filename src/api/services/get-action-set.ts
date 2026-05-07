@@ -1,10 +1,10 @@
-import { loadStoryData, getStoryPlaywrightFileInfo } from '../server/utils';
-import { ActionSet } from '../../typings';
-import { getStoryData } from './utils';
+import type { StoryInfo } from '../../schema';
+import type { ActionSet } from '../../typings';
 import { nanoid } from 'nanoid';
-import { StoryInfo } from '../../schema';
+import { getStoryPlaywrightFileInfo, loadStoryData } from '../server/utils';
+import { getStoryData } from './utils';
 
-export const getActionSet = async (data: StoryInfo): Promise<ActionSet[]> => {
+export async function getActionSet(data: StoryInfo): Promise<ActionSet[]> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
@@ -20,4 +20,4 @@ export const getActionSet = async (data: StoryInfo): Promise<ActionSet[]> => {
         return actionSet;
       })
     : [];
-};
+}

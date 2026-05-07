@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const useAnchorEl = () => {
+export function useAnchorEl() {
   const anchorElRef = React.useRef(null);
   const [anchorEl, _setAnchorEl] = React.useState();
 
@@ -15,4 +15,4 @@ export const useAnchorEl = () => {
   }, []);
 
   return { anchorEl, anchorElRef, clearAnchorEl, setAnchorEl };
-};
+}

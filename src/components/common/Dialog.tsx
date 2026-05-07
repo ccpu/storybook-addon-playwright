@@ -1,15 +1,15 @@
-import React from 'react';
+import type { DialogProps as MuDialogProps } from '@material-ui/core';
 import {
+  DialogActions,
+  DialogTitle,
+  Divider,
+  IconButton,
   makeStyles,
   Dialog as MuDialog,
-  DialogProps as MuDialogProps,
-  DialogTitle,
-  IconButton,
-  DialogActions,
-  Divider,
   Typography,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import React from 'react';
 
 interface StyleProps {
   width?: string | number;

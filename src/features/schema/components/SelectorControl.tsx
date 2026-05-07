@@ -1,12 +1,13 @@
-import React, { memo, useCallback, useState, useEffect } from 'react';
-import { makeStyles, IconButton } from '@material-ui/core';
-import { ControlProps } from '../../../typings';
-import { useControl, useSelectorManager, SelectorType } from '../../../hooks';
-import { FormControl } from './FormControl';
+import type { SelectorType } from '../../../hooks';
+import type { ControlProps } from '../../../typings';
+import { IconButton, makeStyles } from '@material-ui/core';
 import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
-import { isValidSelector } from '../../../utils';
-import clsx from 'clsx';
 import PointerIcon from '@material-ui/icons/FilterTiltShift';
+import clsx from 'clsx';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import { useControl, useSelectorManager } from '../../../hooks';
+import { isValidSelector } from '../../../utils';
+import { FormControl } from './FormControl';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -102,9 +103,9 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
             const objPath =
               fullObjectPath.length === 1
                 ? ''
-                : fullObjectPath.slice(0, -2) + '.';
-            onSelectorChange(objPath + `x`, Math.round(data.x ?? 0));
-            onSelectorChange(objPath + `y`, Math.round(data.y ?? 0));
+                : `${fullObjectPath.slice(0, -2)}.`;
+            onSelectorChange(`${objPath}x`, Math.round(data.x ?? 0));
+            onSelectorChange(`${objPath}y`, Math.round(data.y ?? 0));
           } else {
             const key = label === 'top' ? 'y' : label === 'left' ? 'x' : label;
             handleChange(data[key]);
@@ -202,11 +203,9 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
               onClick={handleIdSelectorClick}
               className={classes.button}
             >
-              {
-                <div className={classes.selectorHashIcon}>
-                  <TargetIcon className={classes.selectorIcon} />
-                </div>
-              }
+              <div className={classes.selectorHashIcon}>
+                <TargetIcon className={classes.selectorIcon} />
+              </div>
             </IconButton>
           )}
         </div>

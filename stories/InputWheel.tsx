@@ -23,7 +23,6 @@ const InputWheel: React.FC = () => {
     }
     return () => {
       if (input.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         input.current.removeEventListener('wheel', onMouseWheel);
       }
     };

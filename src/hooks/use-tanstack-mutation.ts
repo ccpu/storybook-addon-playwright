@@ -13,11 +13,11 @@ interface MutationOptions {
   clearResultOnSuccess?: boolean;
 }
 
-export const useTanstackMutation = <T extends AnyFn>(
+export function useTanstackMutation<T extends AnyFn>(
   func: T,
   setResponseResult = true,
   options: MutationOptions = {},
-) => {
+) {
   const [error, setError] = useState<string>();
   const [result, setResult] = useState<MutationReturnType<T>>();
   const [inProgress, setInProgress] = useState(false);
@@ -83,4 +83,4 @@ export const useTanstackMutation = <T extends AnyFn>(
     makeCall,
     result,
   };
-};
+}

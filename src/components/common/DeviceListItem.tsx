@@ -1,7 +1,7 @@
-import React, { forwardRef, Ref, useCallback, memo } from 'react';
-import { ViewportSize } from 'playwright';
-import { MenuItem } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core';
+import type { ViewportSize } from 'playwright';
+import type { Ref } from 'react';
+import { makeStyles, MenuItem } from '@material-ui/core';
+import React, { forwardRef, memo, useCallback } from 'react';
 
 const useStyles = makeStyles(
   () => {
@@ -42,7 +42,7 @@ const DeviceListItem: React.FC<DeviceListItemProps> = memo(
       >
         <div>{name}</div>
         <div>
-          {viewportSize && viewportSize.width + 'x' + viewportSize.height}
+          {viewportSize && `${viewportSize.width}x${viewportSize.height}`}
         </div>
       </MenuItem>
     );

@@ -1,13 +1,13 @@
-import React, { forwardRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
+import React, { forwardRef } from 'react';
 
 const useStyles = makeStyles(
   (theme) => {
     return {
       overlay: {
         backgroundColor: 'transparent',
-        border: '1px solid ' + theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`,
         bottom: 0,
         cursor: 'crosshair !important',
         left: 0,

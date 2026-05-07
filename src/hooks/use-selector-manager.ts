@@ -1,14 +1,14 @@
+import type { SelectorState } from '../typings/selector';
 import { useCallback } from 'react';
-import { SelectorState } from '../typings/selector';
-import { useSelectorManagerValue, setSelectorManager } from '../store';
+import { setSelectorManager, useSelectorManagerValue } from '../store';
 
 export type {
-  SelectorType,
   SelectorManageSharedProps,
   SelectorManger,
+  SelectorType,
 } from '../store';
 
-export const useSelectorManager = () => {
+export function useSelectorManager() {
   const selectorManager = useSelectorManagerValue();
 
   const startSelector = useCallback(
@@ -55,4 +55,4 @@ export const useSelectorManager = () => {
     startSelector,
     stopSelector,
   };
-};
+}

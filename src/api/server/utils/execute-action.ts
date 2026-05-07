@@ -1,9 +1,9 @@
-import { StoryAction } from '../../../typings';
-import { Page } from 'playwright';
-import { getActionsSchema } from '../../services/get-actions-schema';
+import type { Page } from 'playwright';
+import type { StoryAction } from '../../../typings';
 import { getActionArgs, isValidAction } from '../../../utils';
+import { getActionsSchema } from '../../services/get-actions-schema';
 
-export const executeAction = async (page: Page, action: StoryAction) => {
+export async function executeAction(page: Page, action: StoryAction) {
   const schema = getActionsSchema();
 
   if (!isValidAction(schema, action)) {
@@ -39,4 +39,4 @@ export const executeAction = async (page: Page, action: StoryAction) => {
   if (typeof pageObj !== 'function') return;
 
   return await pageObj.call(pageObjects[pageObjects.length - 2], ...args);
-};
+}

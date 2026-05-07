@@ -1,36 +1,35 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import type { DragEndEvent, DragOverEvent } from '@dnd-kit/core';
+import type { ActionSet } from '../../../../typings';
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { makeStyles } from '@material-ui/core';
-import { Loader, ListWrapper } from '../../../../components/common';
+import clsx from 'clsx';
+import React, { useCallback, useEffect, useState } from 'react';
+import { trpcClient } from '../../../../api/trpc/client';
+import { ListWrapper, Loader } from '../../../../components/common';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { toast } from '../../../../utils/toast';
+import { useCopyActionSet } from '../../hooks/use-copy-action-set';
+import { useCurrentStoryActionSets } from '../../hooks/use-current-story-action-sets';
+import { useStoryActionSetsLoader } from '../../hooks/use-story-action-sets-loader';
 import {
   deleteActionSet as deleteActionSetFromStore,
   editActionSet,
   toggleCurrentActionSet,
 } from '../../store/actions';
-import { trpcClient } from '../../../../api/trpc/client';
-import { ActionSet } from '../../../../typings';
-import {
-  DndContext,
-  DragEndEvent,
-  DragOverEvent,
-  KeyboardSensor,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import {
-  SortableContext,
-  arrayMove,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
 import { SortableActionSetListItem } from './ActionSetListItem';
-import clsx from 'clsx';
-import { toast } from '../../../../utils/toast';
-import { useCopyActionSet } from '../../hooks/use-copy-action-set';
-import { useCurrentStoryActionSets } from '../../hooks/use-current-story-action-sets';
-import { useStoryActionSetsLoader } from '../../hooks/use-story-action-sets-loader';
 
 const useStyles = makeStyles(
   () => {
@@ -183,7 +182,7 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
           ) : (
             <div className={clsx(classes.message, 'no-data')}>
               <div>No action set to display!</div>
-              <div>Click the {"'+'"} button to create an action set.</div>
+              <div>Click the '+' button to create an action set.</div>
             </div>
           )}
         </SortableContext>

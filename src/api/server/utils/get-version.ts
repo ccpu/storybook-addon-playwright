@@ -1,6 +1,6 @@
-import path from 'path';
+import path from 'node:path';
 
-const findPackageJsonPath = (startDir: string) => {
+function findPackageJsonPath(startDir: string) {
   let currentDir = startDir;
 
   while (currentDir !== path.dirname(currentDir)) {
@@ -17,9 +17,9 @@ const findPackageJsonPath = (startDir: string) => {
   }
 
   throw new Error('Cannot find package.json');
-};
+}
 
-export const getVersion = () => {
+export function getVersion() {
   const packagePath = findPackageJsonPath(process.cwd());
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -28,4 +28,4 @@ export const getVersion = () => {
     .toString();
 
   return version;
-};
+}

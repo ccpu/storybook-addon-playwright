@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import type { ActionSet } from '../../../typings';
 import { useStorybookState } from '@storybook/manager-api';
-import { ActionSet } from '../../../typings';
+import { useEffect, useState } from 'react';
 import { useActionSetStoreState } from '../../../store';
 
-export const useCurrentStoryActionSets = () => {
+export function useCurrentStoryActionSets() {
   const storybookState = useStorybookState();
 
   const state = useActionSetStoreState();
@@ -20,4 +20,4 @@ export const useCurrentStoryActionSets = () => {
   }, [state.stories, storybookState.storyId]);
 
   return { currentActionSets: state.currentActionSets, state, storyActionSets };
-};
+}

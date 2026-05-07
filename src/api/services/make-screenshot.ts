@@ -1,28 +1,26 @@
-import { constructStoryUrl } from '../../utils';
-import { getScreenshotArgs } from '../../utils';
+import type { ElementHandle, Page } from 'playwright';
+import type { TakeScreenshotInput } from '../../schema';
+import type {
+  BrowserContextOptions,
+  Config,
+  ScreenshotImageData,
+  StoryAction,
+} from '../../typings';
+import type {
+  TakeScreenshotOptionsParams,
+  TakeScreenshotParams,
+} from '../typings/schema-types';
+import joinImage from 'join-images';
+import sharp from 'sharp';
+import { extendPage } from '../../page-extra';
+import { constructStoryUrl, getScreenshotArgs } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { executeAction, installMouseHelper } from '../server/utils';
 import {
-  ScreenshotImageData,
-  Config,
-  BrowserContextOptions,
-  StoryAction,
-} from '../../typings';
-import { ScreenshotRequest } from '../typings/screenshot-request-response';
-import { extendPage } from '../../page-extra';
-import { ElementHandle, Page } from 'playwright';
-import joinImage from 'join-images';
-import sharp from 'sharp';
-import {
-  TakeScreenshotParams,
-  TakeScreenshotOptionsParams,
-} from '../typings/schema-types';
-import {
-  shouldTakeScreenshot,
-  releaseModifierKey,
   isInteractiveAction,
+  releaseModifierKey,
+  shouldTakeScreenshot,
 } from './utils';
-import { TakeScreenshotInput } from '../../schema';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -38,27 +36,27 @@ async function takeScreenshot(
   const requestData = {
     ...data,
     requestId: data.requestId || '',
-  } as ScreenshotRequest;
+  };
 
   if (configs.beforeScreenshot) {
     await configs.beforeScreenshot(page, requestData, requestData);
   }
 
   if (handler) {
-    return await handler.screenshot(data.screenshotOptions);
+    return handler.screenshot(data.screenshotOptions);
   }
 
-  return await page.screenshot(data.screenshotOptions);
+  return page.screenshot(data.screenshotOptions);
 }
 
-export const makeScreenshot = async (
+export async function makeScreenshot(
   data: TakeScreenshotInput,
   convertToBase64?: boolean,
-): Promise<ScreenshotImageData> => {
+): Promise<ScreenshotImageData> {
   const requestData = {
     ...data,
     requestId: data.requestId || '',
-  } as ScreenshotRequest;
+  };
 
   const configs = getConfigs();
 
@@ -136,7 +134,7 @@ export const makeScreenshot = async (
     ) {
       imageInfos.push({
         buffer: await takeScreenshot(page, data, configs),
-        options: takeScreenshotAll.args as unknown as TakeScreenshotParams,
+        options: takeScreenshotAll.args,
       });
     }
 
@@ -154,7 +152,7 @@ export const makeScreenshot = async (
               configs,
               elementHandle || undefined,
             ),
-            options: action.args as unknown as TakeScreenshotParams,
+            options: action.args,
           });
         }
         continue;
@@ -163,7 +161,7 @@ export const makeScreenshot = async (
       if (action.name === 'takeScreenshot') {
         imageInfos.push({
           buffer: await takeScreenshot(page, data, configs),
-          options: action.args as unknown as TakeScreenshotParams,
+          options: action.args,
         });
         continue;
       }
@@ -206,7 +204,7 @@ export const makeScreenshot = async (
 
     let options: TakeScreenshotOptionsParams =
       screenshotOptionAction && screenshotOptionAction.args
-        ? (screenshotOptionAction.args as unknown as TakeScreenshotOptionsParams)
+        ? screenshotOptionAction.args
         : {};
 
     options = {
@@ -251,14 +249,12 @@ export const makeScreenshot = async (
               (_, index) => !(buffer === undefined && index === 0),
             );
 
-      const overlays = overlaySources.map((x) => {
-        return {
-          blend: 'multiply',
-          input: x.buffer,
-          ...options.overlayOptions,
-          ...(x.options ? x.options.stitchOptions : {}),
-        } as sharp.OverlayOptions;
-      });
+      const overlays = overlaySources.map((x) => ({
+        blend: 'multiply' as const,
+        input: x.buffer,
+        ...options.overlayOptions,
+        ...(x.options ? x.options.stitchOptions : {}),
+      }));
 
       buffer = await sharp(baseBuffer)
         .composite(overlays)
@@ -276,4 +272,4 @@ export const makeScreenshot = async (
     browserName: data.browserType,
     buffer,
   };
-};
+}

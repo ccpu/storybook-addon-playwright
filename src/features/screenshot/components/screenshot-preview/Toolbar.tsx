@@ -1,19 +1,19 @@
-import React, { useCallback } from 'react';
-import { IconButton } from '@storybook/components';
-import { BrowserTypes } from '../../../../typings';
-import CloseOutlined from '@material-ui/icons/CloseOutlined';
-import { Toolbar as CommonToolbar } from '../../../../components/common';
-import RefreshSharp from '@material-ui/icons/RefreshSharp';
-import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
-import { useBrowserOptions } from '../../../../hooks/use-browser-options';
+import type { BrowserTypes } from '../../../../typings';
 import { Tooltip } from '@material-ui/core';
+import CloseOutlined from '@material-ui/icons/CloseOutlined';
 import NearMeIcon from '@material-ui/icons/NearMe';
-import { BrowserOptions } from './BrowserOptions';
-import { ScreenshotOptions } from './ScreenshotOptions';
+import RefreshSharp from '@material-ui/icons/RefreshSharp';
+import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import { IconButton } from '@storybook/components';
+import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';
-import { ResetSettings } from './ResetSettings';
+import { Toolbar as CommonToolbar } from '../../../../components/common';
+import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
 import { ResizeBrowserToPreview } from '../../../../components/ResizeBrowserToPreview/ResizeBrowserToPreview';
+import { useBrowserOptions } from '../../../../hooks/use-browser-options';
+import { BrowserOptions } from './BrowserOptions';
+import { ResetSettings } from './ResetSettings';
+import { ScreenshotOptions } from './ScreenshotOptions';
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];

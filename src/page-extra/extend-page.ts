@@ -1,19 +1,19 @@
-import { PlaywrightPageWithExtra } from './typings';
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
+import type { PlaywrightPageWithExtra } from './typings';
 
 import {
-  scrollSelector,
-  mouseDownOnSelector,
-  mouseMoveToSelector,
-  dragDropSelector,
-  setSelectorSize,
   clearInput,
+  dragDropSelector,
+  mouseDownOnSelector,
+  mouseFromTo,
+  mouseMoveToSelector,
+  scrollSelector,
   selectorMouseWheel,
+  setSelectorSize,
   touchCancel,
   touchEnd,
-  touchStart,
   touchMove,
-  mouseFromTo,
+  touchStart,
 } from '.';
 import { touchFromTo } from './touch-from-to';
 

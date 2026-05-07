@@ -1,14 +1,14 @@
+import type { DeleteActionSetInput } from '../../schema';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,
   saveStoryFile,
 } from '../server/utils';
-import { DeleteActionSetInput } from '../../schema';
-import { getStoryData, deleteEmptyStory } from './utils';
+import { deleteEmptyStory, getStoryData } from './utils';
 
-export const deleteActionSet = async (
+export async function deleteActionSet(
   data: DeleteActionSetInput,
-): Promise<void> => {
+): Promise<void> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   let storyData = await loadStoryData(fileInfo.path, data.storyId);
 
@@ -33,4 +33,4 @@ export const deleteActionSet = async (
   storyData = deleteEmptyStory(storyData, data.storyId);
 
   await saveStoryFile(fileInfo, storyData);
-};
+}

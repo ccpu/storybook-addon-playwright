@@ -1,17 +1,17 @@
-import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
-import { testFileScreenshots } from './api/services';
-import { ImageDiffResult } from './api/typings';
+import type { ImageDiffResult } from './api/typings';
+import type { RequestData } from './typings/request';
 import { nanoid } from 'nanoid';
-import { RequestData } from './typings/request';
+import { testFileScreenshots } from './api/services';
+import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 
 interface RunImageDiffOptions extends RequestData {
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
 }
 
-export const runImageDiff = async (
+export async function runImageDiff(
   playwrightConfigPath: string | '*',
   options?: RunImageDiffOptions,
-) => {
+) {
   const files = await getPlaywrightConfigFiles(playwrightConfigPath);
 
   let results: ImageDiffResult[] = [];
@@ -32,4 +32,4 @@ export const runImageDiff = async (
   }
 
   return results;
-};
+}

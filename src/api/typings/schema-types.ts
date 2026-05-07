@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { Page, BrowserContextOptions, ViewportSize } from 'playwright';
-import { PlaywrightPageWithExtra } from '../../page-extra/typings';
+import type { BrowserContextOptions, Page, ViewportSize } from 'playwright';
+import type { PlaywrightPageWithExtra } from '../../page-extra/typings';
 
 export type MergeType = 'stitch' | 'overlay';
 export interface TakeScreenshotStitchOptions {
@@ -104,15 +104,15 @@ export interface PlaywrightPage extends Page, PlaywrightPageWithExtra {
 }
 export type PageMethodKeys = keyof PlaywrightPage;
 
-export type TakeScreenshotParams = {
+export interface TakeScreenshotParams {
   stitchOptions?: TakeScreenshotOverlayOptions;
-};
+}
 
-export type TakeScreenshotOptionsParams = {
+export interface TakeScreenshotOptionsParams {
   mergeType?: MergeType;
   stitchOptions?: TakeScreenshotStitchOptions;
   overlayOptions?: TakeScreenshotOverlayOptions;
-};
+}
 
 export interface PlaywrightBrowserContextOptionSchema
   extends BrowserContextOptions {

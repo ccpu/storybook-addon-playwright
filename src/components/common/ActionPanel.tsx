@@ -1,10 +1,10 @@
-import React, { memo } from 'react';
 import {
-  DialogTitle,
   Button,
-  DialogContent,
   DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@material-ui/core';
+import React, { memo } from 'react';
 
 export interface ActionPanelProps {
   title?: string;

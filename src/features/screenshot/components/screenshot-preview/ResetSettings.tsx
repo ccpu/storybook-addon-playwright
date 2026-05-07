@@ -1,10 +1,10 @@
-import React from 'react';
-import { IconButton } from '@storybook/components';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { Tooltip } from '@material-ui/core';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import { IconButton } from '@storybook/components';
+import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../../../hooks';
 
-const ResetSettings = () => {
+function ResetSettings() {
   const { setBrowserOptions } = useBrowserOptions();
   const { setScreenshotOptions } = useScreenshotOptions();
 
@@ -15,12 +15,12 @@ const ResetSettings = () => {
 
   return (
     <IconButton onClick={handleClick}>
-      <Tooltip placement="top" title={'Reset Settings'}>
+      <Tooltip placement="top" title="Reset Settings">
         <RotateLeftIcon style={{ marginTop: 4, width: '20px' }} />
       </Tooltip>
     </IconButton>
   );
-};
+}
 
 ResetSettings.displayName = 'ResetSettings';
 

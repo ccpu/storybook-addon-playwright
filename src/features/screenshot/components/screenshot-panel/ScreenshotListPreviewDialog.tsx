@@ -1,16 +1,13 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { ScreenshotData } from '../../../../typings';
-import {
-  Dialog,
-  DialogProps,
-  ImageDiffPreview,
-} from '../../../../components/common';
-import { makeStyles, capitalize } from '@material-ui/core';
+import type { DialogProps } from '../../../../components/common';
+import type { StoryData } from '../../../../schema';
+import type { ScreenshotData } from '../../../../typings';
+import { capitalize, makeStyles } from '@material-ui/core';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Dialog, ImageDiffPreview } from '../../../../components/common';
+import { useKeyPressFn } from '../../../../hooks/use-key-press-fn';
 import { useScreenshotStoreState } from '../../store/selectors';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
-import { useKeyPressFn } from '../../../../hooks/use-key-press-fn';
-import { StoryData } from '../../../../schema';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -127,11 +124,7 @@ const ScreenshotListPreviewDialog: React.FC<
     <Dialog
       width="100%"
       title={
-        title
-          ? title
-          : currentItem
-          ? capitalize(currentItem.title)
-          : 'Loading ...'
+        title || (currentItem ? capitalize(currentItem.title) : 'Loading ...')
       }
       subtitle={
         (title && currentItem && currentItem.title) +

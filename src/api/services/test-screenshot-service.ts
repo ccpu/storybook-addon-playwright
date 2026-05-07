@@ -1,18 +1,18 @@
-import { ImageDiffResult } from '../typings/image-diff';
-import { getScreenshotData } from './utils';
-import { diffImageToScreenshot } from './diff-image-to-screenshot';
-import { makeScreenshot } from './make-screenshot';
-import { ScreenshotImageData } from '../../typings';
+import type { TestScreenshotInput } from '../../schema';
+import type { ScreenshotImageData } from '../../typings';
+import type { BaseImageInfo } from '../../typings/compare-screenshot';
+import type { ImageDiffResult } from '../typings/image-diff';
+import fs from 'node:fs';
+import { getScreenshotArgs } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
-import fs from 'fs';
-import { BaseImageInfo } from '../../typings/compare-screenshot';
-import { TestScreenshotInput } from '../../schema';
-import { getScreenshotArgs } from '../../utils';
+import { diffImageToScreenshot } from './diff-image-to-screenshot';
+import { makeScreenshot } from './make-screenshot';
+import { getScreenshotData } from './utils';
 
-export const testScreenshotService = async (
+export async function testScreenshotService(
   data: TestScreenshotInput,
-): Promise<ImageDiffResult> => {
+): Promise<ImageDiffResult> {
   const requestId = data.requestId || '';
   const { requestType = 'story-screenshot' } = data;
   const config = getConfigs();
@@ -23,7 +23,7 @@ export const testScreenshotService = async (
     throw new Error('Unable to find screenshot data.');
   }
 
-  let result: ImageDiffResult = {} as ImageDiffResult;
+  let result: ImageDiffResult = {};
   let snapshotData: ScreenshotImageData;
 
   try {
@@ -116,4 +116,4 @@ export const testScreenshotService = async (
   result.filePath = data.filePath;
 
   return result;
-};
+}

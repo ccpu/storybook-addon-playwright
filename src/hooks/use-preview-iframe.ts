@@ -1,18 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { getPreviewIframe } from '../utils';
 
-export const usePreviewIframe = () => {
+export function usePreviewIframe() {
   const iframe = useRef<HTMLIFrameElement | undefined>(undefined);
 
   if (!iframe.current) {
     iframe.current = getPreviewIframe() || undefined;
   }
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       iframe.current = undefined;
-    };
-  }, []);
+    },
+    [],
+  );
 
   return iframe.current;
-};
+}

@@ -1,14 +1,14 @@
-import { ImageDiffResult } from '../typings/image-diff';
+import type { TestStoryScreenshotsInput } from '../../schema';
 
+import type { ImageDiffResult } from '../typings/image-diff';
+import { getConfigs } from '../server/configs';
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../server/utils';
 import { testScreenshotService } from './test-screenshot-service';
-import { getConfigs } from '../server/configs';
 import { getStoryData } from './utils';
-import { TestStoryScreenshotsInput } from '../../schema';
 
-export const testStoryScreenshots = async (
+export async function testStoryScreenshots(
   data: TestStoryScreenshotsInput,
-): Promise<ImageDiffResult[]> => {
+): Promise<ImageDiffResult[]> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
@@ -50,4 +50,4 @@ export const testStoryScreenshots = async (
   }
 
   return diffs;
-};
+}

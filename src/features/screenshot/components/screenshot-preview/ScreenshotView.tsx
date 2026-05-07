@@ -1,21 +1,21 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { makeStyles, capitalize } from '@material-ui/core';
+import type { BrowserTypes } from '../../../../typings';
+import { capitalize, makeStyles } from '@material-ui/core';
+import { darken, lighten } from '@material-ui/core/styles';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Dialog,
+  ErrorPanel,
+  ImagePreview,
+  InputDialog,
+  Loader,
+} from '../../../../components/common';
+import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
 import { useSaveScreenshot } from '../../hooks/use-save-screenshot';
 import { useScreenshot } from '../../hooks/use-screenshot';
-import { BrowserTypes } from '../../../../typings';
-import {
-  ErrorPanel,
-  Dialog,
-  Loader,
-  InputDialog,
-  ImagePreview,
-} from '../../../../components/common';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
-import { useBrowserOptions } from '../../../../hooks/use-browser-options';
-import { lighten, darken } from '@material-ui/core/styles';
 import { getBorderColor } from './utils/index';
 
 const useStyles = makeStyles(
@@ -66,8 +66,11 @@ const useStyles = makeStyles(
       },
 
       fakeBorder: {
-        border:
-          '10px solid ' + getBorderColor(palette.type, background.paper, 0.1),
+        border: `10px solid ${getBorderColor(
+          palette.type,
+          background.paper,
+          0.1,
+        )}`,
         borderTop: 0,
         bottom: 0,
         left: 0,
@@ -172,7 +175,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
 
       isSaving.current = true;
       await saveScreenShot(
-        browserType as BrowserTypes,
+        browserType,
         title,
         screenshot.base64,
         browserOptions,

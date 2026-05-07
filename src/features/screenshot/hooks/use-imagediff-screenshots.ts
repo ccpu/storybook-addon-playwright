@@ -1,17 +1,19 @@
+import type { ImageDiffResult } from '../../../api/typings';
+import type { StoryData } from '../../../schema';
+import type {
+  ScreenshotData,
+  ScreenshotTestTargetType,
+} from '../../../typings';
 import React, { useEffect } from 'react';
-import { ScreenshotTestTargetType } from '../../../typings';
-import { useScreenshotDiffTestByType } from './use-screenshot-diff-test-by-type';
-import { ImageDiffResult } from '../../../api/typings';
 import { isStoryJsonFile } from '../../../utils';
 import { setScreenshots } from '../store/index';
-import { StoryData } from '../../../schema';
-import { ScreenshotData } from '../../../typings';
+import { useScreenshotDiffTestByType } from './use-screenshot-diff-test-by-type';
 
-const getScreenshotDataFromDiffResult = (
+function getScreenshotDataFromDiffResult(
   results: ImageDiffResult[],
   target: ScreenshotTestTargetType,
   storyData?: StoryData,
-) => {
+) {
   if (target === 'all') return results.map((x) => x.screenshotData);
 
   if (target === 'file') {
@@ -29,12 +31,12 @@ const getScreenshotDataFromDiffResult = (
   return results
     .filter((x) => x.storyId === storyData.id)
     .map((x) => x.screenshotData);
-};
+}
 
-export const useImageDiffScreenshots = (
+export function useImageDiffScreenshots(
   target: ScreenshotTestTargetType,
   onLoaded?: () => void,
-) => {
+) {
   const { imageDiffTestInProgress, testStoryScreenShots, storyData } =
     useScreenshotDiffTestByType();
 
@@ -59,4 +61,4 @@ export const useImageDiffScreenshots = (
   }, [loadData, loaded, storyData]);
 
   return { loading: imageDiffTestInProgress, storyData };
-};
+}

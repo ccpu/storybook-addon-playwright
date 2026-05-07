@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { makeStyles, Divider, Button } from '@material-ui/core';
-import { MemoizedSchemaRenderer } from '../../features/schema/components/index';
-import { Config } from 'ts-to-json/dist/src/Config';
-import { Loader } from './Loader';
-import { Definition } from 'ts-to-json';
+import type { Definition } from 'ts-to-json';
+import type { Config } from 'ts-to-json/dist/src/Config';
+import { Button, Divider, makeStyles } from '@material-ui/core';
 import * as immutableObject from 'object-path-immutable';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { trpcClient } from '../../api/trpc/client';
+import { MemoizedSchemaRenderer } from '../../features/schema/components/index';
+import { Loader } from './Loader';
 
 const useStyles = makeStyles(
   () => {
@@ -115,4 +115,4 @@ const SchemaFormLoader: React.FC<SchemaFormProps> = ({
 SchemaFormLoader.displayName = 'SchemaFormLoader';
 
 const MemoizedSchemaFormLoader = React.memo(SchemaFormLoader);
-export { SchemaFormLoader, MemoizedSchemaFormLoader };
+export { MemoizedSchemaFormLoader, SchemaFormLoader };

@@ -1,7 +1,7 @@
+import type { DiffDirection } from '../../api/typings/image-diff';
 import React, { useEffect, useRef, useState } from 'react';
 import { MapInteraction } from 'react-map-interaction';
 import { useKeyPress } from '../../hooks';
-import { DiffDirection } from '../../api/typings/image-diff';
 
 export interface ImagePreviewProps {
   imgSrcString?: string | null;
@@ -11,7 +11,7 @@ export interface ImagePreviewProps {
 const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
   const { imgSrcString, diffDirection } = props;
   const isPressed = useKeyPress('Control');
-  const prevImage = useRef<string>();
+  const prevImage = useRef<string | null>();
 
   const [reset, setReset] = useState(false);
 
@@ -19,7 +19,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
     if (prevImage.current !== imgSrcString) {
       setReset(true);
     }
-    prevImage.current === imgSrcString;
+    prevImage.current = imgSrcString;
   }, [imgSrcString]);
 
   React.useEffect(() => {
@@ -50,7 +50,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
             <div
               style={{
                 display: 'inline-block', // size to content
-                transform: transform,
+                transform,
                 transformOrigin: '0 0 ',
                 // width: '100%',
               }}
@@ -62,7 +62,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = (props) => {
                 src={
                   imgSrcString.startsWith('data:image')
                     ? imgSrcString
-                    : 'data:image/gif;base64,' + imgSrcString
+                    : `data:image/gif;base64,${imgSrcString}`
                 }
               />
             </div>

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 
 import { Dialog } from '../../../src/components/common/Dialog';
+
 describe('ActionDialog', () => {
   const onCloseMock = vi.fn();
 

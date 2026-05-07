@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import {
+import type {
   ActionSchemaList,
-  PlaywrightDataStories,
   ActionSet,
+  PlaywrightDataStories,
 } from '../../../typings';
+import { create } from 'zustand';
 
 export interface ActionSetState {
   actionSchema: ActionSchemaList;

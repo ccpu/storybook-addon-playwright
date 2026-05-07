@@ -1,7 +1,7 @@
 import { readFileSync } from 'jsonfile';
 import { migrateToV1 } from '../../../../src/api/server/migration/migration-v1';
 import { migrationV2 } from '../../../../src/api/server/migration/migration-v2';
-import path from 'path';
+import path from 'node:path';
 import { migrateFile } from '../../../../src/api/server/migration/migration';
 
 describe('migration', () => {

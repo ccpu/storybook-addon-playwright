@@ -1,7 +1,7 @@
-import { getPointByDirection } from './utils/get-point-by-direction';
-import { MouseFromToOptions, Position } from './typings';
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
+import type { MouseFromToOptions, Position } from './typings';
 import { getBoundingBox } from './utils/get-boundingBox';
+import { getPointByDirection } from './utils/get-point-by-direction';
 
 export async function dragDropSelector(
   this: Page,

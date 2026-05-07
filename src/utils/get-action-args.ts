@@ -1,10 +1,10 @@
-import { StoryAction, ActionSchemaList } from '../typings';
+import type { ActionSchemaList, StoryAction } from '../typings';
 import { getActionSchema } from './get-schema';
 
-export const getActionArgs = (
+export function getActionArgs(
   action: StoryAction,
   actionSchema: ActionSchemaList,
-) => {
+) {
   const schema = getActionSchema(actionSchema, action.name);
 
   if (!schema) {
@@ -39,4 +39,4 @@ export const getActionArgs = (
   }, []);
 
   return args;
-};
+}

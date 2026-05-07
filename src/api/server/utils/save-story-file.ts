@@ -1,13 +1,13 @@
-import { StoryPlaywrightFileInfo } from './get-story-playwright-file-info';
-import { PlaywrightData } from '../../../typings';
+import type { PlaywrightData } from '../../../typings';
+import type { StoryPlaywrightFileInfo } from './get-story-playwright-file-info';
+import * as fs from 'node:fs';
 import { writeFileSync } from 'jsonfile';
-import * as fs from 'fs';
 import { getVersion } from './get-version';
 
-export const saveStoryFile = (
+export function saveStoryFile(
   fileInfo: StoryPlaywrightFileInfo,
   data?: PlaywrightData,
-) => {
+) {
   const stories = data?.stories;
 
   if (stories) {
@@ -34,4 +34,4 @@ export const saveStoryFile = (
       // Ignore missing file errors when there is nothing to persist.
     }
   }
-};
+}

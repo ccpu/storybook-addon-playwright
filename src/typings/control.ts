@@ -1,4 +1,4 @@
-import { ControlTypes } from '.';
+import type { ControlTypes } from '.';
 
 export type OptionsKnobOptionsDisplay =
   | 'radio'

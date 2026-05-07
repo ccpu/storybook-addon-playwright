@@ -1,9 +1,9 @@
-import { testStoryScreenshots } from './test-story-screenshots';
-import { getStoryPlaywrightData } from '../server/utils';
-import { RequestData } from '../../typings/request';
+import type { RequestData } from '../../typings/request';
+import type { ImageDiffResult } from '../typings';
 import pLimit from 'p-limit';
 import { getConfigs } from '../server/configs';
-import { ImageDiffResult } from '../typings';
+import { getStoryPlaywrightData } from '../server/utils';
+import { testStoryScreenshots } from './test-story-screenshots';
 
 export interface TestFileScreenshots extends RequestData {
   filePath: string;
@@ -12,9 +12,9 @@ export interface TestFileScreenshots extends RequestData {
   storyId?: string;
 }
 
-export const testFileScreenshots = async (
+export async function testFileScreenshots(
   options: TestFileScreenshots,
-): Promise<ImageDiffResult[]> => {
+): Promise<ImageDiffResult[]> {
   const { filePath, onComplete, storyId, requestType } = options;
   const configs = getConfigs();
 
@@ -40,7 +40,7 @@ export const testFileScreenshots = async (
 
     if (story.data.screenshots && story.data.screenshots.length) {
       arr.push(
-        limit(() =>
+        limit(async () =>
           testStoryScreenshots({
             filePath,
             requestId: options.requestId,
@@ -61,7 +61,7 @@ export const testFileScreenshots = async (
   const results = res.reduce<ImageDiffResult[]>((arr, d) => {
     const normalized = d.map((diff) => {
       if (diff.added && diff.pass === false) {
-        const rest = { ...diff } as ImageDiffResult;
+        const rest = { ...diff };
         delete (rest as { pass?: boolean }).pass;
         return rest;
       }
@@ -82,4 +82,4 @@ export const testFileScreenshots = async (
   if (onComplete) await onComplete(results);
 
   return results;
-};
+}

@@ -1,9 +1,9 @@
-import screenshotOptionSchema from '../server/data/screenshot-option-schema.json';
 import browserOptionSchema from '../server/data/browser-option-schema.json';
+import screenshotOptionSchema from '../server/data/screenshot-option-schema.json';
 
 export type SchemaName = 'browser-options' | 'screenshot-options';
 
-export const getSchemaService = (schemaName: SchemaName) => {
+export function getSchemaService(schemaName: SchemaName) {
   if (schemaName === 'browser-options') {
     return browserOptionSchema;
   }
@@ -11,4 +11,4 @@ export const getSchemaService = (schemaName: SchemaName) => {
     return screenshotOptionSchema;
   }
   return undefined;
-};
+}

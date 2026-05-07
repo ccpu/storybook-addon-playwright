@@ -1,6 +1,8 @@
+import type { DialogProps } from './Dialog';
+import type { ImageDiffPreviewProps } from './ImageDiffPreview';
 import React from 'react';
-import { ImageDiffPreview, ImageDiffPreviewProps } from './ImageDiffPreview';
-import { Dialog, DialogProps } from './Dialog';
+import { Dialog } from './Dialog';
+import { ImageDiffPreview } from './ImageDiffPreview';
 
 export interface ImageDiffPreviewDialogProps
   extends DialogProps,

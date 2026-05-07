@@ -1,10 +1,10 @@
+import type { Definition } from 'ts-to-json';
+import type { ActionSchema } from '../../../../typings';
 import React, { useCallback } from 'react';
-import { ActionSchema } from '../../../../typings';
-import { Definition } from 'ts-to-json';
-import { MemoizedSchemaRenderer } from '../../../schema/components/index';
-import { setActionOptions, toggleSubtitleItem } from '../../store/actions';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { MemoizedSchemaRenderer } from '../../../schema/components/index';
 import { useEditorAction } from '../../hooks/use-editor-action';
+import { setActionOptions, toggleSubtitleItem } from '../../store/actions';
 import { getActionOptionValue } from './utils/index';
 
 export interface ActionSchemaRendererProps {

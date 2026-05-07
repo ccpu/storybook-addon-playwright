@@ -1,6 +1,6 @@
-import { useAddonStateValue, setAddonState } from '../store';
+import { setAddonState, useAddonStateValue } from '../store';
 
-export const useAddonState = () => {
+export function useAddonState() {
   const addonState = useAddonStateValue();
   return { addonState, setAddonState };
-};
+}

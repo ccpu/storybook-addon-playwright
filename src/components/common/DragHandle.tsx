@@ -1,6 +1,6 @@
-import React from 'react';
 import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 import clsx from 'clsx';
+import React from 'react';
 
 export interface DragHandleProps extends React.HTMLAttributes<HTMLSpanElement> {
   setNodeRef?: (element: HTMLSpanElement | null) => void;

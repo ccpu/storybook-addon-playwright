@@ -1,15 +1,15 @@
 import { RESET_STORY_ARGS } from '@storybook/core-events';
 import { useStorybookApi } from '@storybook/manager-api';
-import { useCurrentStoryData } from './use-current-story-data';
 import {
   clearCurrentActionSets,
   deleteTempActionSets,
 } from '../features/action-set/store/actions';
 import { useAddonState } from './use-addon-state';
+import { useCurrentStoryData } from './use-current-story-data';
 
 export const PREVIEW_PANEL_SIZE = 200;
 
-export const useResetSetting = () => {
+export function useResetSetting() {
   const api = useStorybookApi();
 
   const data = useCurrentStoryData();
@@ -31,4 +31,4 @@ export const useResetSetting = () => {
   };
 
   return reset;
-};
+}

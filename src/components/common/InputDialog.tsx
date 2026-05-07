@@ -1,7 +1,8 @@
-import { TextField, makeStyles, Snackbar } from '@material-ui/core';
-import React, { useCallback, useState, useEffect } from 'react';
-import { ActionDialog, ActionDialogDialogProps } from './ActionDialog';
+import type { ActionDialogDialogProps } from './ActionDialog';
+import { makeStyles, Snackbar, TextField } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActionDialog } from './ActionDialog';
 
 interface StyleProps {
   width?: number | string;
@@ -53,7 +54,7 @@ const InputDialog: React.FC<InputDialogProps> = ({
   const [inputValue, setValue] = useState(value);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const classes = useStyles({ width: width });
+  const classes = useStyles({ width });
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {

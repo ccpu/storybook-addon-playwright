@@ -2,15 +2,15 @@ const ROOT_SELECTOR = 'html>body>#root';
 const STORYBOOK_ROOT_SELECTOR = 'html>body>#storybook-root';
 const MAX_LEGACY_ROOT_INDEX = 8;
 
-const hasQuerySelector = (
+function hasQuerySelector(
   documentNode: Document | Partial<Document>,
-): documentNode is Document => {
+): documentNode is Document {
   return typeof documentNode.querySelector === 'function';
-};
+}
 
-const getRootSelector = (
+function getRootSelector(
   documentNode: Document | Partial<Document>,
-): string | undefined => {
+): string | undefined {
   if (!hasQuerySelector(documentNode)) return undefined;
 
   if (documentNode.querySelector(ROOT_SELECTOR)) return ROOT_SELECTOR;
@@ -19,12 +19,12 @@ const getRootSelector = (
   }
 
   return undefined;
-};
+}
 
-export const normalizeRootSelectorPath = (
+export function normalizeRootSelectorPath(
   selectorPath: string,
   documentNode: Document | Partial<Document>,
-): string => {
+): string {
   if (!hasQuerySelector(documentNode)) return selectorPath;
 
   const rootSelector = getRootSelector(documentNode);
@@ -47,4 +47,4 @@ export const normalizeRootSelectorPath = (
   }
 
   return selectorPath;
-};
+}

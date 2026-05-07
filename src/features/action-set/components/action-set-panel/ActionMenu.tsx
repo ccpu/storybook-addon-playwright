@@ -1,7 +1,8 @@
-import React, { memo, useState, useCallback } from 'react';
-import { Menu, makeStyles } from '@material-ui/core';
-import { ActionMenuItem, ActionMenuItemBase } from './ActionMenuItem';
+import type { ActionMenuItemBase } from './ActionMenuItem';
+import { makeStyles, Menu } from '@material-ui/core';
+import React, { memo, useCallback, useState } from 'react';
 import { useActionSetStoreState } from '../../store/index';
+import { ActionMenuItem } from './ActionMenuItem';
 import { getMenu } from './utils/index';
 
 const useStyles = makeStyles(

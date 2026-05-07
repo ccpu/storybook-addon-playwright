@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect } from 'react';
-import { ScreenshotData } from '../../../../typings';
+import type { ImageDiffResult } from '../../../../api/typings';
+import type { ScreenshotData } from '../../../../typings';
 import { Button } from '@material-ui/core';
-import { useCurrentStoryData, useScreenshotDiffTest } from '../../../../hooks';
-import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
-import { Loader, ImageDiffPreviewDialog } from '../../../../components/common';
-import { ScreenshotInfo } from './ScreenshotInfo';
-import { ImageDiffResult } from '../../../../api/typings';
 import { IconButton } from '@storybook/components';
 import { RefreshIcon } from '@storybook/icons';
+import React, { useCallback, useEffect } from 'react';
+import { ImageDiffPreviewDialog, Loader } from '../../../../components/common';
+import { useCurrentStoryData, useScreenshotDiffTest } from '../../../../hooks';
+import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
+import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotUpdateProps {
   screenshot: ScreenshotData;

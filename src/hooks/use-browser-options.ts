@@ -1,15 +1,15 @@
+import type { BrowsersOptionTypes } from '../store';
+import type { BrowserContextOptions, BrowserTypes } from '../typings';
 import { useCallback, useMemo } from 'react';
 import {
-  useBrowserOptionsValue,
   setBrowserOptions as setStoreBrowserOptions,
-  BrowsersOptionTypes,
+  useBrowserOptionsValue,
 } from '../store';
-import { BrowserTypes, BrowserContextOptions } from '../typings';
 import { getDeviceInfo } from '../utils';
 
 export type { BrowsersOption, BrowsersOptionTypes } from '../store';
 
-export const useBrowserOptions = (browserName?: BrowsersOptionTypes) => {
+export function useBrowserOptions(browserName?: BrowsersOptionTypes) {
   const browserOptions = useBrowserOptionsValue();
 
   const setBrowserDeviceOptions = useCallback(
@@ -33,9 +33,10 @@ export const useBrowserOptions = (browserName?: BrowsersOptionTypes) => {
   );
 
   const getBrowserOptions = useCallback(
-    (browserType: BrowserTypes) => {
-      return { ...browserOptions.all, ...browserOptions[browserType] };
-    },
+    (browserType: BrowserTypes) => ({
+      ...browserOptions.all,
+      ...browserOptions[browserType],
+    }),
     [browserOptions],
   );
 
@@ -56,4 +57,4 @@ export const useBrowserOptions = (browserName?: BrowsersOptionTypes) => {
     setBrowserDeviceOptions,
     setBrowserOptions,
   };
-};
+}

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Legacy mock - redirects to @storybook/manager-api mock for backward compatibility
 import { EventEmitter } from 'events';
 

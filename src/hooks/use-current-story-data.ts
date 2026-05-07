@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import type { StoryData } from '../schema';
 import { useStorybookApi } from '@storybook/manager-api';
-import { StoryData } from '../schema';
+import { useEffect, useState } from 'react';
 
-export const useCurrentStoryData = () => {
+export function useCurrentStoryData() {
   const [storyData, setData] = useState<StoryData & { fileName: string }>();
 
   const api = useStorybookApi();
@@ -25,4 +25,4 @@ export const useCurrentStoryData = () => {
   }, [currentStory]);
 
   return storyData;
-};
+}

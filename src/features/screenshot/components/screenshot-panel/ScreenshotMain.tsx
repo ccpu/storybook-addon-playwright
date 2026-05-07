@@ -1,8 +1,8 @@
 import React from 'react';
-import { ScreenshotPanel } from './ScreenshotPanel';
 import { CommonProvider } from '../../../../components/common';
-import { MemoizedStoryScreenshotPreview } from './StoryScreenshotPreview';
 import { useScreenshotUpdateState } from '../../hooks/use-screenshot-update-state';
+import { ScreenshotPanel } from './ScreenshotPanel';
+import { MemoizedStoryScreenshotPreview } from './StoryScreenshotPreview';
 
 export interface ScreenshotMainProps {
   showPanel: boolean;

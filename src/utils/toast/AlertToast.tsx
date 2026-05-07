@@ -1,7 +1,7 @@
-import React from 'react';
-import { CrossIcon, PassedIcon, FailedIcon, AlertIcon } from '@storybook/icons';
-import { IconButton } from '@storybook/components';
 import { getHighestZindex } from '@pixpilot/dom';
+import { IconButton } from '@storybook/components';
+import { AlertIcon, CrossIcon, FailedIcon, PassedIcon } from '@storybook/icons';
+import React from 'react';
 
 export type AlertVariant = 'error' | 'info' | 'warning' | 'success' | 'default';
 
@@ -21,7 +21,7 @@ export interface AlertToastProps extends AlertBaseProps {
   children?: React.ReactNode;
 }
 
-const getVariantIcon = (variant: AlertVariant) => {
+function getVariantIcon(variant: AlertVariant) {
   switch (variant) {
     case 'success':
       return <PassedIcon />;
@@ -34,9 +34,9 @@ const getVariantIcon = (variant: AlertVariant) => {
     default:
       return null;
   }
-};
+}
 
-const getVariantIconColor = (variant: AlertVariant, isDarkMode: boolean) => {
+function getVariantIconColor(variant: AlertVariant, isDarkMode: boolean) {
   switch (variant) {
     case 'success':
       return isDarkMode ? '#4ade80' : '#166534';
@@ -49,7 +49,7 @@ const getVariantIconColor = (variant: AlertVariant, isDarkMode: boolean) => {
     default:
       return 'currentColor';
   }
-};
+}
 
 export const ToastMessageContainer: React.FC<
   React.HTMLAttributes<HTMLDivElement>

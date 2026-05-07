@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ScreenshotData, PlaywrightData } from '../../../typings';
+import type { PlaywrightData, ScreenshotData } from '../../../typings';
 import equal from 'fast-deep-equal';
-import { getOptionsKey } from './get-options-key';
 import { getScreenshotArgs } from '../../../utils';
+import { getOptionsKey } from './get-options-key';
 
-export const findScreenshotWithSameSetting = (
+export function findScreenshotWithSameSetting(
   data: PlaywrightData,
   screenshots: ScreenshotData[],
   screenshot: ScreenshotData,
-) => {
+) {
   const browserOptionsId = getOptionsKey(
     data,
     'browserOptions',
@@ -46,4 +46,4 @@ export const findScreenshotWithSameSetting = (
     }
   }
   return undefined;
-};
+}

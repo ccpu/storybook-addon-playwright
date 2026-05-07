@@ -1,14 +1,14 @@
+import type { ScreenshotTestTargetType } from '../../../typings';
 import React from 'react';
 import {
-  useScreenshotUpdateStateValue,
   setScreenshotUpdateState,
+  useScreenshotUpdateStateValue,
 } from '../../../store';
-import { ScreenshotTestTargetType } from '../../../typings';
 
-export const useScreenshotUpdateState = (
+export function useScreenshotUpdateState(
   reqBy: string,
   target?: ScreenshotTestTargetType,
-) => {
+) {
   const updateInf = useScreenshotUpdateStateValue();
 
   // to prevent rendering loop
@@ -34,4 +34,4 @@ export const useScreenshotUpdateState = (
     setIsLoadingFinish,
     updateInf,
   };
-};
+}

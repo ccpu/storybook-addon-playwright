@@ -1,4 +1,4 @@
-import { ExtendedPage, Location } from './typings';
+import type { ExtendedPage, Location } from './typings';
 
 export async function scrollSelector(
   this: ExtendedPage,

@@ -1,3 +1,4 @@
+import { IconButton } from '@storybook/components';
 import React from 'react';
 import Selecto from 'react-selecto';
 import { create } from 'zustand';
@@ -9,11 +10,10 @@ import {
   useScreenshotOptions,
 } from '../../hooks';
 import { getIframeScrollPosition, toast } from '../../utils';
-import { IframeOverlay } from '../common/IframeOverlay';
 import AlertToast, {
   ToastMessageContainer,
 } from '../../utils/toast/AlertToast';
-import { IconButton } from '@storybook/components';
+import { IframeOverlay } from '../common/IframeOverlay';
 
 export interface ClipperProps {
   clipping: boolean;

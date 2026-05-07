@@ -8,7 +8,7 @@ export interface SortableIndexChangeEvent {
   oldIndex: number;
 }
 
-export const useScreenshotIndexChange = () => {
+export function useScreenshotIndexChange() {
   const { mutateAsync, isPending: ChangeIndexInProgress } =
     trpcClient.screenshot.changeScreenshotIndex.useMutation();
 
@@ -36,4 +36,4 @@ export const useScreenshotIndexChange = () => {
     ChangeIndexInProgress,
     changeIndex,
   };
-};
+}

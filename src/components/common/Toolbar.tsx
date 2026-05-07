@@ -1,6 +1,6 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -17,16 +17,16 @@ const useStyles = makeStyles(
           width: 18,
         },
         '&.border-bottom': {
-          borderBottom: '1px solid ' + divider,
+          borderBottom: `1px solid ${divider}`,
         },
         '&.border-left': {
-          borderLeft: '1px solid ' + divider,
+          borderLeft: `1px solid ${divider}`,
         },
         '&.border-right': {
-          borderRight: '1px solid ' + divider,
+          borderRight: `1px solid ${divider}`,
         },
         '&.border-top': {
-          borderTop: '1px solid ' + divider,
+          borderTop: `1px solid ${divider}`,
         },
         padding: 2,
       },

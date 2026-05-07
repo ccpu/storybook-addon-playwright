@@ -1,5 +1,5 @@
-import { MouseFromToOptions, Position } from './typings';
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
+import type { MouseFromToOptions, Position } from './typings';
 
 export async function mouseFromTo(
   this: Page,

@@ -91,8 +91,8 @@ describe('deleteActionSet', () => {
       storyId: 'story-id',
     });
 
-    const actionSets =
-      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'].actionSets;
+    const { actionSets } =
+      saveStoryFileMock.mock.calls[0]![1]!.stories!['story-id'];
     expect(actionSets).toStrictEqual(undefined);
   });
 });

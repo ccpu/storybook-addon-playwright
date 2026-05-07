@@ -1,15 +1,15 @@
+import type { ActionSet } from '../../../../typings';
+import { Divider, makeStyles } from '@material-ui/core';
 import React, { useCallback } from 'react';
-import { ActionList } from '../actions/ActionList';
-import { ActionSet } from '../../../../typings';
 import {
-  Loader,
-  ListItemWrapper,
   InputDialog,
+  ListItemWrapper,
+  Loader,
 } from '../../../../components/common';
-import { makeStyles, Divider } from '@material-ui/core';
-import { useActionSchemaLoader, useActionEditor } from '../../../../hooks';
-import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 import { TEMP_ACTION_SET } from '../../../../constants';
+import { useActionEditor, useActionSchemaLoader } from '../../../../hooks';
+import { ActionList } from '../actions/ActionList';
+import { ActionSetEditorIcons } from './ActionSetEditorIcons';
 
 const useStyles = makeStyles(
   (theme) => {

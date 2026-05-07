@@ -1,8 +1,6 @@
+import type { ListItemWrapperProps } from '../../../../components/common';
 import React from 'react';
-import {
-  ListItemWrapperProps,
-  ListItemWrapper,
-} from '../../../../components/common';
+import { ListItemWrapper } from '../../../../components/common';
 
 const ScreenshotListItemWrapper: React.FC<ListItemWrapperProps> = ({
   children,

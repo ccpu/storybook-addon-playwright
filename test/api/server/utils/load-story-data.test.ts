@@ -1,11 +1,11 @@
 import { loadStoryData } from '../../../../src/api/server/utils/load-story-data';
 import { getStoryPlaywrightFileInfo } from '../../../../src/api/server/utils/get-story-playwright-file-info';
-import fs from 'fs';
+import fs from 'node:fs';
 
 const spyOnFs = vi.spyOn(fs, 'existsSync');
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 spyOnFs.mockImplementation((file: any) => {
-  if (file.indexOf('story-notExist.playwright.json') !== -1) {
+  if (file.includes('story-notExist.playwright.json')) {
     return false;
   }
   return true;
@@ -16,9 +16,9 @@ vi.mock('jsonfile', () => ({
     file: string,
     callBack: (err?: string, data?: unknown) => void,
   ) => {
-    if (file.indexOf('story-error.playwright.json') !== -1) {
+    if (file.includes('story-error.playwright.json')) {
       callBack('some-error');
-    } else if (file.indexOf('no-story-id.playwright.json') !== -1) {
+    } else if (file.includes('no-story-id.playwright.json')) {
       callBack(undefined, {});
     } else {
       callBack(undefined, { stories: { 'story-id': {} } });

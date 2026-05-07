@@ -1,12 +1,13 @@
 import type { ExternalToast, ToastT } from 'sonner';
-import { simpleHash } from '@pixpilot/hash';
-import { toast as sonnerToast } from 'sonner';
-import React from 'react';
-import AlertToast, {
-  type AlertVariant,
-  type AlertBaseProps,
-  type AlertToastProps,
+import type {
+  AlertBaseProps,
+  AlertToastProps,
+  AlertVariant,
 } from './AlertToast';
+import { simpleHash } from '@pixpilot/hash';
+import React from 'react';
+import { toast as sonnerToast } from 'sonner';
+import AlertToast from './AlertToast';
 
 export const DEFAULT_ALERT_DURATION = 10_000;
 

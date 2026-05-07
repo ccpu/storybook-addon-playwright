@@ -2,7 +2,7 @@ import { testScreenshotService } from '../../../src/api/services/test-screenshot
 import { diffImageToScreenshot } from '../../../src/api/services/diff-image-to-screenshot';
 import { getConfigs } from '../../../src/api/server/configs';
 import { defaultConfigs } from '../../configs/configs';
-import fs from 'fs';
+import fs from 'node:fs';
 
 vi.mock(
   '../../../src/api/server/configs',
@@ -20,7 +20,7 @@ vi.mock(
   '../../../src/api/server/utils/load-story-data',
   async () => await import('../server/utils/__mocks__/load-story-data'),
 );
-vi.mock('fs');
+vi.mock('node:fs');
 
 describe('testScreenshot', () => {
   vi.mocked(getConfigs).mockImplementation(() => ({

@@ -1,6 +1,7 @@
 import { Toolbar } from '../../../src/components/common/Toolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
+
 describe('Toolbar', () => {
   it('should render', () => {
     const wrapper = shallow(<Toolbar />);

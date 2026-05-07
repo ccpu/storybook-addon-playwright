@@ -1,10 +1,10 @@
-import React from 'react';
 import { IconButton } from '@storybook/components';
+import { PlusIcon, RefreshIcon, StarIcon } from '@storybook/icons';
+import React from 'react';
 import {
   DeleteConfirmationButton,
   Toolbar,
 } from '../../../../components/common';
-import { StarIcon, PlusIcon, RefreshIcon } from '@storybook/icons';
 import { FavouriteActions } from './FavouriteActions';
 
 export interface ActionToolbarProps {

@@ -1,10 +1,6 @@
-// Changed: vi.hoisted() ensures the variable is initialized before the Mock
-// factory runs (vitest hoists vi.mock to before all declarations, causing TDZ).
 const spyOnRmdirSyncMock = vi.hoisted(() => vi.fn());
-vi.mock('fs', () => ({
-  existsSync: () => {
-    return true;
-  },
+vi.mock('node:fs', () => ({
+  existsSync: () => true,
   rmdirSync: spyOnRmdirSyncMock,
 }));
 import { runDiffImageToSnapshotMock } from '../../manual-mocks/jest-image-snapshot';
@@ -47,7 +43,7 @@ describe('diffImageToScreenshot', () => {
   });
 
   it('should have diff result in vertical', async () => {
-    const result = await diffImageToScreenshot(diffData, new Buffer('image'));
+    const result = await diffImageToScreenshot(diffData, Buffer.from('image'));
 
     expect(result).toStrictEqual({ added: true, diffDirection: undefined });
     const [data] = runDiffImageToSnapshotMock.mock.calls[0] as unknown as [
@@ -67,7 +63,7 @@ describe('diffImageToScreenshot', () => {
       storybookEndpoint: 'localhost',
     }));
 
-    const result = await diffImageToScreenshot(diffData, new Buffer('image'));
+    const result = await diffImageToScreenshot(diffData, Buffer.from('image'));
 
     expect(result).toStrictEqual({ added: true, diffDirection: 'horizontal' });
     const [data] = runDiffImageToSnapshotMock.mock.calls[0] as unknown as [
@@ -85,7 +81,7 @@ describe('diffImageToScreenshot', () => {
       };
     });
 
-    const result = await diffImageToScreenshot(diffData, new Buffer('image'));
+    const result = await diffImageToScreenshot(diffData, Buffer.from('image'));
 
     expect(result).toStrictEqual({ diffDirection: undefined, pass: false });
 

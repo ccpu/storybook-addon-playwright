@@ -41,7 +41,7 @@ describe('props-to-args migration', () => {
     const changed = migratePropsToArgsData(data);
 
     expect(changed).toBe(true);
-    expect(data.stories.id.screenshots[0]).toEqual({
+    expect(data.stories!.id.screenshots![0]).toEqual({
       args: { color: 'red' },
       browserType: 'chromium',
       id: 's1',
@@ -68,7 +68,7 @@ describe('props-to-args migration', () => {
 
     migratePropsToArgsData(data);
 
-    expect(data.stories.id.screenshots[0]).toEqual({
+    expect(data.stories!.id.screenshots![0]).toEqual({
       args: { color: 'blue' },
       browserType: 'chromium',
       id: 's1',

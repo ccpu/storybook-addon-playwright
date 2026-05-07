@@ -1,14 +1,17 @@
-import path from 'path';
+import path from 'node:path';
 import glob from 'fast-glob';
 import { readFileSync } from 'jsonfile';
-import { getStoryPlaywrightFileInfo, saveStoryFile } from '../utils';
+import {
+  getStoryPlaywrightFileInfo,
+  getVersion,
+  saveStoryFile,
+} from '../utils';
 import { migrateToV1 } from './migration-v1';
 import { migrationV2 } from './migration-v2';
 import { migrationV3 } from './migration-v3';
 import { migrationV4 } from './migration-v4';
-import { getVersion } from '../utils';
 
-export const migrateFile = (file: string, version: string) => {
+export function migrateFile(file: string, version: string) {
   let data = readFileSync(file);
 
   console.log(`\nMigrating ${path.parse(file).name} to v${version}...`);
@@ -30,13 +33,13 @@ export const migrateFile = (file: string, version: string) => {
   }
 
   return data;
-};
+}
 
-export const migration = () => {
+export function migration() {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const version = getVersion();
 
-  console.log('\nMigrating to v' + version + ' ...');
+  console.log(`\nMigrating to v${version} ...`);
 
   const files = glob.sync(['**/*.playwright.json', '!node_modules/**']);
 
@@ -49,4 +52,4 @@ export const migration = () => {
   });
 
   console.log(`\nEnd of migration.`);
-};
+}

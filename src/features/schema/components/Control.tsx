@@ -1,7 +1,8 @@
-import React, { memo, ComponentType } from 'react';
-import { ControlProps } from '../../../typings';
-import { FormControl } from './FormControl';
+import type { ComponentType } from 'react';
+import type { ControlProps } from '../../../typings';
+import React, { memo } from 'react';
 import { useControl } from '../../../hooks';
+import { FormControl } from './FormControl';
 
 const Control: React.FC<ControlProps & Partial<ComponentType>> = memo(
   (props) => {

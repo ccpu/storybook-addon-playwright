@@ -1,6 +1,6 @@
-import { Position, ExtendedPage, MouseOptions } from './typings';
-import { getPointByDirection } from './utils/get-point-by-direction';
+import type { ExtendedPage, MouseOptions, Position } from './typings';
 import { getBoundingBox } from './utils/get-boundingBox';
+import { getPointByDirection } from './utils/get-point-by-direction';
 
 export async function mouseMoveToSelector(
   this: ExtendedPage,

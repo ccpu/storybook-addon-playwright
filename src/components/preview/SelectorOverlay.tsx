@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { makeStyles } from '@material-ui/core';
-import { useSelectorManager } from '../../hooks';
-import useMouseHovered from 'react-use/lib/useMouseHovered';
-import clsx from 'clsx';
-import useThrottleFn from 'react-use/lib/useThrottleFn';
 import { getSelectorPath } from '@dom-utils/selector-path';
+import { makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
+import React, { useEffect, useRef, useState } from 'react';
 import useKey from 'react-use/lib/useKey';
+import useMouseHovered from 'react-use/lib/useMouseHovered';
+import useThrottleFn from 'react-use/lib/useThrottleFn';
+import { useSelectorManager } from '../../hooks';
 import { normalizeRootSelectorPath } from './utils';
 
 const useStyles = makeStyles(
@@ -34,7 +34,7 @@ const useStyles = makeStyles(
         zIndex: 100,
       },
       preview: {
-        border: '1px solid ' + theme.palette.primary.main,
+        border: `1px solid ${theme.palette.primary.main}`,
         position: 'absolute',
       },
     };
@@ -88,7 +88,7 @@ const SelectorOverlay: React.FC<Props> = (props) => {
           if (isIdSelector) {
             setSelectorInfo({
               rect: node.getBoundingClientRect(),
-              selector: node.id ? '#' + node.id : '',
+              selector: node.id ? `#${node.id}` : '',
             });
           } else {
             const path = normalizeRootSelectorPath(
@@ -148,7 +148,7 @@ const SelectorOverlay: React.FC<Props> = (props) => {
       cursor: crosshair !important;
       `;
 
-    const body = document.body;
+    const { body } = document;
 
     document.head.appendChild(style);
 

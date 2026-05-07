@@ -1,14 +1,14 @@
-import { PlaywrightData, StoryOptions } from '../../../typings';
+import type { PlaywrightData, StoryOptions } from '../../../typings';
 
 import { nanoid } from 'nanoid';
 import { getOptionsKey } from './get-options-key';
 
-export const setStoryOptions = (
+export function setStoryOptions(
   storyData: PlaywrightData,
   optionProp: keyof StoryOptions,
   // options?: BrowserContextOptions | ScreenshotOptions,
   options?: unknown,
-) => {
+) {
   if (!options || !Object.keys(options).length) return undefined;
 
   if (!storyData[optionProp]) {
@@ -26,4 +26,4 @@ export const setStoryOptions = (
   storyData[optionProp][id] = options;
 
   return id;
-};
+}

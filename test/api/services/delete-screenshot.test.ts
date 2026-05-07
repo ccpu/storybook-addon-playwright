@@ -1,7 +1,8 @@
-// Changed: vi.hoisted() ensures the variable is initialized before the Mock
-// factory runs (vitest hoists vi.mock to before all declarations, causing TDZ).
 const unlinkSyncMock = vi.hoisted(() => vi.fn());
-vi.mock('fs', () => ({ existsSync: () => true, unlinkSync: unlinkSyncMock }));
+vi.mock('node:fs', () => ({
+  existsSync: () => true,
+  unlinkSync: unlinkSyncMock,
+}));
 
 import { storyFileInfo } from '../../configs/story-file-info';
 import { deleteScreenshot } from '../../../src/api/services/delete-screenshot';

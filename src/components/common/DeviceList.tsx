@@ -1,9 +1,8 @@
+import type { BrowserContextOptions } from '../../typings';
+import { Button, Menu } from '@material-ui/core';
 import React, { useCallback, useMemo } from 'react';
 import DeviceDescriptors from '../../data/deviceDescriptorsSource.json';
-import { Menu } from '@material-ui/core';
 import { DeviceListItem } from './DeviceListItem';
-import { BrowserContextOptions } from '../../typings';
-import { Button } from '@material-ui/core';
 
 export interface DeviceListProps {
   onDeviceSelect: (deviceName?: string) => void;

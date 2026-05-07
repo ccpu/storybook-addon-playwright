@@ -1,8 +1,8 @@
-import { BrowserTypes } from '../../typings';
-import {
+import type {
   ImageDiffResultOutput as OrgImageDiffResultOutput,
   StoryInfo,
 } from '../../schema';
+import type { BrowserTypes } from '../../typings';
 
 export type DiffDirection = 'horizontal' | 'vertical';
 

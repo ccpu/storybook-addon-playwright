@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import type { BrowserContextOptions, ScreenshotOptions } from '../typings';
 
+import { z } from 'zod';
 import { actionSetSchema } from './action-set';
 import { createStoryInputSchema } from './story';
-import { BrowserContextOptions, ScreenshotOptions } from '../typings';
 
 const looseObjectSchema = z.record(z.string(), z.unknown());
 

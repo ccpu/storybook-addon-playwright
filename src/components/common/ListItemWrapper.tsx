@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback } from 'react';
-import { makeStyles, capitalize } from '@material-ui/core';
-import { DragHandle, DragHandleProps } from './DragHandle';
+import type { DragHandleProps } from './DragHandle';
+import { capitalize, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
+import React, { useCallback } from 'react';
 import tinycolor from 'tinycolor2';
+import { DragHandle } from './DragHandle';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -38,7 +39,7 @@ const useStyles = makeStyles(
         gap: 2,
       },
       root: {
-        border: '1px solid ' + divider,
+        border: `1px solid ${divider}`,
         color: text.primary,
         display: 'flex',
         flexDirection: 'column',
@@ -53,10 +54,10 @@ const useStyles = makeStyles(
         color: secondary.main,
       },
       selected: {
-        border: '1px solid ' + tinycolor(primary.main).setAlpha(0.6),
+        border: `1px solid ${tinycolor(primary.main).setAlpha(0.6)}`,
       },
       selectedSecondary: {
-        border: '1px solid ' + secondary.main,
+        border: `1px solid ${secondary.main}`,
       },
     };
   },

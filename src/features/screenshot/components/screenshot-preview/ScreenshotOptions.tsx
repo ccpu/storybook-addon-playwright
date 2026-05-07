@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from 'react';
 import CameraIcon from '@material-ui/icons/Camera';
+import React, { useCallback, useMemo } from 'react';
+import { MemoizedSchemaFormLoader } from '../../../../components/common';
 import { useScreenshotOptions } from '../../hooks/use-screenshot-options';
 import { OptionPopover } from './OptionPopover';
-import { MemoizedSchemaFormLoader } from '../../../../components/common';
 
 const ScreenshotOptions: React.FC = () => {
   const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
@@ -27,7 +27,7 @@ const ScreenshotOptions: React.FC = () => {
     >
       <MemoizedSchemaFormLoader
         onSave={handleSave}
-        schemaName={'screenshot-options'}
+        schemaName="screenshot-options"
         defaultData={screenshotOptions}
         excludeProps={['path']}
       />

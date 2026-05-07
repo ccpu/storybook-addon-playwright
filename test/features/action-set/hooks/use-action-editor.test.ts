@@ -130,7 +130,7 @@ describe('useActionSetEditor', () => {
     vi.mocked(useActionSetStoreState).mockImplementation(
       () =>
         ({
-          orgEditingActionSet: orgEditingActionSet,
+          orgEditingActionSet,
         } as unknown as ActionSetState),
     );
 

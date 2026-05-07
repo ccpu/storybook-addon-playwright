@@ -1,5 +1,5 @@
+import path from 'node:path';
 import kebabCase from 'lodash/kebabCase';
-import path from 'path';
 
 interface Data {
   storyTitle: string;
@@ -8,24 +8,24 @@ interface Data {
   fileName: string;
 }
 
-export const getStoryIdFormScreenshotFileName = (data: Data) => {
+export function getStoryIdFormScreenshotFileName(data: Data) {
   const { screenshotTitle, storyTitle, browser, fileName } = data;
 
-  const screenshotTitleKebabCase = kebabCase(screenshotTitle) as string;
-  const storyTitleCase = kebabCase(storyTitle) as string;
+  const screenshotTitleKebabCase = kebabCase(screenshotTitle);
+  const storyTitleCase = kebabCase(storyTitle);
 
-  let fileNameNoExtension = path.parse(fileName).name as string;
+  let fileNameNoExtension = path.parse(fileName).name;
   fileNameNoExtension = fileNameNoExtension.substring(
     0,
     fileNameNoExtension.length - '-snap'.length,
   );
   fileNameNoExtension = fileNameNoExtension.substring(
     0,
-    fileNameNoExtension.length - ('-' + browser).length,
+    fileNameNoExtension.length - `-${browser}`.length,
   );
   fileNameNoExtension = fileNameNoExtension.substring(
     0,
-    fileNameNoExtension.length - ('-' + screenshotTitleKebabCase).length,
+    fileNameNoExtension.length - `-${screenshotTitleKebabCase}`.length,
   );
   fileNameNoExtension = fileNameNoExtension.substring(
     storyTitleCase.length + 1,
@@ -33,4 +33,4 @@ export const getStoryIdFormScreenshotFileName = (data: Data) => {
   );
 
   return fileNameNoExtension;
-};
+}

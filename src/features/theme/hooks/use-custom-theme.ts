@@ -1,8 +1,8 @@
-import { Theme } from '@material-ui/core';
+import type { Theme } from '@material-ui/core';
 import React from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 
-export const useCustomTheme = () => {
+export function useCustomTheme() {
   const [theme, setTheme] = React.useState<Theme>();
   const isTheme = React.useRef(false);
 
@@ -18,4 +18,4 @@ export const useCustomTheme = () => {
   }, [data]);
 
   return { setTheme, theme };
-};
+}

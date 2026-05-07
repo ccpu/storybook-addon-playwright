@@ -37,7 +37,7 @@ export const addons: StorybookAddons = {
 };
 
 // Helper for tests to emit events
-(addons as any).__setEvent = (eve: string, val: unknown) => {
+addons.__setEvent = (eve: string, val: unknown) => {
   ee.emit(eve, val);
 };
 

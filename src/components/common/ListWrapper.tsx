@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
+import React, { useEffect, useRef } from 'react';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -28,7 +28,7 @@ const ListWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
 
   useEffect(() => {
     if (!ref.current || !ref.current.parentElement) return;
-    //setting storybook panel to height to stretch our panel
+    // setting storybook panel to height to stretch our panel
     ref.current.parentElement.style.height = '100%';
   }, []);
 

@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
-import { ActionMenu } from './ActionMenu';
-import { useActionSchemaLoader } from '../../../../hooks';
-import { Loader } from '../../../../components/common';
-import { EditIcon, SaveIcon, PlusIcon, CrossIcon } from '@storybook/icons';
 import { IconButton } from '@storybook/components';
+import { CrossIcon, EditIcon, PlusIcon, SaveIcon } from '@storybook/icons';
+import React, { useCallback } from 'react';
+import { Loader } from '../../../../components/common';
+import { useActionSchemaLoader } from '../../../../hooks';
+import { ActionMenu } from './ActionMenu';
 
 export interface ActionSetEditorIconsProps {
   onSave: () => void;

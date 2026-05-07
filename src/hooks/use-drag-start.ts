@@ -1,6 +1,6 @@
-import { useDragStartValue, setDragStart } from '../store';
+import { setDragStart, useDragStartValue } from '../store';
 
-export const useDragStart = () => {
+export function useDragStart() {
   const dragStart = useDragStartValue();
   return { dragStart, setDragStart };
-};
+}

@@ -1,13 +1,13 @@
-import { ScreenshotInfo } from '../../../typings';
+import type { ScreenshotInfo } from '../../../typings';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,
 } from '../../../api/server/utils';
-import { setStoryScreenshotOptions } from './set-story-screenshot-options';
 import { getStoryData } from './get-story-data';
 import { normalizeScreenshotActionIds } from './normalize-screenshot-action-ids';
+import { setStoryScreenshotOptions } from './set-story-screenshot-options';
 
-export const getScreenshotData = async (info: ScreenshotInfo) => {
+export async function getScreenshotData(info: ScreenshotInfo) {
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
@@ -32,4 +32,4 @@ export const getScreenshotData = async (info: ScreenshotInfo) => {
   }
 
   return screenShot;
-};
+}

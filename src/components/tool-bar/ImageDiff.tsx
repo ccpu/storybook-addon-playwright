@@ -1,21 +1,21 @@
-import React, { useCallback } from 'react';
-import { makeStyles, Badge } from '@material-ui/core';
+import type { StoryData } from '../../schema';
+import type { ScreenshotTestTargetType } from '../../typings';
+import { Badge, makeStyles } from '@material-ui/core';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
-import {
-  useGlobalImageDiffResults,
-  useScreenshotDiffTestByType,
-} from '../../hooks';
+import { ContrastIcon } from '@storybook/icons';
+import React, { useCallback } from 'react';
 import {
   removeImageDiffResult,
   setImageDiffResults,
 } from '../../features/screenshot/store/actions';
+import {
+  useGlobalImageDiffResults,
+  useScreenshotDiffTestByType,
+} from '../../hooks';
+import { isStoryJsonFile } from '../../utils/is-story-json-file';
+import { toast } from '../../utils/toast';
 import { Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
-import { isStoryJsonFile } from '../../utils/is-story-json-file';
-import { ScreenshotTestTargetType } from '../../typings';
-import { StoryData } from '../../schema';
-import { toast } from '../../utils/toast';
-import { ContrastIcon } from '@storybook/icons';
 
 const useStyles = makeStyles(
   (theme) => {

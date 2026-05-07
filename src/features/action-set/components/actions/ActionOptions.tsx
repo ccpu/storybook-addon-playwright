@@ -1,21 +1,21 @@
-import React, { memo, useCallback, useState, useEffect } from 'react';
-import { AccordionDetails, makeStyles, Chip, Tooltip } from '@material-ui/core';
+import type { DragHandleProps } from '../../../../components/common';
+import { AccordionDetails, Chip, makeStyles, Tooltip } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
-import { ActionSchemaRenderer } from './ActionSchemaRenderer';
-import { capitalize, getActionSchema } from '../../../../utils';
-import {
-  toggleActionExpansion,
-  deleteActionSetAction,
-} from '../../store/actions';
-import { useActionSetStoreState } from '../../store/selectors';
-import { useEditorAction } from '../../hooks/use-editor-action';
-import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
-import { getActionOptionValue } from './utils/index';
-
-import { DragHandleProps } from '../../../../components/common';
-import { QuestionIcon, TrashIcon } from '@storybook/icons';
 import { IconButton } from '@storybook/components';
+import { QuestionIcon, TrashIcon } from '@storybook/icons';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
+import { capitalize, getActionSchema } from '../../../../utils';
+import { useEditorAction } from '../../hooks/use-editor-action';
+import {
+  deleteActionSetAction,
+  toggleActionExpansion,
+} from '../../store/actions';
+
+import { useActionSetStoreState } from '../../store/selectors';
+import { ActionSchemaRenderer } from './ActionSchemaRenderer';
+import { getActionOptionValue } from './utils/index';
 
 const useStyles = makeStyles(
   (theme) => {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(
         transform: 'rotate(0deg) !important',
       },
       expansionPanel: {
-        border: '1px solid ' + divider,
+        border: `1px solid ${divider}`,
         boxShadow: 'none',
       },
       heading: {

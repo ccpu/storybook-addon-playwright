@@ -1,7 +1,7 @@
+import type { SvgIconProps } from '@material-ui/core';
+import type { BrowserTypes } from '../../typings';
 import React, { memo } from 'react';
-import { BrowserTypes } from '../../typings';
-import { Firefox, Browser, Chrome, Webkit } from '../../icons';
-import { SvgIconProps } from '@material-ui/core';
+import { Browser, Chrome, Firefox, Webkit } from '../../icons';
 
 export interface BrowserIconProps extends SvgIconProps {
   browserType?: BrowserTypes;

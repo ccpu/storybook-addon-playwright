@@ -1,14 +1,14 @@
-import { ActionSet } from '../../../typings';
+import type { ActionSet } from '../../../typings';
 import { nanoid } from 'nanoid';
 
 interface Options {
   regenerateIds?: boolean;
 }
 
-export const normalizeScreenshotActionIds = (
+export function normalizeScreenshotActionIds(
   actionSets?: ActionSet[],
   options?: Options,
-): ActionSet[] | undefined => {
+): ActionSet[] | undefined {
   if (!actionSets || !actionSets.length) {
     return undefined;
   }
@@ -23,4 +23,4 @@ export const normalizeScreenshotActionIds = (
     })),
     id: regenerateIds ? nanoid(12) : actionSet.id || nanoid(12),
   }));
-};
+}

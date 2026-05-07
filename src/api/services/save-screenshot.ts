@@ -1,17 +1,20 @@
-import { ImageDiffResult } from '../typings/image-diff';
-import { loadStoryData, getStoryPlaywrightFileInfo } from '../server/utils';
-import { saveStoryFile } from '../server/utils';
-import { diffImageToScreenshot } from './diff-image-to-screenshot';
-import { deleteScreenshot } from './delete-screenshot';
-import { setStoryOptions } from './utils/set-story-options';
-import { getStoryData, findScreenshotWithSameSetting } from './utils';
-import { SaveScreenshotInput } from '../../schema';
-import { normalizeScreenshotActionIds } from './utils/normalize-screenshot-action-ids';
+import type { SaveScreenshotInput } from '../../schema';
+import type { ImageDiffResult } from '../typings/image-diff';
 import { getScreenshotArgs } from '../../utils';
+import {
+  getStoryPlaywrightFileInfo,
+  loadStoryData,
+  saveStoryFile,
+} from '../server/utils';
+import { deleteScreenshot } from './delete-screenshot';
+import { diffImageToScreenshot } from './diff-image-to-screenshot';
+import { findScreenshotWithSameSetting, getStoryData } from './utils';
+import { normalizeScreenshotActionIds } from './utils/normalize-screenshot-action-ids';
+import { setStoryOptions } from './utils/set-story-options';
 
-export const saveScreenshot = async (
+export async function saveScreenshot(
   data: SaveScreenshotInput,
-): Promise<ImageDiffResult> => {
+): Promise<ImageDiffResult> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
@@ -49,10 +52,7 @@ export const saveScreenshot = async (
 
     if (sameDesc) {
       throw new Error(
-        'Found screenshot with the same title, title must be unique.\nTitle: ' +
-          sameDesc.title +
-          '\nBrowser: ' +
-          data.browserType,
+        `Found screenshot with the same title, title must be unique.\nTitle: ${sameDesc.title}\nBrowser: ${data.browserType}`,
       );
     }
 
@@ -64,10 +64,7 @@ export const saveScreenshot = async (
 
     if (sameScreenshotData) {
       throw new Error(
-        'Found screenshot with the same setting, Screenshot settings must be unique for each screenshot.\nTitle: ' +
-          sameScreenshotData.title +
-          '\nBrowser: ' +
-          sameScreenshotData.browserType,
+        `Found screenshot with the same setting, Screenshot settings must be unique for each screenshot.\nTitle: ${sameScreenshotData.title}\nBrowser: ${sameScreenshotData.browserType}`,
       );
     }
   }
@@ -103,7 +100,7 @@ export const saveScreenshot = async (
       ),
       browserType: data.browserType,
       id: data.id,
-      index: index,
+      index,
       props: legacyProps,
       screenshotOptionsId: setStoryOptions(
         storyData,
@@ -119,4 +116,4 @@ export const saveScreenshot = async (
   }
 
   return result;
-};
+}

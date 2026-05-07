@@ -11,7 +11,7 @@ getStoryScreenshotsData.mockImplementation(
         {
           browserType: 'chromium',
           id: 'screenshot-id',
-          title: data.filePath + '-screenshot',
+          title: `${data.filePath}-screenshot`,
         },
       ]);
     });

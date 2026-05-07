@@ -1,4 +1,4 @@
-import { Position } from '../typings';
+import type { Position } from '../typings';
 
 export function getPointByDirection(
   defaultVal: number,
@@ -7,5 +7,5 @@ export function getPointByDirection(
 ): number {
   if (!providedPoint || !providedPoint[direction]) return defaultVal;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return providedPoint[direction]!;
+  return providedPoint[direction];
 }

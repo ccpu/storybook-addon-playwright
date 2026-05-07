@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
-import { addActionSetList } from '../../../store';
 import { useCurrentStoryData } from '../../../hooks';
+import { addActionSetList } from '../../../store';
 import { toast } from '../../../utils';
 
 interface LoadedStory {
@@ -12,11 +12,11 @@ interface LoadedStory {
 
 const __loadedFiles: LoadedStory = {};
 
-export const useStoryActionSetsLoader = () => {
+export function useStoryActionSetsLoader() {
   const { mutateAsync, isPending: loading } =
     trpcClient.actionSet.getActionSet.useMutation();
 
-  const { id: storyId, filePath: filePath } = useCurrentStoryData() || {};
+  const { id: storyId, filePath } = useCurrentStoryData() || {};
 
   useEffect(() => {
     if (
@@ -51,4 +51,4 @@ export const useStoryActionSetsLoader = () => {
   }, [filePath, loading, mutateAsync, storyId]);
 
   return { loading };
-};
+}

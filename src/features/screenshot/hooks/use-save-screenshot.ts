@@ -1,23 +1,23 @@
+import type { SaveScreenshotRequest } from '../../../api/typings';
+import type { BrowserContextOptions, BrowserTypes } from '../../../typings';
+import { nanoid } from 'nanoid';
 import { useCallback, useState } from 'react';
-import { useKnobs } from '../../../hooks/use-knobs';
-import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
-import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { trpcClient } from '../../../api/trpc/client';
-import { BrowserTypes, BrowserContextOptions } from '../../../typings';
-import { SaveScreenshotRequest } from '../../../api/typings';
-import { removeScreenshot, addScreenshot } from '../store/actions';
+import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
+import { useKnobs } from '../../../hooks/use-knobs';
+import { getImageDiffMessages } from '../../../utils';
+import { toast } from '../../../utils/toast';
+import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
+import { addScreenshot, removeScreenshot } from '../store/actions';
 import { useEditScreenshot } from './use-edit-screenshot';
 import { useScreenshotOptions } from './use-screenshot-options';
-import { nanoid } from 'nanoid';
-import { toast } from '../../../utils/toast';
-import { getImageDiffMessages } from '../../../utils';
 
 interface Options {
   title?: string;
   browserType?: BrowserTypes;
 }
 
-export const useSaveScreenshot = (options?: Options) => {
+export function useSaveScreenshot(options?: Options) {
   const { title, browserType } = options || {};
   const args = useKnobs();
 
@@ -65,7 +65,7 @@ export const useSaveScreenshot = (options?: Options) => {
       } else if (result.pass) {
         const message =
           // prettier-ignore
-          `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ` + browserType : '' }`;
+          `Testing existing screenshot were successful, no change has been detected.${titleMsg ? `\nTitle: ${titleMsg}` : ''}${browserType ? `\nBrowser: ${  browserType}` : '' }`;
 
         toast.success(message, {
           duration: 5000,
@@ -73,8 +73,6 @@ export const useSaveScreenshot = (options?: Options) => {
           onAutoClose: reset,
           onDismiss: reset,
         });
-
-        return;
       } else if (result.diffSize || result.error) {
         const message = getImageDiffMessages(result);
 
@@ -83,7 +81,6 @@ export const useSaveScreenshot = (options?: Options) => {
           id: `image-diff-message:error:${message}`,
           onDismiss: reset,
         });
-        return;
       }
     },
   });
@@ -106,9 +103,10 @@ export const useSaveScreenshot = (options?: Options) => {
     [editScreenshotState],
   );
 
-  const getUpdatingScreenshotTitle = useCallback(() => {
-    return editScreenshotState && editScreenshotState.screenshotData.title;
-  }, [editScreenshotState]);
+  const getUpdatingScreenshotTitle = useCallback(
+    () => editScreenshotState && editScreenshotState.screenshotData.title,
+    [editScreenshotState],
+  );
 
   const saveScreenShot = useCallback(
     async (
@@ -201,4 +199,4 @@ export const useSaveScreenshot = (options?: Options) => {
     result: mutationResult,
     saveScreenShot,
   };
-};
+}

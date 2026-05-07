@@ -1,6 +1,7 @@
-import React, { memo, useCallback } from 'react';
-import { ActionPopoverProps, ActionPopover } from './ActionPopover';
+import type { ActionPopoverProps } from './ActionPopover';
 import { Typography } from '@material-ui/core';
+import React, { memo, useCallback } from 'react';
+import { ActionPopover } from './ActionPopover';
 
 export interface ConfirmationPopoverProps extends ActionPopoverProps {
   onConfirm: () => void;
@@ -20,7 +21,7 @@ const ConfirmationPopover: React.FC<ConfirmationPopoverProps> = memo(
     const handleCancel = useCallback(() => {
       if (onCancel) onCancel();
       if (onClose) {
-        onClose({} as never, 'backdropClick');
+        onClose({}, 'backdropClick');
       }
     }, [onCancel, onClose]);
 

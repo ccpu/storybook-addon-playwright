@@ -1,10 +1,10 @@
+import type { StoryInfo } from '../../schema';
+
 import { getStoryPlaywrightFileInfo, loadStoryData } from '../server/utils';
-
-import { setStoryScreenshotOptions } from './utils/set-story-screenshot-options';
 import { getStoryData } from './utils';
-import { StoryInfo } from '../../schema';
+import { setStoryScreenshotOptions } from './utils/set-story-screenshot-options';
 
-export const getStoryScreenshotsData = async (info: StoryInfo) => {
+export async function getStoryScreenshotsData(info: StoryInfo) {
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
 
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
@@ -21,4 +21,4 @@ export const getStoryScreenshotsData = async (info: StoryInfo) => {
     }
     return screenshot;
   });
-};
+}

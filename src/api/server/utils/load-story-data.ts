@@ -1,12 +1,12 @@
-import { PlaywrightData } from '../../../typings';
+import type { PlaywrightData } from '../../../typings';
+import fs from 'node:fs';
 import { readFile } from 'jsonfile';
-import fs from 'fs';
 
-export const loadStoryData = async (
+export async function loadStoryData(
   storyDataPath: string,
   storyId: string,
   create = true,
-): Promise<PlaywrightData | undefined> => {
+): Promise<PlaywrightData | undefined> {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(storyDataPath)) {
       if (!create) {
@@ -41,4 +41,4 @@ export const loadStoryData = async (
       resolve(loadedData);
     });
   });
-};
+}

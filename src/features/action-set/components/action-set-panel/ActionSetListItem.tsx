@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback } from 'react';
+import type { ActionSet } from '../../../../typings';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-  ListItemWrapper,
-  DeleteConfirmationButton,
-  CheckBox,
-} from '../../../../components/common';
-import { ActionSet } from '../../../../typings';
-import { ActionSetEditor } from './ActionSetEditor';
-import { TEMP_ACTION_SET } from '../../../../constants';
-
-import { AddFavouriteAction } from './AddFavouriteAction';
-import { CopyIcon, EditIcon } from '@storybook/icons';
 import { IconButton } from '@storybook/components';
+import { CopyIcon, EditIcon } from '@storybook/icons';
+import React, { useCallback } from 'react';
+import {
+  CheckBox,
+  DeleteConfirmationButton,
+  ListItemWrapper,
+} from '../../../../components/common';
+
+import { TEMP_ACTION_SET } from '../../../../constants';
+import { ActionSetEditor } from './ActionSetEditor';
+import { AddFavouriteAction } from './AddFavouriteAction';
 
 export interface ActionSetActionSetListItemProps {
   onEdit: (item: ActionSet) => void;
@@ -108,9 +108,7 @@ export function ActionSetListItem({
         dragHandleProps={{
           ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
           ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
-          setNodeRef: setActivatorNodeRef as (
-            element: HTMLSpanElement | null,
-          ) => void,
+          setNodeRef: setActivatorNodeRef,
         }}
         icons={
           <>

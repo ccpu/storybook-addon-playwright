@@ -1,23 +1,23 @@
-import {
-  useEditScreenshotStateValue,
-  setEditScreenshotState,
-} from '../../../store';
-import { ScreenshotData, BrowserTypes } from '../../../typings';
-import { useCallback, useEffect, useRef } from 'react';
-import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { useStorybookApi } from '@storybook/manager-api';
-import {
-  deleteTempActionSets,
-  clearCurrentActionSets,
-} from '../../action-set/store/actions';
+import type { BrowserTypes, ScreenshotData } from '../../../typings';
 import { RESET_STORY_ARGS } from '@storybook/core-events';
+import { useStorybookApi } from '@storybook/manager-api';
+import { useCallback, useEffect, useRef } from 'react';
 import { useActiveBrowsers } from '../../../hooks/use-active-browser';
-import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 import { useAddonState } from '../../../hooks/use-addon-state';
+import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
+import {
+  setEditScreenshotState,
+  useEditScreenshotStateValue,
+} from '../../../store';
+import {
+  clearCurrentActionSets,
+  deleteTempActionSets,
+} from '../../action-set/store/actions';
+import { useLoadScreenshotSettings } from './use-load-screenshot-settings';
 
 export type { EditScreenshotState } from '../../../store';
 
-export const useEditScreenshot = () => {
+export function useEditScreenshot() {
   const editScreenshotState = useEditScreenshotStateValue();
 
   const storyData = useCurrentStoryData();
@@ -100,11 +100,12 @@ export const useEditScreenshot = () => {
     [editScreenshotState],
   );
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       unmounted.current = true;
-    };
-  }, []);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!editScreenshotState || !storyData) return undefined;
@@ -122,4 +123,4 @@ export const useEditScreenshot = () => {
     isEditing,
     loadSetting,
   };
-};
+}

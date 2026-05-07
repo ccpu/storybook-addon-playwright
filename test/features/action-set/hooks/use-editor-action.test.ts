@@ -21,7 +21,7 @@ describe('useAction', () => {
     useActionSetStoreStateMock.mockImplementation(
       () =>
         ({
-          orgEditingActionSet: orgEditingActionSet,
+          orgEditingActionSet,
           stories: data.stories,
         } as unknown as ActionSetState),
     );
@@ -57,7 +57,7 @@ describe('useAction', () => {
     useActionSetStoreStateMock.mockImplementation(
       () =>
         ({
-          orgEditingActionSet: orgEditingActionSet,
+          orgEditingActionSet,
           stories: data.stories,
         } as unknown as ActionSetState),
     );

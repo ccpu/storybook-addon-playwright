@@ -1,11 +1,10 @@
-import React from 'react';
-import { makeStyles, Tooltip } from '@material-ui/core';
-import { CircularProgress } from '@material-ui/core';
-import { BrowserTypes } from '../../../../typings';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
-import RefreshIcon from '@material-ui/icons/RefreshOutlined';
+import type { BrowserTypes } from '../../../../typings';
+import { CircularProgress, makeStyles, Tooltip } from '@material-ui/core';
 import Fullscreen from '@material-ui/icons/FullscreenSharp';
+import RefreshIcon from '@material-ui/icons/RefreshOutlined';
+import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { IconButton } from '@storybook/components';
+import React from 'react';
 import { BrowserOptions } from './BrowserOptions';
 
 const useStyles = makeStyles((theme) => {

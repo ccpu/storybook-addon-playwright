@@ -1,16 +1,14 @@
-import { setScreenShotActionSets } from '../../action-set/store/actions';
+import type { BrowserContextOptions } from 'playwright';
+import type { BrowsersOption } from '../../../hooks/use-browser-options';
+import type { ScreenshotData, ScreenshotOptions } from '../../../typings';
+import { RESET_STORY_ARGS, UPDATE_STORY_ARGS } from '@storybook/core-events';
 import { useStorybookApi } from '@storybook/manager-api';
 import { useCallback } from 'react';
-import { ScreenshotData, ScreenshotOptions } from '../../../typings';
-import { RESET_STORY_ARGS, UPDATE_STORY_ARGS } from '@storybook/core-events';
+import { useBrowserOptions } from '../../../hooks/use-browser-options';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import {
-  useBrowserOptions,
-  BrowsersOption,
-} from '../../../hooks/use-browser-options';
-import { useScreenshotOptions } from './use-screenshot-options';
-import { BrowserContextOptions } from 'playwright';
 import { getScreenshotArgs } from '../../../utils';
+import { setScreenShotActionSets } from '../../action-set/store/actions';
+import { useScreenshotOptions } from './use-screenshot-options';
 
 interface ReturnType {
   browserOptions: BrowsersOption;
@@ -18,7 +16,7 @@ interface ReturnType {
   screenshotOptions: ScreenshotOptions;
 }
 
-export const useLoadScreenshotSettings = (): ReturnType => {
+export function useLoadScreenshotSettings(): ReturnType {
   const { setBrowserOptions, browserOptions } = useBrowserOptions();
   const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
 
@@ -66,4 +64,4 @@ export const useLoadScreenshotSettings = (): ReturnType => {
   );
 
   return { browserOptions, loadSetting, screenshotOptions };
-};
+}

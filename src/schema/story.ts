@@ -7,11 +7,12 @@ const storyInfoShape = {
 
 export const storyInfoSchema = z.object(storyInfoShape);
 
-export const createStoryInputSchema = <T extends z.ZodRawShape>(shape: T) =>
-  z.object({
+export function createStoryInputSchema<T extends z.ZodRawShape>(shape: T) {
+  return z.object({
     ...storyInfoShape,
     ...shape,
   });
+}
 
 export const storyInputSchema = createStoryInputSchema({});
 

@@ -1,7 +1,7 @@
-import React from 'react';
+import { IconButton } from '@storybook/components';
 
 import { FormIcon, StopAltHollowIcon } from '@storybook/icons';
-import { IconButton } from '@storybook/components';
+import React from 'react';
 
 export interface CheckBoxProps {
   onClick: () => void;

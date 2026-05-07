@@ -1,6 +1,6 @@
-import { ScreenshotProp } from '../typings';
+import type { ScreenshotProp } from '../typings';
 
-export const knobsToQuerystring = (props?: ScreenshotProp) => {
+export function knobsToQuerystring(props?: ScreenshotProp) {
   if (!props) return '';
 
   const keys = Object.keys(props);
@@ -10,9 +10,8 @@ export const knobsToQuerystring = (props?: ScreenshotProp) => {
     if (Array.isArray(propVal)) {
       if (propVal.length > 0 && typeof propVal[0] === 'object') {
         return `knob-${prop}=${JSON.stringify(propVal)}`;
-      } else {
-        return `knob-${prop}=${propVal.join(',')}`;
       }
+      return `knob-${prop}=${propVal.join(',')}`;
     }
     if (typeof propVal === 'object') {
       return `knob-${prop}=${JSON.stringify(propVal)}`;
@@ -20,4 +19,4 @@ export const knobsToQuerystring = (props?: ScreenshotProp) => {
     return `knob-${prop}=${propVal}`;
   });
   return encodeURI(propQuery.join('&'));
-};
+}

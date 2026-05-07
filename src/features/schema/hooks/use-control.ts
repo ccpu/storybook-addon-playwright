@@ -1,7 +1,6 @@
-import React from 'react';
-import { useState, useCallback } from 'react';
-import { ControlTypes, ControlProps } from '../../../typings';
+import type { ControlProps, ControlTypes } from '../../../typings';
 import { Form } from '@storybook/components';
+import React, { useCallback, useState } from 'react';
 
 interface ControlKnob {
   defaultValue?: unknown;
@@ -12,16 +11,16 @@ interface ControlKnob {
   value: unknown;
 }
 
-const convertOptions = (options?: string[]) => {
+function convertOptions(options?: string[]) {
   if (!options) return undefined;
 
   return options.reduce((obj, key) => {
     obj[key] = key;
     return obj;
   }, {} as Record<string, string>);
-};
+}
 
-const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
+function getDefault(type: ControlTypes, defVal: unknown): unknown {
   if (defVal !== undefined) return defVal;
   switch (type) {
     case 'boolean':
@@ -33,7 +32,7 @@ const getDefault = (type: ControlTypes, defVal: unknown): unknown => {
     default:
       return '';
   }
-};
+}
 
 // Simple control component that replaces @storybook/addon-knobs controls
 const SimpleControl: React.FC<{
@@ -84,7 +83,7 @@ const SimpleControl: React.FC<{
     return React.createElement(
       Form.Select,
       { onChange: handleSelectChange, value: knob.value as string },
-      (knob.options as string[]).map((opt) =>
+      knob.options.map((opt) =>
         React.createElement('option', { key: opt, value: opt }, opt),
       ),
     );
@@ -113,12 +112,12 @@ const SimpleControl: React.FC<{
 };
 
 // Factory that returns the control component for compatibility with previous API
-const getControl = (_type: string) => {
+function getControl(_type: string) {
   void _type;
   return SimpleControl;
-};
+}
 
-export const useControl = (props: ControlProps) => {
+export function useControl(props: ControlProps) {
   const { label, type, onChange, value, options, display } = props;
 
   const [knob, setKnob] = useState<ControlKnob>({
@@ -146,4 +145,4 @@ export const useControl = (props: ControlProps) => {
   );
 
   return { Control, handleChange, knob, setKnob };
-};
+}

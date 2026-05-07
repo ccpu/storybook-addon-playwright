@@ -1,10 +1,10 @@
-import { PlaywrightData, StoryOptions } from '../../../typings';
+import type { PlaywrightData, StoryOptions } from '../../../typings';
 
-export const deleteStoryOptions = (
+export function deleteStoryOptions(
   storyData: PlaywrightData,
   optionsProp: keyof StoryOptions,
   optionsId?: string,
-) => {
+) {
   const screenShotOptionId = `${optionsProp}Id`;
 
   const options = storyData[optionsProp];
@@ -37,4 +37,4 @@ export const deleteStoryOptions = (
   }
 
   return storyData;
-};
+}

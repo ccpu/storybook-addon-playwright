@@ -1,26 +1,25 @@
-import React from 'react';
-import { FavouriteActionSet } from '../../../../typings';
+import type { FavouriteActionSet } from '../../../../typings';
+
 import {
+  Button,
   capitalize,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  FormControlLabel,
+  Popover,
   Radio,
   RadioGroup,
-  FormControlLabel,
-  FormControl,
   TextField,
 } from '@material-ui/core';
+import { IconButton } from '@storybook/components';
+import { StarIcon } from '@storybook/icons';
+import React from 'react';
 import { trpcClient } from '../../../../api/trpc/client';
 import { useAnchorEl } from '../../../../hooks/use-anchor-el';
-import {
-  DialogTitle,
-  Button,
-  DialogActions,
-  Popover,
-  DialogContent,
-} from '@material-ui/core';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { toast } from '../../../../utils/toast';
-import { StarIcon } from '@storybook/icons';
-import { IconButton } from '@storybook/components';
 
 export interface AddFavouriteActionProps {
   item: FavouriteActionSet;
@@ -55,7 +54,7 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
     } catch (error) {
       toast.error(
         // prettier-ignore
-        `An error has occurred:\n ${(error as any).message}`,
+        `An error has occurred:\n ${(error as { message?: string }).message || 'Unknown error'}`,
         { duration: 5000 },
       );
     }
@@ -93,7 +92,7 @@ const AddFavouriteAction: React.FC<AddFavouriteActionProps> = (props) => {
                 <FormControlLabel
                   value={parent}
                   control={<Radio size="small" />}
-                  label={capitalize(parent) + ' Stories'}
+                  label={`${capitalize(parent)} Stories`}
                 />
               </RadioGroup>
             </FormControl>

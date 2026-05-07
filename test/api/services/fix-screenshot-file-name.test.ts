@@ -2,12 +2,12 @@ import { storyData } from '../../configs/story-data';
 import { saveStoryFile } from '../../../src/api/server/utils/save-story-file';
 import { fixScreenshotFileName } from '../../../src/api/services/fix-screenshot-file-name';
 import { getStoryPlaywrightDataByFileName } from '../../../src/api/services/utils/get-story-playwright-data-by-file-name';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { PlaywrightData } from '../../../src/typings';
 import { getStoryPlaywrightFileInfo } from '../../../src/api/server/utils/get-story-playwright-file-info';
 
-vi.mock('fs');
+vi.mock('node:fs');
 const existsSyncMock = vi.spyOn(fs, 'existsSync');
 
 vi.mock(

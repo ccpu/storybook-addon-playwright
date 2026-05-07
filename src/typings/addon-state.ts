@@ -1,4 +1,4 @@
-import { BrowserTypes } from './screenshot';
+import type { BrowserTypes } from './screenshot';
 
 export type ActiveBrowser = {
   [key in BrowserTypes]?: boolean;

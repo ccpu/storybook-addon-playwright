@@ -33,10 +33,6 @@ import { installMouseHelper } from '../../../src/api/server/utils/install-mouse-
 import { releaseModifierKey } from '../../../src/api/services/utils/release-modifier-Key';
 
 import { Page } from 'playwright';
-import {
-  TakeScreenshotOptionsParams,
-  TakeScreenshotParams,
-} from '../../../src/api/typings';
 
 vi.mock(
   '../../../src/api/server/configs',
@@ -242,7 +238,7 @@ describe('makeScreenshot', () => {
     const afterNavigation = vi.fn();
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
-        afterNavigation: afterNavigation,
+        afterNavigation,
         getPage: getPageMock,
       });
     });
@@ -318,7 +314,7 @@ describe('makeScreenshot', () => {
               {
                 args: {
                   mergeType: 'stitch',
-                } as TakeScreenshotOptionsParams,
+                } as unknown as Record<string, unknown>,
                 id: 'action-id',
                 name: 'takeScreenshotOptions',
               },
@@ -361,7 +357,7 @@ describe('makeScreenshot', () => {
                   overlayOptions: {
                     blend: 'clear',
                   },
-                } as TakeScreenshotOptionsParams,
+                } as unknown as Record<string, unknown>,
                 id: 'takeScreenshotOptions-id',
                 name: 'takeScreenshotOptions',
               },
@@ -376,7 +372,7 @@ describe('makeScreenshot', () => {
                   stitchOptions: {
                     blend: 'add',
                   },
-                } as TakeScreenshotParams,
+                } as unknown as Record<string, unknown>,
                 id: 'takeScreenshot-id',
                 name: 'takeScreenshot',
               },
@@ -413,7 +409,7 @@ describe('makeScreenshot', () => {
           {
             actions: [
               {
-                args: {} as TakeScreenshotParams,
+                args: {} as unknown as Record<string, unknown>,
                 id: 'takeScreenshot-id',
                 name: 'takeScreenshot',
               },
@@ -455,7 +451,7 @@ describe('makeScreenshot', () => {
                   overlayOptions: {
                     blend: 'clear',
                   },
-                } as TakeScreenshotOptionsParams,
+                } as unknown as Record<string, unknown>,
                 id: 'takeScreenshotOptions-id',
                 name: 'takeScreenshotOptions',
               },
@@ -466,7 +462,7 @@ describe('makeScreenshot', () => {
           {
             actions: [
               {
-                args: {} as TakeScreenshotParams,
+                args: {} as unknown as Record<string, unknown>,
                 id: 'takeScreenshot-id',
                 name: 'takeScreenshot',
               },
@@ -499,7 +495,7 @@ describe('makeScreenshot', () => {
                   stitchOptions: {
                     direction: 'horizontal',
                   },
-                } as TakeScreenshotOptionsParams,
+                } as unknown as Record<string, unknown>,
                 id: 'takeScreenshotOptions-id',
                 name: 'takeScreenshotOptions',
               },

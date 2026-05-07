@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, forwardRef, Ref } from 'react';
+import type { Ref } from 'react';
+import type { ImageDiffResult } from '../../../../api/typings';
 
-import { Loader } from '../../../../components/common';
-import { ScreenshotData } from '../../../../typings';
-
-import { ScreenshotUpdate } from './ScreenshotUpdate';
-import { ScreenshotInfo } from './ScreenshotInfo';
-import { ScreenshotDelete } from './ScreenshotDelete';
-
-import clsx from 'clsx';
+import type { ScreenshotData } from '../../../../typings';
 import { makeStyles } from '@material-ui/core';
-import { ImageDiffResult } from '../../../../api/typings';
-import { OutboxIcon, ContrastIcon, EditIcon } from '@storybook/icons';
+
 import { IconButton } from '@storybook/components';
+import { ContrastIcon, EditIcon, OutboxIcon } from '@storybook/icons';
+import clsx from 'clsx';
+
+import React, { forwardRef, useState } from 'react';
+import { Loader } from '../../../../components/common';
+import { ScreenshotDelete } from './ScreenshotDelete';
+import { ScreenshotInfo } from './ScreenshotInfo';
+import { ScreenshotUpdate } from './ScreenshotUpdate';
 
 const useStyles = makeStyles(
   (theme) => {

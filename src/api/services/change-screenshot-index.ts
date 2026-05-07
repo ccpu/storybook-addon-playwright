@@ -1,17 +1,13 @@
+import type { ChangeScreenshotIndexInput } from '../../schema';
 import arrayMove from 'array-move';
-
-import { getStoryData } from './utils';
-import { ChangeScreenshotIndexInput } from '../../schema';
-import { ScreenshotData } from '../../typings';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,
   saveStoryFile,
 } from '../server/utils';
+import { getStoryData } from './utils';
 
-export const changeScreenshotIndex = async (
-  info: ChangeScreenshotIndexInput,
-) => {
+export async function changeScreenshotIndex(info: ChangeScreenshotIndexInput) {
   const fileInfo = getStoryPlaywrightFileInfo(info.filePath);
   const storyData = await loadStoryData(fileInfo.path, info.storyId);
 
@@ -26,9 +22,9 @@ export const changeScreenshotIndex = async (
   );
 
   story.screenshots = screenshots.map((screenshot, index) => {
-    (screenshot as ScreenshotData).index = index;
+    screenshot.index = index;
     return screenshot;
   });
 
   await saveStoryFile(fileInfo, storyData);
-};
+}

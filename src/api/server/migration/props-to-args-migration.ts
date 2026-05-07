@@ -1,17 +1,18 @@
-import path from 'path';
+import type { PlaywrightData, ScreenshotData } from '../../../typings';
+import path from 'node:path';
 import glob from 'fast-glob';
 import { readFileSync, writeFileSync } from 'jsonfile';
-import { PlaywrightData, ScreenshotData } from '../../../typings';
 
 interface PropsToArgsMigrationResult {
   changedFiles: string[];
   scannedFiles: number;
 }
 
-const hasValues = (value?: Record<string, unknown>) =>
-  Boolean(value && Object.keys(value).length > 0);
+function hasValues(value?: Record<string, unknown>) {
+  return Boolean(value && Object.keys(value).length > 0);
+}
 
-const migrateScreenshotPropsToArgs = (screenshot: ScreenshotData) => {
+function migrateScreenshotPropsToArgs(screenshot: ScreenshotData) {
   if (screenshot.props === undefined) {
     return false;
   }
@@ -25,12 +26,12 @@ const migrateScreenshotPropsToArgs = (screenshot: ScreenshotData) => {
 
   delete screenshot.props;
   return true;
-};
+}
 
-export const migratePropsToArgsData = (data: PlaywrightData) => {
+export function migratePropsToArgsData(data: PlaywrightData) {
   let changed = false;
 
-  const stories = data.stories;
+  const { stories } = data;
   if (!stories) {
     return false;
   }
@@ -44,11 +45,11 @@ export const migratePropsToArgsData = (data: PlaywrightData) => {
   });
 
   return changed;
-};
+}
 
-export const runPropsToArgsMigration = (
+export function runPropsToArgsMigration(
   cwd = process.cwd(),
-): PropsToArgsMigrationResult => {
+): PropsToArgsMigrationResult {
   const files = glob.sync(['**/*.playwright.json', '!node_modules/**'], {
     absolute: true,
     cwd,
@@ -74,4 +75,4 @@ export const runPropsToArgsMigration = (
     changedFiles,
     scannedFiles: files.length,
   };
-};
+}

@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
-import { SchemaRenderer } from './SchemaRenderer';
-import { Control } from './Control';
-import { SelectorControl } from './SelectorControl';
-import { ActionSchema } from '../../../typings';
+import type { ActionSchema } from '../../../typings';
 import { capitalize } from '@material-ui/core';
 import startCase from 'lodash/startCase';
+import React, { useCallback } from 'react';
+import { Control } from './Control';
+import { SchemaRenderer } from './SchemaRenderer';
+import { SelectorControl } from './SelectorControl';
 
 export interface SchemaPropProps {
   name: string;
@@ -56,8 +56,7 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
   if (
     onSelectorChange &&
     (name === 'selector' ||
-      (schema.type === 'number' &&
-        ['x', 'y', 'top', 'left'].indexOf(name) !== -1))
+      (schema.type === 'number' && ['x', 'y', 'top', 'left'].includes(name)))
   ) {
     return (
       <SelectorControl
@@ -172,7 +171,7 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
           </p>
           <div style={{ paddingLeft: 12 }}>
             <SchemaRenderer
-              schemaProps={(schema.properties || {}) as ActionSchema}
+              schemaProps={schema.properties || {}}
               parents={[...parents, name]}
               required={schema.required}
               onChange={onChange}
@@ -192,4 +191,4 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
 SchemaProp.displayName = 'SchemaProp';
 
 const MemoizedSchemaProp = React.memo(SchemaProp);
-export { SchemaProp, MemoizedSchemaProp };
+export { MemoizedSchemaProp, SchemaProp };

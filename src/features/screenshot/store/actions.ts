@@ -1,14 +1,17 @@
-import { ScreenshotData } from '../../../typings';
-import { ImageDiffResult } from '../../../api/typings';
+import type { ImageDiffResult } from '../../../api/typings';
+import type { ScreenshotData } from '../../../typings';
+import type { ScreenshotState } from './screenshot-store';
 import arrayMove from 'array-move';
-import { useScreenshotStore, ScreenshotState } from './screenshot-store';
+import { useScreenshotStore } from './screenshot-store';
 
 const getState = () => useScreenshotStore.getState();
-const setState = (
+function setState(
   partial:
     | Partial<ScreenshotState>
     | ((state: ScreenshotState) => Partial<ScreenshotState>),
-) => useScreenshotStore.setState(partial);
+) {
+  return useScreenshotStore.setState(partial);
+}
 
 export function addScreenshot(screenshot: ScreenshotData) {
   const state = getState();

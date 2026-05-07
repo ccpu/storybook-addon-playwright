@@ -1,4 +1,4 @@
-import { ExtendedPage } from './typings';
+import type { ExtendedPage } from './typings';
 
 export async function setSelectorSize(
   this: ExtendedPage,

@@ -1,8 +1,7 @@
+import { Button, DialogActions, TextField } from '@material-ui/core';
 import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
-import { Button, TextField, DialogActions } from '@material-ui/core';
-import { Dialog } from '../common';
-import { Loader } from '../common';
+import { Dialog, Loader } from '../common';
 
 interface Props {
   fixFunction?: boolean;
@@ -36,7 +35,7 @@ const FixScreenshotFileDialog: React.FC<Props> = ({
       <Dialog
         open={open}
         onClose={handleClose}
-        title={'Fix Screenshot File Name'}
+        title="Fix Screenshot File Name"
         width="400px"
       >
         <Loader open={fixFileNamesInProgress} />

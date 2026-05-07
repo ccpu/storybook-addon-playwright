@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import type { StoryAction } from '../../../typings';
+import { useEffect, useState } from 'react';
 import { useActionSetStoreState } from '../../../store';
-import { StoryAction } from '../../../typings';
 
-export const useEditorAction = (
+export function useEditorAction(
   storyId: string,
   actionId: string,
-): StoryAction | undefined => {
+): StoryAction | undefined {
   const [action, setAction] = useState<StoryAction>();
   const state = useActionSetStoreState();
 
@@ -43,4 +43,4 @@ export const useEditorAction = (
   }, [actionId, state, storyId]);
 
   return action;
-};
+}

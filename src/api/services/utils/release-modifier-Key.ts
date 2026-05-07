@@ -1,10 +1,7 @@
-import { ActionSet } from '../../../typings';
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
+import type { ActionSet } from '../../../typings';
 
-export const releaseModifierKey = async (
-  page: Page,
-  actionSets: ActionSet[],
-) => {
+export async function releaseModifierKey(page: Page, actionSets: ActionSet[]) {
   if (actionSets) {
     const modifierKeys = ['Shift', 'Meta', 'Control', 'Alt'];
 
@@ -23,4 +20,4 @@ export const releaseModifierKey = async (
       }
     }
   }
-};
+}

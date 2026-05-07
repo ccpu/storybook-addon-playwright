@@ -1,22 +1,22 @@
-import { Page } from 'playwright';
-import { ActionSchemaList } from './action-schema';
-import { BrowserTypes, BrowserContextOptions } from './screenshot';
-import {
+import type { Theme } from '@material-ui/core';
+import type { MatchImageSnapshotOptions } from 'jest-image-snapshot';
+import type { Page } from 'playwright';
+import type { TestFileScreenshots } from '../api/services';
+import type {
   DiffDirection,
   ImageDiffResult,
   ScreenshotRequest,
   TakeScreenshotOptionsParams,
 } from '../api/typings';
-import { RequestData } from './request';
 
-import { Theme } from '@material-ui/core';
-import {
+import type { StoryInfo } from '../schema';
+import type { ActionSchemaList } from './action-schema';
+import type {
   CompareScreenshotParams,
   CompareScreenshotReturnType,
 } from './compare-screenshot';
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import { TestFileScreenshots } from '../api/services';
-import { StoryInfo } from '../schema';
+import type { RequestData } from './request';
+import type { BrowserContextOptions, BrowserTypes } from './screenshot';
 
 type PageGotoOptions = Parameters<Page['goto']>[1];
 

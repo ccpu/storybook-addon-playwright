@@ -1,16 +1,18 @@
-import {
-  UIState,
-  useUIStore,
+import type { AddonState, ScreenshotOptions } from '../typings';
+import type {
   BrowsersOption,
-  SelectorManger,
   EditScreenshotState,
   ScreenshotUpdateOptions,
+  SelectorManger,
+  UIState,
 } from './ui-store';
-import { AddonState, ScreenshotOptions } from '../typings';
+import { useUIStore } from './ui-store';
 
-const setState = (
+function setState(
   partial: Partial<UIState> | ((state: UIState) => Partial<UIState>),
-) => useUIStore.setState(partial);
+) {
+  return useUIStore.setState(partial);
+}
 
 export function setAddonState(addonState: AddonState) {
   setState({ addonState });

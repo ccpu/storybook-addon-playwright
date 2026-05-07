@@ -1,9 +1,9 @@
-import React from 'react';
-import { ScreenshotTestTargetType } from '../../typings';
+import type { ScreenshotTestTargetType } from '../../typings';
 import { IconButton } from '@storybook/components';
-import { Loader } from '../common';
-import { useScreenshotUpdateState } from '../../features/screenshot/hooks/use-screenshot-update-state';
 import { RefreshIcon } from '@storybook/icons';
+import React from 'react';
+import { useScreenshotUpdateState } from '../../features/screenshot/hooks/use-screenshot-update-state';
+import { Loader } from '../common';
 
 export interface ScreenshotUpdateIconProps {
   target: ScreenshotTestTargetType;
@@ -12,7 +12,7 @@ export interface ScreenshotUpdateIconProps {
 const ScreenshotUpdateIcon: React.FC<ScreenshotUpdateIconProps> = ({
   target,
 }) => {
-  const reqBy = 'tool-' + target;
+  const reqBy = `tool-${target}`;
 
   const { runDiffTest, updateInf } = useScreenshotUpdateState(reqBy, target);
 

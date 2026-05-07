@@ -1,4 +1,4 @@
-import { StoryAction } from '../../../../typings';
+import type { StoryAction } from '../../../../typings';
 import equal from 'fast-deep-equal';
 
 function actionsWithoutId(actions: Partial<StoryAction>[]) {
@@ -9,10 +9,10 @@ function actionsWithoutId(actions: Partial<StoryAction>[]) {
   });
 }
 
-export const isSameActions = (
+export function isSameActions(
   a: Partial<StoryAction>[],
   b: Partial<StoryAction>[],
-) => {
+) {
   if (a.length !== b.length) return false;
 
   const newA = actionsWithoutId(a);
@@ -20,4 +20,4 @@ export const isSameActions = (
   const newB = actionsWithoutId(b);
 
   return equal(newA, newB);
-};
+}

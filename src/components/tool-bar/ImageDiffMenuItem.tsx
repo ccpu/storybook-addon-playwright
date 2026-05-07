@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
-import { ImageDiffResult } from '../../api/typings';
+import type { ImageDiffResult } from '../../api/typings';
 import { makeStyles } from '@material-ui/core';
 import { ListItem } from '@storybook/components';
 import { useStorybookApi } from '@storybook/manager-api';
+import React, { useCallback } from 'react';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
 
 const useStyles = makeStyles(
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
           },
           fontSize: 14,
         },
-        border: '1px solid ' + theme.palette.error.main,
+        border: `1px solid ${theme.palette.error.main}`,
         marginBottom: 2,
         marginTop: 2,
         pointerEvents: 'none',
@@ -41,7 +41,7 @@ const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = (props) => {
 
   const classes = useStyles();
 
-  const storyId = imageDiff.storyId;
+  const { storyId } = imageDiff;
 
   const data = storyId ? api.getData(storyId) : undefined;
 
@@ -74,7 +74,7 @@ const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = (props) => {
   return (
     <ListItem
       onClick={handleLoadStory}
-      title={data.parent + '--' + data.name}
+      title={`${data.parent}--${data.name}`}
     />
   );
 };

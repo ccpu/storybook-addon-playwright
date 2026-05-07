@@ -1,10 +1,10 @@
+import type { StoryData } from '../../../schema';
 import { useCallback, useState } from 'react';
-import { addImageDiffResult } from '../store/index';
 import { trpcClient } from '../../../api/trpc/client';
-import { StoryData } from '../../../schema';
 import { toast } from '../../../utils/toast';
+import { addImageDiffResult } from '../store/index';
 
-export const useScreenshotDiffTest = () => {
+export function useScreenshotDiffTest() {
   const [testScreenshotError, setTestScreenshotError] = useState<
     string | undefined
   >(undefined);
@@ -34,7 +34,6 @@ export const useScreenshotDiffTest = () => {
         addImageDiffResult(result);
         return result;
       } catch {
-        7;
         return undefined;
       }
     },
@@ -48,4 +47,4 @@ export const useScreenshotDiffTest = () => {
     testScreenshot,
     testScreenshotError,
   };
-};
+}

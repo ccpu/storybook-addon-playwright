@@ -1,6 +1,6 @@
 import { getIframeDocument } from './get-iframe-document';
 
-export const getIframeScrollPosition = (iframe: HTMLIFrameElement) => {
+export function getIframeScrollPosition(iframe: HTMLIFrameElement) {
   const iframeDocument = getIframeDocument(iframe);
 
   if (!iframeDocument) {
@@ -17,4 +17,4 @@ export const getIframeScrollPosition = (iframe: HTMLIFrameElement) => {
     iframeDocument.documentElement.scrollLeft;
 
   return { scrollLeft, scrollTop };
-};
+}

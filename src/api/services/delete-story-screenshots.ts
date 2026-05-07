@@ -1,10 +1,10 @@
-import { getStoryScreenshotsData } from './get-story-screenshots-data';
+import type { StoryInfo } from '../../schema';
 import { deleteScreenshot } from './delete-screenshot';
-import { StoryInfo } from '../../schema';
+import { getStoryScreenshotsData } from './get-story-screenshots-data';
 
-export const deleteStoryScreenshots = async (
+export async function deleteStoryScreenshots(
   storyInfo: StoryInfo,
-): Promise<void> => {
+): Promise<void> {
   const screenshots = await getStoryScreenshotsData(storyInfo);
 
   if (!screenshots || !screenshots.length) {
@@ -21,4 +21,4 @@ export const deleteStoryScreenshots = async (
       storyId: storyInfo.storyId,
     });
   }
-};
+}

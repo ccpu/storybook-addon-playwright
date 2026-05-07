@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react';
-import { useStorybookState } from '@storybook/manager-api';
 import { makeStyles } from '@material-ui/core';
-import clsx from 'clsx';
-import { SplitPane, Pane } from 'react-split-pane';
-import { isHorizontalPanel } from './utils';
-import { useAddonState } from '../../hooks';
-import { ScreenshotListView } from '../../features/screenshot/components/screenshot-preview/index';
 import { Separator } from '@storybook/components';
-import { CommonProvider } from '../common';
-import { Selector } from './Selector';
-import { EditScreenshotAlert } from './EditScreenshotAlert';
+import { useStorybookState } from '@storybook/manager-api';
+import clsx from 'clsx';
+import React, { useCallback } from 'react';
+import { Pane, SplitPane } from 'react-split-pane';
+import { ScreenshotListView } from '../../features/screenshot/components/screenshot-preview/index';
+import { useAddonState } from '../../hooks';
 import { Clipper } from '../Clipper/Clipper';
+import { CommonProvider } from '../common';
+import { EditScreenshotAlert } from './EditScreenshotAlert';
+import { Selector } from './Selector';
+import { isHorizontalPanel } from './utils';
 
 const useStyles = makeStyles(
   () => {

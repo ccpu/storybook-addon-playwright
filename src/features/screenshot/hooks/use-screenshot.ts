@@ -1,19 +1,19 @@
-import { useCallback, useRef, useEffect, useState } from 'react';
-import { useKnobs } from '../../../hooks/use-knobs';
-import { useStorybookState, addons } from '@storybook/manager-api';
-import { trpcClient } from '../../../api/trpc/client';
-import { BrowserTypes, BrowserContextOptions } from '../../../typings';
+import type { BrowserContextOptions, BrowserTypes } from '../../../typings';
+import { STORY_RENDERED } from '@storybook/core-events';
+import { addons, useStorybookState } from '@storybook/manager-api';
 import sum from 'hash-sum';
+import { nanoid } from 'nanoid';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { trpcClient } from '../../../api/trpc/client';
+import { useKnobs } from '../../../hooks/use-knobs';
+import { toast } from '../../../utils/toast';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
 import { useScreenshotOptions } from './use-screenshot-options';
-import { STORY_RENDERED } from '@storybook/core-events';
-import { nanoid } from 'nanoid';
-import { toast } from '../../../utils/toast';
 
-export const useScreenshot = (
+export function useScreenshot(
   browserType: BrowserTypes | 'storybook',
   browserOptions?: BrowserContextOptions,
-) => {
+) {
   const args = useKnobs();
 
   const state = useStorybookState();
@@ -107,4 +107,4 @@ export const useScreenshot = (
   ]);
 
   return { error, getSnapshot, loading: inProgress, screenshot: result };
-};
+}

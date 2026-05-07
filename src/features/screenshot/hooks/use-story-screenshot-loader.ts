@@ -1,11 +1,11 @@
-import { useEffect, useCallback, useRef } from 'react';
+import type { ScreenshotData } from '../../../typings';
+import { useCallback, useEffect, useRef } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { setScreenshots } from '../store/index';
 import { toast } from '../../../utils/toast';
-import { ScreenshotData } from '../../../typings';
+import { setScreenshots } from '../store/index';
 
-export const useStoryScreenshotLoader = () => {
+export function useStoryScreenshotLoader() {
   const loadedStoryId = useRef<string>();
 
   const storyData = useCurrentStoryData();
@@ -27,9 +27,7 @@ export const useStoryScreenshotLoader = () => {
       });
       loadedStoryId.current = storyData.id;
       setScreenshots((result || []) as ScreenshotData[]);
-    } catch {
-      return;
-    }
+    } catch {}
   }, [mutateAsync, storyData]);
 
   useEffect(() => {
@@ -46,4 +44,4 @@ export const useStoryScreenshotLoader = () => {
     screenshotLoaderInProgress,
     storyData,
   };
-};
+}

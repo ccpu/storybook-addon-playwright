@@ -1,10 +1,10 @@
+import type { FavouriteActionsData } from '../../schema';
+import type { FavouriteActionSet } from '../../typings';
+import * as fs from 'node:fs';
 import { readFile } from 'jsonfile';
-import { FavouriteActionSet } from '../../typings';
 import { FAVOURITE_ACTIONS_FILE_PATH } from './constants';
-import * as fs from 'fs';
-import { FavouriteActionsData } from '../../schema';
 
-export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
+export async function getFavouriteActions(): Promise<FavouriteActionSet[]> {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(FAVOURITE_ACTIONS_FILE_PATH)) {
       resolve([]);
@@ -23,4 +23,4 @@ export const getFavouriteActions = async (): Promise<FavouriteActionSet[]> => {
       },
     );
   });
-};
+}

@@ -1,12 +1,12 @@
-import {
+import type {
   ActionSet,
-  ScreenshotOptions,
-  PlaywrightDataStories,
-  ScreenshotSetting,
   PlaywrightData,
+  PlaywrightDataStories,
+  ScreenshotOptions,
+  ScreenshotSetting,
 } from '../../../typings';
-import { setStoryOptions } from '../../services/utils';
 import { nanoid } from 'nanoid';
+import { setStoryOptions } from '../../services/utils';
 
 interface ScreenshotDataV0 extends Omit<ScreenshotSetting, 'props'> {
   title: string;
@@ -29,15 +29,15 @@ interface V0 {
   [story: string]: V0StoryData;
 }
 
-export const migrateToV1 = (data: V0, version: string) => {
+export function migrateToV1(data: V0, version: string) {
   const storyIds = Object.keys(data);
 
   const newData: PlaywrightData = {
-    version: version,
+    version,
   };
 
   newData.stories = storyIds.reduce((newStoryData, storyId) => {
-    const storyData = data[storyId] as V0StoryData;
+    const storyData = data[storyId];
 
     if (!Object.keys(storyData).length) {
       return newStoryData;
@@ -56,7 +56,7 @@ export const migrateToV1 = (data: V0, version: string) => {
           return {
             ...rest,
             title: description ?? rest.title,
-          } as ActionSet;
+          };
         },
       );
     }
@@ -117,4 +117,4 @@ export const migrateToV1 = (data: V0, version: string) => {
   }, {} as PlaywrightDataStories);
 
   return newData;
-};
+}

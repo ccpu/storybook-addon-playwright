@@ -1,16 +1,16 @@
-import React, { useCallback, useState } from 'react';
-import { ScreenshotTestTargetType } from '../../../../typings';
-import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
-import { useImageDiffScreenshots } from '../../hooks/use-imagediff-screenshots';
-import { Loader } from '../../../../components/common';
-import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
+import type { ScreenshotTestTargetType } from '../../../../typings';
 import { Button } from '@material-ui/core';
+import React, { useCallback, useState } from 'react';
+import { Loader } from '../../../../components/common';
+import { toast } from '../../../../utils/toast';
+import { useImageDiffScreenshots } from '../../hooks/use-imagediff-screenshots';
+import { useScreenshotUpdate } from '../../hooks/use-screenshot-update';
 import {
-  setPauseDeleteImageDiffResult,
   removePassedImageDiffResult,
+  setPauseDeleteImageDiffResult,
 } from '../../store/actions';
 import { useScreenshotStoreState } from '../../store/selectors';
-import { toast } from '../../../../utils/toast';
+import { ScreenshotListPreviewDialog } from './ScreenshotListPreviewDialog';
 
 export interface StoryScreenshotPreviewProps {
   onClose: () => void;
@@ -113,4 +113,4 @@ const StoryScreenshotPreview: React.FC<StoryScreenshotPreviewProps> = (
 StoryScreenshotPreview.displayName = 'StoryScreenshotPreview';
 const MemoizedStoryScreenshotPreview = React.memo(StoryScreenshotPreview);
 
-export { StoryScreenshotPreview, MemoizedStoryScreenshotPreview };
+export { MemoizedStoryScreenshotPreview, StoryScreenshotPreview };

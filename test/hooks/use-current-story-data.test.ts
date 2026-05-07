@@ -1,6 +1,6 @@
-import { useCurrentStoryData } from '../../src/hooks/use-current-story-data';
-import { renderHook } from '@testing-library/react-hooks';
 import { useStorybookApi } from '@storybook/manager-api';
+import { renderHook } from '@testing-library/react-hooks';
+import { useCurrentStoryData } from '../../src/hooks/use-current-story-data';
 
 describe('useCurrentStoryData', () => {
   beforeEach(() => {
@@ -17,9 +17,7 @@ describe('useCurrentStoryData', () => {
     vi.mocked(useStorybookApi).mockImplementationOnce(
       () =>
         ({
-          getCurrentStoryData: () => {
-            return undefined;
-          },
+          getCurrentStoryData: () => undefined,
           getCurrentVersion: () => ({
             version: '6.0.0',
           }),

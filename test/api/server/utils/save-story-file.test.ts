@@ -8,9 +8,9 @@ vi.mock('jsonfile', () => ({
 import { saveStoryFile } from '../../../../src/api/server/utils/save-story-file';
 import { getStoryPlaywrightFileInfo } from '../../../../src/api/server/utils/get-story-playwright-file-info';
 import * as jsonfile from 'jsonfile';
-import { unlinkSync } from 'fs';
+import { unlinkSync } from 'node:fs';
 
-vi.mock('fs');
+vi.mock('node:fs');
 
 describe('saveStoryFile', () => {
   beforeEach(() => {

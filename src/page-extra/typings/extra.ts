@@ -1,4 +1,4 @@
-import { Page } from 'playwright';
+import type { Page } from 'playwright';
 
 export interface Position {
   x?: number;

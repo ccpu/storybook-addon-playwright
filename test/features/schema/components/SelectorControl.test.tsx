@@ -46,7 +46,7 @@ describe('SelectorControl', () => {
           isFollowedByPositionProp={false}
           appendValueToTitle={false}
           onAppendValueToTitle={onAppendValueToTitleMock}
-          value={'value'}
+          value="value"
           isRequired={false}
           onSelectorChange={onSelectorChangeMock}
           {...props}

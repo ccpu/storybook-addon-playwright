@@ -1,6 +1,6 @@
 import { getRawStories } from './get-raw-stories';
 
-export const getStoryFunction = (storyId: string): any => {
+export function getStoryFunction(storyId: string): unknown {
   const raw = getRawStories();
   if (!raw) return undefined;
   const story = raw.find((x) => x.id === storyId);
@@ -13,4 +13,4 @@ export const getStoryFunction = (storyId: string): any => {
     return (story as any).getOriginal();
   }
   return story;
-};
+}

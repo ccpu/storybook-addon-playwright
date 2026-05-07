@@ -1,8 +1,8 @@
+import type { ActionSet } from '../../../typings';
 import { useMemo } from 'react';
-import { ActionSet } from '../../../typings';
 import { useActionSetStoreState } from '../../../store';
 
-export const useCurrentActions = (storyId: string) => {
+export function useCurrentActions(storyId: string) {
   const state = useActionSetStoreState();
 
   const currentActions = useMemo((): ActionSet[] => {
@@ -17,4 +17,4 @@ export const useCurrentActions = (storyId: string) => {
   }, [state.currentActionSets, state.initialised, state.stories, storyId]);
 
   return { currentActions, state };
-};
+}

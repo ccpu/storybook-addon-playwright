@@ -1,11 +1,11 @@
-import { ImageDiffResult } from '../typings/image-diff';
-import { getScreenshotData } from './utils';
+import type { UpdateScreenshotInput } from '../../schema';
+import type { ImageDiffResult } from '../typings/image-diff';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
-import { UpdateScreenshotInput } from '../../schema';
+import { getScreenshotData } from './utils';
 
-export const updateScreenshotService = async (
+export async function updateScreenshotService(
   data: UpdateScreenshotInput,
-): Promise<ImageDiffResult> => {
+): Promise<ImageDiffResult> {
   const screenshotData = await getScreenshotData(data);
 
   if (!screenshotData) {
@@ -33,7 +33,7 @@ export const updateScreenshotService = async (
   const normalizedResult =
     result.added && result.pass === false
       ? (() => {
-          const rest = { ...result } as ImageDiffResult;
+          const rest = { ...result };
           delete (rest as { pass?: boolean }).pass;
           return rest;
         })()
@@ -43,4 +43,4 @@ export const updateScreenshotService = async (
   normalizedResult.storyId = data.storyId;
 
   return normalizedResult;
-};
+}

@@ -1,18 +1,21 @@
-import { ScreenshotSetting } from '../../typings';
+import type { StoryInfo } from '../../schema';
 
-import { ScreenshotData, ScreenshotInfo } from '../../typings';
-import { RequestData } from '../../typings/request';
-import { StoryInfo } from '../../schema';
+import type {
+  ScreenshotData,
+  ScreenshotInfo,
+  ScreenshotSetting,
+} from '../../typings';
+import type { RequestData } from '../../typings/request';
 
 export interface ScreenshotRequest extends ScreenshotSetting, RequestData {
   storyId: string;
 }
 
-export type GetScreenshotResponse = {
+export interface GetScreenshotResponse {
   base64: string;
   error: string;
   id: string;
-};
+}
 
 export interface SaveScreenshotRequest extends ScreenshotData, StoryInfo {
   base64?: string;

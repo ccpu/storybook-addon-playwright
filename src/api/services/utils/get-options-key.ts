@@ -1,12 +1,12 @@
+import type { PlaywrightData, StoryOptions } from '../../../typings';
 import equal from 'fast-deep-equal';
-import { StoryOptions, PlaywrightData } from '../../../typings';
 
-export const getOptionsKey = (
+export function getOptionsKey(
   storyData: PlaywrightData,
   optionProp: keyof StoryOptions,
   // options?: BrowserContextOptions | ScreenshotOptions,
   options?: unknown,
-) => {
+) {
   if (!options || !storyData[optionProp]) return undefined;
 
   const keys = Object.keys(storyData[optionProp]);
@@ -19,4 +19,4 @@ export const getOptionsKey = (
     }
   }
   return undefined;
-};
+}

@@ -1,13 +1,13 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import {
+import type {
   AddonState,
+  BrowserContextOptions,
+  ScreenshotData,
   ScreenshotOptions,
   ScreenshotTestTargetType,
-  ScreenshotData,
-  BrowserContextOptions,
 } from '../typings';
-import { SelectorState } from '../typings/selector';
+import type { SelectorState } from '../typings/selector';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface BrowsersOption {
   chromium?: BrowserContextOptions;
@@ -57,12 +57,13 @@ export interface UIState {
 export const initialUIState: UIState = {
   addonState: {
     clippingWarningDismissed: false,
+    previewPanelEnabled: true,
   } as AddonState,
   browserOptions: { all: {} },
   dragStart: false,
   editScreenshotState: undefined,
   schemaLoaded: false,
-  screenshotOptions: {} as ScreenshotOptions,
+  screenshotOptions: {},
   screenshotUpdateState: {},
   selectorManager: {} as SelectorManger,
 };

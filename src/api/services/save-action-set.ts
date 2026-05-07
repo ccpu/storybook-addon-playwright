@@ -1,12 +1,14 @@
-import { saveStoryFile } from '../server/utils';
-import { loadStoryData, getStoryPlaywrightFileInfo } from '../server/utils';
-import { getStoryData } from './utils';
-import { SaveActionSetInput } from '../../schema';
-import { StoryAction } from '../../typings';
+import type { SaveActionSetInput } from '../../schema';
+import type { StoryAction } from '../../typings';
+import {
+  getStoryPlaywrightFileInfo,
+  loadStoryData,
+  saveStoryFile,
+} from '../server/utils';
 
-export const saveActionSet = async (
-  data: SaveActionSetInput,
-): Promise<void> => {
+import { getStoryData } from './utils';
+
+export async function saveActionSet(data: SaveActionSetInput): Promise<void> {
   const fileInfo = getStoryPlaywrightFileInfo(data.filePath);
   const storyData = await loadStoryData(fileInfo.path, data.storyId);
 
@@ -31,4 +33,4 @@ export const saveActionSet = async (
   story.actionSets.push(actionSetToSave);
 
   await saveStoryFile(fileInfo, storyData);
-};
+}

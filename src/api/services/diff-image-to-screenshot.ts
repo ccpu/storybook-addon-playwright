@@ -1,11 +1,14 @@
-import { DiffImageToScreenShot, ImageDiffResult } from '../typings/image-diff';
+import type { MatchImageSnapshotOptions } from 'jest-image-snapshot';
+import type {
+  DiffImageToScreenShot,
+  ImageDiffResult,
+} from '../typings/image-diff';
+import * as fs from 'node:fs';
+// import { nanoid } from 'nanoid';
+import path from 'node:path';
 import { runDiffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot';
-import { MatchImageSnapshotOptions } from 'jest-image-snapshot';
-import * as fs from 'fs';
 import { getConfigs } from '../server/configs';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
-// import { nanoid } from 'nanoid';
-import path from 'path';
 
 export interface SnapshotOptions extends MatchImageSnapshotOptions {
   allowSizeMismatch?: boolean;
@@ -14,11 +17,11 @@ export interface SnapshotOptions extends MatchImageSnapshotOptions {
   updateSnapshot?: boolean;
 }
 
-export const diffImageToScreenshot = async (
+export async function diffImageToScreenshot(
   data: DiffImageToScreenShot,
   imageBuffer: Buffer,
   options?: Partial<SnapshotOptions>,
-): Promise<ImageDiffResult> => {
+): Promise<ImageDiffResult> {
   return new Promise((resolve, reject) => {
     try {
       const paths = getScreenshotPaths(data);
@@ -51,7 +54,7 @@ export const diffImageToScreenshot = async (
         updateSnapshot: false,
         ...imageDiffOptions,
         ...options,
-      } as SnapshotOptions) as ImageDiffResult;
+      }) as ImageDiffResult;
 
       if (!result.pass) {
         fs.rmdirSync(diffDir, { recursive: true });
@@ -70,4 +73,4 @@ export const diffImageToScreenshot = async (
       reject(error);
     }
   });
-};
+}

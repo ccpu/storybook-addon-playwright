@@ -8,6 +8,17 @@ vi.mock('react', async (importOriginal) => {
   const patchedDefault = { ...(actual.default ?? actual), useEffect: hook };
   return { ...actual, default: patchedDefault, useEffect: hook };
 });
+vi.mock('../../../../../src/api/trpc/client', () => ({
+  createTrpcHttpClient: () => ({}),
+  trpcClient: {
+    Provider: ({ children }: { children: unknown }) => children,
+    screenshot: {
+      hasScreenshotTitleGenerator: {
+        useQuery: () => ({ data: false }),
+      },
+    },
+  },
+}));
 import '../../../../manual-mocks/react-useEffect';
 import { ScreenshotView } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenshotView';
 import { shallow } from 'enzyme';
@@ -41,6 +52,11 @@ const useSaveScreenshotMockData = () => ({
   result: undefined,
   saveScreenShot: vi.fn(),
 });
+
+vi.mock(
+  '../../../../../src/features/screenshot/hooks/use-generate-screenshot-title',
+  async () => await import('../../hooks/__mocks__/use-generate-screenshot-title'),
+);
 
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot',

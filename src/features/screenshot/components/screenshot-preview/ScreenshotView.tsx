@@ -11,8 +11,10 @@ import {
   InputDialog,
   Loader,
 } from '../../../../components/common';
+import { trpcClient } from '../../../../api/trpc/client';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
+import { useGenerateScreenshotTitle } from '../../hooks/use-generate-screenshot-title';
 import { useSaveScreenshot } from '../../hooks/use-save-screenshot';
 import { useScreenshot } from '../../hooks/use-screenshot';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
@@ -128,6 +130,11 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     browserOptions,
   );
 
+  const { data: hasGenerator } =
+    trpcClient.screenshot.hasScreenshotTitleGenerator.useQuery();
+
+  const { generateTitle } = useGenerateScreenshotTitle(browserType);
+
   useEffect(() => {
     if (!refresh || loading) return;
     getSnapshot();
@@ -232,6 +239,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
             title="Screenshot Title"
             value={getUpdatingScreenshotTitle()}
             required
+            onGenerateContent={hasGenerator ? generateTitle : undefined}
           />
 
           <Loader open={inProgress && !savingWithTitle} />

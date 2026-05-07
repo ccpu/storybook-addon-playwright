@@ -2,6 +2,7 @@ import {
   changeScreenshotIndexInputSchema,
   deleteScreenshotInputSchema,
   deleteStoryScreenshotsInputSchema,
+  generateScreenshotTitleInputSchema,
   imageDiffResultOutputSchema,
   saveScreenshotInputSchema,
   saveScreenshotOutputSchema,
@@ -15,7 +16,9 @@ import {
 import { changeScreenshotIndex } from '../../services/change-screenshot-index';
 import { deleteScreenshot } from '../../services/delete-screenshot';
 import { deleteStoryScreenshots } from '../../services/delete-story-screenshots';
+import { generateScreenshotTitle } from '../../services/generate-screenshot-title';
 import { getStoryScreenshotsData as getStoryScreenshots } from '../../services/get-story-screenshots-data';
+import { hasScreenshotTitleGenerator } from '../../services/has-screenshot-title-generator';
 import { makeScreenshot } from '../../services/make-screenshot';
 import { saveScreenshot } from '../../services/save-screenshot';
 import { testScreenshotService as testScreenshot } from '../../services/test-screenshot-service';
@@ -38,10 +41,17 @@ export const screenshotRouter = router({
     .input(deleteStoryScreenshotsInputSchema)
     .mutation(async ({ input }) => deleteStoryScreenshots(input)),
 
+  generateScreenshotTitle: baseProcedure
+    .input(generateScreenshotTitleInputSchema)
+    .mutation(async ({ input }) => generateScreenshotTitle(input)),
+
   // mutation: reads FS as part of a stateful lookup — justified
   getStoryScreenshots: baseProcedure
     .input(storyInputSchema)
     .mutation(async ({ input }) => getStoryScreenshots(input)),
+
+  // query: checks if getScreenshotTitle is configured
+  hasScreenshotTitleGenerator: baseProcedure.query(() => hasScreenshotTitleGenerator()),
 
   saveScreenshot: baseProcedure
     .input(saveScreenshotInputSchema)

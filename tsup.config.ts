@@ -29,14 +29,11 @@ export default defineConfig((overrideOptions) => {
       target: 'es2020',
     },
     /*
-     * Node entries: preset, index, server routes, constants.
-     * These are loaded by Node (Storybook preset, middleware, Jest helpers).
+     * Node entries: index, server routes, constants.
+     * These are loaded by Node (middleware, Jest helpers).
      */
     {
       ...commonConfig,
-      banner: {
-        js: '#!/usr/bin/env node',
-      },
       dts: false,
       entry: {
         cli: 'src/cli.ts',
@@ -54,7 +51,6 @@ export default defineConfig((overrideOptions) => {
         'constants/routes': 'src/constants/routes.ts',
         'get-screenshots': 'src/get-screenshots.ts',
         index: 'src/index.ts',
-        preset: 'src/preset.ts',
         'run-image-diff': 'src/run-image-diff.ts',
         'to-match-screenshots': 'src/to-match-screenshots.ts',
         'trpc/context': 'src/api/trpc/context.ts',

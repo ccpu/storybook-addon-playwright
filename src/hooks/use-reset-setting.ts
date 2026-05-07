@@ -7,7 +7,7 @@ import {
 import { useAddonState } from './use-addon-state';
 import { useCurrentStoryData } from './use-current-story-data';
 
-export const PREVIEW_PANEL_SIZE = 200;
+export const PREVIEW_PANEL_SIZE = 100;
 
 export function useResetSetting() {
   const api = useStorybookApi();

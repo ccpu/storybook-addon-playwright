@@ -5,6 +5,11 @@ import CheckNotSelected from '@material-ui/icons/RadioButtonUncheckedRounded';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { capitalize } from '../../../utils';
+import { resolveMuiIcon } from '../../../utils/resolve-mui-icon';
+
+const CheckSelectedIcon = resolveMuiIcon(CheckSelected);
+const HelpOutlineSharpIcon = resolveMuiIcon(HelpOutlineSharp);
+const CheckNotSelectedIcon = resolveMuiIcon(CheckNotSelected);
 
 const useStyles = makeStyles(
   (theme) => {
@@ -100,7 +105,7 @@ const FormControl: React.FC<ControlFormProps> = memo((props) => {
               enterDelay={800}
               title={description}
             >
-              <HelpOutlineSharp className={classes.icons} />
+              <HelpOutlineSharpIcon className={classes.icons} />
             </Tooltip>
           )}
         </div>
@@ -112,12 +117,12 @@ const FormControl: React.FC<ControlFormProps> = memo((props) => {
               title="Append value to title"
             >
               {appendValueToTitle ? (
-                <CheckSelected
+                <CheckSelectedIcon
                   style={{ opacity: 1 }}
                   className={classes.icons}
                 />
               ) : (
-                <CheckNotSelected className={classes.icons} />
+                <CheckNotSelectedIcon className={classes.icons} />
               )}
             </Tooltip>
           </div>

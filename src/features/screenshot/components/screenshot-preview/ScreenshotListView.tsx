@@ -2,7 +2,7 @@ import type { ScreenShotViewPanel } from '../../../../typings';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React, { useCallback, useState } from 'react';
-import useMeasure from 'react-use/lib/useMeasure';
+import { useMeasure } from 'react-use';
 import { InputDialog, Loader } from '../../../../components/common';
 import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
 import { useStoryUrl } from '../../../../hooks/use-story-url';

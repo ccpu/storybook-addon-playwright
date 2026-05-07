@@ -15,9 +15,7 @@ describe('cli', () => {
       changedFiles: ['a.playwright.json'],
       scannedFiles: 3,
     });
-    const logSpy = vi
-      .spyOn(console, 'log')
-      .mockImplementation(() => undefined);
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
 
     const exitCode = runCli(['migrate', 'props-to-args']);
 
@@ -27,9 +25,7 @@ describe('cli', () => {
   });
 
   it('prints usage for unknown commands', () => {
-    const logSpy = vi
-      .spyOn(console, 'log')
-      .mockImplementation(() => undefined);
+    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
 
     const exitCode = runCli(['unknown']);
 

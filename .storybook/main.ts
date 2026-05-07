@@ -1,12 +1,16 @@
 import path from 'path';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
-const config: StorybookConfig = {
+type LocalStorybookConfig = StorybookConfig & {
+  managerEntries: (entry?: string[]) => string[];
+};
+
+const config: LocalStorybookConfig = {
   stories: ['../**/*.stories.tsx'],
-  addons: [
-    '@storybook/addon-essentials',
-    'storybook-dark-mode',
-    path.resolve(__dirname, '../preset.js'),
+  addons: ['@storybook/addon-essentials', 'storybook-dark-mode'],
+  managerEntries: (entry = []) => [
+    ...entry,
+    path.resolve(__dirname, '../register.js'),
   ],
 
   framework: {

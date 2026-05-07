@@ -9,6 +9,9 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButton as SIconButton } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
+
+const CloseIconComponent = resolveMuiIcon(CloseIcon);
 
 const useStyles = makeStyles(
   () => {
@@ -71,7 +74,7 @@ const OptionPopover: React.FC<OptionPopoverProps> = ({
           <div className={classes.title}>
             <span>{title}</span>
             <IconButton size="small" onClick={handleClose}>
-              <CloseIcon />
+              <CloseIconComponent />
             </IconButton>
           </div>
           <Divider />

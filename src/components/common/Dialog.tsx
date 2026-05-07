@@ -10,6 +10,9 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
+import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
+
+const CloseIconComponent = resolveMuiIcon(CloseIcon);
 
 interface StyleProps {
   width?: string | number;
@@ -106,7 +109,7 @@ const Dialog: React.FC<DialogProps> = ({
                   className={classes.closIcon}
                   onClick={onClose}
                 >
-                  <CloseIcon />
+                  <CloseIconComponent />
                 </IconButton>
               )}
             </div>

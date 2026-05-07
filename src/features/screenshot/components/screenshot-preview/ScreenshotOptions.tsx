@@ -1,8 +1,11 @@
 import CameraIcon from '@material-ui/icons/Camera';
 import React, { useCallback, useMemo } from 'react';
 import { MemoizedSchemaFormLoader } from '../../../../components/common';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { useScreenshotOptions } from '../../hooks/use-screenshot-options';
 import { OptionPopover } from './OptionPopover';
+
+const CameraIconComponent = resolveMuiIcon(CameraIcon);
 
 const ScreenshotOptions: React.FC = () => {
   const { setScreenshotOptions, screenshotOptions } = useScreenshotOptions();
@@ -22,7 +25,7 @@ const ScreenshotOptions: React.FC = () => {
   return (
     <OptionPopover
       title="Screenshot Options"
-      Icon={CameraIcon}
+      Icon={CameraIconComponent}
       active={isActive}
     >
       <MemoizedSchemaFormLoader

@@ -6,7 +6,10 @@ import {
   MemoizedSchemaFormLoader,
 } from '../../../../components/common';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { OptionPopover } from './OptionPopover';
+
+const SettingIconComponent = resolveMuiIcon(SettingIcon);
 
 export interface BrowserOptionsProps {
   browserType: keyof BrowsersOption;
@@ -44,7 +47,11 @@ const BrowserOptions: React.FC<BrowserOptionsProps> = ({ browserType }) => {
   if (!browserOptions) return null;
 
   return (
-    <OptionPopover title="Browser Options" Icon={SettingIcon} active={isActive}>
+    <OptionPopover
+      title="Browser Options"
+      Icon={SettingIconComponent}
+      active={isActive}
+    >
       {!reset && (
         <MemoizedSchemaFormLoader
           onSave={handleSave}

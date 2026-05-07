@@ -5,7 +5,12 @@ import RefreshIcon from '@material-ui/icons/RefreshOutlined';
 import SaveIcon from '@material-ui/icons/SaveAltOutlined';
 import { IconButton } from '@storybook/components';
 import React from 'react';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { BrowserOptions } from './BrowserOptions';
+
+const FullscreenIcon = resolveMuiIcon(Fullscreen);
+const RefreshOutlinedIcon = resolveMuiIcon(RefreshIcon);
+const SaveAltOutlinedIcon = resolveMuiIcon(SaveIcon);
 
 const useStyles = makeStyles((theme) => {
   const { palette } = theme;
@@ -86,13 +91,13 @@ const ScreenShotViewToolbar: React.FC<PreviewItemProps> = (props) => {
         {showSaveButton && (
           <IconButton onClick={onSave}>
             <Tooltip placement="top" title="Save screenshot">
-              <SaveIcon />
+              <SaveAltOutlinedIcon />
             </Tooltip>
           </IconButton>
         )}
         <IconButton onClick={onRefresh}>
           <Tooltip placement="top" title="Refresh">
-            <RefreshIcon />
+            <RefreshOutlinedIcon />
           </Tooltip>
         </IconButton>
         {browserType !== 'storybook' && (
@@ -101,7 +106,7 @@ const ScreenShotViewToolbar: React.FC<PreviewItemProps> = (props) => {
 
         <IconButton onClick={onFullScreen}>
           <Tooltip placement="top" title="Full screen">
-            <Fullscreen />
+            <FullscreenIcon />
           </Tooltip>
         </IconButton>
       </div>

@@ -9,15 +9,12 @@ import {
   ADDON_ID,
   PREVIEW_ID,
   SCREENSHOT_PANEL_ID,
+  TOAST_ID,
   TOOL_ID,
 } from './constants';
-// Register the PREVIEW wrapper at module load time (before React renders).
-// In Storybook 8, initModules/loadAddons runs in a useEffect (after first render).
-// The Canvas component captures `wrappers` as a closure on first render and never
-// updates it, so we must populate elements[PREVIEW] before the first render.
-// in version 10 may need to use definePreviewAddon instead of add with type PREVIEW (https://storybook.js.org/docs/addons/addon-migration-guide)
+import { Toaster } from 'sonner';
+
 addons.add(PREVIEW_ID, {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render: Preview as any,
   type: types.PREVIEW,
 });
@@ -29,6 +26,14 @@ addons.register(ADDON_ID, () => {
   } catch {
     return;
   }
+
+  // Toast must inject once at the manager level to ensure it is available in all panels and tools,
+  // and not duplicated if multiple panels/tools use it.
+  addons.add(TOAST_ID, {
+    render: () => <Toaster position="bottom-left" />,
+    title: 'toast',
+    type: types.TAB,
+  });
 
   addons.add(TOOL_ID, {
     render: () => <Tool />,

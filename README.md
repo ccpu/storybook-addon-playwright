@@ -47,13 +47,12 @@ module.exports = {
   stories: ['../**/*.stories.[tj]sx'],
   addons: [
     '@storybook/addon-essentials',
-    'storybook-addon-playwright/preset',
     'storybook-addon-playwright/register',
   ],
 };
 ```
 
-within `.storybook/main.js` OR `.storybook/middleware.js`:
+within `.storybook/middleware.js`:
 
 ```js
 const { setConfig } = require('storybook-addon-playwright/configs');

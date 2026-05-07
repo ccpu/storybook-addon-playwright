@@ -18,7 +18,6 @@ import {
 import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
 import { FixScreenshotFileDialog } from '../common';
 import {
-  CogIcon,
   RefreshIcon,
   BottomBarIcon,
   SidebarAltIcon,
@@ -28,9 +27,9 @@ import {
   EyeCloseIcon,
   WrenchIcon,
   EyeIcon,
+  BrowserIcon,
 } from '@storybook/icons';
 import { DisplayPlacement } from '../../typings';
-import { Toaster } from 'sonner';
 
 const useStyles = makeStyles(() => ({
   asterisk: {
@@ -98,7 +97,6 @@ const Tool: React.FC = () => {
   const placement = addonState ? addonState.placement : 'auto';
   return (
     <CommonProvider>
-      <Toaster position="bottom-left" />
       <Separator />
       <WithTooltip
         placement="bottom"
@@ -212,7 +210,7 @@ const Tool: React.FC = () => {
         )}
       >
         <IconButton aria-label="Open menu" title="Open menu">
-          <CogIcon />
+          <BrowserIcon />
         </IconButton>
       </WithTooltip>
       {storyData && (

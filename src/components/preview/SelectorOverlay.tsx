@@ -2,9 +2,7 @@ import { getSelectorPath } from '@dom-utils/selector-path';
 import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
-import useKey from 'react-use/lib/useKey';
-import useMouseHovered from 'react-use/lib/useMouseHovered';
-import useThrottleFn from 'react-use/lib/useThrottleFn';
+import { useKey, useMouseHovered, useThrottleFn } from 'react-use';
 import { useSelectorManager } from '../../hooks';
 import { normalizeRootSelectorPath } from './utils';
 

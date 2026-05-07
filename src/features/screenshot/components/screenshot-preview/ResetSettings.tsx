@@ -3,6 +3,9 @@ import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../../../hooks';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
+
+const RotateLeftIconComponent = resolveMuiIcon(RotateLeftIcon);
 
 function ResetSettings() {
   const { setBrowserOptions } = useBrowserOptions();
@@ -16,7 +19,7 @@ function ResetSettings() {
   return (
     <IconButton onClick={handleClick}>
       <Tooltip placement="top" title="Reset Settings">
-        <RotateLeftIcon style={{ marginTop: 4, width: '20px' }} />
+        <RotateLeftIconComponent style={{ marginTop: 4, width: '20px' }} />
       </Tooltip>
     </IconButton>
   );

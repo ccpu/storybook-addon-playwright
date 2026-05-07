@@ -7,7 +7,11 @@ import clsx from 'clsx';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useControl, useSelectorManager } from '../../../hooks';
 import { isValidSelector } from '../../../utils';
+import { resolveMuiIcon } from '../../../utils/resolve-mui-icon';
 import { FormControl } from './FormControl';
+
+const TargetIconComponent = resolveMuiIcon(TargetIcon);
+const PointerIconComponent = resolveMuiIcon(PointerIcon);
 
 const useStyles = makeStyles(
   (theme) => {
@@ -191,9 +195,9 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
             className={classes.button}
           >
             {isSelector ? (
-              <TargetIcon className={classes.selectorIcon} />
+              <TargetIconComponent className={classes.selectorIcon} />
             ) : (
-              <PointerIcon />
+              <PointerIconComponent />
             )}
           </IconButton>
 
@@ -204,7 +208,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
               className={classes.button}
             >
               <div className={classes.selectorHashIcon}>
-                <TargetIcon className={classes.selectorIcon} />
+                <TargetIconComponent className={classes.selectorIcon} />
               </div>
             </IconButton>
           )}

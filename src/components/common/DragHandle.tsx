@@ -1,6 +1,9 @@
 import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
 import clsx from 'clsx';
 import React from 'react';
+import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
+
+const DragIndicatorSharpIcon = resolveMuiIcon(DragIndicatorSharp);
 
 export interface DragHandleProps extends React.HTMLAttributes<HTMLSpanElement> {
   setNodeRef?: (element: HTMLSpanElement | null) => void;
@@ -18,7 +21,7 @@ export const DragHandle: React.FC<DragHandleProps> = ({
       style={{ cursor: 'move', display: 'inline-flex' }}
       {...rest}
     >
-      <DragIndicatorSharp
+      <DragIndicatorSharpIcon
         style={{
           cursor: 'move',
           fontSize: 25,

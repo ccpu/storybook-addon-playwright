@@ -22,6 +22,10 @@ import { ScreenshotInfo } from './ScreenshotInfo';
 import { ScreenshotListItemMenu } from './ScreenshotListItemMenu';
 import { ScreenshotListItemWrapper } from './ScreenshotListItemWrapper';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
+
+const CheckCircleIcon = resolveMuiIcon(CheckCircle);
+const ErrorIcon = resolveMuiIcon(Error);
 
 const useStyles = makeStyles(
   () => {
@@ -209,7 +213,7 @@ function ScreenshotListItem({
           <Loader progressSize={20} position="absolute" open={inProgress} />
 
           {isPassesImageDiff && (
-            <CheckCircle
+            <CheckCircleIcon
               color="primary"
               onClick={handleRemoveScreenShotResult}
               className={classes.indicatorIcon}
@@ -217,7 +221,7 @@ function ScreenshotListItem({
           )}
 
           {imageDiffResult && !imageDiffResult.pass && (
-            <Error
+            <ErrorIcon
               color="secondary"
               onClick={handleShowImageDiffResult}
               className={classes.indicatorIcon}

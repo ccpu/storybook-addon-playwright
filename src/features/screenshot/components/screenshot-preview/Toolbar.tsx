@@ -11,9 +11,15 @@ import { Toolbar as CommonToolbar } from '../../../../components/common';
 import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
 import { ResizeBrowserToPreview } from '../../../../components/ResizeBrowserToPreview/ResizeBrowserToPreview';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
+import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { BrowserOptions } from './BrowserOptions';
 import { ResetSettings } from './ResetSettings';
 import { ScreenshotOptions } from './ScreenshotOptions';
+
+const CloseOutlinedIcon = resolveMuiIcon(CloseOutlined);
+const NearMeOutlinedIcon = resolveMuiIcon(NearMeIcon);
+const RefreshSharpIcon = resolveMuiIcon(RefreshSharp);
+const SaveAltOutlinedIcon = resolveMuiIcon(SaveIcon);
 
 export interface ToolbarProps {
   browserTypes: BrowserTypes[];
@@ -72,7 +78,7 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
                 : 'Show cursor'
             }
           >
-            <NearMeIcon style={{ transform: 'rotate(-80deg)' }} />
+            <NearMeOutlinedIcon style={{ transform: 'rotate(-80deg)' }} />
           </Tooltip>
         </IconButton>
 
@@ -82,13 +88,13 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
 
         <IconButton onClick={onSave}>
           <Tooltip placement="top" title="Save screenshots">
-            <SaveIcon />
+            <SaveAltOutlinedIcon />
           </Tooltip>
         </IconButton>
 
         <IconButton onClick={onRefresh}>
           <Tooltip placement="top" title="Refresh">
-            <RefreshSharp />
+            <RefreshSharpIcon />
           </Tooltip>
         </IconButton>
 
@@ -99,7 +105,7 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
 
         <IconButton onClick={onCLose}>
           <Tooltip placement="top" title="Close panel">
-            <CloseOutlined />
+            <CloseOutlinedIcon />
           </Tooltip>
         </IconButton>
       </div>

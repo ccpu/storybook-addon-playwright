@@ -13,7 +13,7 @@ function hasValues(value?: Record<string, unknown>) {
 }
 
 function isWindowsPath(value: string) {
-  return /^[A-Za-z]:[\\/]/.test(value) || value.startsWith('\\\\');
+  return /^[A-Z]:[\\/]/i.test(value) || value.startsWith('\\\\');
 }
 
 function relativePath(cwd: string, file: string) {

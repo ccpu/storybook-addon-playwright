@@ -12,6 +12,16 @@ function hasValues(value?: Record<string, unknown>) {
   return Boolean(value && Object.keys(value).length > 0);
 }
 
+function isWindowsPath(value: string) {
+  return /^[A-Za-z]:[\\/]/.test(value) || value.startsWith('\\\\');
+}
+
+function relativePath(cwd: string, file: string) {
+  const pathApi = isWindowsPath(cwd) || isWindowsPath(file) ? path.win32 : path;
+
+  return pathApi.relative(cwd, file);
+}
+
 function migrateScreenshotPropsToArgs(screenshot: ScreenshotData) {
   if (screenshot.props === undefined) {
     return false;
@@ -66,7 +76,7 @@ export function runPropsToArgsMigration(cwd = process.cwd()): PropsToArgsMigrati
       EOL: '\r\n',
       spaces: 2,
     });
-    changedFiles.push(path.relative(cwd, file));
+    changedFiles.push(relativePath(cwd, file));
   });
 
   return {

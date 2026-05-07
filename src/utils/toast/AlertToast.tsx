@@ -18,6 +18,7 @@ export interface AlertToastProps extends AlertBaseProps {
   onClose?: () => void;
   description?: string;
   style?: React.CSSProperties;
+  children?: React.ReactNode;
 }
 
 const getVariantIcon = (variant: AlertVariant) => {
@@ -50,6 +51,25 @@ const getVariantIconColor = (variant: AlertVariant, isDarkMode: boolean) => {
   }
 };
 
+export const ToastMessageContainer: React.FC<
+  React.HTMLAttributes<HTMLDivElement>
+> = (props) => {
+  return (
+    <div
+      {...props}
+      style={{
+        fontSize: '11px',
+        lineHeight: '14px',
+        opacity: 0.9,
+        overflowWrap: 'anywhere',
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+        ...props.style,
+      }}
+    ></div>
+  );
+};
+
 const AlertToast: React.FC<AlertToastProps> = ({
   title,
   description,
@@ -57,6 +77,7 @@ const AlertToast: React.FC<AlertToastProps> = ({
   onClose,
   style,
   closeButton = true,
+  children,
   ...rest
 }) => {
   const isLightMode = document.body.classList.contains('light');
@@ -131,19 +152,9 @@ const AlertToast: React.FC<AlertToastProps> = ({
           </div>
         )}
         {description && (
-          <div
-            style={{
-              fontSize: '11px',
-              lineHeight: '14px',
-              opacity: 0.9,
-              overflowWrap: 'anywhere',
-              whiteSpace: 'normal',
-              wordBreak: 'break-word',
-            }}
-          >
-            {descriptioncomponent}
-          </div>
+          <ToastMessageContainer>{descriptioncomponent}</ToastMessageContainer>
         )}
+        {children}
       </div>
 
       {onClose && closeButton && (

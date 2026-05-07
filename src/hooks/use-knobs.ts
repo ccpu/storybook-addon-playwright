@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { STORY_ARGS_UPDATED, STORY_CHANGED } from '@storybook/core-events';
 import { ScreenshotProp } from '../typings';
-import { addons } from '@storybook/manager-api';
+import { addons, useStorybookApi } from '@storybook/manager-api';
+import equal from 'fast-deep-equal';
 
 export const useKnobs = () => {
   const [args, setArgs] = useState<ScreenshotProp>();
+  const api = useStorybookApi();
+  const apiRef = useRef(api);
+
+  apiRef.current = api;
 
   useEffect(() => {
     setArgs(undefined);
@@ -14,8 +19,14 @@ export const useKnobs = () => {
       args: Record<string, unknown>;
     }) => {
       if (!data || !data.args) return;
+      const currentStoryData = apiRef.current.getCurrentStoryData() as
+        | { initialArgs?: Record<string, unknown> }
+        | undefined;
+      const initialArgs = currentStoryData?.initialArgs || {};
+
       const propObj = Object.keys(data.args).reduce((obj, key) => {
-        if (data.args[key] !== undefined) {
+        const argValue = data.args[key];
+        if (argValue !== undefined && !equal(argValue, initialArgs[key])) {
           obj[key] = data.args[key];
         }
         return obj;

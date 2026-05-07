@@ -55,7 +55,9 @@ export interface UIState {
 }
 
 export const initialUIState: UIState = {
-  addonState: {} as AddonState,
+  addonState: {
+    clippingWarningDismissed: false,
+  } as AddonState,
   browserOptions: { all: {} },
   dragStart: false,
   editScreenshotState: undefined,

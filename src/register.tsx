@@ -42,7 +42,7 @@ addons.register(ADDON_ID, () => {
         <ActionPanel />
       </AddonPanel>
     ),
-    title: 'Actions',
+    title: 'Playwright Actions',
     type: types.PANEL,
   });
 

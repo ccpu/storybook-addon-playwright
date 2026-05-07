@@ -1,4 +1,4 @@
-import type { ToastT } from 'sonner';
+import type { ExternalToast, ToastT } from 'sonner';
 import { simpleHash } from '@pixpilot/hash';
 import { toast as sonnerToast } from 'sonner';
 import React from 'react';
@@ -31,6 +31,15 @@ export type ToastMessage =
   | string
   | ({ title: string; description: string } & AlertToastProps);
 
+interface ToastCustomRenderProps {
+  id: string | number;
+  dismiss: () => void;
+}
+
+type ToastCustomContent =
+  | React.ReactElement
+  | ((props: ToastCustomRenderProps) => React.ReactElement);
+
 export interface ToastFunction {
   (props: ToastProps): string;
   error: (message: ToastMessage, options?: ToastOwnProps) => string;
@@ -38,10 +47,10 @@ export interface ToastFunction {
   warning: (message: ToastMessage, options?: ToastOwnProps) => string;
   info: (message: ToastMessage, options?: ToastOwnProps) => string;
   custom: (
-    component: React.ReactElement,
-    options?: ToastOwnProps,
+    component: ToastCustomContent,
+    options?: ExternalToast,
   ) => string | number;
-  dismiss: (id: string) => void;
+  dismiss: (id: string | number) => void;
   dismissAll: () => void;
 }
 
@@ -70,8 +79,8 @@ function getToastId(baseId: string) {
     });
   }
 
-  const currentInstance = toastInstances.get(baseId)!;
-  return currentInstance.currentId;
+  const currentInstance = toastInstances.get(baseId);
+  return currentInstance?.currentId ?? baseId;
 }
 
 function getToastHandlers(baseId: string) {
@@ -147,19 +156,31 @@ toast.warning = (message: ToastMessage, options?: ToastOwnProps) =>
 toast.info = (message: ToastMessage, options?: ToastOwnProps) =>
   createToast('info', message, options);
 
-toast.custom = (component: React.ReactElement, options?: ToastOwnProps) => {
+toast.custom = (component: ToastCustomContent, options?: ExternalToast) => {
   const { duration, ...rest } = options || {};
 
   // 1. No tracking Map!
   // 2. No ID generation! (Sonner does this natively if `id` is missing)
   // 3. No counter suffixes!
 
-  return sonnerToast.custom(() => component, {
-    duration: duration ?? DEFAULT_ALERT_DURATION,
-    ...rest, // This passes 'id', 'position', etc., straight to Sonner
-  });
+  return sonnerToast.custom(
+    (t) => {
+      if (typeof component === 'function') {
+        return component({
+          dismiss: () => sonnerToast.dismiss(t),
+          id: t,
+        });
+      }
+
+      return component;
+    },
+    {
+      duration: duration ?? DEFAULT_ALERT_DURATION,
+      ...rest, // This passes 'id', 'position', etc., straight to Sonner
+    },
+  );
 };
-toast.dismiss = (id: string) => {
+toast.dismiss = (id: string | number) => {
   sonnerToast.dismiss(id);
 };
 

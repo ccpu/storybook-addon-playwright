@@ -39,6 +39,33 @@
           "title": "Test args"
         }
       ]
+    },
+    "controls-arg-patterns--story-level-arg-types-override": {
+      "screenshots": [
+        {
+          "browserOptionsId": "Y-BuWx6zlwWg",
+          "browserType": "chromium",
+          "id": "m2RitR5pu_K6",
+          "index": 0,
+          "screenshotOptionsId": "ylWas71IaJHI",
+          "title": "test clipping"
+        }
+      ]
+    },
+    "controls-arg-patterns--meta-args-and-meta-arg-types": {
+      "screenshots": [
+        {
+          "args": {
+            "advanced": true
+          },
+          "browserOptionsId": "rww9Mur2Uayu",
+          "browserType": "chromium",
+          "id": "CWvJjHUkzg_3",
+          "index": 0,
+          "screenshotOptionsId": "jjr2dgFqdpWc",
+          "title": "df"
+        }
+      ]
     }
   },
   "browserOptions": {
@@ -47,6 +74,18 @@
       "viewport": {
         "height": 480,
         "width": 950
+      }
+    },
+    "Y-BuWx6zlwWg": {
+      "viewport": {
+        "height": 582,
+        "width": 640
+      }
+    },
+    "rww9Mur2Uayu": {
+      "viewport": {
+        "height": 599,
+        "width": 625
       }
     }
   },
@@ -57,6 +96,22 @@
         "width": 319,
         "x": 247,
         "y": 44
+      }
+    },
+    "ylWas71IaJHI": {
+      "clip": {
+        "height": 119,
+        "width": 336,
+        "x": 52,
+        "y": 447
+      }
+    },
+    "jjr2dgFqdpWc": {
+      "clip": {
+        "height": 223,
+        "width": 280,
+        "x": 92,
+        "y": 42
       }
     }
   }

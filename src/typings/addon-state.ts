@@ -17,4 +17,5 @@ export interface AddonState {
   previewPanelSize: number;
   disabledBrowser: DisabledBrowserView;
   previewPanelEnabled: boolean;
+  clippingWarningDismissed?: boolean;
 }

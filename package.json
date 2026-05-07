@@ -9,6 +9,9 @@
     "pnpm": ">= 10.25.0"
   },
   "main": "dist/index.js",
+  "bin": {
+    "storybook-addon-playwright": "./dist/cli.js"
+  },
   "typings": "dist/index.d.ts",
   "types": "",
   "repository": {
@@ -55,6 +58,7 @@
     "watch": "tsc -w",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "node ./scripts/test.mjs",
+    "migrate:props-to-args": "pnpm exec tsx src/cli.ts migrate props-to-args",
     "test:coverage": "node ./scripts/test.mjs --coverage",
     "test:watch": "vitest",
     "prepack": "pnpm run lint && pnpm run build"

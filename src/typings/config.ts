@@ -57,7 +57,6 @@ export interface Config<T = Page> {
     requestData: RequestData,
   ) => Promise<void>;
   diffDirection?: DiffDirection;
-  enableMigration?: boolean;
   afterUrlConstruction?: (url: string, data: ScreenshotRequest) => string;
   afterNavigation?: (page: T, data: ScreenshotRequest) => Promise<void>;
   concurrencyLimit?: {

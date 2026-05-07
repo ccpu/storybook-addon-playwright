@@ -34,6 +34,20 @@ export default defineConfig((overrideOptions) => {
      */
     {
       ...commonConfig,
+      banner: {
+        js: '#!/usr/bin/env node',
+      },
+      dts: false,
+      entry: {
+        cli: 'src/cli.ts',
+      },
+      format: ['cjs'],
+      minify: false,
+      platform: 'node',
+      target: 'node18',
+    },
+    {
+      ...commonConfig,
       dts: !overrideOptions.watch,
       entry: {
         'api/server/routes': 'src/api/server/routes.ts',

@@ -27,6 +27,21 @@ vi.mock('join-images');
 // jest-image-snapshot: __mocks__/jest-image-snapshot.ts provides a vi.fn() spy
 // so tests can configure mockImplementationOnce without importing the real snap.
 vi.mock('jest-image-snapshot');
+// Keep real react-use exports (e.g. useMeasure) and only override hooks that
+// already have dedicated manual mocks under __mocks__/react-use/lib/*.
+vi.mock('react-use', async (importOriginal) => {
+  const actual = (await importOriginal()) as Record<string, unknown>;
+  const useKey = (await import('react-use/lib/useKey')).default;
+  const useThrottleFn = (await import('react-use/lib/useThrottleFn')).default;
+  const useMouseHovered = (await import('react-use/lib/useMouseHovered')).default;
+
+  return {
+    ...actual,
+    useKey,
+    useThrottleFn,
+    useMouseHovered,
+  };
+});
 // react-use sub-path mocks (useKey, useMouseHovered, useThrottleFn).
 // Jest applied __mocks__/react-use/lib/* automatically; vitest requires explicit calls.
 vi.mock('react-use/lib/useKey');

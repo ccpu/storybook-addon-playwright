@@ -57,6 +57,11 @@ export default defineConfig({
           'p-limit',
           'yocto-queue',
           'jsonfile',
+          // React 17 + Node ESM cannot resolve extensionless `react/jsx-runtime`
+          // for some modern ESM bundles unless Vite processes them.
+          '@tanstack/react-query',
+          '@trpc/react-query',
+          'react-split-pane',
           /middleware\.js$/,
           /dist[/\\]trpc[/\\]/,
         ],

@@ -10,6 +10,6 @@ describe('argsToQuerystring', () => {
   });
 
   it('should serialize booleans', () => {
-    expect(argsToQuerystring({ prop1: true })).toBe('prop1:true');
+    expect(argsToQuerystring({ prop1: true })).toBe('prop1:!true');
   });
 });

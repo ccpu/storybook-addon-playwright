@@ -8,7 +8,7 @@ import {
 import { setStoryOptions } from '../../services/utils';
 import { nanoid } from 'nanoid';
 
-interface ScreenshotDataV0 extends ScreenshotSetting {
+interface ScreenshotDataV0 extends Omit<ScreenshotSetting, 'props'> {
   title: string;
   hash?: string;
   index?: number;

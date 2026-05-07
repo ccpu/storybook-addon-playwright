@@ -2,8 +2,7 @@ import {
   Page,
   BrowserContextOptions as PlaywrightBrowserContextOptions,
 } from 'playwright';
-import { ActionSet } from './story-action';
-import { StoryInfo } from '../schema';
+import { ScreenshotSettingInput, StoryInfo } from '../schema';
 
 export type BrowserTypes = 'chromium' | 'firefox' | 'webkit';
 
@@ -38,19 +37,7 @@ export interface ScreenshotClip {
   y?: number;
 }
 
-export interface ScreenshotSetting {
-  args?: ScreenshotProp;
-  browserType: BrowserTypes;
-  /**
-   * @deprecated Use args instead. This will be removed in a future release.
-   */
-  props?: ScreenshotProp;
-  actionSets?: ActionSet[];
-  browserOptions?: BrowserContextOptions;
-  browserOptionsId?: string;
-  screenshotOptions?: ScreenshotOptions;
-  screenshotOptionsId?: string;
-}
+export type ScreenshotSetting = ScreenshotSettingInput;
 
 export interface ScreenshotData extends ScreenshotSetting {
   title: string;

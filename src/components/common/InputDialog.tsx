@@ -1,5 +1,5 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
-import { makeStyles, Snackbar, TextField } from '@material-ui/core';
+import { Button, CircularProgress, makeStyles, Snackbar, TextField } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActionDialog } from './ActionDialog';
@@ -11,6 +11,9 @@ interface StyleProps {
 const useStyles = makeStyles(
   () => {
     return {
+      generateButton: {
+        marginTop: 8,
+      },
       input: {
         width: '100%',
       },
@@ -33,6 +36,7 @@ export interface InputDialogProps
   required?: boolean;
   requiredMessage?: string;
   label?: string;
+  onGenerateContent?: () => Promise<string | undefined>;
 }
 
 const InputDialog: React.FC<InputDialogProps> = ({
@@ -46,10 +50,12 @@ const InputDialog: React.FC<InputDialogProps> = ({
   open,
   children,
   label,
+  onGenerateContent,
   ...rest
 }) => {
   const [inputValue, setValue] = useState(value);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const classes = useStyles({ width });
 
@@ -75,6 +81,19 @@ const InputDialog: React.FC<InputDialogProps> = ({
   const handleSnackbarClose = useCallback(() => {
     setOpenSnackbar(false);
   }, []);
+
+  const handleGenerate = useCallback(async () => {
+    if (!onGenerateContent) return;
+    setIsGenerating(true);
+    try {
+      const generated = await onGenerateContent();
+      if (generated !== undefined) {
+        setValue(generated);
+      }
+    } finally {
+      setIsGenerating(false);
+    }
+  }, [onGenerateContent]);
 
   useEffect(() => {
     setValue(value);
@@ -103,6 +122,17 @@ const InputDialog: React.FC<InputDialogProps> = ({
           shrink: true,
         }}
       ></TextField>
+      {onGenerateContent && (
+        <Button
+          className={classes.generateButton}
+          size="small"
+          onClick={handleGenerate}
+          disabled={isGenerating}
+          startIcon={isGenerating ? <CircularProgress size={14} /> : undefined}
+        >
+          {isGenerating ? 'Generating...' : 'Generate Title'}
+        </Button>
+      )}
       {children}
       <Snackbar
         autoHideDuration={6000}

@@ -10,6 +10,8 @@ import { deleteStoryScreenshots } from '../../../src/api/services/delete-story-s
 import { changeScreenshotIndex } from '../../../src/api/services/change-screenshot-index';
 import { testStoryScreenshots } from '../../../src/api/services/test-story-screenshots';
 import { testScreenshots } from '../../../src/api/services/test-screenshots-service';
+import { generateScreenshotTitle } from '../../../src/api/services/generate-screenshot-title';
+import { hasScreenshotTitleGenerator } from '../../../src/api/services/has-screenshot-title-generator';
 
 vi.mock('../../../src/api/services/make-screenshot');
 vi.mock('../../../src/api/services/save-screenshot');
@@ -21,6 +23,8 @@ vi.mock('../../../src/api/services/delete-story-screenshots');
 vi.mock('../../../src/api/services/change-screenshot-index');
 vi.mock('../../../src/api/services/test-story-screenshots');
 vi.mock('../../../src/api/services/test-screenshots-service');
+vi.mock('../../../src/api/services/generate-screenshot-title');
+vi.mock('../../../src/api/services/has-screenshot-title-generator');
 
 const createCaller = createCallerFactory(screenshotRouter);
 const caller = createCaller({} as any);
@@ -211,5 +215,31 @@ describe('screenshotRouter', () => {
       storyId: 'story--name',
     });
     expect(result).toEqual(mockResult);
+  });
+
+  it('generateScreenshotTitle calls generateScreenshotTitle service', async () => {
+    (generateScreenshotTitle as Mock).mockResolvedValue('AI Generated Title');
+
+    const result = await caller.generateScreenshotTitle({
+      browserType: 'chromium',
+      filePath: 'file.ts',
+      storyId: 'story--name',
+    });
+
+    expect(generateScreenshotTitle).toHaveBeenCalledWith({
+      browserType: 'chromium',
+      filePath: 'file.ts',
+      storyId: 'story--name',
+    });
+    expect(result).toBe('AI Generated Title');
+  });
+
+  it('hasScreenshotTitleGenerator calls hasScreenshotTitleGenerator service', async () => {
+    (hasScreenshotTitleGenerator as Mock).mockReturnValue(true);
+
+    const result = await caller.hasScreenshotTitleGenerator();
+
+    expect(hasScreenshotTitleGenerator).toHaveBeenCalled();
+    expect(result).toBe(true);
   });
 });

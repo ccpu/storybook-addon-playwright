@@ -26,6 +26,15 @@ export type ConfigGetPage = (
   requestData: ScreenshotRequest,
 ) => Promise<Page>;
 
+export interface ScreenshotTitleRequest {
+  args?: Record<string, unknown>;
+  browserType: string;
+  filePath: string;
+  props?: Record<string, unknown>;
+  storyId: string;
+  storySource?: string;
+}
+
 export interface Config<T = Page> {
   storybookEndpoint: string;
   customActionSchema?: ActionSchemaList;
@@ -65,6 +74,7 @@ export interface Config<T = Page> {
   compareScreenshot?: (
     data: CompareScreenshotParams,
   ) => Promise<CompareScreenshotReturnType | false>;
+  getScreenshotTitle?: (data: ScreenshotTitleRequest) => Promise<string>;
   theme?: Theme;
   imageDiffOptions?: Pick<
     MatchImageSnapshotOptions,

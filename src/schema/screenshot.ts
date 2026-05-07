@@ -140,6 +140,12 @@ export const updateScreenshotInputSchema = createStoryInputSchema({
   screenshotId: z.string(),
 });
 
+export const generateScreenshotTitleInputSchema = createStoryInputSchema({
+  args: looseObjectSchema.optional(),
+  browserType: browserTypeSchema,
+  props: looseObjectSchema.optional(),
+});
+
 export type RequestDataInput = z.infer<typeof requestDataSchema>;
 export type ScreenshotSettingInput = z.infer<typeof screenshotSettingSchema>;
 export type ScreenshotDataInput = z.infer<typeof screenshotDataSchema>;
@@ -158,3 +164,4 @@ export type TestScreenshotInput = z.infer<typeof testScreenshotInputSchema>;
 export type TestStoryScreenshotsInput = z.infer<typeof testStoryScreenshotsInputSchema>;
 export type TestScreenshotsInput = z.infer<typeof testScreenshotsInputSchema>;
 export type UpdateScreenshotInput = z.infer<typeof updateScreenshotInputSchema>;
+export type GenerateScreenshotTitleInput = z.infer<typeof generateScreenshotTitleInputSchema>;

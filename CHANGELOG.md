@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.16
+
+### Patch Changes
+
+- downgrade Node version to 20 in setup project
+
 ## 5.0.0-rc.15
 
 ### Patch Changes

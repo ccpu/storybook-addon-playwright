@@ -35,14 +35,14 @@ jobs:
           node-version: 20
           pnpm-version: 10.25.0
           registry-url: https://registry.npmjs.org
-          build: "false"
+          build: 'false'
 
       - name: Release
         uses: pixpilot/changesets-autopilot@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          provenance: "true"
+          provenance: 'true'
 # ======================================================================
 # If your branch is protected, remove the steps above and use this one instead.
 # Additional setup:

@@ -33,7 +33,6 @@ jobs:
         uses: ./.github/actions/setup-project
         with:
           node-version: 24
-          pnpm-version: 10.25.0
           registry-url: https://registry.npmjs.org
           build: 'false'
 

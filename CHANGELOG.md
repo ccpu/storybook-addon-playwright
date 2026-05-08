@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.18
+
+### Patch Changes
+
+- update Node version to 24 and remove pnpm version
+
 ## 5.0.0-rc.17
 
 ### Patch Changes

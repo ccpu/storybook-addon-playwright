@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.28
+
+### Patch Changes
+
+- update Node version to 24.1.0 and use stable changesets-autopilot version
+
 ## 5.0.0-rc.27
 
 ### Patch Changes

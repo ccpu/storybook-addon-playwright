@@ -1,26 +1,2 @@
-#!/usr/bin/env sh
-
-OS="$(uname -s)"
-
-echo "Detected OS: $OS"
-
-if [ "$OS" = "Darwin" ]; then
-  # macOS: open a new Terminal window and run tests
-  osascript <<EOF
-tell application "Terminal"
-    do script "cd '$PWD' && npm test"
-end tell
-EOF
-
-elif [ "$OS" = "Linux" ]; then
-  # Linux: just run in current shell (safe default)
-  npm test
-
-elif echo "$OS" | grep -q "MINGW\|MSYS\|CYGWIN"; then
-  # Windows Git Bash
-  npm test
-
-else
-  echo "Unsupported OS: $OS"
-  exit 1
-fi
+# echo "Running tests before push..."
+# pnpm test

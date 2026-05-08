@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.19
+
+### Patch Changes
+
+- remove unused environment variables from release workflow
+
 ## 5.0.0-rc.18
 
 ### Patch Changes

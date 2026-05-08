@@ -41,7 +41,7 @@ jobs:
         uses: pixpilot/changesets-autopilot@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ''
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           provenance: 'true'
 # ======================================================================
 # If your branch is protected, remove the steps above and use this one instead.

@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.12
+
+### Patch Changes
+
+- update NPM_TOKEN handling in release.yml
+- standardize quotes and update NPM_TOKEN handling
+
 ## 5.0.0-rc.11
 
 ### Patch Changes

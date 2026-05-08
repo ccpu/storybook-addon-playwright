@@ -5,7 +5,7 @@ inputs:
   node-version:
     description: Node.js version to use
     required: false
-    default: '20'
+    default: '24'
 
   pnpm-version:
     description: pnpm version to use
@@ -30,7 +30,7 @@ runs:
         version: ${{ inputs.pnpm-version }}
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
         cache: pnpm

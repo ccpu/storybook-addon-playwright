@@ -5,6 +5,9 @@
     "storybook-addon-playwright": "4.21.0"
   },
   "changesets": [
-    "auto-generated-at-1778183287628"
+    "auto-generated-at-1778183287628",
+    "auto-generated-at-1778184367200",
+    "auto-generated-at-1778184367201",
+    "stale-pans-fix"
   ]
 }

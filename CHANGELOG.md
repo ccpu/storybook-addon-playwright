@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.4
+
+### Patch Changes
+
+- comment out test execution in CI and pre-push scripts
+- enhance Playwright setup with new browser management and box drawing functionality
+
 ## 5.0.0-rc.3
 
 ### Minor Changes

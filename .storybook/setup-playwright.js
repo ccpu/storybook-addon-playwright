@@ -1,8 +1,26 @@
-const { setConfig } = require('../configs');
+// @ts-check
+
+const { setConfig } = /** @type {typeof import('../src/api/server/configs')} */ (
+  require('../configs')
+);
 const playwright = require('playwright');
 
+/**
+ * @typedef {import('../src/typings/config').Config} Config
+ * @typedef {{ evaluate: (pageFunction: (pos: { x: number; y: number } | undefined) => void, arg: { x: number; y: number } | undefined) => Promise<void> }} BoxPage
+ * @typedef {{ newPage: (options?: any) => Promise<any> }} BrowserInstance
+ */
+
+/** @type {Partial<Record<import('../src/typings/screenshot').BrowserTypes, BrowserInstance>>} */
+const browser = {};
+
+/**
+ * @this {BoxPage}
+ * @param {{ x: number; y: number } | undefined} position
+ */
 async function addBox(position) {
-  await this.evaluate((pos) => {
+  /** @param {{ x: number; y: number } | undefined} pos */
+  const drawBox = (pos) => {
     if (!pos) return;
     const div = document.createElement('div');
     div.style.backgroundColor = '#009EEA';
@@ -13,38 +31,66 @@ async function addBox(position) {
     div.style.left = pos.x + 'px';
     div.style.zIndex = '10000000';
     document.body.append(div);
-  }, position);
+  };
+
+  await this.evaluate(drawBox, position);
+}
+
+/**
+ * @param {import('../src/typings/screenshot').BrowserTypes} browserType
+ * @param {import('../src/typings/screenshot').BrowserContextOptions} options
+ * @param {unknown} _requestData
+ * @returns {Promise<any>} A Playwright page instance.
+ */
+async function getPage(browserType, options, _requestData) {
+  if (!browser[browserType]) {
+    browser[browserType] = await playwright[browserType].launch();
+  }
+
+  const currentBrowser = browser[browserType];
+  if (!currentBrowser) {
+    throw new Error(`Browser ${browserType} failed to initialize.`);
+  }
+
+  const page = await currentBrowser.newPage(options);
+  /** @type {BoxPage & { addBox: typeof addBox }} */
+  (page).addBox = addBox;
+
+  return page;
+}
+
+/**
+ * @param {any} page
+ * @returns {Promise<void>}
+ */
+async function afterNavigation(page) {
+  await page.waitForFunction(() => {
+    const root = document.getElementById('storybook-root') || document.getElementById('root');
+
+    return (root?.childNodes.length ?? 0) > 0;
+  });
+}
+
+/**
+ * @param {any} page
+ * @returns {Promise<void>}
+ */
+async function afterScreenshot(page) {
+  await page.close();
 }
 
 async function setupPlaywright() {
   try {
-    const browser = {};
-
-    setConfig({
+    /** @type {Config & { autoMigration: boolean }} */
+    const config = {
       storybookEndpoint: 'http://localhost:9002/',
-      getPage: async (browserType, options) => {
-        if (!browser[browserType]) {
-          browser[browserType] = await playwright[browserType].launch();
-        }
-        const page = await browser[browserType].newPage(options);
-        page.addBox = addBox;
-        return page;
-      },
-      afterNavigation: async (page) => {
-        await page.waitForFunction(() => {
-          const root =
-            document.getElementById('storybook-root') || document.getElementById('root');
-
-          return (root?.childNodes.length ?? 0) > 0;
-        });
-      },
-      afterScreenshot: async (page) => {
-        await page.close();
-      },
+      getPage,
+      afterNavigation,
+      afterScreenshot,
       autoMigration: true,
       customActionSchema: {
         addBox: {
-          type: 'promise',
+          type: /** @type {never} */ ('Promise'),
           parameters: {
             position: {
               type: 'object',
@@ -57,7 +103,9 @@ async function setupPlaywright() {
           },
         },
       },
-    });
+    };
+
+    setConfig(config);
   } catch (error) {
     console.error(error);
   }

@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.6
+
+### Patch Changes
+
+- update build flag format and enable provenance
+- comment out project setup, build, and test steps
+
 ## 5.0.0-rc.5
 
 ### Patch Changes

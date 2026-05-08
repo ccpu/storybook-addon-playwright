@@ -1,2 +1,26 @@
-echo "Running tests before push..."
-pnpm test
+#!/bin/sh
+
+echo "Detecting OS and popping open visual test runner..."
+
+# Detect the operating system
+OS="$(uname -s)"
+
+case "${OS}" in
+    Darwin*)
+        # macOS
+        osascript -e 'tell app "Terminal" to do script "cd '\"$PWD\"' && npm test"'
+        ;;
+    CYGWIN*|MINGW*|MSYS*)
+        # Windows (Git Bash)
+        start cmd /c "cd \"$PWD\" && npm test & pause"
+        ;;
+    Linux*)
+        # Linux (Tries gnome-terminal first, falls back to xterm)
+        gnome-terminal -- bash -c "cd \"$PWD\" && npm test; read -p 'Press enter to close...'" || xterm -e "cd \"$PWD\" && npm test; read -p 'Press enter to close...'"
+        ;;
+    *)
+        # Fallback if the OS is somehow unknown
+        echo "Unknown OS: ${OS}. Running tests invisibly in the background instead."
+        npm test
+        ;;
+esac

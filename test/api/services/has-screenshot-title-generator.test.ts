@@ -1,6 +1,9 @@
 import { hasScreenshotTitleGenerator } from '../../../src/api/services/has-screenshot-title-generator';
 
-vi.mock('../../../src/api/server/configs', async () => await import('../server/__mocks__/configs'));
+vi.mock(
+  '../../../src/api/server/configs',
+  async () => await import('../server/__mocks__/configs'),
+);
 
 describe('hasScreenshotTitleGenerator', () => {
   beforeEach(() => {

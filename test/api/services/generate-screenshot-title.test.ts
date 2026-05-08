@@ -1,7 +1,10 @@
 import { generateScreenshotTitle } from '../../../src/api/services/generate-screenshot-title';
 import fs from 'node:fs';
 
-vi.mock('../../../src/api/server/configs', async () => await import('../server/__mocks__/configs'));
+vi.mock(
+  '../../../src/api/server/configs',
+  async () => await import('../server/__mocks__/configs'),
+);
 
 vi.mock('node:fs');
 

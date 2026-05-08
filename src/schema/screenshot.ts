@@ -164,4 +164,6 @@ export type TestScreenshotInput = z.infer<typeof testScreenshotInputSchema>;
 export type TestStoryScreenshotsInput = z.infer<typeof testStoryScreenshotsInputSchema>;
 export type TestScreenshotsInput = z.infer<typeof testScreenshotsInputSchema>;
 export type UpdateScreenshotInput = z.infer<typeof updateScreenshotInputSchema>;
-export type GenerateScreenshotTitleInput = z.infer<typeof generateScreenshotTitleInputSchema>;
+export type GenerateScreenshotTitleInput = z.infer<
+  typeof generateScreenshotTitleInputSchema
+>;

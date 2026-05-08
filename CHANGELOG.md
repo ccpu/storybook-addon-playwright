@@ -1,5 +1,16 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.3
+
+### Minor Changes
+
+- improve OS detection and test execution in pre-push script
+
+### Patch Changes
+
+- update version in tests to match expected output
+- enhance Playwright setup with new browser management and box drawing functionality
+
 ## 5.0.0-rc.2
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.13
+
+### Patch Changes
+
+- enable pure OIDC publish by clearing token auth env
+- standardize NPM_TOKEN handling in release.yml
+- standardize quotes and update NPM_TOKEN handling
+
 ## 5.0.0-rc.12
 
 ### Patch Changes

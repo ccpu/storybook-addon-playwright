@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.23
+
+### Patch Changes
+
+- update Node version to 22
+- downgrade Node version to 22.14.0
+
 ## 5.0.0-rc.22
 
 ### Patch Changes

@@ -32,12 +32,12 @@ jobs:
       - name: Setup project
         uses: ./.github/actions/setup-project
         with:
-          node-version: 24
+          node-version: 24.1.0
           registry-url: https://registry.npmjs.org
           build: 'false'
 
       - name: Release
-        uses: pixpilot/changesets-autopilot@4953de8ed4572d67908086813b6ed3878b60034d
+        uses: pixpilot/changesets-autopilot@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           provenance: 'true'

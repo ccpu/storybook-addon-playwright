@@ -5,6 +5,21 @@ import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
 
+vi.mock('../../../../src/hooks/use-current-story-data', () => ({
+  useCurrentStoryData: () => ({
+    filePath: 'src/story.tsx',
+    id: 'story--name',
+    name: 'Story',
+    parent: 'component',
+  }),
+}));
+
+vi.mock('../../../../src/hooks/use-knobs', () => ({
+  useKnobs: () => ({
+    color: 'red',
+  }),
+}));
+
 vi.mock(
   '../../../../src/utils/get-preview-iframe',
   async () => await import('../../../utils/__mocks__/get-preview-iframe'),
@@ -37,8 +52,12 @@ describe('useGenerateScreenshotTitle', () => {
   });
 
   it('should return generated title from server', async () => {
+    const spy = vi.fn();
     server.use(
-      trpcMsw.screenshot.generateScreenshotTitle.mutation(() => 'AI Generated Title'),
+      trpcMsw.screenshot.generateScreenshotTitle.mutation(({ input }) => {
+        spy(input);
+        return 'AI Generated Title';
+      }),
     );
 
     const { result } = renderHook(() => useGenerateScreenshotTitle('chromium'));
@@ -49,6 +68,18 @@ describe('useGenerateScreenshotTitle', () => {
     });
 
     expect(title).toBe('AI Generated Title');
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        browserType: 'chromium',
+        changedArgs: { color: 'red' },
+        filePath: 'src/story.tsx',
+        name: 'With Component',
+        parameters: expect.objectContaining({
+          __id: 'story-id',
+        }),
+        storyId: 'story--name',
+      }),
+    );
   });
 
   it('should return undefined on error', async () => {

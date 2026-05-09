@@ -223,13 +223,19 @@ describe('screenshotRouter', () => {
     const result = await caller.generateScreenshotTitle({
       browserType: 'chromium',
       filePath: 'file.ts',
+      initialArgs: { color: 'red' },
+      name: 'MyStory',
       storyId: 'story--name',
+      title: 'Story Title',
     });
 
     expect(generateScreenshotTitle).toHaveBeenCalledWith({
       browserType: 'chromium',
       filePath: 'file.ts',
+      initialArgs: { color: 'red' },
+      name: 'MyStory',
       storyId: 'story--name',
+      title: 'Story Title',
     });
     expect(result).toBe('AI Generated Title');
   });

@@ -6,7 +6,7 @@ import {
   BrowsersOption,
   useBrowserOptions,
 } from '../../../../../src/hooks/use-browser-options';
-import { MemoizedSchemaFormLoader } from '../../../../../src/components';
+import { SchemaFormLoader } from '../../../../../src/components/common/SchemaFormLoader';
 import { OptionPopover } from '../../../../../src/features/screenshot/components/screenshot-preview/OptionPopover';
 
 vi.mock(
@@ -55,14 +55,14 @@ describe('BrowserOptions', () => {
     const wrapper = shallow(<BrowserOptions browserType="all" />);
 
     expect(wrapper.find(OptionPopover).prop('active')).toBeTruthy();
-    expect(wrapper.find(MemoizedSchemaFormLoader).prop('defaultData')).toEqual({
+    expect(wrapper.find(SchemaFormLoader).prop('defaultData')).toEqual({
       cursor: true,
     });
   });
 
   it('should handle save', () => {
     const wrapper = shallow(<BrowserOptions browserType="all" />);
-    wrapper.find(MemoizedSchemaFormLoader).props().onSave({ type: 'MyType' });
+    wrapper.find(SchemaFormLoader).props().onSave({ type: 'MyType' });
     expect(setBrowserOptionsMock).toHaveBeenCalledWith('all', {
       type: 'MyType',
     });
@@ -71,9 +71,7 @@ describe('BrowserOptions', () => {
   it('should handleDeviceSelection', () => {
     const wrapper = shallow(<BrowserOptions browserType="all" />);
 
-    const FooterComponent = wrapper
-      .find(MemoizedSchemaFormLoader)
-      .props().FooterComponent;
+    const FooterComponent = wrapper.find(SchemaFormLoader).props().FooterComponent;
 
     expect(FooterComponent).toBeDefined();
 

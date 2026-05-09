@@ -33,6 +33,7 @@ export interface ScreenshotTitleRequest {
   props?: Record<string, unknown>;
   storyId: string;
   storySource?: string;
+  storyArgs?: Record<string, unknown>;
 }
 
 export interface Config<T = Page> {
@@ -74,7 +75,7 @@ export interface Config<T = Page> {
   compareScreenshot?: (
     data: CompareScreenshotParams,
   ) => Promise<CompareScreenshotReturnType | false>;
-  getScreenshotTitle?: (data: ScreenshotTitleRequest) => Promise<string>;
+  getScreenshotTitle?: (data: ScreenshotTitleRequest) => string | Promise<string>;
   theme?: Theme;
   imageDiffOptions?: Pick<
     MatchImageSnapshotOptions,

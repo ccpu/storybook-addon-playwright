@@ -141,9 +141,14 @@ export const updateScreenshotInputSchema = createStoryInputSchema({
 });
 
 export const generateScreenshotTitleInputSchema = createStoryInputSchema({
-  args: looseObjectSchema.optional(),
+  changedArgs: looseObjectSchema.optional(),
   browserType: browserTypeSchema,
-  props: looseObjectSchema.optional(),
+  initialArgs: looseObjectSchema.optional(),
+  argTypes: z.record(z.string(), z.unknown()).optional(),
+  name: z.string(),
+  title: z.string(),
+  parameters: z.record(z.string(), z.unknown()).optional(),
+  filePath: z.string(),
 });
 
 export type RequestDataInput = z.infer<typeof requestDataSchema>;

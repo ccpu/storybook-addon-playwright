@@ -2,7 +2,7 @@ import { ScreenshotOptions } from '../../../../../src/features/screenshot/compon
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useScreenshotOptions } from '../../../../../src/features/screenshot/hooks/use-screenshot-options';
-import { MemoizedSchemaFormLoader } from '../../../../../src/components';
+import { SchemaFormLoader } from '../../../../../src/components/common/SchemaFormLoader';
 
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-options',
@@ -22,7 +22,7 @@ describe('ScreenshotOptions', () => {
 
   it('should handle save', () => {
     const wrapper = shallow(<ScreenshotOptions />);
-    wrapper.find(MemoizedSchemaFormLoader).props().onSave({ data: 1 });
+    wrapper.find(SchemaFormLoader).props().onSave({ data: 1 });
     expect(setScreenshotOptionsMock).toHaveBeenCalledWith({ data: 1 });
   });
 });

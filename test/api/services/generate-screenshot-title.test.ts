@@ -20,7 +20,9 @@ describe('generateScreenshotTitle', () => {
       generateScreenshotTitle({
         browserType: 'chromium',
         filePath: 'story.ts',
+        name: 'MyStory',
         storyId: 'story--name',
+        title: 'Story Title',
       }),
     ).rejects.toThrow('getScreenshotTitle is not configured.');
   });
@@ -38,22 +40,29 @@ describe('generateScreenshotTitle', () => {
     mockGetScreenshotTitle.mockResolvedValue('Generated Title');
 
     const result = await generateScreenshotTitle({
-      args: { color: 'red' },
+      changedArgs: { color: 'red' },
       browserType: 'chromium',
       filePath: 'src/story.tsx',
-      props: { size: 'large' },
+      name: 'MyStory',
+
+      initialArgs: { color: 'red', size: 'large' },
       storyId: 'story--name',
+      title: 'Story Title',
     });
 
     expect(result).toBe('Generated Title');
-    expect(mockGetScreenshotTitle).toHaveBeenCalledWith({
-      args: { color: 'red' },
-      browserType: 'chromium',
-      filePath: 'src/story.tsx',
-      props: { size: 'large' },
-      storyId: 'story--name',
-      storySource: 'export const MyStory = () => <div />;',
-    });
+    expect(mockGetScreenshotTitle).toHaveBeenCalledWith(
+      expect.objectContaining({
+        browserType: 'chromium',
+        changedArgs: { color: 'red' },
+        filePath: 'src/story.tsx',
+        initialArgs: { color: 'red', size: 'large' },
+        name: 'MyStory',
+        storyId: 'story--name',
+        storySource: 'export const MyStory = () => <div />;',
+        title: 'Story Title',
+      }),
+    );
   });
 
   it('should pass undefined storySource when file cannot be read', async () => {
@@ -73,7 +82,9 @@ describe('generateScreenshotTitle', () => {
     const result = await generateScreenshotTitle({
       browserType: 'firefox',
       filePath: 'missing.ts',
+      name: 'MissingStory',
       storyId: 'story--id',
+      title: 'Missing Story Title',
     });
 
     expect(result).toBe('Fallback Title');

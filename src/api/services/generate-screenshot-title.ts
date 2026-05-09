@@ -20,11 +20,7 @@ export async function generateScreenshotTitle(
   }
 
   return getScreenshotTitle({
-    args: data.args,
-    browserType: data.browserType,
-    filePath: data.filePath,
-    props: data.props,
-    storyId: data.storyId,
+    ...data,
     storySource,
   });
 }

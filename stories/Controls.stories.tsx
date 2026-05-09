@@ -238,7 +238,18 @@ const storyLevelArgs: Partial<ControlsStoryArgs> = {
   variant: 'secondary',
 };
 
-export const MetaArgsAndMetaArgTypes: Story = {};
+/**
+ *  Story docs example for combining meta args and meta argTypes.
+ */
+export const MetaArgsAndMetaArgTypes: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows how meta args and meta argTypes combine in the controls panel.',
+      },
+    },
+  },
+};
 
 export const StoryLevelArgsOverride: Story = {
   args: storyLevelArgs,

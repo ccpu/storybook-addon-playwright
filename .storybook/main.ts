@@ -1,6 +1,16 @@
 import path from 'path';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 
+// import { setupPlaywright } from './setup-playwright';
+
+
+// (() => {
+//   setupPlaywright().catch((error) => {
+//     console.error('Error setting up Playwright:', error);
+//   });
+// })();
+
+
 type LocalStorybookConfig = StorybookConfig & {
   managerEntries: (entry?: string[]) => string[];
 };

@@ -2,7 +2,7 @@ import '../../manual-mocks/react-useEffect';
 import { InputDialog } from '../../../src/components/common/InputDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { TextField, Snackbar } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { ActionDialog } from '../../../src/components/common/ActionDialog';
 
 describe('InputDialog', () => {
@@ -31,7 +31,7 @@ describe('InputDialog', () => {
     expect(saveMock).toHaveBeenCalledWith('foo');
   });
 
-  it('should validate on save and show/close Snackbar', () => {
+  it('should validate on save and show error state', () => {
     const saveMock = vi.fn();
     const wrapper = shallow(
       <InputDialog onClose={vi.fn()} open={true} onSave={saveMock} required />,
@@ -46,14 +46,7 @@ describe('InputDialog', () => {
 
     wrapper.find(ActionDialog).props().onPositiveAction?.();
 
-    expect(wrapper.find(Snackbar).text()).toBe('Field is required');
-
-    wrapper
-      .find(Snackbar)
-      .props()
-      .onClose?.({} as React.SyntheticEvent<unknown, Event>, 'clickaway');
-
-    expect(wrapper.find(Snackbar).props().open).toBe(false);
+    expect(wrapper.find(TextField).prop('error')).toBe(true);
   });
 
   it('should handle close and cancel', () => {

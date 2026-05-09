@@ -1,6 +1,7 @@
 import type { ControlProps, ControlTypes } from '../../../typings';
 import { Form } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
+import { CheckBox } from '../../../components';
 
 interface ControlKnob {
   defaultValue?: unknown;
@@ -39,6 +40,10 @@ const SimpleControl: React.FC<{
   onChange: (val: unknown) => void;
   knob: ControlKnob;
 }> = ({ onChange, knob }) => {
+  const handleBooleanChange = (checked: boolean) => {
+    onChange(checked);
+  };
+
   const handleInputChange: React.FormEventHandler<HTMLInputElement> = (e) => {
     const value =
       knob.type === 'boolean'
@@ -60,10 +65,10 @@ const SimpleControl: React.FC<{
   };
 
   if (knob.type === 'boolean') {
-    return React.createElement(Form.Input, {
+    return React.createElement(CheckBox, {
       checked: Boolean(knob.value),
-      onChange: handleInputChange,
-      type: 'checkbox',
+      onClick: () => undefined,
+      onChange: handleBooleanChange,
     });
   }
 

@@ -1,14 +1,9 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
-import {
-  Button,
-  CircularProgress,
-  makeStyles,
-  Snackbar,
-  TextField,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
+import { Button, CircularProgress, makeStyles, TextField } from '@material-ui/core';
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActionDialog } from './ActionDialog';
+import { toast } from '../../utils';
 
 interface StyleProps {
   width?: number | string;
@@ -60,7 +55,7 @@ const InputDialog: React.FC<InputDialogProps> = ({
   ...rest
 }) => {
   const [inputValue, setValue] = useState(value);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const classes = useStyles({ width });
@@ -78,15 +73,12 @@ const InputDialog: React.FC<InputDialogProps> = ({
 
   const handleSave = useCallback(() => {
     if (required && !inputValue) {
-      setOpenSnackbar(true);
+      toast.error(requiredMessage);
+      setHasError(true);
       return;
     }
     onSave(inputValue.trim());
-  }, [inputValue, onSave, required]);
-
-  const handleSnackbarClose = useCallback(() => {
-    setOpenSnackbar(false);
-  }, []);
+  }, [inputValue, onSave, required, requiredMessage]);
 
   const handleGenerate = useCallback(async () => {
     if (!onGenerateContent) return;
@@ -122,7 +114,7 @@ const InputDialog: React.FC<InputDialogProps> = ({
         variant="outlined"
         autoFocus
         label={label}
-        error={openSnackbar}
+        error={hasError}
         required
         InputLabelProps={{
           shrink: true,
@@ -140,14 +132,6 @@ const InputDialog: React.FC<InputDialogProps> = ({
         </Button>
       )}
       {children}
-      <Snackbar
-        autoHideDuration={6000}
-        open={openSnackbar}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-      >
-        <Alert severity="error">{requiredMessage}</Alert>
-      </Snackbar>
     </ActionDialog>
   );
 };

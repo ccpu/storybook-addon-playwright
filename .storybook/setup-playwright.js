@@ -83,6 +83,10 @@ async function setupPlaywright() {
   try {
     /** @type {Config & { autoMigration: boolean }} */
     const config = {
+      getScreenshotTitle: (requestData) => {
+        console.log(requestData);
+        return ''
+      },
       storybookEndpoint: 'http://localhost:9002/',
       getPage,
       afterNavigation,

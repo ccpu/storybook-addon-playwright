@@ -16,7 +16,7 @@ An addon to visually test stories across multiple browsers within the Storybook 
 | ---------- | ---------- |
 | storybook  | ~8         |
 | playwright | ~1.17      |
-| Node.js    | >= 20.19.0 |
+| Node.js    | >= 24.15.0 |
 
 ## Motivation
 
@@ -107,7 +107,7 @@ The addon consists of three panels:
 
 The addon stores Storybook controls state in `args` inside screenshot settings. When Playwright loads a story it rebuilds the `args` query string from this saved state.
 
-> Older screenshot files that used a `props` field are still read as a fallback. Use the [migration CLI](#migration) to upgrade them.
+> Older screenshot files that used a `knobs` field and stored in `props` are still read as a fallback. Use the [migration CLI](#migration) to upgrade them.
 
 ### Action list panel
 

@@ -19,19 +19,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Setup project
-      #   uses: ./.github/actions/setup-project
-      #   with:
-      #     node-version: 20
-      #     pnpm-version: 10.25.0
+      - name: Setup project
+        uses: ./.github/actions/setup-project
 
-      # - name: Lint
-      #   run: pnpm lint
+      - name: Lint
+        run: pnpm lint
 
-      # - name: Build
-      #   run: pnpm build
+      - name: Build
+        run: pnpm build
 
-      # - name: Run tests
-      #   run: pnpm test
-      #   env:
-      #     CI: true
+      - name: Run tests
+        run: pnpm test
+        env:
+          CI: true

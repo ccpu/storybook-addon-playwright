@@ -32,7 +32,6 @@ jobs:
       - name: Setup project
         uses: ./.github/actions/setup-project
         with:
-          node-version: 24
           registry-url: https://registry.npmjs.org
           build: 'false'
 
@@ -68,8 +67,6 @@ jobs:
 #   - name: Setup project
 #     uses: ./.github/actions/setup-project
 #     with:
-#       node-version: 20
-#       pnpm-version: 10.25.0
 #       registry-url: https://registry.npmjs.org
 #       build: 'false'
 

@@ -1,16 +1,19 @@
 name: Setup project
-description: Setup Node.js, install pnpm, install dependencies, and optionally build the project
+description: 'Setup Node.js, install pnpm, install dependencies, and build the project'
 
 inputs:
+  node-version-file:
+    description: Node.js version file to use
+    required: false
+    default: .node-version
+
   node-version:
     description: Node.js version to use
     required: false
-    default: '24'
 
   pnpm-version:
     description: pnpm version to use
     required: false
-    default: '10.25.0'
 
   registry-url:
     description: npm registry URL
@@ -26,18 +29,32 @@ runs:
   steps:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
+      if: ${{ inputs.pnpm-version != '' }}
       with:
         version: ${{ inputs.pnpm-version }}
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v6
+    - name: Install pnpm (without version)
+      uses: pnpm/action-setup@v4
+      if: ${{ inputs.pnpm-version == '' }}
+
+    - name: Setup Node.js with explicit version
+      if: ${{ inputs.node-version != '' }}
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         cache: pnpm
         registry-url: ${{ inputs.registry-url }}
 
+    - name: Setup Node.js from version file
+      if: ${{ inputs.node-version == '' }}
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: ${{ inputs.node-version-file }}
+        cache: pnpm
+        registry-url: ${{ inputs.registry-url }}
+
     - name: Install dependencies
-      run: pnpm install --frozen-lockfile
+      run: pnpm install
       shell: bash
 
     - name: Build project

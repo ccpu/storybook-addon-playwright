@@ -1,2 +1,2 @@
-# echo "Running tests before push..."
-# pnpm test
+echo "Running tests before push..."
+pnpm test

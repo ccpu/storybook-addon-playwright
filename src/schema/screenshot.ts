@@ -140,15 +140,22 @@ export const updateScreenshotInputSchema = createStoryInputSchema({
   screenshotId: z.string(),
 });
 
-export const generateScreenshotTitleInputSchema = createStoryInputSchema({
-  changedArgs: looseObjectSchema.optional(),
-  browserType: browserTypeSchema,
-  initialArgs: looseObjectSchema.optional(),
-  argTypes: z.record(z.string(), z.unknown()).optional(),
-  name: z.string(),
-  title: z.string(),
-  parameters: z.record(z.string(), z.unknown()).optional(),
-  filePath: z.string(),
+export const generateScreenshotTitleInputSchema = z.object({
+  story: z.object({
+    changedArgs: looseObjectSchema.optional(),
+    initialArgs: looseObjectSchema.optional(),
+    argTypes: z.record(z.string(), z.unknown()).optional(),
+    name: z.string(),
+    title: z.string(),
+    parameters: z.record(z.string(), z.unknown()).optional(),
+    filePath: z.string(),
+    id: z.string(),
+  }),
+  browser: z.object({
+    type: browserTypeSchema,
+    options: browserOptionsSchema.optional(),
+  }),
+  screenshotOptions: screenshotOptionsSchema.optional(),
 });
 
 export type RequestDataInput = z.infer<typeof requestDataSchema>;

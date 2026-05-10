@@ -221,21 +221,29 @@ describe('screenshotRouter', () => {
     (generateScreenshotTitle as Mock).mockResolvedValue('AI Generated Title');
 
     const result = await caller.generateScreenshotTitle({
-      browserType: 'chromium',
-      filePath: 'file.ts',
-      initialArgs: { color: 'red' },
-      name: 'MyStory',
-      storyId: 'story--name',
-      title: 'Story Title',
+      story: {
+        filePath: 'file.ts',
+        id: 'story--name',
+        initialArgs: { color: 'red' },
+        name: 'MyStory',
+        title: 'Story Title',
+      },
+      browser: {
+        type: 'chromium',
+      },
     });
 
     expect(generateScreenshotTitle).toHaveBeenCalledWith({
-      browserType: 'chromium',
-      filePath: 'file.ts',
-      initialArgs: { color: 'red' },
-      name: 'MyStory',
-      storyId: 'story--name',
-      title: 'Story Title',
+      browser: {
+        type: 'chromium',
+      },
+      story: {
+        filePath: 'file.ts',
+        id: 'story--name',
+        initialArgs: { color: 'red' },
+        name: 'MyStory',
+        title: 'Story Title',
+      },
     });
     expect(result).toBe('AI Generated Title');
   });

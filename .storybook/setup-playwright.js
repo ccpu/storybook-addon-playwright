@@ -84,7 +84,9 @@ async function setupPlaywright() {
     /** @type {Config & { autoMigration: boolean }} */
     const config = {
       getScreenshotTitle: (requestData) => {
-        console.log(requestData);
+        if(Object.keys(requestData.story.changedArgs?? {}).length === 0) {
+          return 'Should render correctly.';
+        }
         return ''
       },
       storybookEndpoint: 'http://localhost:9002/',

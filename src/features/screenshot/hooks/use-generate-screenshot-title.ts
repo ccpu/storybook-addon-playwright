@@ -3,14 +3,19 @@ import { useCallback } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useKnobs } from '../../../hooks/use-knobs';
-
 import { toast } from '../../../utils/toast';
 import { API, useStorybookApi, StoryEntry } from '@storybook/manager-api';
+import { useBrowserOptions } from '../../../hooks';
+import { useScreenshotOptionsValue } from '../../../store';
 
 export function useGenerateScreenshotTitle(browserType: BrowserTypes | 'storybook') {
   const storyData = useCurrentStoryData();
   const args = useKnobs();
   const api = useStorybookApi() as API;
+  const { getBrowserOptions } = useBrowserOptions();
+  const screenshotOptions = useScreenshotOptionsValue();
+
+  const browserOptions = getBrowserOptions(browserType as BrowserTypes);
 
   const { mutateAsync, isPending: isGenerating } =
     trpcClient.screenshot.generateScreenshotTitle.useMutation({
@@ -18,20 +23,6 @@ export function useGenerateScreenshotTitle(browserType: BrowserTypes | 'storyboo
         toast.error(error.message || 'Failed to generate screenshot title');
       },
     });
-
-  for (const key in api) {
-    if (typeof api[key] === 'function') {
-      const originalFn = api[key];
-
-      try {
-        if (key.startsWith('get')) {
-          console.log(key, originalFn());
-        }
-      } catch {
-        // Ignore errors from other hooks
-      }
-    }
-  }
 
   const generateTitle = useCallback(async (): Promise<string | undefined> => {
     if (!storyData || browserType === 'storybook') return undefined;
@@ -47,20 +38,26 @@ export function useGenerateScreenshotTitle(browserType: BrowserTypes | 'storyboo
 
     try {
       return await mutateAsync({
-        changedArgs: args,
-        browserType,
-        filePath: storyData.filePath,
-        initialArgs: currentStoryData.initialArgs,
-        storyId: storyData.id,
-        argTypes: currentStoryData.argTypes,
-        parameters: currentStoryData.parameters as Record<string, unknown>,
-        name: currentStoryData.name,
-        title: currentStoryData.title,
+        browser: {
+          type: browserType,
+          options: browserOptions,
+        },
+        story: {
+          changedArgs: args,
+          filePath: storyData.filePath,
+          id: storyData.id,
+          initialArgs: currentStoryData.initialArgs,
+          argTypes: currentStoryData.argTypes,
+          parameters: currentStoryData.parameters as Record<string, unknown>,
+          name: currentStoryData.name,
+          title: currentStoryData.title,
+        },
+        screenshotOptions,
       });
     } catch {
       return undefined;
     }
-  }, [api, args, browserType, mutateAsync, storyData]);
+  }, [api, args, browserOptions, browserType, mutateAsync, screenshotOptions, storyData]);
 
   return { generateTitle, isGenerating };
 }

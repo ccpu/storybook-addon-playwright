@@ -1,10 +1,10 @@
 # storybook-addon-playwright
 
-An addon to visually test the stories in the multiple browsers within storybook environment.
+An addon to visually test stories across multiple browsers within the Storybook environment.
 
-> Addon will not work in storybook static build, but the screenshots can be tested against the static build files.
+> Addon will not work in a Storybook static build, but screenshots can be tested against static build files.
 
-> This package has been tested with react framework only, therefore it may not work with other frameworks.
+> This package has been tested with the React framework only and may not work with other frameworks.
 
 > Works with [Component Story Format (CSF)](https://storybook.js.org/docs/formats/component-story-format/) only.
 
@@ -12,14 +12,15 @@ An addon to visually test the stories in the multiple browsers within storybook 
 
 ## Compatibility
 
-| Package    | Version |
-| ---------- | ------- |
-| storybook  | ~8.6    |
-| playwright | ~1.17   |
+| Package    | Version    |
+| ---------- | ---------- |
+| storybook  | ~8         |
+| playwright | ~1.17      |
+| Node.js    | >= 20.19.0 |
 
 ## Motivation
 
-Being able to make components that feel and look same in all browser were always a challenge, it's required that developer keep switching between browsers and visually checking the components. It's also important to keep track of the changes and be able to detect changes as quickly as possible. That's why this add-on has been created. With the help of playwright and storybook now it's possible to visually check components and be notified of changes all in one place.
+Being able to make components that feel and look the same in all browsers has always been a challenge. It requires developers to keep switching between browsers and visually checking components. It is also important to track changes and detect regressions as quickly as possible. With the help of Playwright and Storybook, this addon makes it possible to visually check components and be notified of changes — all in one place.
 
 ## Example
 
@@ -27,210 +28,116 @@ Being able to make components that feel and look same in all browser were always
 
 ## Getting Started
 
-Required packages:
+Install the package:
 
-- storybook-addon-playwright
-- @storybook/addon-essentials (or @storybook/addon-controls)
-
-```js
-pnpm add -D storybook-addon-playwright @storybook/addon-essentials
+```bash
+pnpm add -D storybook-addon-playwright
 ```
-
-> Legacy knob-based stories are still supported for now, but knobs support is deprecated and will be removed in a future release.
 
 ## Configuration
 
-within `.storybook/main.js`
+### 1. Register the addon
+
+Within `.storybook/main.js` (or `main.ts`):
 
 ```js
 module.exports = {
   stories: ['../**/*.stories.[tj]sx'],
-  addons: ['@storybook/addon-essentials', 'storybook-addon-playwright/register'],
+  addons: ['storybook-addon-playwright/register'],
 };
 ```
 
-within `.storybook/middleware.js`:
+### 2. Configure the middleware
+
+Within `.storybook/middleware.js`, initialise your Playwright browsers, call `setConfig`, and then register the addon's middleware. The browsers are initialised asynchronously, so a `ready` promise is used to ensure setup completes before the first request is handled.
 
 ```js
 const { setConfig } = require('storybook-addon-playwright/configs');
+const addonMiddleware = require('storybook-addon-playwright/middleware');
 const playwright = require('playwright');
 
-(async () => {
-  let browser = {
-    chromium: await playwright['chromium'].launch(),
-    firefox: await playwright['firefox'].launch(),
-    webkit: await playwright['webkit'].launch(),
-  };
+const browsers = {};
+
+// Initialise browsers and configure the addon asynchronously.
+const ready = (async () => {
+  browsers.chromium = await playwright.chromium.launch();
+  browsers.firefox = await playwright.firefox.launch();
+  browsers.webkit = await playwright.webkit.launch();
+
   setConfig({
-    storybookEndpoint: `http://localhost:6006/`,
+    storybookEndpoint: 'http://localhost:6006/',
     getPage: async (browserType, options) => {
-      const page = await browser[browserType].newPage(options);
-      return page;
+      return await browsers[browserType].newPage(options);
     },
     afterScreenshot: async (page) => {
       await page.close();
     },
   });
 })();
-```
 
-within `.storybook/middleware.js` :
-
-```js
-const middleware = require('storybook-addon-playwright/middleware');
-module.exports = middleware;
+module.exports = function (router) {
+  // Block addon API calls until browsers are ready.
+  router.all('/trpc/*', async (_req, res, next) => {
+    await ready;
+    next();
+  });
+  // Register the addon's tRPC request handler.
+  addonMiddleware(router);
+};
 ```
 
 ## setConfig Options
 
-- storybookEndpoint
-- beforeScreenshot
-- afterScreenshot
-- beforeStoryImageDiff
-- afterStoryImageDiff
-- beforeFileImageDiff
-- afterFileImageDiff
-- beforeAllImageDiff
-- afterAllImageDiff
-- pageGotoOptions
-- afterUrlConstruction
-- afterNavigation
-- releaseModifierKey
-- screenshotOptions
-- theme
-
-### storybookEndpoint
-
-`storybookEndpoint` must match the ip/port of storybook.
-
-> For docker and none locale browsers, the public ip address of storybook required.
-
-### beforeScreenshot
-
-Will be called before taking a screenshot, useful to manipulate the page.
-
-### afterScreenshot
-
-Will be called after a screenshot taken.
-
-### afterStoryImageDiff
-
-Will be called before/after running image diff test on whole application screenshot.
-
-### beforeStoryImageDiff/afterStoryImageDiff
-
-Will be called before/after running image diff on particular story.
-
-### beforeFileImageDiff/afterFileImageDiff
-
-Will be called before/after running image diff on particular file.
-
-### beforeAllImageDiff/afterAllImageDiff
-
-Will be called after imageDiff process of all stories screenshots complete.
-
-### pageGotoOptions
-
-please refer top [Playwright API page.goto option](https://github.com/microsoft/playwright/blob/master/docs/api.md#pagegotourl-options)
-
-### afterUrlConstruction
-
-Will be called before page.goto, can be used to manipulate url.
-
-### afterNavigation
-
-Will be called when page navigated to story.
-
-### releaseModifierKey
-
-When set to true, will execute keyboard.up for modifier key, Shift, Meta, Control, or Alt, after screenshot taken.
-
-### screenshotOptions
-
-Default Options to apply when taking screenshot.
-
-### theme
-
-It overrides the default theme of the addon. It is a `json` of type material-ui [`Theme`](https://mui.com/customization/default-theme/) object.
-
-```js
-.
-.
-.
-setConfig({
-  theme: {
-    palette: {
-      primary: {
-        main: '#0052cc',
-      },
-      secondary: {
-        main: '#edf2ff',
-      },
-    },
-  }
-});
-.
-.
-.
-```
+For a full list of available options with detailed descriptions, see the [`Config` interface in `src/typings/config.ts`](src/typings/config.ts).
+Every option is documented with a JSDoc comment explaining its purpose, parameters, and usage.
 
 ## How it works
 
-This add-on is basically an interface between playwright and storybook stories.
-Add-on executes user instruction on the page provided in configuration.
+The addon is an interface between Playwright and Storybook stories. It executes user-defined action sequences on the Playwright page provided in the configuration.
 
-Instructions created by user will save in a json file next to the story file. therefore its available for the next load.
+Action sets are saved as JSON files next to the story file, so they persist across reloads.
 
-This add-on consist of there parts:
+The addon consists of three panels:
 
-- Action list panel
-- Screenshots list panel
-- Screenshots preview panel
+- **Action list panel**
+- **Screenshots list panel**
+- **Screenshots preview panel**
 
-### Args and legacy knobs
+### Args
 
-The addon now stores Storybook controls state in `args` inside screenshot settings.
+The addon stores Storybook controls state in `args` inside screenshot settings. When Playwright loads a story it rebuilds the `args` query string from this saved state.
 
-- New screenshots save `args` (Record<string, any>) and use it to rebuild the `args` query string when loading stories in Playwright.
-- Existing screenshot files with legacy `props` are still read as a fallback.
-- During transition, `props` remains supported but is deprecated.
+> Older screenshot files that used a `props` field are still read as a fallback. Use the [migration CLI](#migration) to upgrade them.
 
-### Action list panel:
+### Action list panel
 
-Action panel act like a playground, it consists of the list of action sets that created by user for specific story and will be executed in the browser page when selected.
+The action panel acts as a playground. It holds the list of action sets created by the user for a specific story. Selecting an action set executes it on the Playwright page.
 
-An action set can have single or multiple actions.
-
-Actions are referred to the playwright page methods such as click, mouse move etc...
+An action set can contain one or more actions. Actions correspond to Playwright `Page` methods such as `click`, `mouse.move`, etc.
 
 ### Screenshots list panel
 
-This panel holds the screenshots taken previously by user, here you can manage screenshots such as delete edit or sort screenshots.
+This panel holds previously saved screenshots. From here you can delete, edit, or reorder screenshots.
 
 ### Screenshots preview panel
 
-The preview panel displays the latest screenshots taken by the playwright, it can selectively display all or some of the supported browser by playwright.
+The preview panel shows the latest screenshots taken by Playwright. It can display screenshots from all supported browsers or a subset. You can save screenshots and change settings such as width and height.
 
-Here you can save and change the screenshots settings such as with, height etc.
+Screenshots are stored in a folder named `__screenshots__` next to the story file.
 
-The screenshots are saved in the folder named `__screenshots__` under the story folder.
+## Add or extend Playwright page methods
 
-## Add or extend playwright page methods
+Pass a `customActionSchema` object to `setConfig` to expose additional methods in the **Add Actions** menu of the Actions panel.
 
-To add or extend the playwright method, the following properties are available in the `setConfig` method:
+> This property follows [JSON Schema](http://json-schema.org/) rules with one additional property named `parameters`. A clear understanding of JSON Schema is required.
 
-- customActionSchema
-
-### customActionSchema
-
-This property enables developer to add a new method to the playwright page. every entries in the `customActionSchema` property will appear in the 'Add Actions' menu under the `Actions` panel.
-
-> This property follows the [json-schema]('http://json-schema.org/') rules with one additional property named `parameters`, therefore clear understanding of `json-schema` required.
-
-Here is an example to add a box to the page:
+Example — add a coloured box to the page:
 
 ```js
-//async function addBox(this: Page, position: { x: number; y: number })
+const { setConfig } = require('storybook-addon-playwright/configs');
+const addonMiddleware = require('storybook-addon-playwright/middleware');
+const playwright = require('playwright');
+
 async function addBox(position) {
   await this.evaluate((pos) => {
     if (!pos) return;
@@ -245,16 +152,16 @@ async function addBox(position) {
   }, position);
 }
 
-(async () => {
-  let browser = {
-    chromium: await playwright['chromium'].launch(),
-    firefox: await playwright['firefox'].launch(),
-    webkit: await playwright['webkit'].launch(),
-  };
+const browsers = {};
+const ready = (async () => {
+  browsers.chromium = await playwright.chromium.launch();
+  browsers.firefox = await playwright.firefox.launch();
+  browsers.webkit = await playwright.webkit.launch();
+
   setConfig({
-    storybookEndpoint: `http://localhost:6006/`,
+    storybookEndpoint: 'http://localhost:6006/',
     getPage: async (browserType, options) => {
-      const page = await browser[browserType].newPage(options);
+      const page = await browsers[browserType].newPage(options);
       page.addBox = addBox;
       return page;
     },
@@ -268,12 +175,8 @@ async function addBox(position) {
           position: {
             type: 'object',
             properties: {
-              x: {
-                type: 'number',
-              },
-              y: {
-                type: 'number',
-              },
+              x: { type: 'number' },
+              y: { type: 'number' },
             },
             required: ['x', 'y'],
           },
@@ -282,100 +185,95 @@ async function addBox(position) {
     },
   });
 })();
+
+module.exports = function (router) {
+  router.all('/trpc/*', async (_req, res, next) => {
+    await ready;
+    next();
+  });
+  addonMiddleware(router);
+};
 ```
 
 ## Additional Page Methods
 
-The following custom methods has been added to the playwright page:
+The following custom methods are automatically added to every Playwright page:
 
-- clearInput,
-- mouseDownOnSelector
-- mouseMoveToSelector
-- setSelectorSize
-- scrollSelector
-- dragDropSelector
-- takeScreenshot
-- takeScreenshotOptions
-- selectorMouseWheel
-- mouseFromTo
+### Mouse & interaction
 
-### clearInput
+| Method                                                                   | Description                                                                               |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `clearInput(selector, options?)`                                         | Focuses the element matching `selector`, clears its value, and triggers an `input` event. |
+| `mouseDownOnSelector(selector, point?, options?)`                        | Performs a `mousedown` at the center of the element matching `selector`.                  |
+| `mouseMoveToSelector(selector, point?, options?)`                        | Moves the mouse to the center of the element matching `selector`.                         |
+| `mouseFromTo(from, to, options?)`                                        | Performs a full mouse down → move → up sequence between two page positions.               |
+| `dragDropSelector(selector, to, mouseDownRelativeToSelector?, options?)` | Grabs the element matching `selector` and drops it at the given position.                 |
+| `setSelectorSize(selector, width?, height?)`                             | Sets the `width` and/or `height` of the element matching `selector`.                      |
+| `scrollSelector(selector, scrollProperty)`                               | Sets `scrollLeft` and/or `scrollTop` on the element matching `selector`.                  |
+| `selectorMouseWheel(selector, eventInitDict?)`                           | Dispatches a `WheelEvent` on the element matching `selector`.                             |
 
-This method fetches an element with `selector`, waits for actionability checks, focuses the element, clear it and triggers an input event.
+### Touch events
 
-### mouseDownOnSelector
+| Method                                                                                                | Description                                                                                        |
+| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `touchStart(selector, page?, screen?, client?, options?)`                                             | Dispatches a `touchstart` event on the element matching `selector`.                                |
+| `touchMove(selector, page?, screen?, client?, options?)`                                              | Dispatches a `touchmove` event on the element matching `selector`.                                 |
+| `touchEnd(selector, page?, screen?, client?, options?)`                                               | Dispatches a `touchend` event on the element matching `selector`.                                  |
+| `touchCancel(selector, page?, screen?, client?, options?)`                                            | Dispatches a `touchcancel` event on the element matching `selector`.                               |
+| `touchFromTo(selector, pageFrom?, pageTo?, clientFrom?, clientTo?, screenFrom?, screenTo?, options?)` | Dispatches `touchstart` → `touchmove` → `touchend` in sequence on the element matching `selector`. |
 
-This method fetches an element with `selector`, and perform mousedown on the center of selector.
+### Screenshots
 
-### mouseMoveToSelector
-
-This method fetches an element with `selector`, and move the mouse to center of selector.
-
-### setSelectorSize
-
-This method fetches an element with `selector`, and set the selector with or height.
-
-### scrollSelector
-
-This method fetches an element with `selector`, and set the selector scrollLeft and scrollTop.
-
-### dragDropSelector
-
-This method fetches an element with `selector`, and move it to the position given by user.
-
-### takeScreenshot
-
-This method will take a screenshot between actions, its useful for taking a screenshot in sequence for events/actions.
-In the end the screenshots will be merged with the final screenshot.
-
-### takeScreenshotOptions
-
-The purpose of this action is to have centralized options for all screenshots.
-This action can be used in conjunction with takeScreenshot action only.
-Only one instance can be used.
-
-### selectorMouseWheel
-
-This method fetches an element with `selector`, and dispatch WheelEvent.
-
-### mouseFromTo
-
-This method will perform mouse down, move,and up from to selected location.
+| Method                                                               | Description                                                                                                                       |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `takeScreenshot(stitchOptions?)`                                     | Takes a screenshot at the current point in an action sequence. All intermediate screenshots are merged with the final screenshot. |
+| `takeScreenshotAll(stitchOptions?)`                                  | Takes a screenshot after every subsequent action. All screenshots are merged at the end.                                          |
+| `takeElementScreenshot(selector)`                                    | Takes a screenshot cropped to the element matching `selector`.                                                                    |
+| `takeScreenshotOptions(mergeType?, stitchOptions?, overlayOptions?)` | Sets global screenshot merge options for the current action set. Only one instance per action set is allowed.                     |
 
 ## Testing
 
-Screenshots saved with the addon can also be tested with the test framework like jest. to do so configure the jest as follow:
+Screenshots saved by the addon can be regression-tested in your test suite. The addon exports two primary helpers:
 
-add setup file to `jest.config.js`
+- **`toMatchScreenshots`** — a custom matcher that loads every `*.playwright.json` file and compares screenshots against saved baselines using `jest-image-snapshot`.
+- **`runImageDiff`** — a standalone function that runs the same diff programmatically and returns results without a test framework matcher.
+- **`getScreenshots`** — a lower-level helper that iterates screenshots and calls a callback with each buffer, for use with any assertion library.
 
-```js
-module.exports = {
-  setupFilesAfterEnv: ['./jest.setup.js'],
-};
+### Setup with Vitest
+
+Add a setup file to `vitest.config.ts`:
+
+```ts
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    setupFiles: ['./vitest.setup.ts'],
+  },
+});
 ```
 
-within `jest.setup.js`
+Within `vitest.setup.ts`:
 
-```js
-const playwright = require('playwright');
-const { setConfig } = require('storybook-addon-playwright/configs');
-const { toMatchScreenshots } = require('storybook-addon-playwright');
+```ts
+import playwright from 'playwright';
+import { setConfig } from 'storybook-addon-playwright/configs';
+import { toMatchScreenshots } from 'storybook-addon-playwright';
 
 expect.extend({ toMatchScreenshots });
 
-let browser = {};
+const browsers: Record<string, any> = {};
 
 beforeAll(async () => {
-  browser = {
-    chromium: await playwright['chromium'].launch(),
-    firefox: await playwright['firefox'].launch(),
-    webkit: await playwright['webkit'].launch(),
-  };
+  browsers.chromium = await playwright.chromium.launch();
+  browsers.firefox = await playwright.firefox.launch();
+  browsers.webkit = await playwright.webkit.launch();
+
   setConfig({
-    storybookEndpoint: `http://localhost:6006/`, // or  `./storybook-static`
+    storybookEndpoint: 'http://localhost:6006/', // or './storybook-static'
     getPage: async (browserType, options) => {
-      const page = await browser[browserType].newPage(options);
-      return page;
+      return await browsers[browserType].newPage(options);
     },
     afterScreenshot: async (page) => {
       await page.close();
@@ -384,31 +282,96 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  const promises = Object.keys(browser).map((browserType) =>
-    browser[browserType].close(),
-  );
-  await Promise.resolve(promises);
+  await Promise.all(Object.values(browsers).map((b) => b.close()));
 });
 ```
 
-and within the test file:
+### Setup with Jest
+
+Add a setup file to `jest.config.js`:
 
 ```js
-describe('test screenshots', () => {
-  it('should pass image diff', async () => {
+module.exports = {
+  setupFilesAfterFramework: ['./jest.setup.js'],
+};
+```
+
+Within `jest.setup.js`:
+
+```js
+const playwright = require('playwright');
+const { setConfig } = require('storybook-addon-playwright/configs');
+const { toMatchScreenshots } = require('storybook-addon-playwright');
+
+expect.extend({ toMatchScreenshots });
+
+let browsers = {};
+
+beforeAll(async () => {
+  browsers = {
+    chromium: await playwright.chromium.launch(),
+    firefox: await playwright.firefox.launch(),
+    webkit: await playwright.webkit.launch(),
+  };
+  setConfig({
+    storybookEndpoint: 'http://localhost:6006/', // or './storybook-static'
+    getPage: async (browserType, options) => {
+      return await browsers[browserType].newPage(options);
+    },
+    afterScreenshot: async (page) => {
+      await page.close();
+    },
+  });
+});
+
+afterAll(async () => {
+  await Promise.all(Object.values(browsers).map((b) => b.close()));
+});
+```
+
+### Using `toMatchScreenshots`
+
+Pass `'*'` to test all `*.playwright.json` files found in the project, or pass a path relative to the test file to target a specific one:
+
+```ts
+describe('screenshot regression', () => {
+  it('should match all saved screenshots', async () => {
     await expect('*').toMatchScreenshots();
-  }, 10000);
+  }, 60_000);
+
+  it('should match a specific story file', async () => {
+    await expect('Button.stories.playwright.json').toMatchScreenshots();
+  }, 30_000);
 });
 ```
 
-Or with `toMatchImageSnapshot`:
+> Set an appropriate timeout. Screenshot capture across multiple browsers can take tens of seconds.
 
-```js
-const { getScreenshots } = require('storybook-addon-playwright');
+### Using `runImageDiff`
 
-describe('test screenshots manually', () => {
+Use `runImageDiff` when you want the diff results as a plain array rather than a matcher assertion:
+
+```ts
+import { runImageDiff } from 'storybook-addon-playwright';
+
+const results = await runImageDiff('*');
+const failures = results.filter((r) => !r.pass);
+console.log(`${failures.length} screenshot(s) failed.`);
+```
+
+### Using `getScreenshots` with a custom assertion
+
+```ts
+import { getScreenshots } from 'storybook-addon-playwright';
+import { toMatchImageSnapshot } from 'jest-image-snapshot';
+
+expect.extend({ toMatchImageSnapshot });
+
+describe('manual screenshot test', () => {
   it('should pass image diff', async () => {
     await getScreenshots({
+      playwrightJsonPath: '*',
+      requestId: 'my-run',
       onScreenshotReady: (screenshotBuffer, baselineScreenshotPath) => {
         expect(screenshotBuffer).toMatchImageSnapshot({
           customSnapshotIdentifier: baselineScreenshotPath.screenshotIdentifier,
@@ -416,27 +379,35 @@ describe('test screenshots manually', () => {
         });
       },
     });
-  }, 10000);
+  }, 60_000);
 });
 ```
 
-> Make sure to set appropriate timeout for your tests.
+## TypeScript
 
-## Typescript
+The package ships `typings/global.d.ts` which augments Vitest's `Assertion` interface with `toMatchScreenshots` and `toMatchImageSnapshot`. Reference it in your `tsconfig.json`:
 
-If your editor does not recognise the `toMatchScreenshots` matcher, add a global.d.ts file to your project with:
+```json
+{
+  "compilerOptions": {
+    "types": ["vitest/globals", "storybook-addon-playwright/typings/global"]
+  }
+}
+```
 
-```js
-import 'storybook-addon-playwright';
+Or add a triple-slash reference in any `.d.ts` file in your project:
+
+```ts
+/// <reference types="storybook-addon-playwright/typings/global" />
 ```
 
 ## Migration
 
-Run migration from CLI:
+Run migration from the CLI to upgrade older screenshot files from the deprecated `props` field to `args`:
 
 ```bash
 npx storybook-addon-playwright migrate props-to-args
 ```
 
 This command scans all `*.playwright.json` files and migrates screenshot settings from `props` to `args`.
-When `args` already exists, it is kept as-is and only `props` is removed.
+When `args` already exists it is kept as-is and only `props` is removed.

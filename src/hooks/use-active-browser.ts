@@ -1,10 +1,10 @@
 import type { BrowserTypes, ScreenShotViewPanel } from '../typings';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useAddonState } from './use-addon-state';
 
 export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
   const { addonState, setAddonState } = useAddonState();
-  const [activeBrowsers, setActiveBrowsers] = useState<BrowserTypes[]>([]);
+  const [refreshingBrowsers, setRefreshBrowsers] = useState<BrowserTypes[]>([]);
   const [browserTypes] = useState<BrowserTypes[]>(['chromium', 'firefox', 'webkit']);
 
   const isDisabled = useCallback(
@@ -41,22 +41,41 @@ export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
 
   const toggleBrowser = useCallback(
     (browserType: BrowserTypes) => {
-      setBrowserState(browserType, browserView, !isDisabled(browserType));
+      const disable = !isDisabled(browserType);
+
+      setBrowserState(browserType, browserView, disable);
+
+      if (disable) {
+        setRefreshBrowsers((current) =>
+          current.filter((browser) => browser !== browserType),
+        );
+        return;
+      }
+
+      setRefreshBrowsers((current) =>
+        current.includes(browserType) ? current : [...current, browserType],
+      );
     },
     [browserView, isDisabled, setBrowserState],
   );
 
-  useEffect(() => {
-    if (!addonState || !Object.keys(addonState).length) return;
-    const activeBrs = browserTypes.filter((b) => !isDisabled(b));
-    setActiveBrowsers(activeBrs);
-  }, [addonState, browserTypes, isDisabled]);
+  const clearBrowserRefresh = useCallback((browserType: BrowserTypes) => {
+    setRefreshBrowsers((current) => current.filter((browser) => browser !== browserType));
+  }, []);
+
+  const activeBrowsers = useMemo(
+    () => browserTypes.filter((browserType) => !isDisabled(browserType)),
+    [browserTypes, isDisabled],
+  );
 
   return {
     activeBrowsers,
     browserTypes,
     isDisabled,
+    refreshingBrowsers,
+    clearBrowserRefresh,
     setBrowserState,
     toggleBrowser,
+    refreshBrowsers: setRefreshBrowsers,
   };
 }

@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const GRID_PERCENT = 100;
+const TWO_COLUMNS = 2;
+const LIST_GAP_PX = 2;
+
 interface Props {
   showStorybook?: boolean;
   column?: number;
@@ -66,33 +70,36 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const [ref, rect] = useMeasure<HTMLDivElement>();
 
-  const { activeBrowsers, toggleBrowser, browserTypes } = useActiveBrowsers(viewPanel);
-
-  const [refresh, setRefresh] = useState(false);
+  const {
+    activeBrowsers,
+    toggleBrowser,
+    browserTypes,
+    refreshingBrowsers,
+    clearBrowserRefresh,
+    refreshBrowsers,
+  } = useActiveBrowsers(viewPanel);
 
   const classes = useStyles();
 
   const storyUrl = useStoryUrl();
 
   const handleRefresh = useCallback(() => {
-    setRefresh(true);
-  }, []);
-
-  const handleRefreshEnd = useCallback(() => {
-    setRefresh(false);
-  }, []);
+    refreshBrowsers(activeBrowsers);
+  }, [activeBrowsers, refreshBrowsers]);
 
   const toggleTitleDialog = useCallback(() => {
     setShowTitleDialog(!showTitleDialog);
   }, [showTitleDialog]);
 
-  const width = `calc(${100 / (column || activeBrowsers.length)}% - 2px)`;
+  const width = `calc(${
+    GRID_PERCENT / (column || activeBrowsers.length)
+  }% - ${LIST_GAP_PX}px)`;
 
   const itemHeight =
     column === 1
       ? rect.height / activeBrowsers.length
-      : column === 2
-      ? rect.height / 2
+      : column === TWO_COLUMNS
+      ? rect.height / TWO_COLUMNS
       : rect.height;
 
   const handleScreenshotsSaveComplete = useCallback(
@@ -165,8 +172,10 @@ const ScreenshotListView: React.FC<Props> = (props) => {
                 <ScreenshotView
                   browserType={browser}
                   height={itemHeight}
-                  refresh={refresh}
-                  onRefreshEnd={handleRefreshEnd}
+                  refresh={refreshingBrowsers.includes(browser)}
+                  onRefreshEnd={() => {
+                    clearBrowserRefresh(browser);
+                  }}
                   savingWithTitle={saveScreenshot && saveScreenshot[browser]}
                   onSaveComplete={handleScreenshotsSaveComplete}
                 />

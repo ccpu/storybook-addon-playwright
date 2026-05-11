@@ -23,7 +23,10 @@ describe('ScreenshotList', () => {
   it('should not have screenshot view if there is no active browser', () => {
     useActiveBrowserMock.mockImplementationOnce(() => ({
       activeBrowsers: [],
+      clearBrowserRefresh: vi.fn(),
       isDisabled: vi.fn(),
+      refreshBrowsers: vi.fn(),
+      refreshingBrowsers: [],
       toggleBrowser: vi.fn(),
     }));
 
@@ -56,6 +59,17 @@ describe('ScreenshotList', () => {
   });
 
   it('should handle refresh', () => {
+    const refreshBrowsersMock = vi.fn();
+
+    useActiveBrowserMock.mockImplementationOnce(() => ({
+      activeBrowsers: ['chromium', 'firefox', 'webkit'],
+      clearBrowserRefresh: vi.fn(),
+      isDisabled: vi.fn(),
+      refreshBrowsers: refreshBrowsersMock,
+      refreshingBrowsers: [],
+      toggleBrowser: vi.fn(),
+    }));
+
     const wrapper = shallow(
       <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
     );
@@ -63,12 +77,25 @@ describe('ScreenshotList', () => {
 
     toolbar.props().onRefresh();
 
-    let screenshotView = wrapper.find(ScreenshotView);
-    expect(screenshotView.first().props().refresh).toBeTruthy();
+    expect(refreshBrowsersMock).toHaveBeenCalledWith(['chromium', 'firefox', 'webkit']);
+  });
 
-    screenshotView.first().props().onRefreshEnd?.();
-    screenshotView = wrapper.find(ScreenshotView);
-    expect(screenshotView.first().props().refresh).toBeFalsy();
+  it('should refresh a newly enabled browser', () => {
+    useActiveBrowserMock.mockImplementationOnce(() => ({
+      activeBrowsers: ['chromium'],
+      clearBrowserRefresh: vi.fn(),
+      isDisabled: vi.fn(),
+      refreshBrowsers: vi.fn(),
+      refreshingBrowsers: ['chromium'],
+      toggleBrowser: vi.fn(),
+    }));
+
+    const wrapper = shallow(
+      <ScreenshotListView onClose={onCloseMock} viewPanel="dialog" />,
+    );
+
+    const screenshotView = wrapper.find(ScreenshotView);
+    expect(screenshotView.first().props().refresh).toBeTruthy();
   });
 
   it('should show save screenshot title dialog', () => {
@@ -85,7 +112,10 @@ describe('ScreenshotList', () => {
   it('should save screenshot', () => {
     useActiveBrowserMock.mockImplementation(() => ({
       activeBrowsers: ['chromium', 'firefox'],
+      clearBrowserRefresh: vi.fn(),
       isDisabled: vi.fn(),
+      refreshBrowsers: vi.fn(),
+      refreshingBrowsers: [],
       toggleBrowser: vi.fn(),
     }));
 

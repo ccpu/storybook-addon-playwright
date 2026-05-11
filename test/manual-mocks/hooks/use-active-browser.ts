@@ -8,6 +8,9 @@ vi.mock('../../../src/hooks/use-active-browser', () => ({
 
 useActiveBrowserMock.mockImplementation(() => ({
   activeBrowsers: ['chromium', 'firefox', 'webkit'],
+  clearBrowserRefresh: vi.fn(),
   isDisabled: isDisabledMock,
+  refreshBrowsers: vi.fn(),
+  refreshingBrowsers: [],
   toggleBrowser: toggleBrowserMock,
 }));

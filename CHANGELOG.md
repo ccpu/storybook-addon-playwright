@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.33
+
+### Minor Changes
+
+- update Node.js version requirements and enhance setup actions
+
 ## 5.0.0-rc.32
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.34
+
+### Minor Changes
+
+- enhance browser refresh functionality and improve layout
+
 ## 5.0.0-rc.33
 
 ### Minor Changes

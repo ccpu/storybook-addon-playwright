@@ -49,7 +49,7 @@ module.exports = {
 
 ### 2. Configure the middleware
 
-Within `.storybook/middleware.js`, initialise your Playwright browsers, call `setConfig`, and then register the addon's middleware. The browsers are initialised asynchronously, so a `ready` promise is used to ensure setup completes before the first request is handled.
+Within `.storybook/middleware.js`, initialise your Playwright browsers asynchronously, call `setConfig` immediately, and wait for readiness inside `getPage`. This keeps setup safe.
 
 ```js
 const { setConfig } = require('storybook-addon-playwright/configs');
@@ -58,30 +58,25 @@ const playwright = require('playwright');
 
 const browsers = {};
 
-// Initialise browsers and configure the addon asynchronously.
+// Initialise browsers asynchronously.
 const ready = (async () => {
   browsers.chromium = await playwright.chromium.launch();
   browsers.firefox = await playwright.firefox.launch();
   browsers.webkit = await playwright.webkit.launch();
-
-  setConfig({
-    storybookEndpoint: 'http://localhost:6006/',
-    getPage: async (browserType, options) => {
-      return await browsers[browserType].newPage(options);
-    },
-    afterScreenshot: async (page) => {
-      await page.close();
-    },
-  });
 })();
 
-module.exports = function (router) {
-  // Block addon API calls until browsers are ready.
-  router.all('/trpc/*', async (_req, res, next) => {
+setConfig({
+  storybookEndpoint: 'http://localhost:6006/',
+  getPage: async (browserType, options) => {
     await ready;
-    next();
-  });
-  // Register the addon's tRPC request handler.
+    return await browsers[browserType].newPage(options);
+  },
+  afterScreenshot: async (page) => {
+    await page.close();
+  },
+});
+
+module.exports = function (router) {
   addonMiddleware(router);
 };
 ```
@@ -157,40 +152,37 @@ const ready = (async () => {
   browsers.chromium = await playwright.chromium.launch();
   browsers.firefox = await playwright.firefox.launch();
   browsers.webkit = await playwright.webkit.launch();
+})();
 
-  setConfig({
-    storybookEndpoint: 'http://localhost:6006/',
-    getPage: async (browserType, options) => {
-      const page = await browsers[browserType].newPage(options);
-      page.addBox = addBox;
-      return page;
-    },
-    afterScreenshot: async (page) => {
-      await page.close();
-    },
-    customActionSchema: {
-      addBox: {
-        type: 'promise',
-        parameters: {
-          position: {
-            type: 'object',
-            properties: {
-              x: { type: 'number' },
-              y: { type: 'number' },
-            },
-            required: ['x', 'y'],
+setConfig({
+  storybookEndpoint: 'http://localhost:6006/',
+  getPage: async (browserType, options) => {
+    await ready;
+    const page = await browsers[browserType].newPage(options);
+    page.addBox = addBox;
+    return page;
+  },
+  afterScreenshot: async (page) => {
+    await page.close();
+  },
+  customActionSchema: {
+    addBox: {
+      type: 'promise',
+      parameters: {
+        position: {
+          type: 'object',
+          properties: {
+            x: { type: 'number' },
+            y: { type: 'number' },
           },
+          required: ['x', 'y'],
         },
       },
     },
-  });
-})();
+  },
+});
 
 module.exports = function (router) {
-  router.all('/trpc/*', async (_req, res, next) => {
-    await ready;
-    next();
-  });
   addonMiddleware(router);
 };
 ```

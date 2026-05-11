@@ -1,18 +1,84 @@
-// @ts-check
-
-const { setConfig } = /** @type {typeof import('../src/api/server/configs')} */ (
-  require('../configs')
-);
-const playwright = require('playwright');
-
 /**
  * @typedef {import('../src/typings/config').Config} Config
  * @typedef {{ evaluate: (pageFunction: (pos: { x: number; y: number } | undefined) => void, arg: { x: number; y: number } | undefined) => Promise<void> }} BoxPage
  * @typedef {{ newPage: (options?: any) => Promise<any> }} BrowserInstance
  */
 
+import os from 'node:os';
+
+const { setConfig } = /** @type {typeof import('../src/api/server/configs')} */ (
+  require('../configs')
+);
+const playwright = require('playwright');
+
+const PLAYWRIGHT_WS_BASE_URL =
+  process.env.PLAYWRIGHT_WS_BASE_URL ?? 'ws://127.0.0.1:3010';
+
+const LOCAL_PLAYWRIGHT = true;
+const STORYBOOK_PORT = 9002;
+
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+
+  for (const interfaceName of Object.keys(interfaces)) {
+    const networkInterface = interfaces[interfaceName];
+
+    if (!networkInterface) {
+      continue;
+    }
+
+    for (const net of networkInterface) {
+      // Skip internal (localhost) and non-IPv4 addresses
+      if (net.family === 'IPv4' && !net.internal) {
+        return net.address;
+      }
+    }
+  }
+
+  return undefined;
+}
+
 /** @type {Partial<Record<import('../src/typings/screenshot').BrowserTypes, BrowserInstance>>} */
 const browser = {};
+
+function getStorybookEndpoint() {
+  if (LOCAL_PLAYWRIGHT) {
+    return 'http://localhost:' + STORYBOOK_PORT + '/';
+  }
+  return 'http://' + getLocalIpAddress() + ':' + STORYBOOK_PORT + '/';
+}
+
+async function getBrowser(browserType) {
+  if (browser[browserType]) {
+    return browser[browserType];
+  }
+  if (LOCAL_PLAYWRIGHT) {
+    console.log(`[setup-playwright] Launched local ${browserType} Playwright instance`);
+    browser[browserType] = await playwright[browserType].launch();
+    return browser[browserType];
+  }
+  const wsEndpoint = PLAYWRIGHT_WS_BASE_URL + '/' + browserType;
+  browser[browserType] = await playwright[browserType].connect(wsEndpoint);
+  console.log(
+    `[setup-playwright] Connected ${browserType} to remote Playwright server at ${wsEndpoint}`,
+  );
+  return browser[browserType];
+}
+
+/**
+ * @param {import('../src/typings/screenshot').BrowserTypes} browserType
+ * @returns {Promise<BrowserInstance>} Connected remote browser instance.
+ */
+async function getBrowserInstance(browserType) {
+  try {
+    return await getBrowser(browserType);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(
+      `Failed to start Playwright browser ${browserType}. If the browser executable is missing, run \`pnpm exec playwright install\`. Original error: ${message}`,
+    );
+  }
+}
 
 /**
  * @this {BoxPage}
@@ -43,11 +109,7 @@ async function addBox(position) {
  * @returns {Promise<any>} A Playwright page instance.
  */
 async function getPage(browserType, options, _requestData) {
-  if (!browser[browserType]) {
-    browser[browserType] = await playwright[browserType].launch();
-  }
-
-  const currentBrowser = browser[browserType];
+  const currentBrowser = await getBrowserInstance(browserType);
   if (!currentBrowser) {
     throw new Error(`Browser ${browserType} failed to initialize.`);
   }
@@ -65,7 +127,8 @@ async function getPage(browserType, options, _requestData) {
  */
 async function afterNavigation(page) {
   await page.waitForFunction(() => {
-    const root = document.getElementById('storybook-root') || document.getElementById('root');
+    const root =
+      document.getElementById('storybook-root') || document.getElementById('root');
 
     return (root?.childNodes.length ?? 0) > 0;
   });
@@ -84,12 +147,12 @@ async function setupPlaywright() {
     /** @type {Config & { autoMigration: boolean }} */
     const config = {
       getScreenshotTitle: (requestData) => {
-        if(Object.keys(requestData.story.changedArgs?? {}).length === 0) {
+        if (Object.keys(requestData.story.changedArgs ?? {}).length === 0) {
           return 'Should render correctly.';
         }
-        return ''
+        return '';
       },
-      storybookEndpoint: 'http://localhost:9002/',
+      storybookEndpoint: getStorybookEndpoint(),
       getPage,
       afterNavigation,
       afterScreenshot,

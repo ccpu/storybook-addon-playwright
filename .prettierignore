@@ -35,7 +35,6 @@
 **/.eslintcache
 **/.cache-loader/
 **/.serverless/
-**/.storybook/
 **/.cypress/
 **/.turbo/
 # Miscellaneous
@@ -48,7 +47,3 @@
 **/*.env*
 **/*.local
 **/.env/
-
-
-
-

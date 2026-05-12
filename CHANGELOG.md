@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.36
+
+### Minor Changes
+
+- wrap generate button in a flex container for better alignment
+
 ## 5.0.0-rc.35
 
 ### Minor Changes

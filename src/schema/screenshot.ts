@@ -152,7 +152,7 @@ export const generateScreenshotTitleInputSchema = z.object({
     id: z.string(),
   }),
   browser: z.object({
-    type: browserTypeSchema,
+    type: browserTypeSchema.nullable(),
     options: browserOptionsSchema.optional(),
   }),
   screenshotOptions: screenshotOptionsSchema.optional(),

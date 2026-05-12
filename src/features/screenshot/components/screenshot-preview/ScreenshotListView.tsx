@@ -8,6 +8,7 @@ import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
 import { useStoryUrl } from '../../../../hooks/use-story-url';
 import { ScreenshotView } from './ScreenshotView';
 import { Toolbar } from './Toolbar';
+import { useGenerateScreenshotTitle } from '../../hooks';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -69,6 +70,8 @@ const ScreenshotListView: React.FC<Props> = (props) => {
   }>();
 
   const [ref, rect] = useMeasure<HTMLDivElement>();
+
+  const { generateTitle, hasGenerator } = useGenerateScreenshotTitle(null);
 
   const {
     activeBrowsers,
@@ -190,6 +193,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
         onSave={handleSaveScreenshot}
         title="Screenshots Title"
         required
+        onGenerateContent={hasGenerator ? generateTitle : undefined}
       />
       <Loader open={Boolean(saveScreenshot)} />
     </div>

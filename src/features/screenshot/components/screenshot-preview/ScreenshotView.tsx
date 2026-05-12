@@ -11,7 +11,6 @@ import {
   InputDialog,
   Loader,
 } from '../../../../components/common';
-import { trpcClient } from '../../../../api/trpc/client';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
 import { useGenerateScreenshotTitle } from '../../hooks/use-generate-screenshot-title';
@@ -130,10 +129,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     browserOptions,
   );
 
-  const { data: hasGenerator } =
-    trpcClient.screenshot.hasScreenshotTitleGenerator.useQuery();
-
-  const { generateTitle } = useGenerateScreenshotTitle(browserType);
+  const { generateTitle, hasGenerator } = useGenerateScreenshotTitle(browserType);
 
   useEffect(() => {
     if (!refresh || loading) return;

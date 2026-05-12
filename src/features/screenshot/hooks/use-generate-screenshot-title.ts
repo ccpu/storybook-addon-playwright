@@ -8,12 +8,16 @@ import { API, useStorybookApi, StoryEntry } from '@storybook/manager-api';
 import { useBrowserOptions } from '../../../hooks';
 import { useScreenshotOptionsValue } from '../../../store';
 
-export function useGenerateScreenshotTitle(browserType: BrowserTypes | 'storybook') {
+export function useGenerateScreenshotTitle(
+  browserType: BrowserTypes | 'storybook' | null,
+) {
   const storyData = useCurrentStoryData();
   const args = useKnobs();
   const api = useStorybookApi() as API;
   const { getBrowserOptions } = useBrowserOptions();
   const screenshotOptions = useScreenshotOptionsValue();
+  const { data: hasGenerator = false } =
+    trpcClient.screenshot.hasScreenshotTitleGenerator.useQuery();
 
   const browserOptions = getBrowserOptions(browserType as BrowserTypes);
 
@@ -59,5 +63,5 @@ export function useGenerateScreenshotTitle(browserType: BrowserTypes | 'storyboo
     }
   }, [api, args, browserOptions, browserType, mutateAsync, screenshotOptions, storyData]);
 
-  return { generateTitle, isGenerating };
+  return { generateTitle, hasGenerator, isGenerating };
 }

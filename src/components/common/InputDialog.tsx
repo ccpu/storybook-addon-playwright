@@ -59,6 +59,7 @@ const InputDialog: React.FC<InputDialogProps> = ({
   const [isGenerating, setIsGenerating] = useState(false);
 
   const classes = useStyles({ width });
+  const showGenerateButton = Boolean(onGenerateContent);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
@@ -121,7 +122,7 @@ const InputDialog: React.FC<InputDialogProps> = ({
         }}
       ></TextField>
 
-      {onGenerateContent && (
+      {showGenerateButton && (
         <div style={{ justifyContent: 'end', display: 'flex' }}>
           <Button
             className={classes.generateButton}

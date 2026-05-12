@@ -2,7 +2,7 @@ import '../../manual-mocks/react-useEffect';
 import { InputDialog } from '../../../src/components/common/InputDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { TextField } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import { ActionDialog } from '../../../src/components/common/ActionDialog';
 
 describe('InputDialog', () => {
@@ -72,5 +72,18 @@ describe('InputDialog', () => {
     );
 
     expect(wrapper.find(TextField).props().value).toBe('val');
+  });
+
+  it('should show generate button when generator is available', () => {
+    const wrapper = shallow(
+      <InputDialog
+        onClose={vi.fn()}
+        open={true}
+        onSave={vi.fn()}
+        onGenerateContent={vi.fn()}
+      />,
+    );
+
+    expect(wrapper.find(Button)).toHaveLength(1);
   });
 });

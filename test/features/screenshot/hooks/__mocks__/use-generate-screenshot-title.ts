@@ -4,5 +4,6 @@ export const useGenerateScreenshotTitle: typeof orgHook = vi
   .fn()
   .mockImplementation(() => ({
     generateTitle: vi.fn().mockResolvedValue(undefined),
+    hasGenerator: false,
     isGenerating: false,
   }));

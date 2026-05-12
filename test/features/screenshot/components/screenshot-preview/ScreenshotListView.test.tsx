@@ -4,13 +4,37 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ScreenshotView } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenshotView';
 import { Toolbar } from '../../../../../src/features/screenshot/components/screenshot-preview/Toolbar';
-import { InputDialog, Loader } from '../../../../../src/components/common';
+import { inputModal, Loader } from '../../../../../src/components/common';
+
+const { saveScreenShotMock } = vi.hoisted(() => ({
+  saveScreenShotMock: vi.fn(),
+}));
+
+vi.mock(
+  '../../../../../src/features/screenshot/hooks/use-generate-screenshot-title',
+  () => ({
+    useGenerateScreenshotTitle: () => ({
+      generateTitle: vi.fn(),
+      hasGenerator: false,
+    }),
+  }),
+);
+
+vi.mock('../../../../../src/features/screenshot/hooks/use-save-screenshot', () => ({
+  useSaveScreenshot: () => ({
+    getUpdatingScreenshotTitle: vi.fn(),
+    inProgress: false,
+    saveScreenShot: saveScreenShotMock,
+  }),
+}));
 
 describe('ScreenshotList', () => {
   const onCloseMock = vi.fn();
+  const showModalMock = vi.spyOn(inputModal, 'show').mockResolvedValue(undefined);
 
   beforeEach(() => {
     vi.clearAllMocks();
+    saveScreenShotMock.mockResolvedValue({});
   });
 
   it('should render', () => {
@@ -106,10 +130,16 @@ describe('ScreenshotList', () => {
 
     toolbar.props().onSave?.();
 
-    expect(wrapper.find(InputDialog).props().open).toBeTruthy();
+    expect(showModalMock).toHaveBeenCalledTimes(1);
+    expect(showModalMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        required: true,
+        title: 'Screenshots Title',
+      }),
+    );
   });
 
-  it('should save screenshot', () => {
+  it('should save screenshot', async () => {
     useActiveBrowserMock.mockImplementation(() => ({
       activeBrowsers: ['chromium', 'firefox'],
       clearBrowserRefresh: vi.fn(),
@@ -128,28 +158,90 @@ describe('ScreenshotList', () => {
     );
     const toolbar = wrapper.find(Toolbar);
 
+    const screenshotViews = wrapper.find(ScreenshotView);
+    screenshotViews.forEach((node) => {
+      const browserType = node.props().browserType;
+      if (browserType === 'storybook') return;
+
+      node.props().onScreenshotDataChange?.(browserType, {
+        base64: `${browserType}-base64`,
+        browserOptions: {} as any,
+      });
+    });
+
     toolbar.props().onSave?.();
 
-    wrapper.find(InputDialog).props().onSave('title');
+    const showArgs = showModalMock.mock.calls[0][0] as {
+      onSave: (value: string) => void;
+    };
+    showArgs.onSave('title');
 
-    const chromium = wrapper.find(ScreenshotView).first();
+    await new Promise((resolve) => setImmediate(resolve));
 
-    expect(chromium.props().savingWithTitle).toBe('title');
+    expect(saveScreenShotMock).toHaveBeenCalledWith(
+      'chromium',
+      'title',
+      'chromium-base64',
+      {},
+    );
+    expect(saveScreenShotMock).toHaveBeenCalledWith(
+      'firefox',
+      'title',
+      'firefox-base64',
+      {},
+    );
+    expect(saveScreenShotMock).toHaveBeenCalledTimes(2);
+  });
 
-    chromium.props().onSaveComplete?.('chromium');
+  it('should open single screenshot save dialog from ScreenshotView', () => {
+    const wrapper = shallow(
+      <ScreenshotListView
+        onClose={onCloseMock}
+        viewPanel="dialog"
+        showStorybook={false}
+      />,
+    );
 
-    expect(wrapper.find(ScreenshotView).first().props().savingWithTitle).toBe(undefined);
+    const firstView = wrapper.find(ScreenshotView).first();
+    firstView.props().onSave?.('chromium');
 
-    // Loader should be visible until all screenshot processed
+    expect(showModalMock).toHaveBeenCalledTimes(1);
+    expect(showModalMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Screenshot Title',
+      }),
+    );
+  });
+
+  it('should show loader while screenshot queue is saving', () => {
+    const pending = new Promise<void>(() => {});
+    saveScreenShotMock.mockReturnValue(pending);
+
+    const wrapper = shallow(
+      <ScreenshotListView
+        onClose={onCloseMock}
+        viewPanel="dialog"
+        showStorybook={false}
+      />,
+    );
+
+    wrapper
+      .find(ScreenshotView)
+      .first()
+      .props()
+      .onScreenshotDataChange?.('chromium', {
+        base64: 'chromium-base64',
+        browserOptions: {} as any,
+      });
+
+    wrapper.find(Toolbar).props().onSave?.();
+
+    const showArgs = showModalMock.mock.calls[0][0] as {
+      onSave: (value: string) => void;
+    };
+    showArgs.onSave('title');
+    wrapper.update();
+
     expect(wrapper.find(Loader).props().open).toBeTruthy();
-
-    const firefox = wrapper.find(ScreenshotView).last();
-    expect(firefox.props().savingWithTitle).toBe('title');
-
-    firefox.props().onSaveComplete?.('firefox');
-
-    expect(wrapper.find(ScreenshotView).last().props().savingWithTitle).toBe(undefined);
-
-    expect(wrapper.find(Loader).props().open).toBeFalsy();
   });
 });

@@ -1,5 +1,6 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
 import { Button, CircularProgress, makeStyles, TextField } from '@material-ui/core';
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActionDialog } from './ActionDialog';
@@ -142,4 +143,47 @@ const InputDialog: React.FC<InputDialogProps> = ({
 
 InputDialog.displayName = 'InputDialog';
 
-export { InputDialog };
+export type InputModalProps = Omit<InputDialogProps, 'open' | 'onClose'>;
+
+const InputDialogModal = NiceModal.create<InputModalProps>((props) => {
+  const modal = useModal();
+
+  const handleClose = useCallback(() => {
+    modal.hide();
+  }, [modal]);
+
+  const handleSave = useCallback(
+    (content: string) => {
+      props.onSave(content);
+      modal.hide();
+    },
+    [modal, props],
+  );
+
+  return (
+    <InputDialog
+      {...props}
+      open={modal.visible}
+      onClose={handleClose}
+      onSave={handleSave}
+    />
+  );
+});
+
+InputDialogModal.displayName = 'InputDialogModal';
+
+export const INPUT_DIALOG_MODAL_ID = 'input-dialog';
+
+let registered = false;
+
+const registerInputDialogModal = () => {
+  if (registered) return;
+  NiceModal.register(INPUT_DIALOG_MODAL_ID, InputDialogModal);
+  registered = true;
+};
+
+const inputModal = {
+  show: (props: InputModalProps) => NiceModal.show(INPUT_DIALOG_MODAL_ID, props),
+};
+
+export { InputDialog, inputModal, registerInputDialogModal };

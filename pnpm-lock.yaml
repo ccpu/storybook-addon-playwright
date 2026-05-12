@@ -25,6 +25,9 @@ importers:
       '@dom-utils/selector-path':
         specifier: ^1.0.3
         version: 1.0.3
+      '@ebay/nice-modal-react':
+        specifier: ^1.2.13
+        version: 1.2.13(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@material-ui/core':
         specifier: ^4.12.4
         version: 4.12.4(@types/react@17.0.16)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
@@ -1190,6 +1193,12 @@ packages:
 
   '@dom-utils/selector-path@1.0.3':
     resolution: {integrity: sha512-x7+Os1cv9vqoDg2OuoADOWKHuBXszWnibA2Iuq7UmEdj/BA/78X64eBzYnFwc2kENbUXzV3iCfwzZmNgkbYzOQ==}
+
+  '@ebay/nice-modal-react@1.2.13':
+    resolution: {integrity: sha512-jx8xIWe/Up4tpNuM02M+rbnLoxdngTGk3Y8LjJsLGXXcSoKd/+eZStZcAlIO/jwxyz/bhPZnpqPJZWAmhOofuA==}
+    peerDependencies:
+      react: '>16.8.0'
+      react-dom: '>16.8.0'
 
   '@egjs/children-differ@1.0.1':
     resolution: {integrity: sha512-DRvyqMf+CPCOzAopQKHtW+X8iN6Hy6SFol+/7zCUiE5y4P/OB8JP8FtU4NxtZwtafvSL4faD5KoQYPj3JHzPFQ==}
@@ -8772,6 +8781,11 @@ snapshots:
   '@dom-utils/selector-path@1.0.3':
     dependencies:
       trim: 0.0.1
+
+  '@ebay/nice-modal-react@1.2.13(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
+    dependencies:
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
 
   '@egjs/children-differ@1.0.1':
     dependencies:

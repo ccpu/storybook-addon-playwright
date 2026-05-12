@@ -12,40 +12,9 @@ import '../../../../manual-mocks/react-useEffect';
 import { ScreenshotView } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenshotView';
 import { shallow } from 'enzyme';
 import React from 'react';
-import {
-  ErrorPanel,
-  Dialog,
-  InputDialog,
-  Loader,
-} from '../../../../../src/components/common';
+import { ErrorPanel, Dialog } from '../../../../../src/components/common';
 import { ScreenShotViewToolbar } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenShotViewToolbar';
 import { useScreenshot } from '../../../../../src/features/screenshot/hooks/use-screenshot';
-import { useSaveScreenshot } from '../../../../../src/features/screenshot/hooks/use-save-screenshot';
-
-vi.mock(
-  '../../../../../src/features/screenshot/hooks/use-save-screenshot',
-  async () => await import('../../hooks/__mocks__/use-save-screenshot'),
-);
-const useSaveScreenshotMock = useSaveScreenshot as Mock;
-const onSaveMock = vi.fn();
-onSaveMock.mockImplementation(() => {
-  return new Promise<void>((resolve) => {
-    resolve();
-  });
-});
-
-const useSaveScreenshotMockData = () => ({
-  getUpdatingScreenshotTitle: vi.fn(),
-  inProgress: false,
-  onSuccessClose: vi.fn(),
-  result: undefined,
-  saveScreenShot: vi.fn(),
-});
-
-vi.mock(
-  '../../../../../src/features/screenshot/hooks/use-generate-screenshot-title',
-  async () => await import('../../hooks/__mocks__/use-generate-screenshot-title'),
-);
 
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot',
@@ -77,12 +46,6 @@ describe('ScreenshotView', () => {
     useScreenshotMock.mockImplementation(() => ({
       ...useScreenshotMockData(),
     }));
-    useSaveScreenshotMock.mockImplementation(() => {
-      return {
-        ...useSaveScreenshotMockData(),
-        saveScreenShot: onSaveMock,
-      } as never;
-    });
   });
 
   it('should render', () => {
@@ -134,73 +97,36 @@ describe('ScreenshotView', () => {
     expect(wrapper.find(Dialog).props().open).toBe(true);
   });
 
-  it('should show screenshot options dialog on save and close', () => {
-    const wrapper = shallow(<ScreenshotView browserType="firefox" height={200} />);
+  it('should call onSave callback when saving', () => {
+    const onSaveMock = vi.fn();
+    const wrapper = shallow(
+      <ScreenshotView browserType="firefox" height={200} onSave={onSaveMock} />,
+    );
     const toolbar = wrapper.find(ScreenShotViewToolbar);
 
     expect(toolbar).toHaveLength(1);
 
     toolbar.props().onSave();
 
-    expect(wrapper.find(InputDialog).props().open).toBeTruthy();
-
-    wrapper.find(InputDialog).props().onClose();
-
-    expect(wrapper.find(InputDialog).props().open).toBeFalsy();
+    expect(onSaveMock).toHaveBeenCalledWith('firefox');
   });
 
-  it('should save screenshot', async () => {
-    const wrapper = shallow(
-      <ScreenshotView browserType="chromium" height={200} onSaveComplete={vi.fn()} />,
-    );
-    wrapper.find(ScreenShotViewToolbar).props().onSave();
-
-    wrapper.find(InputDialog).props().onSave('title');
-
-    await new Promise((resolve) => setImmediate(resolve));
-
-    expect(onSaveMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should save screenshot when parent request it', async () => {
-    const onSaveCompleteMock = vi.fn();
-
-    useSaveScreenshotMock.mockImplementationOnce(() => {
-      return {
-        ...useSaveScreenshotMockData(),
-        inProgress: false,
-        saveScreenShot: onSaveMock,
-      } as never;
-    });
-
+  it('should publish screenshot data to parent', () => {
+    const onScreenshotDataChangeMock = vi.fn();
     const wrapper = shallow(
       <ScreenshotView
         browserType="chromium"
         height={200}
-        savingWithTitle={'title'}
-        onSaveComplete={onSaveCompleteMock}
+        onScreenshotDataChange={onScreenshotDataChangeMock}
       />,
     );
 
-    // should not show InputDialog
-    expect(wrapper.find(InputDialog).props().open).toBeFalsy();
-    // should not show loader
-    expect(wrapper.find(Loader).props().open).toBeFalsy();
-
-    useSaveScreenshotMock.mockImplementationOnce(() => {
-      return {
-        ...useSaveScreenshotMockData(),
-        inProgress: true,
-        saveScreenShot: onSaveMock,
-      } as never;
-    });
-
-    wrapper.setProps({ savingWithTitle: 'title-2' });
-
-    expect(onSaveMock).toHaveBeenCalledTimes(1);
-
-    await new Promise((resolve) => setImmediate(resolve));
-
-    expect(onSaveCompleteMock).toHaveBeenCalledTimes(1);
+    expect(wrapper.exists()).toBe(true);
+    expect(onScreenshotDataChangeMock).toHaveBeenCalledWith(
+      'chromium',
+      expect.objectContaining({
+        base64: 'base64-image',
+      }),
+    );
   });
 });

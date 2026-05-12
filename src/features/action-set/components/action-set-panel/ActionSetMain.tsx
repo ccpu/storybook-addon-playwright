@@ -3,7 +3,7 @@ import { useStorybookState } from '@storybook/manager-api';
 import { nanoid } from 'nanoid';
 import React, { useCallback, useEffect } from 'react';
 import { trpcClient } from '../../../../api/trpc/client';
-import { InputDialog } from '../../../../components/common';
+import { inputModal } from '../../../../components/common';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { useCurrentActions } from '../../hooks/use-current-actions';
 import {
@@ -23,7 +23,6 @@ interface SortableIndexChangeEvent {
 }
 
 const ActionSetMain: React.FC = () => {
-  const [showDescDialog, setShowDescDialog] = React.useState(false);
   const { storyId } = useStorybookState();
 
   const storyData = useCurrentStoryData();
@@ -38,12 +37,8 @@ const ActionSetMain: React.FC = () => {
   const { mutateAsync: changeActionSetIndex } =
     trpcClient.actionSet.changeActionSetIndex.useMutation();
 
-  const toggleDescriptionDialog = useCallback(() => {
-    setShowDescDialog(!showDescDialog);
-  }, [showDescDialog]);
-
   const createNewActionSet = useCallback(
-    (desc) => {
+    (desc: string) => {
       const id = nanoid(12);
       const newActionSet: ActionSet = {
         actions: [],
@@ -59,11 +54,17 @@ const ActionSetMain: React.FC = () => {
         selected: true,
         storyId,
       });
-
-      toggleDescriptionDialog();
     },
-    [storyId, toggleDescriptionDialog],
+    [storyId],
   );
+
+  const toggleDescriptionDialog = useCallback(() => {
+    void inputModal.show({
+      onSave: createNewActionSet,
+      required: true,
+      title: 'Action set title',
+    });
+  }, [createNewActionSet]);
 
   const handleReset = useCallback(() => {
     clearCurrentActionSets();
@@ -128,14 +129,6 @@ const ActionSetMain: React.FC = () => {
       />
 
       <ActionSetList onSortEnd={handleSortEnd} />
-
-      <InputDialog
-        onClose={toggleDescriptionDialog}
-        title="Action set title"
-        open={showDescDialog}
-        onSave={createNewActionSet}
-        required
-      />
     </div>
   );
 };

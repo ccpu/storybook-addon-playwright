@@ -56,7 +56,7 @@ import { ActionSetMain } from '../../../../../src/features/action-set/components
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionToolbar } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetToolbar';
-import { InputDialog } from '../../../../../src/components/common';
+import { inputModal } from '../../../../../src/components/common';
 import { ActionSetList } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetList';
 import { useStorybookState } from '@storybook/manager-api';
 import { useCurrentActions } from '../../../../../src/features/action-set/hooks/use-current-actions';
@@ -75,6 +75,8 @@ vi.mock(
 );
 
 describe('ActionSetMain', () => {
+  const showModalMock = vi.spyOn(inputModal, 'show').mockResolvedValue(undefined);
+
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(useCurrentActions).mockReturnValue({
@@ -95,13 +97,14 @@ describe('ActionSetMain', () => {
     expect(toolbar).toHaveLength(1);
 
     toolbar.props().onAddActionSet();
-    let inputDialog = wrapper.find(InputDialog);
-    expect(inputDialog).toHaveLength(1);
-    expect(inputDialog.props().open).toBeTruthy();
 
-    inputDialog.props().onClose();
-    inputDialog = wrapper.find(InputDialog);
-    expect(inputDialog.props().open).toBeFalsy();
+    expect(showModalMock).toHaveBeenCalledTimes(1);
+    expect(showModalMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        required: true,
+        title: 'Action set title',
+      }),
+    );
   });
 
   it('should handle sort action list', () => {
@@ -120,8 +123,10 @@ describe('ActionSetMain', () => {
     const toolbar = wrapper.find(ActionToolbar);
 
     toolbar.props().onAddActionSet();
-    const inputDialog = wrapper.find(InputDialog);
-    inputDialog.props().onSave('new action set');
+    const showArgs = showModalMock.mock.calls[0][0] as {
+      onSave: (value: string) => void;
+    };
+    showArgs.onSave('new action set');
 
     expect(cancelEditActionSetMock).toHaveBeenCalledWith('story-id');
 

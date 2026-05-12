@@ -1,14 +1,14 @@
 import type { ScreenShotViewPanel } from '../../../../typings';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import React, { useCallback, useState } from 'react';
-import { useMeasure } from 'react-use';
-import { InputDialog, Loader } from '../../../../components/common';
+import React, { useCallback } from 'react';
+import { Loader } from '../../../../components/common';
 import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
 import { useStoryUrl } from '../../../../hooks/use-story-url';
 import { ScreenshotView } from './ScreenshotView';
 import { Toolbar } from './Toolbar';
-import { useGenerateScreenshotTitle } from '../../hooks';
+import { useScreenshotListLayout } from './hooks/use-screenshot-list-layout';
+import { useScreenshotSaveFlow } from './hooks/use-screenshot-save-flow';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -49,10 +49,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GRID_PERCENT = 100;
-const TWO_COLUMNS = 2;
-const LIST_GAP_PX = 2;
-
 interface Props {
   showStorybook?: boolean;
   column?: number;
@@ -62,16 +58,6 @@ interface Props {
 
 const ScreenshotListView: React.FC<Props> = (props) => {
   const { showStorybook, column, onClose, viewPanel } = props;
-
-  const [showTitleDialog, setShowTitleDialog] = useState(false);
-
-  const [saveScreenshot, setSaveScreenshot] = useState<{
-    [browser: string]: string | undefined;
-  }>();
-
-  const [ref, rect] = useMeasure<HTMLDivElement>();
-
-  const { generateTitle, hasGenerator } = useGenerateScreenshotTitle(null);
 
   const {
     activeBrowsers,
@@ -86,61 +72,17 @@ const ScreenshotListView: React.FC<Props> = (props) => {
 
   const storyUrl = useStoryUrl();
 
+  const { itemHeight, ref, width } = useScreenshotListLayout(
+    column,
+    activeBrowsers.length,
+  );
+
+  const { isSaving, requestSaveAll, requestSaveOne, setScreenshotData } =
+    useScreenshotSaveFlow(activeBrowsers);
+
   const handleRefresh = useCallback(() => {
     refreshBrowsers(activeBrowsers);
   }, [activeBrowsers, refreshBrowsers]);
-
-  const toggleTitleDialog = useCallback(() => {
-    setShowTitleDialog(!showTitleDialog);
-  }, [showTitleDialog]);
-
-  const width = `calc(${
-    GRID_PERCENT / (column || activeBrowsers.length)
-  }% - ${LIST_GAP_PX}px)`;
-
-  const itemHeight =
-    column === 1
-      ? rect.height / activeBrowsers.length
-      : column === TWO_COLUMNS
-      ? rect.height / TWO_COLUMNS
-      : rect.height;
-
-  const handleScreenshotsSaveComplete = useCallback(
-    (browser: string) => {
-      if (!saveScreenshot) return;
-      const title = saveScreenshot[browser];
-      delete saveScreenshot[browser];
-      const keys = Object.keys(saveScreenshot);
-
-      if (keys.length) {
-        // to take screenshot in sequent we set title one at the time, it will prevent file overwriting problem
-        saveScreenshot[keys[0]] = title;
-        setSaveScreenshot({ ...saveScreenshot });
-      } else {
-        setSaveScreenshot(undefined);
-        setShowTitleDialog(false);
-      }
-    },
-    [saveScreenshot],
-  );
-
-  const handleSaveScreenshot = useCallback(
-    (title: string) => {
-      const browsers = activeBrowsers.reduce<Record<string, string | undefined>>(
-        (obj, b) => {
-          obj[b] = undefined;
-          return obj;
-        },
-        {},
-      );
-
-      // to take screenshot in sequent we set title one at the time, it will prevent file  overwriting problem
-      browsers[activeBrowsers[0]] = title;
-
-      setSaveScreenshot(browsers);
-    },
-    [activeBrowsers],
-  );
 
   return (
     <div className={clsx(classes.root, { [classes.vertical]: column === 1 })}>
@@ -150,7 +92,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
         toggleBrowser={toggleBrowser}
         onCLose={onClose}
         onRefresh={handleRefresh}
-        onSave={toggleTitleDialog}
+        onSave={requestSaveAll}
         isVertical={column === 1}
       />
       <div className={classes.preview}>
@@ -176,26 +118,18 @@ const ScreenshotListView: React.FC<Props> = (props) => {
                   browserType={browser}
                   height={itemHeight}
                   refresh={refreshingBrowsers.includes(browser)}
+                  onSave={requestSaveOne}
                   onRefreshEnd={() => {
                     clearBrowserRefresh(browser);
                   }}
-                  savingWithTitle={saveScreenshot && saveScreenshot[browser]}
-                  onSaveComplete={handleScreenshotsSaveComplete}
+                  onScreenshotDataChange={setScreenshotData}
                 />
               </div>
             ))}
           </div>
         )}
       </div>
-      <InputDialog
-        open={showTitleDialog}
-        onClose={toggleTitleDialog}
-        onSave={handleSaveScreenshot}
-        title="Screenshots Title"
-        required
-        onGenerateContent={hasGenerator ? generateTitle : undefined}
-      />
-      <Loader open={Boolean(saveScreenshot)} />
+      <Loader open={isSaving} />
     </div>
   );
 };

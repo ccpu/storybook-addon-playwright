@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { ActionSet } from '../../../../../src/typings';
 import { ActionSetEditorIconsProps } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetEditorIcons';
-import { ListItemWrapper, InputDialog } from '../../../../../src/components/common';
+import { inputModal, ListItemWrapper } from '../../../../../src/components/common';
 import { useActionEditor } from '../../../../../src/features/action-set/hooks/use-action-editor';
 
 vi.mock(
@@ -30,6 +30,7 @@ vi.mocked(useActionEditor).mockImplementation(
 
 describe('ActionSetEditor', () => {
   const actionSet: ActionSet = storyFileInfo().stories!['story-id'].actionSets![0];
+  const showModalMock = vi.spyOn(inputModal, 'show').mockResolvedValue(undefined);
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -65,9 +66,11 @@ describe('ActionSetEditor', () => {
       }
     ).props.onEditTitle();
 
-    const inputDialog = wrapper.find(InputDialog);
-    expect(inputDialog.exists()).toBeTruthy();
-    inputDialog.props().onSave('new-desc');
+    expect(showModalMock).toHaveBeenCalledTimes(1);
+    const showArgs = showModalMock.mock.calls[0][0] as {
+      onSave: (value: string) => void;
+    };
+    showArgs.onSave('new-desc');
 
     expect(handleDescriptionChangeMock).toHaveBeenCalledWith('new-desc');
   });

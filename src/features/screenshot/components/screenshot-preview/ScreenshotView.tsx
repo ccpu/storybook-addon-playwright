@@ -1,20 +1,12 @@
-import type { BrowserTypes } from '../../../../typings';
+import type { BrowserContextOptions, BrowserTypes } from '../../../../typings';
 import { capitalize, makeStyles } from '@material-ui/core';
 import { darken, lighten } from '@material-ui/core/styles';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  Dialog,
-  ErrorPanel,
-  ImagePreview,
-  InputDialog,
-  Loader,
-} from '../../../../components/common';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Dialog, ErrorPanel, ImagePreview } from '../../../../components/common';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { useEditScreenshot } from '../../hooks/use-edit-screenshot';
-import { useGenerateScreenshotTitle } from '../../hooks/use-generate-screenshot-title';
-import { useSaveScreenshot } from '../../hooks/use-save-screenshot';
 import { useScreenshot } from '../../hooks/use-screenshot';
 import { ScreenShotViewToolbar } from './ScreenShotViewToolbar';
 import { getBorderColor } from './utils/index';
@@ -95,8 +87,14 @@ export interface PreviewItemProps {
   height: number;
   refresh?: boolean;
   onRefreshEnd?: () => void;
-  savingWithTitle?: string;
-  onSaveComplete?: (browserType: string) => void;
+  onSave?: (browserType: BrowserTypes) => void;
+  onScreenshotDataChange?: (
+    browserType: BrowserTypes,
+    data?: {
+      base64: string;
+      browserOptions: BrowserContextOptions;
+    },
+  ) => void;
 }
 
 const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
@@ -106,13 +104,9 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     height,
     refresh,
     onRefreshEnd,
-    savingWithTitle,
-    onSaveComplete,
+    onSave,
+    onScreenshotDataChange,
   } = props;
-
-  const [showTitleDialog, setShowTitleDialog] = useState(false);
-
-  const isSaving = useRef<boolean>(false);
 
   const { isEditing } = useEditScreenshot();
 
@@ -129,8 +123,6 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     browserOptions,
   );
 
-  const { generateTitle, hasGenerator } = useGenerateScreenshotTitle(browserType);
-
   useEffect(() => {
     if (!refresh || loading) return;
     getSnapshot();
@@ -138,9 +130,6 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
   }, [getSnapshot, loading, onRefreshEnd, refresh]);
 
   const containerHeight = height - 30;
-
-  const handleShowTitleDialog = useCallback(() => setShowTitleDialog(true), []);
-  const handleCloseTitleDialog = useCallback(() => setShowTitleDialog(false), []);
 
   const isValidToSave =
     Boolean(screenshot && screenshot.base64) && browserType !== 'storybook';
@@ -151,40 +140,24 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
 
   const errorMessage = error || (screenshot as { error?: string } | undefined)?.error;
 
-  const { saveScreenShot, inProgress, getUpdatingScreenshotTitle } = useSaveScreenshot({
-    browserType: browserType === 'storybook' ? undefined : browserType,
-    title: savingWithTitle,
-  });
-
-  const handleSave = useCallback(
-    async (title: string) => {
-      if (browserType === 'storybook' || !screenshot?.base64) {
-        return;
-      }
-
-      isSaving.current = true;
-      await saveScreenShot(browserType, title, screenshot.base64, browserOptions);
-      onSaveComplete?.(browserType);
-      handleCloseTitleDialog();
-      isSaving.current = false;
-    },
-    [
-      browserOptions,
-      browserType,
-      handleCloseTitleDialog,
-      onSaveComplete,
-      saveScreenShot,
-      screenshot,
-    ],
-  );
+  const handleSaveRequest = useCallback(() => {
+    if (browserType === 'storybook' || !screenshot?.base64) return;
+    onSave?.(browserType);
+  }, [browserType, onSave, screenshot]);
 
   useEffect(() => {
-    if (savingWithTitle) {
-      if (!isSaving.current && !inProgress) {
-        handleSave(savingWithTitle);
-      }
+    if (!onScreenshotDataChange || browserType === 'storybook') return;
+
+    if (!screenshot?.base64) {
+      onScreenshotDataChange(browserType, undefined);
+      return;
     }
-  }, [browserType, handleSave, inProgress, savingWithTitle]);
+
+    onScreenshotDataChange(browserType, {
+      base64: screenshot.base64,
+      browserOptions,
+    });
+  }, [browserOptions, browserType, onScreenshotDataChange, screenshot]);
 
   return (
     <div
@@ -194,7 +167,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
     >
       <ScreenShotViewToolbar
         browserType={browserType}
-        onSave={handleShowTitleDialog}
+        onSave={handleSaveRequest}
         loading={loading}
         onRefresh={getSnapshot}
         showSaveButton={isValidToSave}
@@ -225,30 +198,6 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
           ></iframe>
         )}
       </div>
-
-      {isValidToSave && (
-        <>
-          <InputDialog
-            open={showTitleDialog}
-            onClose={handleCloseTitleDialog}
-            onSave={handleSave}
-            title="Screenshot Title"
-            value={getUpdatingScreenshotTitle()}
-            required
-            onGenerateContent={hasGenerator ? generateTitle : undefined}
-          />
-
-          <Loader open={inProgress && !savingWithTitle} />
-
-          {/* <ImageDiffPreviewDialog
-            imageDiffResult={result || { pass: false }}
-            onClose={onSuccessClose}
-            open={true}
-            activeTab="imageDiff"
-            title={getUpdatingScreenshotTitle() || 'Image Diff Preview'}
-          /> */}
-        </>
-      )}
 
       <Dialog
         open={openFullScreen}

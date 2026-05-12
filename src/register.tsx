@@ -1,6 +1,7 @@
 import { AddonPanel } from '@storybook/components';
 import { addons, types } from '@storybook/manager-api';
 import React from 'react';
+import { registerInputDialogModal } from './components/common';
 import { ActionPanel, ScreenshotPanel } from './components/panel';
 import { Preview } from './components/preview';
 import { Tool } from './components/tool-bar';
@@ -18,6 +19,8 @@ addons.add(PREVIEW_ID, {
   render: Preview as any,
   type: types.PREVIEW,
 });
+
+registerInputDialogModal();
 
 addons.register(ADDON_ID, () => {
   try {

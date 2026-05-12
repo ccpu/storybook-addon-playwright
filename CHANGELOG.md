@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.37
+
+### Minor Changes
+
+- integrate `@ebay/nice-modal-react` for dialog management
+- enhance screenshot generation functionality
+
 ## 5.0.0-rc.36
 
 ### Minor Changes

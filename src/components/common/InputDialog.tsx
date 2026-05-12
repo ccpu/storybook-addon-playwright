@@ -29,7 +29,8 @@ const useStyles = makeStyles(
 export { useStyles as useInputDialogStyles };
 
 export interface InputDialogProps
-  extends StyleProps,
+  extends
+    StyleProps,
     Omit<ActionDialogDialogProps, 'onNegativeAction' | 'onPositiveAction' | 'onClose'> {
   onSave: (content: string) => void;
   onCancel?: () => void;

@@ -7,8 +7,7 @@ import { useScreenshotDiffTest } from '../../hooks';
 import { ScreenshotInfo } from './ScreenshotInfo';
 
 export interface ScreenshotPreviewDialogProps
-  extends DialogProps,
-    Partial<ImageDiffPreviewProps> {
+  extends DialogProps, Partial<ImageDiffPreviewProps> {
   screenShotData: ScreenshotData;
   storyData: StoryData;
 }

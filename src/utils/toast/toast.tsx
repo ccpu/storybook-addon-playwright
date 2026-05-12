@@ -7,11 +7,10 @@ import AlertToast from './AlertToast';
 
 export const DEFAULT_ALERT_DURATION = 10_000;
 
-interface ToastOwnProps
-  extends Pick<
-    ToastT,
-    'dismissible' | 'duration' | 'position' | 'onAutoClose' | 'onDismiss' | 'closeButton'
-  > {
+interface ToastOwnProps extends Pick<
+  ToastT,
+  'dismissible' | 'duration' | 'position' | 'onAutoClose' | 'onDismiss' | 'closeButton'
+> {
   id?: string;
 }
 

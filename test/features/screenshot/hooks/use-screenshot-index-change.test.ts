@@ -26,7 +26,7 @@ describe('useScreenshotIndexChange', () => {
     vi.clearAllMocks();
   });
   it('should dispatch index', async () => {
-    server.use(trpcMsw.screenshot.changeScreenshotIndex.mutation(() => ({} as any)));
+    server.use(trpcMsw.screenshot.changeScreenshotIndex.mutation(() => ({}) as any));
     const { result } = renderHook(() => useScreenshotIndexChange());
 
     await act(async () => {

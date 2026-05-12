@@ -2,7 +2,36 @@ import enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import '@testing-library/jest-dom';
+import { RequestHandler } from 'msw';
 import { server } from './test/msw-server';
+
+// MSW v2 expects request.signal to exist when a handler runs, but some request
+// sources in our tests may omit it after dependency updates.
+const originalRequestHandlerRun = Object.getOwnPropertyDescriptor(
+  RequestHandler.prototype,
+  'run',
+)?.value as typeof RequestHandler.prototype.run | undefined;
+
+if (!originalRequestHandlerRun) {
+  throw new Error('MSW RequestHandler.run is unavailable in test setup');
+}
+
+RequestHandler.prototype.run = function patchedRequestHandlerRun(args) {
+  const request = (args as { request?: { signal?: AbortSignal } }).request;
+
+  if (request && !request.signal) {
+    try {
+      Object.defineProperty(request, 'signal', {
+        configurable: true,
+        value: new AbortController().signal,
+      });
+    } catch {
+      // Best effort only: if request is not extensible, keep original behavior.
+    }
+  }
+
+  return originalRequestHandlerRun.call(this, args as any);
+};
 
 // ---------------------------------------------------------------------------
 // MSW server lifecycle — intercepts tRPC HTTP calls for hook tests that use
@@ -18,14 +47,13 @@ afterAll(() => server.close());
 // Legacy enzyme shallow tests that can't mount providers keep local in-file
 // vi.mock('./src/api/trpc/client', ...) stubs.
 
-vi.mock('@testing-library/react-hooks', async (importOriginal) => {
-  const actual = (await importOriginal()) as any;
+vi.mock('@testing-library/react-hooks', async () => {
+  const actual = (await import('@testing-library/react-hooks/dom')) as any;
   const React = await import('react');
   const { QueryClient, QueryClientProvider } = await import('@tanstack/react-query');
   const { httpLink } = await import('@trpc/client');
   // Real tRPC client — HTTP requests are intercepted by MSW in hook tests.
   const { trpcClient } = await import('./src/api');
-  const { waitFor } = await import('@testing-library/react');
 
   const renderHook = (callback, options = {}) => {
     const queryClient = new QueryClient({
@@ -71,7 +99,6 @@ vi.mock('@testing-library/react-hooks', async (importOriginal) => {
   return {
     ...actual,
     renderHook,
-    waitFor: (actual as any).waitFor ?? waitFor,
   };
 });
 
@@ -93,7 +120,9 @@ expect.extend({ toMatchImageSnapshot });
 // (e.g. fetch.mockResponseOnce) keep working. The jest global shim in
 // setupTests.vitest-globals.ts ensures jest.fn() is available when the module
 // initialises. vi.stubGlobal is kept as fallback comment only.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('jest-fetch-mock').enableMocks();
+const fetchMock = require('jest-fetch-mock');
+fetchMock.enableMocks();
+// Keep the native fetch implementation active so MSW can intercept Request objects.
+fetchMock.dontMock();
 
 enzyme.configure({ adapter: new Adapter() });

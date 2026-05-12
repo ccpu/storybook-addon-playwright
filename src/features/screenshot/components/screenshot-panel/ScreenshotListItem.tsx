@@ -45,8 +45,10 @@ const useStyles = makeStyles(
   { name: 'ScreenshotListItemMenu' },
 );
 
-export interface ScreenshotListItemProps
-  extends Omit<ScreenshotListItemMenuProps, 'onDelete'> {
+export interface ScreenshotListItemProps extends Omit<
+  ScreenshotListItemMenuProps,
+  'onDelete'
+> {
   onClick?: (item: ScreenshotData) => void;
   selected?: boolean;
   forceShowMenu?: boolean;

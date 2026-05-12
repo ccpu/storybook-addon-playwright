@@ -26,7 +26,7 @@ describe('useScreenshotUpdate', () => {
     vi.clearAllMocks();
   });
   it('should dispatch new result', async () => {
-    server.use(trpcMsw.screenshot.updateScreenshot.mutation(() => ({} as any)));
+    server.use(trpcMsw.screenshot.updateScreenshot.mutation(() => ({}) as any));
     const { result } = renderHook(() => useScreenshotUpdate());
 
     await act(async () => {

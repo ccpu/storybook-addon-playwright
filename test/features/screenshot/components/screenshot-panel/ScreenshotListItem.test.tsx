@@ -61,9 +61,8 @@ vi.mock(
 vi.mock(
   '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test',
   async () => {
-    const { useScreenshotDiffTest } = await import(
-      '../../hooks/__mocks__/use-screenshot-diff-test'
-    );
+    const { useScreenshotDiffTest } =
+      await import('../../hooks/__mocks__/use-screenshot-diff-test');
     return { useScreenshotDiffTest: useScreenshotDiffTest };
   },
 );

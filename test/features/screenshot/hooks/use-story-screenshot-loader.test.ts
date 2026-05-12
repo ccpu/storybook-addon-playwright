@@ -23,7 +23,7 @@ describe('useStoryScreenshotLoader', () => {
             browserType: 'chromium',
             id: 'screenshot-id',
             title: 'title',
-          } as any),
+          }) as any,
       ),
     );
 

@@ -7,5 +7,5 @@ useActionSchemaLoader.mockImplementation(
     ({
       loaded: false,
       loading: false,
-    } as ReturnType<typeof orgUseActionSchemaLoader>),
+    }) as ReturnType<typeof orgUseActionSchemaLoader>,
 );

@@ -24,9 +24,8 @@ vi.mocked(testStoryScreenShotsMock).mockImplementation(() => {
 vi.mock(
   '../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
   async () => {
-    const { useGlobalImageDiffResults } = await import(
-      './__mocks__/use-global-imageDiff-results'
-    );
+    const { useGlobalImageDiffResults } =
+      await import('./__mocks__/use-global-imageDiff-results');
     return {
       useScreenshotDiffTestByType: useGlobalImageDiffResults,
     };

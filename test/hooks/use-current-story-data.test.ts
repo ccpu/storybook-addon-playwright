@@ -21,7 +21,7 @@ describe('useCurrentStoryData', () => {
           getCurrentVersion: () => ({
             version: '6.0.0',
           }),
-        } as never),
+        }) as never,
     );
     const { result } = renderHook(() => useCurrentStoryData());
     expect(result.current).toBeUndefined();

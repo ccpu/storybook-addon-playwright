@@ -1,7 +1,6 @@
 vi.mock('../../../src/api/trpc/client', async () => {
-  const { fixScreenshotFileName } = await import(
-    '../../api/trpc/clients/__mocks__/fix-title.client'
-  );
+  const { fixScreenshotFileName } =
+    await import('../../api/trpc/clients/__mocks__/fix-title.client');
   return {
     createTrpcHttpClient: () => ({}),
     trpcClient: {

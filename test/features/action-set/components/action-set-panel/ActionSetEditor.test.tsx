@@ -25,7 +25,7 @@ vi.mocked(useActionEditor).mockImplementation(
     ({
       handleAddAction: handleAddActionMock,
       handleDescriptionChange: handleDescriptionChangeMock,
-    } as unknown as ReturnType<typeof useActionEditor>),
+    }) as unknown as ReturnType<typeof useActionEditor>,
 );
 
 describe('ActionSetEditor', () => {
@@ -80,7 +80,7 @@ describe('ActionSetEditor', () => {
       () =>
         ({
           validationResult: [{ id: 'action-id', name: 'action-name', required: ['foo'] }],
-        } as unknown as ReturnType<typeof useActionEditor>),
+        }) as unknown as ReturnType<typeof useActionEditor>,
     );
 
     const wrapper = shallow(<ActionSetEditor actionSet={actionSet} />);

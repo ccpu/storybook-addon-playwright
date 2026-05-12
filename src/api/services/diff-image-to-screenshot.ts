@@ -51,7 +51,11 @@ export async function diffImageToScreenshot(
       }) as ImageDiffResult;
 
       if (!result.pass) {
-        fs.rmdirSync(diffDir, { recursive: true });
+        (
+          fs as unknown as {
+            rmdirSync: (path: string, options: { recursive: boolean }) => void;
+          }
+        ).rmdirSync(diffDir, { recursive: true });
       }
 
       if (result.added && result.pass === false) {

@@ -62,10 +62,13 @@ export function migrateToV1(data: V0, version: string) {
     if (storyData.screenshots) {
       newStoryData[storyId].screenshots = storyData.screenshots.map((screenshot) => {
         const args = screenshot.props
-          ? screenshot.props.reduce((obj, prop) => {
-              obj[prop.name] = prop.value;
-              return obj;
-            }, {} as Record<string, unknown>)
+          ? screenshot.props.reduce(
+              (obj, prop) => {
+                obj[prop.name] = prop.value;
+                return obj;
+              },
+              {} as Record<string, unknown>,
+            )
           : undefined;
 
         const screenshotWithOptionalFields = screenshot as ScreenshotDataV0 & {

@@ -4,9 +4,8 @@ import { FavouriteActionSet } from '../../../../../src/typings';
 import React from 'react';
 
 vi.mock('../../../../../src/api/trpc/client', async () => {
-  const { addFavouriteAction } = await import(
-    '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
-  );
+  const { addFavouriteAction } =
+    await import('../../../../api/trpc/clients/__mocks__/favourite-actions.client');
   return {
     createTrpcHttpClient: () => ({}),
     trpcClient: {

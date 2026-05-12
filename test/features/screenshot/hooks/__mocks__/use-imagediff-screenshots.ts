@@ -6,6 +6,6 @@ useImageDiffScreenshots.mockImplementation(
     ({
       loading: false,
       storyData: undefined,
-    } as ReturnType<typeof orgUseImageDiffScreenshots>),
+    }) as ReturnType<typeof orgUseImageDiffScreenshots>,
 );
 export { useImageDiffScreenshots };

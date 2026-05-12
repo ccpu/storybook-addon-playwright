@@ -178,7 +178,7 @@ describe('Clipper', () => {
             x: 0,
             y: 0,
           }),
-        } as HTMLIFrameElement),
+        }) as HTMLIFrameElement,
     );
 
     const wrapper = mount(<Clipper />);
@@ -276,7 +276,7 @@ describe('Clipper', () => {
             x: 0,
             y: 0,
           }),
-        } as unknown as HTMLIFrameElement),
+        }) as unknown as HTMLIFrameElement,
     );
 
     const wrapper = mount(<Clipper />);
@@ -348,7 +348,7 @@ describe('Clipper', () => {
             x: 0,
             y: 0,
           }),
-        } as HTMLIFrameElement),
+        }) as HTMLIFrameElement,
     );
 
     const wrapper = mount(<Clipper />);
@@ -430,7 +430,7 @@ describe('Clipper', () => {
             x: 0,
             y: 0,
           }),
-        } as HTMLIFrameElement),
+        }) as HTMLIFrameElement,
     );
 
     const wrapper = mount(<Clipper />);
@@ -547,7 +547,7 @@ describe('Clipper', () => {
             x: 0,
             y: 0,
           }),
-        } as HTMLIFrameElement),
+        }) as HTMLIFrameElement,
     );
 
     const wrapper = mount(<Clipper />);

@@ -15,7 +15,8 @@ export interface CompareScreenshotParams extends ScreenshotInfo, RequestData {
 }
 
 export interface CompareScreenshotReturnType
-  extends Required<Pick<ImageDiffResult, 'pass'>>,
+  extends
+    Required<Pick<ImageDiffResult, 'pass'>>,
     Omit<ImageDiffResult, 'pass' | 'added'> {
   diffImageString?: string;
 }

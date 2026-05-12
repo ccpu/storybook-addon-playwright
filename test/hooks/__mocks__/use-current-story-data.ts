@@ -8,7 +8,7 @@ useCurrentStoryData.mockImplementation(
     ({
       ...getStoryData(),
       fileName: 'story.stories.tsx',
-    } as unknown as ReturnType<typeof orgUseCurrentStoryData>),
+    }) as unknown as ReturnType<typeof orgUseCurrentStoryData>,
 );
 
 export { useCurrentStoryData };

@@ -11,9 +11,8 @@ import { useStoryActionSetsLoader } from '../../../../../src/features/action-set
 import { useCurrentStoryActionSets } from '../../../../../src/features/action-set/hooks/use-current-story-action-sets';
 
 vi.mock('../../../../../src/api/trpc/client', async () => {
-  const { deleteActionSet, saveActionSet } = await import(
-    '../../../../api/trpc/clients/__mocks__/action-set.client'
-  );
+  const { deleteActionSet, saveActionSet } =
+    await import('../../../../api/trpc/clients/__mocks__/action-set.client');
 
   return {
     createTrpcHttpClient: () => ({}),

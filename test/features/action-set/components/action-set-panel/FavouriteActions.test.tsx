@@ -7,12 +7,10 @@ import { ListItem, WithTooltip } from '@storybook/components';
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 
 vi.mock('../../../../../src/api/trpc/client', async () => {
-  const { getFavouriteActions, deleteFavouriteAction } = await import(
-    '../../../../api/trpc/clients/__mocks__/favourite-actions.client'
-  );
-  const { saveActionSet } = await import(
-    '../../../../api/trpc/clients/__mocks__/action-set.client'
-  );
+  const { getFavouriteActions, deleteFavouriteAction } =
+    await import('../../../../api/trpc/clients/__mocks__/favourite-actions.client');
+  const { saveActionSet } =
+    await import('../../../../api/trpc/clients/__mocks__/action-set.client');
 
   return {
     createTrpcHttpClient: () => ({}),

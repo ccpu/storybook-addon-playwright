@@ -51,5 +51,5 @@ getPreviewIframe.mockImplementation(
         __playwright_addon_hot_reload_time__: 1,
         __playwright_addon_required_context__: [requiredFunc],
       },
-    } as unknown as HTMLIFrameElement),
+    }) as unknown as HTMLIFrameElement,
 );

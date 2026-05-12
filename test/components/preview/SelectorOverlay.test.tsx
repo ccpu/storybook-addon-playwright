@@ -7,7 +7,7 @@
 // that was previously in a separate vi.mock('react', ...) call (merged here).
 // Changed: events must be declared via vi.hoisted() so it is available when the
 // vi.mock factory (also hoisted) captures it via closure before module body runs.
-const events = vi.hoisted(() => ({} as Record<string, (e?: any) => void>));
+const events = vi.hoisted(() => ({}) as Record<string, (e?: any) => void>);
 vi.mock('react', async (importOriginal) => {
   const actual = await importOriginal<any>();
   const hook = (fn: any, deps?: any) => (globalThis as any).__useEffectSpy?.(fn, deps);

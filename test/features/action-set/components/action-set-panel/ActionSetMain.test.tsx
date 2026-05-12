@@ -3,9 +3,8 @@
 // babel-jest which uses live property reads). The mock routes useEffect calls
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('../../../../../src/api/trpc/client', async () => {
-  const { changeActionSetIndex, deleteActionSet } = await import(
-    '../../../../api/trpc/clients/__mocks__/action-set.client'
-  );
+  const { changeActionSetIndex, deleteActionSet } =
+    await import('../../../../api/trpc/clients/__mocks__/action-set.client');
   return {
     createTrpcHttpClient: () => ({}),
     trpcClient: {

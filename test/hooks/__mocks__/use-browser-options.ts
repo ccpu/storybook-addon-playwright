@@ -8,5 +8,5 @@ export const useBrowserOptions = vi.fn<typeof orgUseBrowserOptions>().mockImplem
       hasOption: false,
       setBrowserDeviceOptions: vi.fn(),
       setBrowserOptions: vi.fn(),
-    } as ReturnType<typeof orgUseBrowserOptions>),
+    }) as ReturnType<typeof orgUseBrowserOptions>,
 );

@@ -9,5 +9,5 @@ useAnchorEl.mockImplementation(
       anchorElRef: { current: null },
       clearAnchorEl: vi.fn(),
       setAnchorEl: vi.fn(),
-    } as unknown as ReturnType<typeof orgUseAnchorEl>),
+    }) as unknown as ReturnType<typeof orgUseAnchorEl>,
 );

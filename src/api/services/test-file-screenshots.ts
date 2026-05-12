@@ -41,8 +41,8 @@ export async function testFileScreenshots(
               requestType: options.requestType
                 ? options.requestType
                 : storyId
-                ? 'story'
-                : 'file',
+                  ? 'story'
+                  : 'file',
               storyId: story.storyId,
             }),
           ),

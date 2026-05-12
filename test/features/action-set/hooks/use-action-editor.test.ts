@@ -37,7 +37,7 @@ describe('useActionSetEditor', () => {
     vi.clearAllMocks();
     vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
     // Default handler: saveActionSet succeeds
-    server.use(trpcMsw.actionSet.saveActionSet.mutation(() => ({} as any)));
+    server.use(trpcMsw.actionSet.saveActionSet.mutation(() => ({}) as any));
   });
 
   const actionSet: ActionSet = {
@@ -129,7 +129,7 @@ describe('useActionSetEditor', () => {
       () =>
         ({
           orgEditingActionSet,
-        } as unknown as ActionSetState),
+        }) as unknown as ActionSetState,
     );
 
     const { result } = renderHook(() => useActionEditor(actionSet));

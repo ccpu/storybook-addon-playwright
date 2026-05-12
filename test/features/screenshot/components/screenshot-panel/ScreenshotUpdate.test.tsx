@@ -4,9 +4,8 @@
 // through globalThis.__useEffectSpy, which react-useEffect.ts sets up per test.
 vi.mock('../../../../../src/api/trpc/client', async () => {
   const React = await import('react');
-  const { testScreenshot, updateScreenshot } = await import(
-    '../../../../api/trpc/clients/__mocks__/screenshot.client'
-  );
+  const { testScreenshot, updateScreenshot } =
+    await import('../../../../api/trpc/clients/__mocks__/screenshot.client');
 
   const useMutationFactory =
     (run: (input: unknown) => unknown) =>

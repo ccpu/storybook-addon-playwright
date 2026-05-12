@@ -52,7 +52,7 @@ describe('useSaveScreenshot', () => {
 
   it('should add', async () => {
     server.use(
-      trpcMsw.screenshot.saveScreenshot.mutation(() => ({ added: true } as any)),
+      trpcMsw.screenshot.saveScreenshot.mutation(() => ({ added: true }) as any),
     );
 
     const { result } = renderHook(() => useSaveScreenshot());
@@ -108,7 +108,7 @@ describe('useSaveScreenshot', () => {
 
   it('should clear result', async () => {
     server.use(
-      trpcMsw.screenshot.saveScreenshot.mutation(() => ({ added: true } as any)),
+      trpcMsw.screenshot.saveScreenshot.mutation(() => ({ added: true }) as any),
     );
 
     const { result } = renderHook(() => useSaveScreenshot());

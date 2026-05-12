@@ -9,9 +9,7 @@ interface StyleProps {
 }
 
 export interface ActionDialogDialogProps
-  extends StyleProps,
-    DialogProps,
-    ActionPanelProps {
+  extends StyleProps, DialogProps, ActionPanelProps {
   open: boolean;
   onClose: () => void;
   value?: string;

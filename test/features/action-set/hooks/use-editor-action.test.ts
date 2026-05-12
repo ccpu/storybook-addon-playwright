@@ -23,7 +23,7 @@ describe('useAction', () => {
         ({
           orgEditingActionSet,
           stories: data.stories,
-        } as unknown as ActionSetState),
+        }) as unknown as ActionSetState,
     );
   });
 
@@ -55,7 +55,7 @@ describe('useAction', () => {
         ({
           orgEditingActionSet,
           stories: data.stories,
-        } as unknown as ActionSetState),
+        }) as unknown as ActionSetState,
     );
 
     const { result } = renderHook(() => useEditorAction('story-id', 'action-id'));

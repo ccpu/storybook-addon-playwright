@@ -7,7 +7,7 @@ import { StoryData } from '../../../../src/schema';
 
 describe('useCopyActionSet', () => {
   it('should copy', async () => {
-    server.use(trpcMsw.actionSet.saveActionSet.mutation(() => ({} as any)));
+    server.use(trpcMsw.actionSet.saveActionSet.mutation(() => ({}) as any));
     const { result } = renderHook(() =>
       useCopyActionSet({
         filePath: './test.stories.tsx',

@@ -38,16 +38,13 @@ import { toast } from '../../../src/utils/toast';
 vi.mock(
   '../../../src/features/screenshot/hooks/use-global-imageDiff-results',
   async () =>
-    await import(
-      '../../features/screenshot/hooks/__mocks__/use-global-imageDiff-results'
-    ),
+    await import('../../features/screenshot/hooks/__mocks__/use-global-imageDiff-results'),
 );
 vi.mock(
   '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
   async () => {
-    const { useScreenshotDiffTestByType } = await import(
-      '../../features/screenshot/hooks/__mocks__/use-screenshot-diff-test-by-type'
-    );
+    const { useScreenshotDiffTestByType } =
+      await import('../../features/screenshot/hooks/__mocks__/use-screenshot-diff-test-by-type');
     return {
       useScreenshotDiffTestByType,
     };

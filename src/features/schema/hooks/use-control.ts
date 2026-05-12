@@ -15,10 +15,13 @@ interface ControlKnob {
 function convertOptions(options?: string[]) {
   if (!options) return undefined;
 
-  return options.reduce((obj, key) => {
-    obj[key] = key;
-    return obj;
-  }, {} as Record<string, string>);
+  return options.reduce(
+    (obj, key) => {
+      obj[key] = key;
+      return obj;
+    },
+    {} as Record<string, string>,
+  );
 }
 
 function getDefault(type: ControlTypes, defVal: unknown): unknown {
@@ -49,8 +52,8 @@ const SimpleControl: React.FC<{
       knob.type === 'boolean'
         ? e.currentTarget.checked
         : knob.type === 'number'
-        ? Number(e.currentTarget.value)
-        : e.currentTarget.value;
+          ? Number(e.currentTarget.value)
+          : e.currentTarget.value;
     onChange(value);
   };
 

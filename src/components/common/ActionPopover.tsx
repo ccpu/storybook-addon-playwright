@@ -5,8 +5,7 @@ import React, { memo } from 'react';
 import { ActionPanel } from './ActionPanel';
 
 export interface ActionPopoverProps
-  extends ActionPanelProps,
-    Omit<PopoverProps, 'open' | 'onClose'> {
+  extends ActionPanelProps, Omit<PopoverProps, 'open' | 'onClose'> {
   onClose?: PopoverProps['onClose'];
 }
 

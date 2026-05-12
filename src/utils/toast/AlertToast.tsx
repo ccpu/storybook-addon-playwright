@@ -82,12 +82,10 @@ const AlertToast: React.FC<AlertToastProps> = ({
 }) => {
   const isLightMode = document.body.classList.contains('light');
 
-  const backgroundColor = isLightMode
-    ? 'rgba(32, 34, 37, 0.98)'
-    : 'rgba(238, 243, 246, 0.97)';
+  const backgroundColor = isLightMode ? 'rgba(32, 34, 37, 0.98)' : 'rgb(238, 243, 246)';
   const borderColor = isLightMode
     ? 'rgba(255, 255, 255, 0.08)'
-    : 'rgba(255, 255, 255, 0.1)';
+    : 'rgba(206, 197, 197, 0.315)';
   const textColor = isLightMode ? 'rgba(255, 255, 255, 0.88)' : 'rgba(34, 36, 37, 0.75)';
   const titleColor = isLightMode ? 'rgba(255, 255, 255, 0.96)' : 'rgb(115, 130, 140)';
   const closeButtonColor = isLightMode

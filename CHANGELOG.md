@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.1.0
+
+### Minor Changes
+
+- enhance screenshot generation functionality
+
 ## 5.0.0
 
 ### Major Changes

@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.0.0-rc.35
+
+### Minor Changes
+
+- update Storybook port to 1090 and enhance Zustand store integration
+
 ## 5.0.0-rc.34
 
 ### Minor Changes

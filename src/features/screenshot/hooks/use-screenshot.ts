@@ -84,7 +84,6 @@ export function useScreenshot(
       browserOptions,
       currentActions,
       id: state.storyId,
-      renderCount,
       screenshotOptions,
     });
 

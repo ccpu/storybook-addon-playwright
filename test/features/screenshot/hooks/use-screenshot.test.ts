@@ -50,4 +50,38 @@ describe('useScreenshot', () => {
     expect(result.current.loading).toBe(false);
     expect(result.current.screenshot).toStrictEqual(undefined);
   });
+
+  it('should not reload on repeated STORY_RENDERED events when inputs are unchanged', async () => {
+    const takeScreenshotMock = vi.fn();
+
+    server.use(
+      trpcMsw.screenshot.takeScreenshot.mutation(() => {
+        takeScreenshotMock();
+        return {
+          base64: 'base64',
+          browserName: 'chromium' as const,
+          buffer: { data: [], type: 'Buffer' as const },
+        };
+      }),
+    );
+
+    const { result, waitForNextUpdate } = renderHook(() => useScreenshot('chromium'));
+
+    act(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (addons as any).__setEvent(STORY_RENDERED);
+    });
+
+    await waitForNextUpdate();
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(takeScreenshotMock).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (addons as any).__setEvent(STORY_RENDERED);
+    });
+
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(takeScreenshotMock).toHaveBeenCalledTimes(1);
+  });
 });

@@ -15,7 +15,7 @@ An addon to visually test stories across multiple browsers within the Storybook 
 | Package    | Version    |
 | ---------- | ---------- |
 | storybook  | ~8         |
-| playwright | ~1.17      |
+| playwright | ~1.59      |
 | Node.js    | >= 24.15.0 |
 
 ## Motivation

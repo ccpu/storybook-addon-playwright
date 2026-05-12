@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.1.1
+
+### Patch Changes
+
+- remove obsolete middleware from routes
+
 ## 5.1.0
 
 ### Minor Changes

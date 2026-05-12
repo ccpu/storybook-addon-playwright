@@ -1,5 +1,6 @@
 import type { ScreenshotInfo } from '../../../typings';
-import { getStoryPlaywrightFileInfo, loadStoryData } from '../../../api/server/utils';
+import { getStoryPlaywrightFileInfo } from '../../../api/server/utils/get-story-playwright-file-info';
+import { loadStoryData } from '../../../api/server/utils/load-story-data';
 import { getStoryData } from './get-story-data';
 import { normalizeScreenshotActionIds } from './normalize-screenshot-action-ids';
 import { setStoryScreenshotOptions } from './set-story-screenshot-options';

@@ -2,9 +2,10 @@ import type { TestStoryScreenshotsInput } from '../../schema';
 
 import type { ImageDiffResult } from '../typings/image-diff';
 import { getConfigs } from '../server/configs';
-import { getStoryPlaywrightFileInfo, loadStoryData } from '../server/utils';
+import { getStoryPlaywrightFileInfo } from '../server/utils/get-story-playwright-file-info';
+import { loadStoryData } from '../server/utils/load-story-data';
 import { testScreenshotService } from './test-screenshot-service';
-import { getStoryData } from './utils';
+import { getStoryData } from './utils/get-story-data';
 
 export async function testStoryScreenshots(
   data: TestStoryScreenshotsInput,

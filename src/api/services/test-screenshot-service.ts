@@ -8,7 +8,7 @@ import { getConfigs } from '../server/configs';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
 import { makeScreenshot } from './make-screenshot';
-import { getScreenshotData } from './utils';
+import { getScreenshotData } from './utils/get-screenshot-data';
 
 export async function testScreenshotService(
   data: TestScreenshotInput,

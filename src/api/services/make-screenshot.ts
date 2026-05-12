@@ -15,8 +15,11 @@ import sharp from 'sharp';
 import { extendPage } from '../../page-extra';
 import { constructStoryUrl, getScreenshotArgs } from '../../utils';
 import { getConfigs } from '../server/configs';
-import { executeAction, installMouseHelper } from '../server/utils';
-import { isInteractiveAction, releaseModifierKey, shouldTakeScreenshot } from './utils';
+import { executeAction } from '../server/utils/execute-action';
+import { installMouseHelper } from '../server/utils/install-mouse-helper';
+import { isInteractiveAction } from './utils/is-interactive-action';
+import { releaseModifierKey } from './utils/release-modifier-Key';
+import { shouldTakeScreenshot } from './utils/should-take-screenshot';
 
 interface ImageInfo {
   buffer: Buffer;

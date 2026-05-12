@@ -1,7 +1,7 @@
 import type { ImageDiffResult } from './api/typings';
 import type { RequestData } from './typings/request';
 import { nanoid } from 'nanoid';
-import { testFileScreenshots } from './api/services';
+import { testFileScreenshots } from './api/services/test-file-screenshots';
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 
 interface RunImageDiffOptions extends RequestData {

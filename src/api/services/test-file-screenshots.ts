@@ -2,7 +2,7 @@ import type { RequestData } from '../../typings/request';
 import type { ImageDiffResult } from '../typings';
 import pLimit from 'p-limit';
 import { getConfigs } from '../server/configs';
-import { getStoryPlaywrightData } from '../server/utils';
+import { getStoryPlaywrightData } from '../server/utils/get-story-playwright-data';
 import { testStoryScreenshots } from './test-story-screenshots';
 
 export interface TestFileScreenshots extends RequestData {

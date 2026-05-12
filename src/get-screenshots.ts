@@ -1,9 +1,9 @@
 import type { ScreenshotPathInfo } from './api/server/utils/get-screenshot-paths';
 import type { RequestData } from './typings/request';
 import fs from 'node:fs';
-import { getStoryPlaywrightData } from './api/server/utils';
+import { getStoryPlaywrightData } from './api/server/utils/get-story-playwright-data';
 import { getScreenshotPaths } from './api/server/utils/get-screenshot-paths';
-import { makeScreenshot } from './api/services';
+import { makeScreenshot } from './api/services/make-screenshot';
 import { setStoryScreenshotOptions } from './api/services/utils/set-story-screenshot-options';
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 

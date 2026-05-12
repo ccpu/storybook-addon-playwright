@@ -6,22 +6,6 @@
         {
           "actions": [
             {
-              "name": "touchEnd",
-              "args": {
-                "selector": "html>body>#root>div",
-                "page": {
-                  "x": 67,
-                  "y": 120
-                }
-              }
-            }
-          ],
-          "id": "2DgXBLw6Dru_",
-          "title": "touch end"
-        },
-        {
-          "actions": [
-            {
               "name": "touchFromTo",
               "args": {
                 "selector": "html>body>#root>div",
@@ -121,15 +105,6 @@
         {
           "actions": [
             {
-              "name": "takeScreenshotAll"
-            }
-          ],
-          "id": "W0_j42vwskVx",
-          "title": "Take screenshot of all actions"
-        },
-        {
-          "actions": [
-            {
               "name": "dragDropSelector",
               "args": {
                 "selector": "html>body>#root>div",
@@ -161,6 +136,31 @@
           ],
           "id": "h3i7z-6c1v3g",
           "title": "Screenshot options"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshotAll"
+            }
+          ],
+          "id": "W0_j42vwskVx",
+          "title": "Take screenshot of all actions"
+        },
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "html>body>#storybook-root>div",
+                "page": {
+                  "x": 67,
+                  "y": 120
+                }
+              },
+              "name": "touchEnd"
+            }
+          ],
+          "id": "2DgXBLw6Dru_",
+          "title": "touch end"
         }
       ],
       "screenshots": [
@@ -169,9 +169,8 @@
             {
               "actions": [
                 {
-                  "name": "touchStart",
                   "args": {
-                    "selector": "html>body>#root>div",
+                    "selector": "html>body>#storybook-root>div",
                     "clients": {
                       "x": 97,
                       "y": 109
@@ -180,53 +179,64 @@
                       "x": 64,
                       "y": 42
                     }
-                  }
+                  },
+                  "id": "LhBjfEq6zIr0",
+                  "name": "touchStart"
                 }
               ],
+              "id": "6Dndp0VMQpLx",
+              "temp": true,
               "title": "touch start"
             },
             {
               "actions": [
                 {
-                  "name": "touchMove",
                   "args": {
-                    "selector": "html>body>#root>div",
+                    "selector": "html>body>#storybook-root>div",
                     "client": {
                       "x": 67,
                       "y": 111
                     }
-                  }
+                  },
+                  "id": "o8_REcMMY0T5",
+                  "name": "touchMove"
                 }
               ],
+              "id": "gKC0ic-90P41",
+              "temp": true,
               "title": "touch move"
             },
             {
               "actions": [
                 {
+                  "id": "AFCsnU51iqxt",
                   "name": "takeScreenshotAll"
                 }
               ],
+              "id": "UHd-S8tA9Rnb",
               "title": "Take screenshot of all actions"
             },
             {
               "actions": [
                 {
-                  "name": "touchEnd",
                   "args": {
-                    "selector": "html>body>#root>div",
+                    "selector": "html>body>#storybook-root>div",
                     "page": {
                       "x": 67,
                       "y": 120
                     }
-                  }
+                  },
+                  "id": "JRlIg7ZLbNMP",
+                  "name": "touchEnd"
                 }
               ],
+              "id": "6ZCT_TCfLRCn",
               "title": "touch end"
             }
           ],
           "browserOptionsId": "SSyL1CPufciH",
           "browserType": "chromium",
-          "id": "Onzwhnykeaur",
+          "id": "-37oAzmZs3lU",
           "index": 0,
           "title": "should handle touch events"
         }

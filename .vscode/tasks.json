@@ -3,16 +3,16 @@
   // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
-    {
-      "label": "watch",
-      "type": "shell",
-      "group": "build",
-      "command": "pnpm run watch",
-      "problemMatcher": [],
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
-    }
+    // {
+    //   "label": "watch",
+    //   "type": "shell",
+    //   "group": "build",
+    //   "command": "pnpm run watch",
+    //   "problemMatcher": [],
+    //   "runOptions": {
+    //     "runOn": "folderOpen"
+    //   }
+    // }
     // {
     //   "label": "storybook start",
     //   "type": "shell",

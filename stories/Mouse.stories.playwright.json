@@ -6,18 +6,6 @@
         {
           "actions": [
             {
-              "name": "hover",
-              "args": {
-                "selector": "html>body>#root>button"
-              }
-            }
-          ],
-          "id": "Oz3loHz4HT2-",
-          "title": "Should hover"
-        },
-        {
-          "actions": [
-            {
               "name": "waitForTimeout",
               "args": {
                 "timeout": 500
@@ -30,10 +18,22 @@
         {
           "actions": [
             {
-              "name": "click",
               "args": {
-                "selector": "html>body>div:nth-child(5)>button"
-              }
+                "selector": "html>body>#storybook-root>button"
+              },
+              "name": "hover"
+            }
+          ],
+          "id": "Oz3loHz4HT2-",
+          "title": "Should hover"
+        },
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "html>body>#storybook-root>button"
+              },
+              "name": "click"
             }
           ],
           "id": "ROT48nHFvMXm",
@@ -46,29 +46,33 @@
             {
               "actions": [
                 {
-                  "name": "hover",
                   "args": {
-                    "selector": "html>body>#root>button"
-                  }
+                    "selector": "html>body>#storybook-root>button"
+                  },
+                  "id": "RJ_V5Ws4zO3X",
+                  "name": "hover"
                 }
               ],
+              "id": "S7W0G0sOXqt_",
               "title": "Should hover"
             },
             {
               "actions": [
                 {
-                  "name": "waitForTimeout",
                   "args": {
                     "timeout": 500
-                  }
+                  },
+                  "id": "wUMRII8s-nTg",
+                  "name": "waitForTimeout"
                 }
               ],
+              "id": "BnVzz0Np8qt6",
               "title": "delay"
             }
           ],
           "browserOptionsId": "GIEplriVQiCS",
           "browserType": "chromium",
-          "id": "pmrTVde8v-Sx",
+          "id": "GdrX5LdcSkuT",
           "index": 0,
           "title": "should hover"
         },
@@ -77,18 +81,20 @@
             {
               "actions": [
                 {
-                  "name": "click",
                   "args": {
-                    "selector": "html>body>div:nth-child(5)>button"
-                  }
+                    "selector": "html>body>#storybook-root>button"
+                  },
+                  "id": "ORvynzlgKc8d",
+                  "name": "click"
                 }
               ],
+              "id": "kjid7SIUtzBm",
               "title": "click"
             }
           ],
           "browserOptionsId": "GIEplriVQiCS",
           "browserType": "chromium",
-          "id": "PNhz9gz896e2",
+          "id": "-Ynrka1W2KvW",
           "index": 1,
           "screenshotOptionsId": "naEJt2qr1Goh",
           "title": "click"

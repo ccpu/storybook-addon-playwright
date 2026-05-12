@@ -34,70 +34,87 @@
             {
               "actions": [
                 {
+                  "id": "eq5CbFzQvFUl",
                   "name": "takeScreenshotAll"
                 }
               ],
+              "id": "mamb_4Wcg1_f",
+              "temp": true,
               "title": "Take screenshot of all actions"
             },
             {
               "actions": [
                 {
-                  "name": "waitForTimeout",
                   "args": {
                     "timeout": 200
-                  }
+                  },
+                  "id": "6gVQT2V1hWEs",
+                  "name": "waitForTimeout"
                 }
               ],
+              "id": "bSviC8Bt0g5C",
               "title": "delay 200"
             },
             {
               "actions": [
                 {
-                  "name": "click",
                   "args": {
-                    "selector": "html>body>#root>div>input"
-                  }
+                    "selector": "#input"
+                  },
+                  "id": "ScK3mupjj3az",
+                  "name": "click"
                 }
               ],
+              "id": "UD-ZzTqJR2f9",
+              "temp": true,
               "title": "mouse click"
             },
             {
               "actions": [
                 {
-                  "name": "waitForTimeout",
                   "args": {
                     "timeout": 100
-                  }
+                  },
+                  "id": "-AKzWrnrJZjG",
+                  "name": "waitForTimeout"
                 }
               ],
+              "id": "9ZLZuKPGQpUI",
+              "temp": true,
               "title": "delay 100"
             },
             {
               "actions": [
                 {
-                  "name": "keyboard.press",
                   "args": {
                     "key": "2"
-                  }
+                  },
+                  "id": "z9HAQ4_9VL5_",
+                  "name": "keyboard.press"
                 }
               ],
+              "id": "qfwJ5waqOQZK",
+              "temp": true,
               "title": "type 2"
             },
             {
               "actions": [
                 {
-                  "name": "waitForTimeout",
                   "args": {
                     "timeout": 100
-                  }
+                  },
+                  "id": "DVcB57hNvKhr",
+                  "name": "waitForTimeout"
                 }
               ],
+              "id": "Ud3cEedbfOEL",
+              "temp": true,
               "title": "delay 100"
             }
           ],
           "browserOptionsId": "Epcpwe0oWFQ8",
           "browserType": "chromium",
-          "id": "mLqyU2xGWUqn",
+          "id": "sbgR_JNq30Od",
           "index": 0,
           "title": "should wait for input value to change to 1 and change input value afterwards"
         }

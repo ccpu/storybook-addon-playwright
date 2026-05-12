@@ -1,5 +1,78 @@
 # storybook-addon-playwright
 
+## 5.0.0
+
+### Major Changes
+
+- dcfdf91: new release
+- 89f6442: next
+
+### Minor Changes
+
+- fadc181: add publish workflow for package release
+- fadc181: add screenshot title generation functionality
+- 968f95b: improve OS detection and test execution in pre-push script
+- c7893bb: enhance screenshot title generation and update components
+- 9ca008d: update Node.js version requirements and enhance setup actions
+- 560c579: enhance browser refresh functionality and improve layout
+- 462377b: update Storybook port to 1090 and enhance Zustand store integration
+- 276bb7f: wrap generate button in a flex container for better alignment
+- enhance screenshot generation functionality
+
+### Patch Changes
+
+- 78c9ab8: correct regex for Windows path detection
+- 18df14b: update version in tests to match expected output
+- 18df14b: enhance Playwright setup with new browser management and box drawing functionality
+- 968f95b: update version in tests to match expected output
+- 968f95b: enhance Playwright setup with new browser management and box drawing functionality
+- 11c1f7f: comment out test execution in CI and pre-push scripts
+- 11c1f7f: enhance Playwright setup with new browser management and box drawing functionality
+- 82c5f48: comment out project setup, build, and test steps
+- 19978f3: update build flag format and enable provenance
+- 19978f3: comment out project setup, build, and test steps
+- 04f9972: update build flag format and enable provenance
+- 04f9972: comment out project setup, build, and test steps
+- 76142d1: standardize quotes in release.yml
+- 76142d1: comment out project setup, build, and test steps
+- d136627: standardize quotes and update NPM_TOKEN handling
+- 94857ae: standardize quotes and update NPM_TOKEN handling
+- d94e4af: standardize quotes in release.yml
+- d94e4af: standardize quotes and update NPM_TOKEN handling
+- 7772fca: update NPM_TOKEN handling in release.yml
+- 7772fca: standardize quotes and update NPM_TOKEN handling
+- b6d1ef0: enable pure OIDC publish by clearing token auth env
+- b6d1ef0: standardize NPM_TOKEN handling in release.yml
+- b6d1ef0: standardize quotes and update NPM_TOKEN handling
+- 5c59afe: add initial changeset for patch release
+- 5c59afe: standardize NPM_TOKEN handling in release.yml
+- 5c59afe: standardize quotes and update NPM_TOKEN handling
+- da6b5c2: add initial changeset for patch release
+- da6b5c2: standardize NPM_TOKEN handling in release.yml
+- da6b5c2: standardize quotes and update NPM_TOKEN handling
+- 3234921: downgrade Node version to 20 in setup project
+- b0a1a27: update Node version to 24 in setup project
+- b0a1a27: downgrade Node version to 20 in setup project
+- 72cb546: update Node version to 24 and remove pnpm version
+- e1e5558: remove unused environment variables from release workflow
+- 56d95d3: downgrade Node version to 22.14.0
+- baeb010: update Node version to 22
+- baeb010: downgrade Node version to 22.14.0
+- 61f4b5a: downgrade Node version to 22.14.0
+- 666d277: update Node version to 22
+- 666d277: downgrade Node version to 22.14.0
+- 1fd94d1: specify exact Node version as 24.0.0
+- 654a232: specify exact Node version as 24.0.0
+- 654a232: specify exact Node version as 24.0.0
+- 887a8ec: remove specific Node version from setup
+- 297498b: update Node version to 24 and specify changesets-autopilot version
+- 3d77039: update Node version to 24.1.0 and use stable changesets-autopilot version
+- f568062: update Node version to 24
+- f568062: update Node version to 24.1.0 and use stable changesets-autopilot version
+- fbb793f: remove specific Node version from setup
+- 6c5074e: update Node version to 24
+- 2a7966b: test
+
 ## 5.0.0-rc.36
 
 ### Minor Changes

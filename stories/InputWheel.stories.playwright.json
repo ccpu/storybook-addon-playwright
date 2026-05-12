@@ -100,13 +100,6 @@
           "id": "mLqyU2xGWUqn",
           "index": 0,
           "title": "should wait for input value to change to 1 and change input value afterwards"
-        },
-        {
-          "browserOptionsId": "Epcpwe0oWFQ8",
-          "browserType": "chromium",
-          "id": "mXeqZHfODMb-",
-          "index": 1,
-          "title": "asd"
         }
       ]
     },

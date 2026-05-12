@@ -120,16 +120,19 @@ const InputDialog: React.FC<InputDialogProps> = ({
           shrink: true,
         }}
       ></TextField>
+
       {onGenerateContent && (
-        <Button
-          className={classes.generateButton}
-          size="small"
-          onClick={handleGenerate}
-          disabled={isGenerating}
-          startIcon={isGenerating ? <CircularProgress size={14} /> : undefined}
-        >
-          {isGenerating ? 'Generating...' : 'Generate Title'}
-        </Button>
+        <div style={{ justifyContent: 'end', display: 'flex' }}>
+          <Button
+            className={classes.generateButton}
+            size="small"
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            startIcon={isGenerating ? <CircularProgress size={14} /> : undefined}
+          >
+            {isGenerating ? 'Generating...' : 'Generate Title'}
+          </Button>
+        </div>
       )}
       {children}
     </ActionDialog>

@@ -32,7 +32,7 @@ addons.register(ADDON_ID, () => {
   addons.add(TOAST_ID, {
     render: () => <Toaster position="bottom-left" />,
     title: 'toast',
-    type: types.TAB,
+    type: types.TOOL,
   });
 
   addons.add(TOOL_ID, {

@@ -16,7 +16,7 @@
       "request": "launch",
       "name": "Storybook Debug",
       "breakOnLoad": true,
-      "url": "http://localhost:9002",
+      "url": "http://localhost:1090",
       "sourceMaps": true,
       "webRoot": "${workspaceFolder}",
       "sourceMapPathOverrides": {

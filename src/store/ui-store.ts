@@ -7,7 +7,7 @@ import type {
 } from '../typings';
 import type { SelectorState } from '../typings/selector';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 export interface BrowsersOption {
   chromium?: BrowserContextOptions;
@@ -69,12 +69,15 @@ export const initialUIState: UIState = {
 };
 
 export const useUIStore = create<UIState>()(
-  persist(() => ({ ...initialUIState }), {
-    name: '__playwright_ui-store',
-    partialize: (state) => ({
-      addonState: state.addonState,
-      browserOptions: state.browserOptions,
-      screenshotOptions: state.screenshotOptions,
+  devtools(
+    persist(() => ({ ...initialUIState }), {
+      name: '__playwright_ui-store',
+      partialize: (state) => ({
+        addonState: state.addonState,
+        browserOptions: state.browserOptions,
+        screenshotOptions: state.screenshotOptions,
+      }),
     }),
-  }),
+    { name: 'ui-store' },
+  ),
 );

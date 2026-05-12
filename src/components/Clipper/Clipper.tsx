@@ -2,6 +2,7 @@ import { IconButton } from '@storybook/components';
 import React from 'react';
 import Selecto from 'react-selecto';
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import {
   useAddonState,
   useBrowserOptions,
@@ -20,24 +21,29 @@ export interface ClipperProps {
   toggleClippingState: () => void;
 }
 
-export const useClipperState = create<ClipperProps>()((set) => ({
-  clipping: false,
-  start: () => {
-    set(() => ({
-      clipping: true,
-    }));
-  },
-  stop: () => {
-    set(() => ({
+export const useClipperState = create<ClipperProps>()(
+  devtools(
+    (set) => ({
       clipping: false,
-    }));
-  },
-  toggleClippingState: () => {
-    set((s) => ({
-      clipping: !s.clipping,
-    }));
-  },
-}));
+      start: () => {
+        set(() => ({
+          clipping: true,
+        }));
+      },
+      stop: () => {
+        set(() => ({
+          clipping: false,
+        }));
+      },
+      toggleClippingState: () => {
+        set((s) => ({
+          clipping: !s.clipping,
+        }));
+      },
+    }),
+    { name: 'clipper-store' },
+  ),
+);
 
 const Clipper: React.FC = () => {
   const { clipping, stop } = useClipperState();

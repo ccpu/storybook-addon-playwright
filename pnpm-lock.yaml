@@ -43,6 +43,9 @@ importers:
       '@pixpilot/hash':
         specifier: ^0.2.0
         version: 0.2.0
+      '@pixpilot/object':
+        specifier: ^2.4.2
+        version: 2.4.2
       '@storybook/components':
         specifier: ^8.6.18
         version: 8.6.18(storybook@8.6.18(prettier@2.8.8))
@@ -2134,11 +2137,20 @@ packages:
       eslint-plugin-turbo:
         optional: true
 
+  '@pixpilot/guid@0.0.0':
+    resolution: {integrity: sha512-DOcQXX/u7SvZFZ1GiJaPtqxhauL6S2pnV0tLwZllVWfvPfBLH+dSfaiPg96pABRcjoCv/BPBfkl9+tyhOVplXQ==}
+
   '@pixpilot/hash@0.2.0':
     resolution: {integrity: sha512-2K+cuP9zydAT5fGCXtEu+QRPr47FvdhIYOhze8W+8cMCnG1zRN/ObN6XjO0rEyMW75XWf9TykuREdivy0gI8Tg==}
 
   '@pixpilot/math@0.1.0':
     resolution: {integrity: sha512-HamO24QpsjIpDVj4i0XQNwe+piJJhc8ZwQen/eP3sjFp4+alC41ByIeZS6O6lB21+a+yrvukcc5Qti1V9zK5mA==}
+
+  '@pixpilot/object@2.4.2':
+    resolution: {integrity: sha512-bqrDWQ0WBJUHzDSh2+syjymh0Ysv/oGqHrFifdGfsoitZ/H7goR+1C483XvmxYfcBDpUzDU2nM+Cjn8QjTRLcQ==}
+
+  '@pixpilot/string@3.0.0':
+    resolution: {integrity: sha512-GPELORLs0aQb8f8psY9Em1QQ9pxp49P6GCDve8OliIvs722FSalCLTY3CTcIKe7zNhrADTdsyq53L3UL7y2MiQ==}
 
   '@pkgr/core@0.2.9':
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
@@ -3935,6 +3947,10 @@ packages:
 
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
+
+  dot-prop@10.1.0:
+    resolution: {integrity: sha512-MVUtAugQMOff5RnBy2d9N31iG0lNwg1qAoAOn7pOK5wf94WIaE3My2p3uwTQuvS2AcqchkcR3bHByjaM0mmi7Q==}
+    engines: {node: '>=20'}
 
   dot-prop@5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -9739,9 +9755,22 @@ snapshots:
       - vitest
       - vue-eslint-parser
 
+  '@pixpilot/guid@0.0.0': {}
+
   '@pixpilot/hash@0.2.0': {}
 
   '@pixpilot/math@0.1.0': {}
+
+  '@pixpilot/object@2.4.2':
+    dependencies:
+      '@fastify/deepmerge': 3.2.1
+      '@pixpilot/guid': 0.0.0
+      '@pixpilot/string': 3.0.0
+      dot-prop: 10.1.0
+
+  '@pixpilot/string@3.0.0':
+    dependencies:
+      change-case: 5.4.4
 
   '@pkgr/core@0.2.9': {}
 
@@ -11712,6 +11741,10 @@ snapshots:
     dependencies:
       no-case: 3.0.4
       tslib: 2.4.0
+
+  dot-prop@10.1.0:
+    dependencies:
+      type-fest: 5.6.0
 
   dot-prop@5.3.0:
     dependencies:

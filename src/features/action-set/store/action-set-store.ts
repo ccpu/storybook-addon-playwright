@@ -4,6 +4,7 @@ import type {
   PlaywrightDataStories,
 } from '../../../typings';
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 export interface ActionSetState {
   actionSchema: ActionSchemaList;
@@ -22,6 +23,11 @@ export const initialActionSetState: ActionSetState = {
   stories: {},
 };
 
-export const useActionSetStore = create<ActionSetState>(() => ({
-  ...initialActionSetState,
-}));
+export const useActionSetStore = create<ActionSetState>()(
+  devtools(
+    () => ({
+      ...initialActionSetState,
+    }),
+    { name: 'action-set-store' },
+  ),
+);

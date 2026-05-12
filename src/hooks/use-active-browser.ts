@@ -1,11 +1,15 @@
 import type { BrowserTypes, ScreenShotViewPanel } from '../typings';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAddonState } from './use-addon-state';
+import { useUIStore } from '../store';
+import { deepEqual } from '@pixpilot/object';
+
+const defaultBrowserTypes: BrowserTypes[] = ['chromium', 'firefox', 'webkit'];
 
 export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
   const { addonState, setAddonState } = useAddonState();
   const [refreshingBrowsers, setRefreshBrowsers] = useState<BrowserTypes[]>([]);
-  const [browserTypes] = useState<BrowserTypes[]>(['chromium', 'firefox', 'webkit']);
+  const [browserTypes] = useState<BrowserTypes[]>(defaultBrowserTypes);
 
   const isDisabled = useCallback(
     (browserType: BrowserTypes) => {
@@ -38,6 +42,33 @@ export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
     },
     [addonState, setAddonState],
   );
+
+  useEffect(() => {
+    const unsubscribe = useUIStore.subscribe((state, prevState) => {
+      if (
+        !deepEqual(state.browserOptions.all, prevState.browserOptions.all) ||
+        !deepEqual(state.screenshotOptions, prevState.screenshotOptions)
+      ) {
+        setRefreshBrowsers(defaultBrowserTypes);
+      }
+      defaultBrowserTypes.forEach((browserType) => {
+        if (
+          !deepEqual(
+            state.browserOptions[browserType],
+            prevState.browserOptions[browserType],
+          )
+        ) {
+          setRefreshBrowsers((current) =>
+            current.includes(browserType) ? current : [...current, browserType],
+          );
+        }
+      });
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [browserTypes]);
 
   const toggleBrowser = useCallback(
     (browserType: BrowserTypes) => {

@@ -2,7 +2,7 @@ import path from 'path';
 import { spawn, type ChildProcess } from 'child_process';
 
 const ROOT = path.resolve(__dirname, '..');
-const PORT = '9002';
+const PORT = '1090';
 const EXTRA_PORTS_TO_CLEAN = ['9003'];
 const NODE_BIN = process.execPath;
 const STORYBOOK_BIN = path.join(ROOT, 'node_modules', 'storybook', 'bin', 'index.cjs');

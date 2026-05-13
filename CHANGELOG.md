@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.1.4
+
+### Patch Changes
+
+- update exports to use getConfigs and setConfig from trpc/router
+
 ## 5.1.3
 
 ### Patch Changes

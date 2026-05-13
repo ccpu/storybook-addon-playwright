@@ -1,12 +1,12 @@
-export const useActiveBrowserMock = vi.fn<(...args: unknown[]) => unknown>();
+export const useBrowserStateManager = vi.fn<(...args: unknown[]) => unknown>();
 export const isDisabledMock = vi.fn<(...args: unknown[]) => unknown>();
 export const toggleBrowserMock = vi.fn<(...args: unknown[]) => unknown>();
 
-vi.mock('../../../src/hooks/use-active-browser', () => ({
-  useActiveBrowsers: useActiveBrowserMock,
+vi.mock('../../../src/hooks/use-browser-state-manager', () => ({
+  useBrowserStateManager: useBrowserStateManager,
 }));
 
-useActiveBrowserMock.mockImplementation(() => ({
+useBrowserStateManager.mockImplementation(() => ({
   activeBrowsers: ['chromium', 'firefox', 'webkit'],
   clearBrowserRefresh: vi.fn(),
   isDisabled: isDisabledMock,

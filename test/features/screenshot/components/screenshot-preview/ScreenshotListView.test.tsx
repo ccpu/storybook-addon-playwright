@@ -1,4 +1,4 @@
-import { useActiveBrowserMock } from '../../../../manual-mocks/hooks/use-active-browser';
+import { useBrowserStateManager } from '../../../../manual-mocks/hooks/use-browser-state-manager';
 import { ScreenshotListView } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenshotListView';
 import { shallow } from 'enzyme';
 import React from 'react';
@@ -45,7 +45,7 @@ describe('ScreenshotList', () => {
   });
 
   it('should not have screenshot view if there is no active browser', () => {
-    useActiveBrowserMock.mockImplementationOnce(() => ({
+    useBrowserStateManager.mockImplementationOnce(() => ({
       activeBrowsers: [],
       clearBrowserRefresh: vi.fn(),
       isDisabled: vi.fn(),
@@ -85,7 +85,7 @@ describe('ScreenshotList', () => {
   it('should handle refresh', () => {
     const refreshBrowsersMock = vi.fn();
 
-    useActiveBrowserMock.mockImplementationOnce(() => ({
+    useBrowserStateManager.mockImplementationOnce(() => ({
       activeBrowsers: ['chromium', 'firefox', 'webkit'],
       clearBrowserRefresh: vi.fn(),
       isDisabled: vi.fn(),
@@ -105,7 +105,7 @@ describe('ScreenshotList', () => {
   });
 
   it('should refresh a newly enabled browser', () => {
-    useActiveBrowserMock.mockImplementationOnce(() => ({
+    useBrowserStateManager.mockImplementationOnce(() => ({
       activeBrowsers: ['chromium'],
       clearBrowserRefresh: vi.fn(),
       isDisabled: vi.fn(),
@@ -140,7 +140,7 @@ describe('ScreenshotList', () => {
   });
 
   it('should save screenshot', async () => {
-    useActiveBrowserMock.mockImplementation(() => ({
+    useBrowserStateManager.mockImplementation(() => ({
       activeBrowsers: ['chromium', 'firefox'],
       clearBrowserRefresh: vi.fn(),
       isDisabled: vi.fn(),

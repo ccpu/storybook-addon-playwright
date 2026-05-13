@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.4.2
+
+### Patch Changes
+
+- fix reload on hot-reload
+
 ## 5.4.1
 
 ### Patch Changes

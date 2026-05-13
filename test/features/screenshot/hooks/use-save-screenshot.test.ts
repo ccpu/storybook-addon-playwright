@@ -72,6 +72,7 @@ describe('useSaveScreenshot', () => {
       browserOptions: undefined,
       browserType: 'chromium',
       filePath: './test.stories.tsx',
+      globals: undefined,
       id: 'some-id',
       index: undefined,
       props: undefined,

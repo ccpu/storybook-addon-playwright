@@ -10,6 +10,30 @@ describe('constructStoryUrl', () => {
     ).toBe('http://localhost:3000/iframe.html?id=story-id&args=prop:val');
   });
 
+  it('should construct url with globals query', () => {
+    expect(
+      constructStoryUrl('http://localhost:3000', 'story-id', undefined, undefined, {
+        locale: 'en',
+      }),
+    ).toBe('http://localhost:3000/iframe.html?id=story-id&globals=locale:en');
+  });
+
+  it('should construct url with args and globals query', () => {
+    expect(
+      constructStoryUrl(
+        'http://localhost:3000',
+        'story-id',
+        undefined,
+        { prop: 'val' },
+        {
+          locale: 'en',
+        },
+      ),
+    ).toBe(
+      'http://localhost:3000/iframe.html?id=story-id&args=prop:val&globals=locale:en',
+    );
+  });
+
   it('should construct http url', () => {
     expect(constructStoryUrl('http://localhost:3000', 'story-id', { prop: 'val' })).toBe(
       'http://localhost:3000/iframe.html?id=story-id&knob-prop=val',

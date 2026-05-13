@@ -3,7 +3,7 @@ import type { ScreenshotImageData } from '../../typings';
 import type { BaseImageInfo } from '../../typings/compare-screenshot';
 import type { ImageDiffResult } from '../typings/image-diff';
 import fs from 'node:fs';
-import { getScreenshotArgs } from '../../utils';
+import { getScreenshotArgs, getScreenshotGlobals } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 import { diffImageToScreenshot } from './diff-image-to-screenshot';
@@ -33,6 +33,7 @@ export async function testScreenshotService(
         args: getScreenshotArgs(screenshotData),
         browserOptions: screenshotData.browserOptions,
         browserType: screenshotData.browserType,
+        globals: getScreenshotGlobals(screenshotData),
         props: screenshotData.props,
         requestId: data.requestId,
         requestType,

@@ -28,6 +28,7 @@ export * from './use-anchor-el';
 export * from './use-browser-options';
 export * from './use-current-story-data';
 export * from './use-drag-start';
+export * from './use-globals';
 export * from './use-key-press';
 export * from './use-key-press-fn';
 export * from './use-knobs';

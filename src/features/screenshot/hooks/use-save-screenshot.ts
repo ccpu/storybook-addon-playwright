@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { useCallback, useState } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
+import { useGlobals } from '../../../hooks/use-globals';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { getImageDiffMessages } from '../../../utils';
 import { toast } from '../../../utils/toast';
@@ -20,6 +21,7 @@ interface Options {
 export function useSaveScreenshot(options?: Options) {
   const { title, browserType } = options || {};
   const args = useKnobs();
+  const globals = useGlobals();
 
   const { screenshotOptions } = useScreenshotOptions();
 
@@ -129,6 +131,7 @@ export function useSaveScreenshot(options?: Options) {
         browserOptions,
         browserType,
         filePath: storyData.filePath,
+        globals,
         id: nanoid(12),
         props: args,
         screenshotOptions:
@@ -170,6 +173,7 @@ export function useSaveScreenshot(options?: Options) {
     [
       currentActions,
       args,
+      globals,
       screenshotOptions,
       storyData,
       isUpdating,

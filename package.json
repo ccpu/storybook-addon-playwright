@@ -132,6 +132,7 @@
     "@commitlint/config-conventional": "^21.0.1",
     "@pixpilot/eslint-config-react": "^0.5.1",
     "@storybook/addon-essentials": "8.6.18",
+    "@storybook/addon-themes": "^8.6.18",
     "@storybook/react": "^8.6.18",
     "@storybook/react-webpack5": "^8.6.18",
     "@storybook/test": "^8.6.18",

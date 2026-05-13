@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { PlaywrightData, ScreenshotData } from '../../../typings';
 import equal from 'fast-deep-equal';
-import { getScreenshotArgs } from '../../../utils';
+import { getScreenshotArgs, getScreenshotGlobals } from '../../../utils';
 import { getOptionsKey } from './get-options-key';
 
 export function findScreenshotWithSameSetting(
@@ -20,6 +20,7 @@ export function findScreenshotWithSameSetting(
     screenshot.screenshotOptions,
   );
   const screenshotArgs = getScreenshotArgs(screenshot);
+  const screenshotGlobals = getScreenshotGlobals(screenshot);
 
   const removeActionId = (scrShot: ScreenshotData) => {
     const newAction =
@@ -40,7 +41,8 @@ export function findScreenshotWithSameSetting(
       sc.screenshotOptionsId === screenshotOptionsId &&
       sc.browserType === screenshot.browserType &&
       equal(removeActionId(sc), removeActionId(screenshot)) &&
-      equal(getScreenshotArgs(sc), screenshotArgs)
+      equal(getScreenshotArgs(sc), screenshotArgs) &&
+      equal(getScreenshotGlobals(sc), screenshotGlobals)
     ) {
       return sc;
     }

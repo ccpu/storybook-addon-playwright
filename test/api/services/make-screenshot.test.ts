@@ -123,6 +123,17 @@ describe('makeScreenshot', () => {
     expect(gotoMock.mock.calls[0][0]).toContain('&args=label:Hello');
   });
 
+  it('should pass globals into story url', async () => {
+    await makeScreenshot({
+      browserType: 'chromium',
+      globals: { locale: 'en' },
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    expect(gotoMock.mock.calls[0][0]).toContain('&globals=locale:en');
+  });
+
   it('should call to release modifier keys after screenshot', async () => {
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({

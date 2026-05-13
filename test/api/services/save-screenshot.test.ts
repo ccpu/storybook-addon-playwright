@@ -155,6 +155,7 @@ describe('saveScreenshot', () => {
         actionSets: [],
         args: {},
         browserOptions: {} as BrowserContextOptions,
+        globals: {},
         id: 'screenshot-id-3',
         props: {},
         title: 'new title',
@@ -167,6 +168,7 @@ describe('saveScreenshot', () => {
 
     expect(data.actionSets).toBe(undefined);
     expect(data.args).toBe(undefined);
+    expect(data.globals).toBe(undefined);
     expect(data.props).toBe(undefined);
     expect(data.browserOptions).toBe(undefined);
   });
@@ -186,7 +188,24 @@ describe('saveScreenshot', () => {
     const data = mockData.calls[0][1]!.stories!['story-id'].screenshots![1];
 
     expect(data.args).toStrictEqual({ text: 'arg-val' });
+    expect(data.globals).toBe(undefined);
     expect(data.props).toBe(undefined);
+  });
+
+  it('should save globals when provided', async () => {
+    await saveScreenshot(
+      getData({
+        globals: { locale: 'en' },
+        id: 'screenshot-id-3',
+        title: 'new title',
+      }),
+    );
+
+    const mockData = vi.mocked(saveStoryFile).mock;
+
+    const data = mockData.calls[0][1]!.stories!['story-id'].screenshots![1];
+
+    expect(data.globals).toStrictEqual({ locale: 'en' });
   });
 
   it('should update screenshot', async () => {

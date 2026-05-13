@@ -1,4 +1,5 @@
 import { ScreenshotProp } from '../typings';
+import { getScreenshotProp } from './get-screenshot-prop';
 
 interface ScreenshotArgsLike {
   args?: ScreenshotProp;
@@ -10,9 +11,5 @@ export const getScreenshotArgs = (
 ): ScreenshotProp | undefined => {
   if (!data) return undefined;
 
-  const args = data.args && Object.keys(data.args).length ? data.args : undefined;
-
-  if (args) return args;
-
-  return data.props && Object.keys(data.props).length ? data.props : undefined;
+  return getScreenshotProp(data.args, data.props);
 };

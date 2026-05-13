@@ -5,6 +5,7 @@ import sum from 'hash-sum';
 import { nanoid } from 'nanoid';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
+import { useGlobals } from '../../../hooks/use-globals';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { toast } from '../../../utils/toast';
 import { useCurrentActions } from '../../action-set/hooks/use-current-actions';
@@ -15,6 +16,7 @@ export function useScreenshot(
   browserOptions?: BrowserContextOptions,
 ) {
   const args = useKnobs();
+  const globals = useGlobals();
 
   const state = useStorybookState();
 
@@ -61,6 +63,7 @@ export function useScreenshot(
       args,
       browserOptions,
       browserType,
+      globals,
       props: args,
       requestId: nanoid(),
       screenshotOptions,
@@ -71,6 +74,7 @@ export function useScreenshot(
     currentActions,
     args,
     browserOptions,
+    globals,
     mutate,
     screenshotOptions,
     state.storyId,
@@ -83,6 +87,7 @@ export function useScreenshot(
       args,
       browserOptions,
       currentActions,
+      globals,
       id: state.storyId,
       screenshotOptions,
     });
@@ -99,6 +104,7 @@ export function useScreenshot(
     getSnapshot,
     args,
     browserOptions,
+    globals,
     state.storyId,
     screenshotOptions,
     inProgress,

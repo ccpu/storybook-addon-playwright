@@ -121,6 +121,20 @@ describe('useLoadScreenshotSettings', () => {
     });
   });
 
+  it('should emit globals update event', () => {
+    const { result } = renderHook(() => useLoadScreenshotSettings());
+
+    act(() => {
+      const data = getData();
+      data.globals = { locale: 'en' };
+      result.current.loadSetting(data);
+    });
+
+    expect(emitMock).toHaveBeenCalledWith('updateGlobals', {
+      globals: { locale: 'en' },
+    });
+  });
+
   it('should set screenshotOptions and browserOptions', () => {
     const setScreenshotOptionsMock = vi.fn();
     const setBrowserOptionsMock = vi.fn();

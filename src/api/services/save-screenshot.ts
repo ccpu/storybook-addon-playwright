@@ -1,6 +1,6 @@
 import type { SaveScreenshotInput } from '../../schema';
 import type { ImageDiffResult } from '../typings/image-diff';
-import { getScreenshotArgs } from '../../utils';
+import { getScreenshotArgs, getScreenshotGlobals } from '../../utils';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,
@@ -72,6 +72,7 @@ export async function saveScreenshot(
   const result = await diffImageToScreenshot(data, Buffer.from(data.base64, 'base64'));
 
   const args = getScreenshotArgs(data);
+  const globals = getScreenshotGlobals(data);
   const legacyProps =
     !data.args && data.props && Object.keys(data.props).length > 0
       ? data.props
@@ -92,6 +93,7 @@ export async function saveScreenshot(
       args,
       browserOptionsId: setStoryOptions(storyData, 'browserOptions', data.browserOptions),
       browserType: data.browserType,
+      globals,
       id: data.id,
       index,
       props: legacyProps,

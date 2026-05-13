@@ -1,12 +1,16 @@
 import type { BrowserContextOptions } from 'playwright';
 import type { BrowsersOption } from '../../../hooks/use-browser-options';
 import type { ScreenshotData, ScreenshotOptions } from '../../../typings';
-import { RESET_STORY_ARGS, UPDATE_STORY_ARGS } from '@storybook/core-events';
+import {
+  RESET_STORY_ARGS,
+  UPDATE_GLOBALS,
+  UPDATE_STORY_ARGS,
+} from '@storybook/core-events';
 import { useStorybookApi } from '@storybook/manager-api';
 import { useCallback } from 'react';
 import { useBrowserOptions } from '../../../hooks/use-browser-options';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
-import { getScreenshotArgs } from '../../../utils';
+import { getScreenshotArgs, getScreenshotGlobals } from '../../../utils';
 import { setScreenShotActionSets } from '../../action-set/store/actions';
 import { useScreenshotOptions } from './use-screenshot-options';
 
@@ -46,6 +50,12 @@ export function useLoadScreenshotSettings(): ReturnType {
         api.emit(UPDATE_STORY_ARGS, {
           storyId: storyData?.id,
           updatedArgs: args,
+        });
+      }
+      const globals = getScreenshotGlobals(screenshotData);
+      if (globals && Object.keys(globals).length) {
+        api.emit(UPDATE_GLOBALS, {
+          globals,
         });
       }
       dispatchActions(screenshotData);

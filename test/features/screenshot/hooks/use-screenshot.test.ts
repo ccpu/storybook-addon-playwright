@@ -12,6 +12,12 @@ vi.mock('../../../../src/hooks/use-knobs', () => ({
   },
 }));
 
+vi.mock('../../../../src/hooks/use-globals', () => ({
+  useGlobals: () => {
+    return undefined;
+  },
+}));
+
 vi.mock(
   '../../../../src/utils/get-preview-iframe',
   async () => await import('../../../utils/__mocks__/get-preview-iframe'),

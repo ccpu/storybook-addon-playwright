@@ -13,7 +13,7 @@ import type {
 import joinImage from 'join-images';
 import sharp from 'sharp';
 import { extendPage } from '../../page-extra';
-import { constructStoryUrl, getScreenshotArgs } from '../../utils';
+import { constructStoryUrl, getScreenshotArgs, getScreenshotGlobals } from '../../utils';
 import { getConfigs } from '../server/configs';
 import { executeAction } from '../server/utils/execute-action';
 import { installMouseHelper } from '../server/utils/install-mouse-helper';
@@ -76,8 +76,15 @@ export async function makeScreenshot(
   extendPage(page);
 
   const args = getScreenshotArgs(data);
+  const globals = getScreenshotGlobals(data);
 
-  let url = constructStoryUrl(configs.storybookEndpoint, data.storyId, data.props, args);
+  let url = constructStoryUrl(
+    configs.storybookEndpoint,
+    data.storyId,
+    data.props,
+    args,
+    globals,
+  );
 
   if (configs.afterUrlConstruction) {
     url = configs.afterUrlConstruction(url, requestData);

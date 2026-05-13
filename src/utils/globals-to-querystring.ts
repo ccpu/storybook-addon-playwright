@@ -1,6 +1,6 @@
 import type { ScreenshotProp } from '../typings';
 import { storybookPropsToQuerystring } from './storybook-props-to-querystring';
 
-export function argsToQuerystring(args?: ScreenshotProp) {
-  return storybookPropsToQuerystring(args);
+export function globalsToQuerystring(globals?: ScreenshotProp) {
+  return storybookPropsToQuerystring(globals);
 }

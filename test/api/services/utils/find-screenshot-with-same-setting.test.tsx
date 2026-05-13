@@ -46,6 +46,14 @@ describe('findScreenshotWithSameSetting', () => {
             id: 'screenshot-id-3',
             title: 'title',
           },
+          {
+            browserType: 'chromium',
+            globals: {
+              locale: 'en',
+            },
+            id: 'screenshot-id-5',
+            title: 'title',
+          },
         ],
       },
     },
@@ -180,6 +188,29 @@ describe('findScreenshotWithSameSetting', () => {
       },
       browserType: 'chromium',
       id: 'screenshot-id-4',
+      title: 'title',
+    });
+  });
+
+  it('should return screenshot with same globals', () => {
+    const screenshot = findScreenshotWithSameSetting(
+      data,
+      data.stories!['story-id'].screenshots!,
+      {
+        browserType: 'chromium',
+        globals: {
+          locale: 'en',
+        },
+        id: 'test-screenshot-id',
+        title: 'title',
+      },
+    );
+    expect(screenshot).toStrictEqual({
+      browserType: 'chromium',
+      globals: {
+        locale: 'en',
+      },
+      id: 'screenshot-id-5',
       title: 'title',
     });
   });

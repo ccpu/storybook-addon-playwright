@@ -2,6 +2,7 @@ import type { ScreenshotProp } from '../typings';
 
 import normalize from 'normalize-url';
 import { argsToQuerystring } from './args-to-querystring';
+import { globalsToQuerystring } from './globals-to-querystring';
 import { knobsToQuerystring } from './knobs-to-querystring';
 
 export function constructStoryUrl(
@@ -9,6 +10,7 @@ export function constructStoryUrl(
   id: string,
   props?: ScreenshotProp,
   args?: ScreenshotProp,
+  globals?: ScreenshotProp,
 ) {
   let normalized: string;
 
@@ -26,11 +28,14 @@ export function constructStoryUrl(
 
   let storyUrl = `${normalized}/iframe.html?id=${id}`;
 
-  if (args) {
-    const argsQuery = argsToQuerystring(args);
-    if (argsQuery) {
-      storyUrl = `${storyUrl}&args=${argsQuery}`;
-    }
+  const argsQuery = argsToQuerystring(args);
+  if (argsQuery) {
+    storyUrl = `${storyUrl}&args=${argsQuery}`;
+  }
+
+  const globalsQuery = globalsToQuerystring(globals);
+  if (globalsQuery) {
+    storyUrl = `${storyUrl}&globals=${globalsQuery}`;
   }
 
   if (props) {

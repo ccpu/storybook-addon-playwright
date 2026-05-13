@@ -2,7 +2,7 @@ import type { BrowserTypes, ScreenshotData } from '../../../typings';
 import { RESET_STORY_ARGS } from '@storybook/core-events';
 import { useStorybookApi } from '@storybook/manager-api';
 import { useCallback, useEffect, useRef } from 'react';
-import { useActiveBrowsers } from '../../../hooks/use-active-browser';
+import { useBrowserStateManager } from '../../../hooks/use-browser-state-manager';
 import { useAddonState } from '../../../hooks/use-addon-state';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { setEditScreenshotState, useEditScreenshotStateValue } from '../../../store';
@@ -21,7 +21,7 @@ export function useEditScreenshot() {
 
   const { setAddonState, addonState } = useAddonState();
 
-  const { setBrowserState } = useActiveBrowsers('dialog');
+  const { setBrowserState } = useBrowserStateManager('dialog');
 
   const { loadSetting, screenshotOptions, browserOptions } = useLoadScreenshotSettings();
 

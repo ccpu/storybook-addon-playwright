@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React, { useCallback } from 'react';
 import { Loader } from '../../../../components/common';
-import { useActiveBrowsers } from '../../../../hooks/use-active-browser';
+import { useBrowserStateManager } from '../../../../hooks/use-browser-state-manager';
 import { useStoryUrl } from '../../../../hooks/use-story-url';
 import { ScreenshotView } from './ScreenshotView';
 import { Toolbar } from './Toolbar';
@@ -66,7 +66,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
     refreshingBrowsers,
     clearBrowserRefresh,
     refreshBrowsers,
-  } = useActiveBrowsers(viewPanel);
+  } = useBrowserStateManager(viewPanel);
 
   const classes = useStyles();
 

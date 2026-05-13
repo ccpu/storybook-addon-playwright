@@ -1,5 +1,7 @@
 import type { AddonState, BrowserTypes, ScreenShotViewPanel } from '../../src/typings';
 import { act, renderHook } from '@testing-library/react-hooks';
+import { STORY_RENDERED } from '@storybook/core-events';
+import { addons } from '@storybook/manager-api';
 
 type AddonStateSeed = Omit<AddonState, 'disabledBrowser'> & {
   disabledBrowser?: AddonState['disabledBrowser'];
@@ -56,12 +58,12 @@ vi.mock('../../src/hooks/use-addon-state', async () => {
   };
 });
 
-import { useActiveBrowsers } from '../../src/hooks/use-active-browser';
+import { useBrowserStateManager } from '../../src/hooks/use-browser-state-manager';
 
 const defaultBrowsers: BrowserTypes[] = ['chromium', 'firefox', 'webkit'];
 
 function renderActiveBrowsers(browserView: ScreenShotViewPanel) {
-  return renderHook(() => useActiveBrowsers(browserView));
+  return renderHook(() => useBrowserStateManager(browserView));
 }
 
 function getLastAddonStateCall() {
@@ -231,5 +233,23 @@ describe('useActiveBrowsers', () => {
 
     expect(storeMocks.subscribe).toHaveBeenCalledTimes(1);
     expect(storeMocks.unsubscribe).toHaveBeenCalledTimes(1);
+  });
+
+  it('should refresh active browsers after STORY_RENDERED', () => {
+    const { result } = renderActiveBrowsers('dialog');
+
+    act(() => {
+      result.current.toggleBrowser('firefox');
+    });
+
+    expect(result.current.activeBrowsers).toStrictEqual(['chromium', 'webkit']);
+    expect(result.current.refreshingBrowsers).toStrictEqual([]);
+
+    act(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (addons as any).__setEvent(STORY_RENDERED, 'story-id');
+    });
+
+    expect(result.current.refreshingBrowsers).toStrictEqual(['chromium', 'webkit']);
   });
 });

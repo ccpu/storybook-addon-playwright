@@ -1,4 +1,6 @@
 import type { BrowserTypes, ScreenShotViewPanel } from '../typings';
+import { STORY_RENDERED } from '@storybook/core-events';
+import { addons } from '@storybook/manager-api';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAddonState } from './use-addon-state';
 import { useUIStore } from '../store';
@@ -6,7 +8,7 @@ import { deepEqual } from '@pixpilot/object';
 
 const defaultBrowserTypes: BrowserTypes[] = ['chromium', 'firefox', 'webkit'];
 
-export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
+export function useBrowserStateManager(browserView: ScreenShotViewPanel) {
   const { addonState, setAddonState } = useAddonState();
   const [refreshingBrowsers, setRefreshBrowsers] = useState<BrowserTypes[]>([]);
   const [browserTypes] = useState<BrowserTypes[]>(defaultBrowserTypes);
@@ -69,6 +71,33 @@ export function useActiveBrowsers(browserView: ScreenShotViewPanel) {
       unsubscribe();
     };
   }, [browserTypes]);
+
+  useEffect(() => {
+    const channel = addons.getChannel();
+
+    const onStoryRendered = () => {
+      const activeBrowserTypes = defaultBrowserTypes.filter(
+        (browserType) => !isDisabled(browserType),
+      );
+
+      setRefreshBrowsers((current) => {
+        if (
+          current.length === activeBrowserTypes.length &&
+          activeBrowserTypes.every((browserType) => current.includes(browserType))
+        ) {
+          return current;
+        }
+
+        return activeBrowserTypes;
+      });
+    };
+
+    channel.on(STORY_RENDERED, onStoryRendered);
+
+    return () => {
+      channel.off(STORY_RENDERED, onStoryRendered);
+    };
+  }, [isDisabled]);
 
   const toggleBrowser = useCallback(
     (browserType: BrowserTypes) => {

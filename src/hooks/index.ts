@@ -22,7 +22,7 @@ export * from '../features/screenshot/hooks/use-screenshot-options';
 export * from '../features/screenshot/hooks/use-screenshot-update';
 export * from '../features/screenshot/hooks/use-screenshot-update-state';
 export * from '../features/screenshot/hooks/use-story-screenshot-loader';
-export * from './use-active-browser';
+export * from './use-browser-state-manager';
 export * from './use-addon-state';
 export * from './use-anchor-el';
 export * from './use-browser-options';

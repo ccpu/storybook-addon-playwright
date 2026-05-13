@@ -67,8 +67,11 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
         )
       : imageDiffResult;
 
+  const hasFailedDiff =
+    diffResults.length > 0 && diffResults.some((x) => x.pass === false);
+
   const handleImageDiffClick = useCallback(async () => {
-    if (diffResults.length > 0) return;
+    if (hasFailedDiff) return;
 
     const result = await testStoryScreenShots(target);
 
@@ -81,7 +84,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
         id: 'image-diff:all-passed',
       });
     }
-  }, [diffResults.length, target, testStoryScreenShots]);
+  }, [hasFailedDiff, target, testStoryScreenShots]);
 
   const handleClearAllResults = useCallback(() => {
     if (target === 'file') {
@@ -99,9 +102,6 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
     target === 'file' && storyData
       ? `Run diff test for all stories in '${storyData.filePath}' file.`
       : 'Run diff test for all stories';
-
-  const hasFailedDiff =
-    diffResults.length > 0 && diffResults.some((x) => x.pass === false);
 
   const iconButton = (
     <IconButton
@@ -125,7 +125,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
     </IconButton>
   );
 
-  if (diffResults.length === 0) {
+  if (!hasFailedDiff) {
     return iconButton;
   }
 

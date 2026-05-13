@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.1.5
+
+### Patch Changes
+
+- update route handlers to use new path prefix
+
 ## 5.1.4
 
 ### Patch Changes

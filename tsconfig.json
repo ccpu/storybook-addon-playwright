@@ -35,6 +35,7 @@
     "setupTests.ts",
     "setupTests.automocks.ts",
     "setupTests.vitest-globals.ts",
+    "ai.d.ts",
     "test-data/**/*",
     "middleware.d.ts",
     "configs.d.ts",

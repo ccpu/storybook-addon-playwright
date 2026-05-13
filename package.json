@@ -48,6 +48,9 @@
   },
   "scripts": {
     "storybook": "pnpm run clean && pnpm exec tsx .storybook/start-dev.ts",
+    "generate:playwright:action-schema": "pnpm exec tsx scripts/playwright/generate-action-schema.ts",
+    "generate:playwright:all-schema": "pnpm exec tsx scripts/playwright/generate-all-schema.ts",
+    "generate:playwright:schema": "pnpm run generate:playwright:all-schema",
     "changeset": "changeset",
     "prepare": "husky",
     "clean": "rimraf coverage dist tmp",

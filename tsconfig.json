@@ -42,7 +42,8 @@
     "stories/**/*",
     "vitest.config.ts",
     "vitest.middleware.config.ts",
-    ".storybook/**/*"
+    ".storybook/**/*",
+    "scripts/**/*"
   ],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

@@ -597,7 +597,7 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to query for. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to query for."
       },
       "options": {
         "type": "object",
@@ -605,22 +605,22 @@
           "state": {
             "type": "string",
             "enum": ["attached", "detached", "visible", "hidden"],
-            "description": "Defaults to `'visible'`. Can be either:\n- `'attached'` - wait for element to be present in DOM.\n- `'detached'` - wait for element to not be present in DOM.\n- `'visible'` - wait for element to have non-empty bounding box and no `visibility:hidden`. Note that element without   any content or with `display:none` has an empty bounding box and is not considered visible.\n- `'hidden'` - wait for element to be either detached from DOM, or have an empty bounding box or `visibility:hidden`.   This is opposite to the `'visible'` option."
+            "description": "Defaults to `'visible'`. Can be either:\n- `'attached'` - wait for element to be present in DOM.\n- `'detached'` - wait for element to not be present in DOM.\n- `'visible'` - wait for element to have non-empty bounding box and no `visibility:hidden`. Note that element   without any content or with `display:none` has an empty bounding box and is not considered visible.\n- `'hidden'` - wait for element to be either detached from DOM, or have an empty bounding box or   `visibility:hidden`. This is opposite to the `'visible'` option."
           },
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           }
         },
         "additionalProperties": false
       }
     },
     "required": ["selector", "options"],
-    "description": "Returns when element specified by selector satisfies `state` option. Returns `null` if waiting for `hidden` or `detached`.\n\n> NOTE: Playwright automatically waits for element to be ready before performing an action. Using [Locator] objects and web-first assertions make the code wait-for-selector-free.\n\nWait for the `selector` to satisfy `state` option (either appear/disappear from dom, or become visible/hidden). If at the moment of calling the method `selector` already satisfies the condition, the method will return immediately. If the selector doesn't satisfy the condition for the `timeout` milliseconds, the function will throw.\n\nThis method works across navigations:\n\n```js const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.\n\n(async () => {   const browser = await chromium.launch();   const page = await browser.newPage();   for (let currentURL of ['https://google.com', 'https://bbc.com']) {     await page.goto(currentURL);     const element = await page.waitForSelector('img');     console.log('Loaded image: ' + await element.getAttribute('src'));   }   await browser.close(); })(); ```"
+    "description": "**NOTE** Use web assertions that assert visibility or a locator-based [locator.waitFor([options])](https://playwright.dev/docs/api/class-locator#locator-wait-for) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nReturns when element specified by selector satisfies [`state`](https://playwright.dev/docs/api/class-page#page-wait-for-selector-option-state) option. Returns `null` if waiting for `hidden` or `detached`.\n\n**NOTE** Playwright automatically waits for element to be ready before performing an action. Using [Locator](https://playwright.dev/docs/api/class-locator) objects and web-first assertions makes the code wait-for-selector-free.\n\nWait for the [`selector`](https://playwright.dev/docs/api/class-page#page-wait-for-selector-option-selector) to satisfy [`state`](https://playwright.dev/docs/api/class-page#page-wait-for-selector-option-state) option (either appear/disappear from dom, or become visible/hidden). If at the moment of calling the method [`selector`](https://playwright.dev/docs/api/class-page#page-wait-for-selector-option-selector) already satisfies the condition, the method will return immediately. If the selector doesn't satisfy the condition for the [`timeout`](https://playwright.dev/docs/api/class-page#page-wait-for-selector-option-timeout) milliseconds, the function will throw.\n\n**Usage**\n\nThis method works across navigations:\n\n```js const { chromium } = require('playwright');  // Or 'firefox' or 'webkit'.\n\n(async () => {   const browser = await chromium.launch();   const page = await browser.newPage();   for (const currentURL of ['https://google.com', 'https://bbc.com']) {     await page.goto(currentURL);     const element = await page.waitForSelector('img');     console.log('Loaded image: ' + await element.getAttribute('src'));   }   await browser.close(); })(); ```"
   },
   "check": {
     "kind": "function",
@@ -628,7 +628,7 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
       },
       "options": {
         "type": "object",
@@ -639,7 +639,8 @@
           },
           "noWaitAfter": {
             "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+            "description": "This option has no effect.",
+            "deprecated": "This option has no effect."
           },
           "position": {
             "type": "object",
@@ -657,11 +658,11 @@
           },
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           },
           "trial": {
             "type": "boolean",
@@ -672,7 +673,7 @@
       }
     },
     "required": ["selector"],
-    "description": "This method checks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is already    checked, this method returns immediately. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the element. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. 1. Ensure that the element is now checked. If not, this method throws.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.check(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-check)."
+    "description": "**NOTE** Use locator-based [locator.check([options])](https://playwright.dev/docs/api/class-locator#locator-check) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method checks an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-check-option-selector) by performing the following steps: 1. Find an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-check-option-selector).    If there is none, wait until a matching element is attached to the DOM. 1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is    already checked, this method returns immediately. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless    [`force`](https://playwright.dev/docs/api/class-page#page-check-option-force) option is set. If the element    is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the    element. 1. Ensure that the element is now checked. If not, this method throws.\n\nWhen all steps combined have not finished during the specified [`timeout`](https://playwright.dev/docs/api/class-page#page-check-option-timeout), this method throws a [TimeoutError](https://playwright.dev/docs/api/class-timeouterror). Passing zero timeout disables this."
   },
   "click": {
     "kind": "function",
@@ -680,7 +681,7 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
       },
       "options": {
         "type": "object",
@@ -706,13 +707,14 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["Alt", "Control", "Meta", "Shift"]
+              "enum": ["Alt", "Control", "ControlOrMeta", "Meta", "Shift"]
             },
-            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
+            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used. \"ControlOrMeta\" resolves to \"Control\" on Windows and Linux and to \"Meta\" on macOS."
           },
           "noWaitAfter": {
             "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`.",
+            "deprecated": "This option will default to `true` in the future."
           },
           "position": {
             "type": "object",
@@ -730,22 +732,22 @@
           },
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           },
           "trial": {
             "type": "boolean",
-            "description": "When set, this method only performs the [actionability](https://playwright.dev/docs/actionability) checks and skips the action. Defaults to `false`. Useful to wait until the element is ready for the action without performing it."
+            "description": "When set, this method only performs the [actionability](https://playwright.dev/docs/actionability) checks and skips the action. Defaults to `false`. Useful to wait until the element is ready for the action without performing it. Note that keyboard `modifiers` will be pressed regardless of `trial` to allow testing elements which are only visible when those keys are pressed."
           }
         },
         "additionalProperties": false
       }
     },
     "required": ["selector"],
-    "description": "This method clicks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the element, or    the specified `position`. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.click(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-click)."
+    "description": "**NOTE** Use locator-based [locator.click([options])](https://playwright.dev/docs/api/class-locator#locator-click) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method clicks an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-click-option-selector) by performing the following steps: 1. Find an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-click-option-selector).    If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless    [`force`](https://playwright.dev/docs/api/class-page#page-click-option-force) option is set. If the element    is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the    element, or the specified    [`position`](https://playwright.dev/docs/api/class-page#page-click-option-position). 1. Wait for initiated navigations to either succeed or fail, unless    [`noWaitAfter`](https://playwright.dev/docs/api/class-page#page-click-option-no-wait-after) option is set.\n\nWhen all steps combined have not finished during the specified [`timeout`](https://playwright.dev/docs/api/class-page#page-click-option-timeout), this method throws a [TimeoutError](https://playwright.dev/docs/api/class-timeouterror). Passing zero timeout disables this."
   },
   "dblclick": {
     "kind": "function",
@@ -753,7 +755,7 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
       },
       "options": {
         "type": "object",
@@ -775,13 +777,14 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["Alt", "Control", "Meta", "Shift"]
+              "enum": ["Alt", "Control", "ControlOrMeta", "Meta", "Shift"]
             },
-            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
+            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used. \"ControlOrMeta\" resolves to \"Control\" on Windows and Linux and to \"Meta\" on macOS."
           },
           "noWaitAfter": {
             "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+            "description": "This option has no effect.",
+            "deprecated": "This option has no effect."
           },
           "position": {
             "type": "object",
@@ -799,22 +802,22 @@
           },
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           },
           "trial": {
             "type": "boolean",
-            "description": "When set, this method only performs the [actionability](https://playwright.dev/docs/actionability) checks and skips the action. Defaults to `false`. Useful to wait until the element is ready for the action without performing it."
+            "description": "When set, this method only performs the [actionability](https://playwright.dev/docs/actionability) checks and skips the action. Defaults to `false`. Useful to wait until the element is ready for the action without performing it. Note that keyboard `modifiers` will be pressed regardless of `trial` to allow testing elements which are only visible when those keys are pressed."
           }
         },
         "additionalProperties": false
       }
     },
     "required": ["selector"],
-    "description": "This method double clicks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to double click in the center of the    element, or the specified `position`. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. Note that if the    first click of the `dblclick()` triggers a navigation event, this method will throw.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\n> NOTE: `page.dblclick()` dispatches two `click` events and a single `dblclick` event.\n\nShortcut for main frame's [frame.dblclick(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-dblclick)."
+    "description": "**NOTE** Use locator-based [locator.dblclick([options])](https://playwright.dev/docs/api/class-locator#locator-dblclick) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method double clicks an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-dblclick-option-selector) by performing the following steps: 1. Find an element matching    [`selector`](https://playwright.dev/docs/api/class-page#page-dblclick-option-selector). If there is none,    wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless    [`force`](https://playwright.dev/docs/api/class-page#page-dblclick-option-force) option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to double click in the center of the    element, or the specified    [`position`](https://playwright.dev/docs/api/class-page#page-dblclick-option-position).\n\nWhen all steps combined have not finished during the specified [`timeout`](https://playwright.dev/docs/api/class-page#page-dblclick-option-timeout), this method throws a [TimeoutError](https://playwright.dev/docs/api/class-timeouterror). Passing zero timeout disables this.\n\n**NOTE** `page.dblclick()` dispatches two `click` events and a single `dblclick` event."
   },
   "fill": {
     "kind": "function",
@@ -822,7 +825,7 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
       },
       "value": {
         "type": "string",
@@ -837,22 +840,23 @@
           },
           "noWaitAfter": {
             "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
+            "description": "This option has no effect.",
+            "deprecated": "This option has no effect."
           },
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           }
         },
         "additionalProperties": false
       }
     },
     "required": ["selector", "value"],
-    "description": "This method waits for an element matching `selector`, waits for [actionability](https://playwright.dev/docs/actionability) checks, focuses the element, fills it and triggers an `input` event after filling. Note that you can pass an empty string to clear the input field.\n\nIf the target element is not an `<input>`, `<textarea>` or `[contenteditable]` element, this method throws an error. However, if the element is inside the `<label>` element that has an associated [control](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control), the control will be filled instead.\n\nTo send fine-grained keyboard events, use [page.type(selector, text[, options])](https://playwright.dev/docs/api/class-page#page-type).\n\nShortcut for main frame's [frame.fill(selector, value[, options])](https://playwright.dev/docs/api/class-frame#frame-fill)."
+    "description": "**NOTE** Use locator-based [locator.fill(value[, options])](https://playwright.dev/docs/api/class-locator#locator-fill) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method waits for an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-fill-option-selector), waits for [actionability](https://playwright.dev/docs/actionability) checks, focuses the element, fills it and triggers an `input` event after filling. Note that you can pass an empty string to clear the input field.\n\nIf the target element is not an `<input>`, `<textarea>` or `[contenteditable]` element, this method throws an error. However, if the element is inside the `<label>` element that has an associated [control](https://developer.mozilla.org/en-US/docs/Web/API/HTMLLabelElement/control), the control will be filled instead.\n\nTo send fine-grained keyboard events, use [locator.pressSequentially(text[, options])](https://playwright.dev/docs/api/class-locator#locator-press-sequentially)."
   },
   "focus": {
     "kind": "function",
@@ -860,25 +864,25 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
       },
       "options": {
         "type": "object",
         "properties": {
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           }
         },
         "additionalProperties": false
       }
     },
     "required": ["selector"],
-    "description": "This method fetches an element with `selector` and focuses it. If there's no element matching `selector`, the method waits until a matching element appears in the DOM.\n\nShortcut for main frame's [frame.focus(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-focus)."
+    "description": "**NOTE** Use locator-based [locator.focus([options])](https://playwright.dev/docs/api/class-locator#locator-focus) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method fetches an element with [`selector`](https://playwright.dev/docs/api/class-page#page-focus-option-selector) and focuses it. If there's no element matching [`selector`](https://playwright.dev/docs/api/class-page#page-focus-option-selector), the method waits until a matching element appears in the DOM."
   },
   "hover": {
     "kind": "function",
@@ -886,7 +890,7 @@
     "parameters": {
       "selector": {
         "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
       },
       "options": {
         "type": "object",
@@ -899,9 +903,14 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": ["Alt", "Control", "Meta", "Shift"]
+              "enum": ["Alt", "Control", "ControlOrMeta", "Meta", "Shift"]
             },
-            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used."
+            "description": "Modifier keys to press. Ensures that only these modifiers are pressed during the operation, and then restores current modifiers back. If not specified, currently pressed modifiers are used. \"ControlOrMeta\" resolves to \"Control\" on Windows and Linux and to \"Meta\" on macOS."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "This option has no effect.",
+            "deprecated": "This option has no effect."
           },
           "position": {
             "type": "object",
@@ -919,11 +928,143 @@
           },
           "strict": {
             "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
           },
           "timeout": {
             "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+          },
+          "trial": {
+            "type": "boolean",
+            "description": "When set, this method only performs the [actionability](https://playwright.dev/docs/actionability) checks and skips the action. Defaults to `false`. Useful to wait until the element is ready for the action without performing it. Note that keyboard `modifiers` will be pressed regardless of `trial` to allow testing elements which are only visible when those keys are pressed."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": ["selector"],
+    "description": "**NOTE** Use locator-based [locator.hover([options])](https://playwright.dev/docs/api/class-locator#locator-hover) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method hovers over an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-hover-option-selector) by performing the following steps: 1. Find an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-hover-option-selector).    If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless    [`force`](https://playwright.dev/docs/api/class-page#page-hover-option-force) option is set. If the element    is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to hover over the center of the    element, or the specified    [`position`](https://playwright.dev/docs/api/class-page#page-hover-option-position).\n\nWhen all steps combined have not finished during the specified [`timeout`](https://playwright.dev/docs/api/class-page#page-hover-option-timeout), this method throws a [TimeoutError](https://playwright.dev/docs/api/class-timeouterror). Passing zero timeout disables this."
+  },
+  "press": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
+      },
+      "key": {
+        "type": "string",
+        "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between `keydown` and `keyup` in milliseconds. Defaults to 0."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`.",
+            "deprecated": "This option will default to `true` in the future."
+          },
+          "strict": {
+            "type": "boolean",
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": ["selector", "key"],
+    "description": "**NOTE** Use locator-based [locator.press(key[, options])](https://playwright.dev/docs/api/class-locator#locator-press) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nFocuses the element, and then uses [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) and [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\n[`key`](https://playwright.dev/docs/api/class-page#page-press-option-key) can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the [`key`](https://playwright.dev/docs/api/class-page#page-press-option-key) values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`, `ControlOrMeta`. `ControlOrMeta` resolves to `Control` on Windows and Linux and to `Meta` on macOS.\n\nHolding down `Shift` will type the text that corresponds to the [`key`](https://playwright.dev/docs/api/class-page#page-press-option-key) in the upper case.\n\nIf [`key`](https://playwright.dev/docs/api/class-page#page-press-option-key) is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nShortcuts such as `key: \"Control+o\"`, `key: \"Control++` or `key: \"Control+Shift+T\"` are supported as well. When specified with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n\n**Usage**\n\n```js const page = await browser.newPage(); await page.goto('https://keycode.info'); await page.press('body', 'A'); await page.screenshot({ path: 'A.png' }); await page.press('body', 'ArrowLeft'); await page.screenshot({ path: 'ArrowLeft.png' }); await page.press('body', 'Shift+O'); await page.screenshot({ path: 'O.png' }); await browser.close(); ```"
+  },
+  "type": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
+      },
+      "text": {
+        "type": "string",
+        "description": "A text to type into a focused element."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "delay": {
+            "type": "number",
+            "description": "Time to wait between key presses in milliseconds. Defaults to 0."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "This option has no effect.",
+            "deprecated": "This option has no effect."
+          },
+          "strict": {
+            "type": "boolean",
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": ["selector", "text"],
+    "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text. `page.type` can be used to send fine-grained keyboard events. To fill values in form fields, use [page.fill(selector, value[, options])](https://playwright.dev/docs/api/class-page#page-fill).\n\nTo press a special key, like `Control` or `ArrowDown`, use [keyboard.press(key[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-press).\n\n**Usage**",
+    "deprecated": "In most cases, you should use\n[locator.fill(value[, options])](https://playwright.dev/docs/api/class-locator#locator-fill) instead. You only need\nto press keys one by one if there is special keyboard handling on the page - in this case use\n[locator.pressSequentially(text[, options])](https://playwright.dev/docs/api/class-locator#locator-press-sequentially)."
+  },
+  "uncheck": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "selector": {
+        "type": "string",
+        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used."
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "force": {
+            "type": "boolean",
+            "description": "Whether to bypass the [actionability](https://playwright.dev/docs/actionability) checks. Defaults to `false`."
+          },
+          "noWaitAfter": {
+            "type": "boolean",
+            "description": "This option has no effect.",
+            "deprecated": "This option has no effect."
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": ["x", "y"],
+            "additionalProperties": false,
+            "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
+          },
+          "strict": {
+            "type": "boolean",
+            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more than one element, the call throws an exception."
+          },
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds. Defaults to `0` - no timeout. The default value can be changed via `actionTimeout` option in the config, or by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
           },
           "trial": {
             "type": "boolean",
@@ -934,7 +1075,19 @@
       }
     },
     "required": ["selector"],
-    "description": "This method hovers over an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to hover over the center of the element,    or the specified `position`. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.hover(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-hover)."
+    "description": "**NOTE** Use locator-based [locator.uncheck([options])](https://playwright.dev/docs/api/class-locator#locator-uncheck) instead. Read more about [locators](https://playwright.dev/docs/locators).\n\nThis method unchecks an element matching [`selector`](https://playwright.dev/docs/api/class-page#page-uncheck-option-selector) by performing the following steps: 1. Find an element matching    [`selector`](https://playwright.dev/docs/api/class-page#page-uncheck-option-selector). If there is none, wait    until a matching element is attached to the DOM. 1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is    already unchecked, this method returns immediately. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless    [`force`](https://playwright.dev/docs/api/class-page#page-uncheck-option-force) option is set. If the element    is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the    element. 1. Ensure that the element is now unchecked. If not, this method throws.\n\nWhen all steps combined have not finished during the specified [`timeout`](https://playwright.dev/docs/api/class-page#page-uncheck-option-timeout), this method throws a [TimeoutError](https://playwright.dev/docs/api/class-timeouterror). Passing zero timeout disables this."
+  },
+  "waitForTimeout": {
+    "kind": "function",
+    "type": "Promise",
+    "parameters": {
+      "timeout": {
+        "type": "number",
+        "description": "A timeout to wait for"
+      }
+    },
+    "required": ["timeout"],
+    "description": "**NOTE** Never wait for timeout in production. Tests that wait for time are inherently flaky. Use [Locator](https://playwright.dev/docs/api/class-locator) actions and web assertions that wait automatically.\n\nWaits for the given [`timeout`](https://playwright.dev/docs/api/class-page#page-wait-for-timeout-option-timeout) in milliseconds.\n\nNote that `page.waitForTimeout()` should only be used for debugging. Tests using the timer in production are going to be flaky. Use signals such as network events, selectors becoming visible and others instead.\n\n**Usage**\n\n```js // wait for 1 second await page.waitForTimeout(1000); ```"
   },
   "keyboard": {
     "type": "object",
@@ -949,7 +1102,7 @@
           }
         },
         "required": ["key"],
-        "description": "Dispatches a `keydown` event.\n\n`key` can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the `key` values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\n\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\n\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nIf `key` is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key presses will be sent with that modifier active. To release the modifier key, use [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\nAfter the key is pressed once, subsequent calls to [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) will have [repeat](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat) set to true. To release the key, use [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\n> NOTE: Modifier keys DO influence `keyboard.down`. Holding down `Shift` will type the text in upper case."
+        "description": "Dispatches a `keydown` event.\n\n[`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-down-option-key) can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-down-option-key) values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`, `ControlOrMeta`. `ControlOrMeta` resolves to `Control` on Windows and Linux and to `Meta` on macOS.\n\nHolding down `Shift` will type the text that corresponds to the [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-down-option-key) in the upper case.\n\nIf [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-down-option-key) is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nIf [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-down-option-key) is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key presses will be sent with that modifier active. To release the modifier key, use [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\nAfter the key is pressed once, subsequent calls to [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) will have [repeat](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat) set to true. To release the key, use [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\n**NOTE** Modifier keys DO influence `keyboard.down`. Holding down `Shift` will type the text in upper case."
       },
       "insertText": {
         "kind": "function",
@@ -961,7 +1114,7 @@
           }
         },
         "required": ["text"],
-        "description": "Dispatches only `input` event, does not emit the `keydown`, `keyup` or `keypress` events.\n\n```js page.keyboard.insertText('嗨'); ```\n\n> NOTE: Modifier keys DO NOT effect `keyboard.insertText`. Holding down `Shift` will not type the text in upper case."
+        "description": "Dispatches only `input` event, does not emit the `keydown`, `keyup` or `keypress` events.\n\n**Usage**\n\n```js page.keyboard.insertText('嗨'); ```\n\n**NOTE** Modifier keys DO NOT effect `keyboard.insertText`. Holding down `Shift` will not type the text in upper case."
       },
       "press": {
         "kind": "function",
@@ -983,7 +1136,7 @@
           }
         },
         "required": ["key"],
-        "description": "`key` can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the `key` values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\n\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\n\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When specified with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n\n```js const page = await browser.newPage(); await page.goto('https://keycode.info'); await page.keyboard.press('A'); await page.screenshot({ path: 'A.png' }); await page.keyboard.press('ArrowLeft'); await page.screenshot({ path: 'ArrowLeft.png' }); await page.keyboard.press('Shift+O'); await page.screenshot({ path: 'O.png' }); await browser.close(); ```\n\nShortcut for [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) and [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up)."
+        "description": "**NOTE** In most cases, you should use [locator.press(key[, options])](https://playwright.dev/docs/api/class-locator#locator-press) instead.\n\n[`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-press-option-key) can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-press-option-key) values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`, `ControlOrMeta`. `ControlOrMeta` resolves to `Control` on Windows and Linux and to `Meta` on macOS.\n\nHolding down `Shift` will type the text that corresponds to the [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-press-option-key) in the upper case.\n\nIf [`key`](https://playwright.dev/docs/api/class-keyboard#keyboard-press-option-key) is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nShortcuts such as `key: \"Control+o\"`, `key: \"Control++` or `key: \"Control+Shift+T\"` are supported as well. When specified with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n\n**Usage**\n\n```js const page = await browser.newPage(); await page.goto('https://keycode.info'); await page.keyboard.press('A'); await page.screenshot({ path: 'A.png' }); await page.keyboard.press('ArrowLeft'); await page.screenshot({ path: 'ArrowLeft.png' }); await page.keyboard.press('Shift+O'); await page.screenshot({ path: 'O.png' }); await browser.close(); ```\n\nShortcut for [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) and [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up)."
       },
       "type": {
         "kind": "function",
@@ -1005,7 +1158,7 @@
           }
         },
         "required": ["text"],
-        "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text.\n\nTo press a special key, like `Control` or `ArrowDown`, use [keyboard.press(key[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-press).\n\n```js await page.keyboard.type('Hello'); // Types instantly await page.keyboard.type('World', {delay: 100}); // Types slower, like a user ```\n\n> NOTE: Modifier keys DO NOT effect `keyboard.type`. Holding down `Shift` will not type the text in upper case. > NOTE: For characters that are not on a US keyboard, only an `input` event will be sent."
+        "description": "**NOTE** In most cases, you should use [locator.fill(value[, options])](https://playwright.dev/docs/api/class-locator#locator-fill) instead. You only need to press keys one by one if there is special keyboard handling on the page - in this case use [locator.pressSequentially(text[, options])](https://playwright.dev/docs/api/class-locator#locator-press-sequentially).\n\nSends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text.\n\nTo press a special key, like `Control` or `ArrowDown`, use [keyboard.press(key[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-press).\n\n**Usage**\n\n```js await page.keyboard.type('Hello'); // Types instantly await page.keyboard.type('World', { delay: 100 }); // Types slower, like a user ```\n\n**NOTE** Modifier keys DO NOT effect `keyboard.type`. Holding down `Shift` will not type the text in upper case.\n\n**NOTE** For characters that are not on a US keyboard, only an `input` event will be sent."
       },
       "up": {
         "kind": "function",
@@ -1022,7 +1175,7 @@
     },
     "required": ["down", "insertText", "press", "type", "up"],
     "additionalProperties": false,
-    "description": "Keyboard provides an api for managing a virtual keyboard. The high level api is [keyboard.type(text[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-type), which takes raw characters and generates proper keydown, keypress/input, and keyup events on your page.\n\nFor finer control, you can use [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down), [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up), and [keyboard.insertText(text)](https://playwright.dev/docs/api/class-keyboard#keyboard-insert-text) to manually fire events as if they were generated from a real keyboard.\n\nAn example of holding down `Shift` in order to select and delete some text:\n\n```js await page.keyboard.type('Hello World!'); await page.keyboard.press('ArrowLeft');\n\nawait page.keyboard.down('Shift'); for (let i = 0; i < ' World'.length; i++)   await page.keyboard.press('ArrowLeft'); await page.keyboard.up('Shift');\n\nawait page.keyboard.press('Backspace'); // Result text will end up saying 'Hello!' ```\n\nAn example of pressing uppercase `A`\n\n```js await page.keyboard.press('Shift+KeyA'); // or await page.keyboard.press('Shift+A'); ```\n\nAn example to trigger select-all with the keyboard\n\n```js // on Windows and Linux await page.keyboard.press('Control+A'); // on macOS await page.keyboard.press('Meta+A'); ```"
+    "description": "Keyboard provides an api for managing a virtual keyboard. The high level api is [keyboard.type(text[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-type), which takes raw characters and generates proper `keydown`, `keypress`/`input`, and `keyup` events on your page.\n\nFor finer control, you can use [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down), [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up), and [keyboard.insertText(text)](https://playwright.dev/docs/api/class-keyboard#keyboard-insert-text) to manually fire events as if they were generated from a real keyboard.\n\nAn example of holding down `Shift` in order to select and delete some text:\n\n```js await page.keyboard.type('Hello World!'); await page.keyboard.press('ArrowLeft');\n\nawait page.keyboard.down('Shift'); for (let i = 0; i < ' World'.length; i++)   await page.keyboard.press('ArrowLeft'); await page.keyboard.up('Shift');\n\nawait page.keyboard.press('Backspace'); // Result text will end up saying 'Hello!' ```\n\nAn example of pressing uppercase `A`\n\n```js await page.keyboard.press('Shift+KeyA'); // or await page.keyboard.press('Shift+A'); ```\n\nAn example to trigger select-all with the keyboard\n\n```js await page.keyboard.press('ControlOrMeta+A'); ```"
   },
   "mouse": {
     "type": "object",
@@ -1032,10 +1185,12 @@
         "type": "Promise",
         "parameters": {
           "x": {
-            "type": "number"
+            "type": "number",
+            "description": "X coordinate relative to the main frame's viewport in CSS pixels."
           },
           "y": {
-            "type": "number"
+            "type": "number",
+            "description": "Y coordinate relative to the main frame's viewport in CSS pixels."
           },
           "options": {
             "type": "object",
@@ -1065,10 +1220,12 @@
         "type": "Promise",
         "parameters": {
           "x": {
-            "type": "number"
+            "type": "number",
+            "description": "X coordinate relative to the main frame's viewport in CSS pixels."
           },
           "y": {
-            "type": "number"
+            "type": "number",
+            "description": "Y coordinate relative to the main frame's viewport in CSS pixels."
           },
           "options": {
             "type": "object",
@@ -1117,17 +1274,19 @@
         "type": "Promise",
         "parameters": {
           "x": {
-            "type": "number"
+            "type": "number",
+            "description": "X coordinate relative to the main frame's viewport in CSS pixels."
           },
           "y": {
-            "type": "number"
+            "type": "number",
+            "description": "Y coordinate relative to the main frame's viewport in CSS pixels."
           },
           "options": {
             "type": "object",
             "properties": {
               "steps": {
                 "type": "number",
-                "description": "defaults to 1. Sends intermediate `mousemove` events."
+                "description": "Defaults to 1. Sends `n` interpolated `mousemove` events to represent travel between Playwright's current cursor position and the provided destination. When set to 1, emits a single `mousemove` event at the destination location."
               }
             },
             "additionalProperties": false
@@ -1162,45 +1321,7 @@
     },
     "required": ["click", "dblclick", "down", "move", "up"],
     "additionalProperties": false,
-    "description": "The Mouse class operates in main-frame CSS pixels relative to the top-left corner of the viewport.\n\nEvery `page` object has its own Mouse, accessible with [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse).\n\n```js // Using ‘page.mouse’ to trace a 100x100 square. await page.mouse.move(0, 0); await page.mouse.down(); await page.mouse.move(0, 100); await page.mouse.move(100, 100); await page.mouse.move(100, 0); await page.mouse.move(0, 0); await page.mouse.up(); ```"
-  },
-  "press": {
-    "kind": "function",
-    "type": "Promise",
-    "parameters": {
-      "selector": {
-        "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
-      },
-      "key": {
-        "type": "string",
-        "description": "Name of the key to press or a character to generate, such as `ArrowLeft` or `a`."
-      },
-      "options": {
-        "type": "object",
-        "properties": {
-          "delay": {
-            "type": "number",
-            "description": "Time to wait between `keydown` and `keyup` in milliseconds. Defaults to 0."
-          },
-          "noWaitAfter": {
-            "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
-          },
-          "strict": {
-            "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
-          },
-          "timeout": {
-            "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "required": ["selector", "key"],
-    "description": "Focuses the element, and then uses [keyboard.down(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-down) and [keyboard.up(key)](https://playwright.dev/docs/api/class-keyboard#keyboard-up).\n\n`key` can specify the intended [keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to generate the text for. A superset of the `key` values can be found [here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:\n\n`F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`, `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.\n\nFollowing modification shortcuts are also supported: `Shift`, `Control`, `Alt`, `Meta`, `ShiftLeft`.\n\nHolding down `Shift` will type the text that corresponds to the `key` in the upper case.\n\nIf `key` is a single character, it is case-sensitive, so the values `a` and `A` will generate different respective texts.\n\nShortcuts such as `key: \"Control+o\"` or `key: \"Control+Shift+T\"` are supported as well. When specified with the modifier, modifier is pressed and being held while the subsequent key is being pressed.\n\n```js const page = await browser.newPage(); await page.goto('https://keycode.info'); await page.press('body', 'A'); await page.screenshot({ path: 'A.png' }); await page.press('body', 'ArrowLeft'); await page.screenshot({ path: 'ArrowLeft.png' }); await page.press('body', 'Shift+O'); await page.screenshot({ path: 'O.png' }); await browser.close(); ```"
+    "description": "The Mouse class operates in main-frame CSS pixels relative to the top-left corner of the viewport.\n\n**NOTE** If you want to debug where the mouse moved, you can use the [Trace viewer](https://playwright.dev/docs/trace-viewer-intro) or [Playwright Inspector](https://playwright.dev/docs/running-tests). A red dot showing the location of the mouse will be shown for every mouse action.\n\nEvery `page` object has its own Mouse, accessible with [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse).\n\n```js // Using ‘page.mouse’ to trace a 100x100 square. await page.mouse.move(0, 0); await page.mouse.down(); await page.mouse.move(0, 100); await page.mouse.move(100, 100); await page.mouse.move(100, 0); await page.mouse.move(0, 0); await page.mouse.up(); ```"
   },
   "touchscreen": {
     "type": "object",
@@ -1210,121 +1331,21 @@
         "type": "Promise",
         "parameters": {
           "x": {
-            "type": "number"
+            "type": "number",
+            "description": "X coordinate relative to the main frame's viewport in CSS pixels."
           },
           "y": {
-            "type": "number"
+            "type": "number",
+            "description": "Y coordinate relative to the main frame's viewport in CSS pixels."
           }
         },
         "required": ["x", "y"],
-        "description": "Dispatches a `touchstart` and `touchend` event with a single touch at the position (`x`,`y`)."
+        "description": "Dispatches a `touchstart` and `touchend` event with a single touch at the position ([`x`](https://playwright.dev/docs/api/class-touchscreen#touchscreen-tap-option-x),[`y`](https://playwright.dev/docs/api/class-touchscreen#touchscreen-tap-option-y)).\n\n**NOTE** [page.tap(selector[, options])](https://playwright.dev/docs/api/class-page#page-tap) the method will throw if [`hasTouch`](https://playwright.dev/docs/api/class-browser#browser-new-context-option-has-touch) option of the browser context is false."
       }
     },
     "required": ["tap"],
     "additionalProperties": false,
-    "description": "The Touchscreen class operates in main-frame CSS pixels relative to the top-left corner of the viewport. Methods on the touchscreen can only be used in browser contexts that have been initialized with `hasTouch` set to true."
-  },
-  "type": {
-    "kind": "function",
-    "type": "Promise",
-    "parameters": {
-      "selector": {
-        "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
-      },
-      "text": {
-        "type": "string",
-        "description": "A text to type into a focused element."
-      },
-      "options": {
-        "type": "object",
-        "properties": {
-          "delay": {
-            "type": "number",
-            "description": "Time to wait between key presses in milliseconds. Defaults to 0."
-          },
-          "noWaitAfter": {
-            "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
-          },
-          "strict": {
-            "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
-          },
-          "timeout": {
-            "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "required": ["selector", "text"],
-    "description": "Sends a `keydown`, `keypress`/`input`, and `keyup` event for each character in the text. `page.type` can be used to send fine-grained keyboard events. To fill values in form fields, use [page.fill(selector, value[, options])](https://playwright.dev/docs/api/class-page#page-fill).\n\nTo press a special key, like `Control` or `ArrowDown`, use [keyboard.press(key[, options])](https://playwright.dev/docs/api/class-keyboard#keyboard-press).\n\n```js await page.type('#mytextarea', 'Hello'); // Types instantly await page.type('#mytextarea', 'World', {delay: 100}); // Types slower, like a user ```\n\nShortcut for main frame's [frame.type(selector, text[, options])](https://playwright.dev/docs/api/class-frame#frame-type)."
-  },
-  "uncheck": {
-    "kind": "function",
-    "type": "Promise",
-    "parameters": {
-      "selector": {
-        "type": "string",
-        "description": "A selector to search for an element. If there are multiple elements satisfying the selector, the first will be used. See [working with selectors](https://playwright.dev/docs/selectors) for more details."
-      },
-      "options": {
-        "type": "object",
-        "properties": {
-          "force": {
-            "type": "boolean",
-            "description": "Whether to bypass the [actionability](https://playwright.dev/docs/actionability) checks. Defaults to `false`."
-          },
-          "noWaitAfter": {
-            "type": "boolean",
-            "description": "Actions that initiate navigations are waiting for these navigations to happen and for pages to start loading. You can opt out of waiting via setting this flag. You would only need this option in the exceptional cases such as navigating to inaccessible pages. Defaults to `false`."
-          },
-          "position": {
-            "type": "object",
-            "properties": {
-              "x": {
-                "type": "number"
-              },
-              "y": {
-                "type": "number"
-              }
-            },
-            "required": ["x", "y"],
-            "additionalProperties": false,
-            "description": "A point to use relative to the top-left corner of element padding box. If not specified, uses some visible point of the element."
-          },
-          "strict": {
-            "type": "boolean",
-            "description": "When true, the call requires selector to resolve to a single element. If given selector resolves to more then one element, the call throws an exception."
-          },
-          "timeout": {
-            "type": "number",
-            "description": "Maximum time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be changed by using the [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout) or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods."
-          },
-          "trial": {
-            "type": "boolean",
-            "description": "When set, this method only performs the [actionability](https://playwright.dev/docs/actionability) checks and skips the action. Defaults to `false`. Useful to wait until the element is ready for the action without performing it."
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "required": ["selector"],
-    "description": "This method unchecks an element matching `selector` by performing the following steps: 1. Find an element matching `selector`. If there is none, wait until a matching element is attached to the DOM. 1. Ensure that matched element is a checkbox or a radio input. If not, this method throws. If the element is already    unchecked, this method returns immediately. 1. Wait for [actionability](https://playwright.dev/docs/actionability) checks on the matched element, unless `force` option is set. If the    element is detached during the checks, the whole action is retried. 1. Scroll the element into view if needed. 1. Use [page.mouse](https://playwright.dev/docs/api/class-page#page-mouse) to click in the center of the element. 1. Wait for initiated navigations to either succeed or fail, unless `noWaitAfter` option is set. 1. Ensure that the element is now unchecked. If not, this method throws.\n\nWhen all steps combined have not finished during the specified `timeout`, this method throws a [TimeoutError]. Passing zero timeout disables this.\n\nShortcut for main frame's [frame.uncheck(selector[, options])](https://playwright.dev/docs/api/class-frame#frame-uncheck)."
-  },
-  "waitForTimeout": {
-    "kind": "function",
-    "type": "Promise",
-    "parameters": {
-      "timeout": {
-        "type": "number",
-        "description": "A timeout to wait for"
-      }
-    },
-    "required": ["timeout"],
-    "description": "Waits for the given `timeout` in milliseconds.\n\nNote that `page.waitForTimeout()` should only be used for debugging. Tests using the timer in production are going to be flaky. Use signals such as network events, selectors becoming visible and others instead.\n\n```js // wait for 1 second await page.waitForTimeout(1000); ```\n\nShortcut for main frame's [frame.waitForTimeout(timeout)](https://playwright.dev/docs/api/class-frame#frame-wait-for-timeout)."
+    "description": "The Touchscreen class operates in main-frame CSS pixels relative to the top-left corner of the viewport. Methods on the touchscreen can only be used in browser contexts that have been initialized with `hasTouch` set to true.\n\nThis class is limited to emulating tap gestures. For examples of other gestures simulated by manually dispatching touch events, see the [emulating legacy touch events](https://playwright.dev/docs/touch-events) page."
   },
   "takeScreenshot": {
     "kind": "function",

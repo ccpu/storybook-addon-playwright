@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.1.3
+
+### Patch Changes
+
+- improve handling of failed image diffs
+
 ## 5.1.2
 
 ### Patch Changes

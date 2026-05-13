@@ -86,6 +86,48 @@ module.exports = function (router) {
 For a full list of available options with detailed descriptions, see the [`Config` interface in `src/typings/config.ts`](src/typings/config.ts).
 Every option is documented with a JSDoc comment explaining its purpose, parameters, and usage.
 
+### AI prompt helper for `getScreenshotTitle`
+
+This package exports `createScreenshotTitlePrompt(data, options)` so you can build a strict LLM prompt for title generation and reuse it across projects.
+
+The helper is designed for small models too. It asks the model to:
+
+- parse the provided data as JSON,
+- understand each field,
+- generate a concise title,
+- return JSON only in this shape: `{ "title": "..." }`.
+
+Example:
+
+```js
+const { setConfig } = require('storybook-addon-playwright/configs');
+const { createScreenshotTitlePrompt } = require('storybook-addon-playwright');
+
+async function askLlm(prompt) {
+  // Call your LLM provider here and return parsed JSON.
+  // The model response must match: { title: string }
+  return { title: 'Button / primary / loading' };
+}
+
+setConfig({
+  storybookEndpoint: 'http://localhost:6006/',
+  getPage: async () => {
+    throw new Error('Example only: implement getPage');
+  },
+  getScreenshotTitle: async (data) => {
+    const prompt = createScreenshotTitlePrompt(data, {
+      maxTitleLength: 72,
+      fallbackTitle: 'Should render correctly.',
+      includeBrowserType: true,
+      includeStoryId: false,
+    });
+
+    const result = await askLlm(prompt);
+    return result.title;
+  },
+});
+```
+
 ## How it works
 
 The addon is an interface between Playwright and Storybook stories. It executes user-defined action sequences on the Playwright page provided in the configuration.

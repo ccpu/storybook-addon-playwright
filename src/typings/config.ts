@@ -218,6 +218,11 @@ export interface Config<T = Page> {
    * Return a string (or a promise resolving to one) based on the story name,
    * browser, and screenshot settings.
    *
+   * For LLM-based title generation, use
+   * `createScreenshotTitlePrompt(data, options)` from
+   * `storybook-addon-playwright` to build a strict prompt that requests
+   * JSON output in the shape `{ "title": "..." }`.
+   *
    * @param data - Story metadata, browser type, and screenshot options.
    */
   getScreenshotTitle?: (data: GenerateScreenshotTitleInput) => string | Promise<string>;

@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.3.0
+
+### Minor Changes
+
+- save only changed story globals
+
 ## 5.2.0
 
 ### Minor Changes

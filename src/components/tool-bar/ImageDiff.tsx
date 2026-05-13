@@ -67,8 +67,9 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
         )
       : imageDiffResult;
 
-  const hasFailedDiff =
-    diffResults.length > 0 && diffResults.some((x) => x.pass === false);
+  const failedDiffResults = diffResults.filter((x) => x.pass === false);
+
+  const hasFailedDiff = failedDiffResults.length > 0;
 
   const handleImageDiffClick = useCallback(async () => {
     if (hasFailedDiff) return;
@@ -113,7 +114,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
     >
       {hasFailedDiff && (
         <Badge
-          badgeContent={diffResults.length}
+          badgeContent={failedDiffResults.length}
           color="secondary"
           className={classes.imageDiffBadge}
           overlap="rectangular"
@@ -150,7 +151,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
             }}
           ></ListItem>
 
-          {diffResults
+          {failedDiffResults
             .filter(
               (x, index, self) =>
                 index === self.findIndex((t) => t.storyId === x.storyId),

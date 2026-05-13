@@ -1,6 +1,7 @@
 const unlinkSyncMock = vi.hoisted(() => vi.fn());
+const existsSyncMock = vi.hoisted(() => vi.fn());
 vi.mock('node:fs', () => ({
-  existsSync: () => true,
+  existsSync: existsSyncMock,
   unlinkSync: unlinkSyncMock,
 }));
 
@@ -20,6 +21,9 @@ vi.mock(
 describe('deleteScreenshot', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    existsSyncMock.mockImplementation((filePath: string) =>
+      filePath.endsWith('-snap.png'),
+    );
   });
 
   afterAll(() => {
@@ -81,5 +85,22 @@ describe('deleteScreenshot', () => {
     ).toStrictEqual(undefined);
 
     expect(unlinkSyncMock).toBeCalledTimes(1);
+  });
+
+  it('should delete the current screenshot file name variant', async () => {
+    existsSyncMock.mockImplementation(
+      (filePath: string) => filePath.endsWith('.png') && !filePath.endsWith('-snap.png'),
+    );
+
+    await deleteScreenshot({
+      filePath: 'story.ts',
+      screenshotId: 'screenshot-id',
+      storyId: 'story-id',
+    });
+
+    expect(unlinkSyncMock).toHaveBeenCalledTimes(1);
+    expect(unlinkSyncMock).toHaveBeenCalledWith(
+      expect.stringContaining('story-id-title-chromium.png'),
+    );
   });
 });

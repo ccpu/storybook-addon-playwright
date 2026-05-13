@@ -1,6 +1,15 @@
-const { removeImageDiffResultMock, setImageDiffResultsMock } = vi.hoisted(() => ({
+const {
+  removeImageDiffResultMock,
+  setImageDiffResultsMock,
+  testStoryScreenShotsMock,
+  useGlobalImageDiffResultsMock,
+  useScreenshotDiffTestByTypeMock,
+} = vi.hoisted(() => ({
   removeImageDiffResultMock: vi.fn(),
   setImageDiffResultsMock: vi.fn(),
+  testStoryScreenShotsMock: vi.fn(),
+  useGlobalImageDiffResultsMock: vi.fn(),
+  useScreenshotDiffTestByTypeMock: vi.fn(),
 }));
 
 function invokeMock<Args extends unknown[]>(mock: (...args: Args) => unknown) {
@@ -22,252 +31,161 @@ vi.mock('../../../src/features/screenshot/store/actions', () => ({
   removeImageDiffResult: invokeMock(removeImageDiffResultMock),
   setImageDiffResults: invokeMock(setImageDiffResultsMock),
 }));
+vi.mock('../../../src/features/screenshot/hooks/use-global-imageDiff-results', () => ({
+  useGlobalImageDiffResults: useGlobalImageDiffResultsMock,
+}));
+vi.mock(
+  '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
+  () => ({
+    useScreenshotDiffTestByType: useScreenshotDiffTestByTypeMock,
+  }),
+);
 
 import '../../manual-mocks/react-useEffect';
 import { storyData } from '../../configs/story-data';
 import { ImageDiff } from '../../../src/components/tool-bar/ImageDiff';
-import { shallow, ShallowWrapper } from 'enzyme';
-import React from 'react';
-import { IconButton, ListItem, WithTooltip } from '@storybook/components';
-import { useScreenshotDiffTestByType } from '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
-import { useGlobalImageDiffResults } from '../../../src/features/screenshot/hooks/use-global-imageDiff-results';
-import { ImageDiffResult } from '../../../src/api/typings';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
+import { Loader } from '../../../src/components/common';
+import { ImageDiffResult } from '../../../src/api/typings';
+import { shallow } from 'enzyme';
+import React from 'react';
+import { Badge } from '@material-ui/core';
+import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { toast } from '../../../src/utils/toast';
 
-vi.mock(
-  '../../../src/features/screenshot/hooks/use-global-imageDiff-results',
-  async () =>
-    await import('../../features/screenshot/hooks/__mocks__/use-global-imageDiff-results'),
-);
-vi.mock(
-  '../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type',
-  async () => {
-    const { useScreenshotDiffTestByType } =
-      await import('../../features/screenshot/hooks/__mocks__/use-screenshot-diff-test-by-type');
-    return {
-      useScreenshotDiffTestByType,
-    };
-  },
-);
-vi.mock(
-  '../../../src/hooks/use-current-story-data',
-  async () => await import('../../hooks/__mocks__/use-current-story-data'),
-);
+vi.mocked(useGlobalImageDiffResultsMock).mockImplementation(() => ({
+  imageDiffResult: [],
+  setImageDiffResult: vi.fn(),
+}));
 
-const testStoryScreenShotsMock = vi.fn();
-vi.mocked(useScreenshotDiffTestByType).mockImplementation(() => {
-  return {
-    imageDiffTestInProgress: false,
-    storyData: {
-      fileName: 'story.ts',
-      filePath: './test.stories.tsx',
-      id: 'story-id',
-      name: 'Story Name',
-      parent: 'Story Parent',
-    },
-    testStoryScreenShots: testStoryScreenShotsMock,
-  };
-});
+vi.mocked(useScreenshotDiffTestByTypeMock).mockImplementation(() => ({
+  imageDiffTestInProgress: false,
+  storyData,
+  testStoryScreenShots: testStoryScreenShotsMock,
+}));
 
 describe('ImageDiff', () => {
-  const imageDiffResult = [
-    {
-      filePath: 'test.stories.playwright.json',
-      pass: true,
-      screenshotId: 'screenshot-id',
-    },
-  ] as ImageDiffResult[];
+  const matchingFileResult = {
+    filePath: 'test.stories.playwright.json',
+    pass: false,
+    screenshotId: 'matching-screenshot-id',
+    storyId: 'story-1',
+  } as ImageDiffResult;
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
-    vi.spyOn(toast, 'success').mockImplementation(() => 'toast-id');
+  const duplicateMatchingFileResult = {
+    filePath: 'test.stories.playwright.json',
+    pass: false,
+    screenshotId: 'matching-screenshot-id-2',
+    storyId: 'story-1',
+  } as ImageDiffResult;
 
-    (useGlobalImageDiffResults as Mock).mockReset();
-    (useGlobalImageDiffResults as Mock).mockImplementation(() => {
-      return { imageDiffResult: [] };
-    });
-  });
+  const otherMatchingFileResult = {
+    filePath: 'test.stories.playwright.json',
+    pass: false,
+    screenshotId: 'matching-screenshot-id-3',
+    storyId: 'story-2',
+  } as ImageDiffResult;
 
-  async function clickOnIconButton(
-    wrapper: ShallowWrapper<
-      unknown,
-      Readonly<unknown>,
-      React.Component<unknown, unknown, unknown>
-    >,
+  const nonMatchingFileResult = {
+    filePath: 'other.stories.playwright.json',
+    pass: false,
+    screenshotId: 'other-screenshot-id',
+    storyId: 'story-3',
+  } as ImageDiffResult;
+
+  function setImageDiffResults(results: ImageDiffResult[]) {
+    vi.mocked(useGlobalImageDiffResultsMock).mockImplementation(() => ({
+      imageDiffResult: results,
+      setImageDiffResult: vi.fn(),
+    }));
+  }
+
+  function setDiffState(
+    options: {
+      imageDiffTestInProgress?: boolean;
+      storyDataOverride?: typeof storyData | undefined;
+      testStoryScreenShots?: typeof testStoryScreenShotsMock;
+    } = {},
   ) {
+    vi.mocked(useScreenshotDiffTestByTypeMock).mockImplementation(() => ({
+      imageDiffTestInProgress: options.imageDiffTestInProgress ?? false,
+      storyData: options.storyDataOverride ?? storyData,
+      testStoryScreenShots: options.testStoryScreenShots ?? testStoryScreenShotsMock,
+    }));
+  }
+
+  async function clickOnIconButton(wrapper: ReturnType<typeof shallow>) {
     await invokeHandler(wrapper.find(IconButton).props().onClick, {
       currentTarget: { tagName: 'button' },
     } as never);
   }
 
-  function getTooltipWrapper(
-    wrapper: ShallowWrapper<
-      unknown,
-      Readonly<unknown>,
-      React.Component<unknown, unknown, unknown>
-    >,
-    onHide = vi.fn(),
-  ) {
+  function getTooltipWrapper(wrapper: ReturnType<typeof shallow>, onHide = vi.fn()) {
     const tooltipProp = wrapper.find(WithTooltip).props().tooltip as (args: {
       onHide: () => void;
     }) => React.ReactNode;
 
-    const tooltip = tooltipProp({ onHide });
-
-    return shallow(<div>{tooltip}</div>);
+    return shallow(<div>{tooltipProp({ onHide })}</div>);
   }
 
-  it('should render', () => {
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-    expect(wrapper.exists()).toBeTruthy();
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
+    vi.spyOn(toast, 'success').mockImplementation(() => 'toast-id');
+    setImageDiffResults([]);
+    setDiffState();
   });
 
-  it('should show/hide menu with the list of story that failed image diff test', async () => {
-    (useGlobalImageDiffResults as Mock)
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      })
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      });
-
+  it('renders the icon button when there are no failed diffs', () => {
     const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
-    await clickOnIconButton(wrapper);
-
-    expect(wrapper.find(WithTooltip).props().trigger).toBe('click');
-
-    const tooltipWrapper = getTooltipWrapper(wrapper);
-
-    expect(tooltipWrapper.find(ListItem)).toHaveLength(1);
-    expect(tooltipWrapper.find(ImageDiffMenuItem)).toHaveLength(1);
-
-    expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(0);
+    expect(wrapper.find(WithTooltip)).toHaveLength(0);
+    expect(wrapper.find(IconButton).props().title).toBe('Run diff test for all stories');
+    expect(wrapper.find(Badge)).toHaveLength(0);
+    expect(wrapper.find(Loader).props().open).toBeFalsy();
   });
 
-  it('should run image diff and show/hide success msg', async () => {
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-
-    testStoryScreenShotsMock.mockImplementationOnce((): ImageDiffResult[] => {
-      return [];
-    });
-
-    await clickOnIconButton(wrapper);
-
-    expect(testStoryScreenShotsMock).toHaveBeenCalledTimes(1);
-
-    expect(toast.success).toHaveBeenCalledWith(
-      'All screenshot tests are passed successfully.',
-      expect.any(Object),
-    );
-  });
-
-  it('should not show success if has a result with pass=false', async () => {
-    testStoryScreenShotsMock.mockImplementationOnce(
-      () => [{ pass: false }] as ImageDiffResult[],
-    );
-
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-
-    await clickOnIconButton(wrapper);
-
-    expect(toast.success).toHaveBeenCalledTimes(0);
-  });
-
-  it('should show menu', () => {
-    (useGlobalImageDiffResults as Mock).mockImplementationOnce(() => ({
-      imageDiffResult: [
-        {
-          filePath: 'test.stories.playwright.json',
-          pass: true,
-          screenshotId: 'screenshot-id',
-        },
-      ] as ImageDiffResult[],
-    }));
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-
-    expect(wrapper.find(WithTooltip).props().trigger).toBe('click');
-
-    const tooltipWrapper = getTooltipWrapper(wrapper);
-
-    expect(tooltipWrapper.find(ListItem)).toHaveLength(1);
-  });
-
-  it('should clear result', async () => {
-    (useGlobalImageDiffResults as Mock)
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      })
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      });
-
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-
-    await clickOnIconButton(wrapper);
-
-    const onHideMock = vi.fn();
-    const tooltipWrapper = getTooltipWrapper(wrapper, onHideMock);
-
-    const clearItem = tooltipWrapper.find(ListItem).first();
-
-    expect(clearItem.props().title).toBe('Clear results');
-
-    invokeHandler(
-      clearItem.props().onClick,
-      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
-    );
-
-    expect(onHideMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should hide menu on item click', async () => {
-    (useGlobalImageDiffResults as Mock)
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      })
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      })
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      });
-
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-
-    await clickOnIconButton(wrapper);
-
-    const onHideMock = vi.fn();
-    const tooltipWrapper = getTooltipWrapper(wrapper, onHideMock);
-
-    tooltipWrapper.find(ImageDiffMenuItem).last().props().onClick();
-
-    expect(onHideMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should test story file', () => {
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
-
-    clickOnIconButton(wrapper);
-
-    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('story');
-  });
-
-  it('should remove only story file image diff', async () => {
-    (useGlobalImageDiffResults as Mock)
-      .mockImplementation(() => {
-        return { imageDiffResult };
-      })
-      .mockImplementationOnce(() => {
-        return { imageDiffResult };
-      });
+  it('opens the failed-results menu, deduplicates stories, and blocks reruns', async () => {
+    setImageDiffResults([
+      matchingFileResult,
+      duplicateMatchingFileResult,
+      otherMatchingFileResult,
+      nonMatchingFileResult,
+    ]);
 
     const wrapper = shallow(<ImageDiff target="file" storyData={storyData} />);
 
+    expect(wrapper.find(WithTooltip)).toHaveLength(1);
+    expect(wrapper.find(IconButton).props().title).toBe(
+      "Run diff test for all stories in './test.stories.tsx' file.",
+    );
+    expect(wrapper.find(Badge).props().badgeContent).toBe(3);
+
     await clickOnIconButton(wrapper);
 
+    expect(testStoryScreenShotsMock).not.toHaveBeenCalled();
+
+    const tooltipWrapper = getTooltipWrapper(wrapper);
+
+    expect(tooltipWrapper.find(ListItem)).toHaveLength(1);
+    expect(tooltipWrapper.find(ImageDiffMenuItem)).toHaveLength(2);
+    expect(tooltipWrapper.find(ImageDiffMenuItem).at(0).props().imageDiff.storyId).toBe(
+      'story-1',
+    );
+    expect(tooltipWrapper.find(ImageDiffMenuItem).at(1).props().imageDiff.storyId).toBe(
+      'story-2',
+    );
+  });
+
+  it('clears matching file results individually', () => {
+    setImageDiffResults([
+      matchingFileResult,
+      duplicateMatchingFileResult,
+      otherMatchingFileResult,
+      nonMatchingFileResult,
+    ]);
+
+    const wrapper = shallow(<ImageDiff target="file" storyData={storyData} />);
     const onHideMock = vi.fn();
     const tooltipWrapper = getTooltipWrapper(wrapper, onHideMock);
 
@@ -280,17 +198,73 @@ describe('ImageDiff', () => {
       {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
     );
 
-    expect(removeImageDiffResultMock).toHaveBeenCalledWith('screenshot-id');
+    expect(removeImageDiffResultMock).toHaveBeenCalledWith('matching-screenshot-id');
+    expect(removeImageDiffResultMock).toHaveBeenCalledWith('matching-screenshot-id-2');
+    expect(removeImageDiffResultMock).toHaveBeenCalledWith('matching-screenshot-id-3');
+    expect(removeImageDiffResultMock).not.toHaveBeenCalledWith('other-screenshot-id');
+    expect(setImageDiffResultsMock).not.toHaveBeenCalled();
     expect(onHideMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should show error server throw error', async () => {
-    testStoryScreenShotsMock.mockImplementationOnce(() => undefined);
+  it('clears all results for non-file targets', () => {
+    setImageDiffResults([matchingFileResult]);
+
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
+    const tooltipWrapper = getTooltipWrapper(wrapper);
+
+    invokeHandler(
+      tooltipWrapper.find(ListItem).first().props().onClick,
+      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
+    );
+
+    expect(setImageDiffResultsMock).toHaveBeenCalledWith([]);
+    expect(removeImageDiffResultMock).not.toHaveBeenCalled();
+  });
+
+  it('runs image diff and shows success when all results pass', async () => {
+    testStoryScreenShotsMock.mockResolvedValueOnce([{ pass: true }] as ImageDiffResult[]);
+
+    const wrapper = shallow(<ImageDiff target="all" />);
+
+    await clickOnIconButton(wrapper);
+
+    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('all');
+    expect(toast.success).toHaveBeenCalledWith(
+      'All screenshot tests are passed successfully.',
+      expect.objectContaining({ id: 'image-diff:all-passed' }),
+    );
+  });
+
+  it('does not show success when the diff call returns no array', async () => {
+    testStoryScreenShotsMock.mockResolvedValueOnce(undefined as never);
 
     const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
 
     await clickOnIconButton(wrapper);
 
-    expect(toast.success).toHaveBeenCalledTimes(0);
+    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('story');
+    expect(toast.success).not.toHaveBeenCalled();
+  });
+
+  it('does not show success when at least one screenshot fails', async () => {
+    testStoryScreenShotsMock.mockResolvedValueOnce([
+      { pass: true },
+      { pass: false },
+    ] as ImageDiffResult[]);
+
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
+
+    await clickOnIconButton(wrapper);
+
+    expect(toast.success).not.toHaveBeenCalled();
+  });
+
+  it('shows the loading state when image diff testing is in progress', () => {
+    setDiffState({ imageDiffTestInProgress: true });
+
+    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
+
+    expect(wrapper.find(IconButton).props().disabled).toBe(true);
+    expect(wrapper.find(Loader).props().open).toBe(true);
   });
 });

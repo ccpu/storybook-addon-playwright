@@ -51,37 +51,6 @@
           "title": "test clipping"
         }
       ]
-    },
-    "controls-arg-patterns--meta-args-and-meta-arg-types": {
-      "screenshots": [
-        {
-          "args": {
-            "advanced": true
-          },
-          "browserOptionsId": "rww9Mur2Uayu",
-          "browserType": "chromium",
-          "id": "CWvJjHUkzg_3",
-          "index": 0,
-          "screenshotOptionsId": "jjr2dgFqdpWc",
-          "title": "df"
-        },
-        {
-          "browserOptionsId": "HiDckMBEnVFA",
-          "browserType": "chromium",
-          "id": "repBefBlgpKH",
-          "index": 1,
-          "screenshotOptionsId": "2tkHkgqWPNPY",
-          "title": "test"
-        },
-        {
-          "browserOptionsId": "HiDckMBEnVFA",
-          "browserType": "firefox",
-          "id": "-qvmOFUAdSUR",
-          "index": 2,
-          "screenshotOptionsId": "2tkHkgqWPNPY",
-          "title": "test"
-        }
-      ]
     }
   },
   "browserOptions": {
@@ -96,31 +65,6 @@
       "viewport": {
         "height": 582,
         "width": 640
-      }
-    },
-    "rww9Mur2Uayu": {
-      "viewport": {
-        "height": 599,
-        "width": 625
-      }
-    },
-    "HiDckMBEnVFA": {
-      "all": {
-        "all": {
-          "viewport": {
-            "height": 582,
-            "width": 896
-          }
-        },
-        "viewport": {
-          "height": 800,
-          "width": 836
-        },
-        "cursor": true
-      },
-      "viewport": {
-        "height": 333,
-        "width": 836
       }
     }
   },
@@ -140,18 +84,6 @@
         "x": 52,
         "y": 447
       }
-    },
-    "jjr2dgFqdpWc": {
-      "clip": {
-        "height": 223,
-        "width": 280,
-        "x": 92,
-        "y": 42
-      }
-    },
-    "2tkHkgqWPNPY": {
-      "fullPage": false,
-      "omitBackground": false
     }
   }
 }

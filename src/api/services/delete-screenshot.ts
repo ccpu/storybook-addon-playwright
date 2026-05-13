@@ -9,6 +9,18 @@ import {
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 import { deleteStoryOptions, getStoryData } from './utils';
 
+function getScreenshotFilePaths(filePath: string) {
+  const filePaths = [filePath];
+
+  if (filePath.endsWith('-snap.png')) {
+    filePaths.push(filePath.replace(/-snap\.png$/, '.png'));
+  } else if (filePath.endsWith('.png')) {
+    filePaths.push(filePath.replace(/\.png$/, '-snap.png'));
+  }
+
+  return [...new Set(filePaths)];
+}
+
 export async function deleteScreenshot(
   data: ScreenshotInfo,
 ): Promise<ScreenshotData[] | undefined> {
@@ -36,8 +48,10 @@ export async function deleteScreenshot(
     title: screenshotInfo.title,
   });
 
-  if (fs.existsSync(paths.filePath)) {
-    fs.unlinkSync(paths.filePath);
+  for (const screenshotFilePath of getScreenshotFilePaths(paths.filePath)) {
+    if (fs.existsSync(screenshotFilePath)) {
+      fs.unlinkSync(screenshotFilePath);
+    }
   }
 
   story.screenshots = story.screenshots.filter((x) => x.id !== data.screenshotId);

@@ -1,1 +1,1 @@
-export * from './dist/api/server/configs';
+export { getConfigs, setConfig } from './dist/trpc/router';

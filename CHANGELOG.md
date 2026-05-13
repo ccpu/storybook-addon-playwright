@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.2.0
+
+### Minor Changes
+
+- update actions and browser options schema
+
 ## 5.1.5
 
 ### Patch Changes

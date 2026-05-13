@@ -220,7 +220,7 @@ export interface Config<T = Page> {
    *
    * For LLM-based title generation, use
    * `createScreenshotTitlePrompt(data, options)` from
-   * `storybook-addon-playwright` to build a strict prompt that requests
+   * `storybook-addon-playwright/ai` to build a strict prompt that requests
    * JSON output in the shape `{ "title": "..." }`.
    *
    * @param data - Story metadata, browser type, and screenshot options.

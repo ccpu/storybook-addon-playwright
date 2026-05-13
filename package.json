@@ -33,6 +33,8 @@
   "files": [
     "LICENSE",
     "README.md",
+    "ai.d.ts",
+    "ai.js",
     "assets",
     "configs.d.ts",
     "configs.js",

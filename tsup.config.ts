@@ -47,6 +47,7 @@ export default defineConfig((overrideOptions) => {
       ...commonConfig,
       dts: !overrideOptions.watch,
       entry: {
+        'ai/index': 'src/ai/index.ts',
         'api/server/routes': 'src/api/server/routes.ts',
         'constants/routes': 'src/constants/routes.ts',
         'get-screenshots': 'src/get-screenshots.ts',

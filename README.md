@@ -88,7 +88,7 @@ Every option is documented with a JSDoc comment explaining its purpose, paramete
 
 ### AI prompt helper for `getScreenshotTitle`
 
-This package exports `createScreenshotTitlePrompt(data, options)` so you can build a strict LLM prompt for title generation and reuse it across projects.
+The AI helper is exported from `storybook-addon-playwright/ai` as `createScreenshotTitlePrompt(data, options)` so you can build a strict LLM prompt for title generation and reuse it across projects.
 
 The helper is designed for small models too. It asks the model to:
 
@@ -101,7 +101,7 @@ Example:
 
 ```js
 const { setConfig } = require('storybook-addon-playwright/configs');
-const { createScreenshotTitlePrompt } = require('storybook-addon-playwright');
+const { createScreenshotTitlePrompt } = require('storybook-addon-playwright/ai');
 
 async function askLlm(prompt) {
   // Call your LLM provider here and return parsed JSON.

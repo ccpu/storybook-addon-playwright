@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 5.1.2
+
+### Patch Changes
+
+- update @pixpilot/dev-config and type definitions
+- update packages
+
 ## 5.1.1
 
 ### Patch Changes

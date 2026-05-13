@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.4.0
+
+### Minor Changes
+
+- add `createScreenshotTitlePrompt` for LLM-based title generation
+
 ## 5.3.0
 
 ### Minor Changes

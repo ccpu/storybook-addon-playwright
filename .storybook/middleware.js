@@ -10,7 +10,7 @@ const setupPlaywrightPromise = setupPlaywright();
 let sseClients = [];
 
 module.exports = function (router) {
-  router.all('/trpc/*', async (_req, res, next) => {
+  router.all('/__storybook_playwright/trpc/*', async (_req, res, next) => {
     try {
       await setupPlaywrightPromise;
       next();

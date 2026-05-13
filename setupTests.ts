@@ -67,7 +67,7 @@ vi.mock('@testing-library/react-hooks', async () => {
       links: [
         httpLink({
           methodOverride: 'POST',
-          url: `${window.location.origin}/trpc`,
+          url: `${window.location.origin}/__storybook_playwright/trpc`,
         }),
       ],
     });

@@ -12,11 +12,11 @@ function toWebRequest(req) {
 }
 
 module.exports = function (router) {
-  router.all('/trpc/*', async (req, res) => {
+  router.all('/__storybook_playwright/trpc/*', async (req, res) => {
     const request = toWebRequest(req);
 
     const response = await fetchRequestHandler({
-      endpoint: '/trpc',
+      endpoint: '/__storybook_playwright/trpc',
       req: request,
       router: appRouter,
       createContext: () => createContext({ req, res }),

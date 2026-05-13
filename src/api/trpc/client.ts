@@ -11,7 +11,7 @@ export function createTrpcHttpClient() {
     links: [
       httpBatchLink({
         maxURLLength: 2083,
-        url: `${BASE}/trpc`,
+        url: `${BASE}/__storybook_playwright/trpc`,
       }),
     ],
   });

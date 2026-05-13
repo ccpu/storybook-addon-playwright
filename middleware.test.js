@@ -7,12 +7,15 @@ const middleware = require('./middleware');
 const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');
 
 describe('middleware', () => {
-  it('should register a /trpc/* route handler', () => {
+  it('should register a /__storybook_playwright/trpc/* route handler', () => {
     const router = { all: vi.fn() };
 
     middleware(router);
 
-    expect(router.all).toHaveBeenCalledWith('/trpc/*', expect.any(Function));
+    expect(router.all).toHaveBeenCalledWith(
+      '/__storybook_playwright/trpc/*',
+      expect.any(Function),
+    );
   });
 
   it('should call fetchRequestHandler and pipe response', async () => {
@@ -23,7 +26,7 @@ describe('middleware', () => {
     const handler = router.all.mock.calls[0][1];
 
     const req = {
-      url: '/trpc/screenshot.takeScreenshot',
+      url: '/__storybook_playwright/trpc/screenshot.takeScreenshot',
       method: 'POST',
       headers: { 'content-type': 'application/json' },
     };
@@ -38,7 +41,7 @@ describe('middleware', () => {
 
     expect(fetchRequestHandler).toHaveBeenCalledWith(
       expect.objectContaining({
-        endpoint: '/trpc',
+        endpoint: '/__storybook_playwright/trpc',
       }),
     );
     expect(res.statusCode).toBe(200);

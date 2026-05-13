@@ -3,8 +3,8 @@ import type { AppRouter } from '../src/api/trpc/router';
 
 const trpcBaseUrl =
   typeof window !== 'undefined' && window.location?.origin
-    ? `${window.location.origin}/trpc`
-    : 'http://localhost/trpc';
+    ? `${window.location.origin}/__storybook_playwright/trpc`
+    : 'http://localhost/__storybook_playwright/trpc';
 
 export const trpcMswBatch = createTRPCMsw<AppRouter>({
   links: [httpLink({ url: trpcBaseUrl })],

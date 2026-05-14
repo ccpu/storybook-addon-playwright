@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.5.0
+
+### Minor Changes
+
+- add customizable outputPrompt option for screenshot title generation
+
 ## 5.4.2
 
 ### Patch Changes

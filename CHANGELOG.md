@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.6.0
+
+### Minor Changes
+
+- enhance screenshot title generation with field guides
+
 ## 5.5.0
 
 ### Minor Changes

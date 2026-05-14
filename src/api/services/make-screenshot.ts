@@ -20,6 +20,7 @@ import { installMouseHelper } from '../server/utils/install-mouse-helper';
 import { isInteractiveAction } from './utils/is-interactive-action';
 import { releaseModifierKey } from './utils/release-modifier-Key';
 import { shouldTakeScreenshot } from './utils/should-take-screenshot';
+import { waitForStoryRendered } from './utils/wait-for-story-rendered';
 
 interface ImageInfo {
   buffer: Buffer;
@@ -91,6 +92,8 @@ export async function makeScreenshot(
   }
 
   await page.goto(url, configs.pageGotoOptions);
+
+  await waitForStoryRendered(page, data.storyId);
 
   if (configs.afterNavigation) {
     await configs.afterNavigation(page, requestData);

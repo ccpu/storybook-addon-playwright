@@ -50,6 +50,7 @@ export default defineConfig((overrideOptions) => {
         'ai/index': 'src/ai/index.ts',
         'api/server/routes': 'src/api/server/routes.ts',
         'constants/routes': 'src/constants/routes.ts',
+        'decorator/index': 'src/decorator/index.tsx',
         'get-screenshots': 'src/get-screenshots.ts',
         index: 'src/index.ts',
         'run-image-diff': 'src/run-image-diff.ts',

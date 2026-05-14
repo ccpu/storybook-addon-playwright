@@ -10,3 +10,4 @@ export * from './release-modifier-Key';
 export * from './set-story-options';
 export * from './set-story-screenshot-options';
 export * from './should-take-screenshot';
+export * from './wait-for-story-rendered';

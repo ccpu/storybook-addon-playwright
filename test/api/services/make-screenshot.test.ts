@@ -54,6 +54,8 @@ const getPageMock = vi.fn();
 
 const screenshotMock = vi.fn();
 const gotoMock = vi.fn();
+const evaluateMock = vi.fn();
+const waitForFunctionMock = vi.fn();
 
 screenshotMock.mockImplementation(() => {
   return new Promise((resolve) => {
@@ -61,11 +63,25 @@ screenshotMock.mockImplementation(() => {
   });
 });
 
+waitForFunctionMock.mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve(true);
+  });
+});
+
+evaluateMock.mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve(undefined);
+  });
+});
+
 getPageMock.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({
+      evaluate: evaluateMock,
       goto: gotoMock,
       screenshot: screenshotMock,
+      waitForFunction: waitForFunctionMock,
     } as unknown as Page);
   });
 });
@@ -261,6 +277,31 @@ describe('makeScreenshot', () => {
       true,
     );
     expect(afterNavigation).toBeCalledTimes(1);
+  });
+
+  it('should wait for story readiness before screenshot', async () => {
+    evaluateMock.mockResolvedValueOnce(false).mockResolvedValueOnce(undefined);
+
+    await makeScreenshot({
+      browserType: 'chromium',
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    expect(waitForFunctionMock).toBeCalledTimes(1);
+    expect(evaluateMock).toBeCalledTimes(2);
+  });
+
+  it('should continue when story readiness wait fails', async () => {
+    waitForFunctionMock.mockRejectedValueOnce(new Error('storybook-preview-not-found'));
+
+    await makeScreenshot({
+      browserType: 'chromium',
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    expect(evaluateMock).toBeCalledTimes(1);
   });
 
   it('should install mouse helper', async () => {

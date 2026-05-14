@@ -125,6 +125,12 @@
           "index": 0,
           "screenshotOptionsId": "fmsdQSLwg4Bi",
           "title": "should allow last screenshot if last action is not takeElementScreenshot"
+        },
+        {
+          "browserType": "chromium",
+          "id": "WGcKzucoOAAr",
+          "index": 1,
+          "title": "Should render correctly."
         }
       ]
     }

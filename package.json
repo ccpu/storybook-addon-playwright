@@ -24,6 +24,37 @@
     "screenshot",
     "storybook-addon"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./ai": {
+      "types": "./dist/ai/index.d.ts",
+      "import": "./dist/ai/index.mjs",
+      "require": "./dist/ai/index.js"
+    },
+    "./configs": {
+      "types": "./configs.d.ts",
+      "require": "./configs.js"
+    },
+    "./decorator": {
+      "types": "./dist/decorator/index.d.ts",
+      "import": "./dist/decorator/index.mjs",
+      "require": "./dist/decorator/index.js"
+    },
+    "./middleware": {
+      "types": "./middleware.d.ts",
+      "require": "./middleware.js"
+    },
+    "./register": {
+      "import": "./dist/register.mjs",
+      "require": "./register.js"
+    },
+    "./typings/global": "./typings/global.d.ts",
+    "./package.json": "./package.json"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "types": "",
@@ -38,6 +69,8 @@
     "assets",
     "configs.d.ts",
     "configs.js",
+    "decorator.d.ts",
+    "decorator.js",
     "dist",
     "middleware.d.ts",
     "middleware.js",

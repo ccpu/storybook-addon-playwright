@@ -81,6 +81,46 @@ module.exports = function (router) {
 };
 ```
 
+### Story Readiness Before Screenshot
+
+The addon will wait briefly for story readiness before taking screenshots.
+
+Built-in readiness checks:
+
+- If a marker is present at navigation time (`body[data-playwright-mounted]`), marker mode is enabled and the addon waits for mounted state.
+- In marker mode, readiness is:
+  - `body[data-playwright-mounted="true"]`.
+- Otherwise, it checks Storybook preview render phases when available.
+- If Storybook internals are not available, it falls back to mounted content under `#storybook-root` or `#storybook-docs`.
+
+If you do not use a mount marker decorator, no marker wait is applied.
+
+For stricter post-mount readiness in React, use the built-in decorator helper from `storybook-addon-playwright/decorator`.
+
+```tsx
+import type { Preview } from '@storybook/react';
+import { withReactMounted } from 'storybook-addon-playwright/decorator';
+
+const preview: Preview = {
+  decorators: [withReactMounted()],
+};
+
+export default preview;
+```
+
+This avoids JSX component typing issues that can happen in some projects when using `ReactMountedDecorator` directly in `preview.tsx`.
+
+What the React decorator does:
+
+- Sets `data-playwright-mounted="pending"` immediately so marker mode is enabled.
+- Updates the value to `"true"` after React mounts.
+- Removes the attribute on unmount.
+
+For non-React frameworks (Vue, Svelte, Angular, etc.), create a small framework-specific decorator/composable that follows the same marker contract:
+
+- Set `data-playwright-mounted="pending"` before mount.
+- Set `data-playwright-mounted="true"` when mounted.
+
 ## setConfig Options
 
 For a full list of available options with detailed descriptions, see the [`Config` interface in `src/typings/config.ts`](src/typings/config.ts).

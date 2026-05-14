@@ -39,6 +39,7 @@
     "test-data/**/*",
     "middleware.d.ts",
     "configs.d.ts",
+    "decorator.d.ts",
     "tsup.config.ts",
     "stories/**/*",
     "vitest.config.ts",

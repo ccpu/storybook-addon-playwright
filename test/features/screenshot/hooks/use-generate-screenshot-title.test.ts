@@ -11,6 +11,7 @@ import { useKnobs } from '../../../../src/hooks/use-knobs';
 import { useStorybookApi } from '@storybook/manager-api';
 import { useBrowserOptions } from '../../../../src/hooks/use-browser-options';
 import { useScreenshotOptionsValue } from '../../../../src/store/ui-selectors';
+import { useCurrentActions } from '../../../../src/features/action-set/hooks/use-current-actions';
 
 vi.mock('../../../../src/hooks/use-current-story-data', () => ({
   useCurrentStoryData: vi.fn(),
@@ -30,6 +31,10 @@ vi.mock('../../../../src/hooks/use-browser-options', () => ({
 
 vi.mock('../../../../src/store/ui-selectors', () => ({
   useScreenshotOptionsValue: vi.fn(),
+}));
+
+vi.mock('../../../../src/features/action-set/hooks/use-current-actions', () => ({
+  useCurrentActions: vi.fn(),
 }));
 
 vi.mock(
@@ -63,6 +68,14 @@ describe('useGenerateScreenshotTitle', () => {
     fullPage: true,
   };
 
+  const mockCurrentActions = [
+    {
+      actions: [{ args: { selector: '#trigger' }, id: 'action-id', name: 'hover' }],
+      id: 'action-set-id',
+      title: 'hover trigger',
+    },
+  ];
+
   beforeAll(() => {
     restoreConsole = mockConsole();
   });
@@ -80,6 +93,10 @@ describe('useGenerateScreenshotTitle', () => {
       getBrowserOptions: vi.fn(() => mockBrowserOptions),
     });
     (useScreenshotOptionsValue as Mock).mockReturnValue(mockScreenshotOptions);
+    (useCurrentActions as Mock).mockReturnValue({
+      currentActions: mockCurrentActions,
+      state: { currentActionSets: [], initialised: true, stories: {} },
+    });
   });
 
   afterEach(() => {
@@ -143,6 +160,7 @@ describe('useGenerateScreenshotTitle', () => {
           options: mockBrowserOptions,
         },
         story: {
+          actions: mockCurrentActions,
           changedArgs: mockArgs,
           filePath: mockStoryData.filePath,
           id: mockStoryData.id,
@@ -241,6 +259,17 @@ describe('useGenerateScreenshotTitle', () => {
           type: 'firefox',
           options: mockBrowserOptions,
         },
+        story: {
+          actions: mockCurrentActions,
+          changedArgs: mockArgs,
+          filePath: mockStoryData.filePath,
+          id: mockStoryData.id,
+          initialArgs: mockCurrentStoryData.initialArgs,
+          argTypes: mockCurrentStoryData.argTypes,
+          parameters: mockCurrentStoryData.parameters,
+          name: mockCurrentStoryData.name,
+          title: mockCurrentStoryData.title,
+        },
       }),
     );
   });
@@ -276,6 +305,17 @@ describe('useGenerateScreenshotTitle', () => {
         browser: {
           type: 'webkit',
           options: mockBrowserOptions,
+        },
+        story: {
+          actions: mockCurrentActions,
+          changedArgs: mockArgs,
+          filePath: mockStoryData.filePath,
+          id: mockStoryData.id,
+          initialArgs: mockCurrentStoryData.initialArgs,
+          argTypes: mockCurrentStoryData.argTypes,
+          parameters: mockCurrentStoryData.parameters,
+          name: mockCurrentStoryData.name,
+          title: mockCurrentStoryData.title,
         },
       }),
     );

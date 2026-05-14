@@ -144,6 +144,7 @@ export const updateScreenshotInputSchema = createStoryInputSchema({
 
 export const generateScreenshotTitleInputSchema = z.object({
   story: z.object({
+    actions: z.array(actionSetSchema).optional(),
     changedArgs: looseObjectSchema.optional(),
     initialArgs: looseObjectSchema.optional(),
     argTypes: z.record(z.string(), z.unknown()).optional(),

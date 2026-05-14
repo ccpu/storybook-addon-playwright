@@ -7,11 +7,13 @@ import { toast } from '../../../utils/toast';
 import { API, useStorybookApi, StoryEntry } from '@storybook/manager-api';
 import { useBrowserOptions } from '../../../hooks';
 import { useScreenshotOptionsValue } from '../../../store';
+import { useCurrentActions } from '../../../features/action-set/hooks/use-current-actions';
 
 export function useGenerateScreenshotTitle(
   browserType: BrowserTypes | 'storybook' | null,
 ) {
   const storyData = useCurrentStoryData();
+  const { currentActions } = useCurrentActions(storyData?.id ?? '');
   const args = useKnobs();
   const api = useStorybookApi() as API;
   const { getBrowserOptions } = useBrowserOptions();
@@ -47,6 +49,7 @@ export function useGenerateScreenshotTitle(
           options: browserOptions,
         },
         story: {
+          actions: currentActions,
           changedArgs: args,
           filePath: storyData.filePath,
           id: storyData.id,
@@ -61,7 +64,16 @@ export function useGenerateScreenshotTitle(
     } catch {
       return undefined;
     }
-  }, [api, args, browserOptions, browserType, mutateAsync, screenshotOptions, storyData]);
+  }, [
+    api,
+    args,
+    browserOptions,
+    browserType,
+    currentActions,
+    mutateAsync,
+    screenshotOptions,
+    storyData,
+  ]);
 
   return { generateTitle, hasGenerator, isGenerating };
 }

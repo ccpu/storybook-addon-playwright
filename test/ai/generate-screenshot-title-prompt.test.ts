@@ -1,6 +1,7 @@
+import type { GenerateScreenshotTitleInput } from '../../src/schema';
 import { createScreenshotTitlePrompt } from '../../src/ai/generate-screenshot-title-prompt';
 
-const input = {
+const input: GenerateScreenshotTitleInput = {
   browser: {
     options: {
       viewport: {
@@ -14,6 +15,13 @@ const input = {
     fullPage: true,
   },
   story: {
+    actions: [
+      {
+        actions: [{ args: { selector: '#trigger' }, id: 'action-id', name: 'hover' }],
+        id: 'action-set-id',
+        title: 'hover trigger',
+      },
+    ],
     changedArgs: {
       intent: 'primary',
       loading: true,
@@ -23,19 +31,22 @@ const input = {
     name: 'Primary Loading',
     title: 'Forms/Button',
   },
-} as const;
+};
 
 describe('createScreenshotTitlePrompt', () => {
   it('builds a strict prompt with input JSON and output contract', () => {
     const prompt = createScreenshotTitlePrompt(input);
 
-    expect(prompt).toContain('Parse INPUT_JSON as JSON.');
+    expect(prompt).toContain('Parse INPUT_JSON.');
     expect(prompt).toContain(
-      'Return only the generated title as string, without any additional text or formatting.',
+      'Return only the generated title as a plain text string, without any additional text, reasoning, or formatting.',
     );
     expect(prompt).toContain('"changedArgs": {');
+    expect(prompt).toContain('"actions": [');
     expect(prompt).toContain('"intent": "primary"');
-    expect(prompt).toContain('Maximum length: 80 characters.');
+    expect(prompt).toContain(
+      'Maximum length: 80 characters (hard limit — the output will be truncated in code if exceeded).',
+    );
     expect(prompt).toContain('Output contract (strict):');
   });
 
@@ -47,10 +58,12 @@ describe('createScreenshotTitlePrompt', () => {
       maxTitleLength: 64,
     });
 
-    expect(prompt).toContain('Maximum length: 64 characters.');
+    expect(prompt).toContain(
+      'Maximum length: 64 characters (hard limit — the output will be truncated in code if exceeded).',
+    );
     expect(prompt).toContain('Do not include browser type in the title.');
     expect(prompt).toContain('You may include story.id when needed for uniqueness.');
-    expect(prompt).toContain('fallback title: "Fallback from AI"');
+    expect(prompt).toContain('Fallback title: "Fallback from AI"');
   });
 
   it('normalizes invalid values to safe defaults', () => {
@@ -59,8 +72,10 @@ describe('createScreenshotTitlePrompt', () => {
       maxTitleLength: 1,
     });
 
-    expect(prompt).toContain('Maximum length: 10 characters.');
-    expect(prompt).toContain('fallback title: "Should render correctly."');
+    expect(prompt).toContain(
+      'Maximum length: 10 characters (hard limit — the output will be truncated in code if exceeded).',
+    );
+    expect(prompt).toContain('Fallback title: "Should render correctly."');
   });
 
   it('supports a custom outputPrompt string', () => {
@@ -71,7 +86,7 @@ describe('createScreenshotTitlePrompt', () => {
     expect(prompt).toContain('Output contract (strict):');
     expect(prompt).toContain('- Return a single sentence with no punctuation.');
     expect(prompt).not.toContain(
-      'Return only the generated title as string, without any additional text or formatting.',
+      'Return only the generated title as a plain text string, without any additional text, reasoning, or formatting.',
     );
   });
 

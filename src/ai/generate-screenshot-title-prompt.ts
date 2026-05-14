@@ -37,6 +37,14 @@ export interface CreateScreenshotTitlePromptOptions {
   outputPrompt?: string | string[];
 }
 
+type PartialContext = Partial<GenerateScreenshotTitleInput>;
+
+type ScreenshotTitleFieldGuide = {
+  story: Record<keyof GenerateScreenshotTitleInput['story'], string>;
+  browser: Record<keyof GenerateScreenshotTitleInput['browser'], string>;
+  screenshotOptions: string;
+};
+
 const DEFAULT_OPTIONS: Required<CreateScreenshotTitlePromptOptions> = {
   fallbackTitle: 'Should render correctly.',
   includeBrowserType: true,
@@ -48,6 +56,45 @@ const DEFAULT_OPTIONS: Required<CreateScreenshotTitlePromptOptions> = {
 
 const INPUT_JSON_INDENT = 2;
 const MIN_TITLE_LENGTH = 10;
+
+const storyGuide = {
+  changedArgs:
+    'The specific arguments that have been changed from their default values for this story; these are high-priority signals for understanding what is unique about this screenshot.',
+  initialArgs:
+    'The default arguments for the story, which can provide context but are less important than changedArgs for title generation.',
+  argTypes:
+    'Metadata about the story arguments, which should only be used if it clarifies the meaning of changedArgs.',
+  name: 'The display name of the story, often concise and descriptive.',
+  title:
+    'The hierarchical path of the story in Storybook, which may include groupings and can provide context about the component and its variations.',
+  parameters:
+    'Additional metadata at the Storybook level, which should only be considered if it impacts the meaning of the screenshot.',
+  filePath:
+    'The file path to the source story, which may provide context about the component or feature being tested.',
+  id: 'The unique identifier for the Storybook story, which should only be included in the title if no other unique context exists.',
+} satisfies ScreenshotTitleFieldGuide['story'];
+
+const browserGuide = {
+  type: 'The type of browser engine used (e.g., chromium, firefox, webkit), which should be included in the title only when it adds useful context.',
+  options:
+    'Options related to the browser or device, such as viewport size and device profile, which may influence the meaning of the screenshot.',
+} satisfies ScreenshotTitleFieldGuide['browser'];
+
+const screenshotOptionsGuide =
+  'Behavior options for taking the screenshot that may change its meaning or context.';
+
+const fieldGuide: ScreenshotTitleFieldGuide = {
+  story: storyGuide,
+  browser: browserGuide,
+  screenshotOptions: screenshotOptionsGuide,
+};
+
+function hasOwnDefinedValue<T extends object, K extends keyof T>(
+  value: T,
+  key: K,
+): boolean {
+  return value[key] !== undefined;
+}
 
 function normalizeOptions(
   options: CreateScreenshotTitlePromptOptions = {},
@@ -85,11 +132,34 @@ function normalizeOptions(
  * `{"title":"..."}`.
  */
 export function createScreenshotTitlePrompt(
-  data: GenerateScreenshotTitleInput,
+  context: PartialContext,
   options?: CreateScreenshotTitlePromptOptions,
 ): string {
   const resolved = normalizeOptions(options);
-  const inputJson = JSON.stringify(data, null, INPUT_JSON_INDENT);
+  const inputJson = JSON.stringify(context, null, INPUT_JSON_INDENT);
+  const fieldGuideSections: string[] = ['Field guide:'];
+
+  if (hasOwnDefinedValue(context, 'story') && context.story) {
+    fieldGuideSections.push(
+      ...Object.entries(fieldGuide.story).map(
+        ([key, description]) => `- story.${key}: ${description}`,
+      ),
+    );
+  }
+
+  if (hasOwnDefinedValue(context, 'browser') && context.browser) {
+    fieldGuideSections.push(
+      ...Object.entries(fieldGuide.browser).map(
+        ([key, description]) => `- browser.${key}: ${description}`,
+      ),
+    );
+  }
+
+  if (hasOwnDefinedValue(context, 'screenshotOptions') && context.screenshotOptions) {
+    fieldGuideSections.push(`- screenshotOptions: ${fieldGuide.screenshotOptions}`);
+  }
+
+  fieldGuideSections.push('');
 
   return [
     'You are a screenshot title generator for Storybook Playwright.',
@@ -101,19 +171,7 @@ export function createScreenshotTitlePrompt(
     '3) Decide the most important details for naming this screenshot.',
     '4) Build a short, human-friendly title.',
     '',
-    'Field guide:',
-    '- story.name: story display name.',
-    '- story.title: Storybook group/title path.',
-    '- story.changedArgs: args changed from defaults; high-priority signal for title.',
-    '- story.initialArgs: default args for the story; use for context only.',
-    '- story.argTypes: arg metadata; use only when it clarifies changedArgs.',
-    '- story.parameters: Storybook-level metadata; only use if it impacts screenshot meaning.',
-    '- story.filePath: source story file path.',
-    '- story.id: unique Storybook story id.',
-    '- browser.type: browser engine (chromium, firefox, webkit).',
-    '- browser.options: browser/device options such as viewport and device profile.',
-    '- screenshotOptions: screenshot behavior options that may change output meaning.',
-    '',
+    ...fieldGuideSections,
     'Title rules:',
     `- Maximum length: ${resolved.maxTitleLength} characters.`,
     `- ${resolved.includeBrowserType ? 'Include browser type only when it adds useful context.' : 'Do not include browser type in the title.'}`,

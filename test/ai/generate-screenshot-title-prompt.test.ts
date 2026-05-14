@@ -83,4 +83,20 @@ describe('createScreenshotTitlePrompt', () => {
     expect(prompt).toContain('- Return only the title.');
     expect(prompt).toContain('- Do not include quotes or markdown.');
   });
+
+  it('omits field guide sections when input data is missing', () => {
+    const prompt = createScreenshotTitlePrompt({
+      story: {
+        filePath: 'stories/Button.stories.tsx',
+        id: 'forms-button--primary-loading',
+        name: 'Primary Loading',
+        title: 'Forms/Button',
+      },
+    });
+
+    expect(prompt).toContain('Field guide:');
+    expect(prompt).toContain('- story.name:');
+    expect(prompt).not.toContain('- browser.type:');
+    expect(prompt).not.toContain('- screenshotOptions:');
+  });
 });

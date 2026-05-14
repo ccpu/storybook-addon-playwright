@@ -37,7 +37,8 @@ export interface CreateScreenshotTitlePromptOptions {
   outputPrompt?: string | string[];
 }
 
-type PartialContext = Partial<GenerateScreenshotTitleInput>;
+type PartialContext = Partial<GenerateScreenshotTitleInput> &
+  Pick<GenerateScreenshotTitleInput, 'story'>;
 
 type ScreenshotTitleFieldGuide = {
   story: Record<keyof GenerateScreenshotTitleInput['story'], string>;

@@ -28,6 +28,13 @@ export interface CreateScreenshotTitlePromptOptions {
    * @default false
    */
   includeStoryId?: boolean;
+
+  /**
+   * Additional instructions for the output format, appended to the prompt's output contract section.
+   *
+   * @default 'Return only the generated title as string, without any additional text or formatting.'
+   */
+  outputPrompt?: string | string[];
 }
 
 const DEFAULT_OPTIONS: Required<CreateScreenshotTitlePromptOptions> = {
@@ -35,6 +42,8 @@ const DEFAULT_OPTIONS: Required<CreateScreenshotTitlePromptOptions> = {
   includeBrowserType: true,
   includeStoryId: false,
   maxTitleLength: 80,
+  outputPrompt:
+    'Return only the generated title as string, without any additional text or formatting.',
 };
 
 const INPUT_JSON_INDENT = 2;
@@ -47,6 +56,16 @@ function normalizeOptions(
     ? Math.max(MIN_TITLE_LENGTH, Math.floor(options.maxTitleLength as number))
     : DEFAULT_OPTIONS.maxTitleLength;
 
+  const outputPrompt = (
+    Array.isArray(options.outputPrompt)
+      ? options.outputPrompt
+      : typeof options.outputPrompt === 'string'
+        ? [options.outputPrompt]
+        : [DEFAULT_OPTIONS.outputPrompt]
+  )
+    .map((instruction) => (instruction as string).trim())
+    .map((x) => '- ' + x);
+
   return {
     fallbackTitle:
       typeof options.fallbackTitle === 'string' && options.fallbackTitle.trim()
@@ -55,6 +74,7 @@ function normalizeOptions(
     includeBrowserType: options.includeBrowserType ?? DEFAULT_OPTIONS.includeBrowserType,
     includeStoryId: options.includeStoryId ?? DEFAULT_OPTIONS.includeStoryId,
     maxTitleLength,
+    outputPrompt: outputPrompt,
   };
 }
 
@@ -103,9 +123,7 @@ export function createScreenshotTitlePrompt(
     '- Title must be plain text (no markdown, no quotes around the full title).',
     '',
     'Output contract (strict):',
-    '- Return JSON only.',
-    '- Return exactly one object with exactly one key: title.',
-    '- Shape: {"title":"<generated title>"}',
+    ...resolved.outputPrompt,
     `- If context is insufficient, use fallback title: ${JSON.stringify(resolved.fallbackTitle)}`,
     '',
     'INPUT_JSON:',

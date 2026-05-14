@@ -30,11 +30,13 @@ describe('createScreenshotTitlePrompt', () => {
     const prompt = createScreenshotTitlePrompt(input);
 
     expect(prompt).toContain('Parse INPUT_JSON as JSON.');
-    expect(prompt).toContain('Return exactly one object with exactly one key: title.');
-    expect(prompt).toContain('{"title":"<generated title>"}');
+    expect(prompt).toContain(
+      'Return only the generated title as string, without any additional text or formatting.',
+    );
     expect(prompt).toContain('"changedArgs": {');
     expect(prompt).toContain('"intent": "primary"');
     expect(prompt).toContain('Maximum length: 80 characters.');
+    expect(prompt).toContain('Output contract (strict):');
   });
 
   it('applies provided options to prompt instructions', () => {
@@ -59,5 +61,26 @@ describe('createScreenshotTitlePrompt', () => {
 
     expect(prompt).toContain('Maximum length: 10 characters.');
     expect(prompt).toContain('fallback title: "Should render correctly."');
+  });
+
+  it('supports a custom outputPrompt string', () => {
+    const prompt = createScreenshotTitlePrompt(input, {
+      outputPrompt: 'Return a single sentence with no punctuation.',
+    });
+
+    expect(prompt).toContain('Output contract (strict):');
+    expect(prompt).toContain('- Return a single sentence with no punctuation.');
+    expect(prompt).not.toContain(
+      'Return only the generated title as string, without any additional text or formatting.',
+    );
+  });
+
+  it('supports multiple outputPrompt instructions', () => {
+    const prompt = createScreenshotTitlePrompt(input, {
+      outputPrompt: ['Return only the title.', 'Do not include quotes or markdown.'],
+    });
+
+    expect(prompt).toContain('- Return only the title.');
+    expect(prompt).toContain('- Do not include quotes or markdown.');
   });
 });

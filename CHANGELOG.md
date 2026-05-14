@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.7.0
+
+### Minor Changes
+
+- enhance screenshot title generation with actions support
+
 ## 5.6.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.8.0
+
+### Minor Changes
+
+- wait for Storybook story readiness before screenshots
+
 ## 5.7.0
 
 ### Minor Changes

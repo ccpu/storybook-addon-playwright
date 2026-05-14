@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 5.6.1
+
+### Patch Changes
+
+- update PartialContext type to include 'story' field
+
 ## 5.6.0
 
 ### Minor Changes

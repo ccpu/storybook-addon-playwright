@@ -35,6 +35,18 @@ export interface Config<T = Page> {
   storybookEndpoint: string;
 
   /**
+   * Maximum time in milliseconds to wait for a story to report as rendered before taking a screenshot.
+   * Defaults to 30000.
+   */
+  storyRenderTimeout?: number;
+
+  /**
+   * When true, waits for the Storybook render signal after navigation.
+   * Defaults to true.
+   */
+  waitForStoryRender?: boolean;
+
+  /**
    * Additional custom action schemas to extend the built-in set of actions
    * available in the screenshot scenario editor.
    */

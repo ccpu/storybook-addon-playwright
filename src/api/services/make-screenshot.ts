@@ -93,7 +93,9 @@ export async function makeScreenshot(
 
   await page.goto(url, configs.pageGotoOptions);
 
-  await waitForStoryRendered(page, data.storyId);
+  if (configs.waitForStoryRender !== false) {
+    await waitForStoryRendered(page, data.storyId, configs.storyRenderTimeout);
+  }
 
   if (configs.afterNavigation) {
     await configs.afterNavigation(page, requestData);

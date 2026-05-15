@@ -101,11 +101,7 @@ describe('makeScreenshot', () => {
     getConfigsMock.mockImplementationOnce(() => {
       return defaultConfigs({
         getPage: async () => {
-          return new Promise((resolve) => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            resolve();
-          });
+          return undefined as unknown as Page;
         },
       });
     });
@@ -302,6 +298,24 @@ describe('makeScreenshot', () => {
     });
 
     expect(evaluateMock).toBeCalledTimes(1);
+  });
+
+  it('should skip story readiness wait when disabled in config', async () => {
+    getConfigsMock.mockImplementationOnce(() => {
+      return defaultConfigs({
+        waitForStoryRender: false,
+        getPage: getPageMock,
+      });
+    });
+
+    await makeScreenshot({
+      browserType: 'chromium',
+      requestId: 'request-id',
+      storyId: 'story-id',
+    });
+
+    expect(waitForFunctionMock).toBeCalledTimes(0);
+    expect(evaluateMock).toBeCalledTimes(0);
   });
 
   it('should install mouse helper', async () => {

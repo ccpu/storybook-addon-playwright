@@ -1,6 +1,7 @@
 import type { Page } from 'playwright';
 import {
   STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
+  STORY_RENDER_TIMEOUT,
   settleStoryRender,
   storyRenderedReadyPredicate,
   waitForStoryRendered,
@@ -90,14 +91,45 @@ describe('wait-for-story-rendered', () => {
     );
 
     expect(waitForFunction).toBeCalledTimes(1);
-    expect(waitForFunction).toBeCalledWith(storyRenderedReadyPredicate, {
-      bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
-      targetStoryId: 'story-id',
-      waitForMarkerOnly: false,
-    });
+    expect(waitForFunction).toBeCalledWith(
+      storyRenderedReadyPredicate,
+      {
+        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
+        targetStoryId: 'story-id',
+        waitForMarkerOnly: false,
+      },
+      {
+        timeout: STORY_RENDER_TIMEOUT,
+      },
+    );
 
     expect(evaluate).toBeCalledTimes(2);
     expect(evaluate.mock.calls[1]?.[0]).toBe(settleStoryRender);
+  });
+
+  it('should pass a custom timeout to waitForFunction', async () => {
+    const waitForFunction = vi.fn().mockResolvedValue(undefined);
+    const evaluate = vi
+      .fn()
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(undefined);
+
+    await waitForStoryRendered(
+      {
+        evaluate,
+        waitForFunction,
+      } as unknown as Page,
+      'story-id',
+      1234,
+    );
+
+    expect(waitForFunction).toBeCalledWith(
+      storyRenderedReadyPredicate,
+      expect.any(Object),
+      expect.objectContaining({
+        timeout: 1234,
+      }),
+    );
   });
 
   it('should use marker-only mode when body marker exists', async () => {
@@ -115,8 +147,13 @@ describe('wait-for-story-rendered', () => {
     expect(waitForFunction).toBeCalledWith(
       storyRenderedReadyPredicate,
       expect.objectContaining({
+        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
+        targetStoryId: 'story-id',
         waitForMarkerOnly: true,
       }),
+      {
+        timeout: STORY_RENDER_TIMEOUT,
+      },
     );
   });
 

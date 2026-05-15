@@ -346,6 +346,7 @@ beforeAll(async () => {
 
   setConfig({
     storybookEndpoint: 'http://localhost:6006/', // or './storybook-static'
+    storyRenderTimeout: 30000,
     getPage: async (browserType, options) => {
       return await browsers[browserType].newPage(options);
     },
@@ -389,6 +390,7 @@ beforeAll(async () => {
   };
   setConfig({
     storybookEndpoint: 'http://localhost:6006/', // or './storybook-static'
+    storyRenderTimeout: 30000,
     getPage: async (browserType, options) => {
       return await browsers[browserType].newPage(options);
     },

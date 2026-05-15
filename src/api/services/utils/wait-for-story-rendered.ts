@@ -1,6 +1,7 @@
 import type { Page } from 'playwright';
 
 export const STORYBOOK_BODY_MOUNTED_ATTRIBUTE = 'data-playwright-mounted';
+export const STORY_RENDER_TIMEOUT = 30000;
 
 type StoryRenderLike = {
   id?: string;
@@ -89,7 +90,11 @@ export async function settleStoryRender(): Promise<void> {
   }
 }
 
-export async function waitForStoryRendered(page: Page, storyId: string): Promise<void> {
+export async function waitForStoryRendered(
+  page: Page,
+  storyId: string,
+  timeout = STORY_RENDER_TIMEOUT,
+): Promise<void> {
   try {
     const waitForMarkerOnly = await page.evaluate(
       ({ bodyMountedAttribute }) => {
@@ -100,11 +105,17 @@ export async function waitForStoryRendered(page: Page, storyId: string): Promise
       },
     );
 
-    await page.waitForFunction(storyRenderedReadyPredicate, {
-      bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
-      targetStoryId: storyId,
-      waitForMarkerOnly,
-    });
+    await page.waitForFunction(
+      storyRenderedReadyPredicate,
+      {
+        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
+        targetStoryId: storyId,
+        waitForMarkerOnly,
+      },
+      {
+        timeout,
+      },
+    );
 
     await page.evaluate(settleStoryRender);
   } catch {

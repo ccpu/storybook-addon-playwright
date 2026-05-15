@@ -36,6 +36,7 @@ export const defaultConfigs = (config?: Partial<Config>): Config => {
         type: 'null',
       },
     },
+    waitForStoryRender: true,
     storybookEndpoint: 'localhost:5000',
     ...restConfig,
     getPage: getPage ?? defaultGetPage,

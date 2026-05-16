@@ -1,5 +1,16 @@
 # storybook-addon-playwright
 
+## 5.9.0
+
+### Minor Changes
+
+- wait for Storybook story readiness before screenshots
+
+### Patch Changes
+
+- update join-images to version 1.4.0
+- 3028b36: fix release
+
 ## 5.8.0
 
 ### Minor Changes

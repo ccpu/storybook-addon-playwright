@@ -9,6 +9,7 @@ import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';
 import { Toolbar as CommonToolbar } from '../../../../components/common';
 import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
+import { ResizeBrowserToIframeContent } from '../../../../components/ResizeBrowserToIframeContent/ResizeBrowserToIframeContent';
 import { ResizeBrowserToPreview } from '../../../../components/ResizeBrowserToPreview/ResizeBrowserToPreview';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
@@ -85,6 +86,7 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
         <ClipperButton />
 
         <ResizeBrowserToPreview />
+        <ResizeBrowserToIframeContent />
 
         <IconButton onClick={onSave}>
           <Tooltip placement="top" title="Save screenshots">

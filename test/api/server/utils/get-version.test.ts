@@ -13,6 +13,6 @@ describe('getVersion', () => {
 
     vi.spyOn(process, 'cwd').mockReturnValue(nestedCwd);
 
-    expect(getVersion()).toBe('5');
+    expect(getVersion()).toBe('6');
   });
 });

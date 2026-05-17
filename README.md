@@ -83,43 +83,30 @@ module.exports = function (router) {
 
 ### Story Readiness Before Screenshot
 
-The addon will wait briefly for story readiness before taking screenshots.
+By default, the addon waits for Storybook to settle by checking `#storybook-root` before taking screenshots. This behavior is enabled by default because `waitForStoryRender` is `true`. Set `waitForStoryRender: false` to disable it.
 
-Built-in readiness checks:
+If your story needs an extra selector wait, do it explicitly in `beforeScreenshot`:
 
-- If a marker is present at navigation time (`body[data-playwright-mounted]`), marker mode is enabled and the addon waits for mounted state.
-- In marker mode, readiness is:
-  - `body[data-playwright-mounted="true"]`.
-- Otherwise, it checks Storybook preview render phases when available.
-- If Storybook internals are not available, it falls back to mounted content under `#storybook-root` or `#storybook-docs`.
-
-If you do not use a mount marker decorator, no marker wait is applied.
-
-For stricter post-mount readiness in React, use the built-in decorator helper from `storybook-addon-playwright/decorator`.
-
-```tsx
-import type { Preview } from '@storybook/react';
-import { withReactMounted } from 'storybook-addon-playwright/decorator';
-
-const preview: Preview = {
-  decorators: [withReactMounted()],
-};
-
-export default preview;
+```js
+setConfig({
+  storybookEndpoint: 'http://localhost:6006/',
+  getPage: async (browserType, options) => {
+    await ready;
+    return await browsers[browserType].newPage(options);
+  },
+  beforeScreenshot: async (page, data) => {
+    await page
+      .frameLocator('iframe')
+      .locator('.my-selector')
+      .waitFor({ state: 'visible', timeout: 10000 });
+  },
+  afterScreenshot: async (page) => {
+    await page.close();
+  },
+});
 ```
 
-This avoids JSX component typing issues that can happen in some projects when using `ReactMountedDecorator` directly in `preview.tsx`.
-
-What the React decorator does:
-
-- Sets `data-playwright-mounted="pending"` immediately so marker mode is enabled.
-- Updates the value to `"true"` after React mounts.
-- Removes the attribute on unmount.
-
-For non-React frameworks (Vue, Svelte, Angular, etc.), create a small framework-specific decorator/composable that follows the same marker contract:
-
-- Set `data-playwright-mounted="pending"` before mount.
-- Set `data-playwright-mounted="true"` when mounted.
+This keeps the readiness logic in your config instead of relying on framework-specific mounting code.
 
 ## setConfig Options
 

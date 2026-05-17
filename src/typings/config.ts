@@ -41,7 +41,8 @@ export interface Config<T = Page> {
   storyRenderTimeout?: number;
 
   /**
-   * When true, waits for the Storybook render signal after navigation.
+   * When true, waits for Storybook to settle after navigation by checking
+   * `#storybook-root`.
    * Defaults to true.
    */
   waitForStoryRender?: boolean;

@@ -1,6 +1,4 @@
 import type { Page } from 'playwright';
-
-export const STORYBOOK_BODY_MOUNTED_ATTRIBUTE = 'data-playwright-mounted';
 export const STORY_RENDER_TIMEOUT = 30000;
 
 type StoryRenderLike = {
@@ -9,26 +7,15 @@ type StoryRenderLike = {
 };
 
 export interface StoryReadyPredicateInput {
-  bodyMountedAttribute: string;
   targetStoryId: string;
-  waitForMarkerOnly?: boolean;
 }
 
 /**
  * Executed in the browser context by Playwright waitForFunction.
  */
 export function storyRenderedReadyPredicate({
-  bodyMountedAttribute,
-  waitForMarkerOnly,
   targetStoryId,
 }: StoryReadyPredicateInput): boolean {
-  const bodyMarkerValue = document.body?.getAttribute(bodyMountedAttribute) || '';
-
-  // If marker mode is explicit, only marker readiness can satisfy the wait.
-  if (waitForMarkerOnly) {
-    return bodyMarkerValue === 'true';
-  }
-
   const preview = (
     globalThis as {
       __STORYBOOK_PREVIEW__?: { storyRenders?: StoryRenderLike[] };
@@ -48,10 +35,8 @@ export function storyRenderedReadyPredicate({
   }
 
   const storyRoot = document.getElementById('storybook-root');
-  const docsRoot = document.getElementById('storybook-docs');
 
-  const hasMountedContent =
-    (storyRoot?.childElementCount || 0) > 0 || (docsRoot?.childElementCount || 0) > 0;
+  const hasMountedContent = (storyRoot?.childElementCount || 0) > 0;
 
   if (!hasMountedContent) {
     return false;
@@ -96,21 +81,10 @@ export async function waitForStoryRendered(
   timeout = STORY_RENDER_TIMEOUT,
 ): Promise<void> {
   try {
-    const waitForMarkerOnly = await page.evaluate(
-      ({ bodyMountedAttribute }) => {
-        return Boolean(document.body?.hasAttribute(bodyMountedAttribute));
-      },
-      {
-        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
-      },
-    );
-
     await page.waitForFunction(
       storyRenderedReadyPredicate,
       {
-        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
         targetStoryId: storyId,
-        waitForMarkerOnly,
       },
       {
         timeout,

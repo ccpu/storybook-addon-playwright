@@ -285,7 +285,7 @@ describe('makeScreenshot', () => {
     });
 
     expect(waitForFunctionMock).toBeCalledTimes(1);
-    expect(evaluateMock).toBeCalledTimes(2);
+    expect(evaluateMock).toBeCalledTimes(1);
   });
 
   it('should continue when story readiness wait fails', async () => {
@@ -297,7 +297,7 @@ describe('makeScreenshot', () => {
       storyId: 'story-id',
     });
 
-    expect(evaluateMock).toBeCalledTimes(1);
+    expect(evaluateMock).toBeCalledTimes(0);
   });
 
   it('should skip story readiness wait when disabled in config', async () => {

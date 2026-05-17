@@ -1,6 +1,5 @@
 import type { Page } from 'playwright';
 import {
-  STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
   STORY_RENDER_TIMEOUT,
   settleStoryRender,
   storyRenderedReadyPredicate,
@@ -10,20 +9,7 @@ import {
 describe('wait-for-story-rendered', () => {
   beforeEach(() => {
     document.body.innerHTML = '';
-    document.body.removeAttribute(STORYBOOK_BODY_MOUNTED_ATTRIBUTE);
     delete (globalThis as { __STORYBOOK_PREVIEW__?: unknown }).__STORYBOOK_PREVIEW__;
-  });
-
-  it('should be ready when body mounted attribute is true', () => {
-    document.body.setAttribute(STORYBOOK_BODY_MOUNTED_ATTRIBUTE, 'true');
-
-    const isReady = storyRenderedReadyPredicate({
-      bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
-      targetStoryId: 'story-id',
-      waitForMarkerOnly: true,
-    });
-
-    expect(isReady).toBe(true);
   });
 
   it('should be ready when preview render phase is completed', () => {
@@ -32,7 +18,6 @@ describe('wait-for-story-rendered', () => {
     };
 
     const isReady = storyRenderedReadyPredicate({
-      bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
       targetStoryId: 'story-id',
     });
 
@@ -49,7 +34,6 @@ describe('wait-for-story-rendered', () => {
     document.body.innerHTML = '<div id="storybook-root"><div>mounted</div></div>';
 
     const isReady = storyRenderedReadyPredicate({
-      bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
       targetStoryId: 'story-id',
     });
 
@@ -63,7 +47,6 @@ describe('wait-for-story-rendered', () => {
 
   it('should return false when no readiness signal exists', () => {
     const isReady = storyRenderedReadyPredicate({
-      bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
       targetStoryId: 'story-id',
     });
 
@@ -94,17 +77,15 @@ describe('wait-for-story-rendered', () => {
     expect(waitForFunction).toBeCalledWith(
       storyRenderedReadyPredicate,
       {
-        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
         targetStoryId: 'story-id',
-        waitForMarkerOnly: false,
       },
       {
         timeout: STORY_RENDER_TIMEOUT,
       },
     );
 
-    expect(evaluate).toBeCalledTimes(2);
-    expect(evaluate.mock.calls[1]?.[0]).toBe(settleStoryRender);
+    expect(evaluate).toBeCalledTimes(1);
+    expect(evaluate.mock.calls[0]?.[0]).toBe(settleStoryRender);
   });
 
   it('should pass a custom timeout to waitForFunction', async () => {
@@ -132,7 +113,7 @@ describe('wait-for-story-rendered', () => {
     );
   });
 
-  it('should use marker-only mode when body marker exists', async () => {
+  it('should pass the story id into waitForFunction', async () => {
     const waitForFunction = vi.fn().mockResolvedValue(undefined);
     const evaluate = vi.fn().mockResolvedValueOnce(true).mockResolvedValueOnce(undefined);
 
@@ -147,9 +128,7 @@ describe('wait-for-story-rendered', () => {
     expect(waitForFunction).toBeCalledWith(
       storyRenderedReadyPredicate,
       expect.objectContaining({
-        bodyMountedAttribute: STORYBOOK_BODY_MOUNTED_ATTRIBUTE,
         targetStoryId: 'story-id',
-        waitForMarkerOnly: true,
       }),
       {
         timeout: STORY_RENDER_TIMEOUT,
@@ -171,6 +150,6 @@ describe('wait-for-story-rendered', () => {
       ),
     ).resolves.not.toThrow();
 
-    expect(evaluate).toBeCalledTimes(1);
+    expect(evaluate).toBeCalledTimes(0);
   });
 });

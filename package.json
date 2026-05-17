@@ -39,11 +39,6 @@
       "types": "./configs.d.ts",
       "require": "./configs.js"
     },
-    "./decorator": {
-      "types": "./dist/decorator/index.d.ts",
-      "import": "./dist/decorator/index.mjs",
-      "require": "./dist/decorator/index.js"
-    },
     "./middleware": {
       "types": "./middleware.d.ts",
       "require": "./middleware.js"
@@ -69,8 +64,6 @@
     "assets",
     "configs.d.ts",
     "configs.js",
-    "decorator.d.ts",
-    "decorator.js",
     "dist",
     "middleware.d.ts",
     "middleware.js",

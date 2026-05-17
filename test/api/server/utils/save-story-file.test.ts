@@ -1,5 +1,3 @@
-// Changed: vi.hoisted() ensures the variable is initialized before the Mock
-// factory runs (vitest hoists vi.mock to before all declarations, causing TDZ).
 const writeFileMock = vi.hoisted(() => vi.fn());
 vi.mock('jsonfile', () => ({
   writeFileSync: writeFileMock,

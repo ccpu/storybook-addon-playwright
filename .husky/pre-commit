@@ -1,1 +1,8 @@
+#!/usr/bin/env sh
+
+if [ -n "$CI" ]; then
+	echo "Skipping pre-commit in CI"
+	exit 0
+fi
+
 pnpm exec lint-staged

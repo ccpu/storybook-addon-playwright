@@ -1,2 +1,9 @@
+#!/usr/bin/env sh
+
+if [ -n "$CI" ]; then
+	echo "Skipping pre-push in CI"
+	exit 0
+fi
+
 echo "Running tests before push..."
 pnpm test

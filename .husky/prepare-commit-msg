@@ -1,1 +1,7 @@
-npx cz --hook || true
+#!/usr/bin/env sh
+
+if [ -n "$CI" ]; then
+	exit 0
+fi
+
+pnpm exec cz --hook || true

@@ -1,5 +1,19 @@
 # storybook-addon-playwright
 
+## 7.0.0
+
+### Major Changes
+
+- remove deprecated decorator files and streamline readiness logic
+
+### Minor Changes
+
+- 37eff36: new release
+
+### Patch Changes
+
+- update version from '5' to '6' in tests
+
 ## 6.0.0
 
 ### Major Changes

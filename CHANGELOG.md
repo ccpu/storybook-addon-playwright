@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.0.1
+
+### Patch Changes
+
+- ensure writeFileMock is initialized correctly
+
 ## 7.0.0
 
 ### Major Changes

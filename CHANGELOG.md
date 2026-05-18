@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.2.2
+
+### Patch Changes
+
+- set build option to 'false' in setup-project step
+
 ## 7.2.1
 
 ### Patch Changes

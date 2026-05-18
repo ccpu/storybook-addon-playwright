@@ -189,6 +189,41 @@ The preview panel shows the latest screenshots taken by Playwright. It can displ
 
 Screenshots are stored in a folder named `__screenshots__` next to the story file.
 
+## Utility helpers
+
+The package also exposes small internal utilities from `storybook-addon-playwright/utils`. One of them is `BrowserManager`, which helps you create and reuse Playwright browser instances by browser type and index.
+
+```ts
+import { BrowserManager } from 'storybook-addon-playwright/utils';
+import { chromium, firefox, webkit } from 'playwright';
+
+const manager = new BrowserManager({
+  browserCount: {
+    chromium: 1,
+    firefox: 1,
+    webkit: 1,
+  },
+  createBrowser: async (browserType) => {
+    const browserTypeMap = {
+      chromium,
+      firefox,
+      webkit,
+    };
+
+    return await browserTypeMap[browserType].launch();
+  },
+  isBrowserConnected: (browser) => browser.isConnected(),
+});
+
+await manager.loadBrowsers();
+
+const { browser, index } = await manager.getBrowser('chromium');
+const page = await browser.newPage();
+
+// Reset every cached browser before the next run if needed.
+await manager.resetBrowsers();
+```
+
 ## Add or extend Playwright page methods
 
 Pass a `customActionSchema` object to `setConfig` to expose additional methods in the **Add Actions** menu of the Actions panel.

@@ -47,6 +47,10 @@
       "import": "./dist/register.mjs",
       "require": "./register.js"
     },
+    "./utils": {
+      "import": "./dist/external-utils/index.mjs",
+      "require": "./dist/external-utils/index.js"
+    },
     "./typings/global": "./typings/global.d.ts",
     "./package.json": "./package.json"
   },

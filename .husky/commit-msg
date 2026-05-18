@@ -1,4 +1,5 @@
-# commit-msg
+#!/usr/bin/env sh
+
 if [ -n "$CI" ]; then
     exit 0
 fi

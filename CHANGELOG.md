@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.0.2
+
+### Patch Changes
+
+- add shebang to commit-msg hook
+
 ## 7.0.1
 
 ### Patch Changes

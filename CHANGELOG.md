@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.2.0
+
+### Minor Changes
+
+- add BrowserManager for managing Playwright browser instances
+
 ## 7.1.0
 
 ### Minor Changes

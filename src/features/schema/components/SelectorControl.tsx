@@ -19,13 +19,15 @@ const useStyles = makeStyles(
     return {
       button: {
         color: theme.palette.text.primary,
+        '& svg': {
+          height: 20,
+          width: 20,
+        },
       },
       buttonWrap: {
         alignItems: 'center',
-        backgroundColor: theme.palette.background.paper,
+        // backgroundColor: theme.palette.background.paper,
         display: 'flex',
-        height: 66,
-        marginBottom: -35,
         zIndex: 1,
       },
       error: {

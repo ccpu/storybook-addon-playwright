@@ -26,13 +26,16 @@ const useStyles = makeStyles(
         marginRight: -8,
         paddingLeft: 4,
         width: 14,
+        '& svg': {
+          width: 14,
+          height: 14,
+        },
       },
       icons: {
         '&:hover': {
           opacity: 0.8,
         },
         cursor: 'pointer',
-        fontSize: 14,
         opacity: 0.4,
       },
       labelWrap: {

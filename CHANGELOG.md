@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.2.3
+
+### Patch Changes
+
+- adjust padding and border styles
+
 ## 7.2.2
 
 ### Patch Changes

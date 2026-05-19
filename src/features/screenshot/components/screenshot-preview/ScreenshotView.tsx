@@ -1,7 +1,6 @@
 import type { BrowserContextOptions, BrowserTypes } from '../../../../typings';
 import { capitalize, makeStyles } from '@material-ui/core';
 import { darken, lighten } from '@material-ui/core/styles';
-import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dialog, ErrorPanel, ImagePreview } from '../../../../components/common';
@@ -36,14 +35,16 @@ const useStyles = makeStyles(
         position: 'relative',
         width: '100%',
         zIndex: 10,
+        backgroundColor: getBackgroundColor(background.default, 0.1),
       },
 
       container: {
         alignItems: 'center',
         height: '100%',
-        overflow: 'hidden',
         position: 'relative',
         width: '100%',
+        border: `3px solid ${palette.divider}`,
+        borderTop: 0,
       },
 
       editMode: {
@@ -69,12 +70,9 @@ const useStyles = makeStyles(
         width: '100%',
       },
 
-      image: {
-        marginLeft: 10,
-        marginRight: 12,
-      },
+      image: {},
       imageContainer: {
-        paddingBottom: 10,
+        width: 'max-content',
       },
     };
   },
@@ -131,6 +129,8 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
 
   const containerHeight = height - 30;
 
+  const isStorybook = browserType === 'storybook';
+
   const isValidToSave =
     Boolean(screenshot && screenshot.base64) && browserType !== 'storybook';
 
@@ -174,26 +174,27 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
         onFullScreen={toggleFullScreen}
       />
 
-      <div className={classes.container} style={{ height: containerHeight }}>
-        <div className={classes.fakeBorder} />
+      <div
+        className={classes.container}
+        style={{ height: containerHeight, overflow: isStorybook ? 'hidden' : 'auto' }}
+      >
+        {/* <div className={classes.fakeBorder} /> */}
         {browserType !== 'storybook' ? (
-          <ScrollArea vertical={true} horizontal={true}>
-            <div className={classes.imageContainer}>
-              {screenshot && screenshot.base64 && !errorMessage ? (
-                <img
-                  className={classes.image}
-                  src={`data:image/gif;base64,${screenshot.base64}`}
-                />
-              ) : (
-                <>{errorMessage && <ErrorPanel message={errorMessage} />}</>
-              )}
-            </div>
-          </ScrollArea>
+          <div className={classes.imageContainer}>
+            {screenshot && screenshot.base64 && !errorMessage ? (
+              <img
+                className={classes.image}
+                src={`data:image/gif;base64,${screenshot.base64}`}
+              />
+            ) : (
+              <>{errorMessage && <ErrorPanel message={errorMessage} />}</>
+            )}
+          </div>
         ) : (
           <iframe
             src={url}
             className={classes.iframe}
-            style={{ height: containerHeight - 10 }}
+            style={{ height: containerHeight }}
             frameBorder="0"
           ></iframe>
         )}

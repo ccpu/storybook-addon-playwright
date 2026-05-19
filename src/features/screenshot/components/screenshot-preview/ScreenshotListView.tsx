@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: `${theme.palette.divider} 0 1px 0 0 inset`,
     height: '100%',
     overflow: 'hidden',
-    padding: 5,
+    paddingTop: 2,
     width: '100%',
   },
   root: {

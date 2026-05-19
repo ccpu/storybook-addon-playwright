@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.2.4
+
+### Patch Changes
+
+- extract iframe inner size logic
+
 ## 7.2.3
 
 ### Patch Changes

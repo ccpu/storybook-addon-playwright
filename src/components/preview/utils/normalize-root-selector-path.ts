@@ -1,5 +1,6 @@
+import { STORYBOOK_ROOT_SELECTOR } from '../../../constants';
+
 const ROOT_SELECTOR = 'html>body>#root';
-const STORYBOOK_ROOT_SELECTOR = 'html>body>#storybook-root';
 const MAX_LEGACY_ROOT_INDEX = 8;
 
 function hasQuerySelector(

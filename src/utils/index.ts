@@ -4,6 +4,7 @@ export * from './construct-story-url';
 export * from './find-selector';
 export * from './get-action-args';
 export * from './get-device-info';
+export * from './get-iframe-inner-size';
 export * from './get-iframe-document';
 export * from './get-iframe-scroll-position';
 export * from './get-image-diff-messages';

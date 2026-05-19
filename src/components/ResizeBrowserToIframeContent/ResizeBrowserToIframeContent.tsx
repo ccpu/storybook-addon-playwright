@@ -3,43 +3,10 @@ import PhotoSizeSelectLargeIconModule from '@material-ui/icons/PhotoSizeSelectLa
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
-import { getPreviewIframe } from '../../utils';
+import { getIframeInnerSize, getPreviewIframe } from '../../utils';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 
 const PhotoSizeSelectLargeIcon = resolveMuiIcon(PhotoSizeSelectLargeIconModule);
-
-function getIframeInnerSize(iframe: HTMLIFrameElement) {
-  const iframeDocument = iframe.contentDocument;
-  if (!iframeDocument || !iframeDocument.body || !iframeDocument.documentElement) {
-    return null;
-  }
-
-  const { body, documentElement } = iframeDocument;
-
-  const width = Math.max(
-    body.scrollWidth,
-    body.offsetWidth,
-    body.clientWidth,
-    documentElement.scrollWidth,
-    documentElement.offsetWidth,
-    documentElement.clientWidth,
-  );
-
-  const height = Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    body.clientHeight,
-    documentElement.scrollHeight,
-    documentElement.offsetHeight,
-    documentElement.clientHeight,
-  );
-
-  if (width <= 0 || height <= 0) {
-    return null;
-  }
-
-  return { width, height };
-}
 
 const ResizeBrowserToIframeContent: React.FC = () => {
   const { setBrowserOptions, browserOptions } = useBrowserOptions();

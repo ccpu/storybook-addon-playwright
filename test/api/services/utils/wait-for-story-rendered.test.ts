@@ -5,6 +5,7 @@ import {
   storyRenderedReadyPredicate,
   waitForStoryRendered,
 } from '../../../../src/api/services/utils/wait-for-story-rendered';
+import { STORYBOOK_ROOT_ID } from '../../../../src/constants';
 
 describe('wait-for-story-rendered', () => {
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('wait-for-story-rendered', () => {
       value: 'interactive',
     });
 
-    document.body.innerHTML = '<div id="storybook-root"><div>mounted</div></div>';
+    document.body.innerHTML = `<div id="${STORYBOOK_ROOT_ID}"><div>mounted</div></div>`;
 
     const isReady = storyRenderedReadyPredicate({
       targetStoryId: 'story-id',

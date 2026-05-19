@@ -1,4 +1,5 @@
 import type { Page } from 'playwright';
+import { STORYBOOK_ROOT_ID } from '../../../constants';
 export const STORY_RENDER_TIMEOUT = 30000;
 
 type StoryRenderLike = {
@@ -34,7 +35,7 @@ export function storyRenderedReadyPredicate({
     return selectedRender.phase === 'completed' || selectedRender.phase === 'finished';
   }
 
-  const storyRoot = document.getElementById('storybook-root');
+  const storyRoot = document.getElementById(STORYBOOK_ROOT_ID);
 
   const hasMountedContent = (storyRoot?.childElementCount || 0) > 0;
 

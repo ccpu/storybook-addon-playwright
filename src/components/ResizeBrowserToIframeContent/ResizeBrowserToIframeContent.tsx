@@ -1,12 +1,12 @@
 import { Tooltip } from '@material-ui/core';
-import PhotoSizeSelectLargeIconModule from '@material-ui/icons/PhotoSizeSelectLarge';
+import AspectRatioIconIconModule from '@mui/icons-material/AspectRatio';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
 import { getIframeInnerSize, getPreviewIframe } from '../../utils';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 
-const PhotoSizeSelectLargeIcon = resolveMuiIcon(PhotoSizeSelectLargeIconModule);
+const AspectRatioIcon = resolveMuiIcon(AspectRatioIconIconModule);
 
 const ResizeBrowserToIframeContent: React.FC = () => {
   const { setBrowserOptions, browserOptions } = useBrowserOptions();
@@ -45,7 +45,7 @@ const ResizeBrowserToIframeContent: React.FC = () => {
       aria-label="Match browser viewport to iframe content"
     >
       <Tooltip placement="top" title="Match browser viewport to iframe content">
-        <PhotoSizeSelectLargeIcon />
+        <AspectRatioIcon />
       </Tooltip>
     </IconButton>
   );

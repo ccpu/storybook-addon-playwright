@@ -1,8 +1,8 @@
 import type { SelectorType } from '../../../hooks';
 import type { ControlProps } from '../../../typings';
 import { IconButton, makeStyles } from '@material-ui/core';
-import TargetIcon from '@material-ui/icons/FilterCenterFocusSharp';
-import PointerIcon from '@material-ui/icons/FilterTiltShift';
+import TargetIcon from '@mui/icons-material/FilterCenterFocusSharp';
+import PointerIcon from '@mui/icons-material/FilterTiltShift';
 import clsx from 'clsx';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useControl, useSelectorManager } from '../../../hooks';

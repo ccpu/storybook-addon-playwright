@@ -1,12 +1,12 @@
 import { Tooltip } from '@material-ui/core';
-import AspectRatioIconModule from '@material-ui/icons/AspectRatio';
+import FitScreenIconModule from '@mui/icons-material/FitScreen';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
 import { getPreviewIframe } from '../../utils';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 
-const AspectRatioIcon = resolveMuiIcon(AspectRatioIconModule);
+const FitScreenIcon = resolveMuiIcon(FitScreenIconModule);
 
 const ResizeBrowserToPreview: React.FC = () => {
   const { setBrowserOptions, browserOptions } = useBrowserOptions();
@@ -39,7 +39,7 @@ const ResizeBrowserToPreview: React.FC = () => {
   return (
     <IconButton onClick={handleClick} aria-label="Match browser viewport to preview">
       <Tooltip placement="top" title="Match browser viewport to preview">
-        <AspectRatioIcon />
+        <FitScreenIcon />
       </Tooltip>
     </IconButton>
   );

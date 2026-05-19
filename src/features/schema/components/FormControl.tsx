@@ -1,7 +1,7 @@
 import { makeStyles, Tooltip } from '@material-ui/core';
-import CheckSelected from '@material-ui/icons/CheckCircleOutlineRounded';
-import HelpOutlineSharp from '@material-ui/icons/HelpOutlineSharp';
-import CheckNotSelected from '@material-ui/icons/RadioButtonUncheckedRounded';
+import CheckSelected from '@mui/icons-material/CheckCircleOutlineRounded';
+import HelpOutlineSharp from '@mui/icons-material/HelpOutlineSharp';
+import CheckNotSelected from '@mui/icons-material/RadioButtonUncheckedRounded';
 import clsx from 'clsx';
 import React, { memo } from 'react';
 import { capitalize } from '../../../utils';

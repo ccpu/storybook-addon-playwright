@@ -1,5 +1,5 @@
 import type { BrowsersOption } from '../../../../hooks/use-browser-options';
-import SettingIcon from '@material-ui/icons/Settings';
+import SettingIcon from '@mui/icons-material/Settings';
 import React, { useCallback, useEffect, useState } from 'react';
 import { DeviceList, MemoizedSchemaFormLoader } from '../../../../components/common';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';

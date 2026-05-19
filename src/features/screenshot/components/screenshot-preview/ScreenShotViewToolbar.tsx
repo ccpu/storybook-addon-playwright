@@ -1,8 +1,8 @@
 import type { BrowserTypes } from '../../../../typings';
 import { CircularProgress, makeStyles, Tooltip } from '@material-ui/core';
-import Fullscreen from '@material-ui/icons/FullscreenSharp';
-import RefreshIcon from '@material-ui/icons/RefreshOutlined';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import Fullscreen from '@mui/icons-material/FullscreenSharp';
+import RefreshIcon from '@mui/icons-material/RefreshOutlined';
+import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';

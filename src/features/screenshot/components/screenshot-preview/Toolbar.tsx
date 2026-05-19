@@ -1,9 +1,9 @@
 import type { BrowserTypes } from '../../../../typings';
 import { Tooltip } from '@material-ui/core';
-import CloseOutlined from '@material-ui/icons/CloseOutlined';
-import NearMeIcon from '@material-ui/icons/NearMe';
-import RefreshSharp from '@material-ui/icons/RefreshSharp';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import CloseOutlined from '@mui/icons-material/CloseOutlined';
+import NearMeIcon from '@mui/icons-material/NearMe';
+import RefreshSharp from '@mui/icons-material/RefreshSharp';
+import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 import { IconButton } from '@storybook/components';
 import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';

@@ -1,4 +1,4 @@
-import DragIndicatorSharp from '@material-ui/icons/DragIndicatorSharp';
+import DragIndicatorSharp from '@mui/icons-material/DragIndicatorSharp';
 import clsx from 'clsx';
 import React from 'react';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';

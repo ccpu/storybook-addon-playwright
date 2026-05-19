@@ -1,5 +1,5 @@
 import { Tooltip } from '@material-ui/core';
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../../../hooks';

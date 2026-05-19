@@ -2,7 +2,7 @@ import { ScreenShotViewToolbar } from '../../../../../src/features/screenshot/co
 import { shallow } from 'enzyme';
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/SaveAltOutlined';
+import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 
 describe('ScreenShotViewToolbar', () => {
   const onRefreshMock = vi.fn();

@@ -1,4 +1,4 @@
-import CameraIcon from '@material-ui/icons/Camera';
+import CameraIcon from '@mui/icons-material/Camera';
 import React, { useCallback, useMemo } from 'react';
 import { MemoizedSchemaFormLoader } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';

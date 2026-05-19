@@ -1,7 +1,7 @@
 import { OptionPopover } from '../../../../../src/features/screenshot/components/screenshot-preview/OptionPopover';
 import { shallow } from 'enzyme';
 import React from 'react';
-import Icon from '@material-ui/icons/AcUnit';
+import Icon from '@mui/icons-material/AcUnit';
 import { IconButton, Popover } from '@material-ui/core';
 import { IconButton as SIconButton } from '@storybook/components';
 

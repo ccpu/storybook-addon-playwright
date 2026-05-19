@@ -8,7 +8,7 @@ import {
   Dialog as MuDialog,
   Typography,
 } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 

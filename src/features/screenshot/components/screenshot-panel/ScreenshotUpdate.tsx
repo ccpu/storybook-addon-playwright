@@ -1,6 +1,6 @@
 import type { ImageDiffResult } from '../../../../api/typings';
 import type { ScreenshotData } from '../../../../typings';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { IconButton } from '@storybook/components';
 import { RefreshIcon } from '@storybook/icons';
 import React, { useCallback, useEffect } from 'react';

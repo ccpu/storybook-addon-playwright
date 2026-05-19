@@ -1,5 +1,5 @@
 import type { BrowserTypes } from '../../typings';
-import { capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import { IconButton } from '@storybook/components';
 import React, { useCallback } from 'react';
 import { BrowserIcon } from '../common/BrowserIcon';

@@ -1,4 +1,5 @@
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+import { Backdrop, CircularProgress } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { getHighestZindex } from '@pixpilot/dom';
 import React, { memo } from 'react';
 import tinycolor from 'tinycolor2';

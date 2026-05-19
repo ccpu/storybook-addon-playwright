@@ -1,6 +1,6 @@
 import { useCustomTheme } from '../../../../src/features/theme/hooks/use-custom-theme';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
 

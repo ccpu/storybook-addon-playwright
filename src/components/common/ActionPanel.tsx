@@ -1,4 +1,4 @@
-import { Button, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import React, { memo } from 'react';
 
 export interface ActionPanelProps {

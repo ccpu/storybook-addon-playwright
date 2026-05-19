@@ -5,7 +5,7 @@ import type { ScreenshotData } from '../../../../typings';
 import type { ScreenshotListItemMenuProps } from './ScreenshotListItemMenu';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import Error from '@mui/icons-material/Error';
 import React, { useCallback, useEffect, useRef, useState } from 'react';

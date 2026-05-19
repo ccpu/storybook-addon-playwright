@@ -1,4 +1,4 @@
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { IconButton } from '@storybook/components';
 import React from 'react';

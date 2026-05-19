@@ -1,4 +1,5 @@
-import { Backdrop, makeStyles } from '@material-ui/core';
+import { Backdrop } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React, { memo } from 'react';
 
 const useStyles = makeStyles(

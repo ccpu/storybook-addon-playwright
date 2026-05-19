@@ -1,5 +1,6 @@
 import type { BrowserTypes } from '../../../../typings';
-import { CircularProgress, makeStyles, Tooltip } from '@material-ui/core';
+import { CircularProgress, Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import Fullscreen from '@mui/icons-material/FullscreenSharp';
 import RefreshIcon from '@mui/icons-material/RefreshOutlined';
 import SaveIcon from '@mui/icons-material/SaveAltOutlined';

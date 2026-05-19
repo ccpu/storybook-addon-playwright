@@ -1,4 +1,4 @@
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { useClipperState } from './Clipper';

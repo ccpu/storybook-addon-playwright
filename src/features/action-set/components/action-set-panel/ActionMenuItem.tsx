@@ -1,5 +1,5 @@
 import type { Ref } from 'react';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem } from '@mui/material';
 import React, { forwardRef, memo, useCallback } from 'react';
 
 export interface ActionMenuItemBase {

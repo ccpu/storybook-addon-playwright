@@ -1,5 +1,5 @@
 import type { ImageDiffResult } from '../../api/typings';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 import { ListItem } from '@storybook/components';
 import { useStorybookApi } from '@storybook/manager-api';
 import React, { useCallback } from 'react';

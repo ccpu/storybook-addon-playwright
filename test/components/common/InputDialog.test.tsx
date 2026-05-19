@@ -2,7 +2,7 @@ import '../../manual-mocks/react-useEffect';
 import { InputDialog } from '../../../src/components/common/InputDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { ActionDialog } from '../../../src/components/common/ActionDialog';
 
 describe('InputDialog', () => {

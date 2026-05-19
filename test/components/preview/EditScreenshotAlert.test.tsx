@@ -2,8 +2,8 @@ import { EditScreenshotAlert } from '../../../src/components/preview/EditScreens
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useEditScreenshot } from '../../../src/features/screenshot/hooks/use-edit-screenshot';
-import { Alert } from '@material-ui/lab';
-import { Button } from '@material-ui/core';
+import { Alert } from '@mui/material';
+import { Button } from '@mui/material';
 
 vi.mock(
   '../../../src/features/screenshot/hooks/use-edit-screenshot',

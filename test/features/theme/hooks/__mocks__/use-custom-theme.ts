@@ -1,4 +1,4 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 import { useCustomTheme as orgUseCustomTheme } from '../../../../../src/features/theme/hooks/use-custom-theme';
 
 export const useCustomTheme = vi.fn<typeof orgUseCustomTheme>();

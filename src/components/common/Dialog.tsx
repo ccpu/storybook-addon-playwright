@@ -1,13 +1,13 @@
-import type { DialogProps as MuDialogProps } from '@material-ui/core';
+import type { DialogProps as MuDialogProps } from '@mui/material';
 import {
   DialogActions,
   DialogTitle,
   Divider,
   IconButton,
-  makeStyles,
   Dialog as MuDialog,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
@@ -95,7 +95,7 @@ const Dialog: React.FC<DialogProps> = ({
     >
       {(TitleActions || enableCloseButton || title || subtitle) && (
         <>
-          <DialogTitle disableTypography={true} className={classes.title}>
+          <DialogTitle className={classes.title}>
             <div>
               {title && <Typography variant="h6">{title}</Typography>}
               {subtitle && <Typography variant="body1">{subtitle}</Typography>}

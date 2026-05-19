@@ -1,5 +1,5 @@
 import type { ActionPopoverProps } from './ActionPopover';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import React, { memo, useCallback } from 'react';
 import { ActionPopover } from './ActionPopover';
 

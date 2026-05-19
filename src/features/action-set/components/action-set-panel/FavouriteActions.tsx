@@ -1,5 +1,6 @@
 import type { FavouriteActionSet } from '../../../../typings';
-import { capitalize, makeStyles } from '@material-ui/core';
+import { capitalize } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { TrashIcon } from '@storybook/icons';
 import { nanoid } from 'nanoid';

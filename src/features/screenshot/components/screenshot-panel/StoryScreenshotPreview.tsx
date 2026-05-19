@@ -1,5 +1,5 @@
 import type { ScreenshotTestTargetType } from '../../../../typings';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import { Loader } from '../../../../components/common';
 import { toast } from '../../../../utils/toast';

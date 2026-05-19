@@ -1,5 +1,5 @@
 import type { ActionSchema } from '../../../typings';
-import { capitalize } from '@material-ui/core';
+import { capitalize } from '@mui/material';
 import startCase from 'lodash/startCase';
 import React, { useCallback } from 'react';
 import { Control } from './Control';

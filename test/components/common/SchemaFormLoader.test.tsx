@@ -47,7 +47,7 @@ import { SchemaFormLoader } from '../../../src/components/common/SchemaFormLoade
 import { shallow } from 'enzyme';
 import React from 'react';
 
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { MemoizedSchemaRenderer } from '../../../src/features/schema/components/index';
 import { getSchema } from '../../api/trpc/clients/__mocks__/schema.client';
 

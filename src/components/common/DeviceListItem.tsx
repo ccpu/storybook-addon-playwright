@@ -1,6 +1,7 @@
 import type { ViewportSize } from 'playwright';
 import type { Ref } from 'react';
-import { makeStyles, MenuItem } from '@material-ui/core';
+import { MenuItem } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React, { forwardRef, memo, useCallback } from 'react';
 
 const useStyles = makeStyles(

@@ -1,4 +1,4 @@
-import type { Theme } from '@material-ui/core';
+import type { Theme } from '@mui/material';
 import type { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import type { Page } from 'playwright';
 import type { TestFileScreenshots } from '../api/services';

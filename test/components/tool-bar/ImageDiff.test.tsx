@@ -49,7 +49,7 @@ import { Loader } from '../../../src/components/common';
 import { ImageDiffResult } from '../../../src/api/typings';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Badge } from '@material-ui/core';
+import { Badge } from '@mui/material';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { toast } from '../../../src/utils/toast';
 

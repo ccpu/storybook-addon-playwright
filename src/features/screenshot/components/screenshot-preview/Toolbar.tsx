@@ -1,5 +1,5 @@
 import type { BrowserTypes } from '../../../../typings';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import RefreshSharp from '@mui/icons-material/RefreshSharp';

@@ -1,6 +1,6 @@
 import type { ScreenshotData } from '../../../../typings';
 
-import { Popover } from '@material-ui/core';
+import { Popover } from '@mui/material';
 import { IconButton } from '@storybook/components';
 import { CogIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';

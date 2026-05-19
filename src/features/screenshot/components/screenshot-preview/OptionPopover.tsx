@@ -1,4 +1,5 @@
-import { Divider, IconButton, makeStyles, Popover, Tooltip } from '@material-ui/core';
+import { Divider, IconButton, Popover, Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton as SIconButton } from '@storybook/components';

@@ -1,6 +1,7 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
-import { Button, CircularProgress, makeStyles, TextField } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { makeStyles } from '@mui/styles';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActionDialog } from './ActionDialog';
@@ -119,10 +120,12 @@ const InputDialog: React.FC<InputDialogProps> = ({
         label={label}
         error={hasError}
         required
-        InputLabelProps={{
-          shrink: true,
+        slotProps={{
+          inputLabel: {
+            shrink: true,
+          },
         }}
-      ></TextField>
+      />
 
       {showGenerateButton && (
         <div style={{ justifyContent: 'end', display: 'flex' }}>

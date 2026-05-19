@@ -1,5 +1,6 @@
-import { Button, makeStyles } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Alert } from '@mui/material';
 import React from 'react';
 import { useEditScreenshot } from '../../hooks';
 

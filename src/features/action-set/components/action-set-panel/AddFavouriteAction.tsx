@@ -12,7 +12,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
-} from '@material-ui/core';
+} from '@mui/material';
 import { IconButton } from '@storybook/components';
 import { StarIcon } from '@storybook/icons';
 import React from 'react';

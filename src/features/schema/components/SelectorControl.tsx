@@ -1,6 +1,7 @@
 import type { SelectorType } from '../../../hooks';
 import type { ControlProps } from '../../../typings';
-import { IconButton, makeStyles } from '@material-ui/core';
+import { IconButton } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import TargetIcon from '@mui/icons-material/FilterCenterFocusSharp';
 import PointerIcon from '@mui/icons-material/FilterTiltShift';
 import clsx from 'clsx';

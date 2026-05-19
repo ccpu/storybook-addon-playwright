@@ -2,7 +2,7 @@ import { OptionPopover } from '../../../../../src/features/screenshot/components
 import { shallow } from 'enzyme';
 import React from 'react';
 import Icon from '@mui/icons-material/AcUnit';
-import { IconButton, Popover } from '@material-ui/core';
+import { IconButton, Popover } from '@mui/material';
 import { IconButton as SIconButton } from '@storybook/components';
 
 describe('OptionPopover', () => {

@@ -1,4 +1,5 @@
-import { createTheme, ThemeProvider as MuThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider as MuThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as StylesThemeProvider } from '@mui/styles';
 import { useStorybookState } from '@storybook/manager-api';
 import React, { memo } from 'react';
 import { useCustomTheme } from '../../features/theme/hooks/use-custom-theme';
@@ -21,7 +22,7 @@ const ThemeProvider: React.FC = memo((props) => {
         primary: { main: storyBookTheme.colorSecondary },
         secondary: { main: storyBookTheme.colorPrimary },
         text: { primary: storyBookTheme.barTextColor },
-        type: storyBookTheme.base === 'dark' ? 'dark' : 'light',
+        mode: storyBookTheme.base === 'dark' ? 'dark' : 'light',
       },
       typography: {
         fontFamily: storyBookTheme.fontBase,
@@ -30,7 +31,11 @@ const ThemeProvider: React.FC = memo((props) => {
     customTheme || {},
   );
 
-  return <MuThemeProvider theme={theme}>{children}</MuThemeProvider>;
+  return (
+    <StylesThemeProvider theme={theme}>
+      <MuThemeProvider theme={theme}>{children}</MuThemeProvider>
+    </StylesThemeProvider>
+  );
 });
 
 ThemeProvider.displayName = 'ThemeProvider';

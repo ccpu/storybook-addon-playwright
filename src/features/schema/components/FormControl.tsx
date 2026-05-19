@@ -1,4 +1,5 @@
-import { makeStyles, Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import CheckSelected from '@mui/icons-material/CheckCircleOutlineRounded';
 import HelpOutlineSharp from '@mui/icons-material/HelpOutlineSharp';
 import CheckNotSelected from '@mui/icons-material/RadioButtonUncheckedRounded';
@@ -99,7 +100,12 @@ const FormControl: React.FC<ControlFormProps> = memo((props) => {
       <div className={classes.iconWrapper}>
         <div>
           {description && (
-            <Tooltip placement="top" interactive enterDelay={800} title={description}>
+            <Tooltip
+              placement="top"
+              disableInteractive={false}
+              enterDelay={800}
+              title={description}
+            >
               <HelpOutlineSharpIcon className={classes.icons} />
             </Tooltip>
           )}

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   IconButton,
   ListItem,
@@ -6,7 +6,19 @@ import {
   TooltipLinkList,
   WithTooltip,
 } from '@storybook/components';
-import { makeStyles } from '@material-ui/core';
+import {
+  BrowserIcon,
+  BottomBarIcon,
+  ChevronRightIcon,
+  EyeCloseIcon,
+  EyeIcon,
+  RefreshIcon,
+  SidebarAltIcon,
+  ShareAltIcon,
+  SyncIcon,
+  WrenchIcon,
+} from '@storybook/icons';
+import { makeStyles } from '@mui/styles';
 import { CommonProvider } from '../common';
 import { PreviewDialog } from '../../features/screenshot/components/screenshot-preview/index';
 import { useAddonState, useCurrentStoryData } from '../../hooks';
@@ -14,18 +26,6 @@ import { ImageDiff } from './ImageDiff';
 import { PREVIEW_PANEL_SIZE, useResetSetting } from '../../hooks/use-reset-setting';
 import { ScreenshotUpdateIcon } from './ScreenshotUpdateIcon';
 import { FixScreenshotFileDialog } from '../common';
-import {
-  RefreshIcon,
-  BottomBarIcon,
-  SidebarAltIcon,
-  SyncIcon,
-  ChevronRightIcon,
-  ShareAltIcon,
-  EyeCloseIcon,
-  WrenchIcon,
-  EyeIcon,
-  BrowserIcon,
-} from '@storybook/icons';
 import { DisplayPlacement } from '../../typings';
 
 const useStyles = makeStyles(() => ({
@@ -37,7 +37,6 @@ const useStyles = makeStyles(() => ({
     top: 1,
     width: 1,
   },
-
   button: {
     position: 'relative',
   },
@@ -50,18 +49,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Tool: React.FC = () => {
+const ToolContent: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] = useState(false);
 
   const { setAddonState, addonState } = useAddonState();
-
-  const [showFixScreenshotFileDialog, setShowFixScreenshotFileDialog] =
-    React.useState<boolean>(false);
   const storyData = useCurrentStoryData();
-
   const resetSetting = useResetSetting();
+  const classes = useStyles();
 
   const isEnablePreviewPanelEnabled = addonState && addonState.previewPanelEnabled;
+  const placement = addonState ? addonState.placement : 'auto';
 
   const handleOpen = () => {
     setOpen(true);
@@ -78,21 +76,19 @@ const Tool: React.FC = () => {
     });
   }, [addonState, isEnablePreviewPanelEnabled, setAddonState]);
 
-  const classes = useStyles();
-
   const handlePlacementChange = useCallback(
-    (placement: DisplayPlacement) => {
+    (placementValue: DisplayPlacement) => {
       setAddonState({
         ...addonState,
-        placement: placement,
+        placement: placementValue,
         previewPanelSize: PREVIEW_PANEL_SIZE,
       });
     },
-    [setAddonState, addonState],
+    [addonState, setAddonState],
   );
-  const placement = addonState ? addonState.placement : 'auto';
+
   return (
-    <CommonProvider>
+    <>
       <Separator />
       <WithTooltip
         placement="bottom"
@@ -121,12 +117,12 @@ const Tool: React.FC = () => {
                   title: 'Full screen view',
                 },
                 {
-                  icon: addonState.previewPanelEnabled ? <EyeCloseIcon /> : <EyeIcon />,
+                  icon: addonState?.previewPanelEnabled ? <EyeCloseIcon /> : <EyeIcon />,
                   id: 'panel-toggle',
                   onClick: () => {
                     handleBowserClose();
                   },
-                  title: addonState.previewPanelEnabled
+                  title: addonState?.previewPanelEnabled
                     ? 'Hide Preview Panel'
                     : 'Show Preview Panel',
                 },
@@ -222,16 +218,24 @@ const Tool: React.FC = () => {
             target="file"
           />
           <ScreenshotUpdateIcon target="file" />
-
-          <FixScreenshotFileDialog
-            onClose={setShowFixScreenshotFileDialog}
-            open={showFixScreenshotFileDialog}
-          />
+          <span className={classes.asterisk}>*</span>
         </>
       )}
+      {showFixScreenshotFileDialog && (
+        <FixScreenshotFileDialog
+          open={showFixScreenshotFileDialog}
+          onClose={() => setShowFixScreenshotFileDialog(false)}
+        />
+      )}
+      {open && <PreviewDialog open={open} onClose={handleClose} />}
+    </>
+  );
+};
 
-      <Separator />
-      <PreviewDialog open={open} onClose={handleClose} />
+const Tool: React.FC = () => {
+  return (
+    <CommonProvider>
+      <ToolContent />
     </CommonProvider>
   );
 };

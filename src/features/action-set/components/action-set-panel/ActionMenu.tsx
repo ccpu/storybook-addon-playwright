@@ -1,5 +1,6 @@
 import type { ActionMenuItemBase } from './ActionMenuItem';
-import { makeStyles, Menu } from '@material-ui/core';
+import { Menu } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React, { memo, useCallback, useState } from 'react';
 import { useActionSetStoreState } from '../../store/index';
 import { ActionMenuItem } from './ActionMenuItem';

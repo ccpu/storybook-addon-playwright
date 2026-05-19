@@ -1,5 +1,6 @@
 import type { ActionSet } from '../../../../typings';
-import { Divider, makeStyles } from '@material-ui/core';
+import { Divider } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React, { useCallback } from 'react';
 import { inputModal, ListItemWrapper, Loader } from '../../../../components/common';
 import { TEMP_ACTION_SET } from '../../../../constants';

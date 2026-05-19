@@ -1,5 +1,5 @@
-import Dialog from '@material-ui/core/Dialog';
-import { makeStyles } from '@material-ui/core/styles';
+import Dialog from '@mui/material/Dialog';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { ThemeProvider } from '../../../../components/common/ThemeProvider';
 import { ScreenshotListView } from './ScreenshotListView';

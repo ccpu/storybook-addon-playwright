@@ -1,6 +1,7 @@
 import type { BrowserContextOptions, BrowserTypes } from '../../../../typings';
-import { capitalize, makeStyles } from '@material-ui/core';
-import { darken, lighten } from '@material-ui/core/styles';
+import { capitalize } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { darken, lighten } from '@mui/material/styles';
 import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dialog, ErrorPanel, ImagePreview } from '../../../../components/common';
@@ -12,7 +13,7 @@ import { getBorderColor } from './utils/index';
 
 const useStyles = makeStyles(
   (theme) => {
-    const getBackgroundColor = theme.palette.type === 'light' ? lighten : darken;
+    const getBackgroundColor = theme.palette.mode === 'light' ? lighten : darken;
     const { palette } = theme;
     const { background } = palette;
 
@@ -25,7 +26,7 @@ const useStyles = makeStyles(
         },
         '& .os-scrollbar-track': {
           '& .os-scrollbar-handle': {
-            backgroundColor: getBorderColor(palette.type, background.paper, 0.6),
+            backgroundColor: getBorderColor(palette.mode, background.paper, 0.6),
           },
           backgroundColor: 'transparent',
           visibility: 'visible !important',
@@ -55,7 +56,7 @@ const useStyles = makeStyles(
       },
 
       fakeBorder: {
-        border: `10px solid ${getBorderColor(palette.type, background.paper, 0.1)}`,
+        border: `10px solid ${getBorderColor(palette.mode, background.paper, 0.1)}`,
         borderTop: 0,
         bottom: 0,
         left: 0,

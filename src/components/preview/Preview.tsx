@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 import { Separator } from '@storybook/components';
 import { useStorybookState } from '@storybook/manager-api';
 import clsx from 'clsx';
@@ -68,7 +68,7 @@ const useStyles = makeStyles(
 
 const DEVIDER_SIZE = 3;
 
-const Preview: React.FC = (props) => {
+const PreviewContent: React.FC = (props) => {
   const { children } = props;
 
   const { addonState, setAddonState } = useAddonState();
@@ -125,19 +125,25 @@ const Preview: React.FC = (props) => {
   const panes = [previewPane, screenshotPane];
 
   return (
+    <div id="preview-container" className={clsx(classes.root)}>
+      <SplitPane
+        direction={isHorizontal ? 'vertical' : 'horizontal'}
+        onResize={(sizes) => handleResizeChange(sizes[previewPaneIndex])}
+        dividerClassName={clsx(classes.splitPane)}
+        dividerStyle={{
+          ...(isHorizontal ? { height: DEVIDER_SIZE } : { width: DEVIDER_SIZE }),
+        }}
+      >
+        {panes}
+      </SplitPane>
+    </div>
+  );
+};
+
+const Preview: React.FC = (props) => {
+  return (
     <CommonProvider>
-      <div id="preview-container" className={clsx(classes.root)}>
-        <SplitPane
-          direction={isHorizontal ? 'vertical' : 'horizontal'}
-          onResize={(sizes) => handleResizeChange(sizes[previewPaneIndex])}
-          dividerClassName={clsx(classes.splitPane)}
-          dividerStyle={{
-            ...(isHorizontal ? { height: DEVIDER_SIZE } : { width: DEVIDER_SIZE }),
-          }}
-        >
-          {panes}
-        </SplitPane>
-      </div>
+      <PreviewContent {...props} />
     </CommonProvider>
   );
 };

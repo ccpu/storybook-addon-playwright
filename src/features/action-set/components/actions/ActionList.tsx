@@ -16,7 +16,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useState } from 'react';
 import { DragHandle, ListWrapper } from '../../../../components/common';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';

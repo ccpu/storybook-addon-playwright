@@ -1,6 +1,7 @@
 import type { ImageDiffResult } from '../../api/typings';
-import { Divider, makeStyles, Tab, Tabs } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Divider, Tab, Tabs } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Alert } from '@mui/material';
 import React, { useCallback } from 'react';
 import { getImageDiffMessages } from '../../utils';
 import { ImagePreview } from './ImagePreview';

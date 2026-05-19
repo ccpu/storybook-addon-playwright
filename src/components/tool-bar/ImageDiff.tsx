@@ -1,6 +1,7 @@
 import type { StoryData } from '../../schema';
 import type { ScreenshotTestTargetType } from '../../typings';
-import { Badge, makeStyles } from '@material-ui/core';
+import { Badge } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { ContrastIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';

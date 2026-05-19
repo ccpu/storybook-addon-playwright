@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DragHandleProps } from './DragHandle';
-import { capitalize, makeStyles } from '@material-ui/core';
+import { capitalize } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
 import React, { useCallback } from 'react';
 import tinycolor from 'tinycolor2';

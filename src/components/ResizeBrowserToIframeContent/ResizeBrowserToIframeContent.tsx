@@ -1,4 +1,4 @@
-import { Tooltip } from '@material-ui/core';
+import { Tooltip } from '@mui/material';
 import AspectRatioIconIconModule from '@mui/icons-material/AspectRatio';
 import { IconButton } from '@storybook/components';
 import React from 'react';

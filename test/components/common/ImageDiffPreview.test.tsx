@@ -2,8 +2,8 @@ import { ImageDiffPreview } from '../../../src/components/common/ImageDiffPrevie
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ImagePreview } from '../../../src/components/common/ImagePreview';
-import { Tabs } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Tabs } from '@mui/material';
+import { Alert } from '@mui/material';
 
 describe('ImageDiffPreview', () => {
   it('should render', () => {

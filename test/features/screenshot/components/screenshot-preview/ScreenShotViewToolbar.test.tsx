@@ -1,7 +1,7 @@
 import { ScreenShotViewToolbar } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenShotViewToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
 import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 
 describe('ScreenShotViewToolbar', () => {

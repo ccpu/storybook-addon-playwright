@@ -1,4 +1,4 @@
-import { Button, DialogActions, TextField } from '@material-ui/core';
+import { Button, DialogActions, TextField } from '@mui/material';
 import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
 import { Dialog, Loader } from '../common';

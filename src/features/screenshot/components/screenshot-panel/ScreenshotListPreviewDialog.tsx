@@ -1,7 +1,8 @@
 import type { DialogProps } from '../../../../components/common';
 import type { StoryData } from '../../../../schema';
 import type { ScreenshotData } from '../../../../typings';
-import { capitalize, makeStyles } from '@material-ui/core';
+import { capitalize } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dialog, ImageDiffPreview } from '../../../../components/common';
 import { useKeyPressFn } from '../../../../hooks/use-key-press-fn';

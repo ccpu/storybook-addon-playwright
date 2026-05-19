@@ -1,7 +1,8 @@
 import type { DragHandleProps } from '../../../../components/common';
-import { AccordionDetails, Chip, makeStyles, Tooltip } from '@material-ui/core';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
+import { AccordionDetails, Chip, Tooltip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import { IconButton } from '@storybook/components';
 import { QuestionIcon, TrashIcon } from '@storybook/icons';
 import React, { memo, useCallback, useEffect, useState } from 'react';
@@ -130,8 +131,10 @@ const ActionOptions: React.FC<ActionOptionsProps> = memo((props) => {
         onChange={handleExpand}
         className={classes.expansionPanel}
         square
-        TransitionProps={{
-          timeout: 100,
+        slotProps={{
+          transition: {
+            timeout: 100,
+          },
         }}
       >
         <AccordionSummary

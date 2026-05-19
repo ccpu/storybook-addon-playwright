@@ -3,7 +3,7 @@ import type { Ref } from 'react';
 import type { ImageDiffResult } from '../../../../api/typings';
 
 import type { ScreenshotData } from '../../../../typings';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
 
 import { IconButton } from '@storybook/components';
 import { ContrastIcon, EditIcon, OutboxIcon } from '@storybook/icons';

@@ -1,5 +1,5 @@
 import type { BrowserContextOptions } from '../../typings';
-import { Button, Menu } from '@material-ui/core';
+import { Button, Menu } from '@mui/material';
 import React, { useCallback, useMemo } from 'react';
 import DeviceDescriptors from '../../data/deviceDescriptorsSource.json';
 import { DeviceListItem } from './DeviceListItem';

@@ -9,6 +9,7 @@ export * from './fix-screenshot-file-name';
 export * from './generate-screenshot-title';
 export * from './get-action-set';
 export * from './get-actions-schema';
+export * from './get-client-config';
 export * from './get-favourite-actions';
 export * from './get-schema-service';
 export * from './get-story-screenshots-data';

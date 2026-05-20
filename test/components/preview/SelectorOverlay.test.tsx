@@ -49,9 +49,10 @@ const stopSelectorMock = vi.fn();
 const setSelectorDataMock = vi.fn();
 
 const useSelectorManagerMockData = (
-  selectorType: 'selector' | 'position' = 'selector',
+  selectorType: 'selector' | 'position' | 'id-selector' = 'selector',
+  selectorAttributeNames: string[] = [],
 ) => ({
-  selectorManager: { type: selectorType },
+  selectorManager: { selectorAttributeNames, type: selectorType },
   setSelectorData: setSelectorDataMock,
   startSelector: vi.fn(),
   stopSelector: stopSelectorMock,
@@ -168,6 +169,54 @@ describe('SelectorOverlay', () => {
     useThrottleFnCallback(10, 10);
 
     expect(wrapper.find('div').first().text()).toBe('X: 10Y: 10div');
+  });
+
+  it('should use first configured attribute when multiple attributes match', () => {
+    const elm = document.createElement('div');
+    elm.id = 'card';
+    elm.setAttribute('data-slot', 'content');
+    elm.setAttribute('data-testid', 'card-main');
+
+    (useSelectorManager as Mock).mockImplementation(() =>
+      useSelectorManagerMockData('id-selector', ['data-slot', 'data-testid', 'id']),
+    );
+
+    const wrapper = shallow(<SelectorOverlay iframe={getIframe(elm)} />);
+
+    useThrottleFnCallback(10, 10);
+
+    expect(wrapper.find('div').first().text()).toContain('[data-slot="content"]');
+  });
+
+  it('should use id only when id is explicitly listed in attributes', () => {
+    const elm = document.createElement('div');
+    elm.id = 'card';
+    elm.setAttribute('data-slot', 'content');
+
+    (useSelectorManager as Mock).mockImplementation(() =>
+      useSelectorManagerMockData('id-selector', ['id', 'data-slot']),
+    );
+
+    const wrapper = shallow(<SelectorOverlay iframe={getIframe(elm)} />);
+
+    useThrottleFnCallback(10, 10);
+
+    expect(wrapper.find('div').first().text()).toContain('#card');
+  });
+
+  it('should default to id when no selector attributes are provided', () => {
+    const elm = document.createElement('div');
+    elm.id = 'card';
+
+    (useSelectorManager as Mock).mockImplementation(() =>
+      useSelectorManagerMockData('id-selector'),
+    );
+
+    const wrapper = shallow(<SelectorOverlay iframe={getIframe(elm)} />);
+
+    useThrottleFnCallback(10, 10);
+
+    expect(wrapper.find('div').first().text()).toContain('#card');
   });
 
   it('should set selector data on mouse up', () => {

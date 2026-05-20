@@ -64,6 +64,17 @@ export interface Config<T = Page> {
   pageGotoOptions?: PageGotoOptions;
 
   /**
+   * Ordered list of attributes used to generate selectors.
+   * The first matching attribute is used.
+   *
+   * When omitted, defaults to ['id'].
+   *
+   * @example ['data-testid']
+   * @example ['data-slot', 'data-testid', 'id']
+   */
+  selectorAttributeNames?: string[];
+
+  /**
    * When `true`, any modifier keys (Shift, Ctrl, Alt, Meta) that were pressed
    * during an action sequence are automatically released afterwards.
    * This prevents modifier keys from accidentally remaining active between actions.

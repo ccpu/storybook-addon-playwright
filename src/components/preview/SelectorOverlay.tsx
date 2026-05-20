@@ -44,6 +44,60 @@ interface Props {
   iframe?: HTMLIFrameElement;
 }
 
+const DEFAULT_SELECTOR_ATTRIBUTE_NAMES = ['id'];
+
+function escapeCssIdentifier(value: string) {
+  if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
+    return CSS.escape(value);
+  }
+
+  return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+function escapeCssAttributeValue(value: string) {
+  return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+function getIdLikeSelector(node: Element, selectorAttributeNames?: string[]) {
+  const attributes =
+    selectorAttributeNames && selectorAttributeNames.length > 0
+      ? selectorAttributeNames
+      : DEFAULT_SELECTOR_ATTRIBUTE_NAMES;
+
+  for (const rawAttributeName of attributes) {
+    const attributeName = rawAttributeName.trim();
+    if (!attributeName) continue;
+
+    const isIdAttribute = attributeName.toLowerCase() === 'id';
+
+    if (isIdAttribute) {
+      if (node.id) {
+        return `#${escapeCssIdentifier(node.id)}`;
+      }
+
+      if (!node.hasAttribute('id')) continue;
+
+      return '[id]';
+    }
+
+    if (!node.hasAttribute(attributeName)) continue;
+
+    const value = node.getAttribute(attributeName);
+
+    if (value == null) continue;
+
+    const safeAttributeName = escapeCssIdentifier(attributeName);
+
+    if (value === '') {
+      return `[${safeAttributeName}]`;
+    }
+
+    return `[${safeAttributeName}="${escapeCssAttributeValue(value)}"]`;
+  }
+
+  return '';
+}
+
 const defaultRect = {
   height: '100%' as unknown as number,
   left: 0,
@@ -85,7 +139,7 @@ const SelectorOverlay: React.FC<Props> = (props) => {
           if (isIdSelector) {
             setSelectorInfo({
               rect: node.getBoundingClientRect(),
-              selector: node.id ? `#${node.id}` : '',
+              selector: getIdLikeSelector(node, selectorManager.selectorAttributeNames),
             });
           } else {
             const path = normalizeRootSelectorPath(

@@ -22,6 +22,7 @@ export type SelectorType = 'selector' | 'position' | 'id-selector';
 
 export interface SelectorManageSharedProps {
   type?: SelectorType;
+  selectorAttributeNames?: string[];
   onData?: (data: SelectorState) => void;
   onStop?: () => void;
 }

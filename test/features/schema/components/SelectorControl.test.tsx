@@ -8,6 +8,21 @@ import { ThemeProvider, themes, convert } from '@storybook/theming';
 import { SelectorManageSharedProps } from '../../../../src/hooks/use-selector-manager';
 import { act } from 'react-dom/test-utils';
 
+vi.mock('../../../../src/api/trpc/client', () => ({
+  createTrpcHttpClient: () => ({}),
+  trpcClient: {
+    schema: {
+      getClientConfig: {
+        useQuery: () => ({
+          data: {
+            selectorAttributeNames: [],
+          },
+        }),
+      },
+    },
+  },
+}));
+
 vi.mock('../../../../src/hooks/use-selector-manager', () => ({
   useSelectorManager() {
     return {

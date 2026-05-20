@@ -10,14 +10,16 @@ export function useSelectorManager() {
   const startSelector = useCallback(
     (options: {
       type?: string;
+      selectorAttributeNames?: string[];
       onData?: (data: SelectorState) => void;
       onStop?: () => void;
     }) => {
-      const { onData, type, onStop } = options;
+      const { onData, onStop, selectorAttributeNames, type } = options;
 
       setSelectorManager({
         onData,
         onStop,
+        selectorAttributeNames,
         start: true,
         type: type as 'selector' | 'position' | 'id-selector',
       });

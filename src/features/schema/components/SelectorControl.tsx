@@ -6,10 +6,13 @@ import TargetIcon from '@mui/icons-material/FilterCenterFocusSharp';
 import PointerIcon from '@mui/icons-material/FilterTiltShift';
 import clsx from 'clsx';
 import React, { memo, useCallback, useEffect, useState } from 'react';
+import { trpcClient } from '../../../api/trpc/client';
 import { useControl, useSelectorManager } from '../../../hooks';
 import { isValidSelector } from '../../../utils';
 import { resolveMuiIcon } from '../../../utils/resolve-mui-icon';
 import { FormControl } from './FormControl';
+
+const DEFAULT_SELECTOR_ATTRIBUTE_NAMES = ['id'];
 
 const TargetIconComponent = resolveMuiIcon(TargetIcon);
 const PointerIconComponent = resolveMuiIcon(PointerIcon);
@@ -97,6 +100,8 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
 
   const { startSelector } = useSelectorManager();
 
+  const { data: clientConfig } = trpcClient.schema.getClientConfig.useQuery();
+
   const { Control, knob, handleChange, setKnob } = useControl(props);
 
   const startSelectorClick = useCallback(
@@ -116,6 +121,8 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
             handleChange(data[key]);
           }
         },
+        selectorAttributeNames:
+          clientConfig?.selectorAttributeNames ?? DEFAULT_SELECTOR_ATTRIBUTE_NAMES,
         type,
       });
     },
@@ -126,6 +133,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
       fullObjectPath,
       label,
       handleChange,
+      clientConfig?.selectorAttributeNames,
     ],
   );
 

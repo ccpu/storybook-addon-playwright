@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.5.1
+
+### Patch Changes
+
+- handle case where takeElementScreenshot has no selector
+
 ## 7.5.0
 
 ### Minor Changes

@@ -20,6 +20,7 @@ describe('wait-for-story-rendered', () => {
 
     const isReady = storyRenderedReadyPredicate({
       targetStoryId: 'story-id',
+      storyRootId: STORYBOOK_ROOT_ID,
     });
 
     expect(isReady).toBe(true);
@@ -36,6 +37,7 @@ describe('wait-for-story-rendered', () => {
 
     const isReady = storyRenderedReadyPredicate({
       targetStoryId: 'story-id',
+      storyRootId: STORYBOOK_ROOT_ID,
     });
 
     expect(isReady).toBe(true);
@@ -49,6 +51,7 @@ describe('wait-for-story-rendered', () => {
   it('should return false when no readiness signal exists', () => {
     const isReady = storyRenderedReadyPredicate({
       targetStoryId: 'story-id',
+      storyRootId: STORYBOOK_ROOT_ID,
     });
 
     expect(isReady).toBe(false);
@@ -79,6 +82,7 @@ describe('wait-for-story-rendered', () => {
       storyRenderedReadyPredicate,
       {
         targetStoryId: 'story-id',
+        storyRootId: STORYBOOK_ROOT_ID,
       },
       {
         timeout: STORY_RENDER_TIMEOUT,
@@ -130,6 +134,7 @@ describe('wait-for-story-rendered', () => {
       storyRenderedReadyPredicate,
       expect.objectContaining({
         targetStoryId: 'story-id',
+        storyRootId: STORYBOOK_ROOT_ID,
       }),
       {
         timeout: STORY_RENDER_TIMEOUT,

@@ -9,6 +9,7 @@ type StoryRenderLike = {
 
 export interface StoryReadyPredicateInput {
   targetStoryId: string;
+  storyRootId: string;
 }
 
 /**
@@ -16,6 +17,7 @@ export interface StoryReadyPredicateInput {
  */
 export function storyRenderedReadyPredicate({
   targetStoryId,
+  storyRootId,
 }: StoryReadyPredicateInput): boolean {
   const preview = (
     globalThis as {
@@ -35,7 +37,7 @@ export function storyRenderedReadyPredicate({
     return selectedRender.phase === 'completed' || selectedRender.phase === 'finished';
   }
 
-  const storyRoot = document.getElementById(STORYBOOK_ROOT_ID);
+  const storyRoot = document.getElementById(storyRootId);
 
   const hasMountedContent = (storyRoot?.childElementCount || 0) > 0;
 
@@ -86,6 +88,7 @@ export async function waitForStoryRendered(
       storyRenderedReadyPredicate,
       {
         targetStoryId: storyId,
+        storyRootId: STORYBOOK_ROOT_ID,
       },
       {
         timeout,

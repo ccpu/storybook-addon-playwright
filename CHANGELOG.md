@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.6.0
+
+### Minor Changes
+
+- add getClientConfig service and integrate selector attributes
+
 ## 7.5.1
 
 ### Patch Changes

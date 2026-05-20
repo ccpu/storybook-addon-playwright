@@ -369,6 +369,32 @@ describe('makeScreenshot', () => {
     expect(screenshotMock).toBeCalledTimes(1);
   });
 
+  it('should take page screenshot when takeElementScreenshot has no selector', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                id: 'takeElementScreenshot-id',
+                name: 'takeElementScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(joinImagesMock).toHaveBeenCalledTimes(0);
+    expect(screenshotMock).toBeCalledTimes(1);
+  });
+
   it('should take 2 screenshots with stitch for merge process', async () => {
     await makeScreenshot(
       {

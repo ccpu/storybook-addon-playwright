@@ -175,8 +175,9 @@ export async function makeScreenshot(
   }
 
   const isTakeElementScreenshotAtLast =
-    lastAction &&
-    (lastAction.name === 'takeElementScreenshot' || lastAction.name === 'takeScreenshot');
+    lastAction?.name === 'takeScreenshot' ||
+    (lastAction?.name === 'takeElementScreenshot' &&
+      Boolean(lastAction.args && lastAction.args.selector));
 
   let buffer: Buffer | undefined;
 

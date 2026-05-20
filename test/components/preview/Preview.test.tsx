@@ -16,6 +16,11 @@ vi.mock(
   } as AddonState,
 }));
 
+const getPreviewContentWrapper = () => {
+  const wrapper = shallow(<Preview />);
+  return shallow(wrapper.props().children as React.ReactElement);
+};
+
 describe('Preview', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -29,7 +34,7 @@ describe('Preview', () => {
     (useAddonState as Mock).mockImplementationOnce(() => ({
       addonState: undefined,
     }));
-    const wrapper = shallow(<Preview />);
+    const wrapper = getPreviewContentWrapper();
     expect(wrapper.type()).toBe(React.Fragment);
   });
 
@@ -40,13 +45,13 @@ describe('Preview', () => {
       } as AddonState,
     }));
 
-    const wrapper = shallow(<Preview />);
+    const wrapper = getPreviewContentWrapper();
 
     expect(wrapper.type()).toBe(React.Fragment);
   });
 
   it('should preview panel horizontal', () => {
-    const wrapper = shallow(<Preview />);
+    const wrapper = getPreviewContentWrapper();
 
     expect(wrapper.find(SplitPane).props().direction).toBe('vertical');
 
@@ -61,7 +66,7 @@ describe('Preview', () => {
         previewPanelEnabled: true,
       } as AddonState,
     }));
-    const wrapper = shallow(<Preview />);
+    const wrapper = getPreviewContentWrapper();
 
     expect(wrapper.find(SplitPane).props().direction).toBe('horizontal');
     expect(wrapper.find(ScreenshotListView).props().column).toBe(1);
@@ -77,7 +82,7 @@ describe('Preview', () => {
       setAddonState,
     }));
 
-    const wrapper = shallow(<Preview />);
+    const wrapper = getPreviewContentWrapper();
 
     const onResize = wrapper.find(SplitPane).props().onResize as
       | ((sizes: number[]) => void)
@@ -101,7 +106,7 @@ describe('Preview', () => {
       setAddonState,
     }));
 
-    const wrapper = shallow(<Preview />);
+    const wrapper = getPreviewContentWrapper();
 
     wrapper.find(ScreenshotListView).props().onClose();
 

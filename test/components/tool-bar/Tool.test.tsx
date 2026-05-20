@@ -15,6 +15,11 @@ vi.mock(
   async () => await import('../../hooks/__mocks__/use-current-story-data'),
 );
 
+const getToolContentWrapper = () => {
+  const wrapper = shallow(<Tool />);
+  return shallow(wrapper.props().children as React.ReactElement);
+};
+
 const getTooltipWrapper = (wrapper: ReturnType<typeof shallow>) => {
   const tooltipProp = wrapper.find(WithTooltip).at(0).props().tooltip as (args: {
     onHide: () => void;
@@ -34,7 +39,7 @@ describe('Tool', () => {
   });
 
   it('should open/hide screenshot preview dialog', () => {
-    const wrapper = shallow(<Tool />);
+    const wrapper = getToolContentWrapper();
     const tooltipWrapper = getTooltipWrapper(wrapper);
     const links = tooltipWrapper.find(TooltipLinkList).props().links as Array<{
       id: string;
@@ -49,7 +54,7 @@ describe('Tool', () => {
     wrapper.find(PreviewDialog).props().onClose();
     wrapper.update();
 
-    expect(wrapper.find(PreviewDialog).props().open).toBeFalsy();
+    expect(wrapper.find(PreviewDialog)).toHaveLength(0);
   });
 
   it('should enable browser preview panel', () => {
@@ -62,7 +67,7 @@ describe('Tool', () => {
       };
     });
 
-    const wrapper = shallow(<Tool />);
+    const wrapper = getToolContentWrapper();
     const tooltipWrapper = getTooltipWrapper(wrapper);
     const links = tooltipWrapper.find(TooltipLinkList).props().links as Array<{
       id: string;
@@ -85,7 +90,7 @@ describe('Tool', () => {
       setAddonState: vi.fn(),
     }));
 
-    const wrapper = shallow(<Tool />);
+    const wrapper = getToolContentWrapper();
     const tooltipWrapper = getTooltipWrapper(wrapper);
     const links = tooltipWrapper.find(TooltipLinkList).props().links as Array<{
       id: string;

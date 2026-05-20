@@ -47,3 +47,45 @@ vi.mock('react-use', async (importOriginal) => {
 vi.mock('react-use/lib/useKey');
 vi.mock('react-use/lib/useThrottleFn');
 vi.mock('react-use/lib/useMouseHovered');
+
+vi.mock('@mui/styles', async (importOriginal) => {
+  const actual = (await importOriginal()) as typeof import('@mui/styles');
+  const { createTheme } = await import('@mui/material/styles');
+  const defaultTheme = createTheme();
+
+  const toSafeTheme = (theme: unknown) => {
+    if (!theme || typeof theme !== 'object') {
+      return defaultTheme;
+    }
+
+    const nextTheme = theme as Record<string, unknown>;
+    const nextPalette = (nextTheme.palette ?? {}) as Record<string, unknown>;
+
+    return {
+      ...defaultTheme,
+      ...nextTheme,
+      palette: {
+        ...defaultTheme.palette,
+        ...nextPalette,
+      },
+    };
+  };
+
+  const makeStyles = ((stylesOrCreator: unknown, options?: unknown) => {
+    if (typeof stylesOrCreator !== 'function') {
+      return actual.makeStyles(stylesOrCreator as never, options as never);
+    }
+
+    return actual.makeStyles((theme: unknown, ...args: unknown[]) => {
+      return (stylesOrCreator as (...params: unknown[]) => unknown)(
+        toSafeTheme(theme),
+        ...args,
+      );
+    }, options as never);
+  }) as typeof actual.makeStyles;
+
+  return {
+    ...actual,
+    makeStyles,
+  };
+});

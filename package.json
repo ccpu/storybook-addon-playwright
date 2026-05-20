@@ -48,6 +48,7 @@
       "require": "./register.js"
     },
     "./utils": {
+      "types": "./dist/external-utils/index.d.ts",
       "import": "./dist/external-utils/index.mjs",
       "require": "./dist/external-utils/index.js"
     },

@@ -1,5 +1,15 @@
 # storybook-addon-playwright
 
+## 7.3.0
+
+### Minor Changes
+
+- update icon styles in ClipperButton, FormControl, and SelectorControl
+
+### Patch Changes
+
+- update styles for Dialog component
+
 ## 7.2.4
 
 ### Patch Changes

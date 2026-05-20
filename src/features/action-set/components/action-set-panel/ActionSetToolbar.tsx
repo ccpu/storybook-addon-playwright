@@ -10,7 +10,6 @@ export interface ActionToolbarProps {
   onFavoriteActionsClick?: () => void;
   onDeleteSelectedActionSets: () => void;
   deleteDisabled?: boolean;
-  getContainerHeight?: () => number | undefined;
 }
 
 const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
@@ -20,7 +19,6 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
     onFavoriteActionsClick,
     onDeleteSelectedActionSets,
     deleteDisabled,
-    getContainerHeight,
   } = props;
 
   return (
@@ -30,7 +28,7 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
           <span>Action Sets</span>
         </div>
         <div className="right">
-          <FavouriteActions getContainerHeight={getContainerHeight}>
+          <FavouriteActions>
             <IconButton onClick={onFavoriteActionsClick} title="Favourite Actions">
               <StarIcon />
             </IconButton>

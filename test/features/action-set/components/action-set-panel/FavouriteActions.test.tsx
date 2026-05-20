@@ -1,8 +1,9 @@
 import { addActionSetMock } from '../../../../manual-mocks/store/action/context';
 import React from 'react';
+import { AutoHeightWithTooltip } from '../../../../../src/components/common';
 import { FavouriteActions } from '../../../../../src/features/action-set/components/action-set-panel/FavouriteActions';
 import { shallow } from 'enzyme';
-import { ListItem, WithTooltip } from '@storybook/components';
+import { ListItem } from '@storybook/components';
 
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 
@@ -109,7 +110,7 @@ describe('FavouriteActions', () => {
     );
 
     expect(wrapper.exists()).toBeTruthy();
-    expect(wrapper.find(WithTooltip).length).toBe(1);
+    expect(wrapper.find(AutoHeightWithTooltip).length).toBe(1);
   });
 
   it('should add quick action', async () => {
@@ -119,7 +120,7 @@ describe('FavouriteActions', () => {
       </FavouriteActions>,
     );
 
-    const tooltipProp = wrapper.find(WithTooltip).props().tooltip as (args: {
+    const tooltipProp = wrapper.find(AutoHeightWithTooltip).props().tooltip as (args: {
       onHide: () => void;
     }) => React.ReactNode;
 

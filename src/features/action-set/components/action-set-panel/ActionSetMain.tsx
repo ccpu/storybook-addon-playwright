@@ -22,12 +22,12 @@ interface SortableIndexChangeEvent {
   oldIndex: number;
 }
 
+const ACTION_SET_ID_LENGTH = 12;
+
 const ActionSetMain: React.FC = () => {
   const { storyId } = useStorybookState();
 
   const storyData = useCurrentStoryData();
-
-  const ref = React.useRef<HTMLDivElement>(null);
 
   const { currentActions } = useCurrentActions(storyId);
 
@@ -39,7 +39,7 @@ const ActionSetMain: React.FC = () => {
 
   const createNewActionSet = useCallback(
     (desc: string) => {
-      const id = nanoid(12);
+      const id = nanoid(ACTION_SET_ID_LENGTH);
       const newActionSet: ActionSet = {
         actions: [],
         id,
@@ -114,18 +114,13 @@ const ActionSetMain: React.FC = () => {
     [changeActionSetIndex, storyData, storyId],
   );
 
-  const getContainerHeight = React.useCallback(() => {
-    return ref.current?.offsetHeight ?? undefined;
-  }, []);
-
   return (
-    <div style={{ height: 'calc(100% - 55px)', transform: 'none' }} ref={ref}>
+    <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       <ActionToolbar
         onAddActionSet={toggleDescriptionDialog}
         onReset={handleReset}
         onDeleteSelectedActionSets={handleDeleteSelectedActionSets}
         deleteDisabled={currentActions.length === 0}
-        getContainerHeight={getContainerHeight}
       />
 
       <ActionSetList onSortEnd={handleSortEnd} />

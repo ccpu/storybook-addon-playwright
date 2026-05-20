@@ -1,11 +1,12 @@
 import type { FavouriteActionSet } from '../../../../typings';
 import { capitalize } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { IconButton, ListItem, WithTooltip } from '@storybook/components';
+import { IconButton, ListItem } from '@storybook/components';
 import { TrashIcon } from '@storybook/icons';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { trpcClient } from '../../../../api/trpc/client';
+import { AutoHeightWithTooltip } from '../../../../components/common';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { addActionSet as addActionSetToStore } from '../../store/actions';
 import { filterFavouriteActions } from './utils/filter-favourite-actions';
@@ -23,7 +24,6 @@ const useStyles = makeStyles(
 
 export interface FavouriteActionsProps {
   children?: React.ReactNode;
-  getContainerHeight?: () => number | undefined;
 }
 
 const defaults: FavouriteActionSet[] = [
@@ -52,7 +52,7 @@ const defaults: FavouriteActionSet[] = [
 ];
 
 const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
-  const { children, getContainerHeight } = props;
+  const { children } = props;
 
   const [actionSets, setActionSets] = React.useState<FavouriteActionSet[]>(defaults);
 
@@ -117,21 +117,14 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
   }, [loadActions]);
 
   return (
-    <WithTooltip
+    <AutoHeightWithTooltip
       closeOnOutsideClick
       placement="bottom-start"
       trigger="click"
+      tooltipClassName={classes.menu}
       tooltip={({ onHide }) => {
-        const containerHeight = getContainerHeight?.();
         return (
-          <div
-            className={classes.menu}
-            style={{
-              maxHeight: containerHeight ? `${containerHeight - 50}px` : '50vh',
-              overflowY: 'auto',
-            }}
-            onMouseDown={(e) => e.stopPropagation()}
-          >
+          <>
             {actionSets.map((item) => {
               return (
                 <ListItem
@@ -156,12 +149,12 @@ const FavouriteActions: React.FC<FavouriteActionsProps> = (props) => {
                 />
               );
             })}
-          </div>
+          </>
         );
       }}
     >
       {children}
-    </WithTooltip>
+    </AutoHeightWithTooltip>
   );
 };
 

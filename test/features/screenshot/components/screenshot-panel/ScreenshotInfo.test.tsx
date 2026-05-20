@@ -6,6 +6,10 @@ import { IconButton } from '@storybook/components';
 import { Popover } from '@mui/material';
 import ReactJson from 'react-json-view';
 
+const ReactJsonView =
+  (ReactJson as unknown as { default?: React.ComponentType<unknown> }).default ??
+  ReactJson;
+
 describe('ScreenshotInfo', () => {
   it('should render', () => {
     const wrapper = shallow(<ScreenshotInfo screenshotData={getScreenshotDate()} />);
@@ -28,7 +32,7 @@ describe('ScreenshotInfo', () => {
 
     wrapper.update();
 
-    const reactJsonComp = wrapper.find(ReactJson);
+    const reactJsonComp = wrapper.find(ReactJsonView);
 
     expect(reactJsonComp).toHaveLength(1);
 
@@ -72,7 +76,7 @@ describe('ScreenshotInfo', () => {
 
     wrapper.update();
 
-    const reactJsonComp = wrapper.find(ReactJson);
+    const reactJsonComp = wrapper.find(ReactJsonView);
 
     expect(reactJsonComp).toHaveLength(1);
 

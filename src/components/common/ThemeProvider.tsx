@@ -12,6 +12,22 @@ const ThemeProvider: React.FC = memo((props) => {
   const { theme: customTheme } = useCustomTheme();
   const theme = createTheme(
     {
+      components: {
+        MuiPaper: {
+          styleOverrides: {
+            root: {
+              variants: [
+                {
+                  props: { variant: 'elevation' },
+                  style: {
+                    backgroundImage: 'none',
+                  },
+                },
+              ],
+            },
+          },
+        },
+      },
       palette: {
         action: { active: storyBookTheme.barTextColor },
         background: {

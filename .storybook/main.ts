@@ -15,11 +15,7 @@ type LocalStorybookConfig = StorybookConfig & {
 
 const config: LocalStorybookConfig = {
   stories: ['../**/*.stories.tsx'],
-  addons: [
-    '@storybook/addon-essentials',
-    'storybook-dark-mode',
-    '@storybook/addon-themes',
-  ],
+  addons: ['storybook-dark-mode', '@storybook/addon-themes'],
   managerEntries: (entry = []) => [...entry, path.resolve(__dirname, '../register.js')],
 
   framework: {

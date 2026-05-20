@@ -6,6 +6,10 @@ import { CogIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import ReactJson from 'react-json-view';
 
+const ReactJsonView =
+  (ReactJson as unknown as { default?: React.ComponentType<unknown> }).default ??
+  ReactJson;
+
 export interface ScreenshotInfoProps {
   screenshotData: ScreenshotData;
   size?: 'small' | 'medium';
@@ -33,7 +37,6 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
     },
     [anchorEl, onClose],
   );
-
   return (
     <>
       <IconButton color={color} onClick={togglePopover} size={size}>
@@ -42,7 +45,7 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
       <Popover anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={togglePopover}>
         <div>
           {anchorEl && (
-            <ReactJson
+            <ReactJsonView
               enableClipboard={false}
               theme="railscasts"
               src={getInfo()}

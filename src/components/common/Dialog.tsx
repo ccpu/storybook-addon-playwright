@@ -32,10 +32,10 @@ const useStyles = makeStyles(
       },
       paper: {
         height: (p: StyleProps) => p.height,
-        margin: 10,
+        padding: 10,
         maxHeight: 'calc(100% - 20px)',
-        maxWidth: (p: StyleProps) => p.width,
-        width: (p: StyleProps) => p.width,
+        maxWidth: (p: StyleProps) => p.width + ' !important',
+        width: (p: StyleProps) => p.width + ' !important',
       },
       title: {
         '& h6': {

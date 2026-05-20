@@ -176,6 +176,9 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
 
   const isSelector = selectorType === 'selector';
 
+  const isYPosition = selectorType === 'position' && label === 'y';
+  const isXPosition = selectorType === 'position' && label === 'x';
+
   return (
     <FormControl
       label={label}
@@ -201,6 +204,15 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
             size="small"
             onClick={handleSelectorClick}
             className={classes.button}
+            title={
+              isSelector
+                ? 'Select element on the page to get its selector path'
+                : 'Select element on the page to get its position relative to the viewport'
+            }
+            style={{
+              visibility: isYPosition ? 'hidden' : undefined,
+              ...(isXPosition && { position: 'relative', bottom: -20 }),
+            }}
           >
             {isSelector ? (
               <TargetIconComponent className={classes.selectorIcon} />
@@ -214,6 +226,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
               size="small"
               onClick={handleIdSelectorClick}
               className={classes.button}
+              title="Select element by ID or attributes set on selectorAttributeNames in config"
             >
               <div className={classes.selectorHashIcon}>
                 <TargetIconComponent className={classes.selectorIcon} />

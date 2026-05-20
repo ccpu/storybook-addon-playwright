@@ -159,6 +159,79 @@ describe('SelectorControl', () => {
     ).toBe(true);
   });
 
+  it('should set selector mode title for primary action button', () => {
+    const wrapper = mount(<Component />);
+
+    const button = wrapper.find('button').first();
+
+    expect(button.prop('title')).toBe(
+      'Select element on the page to get its selector path',
+    );
+  });
+
+  it('should set id selector title for secondary action button', () => {
+    const wrapper = mount(<Component />);
+
+    const button = wrapper.find('button').at(1);
+
+    expect(button.prop('title')).toBe(
+      'Select element by ID or attributes set on selectorAttributeNames in config',
+    );
+  });
+
+  it('should set position mode title for primary action button', () => {
+    const wrapper = mount(
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        value={1}
+      />,
+    );
+
+    const button = wrapper.find('button').first();
+
+    expect(button.prop('title')).toBe(
+      'Select element on the page to get its position relative to the viewport',
+    );
+  });
+
+  it('should hide primary action button for y position controls', () => {
+    const wrapper = mount(
+      <Component
+        label="y"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.y"
+        value={1}
+      />,
+    );
+
+    const button = wrapper.find('button').first();
+
+    expect(button.prop('style')).toMatchObject({ visibility: 'hidden' });
+  });
+
+  it('should offset primary action button for x position controls', () => {
+    const wrapper = mount(
+      <Component
+        label="x"
+        type="number"
+        selectorType="position"
+        fullObjectPath="options.prop.x"
+        value={1}
+      />,
+    );
+
+    const button = wrapper.find('button').first();
+
+    expect(button.prop('style')).toMatchObject({
+      bottom: -20,
+      position: 'relative',
+    });
+  });
+
   it('should start selector and return selector path', () => {
     const wrapper = mount(<Component />);
 

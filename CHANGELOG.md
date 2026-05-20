@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.5.0
+
+### Minor Changes
+
+- add AutoHeightWithTooltip component
+
 ## 7.4.1
 
 ### Patch Changes

@@ -152,6 +152,7 @@ async function setupPlaywright() {
         }
         return '';
       },
+      selectorAttributeNames: ['data-slot', 'id'],
       storybookEndpoint: getStorybookEndpoint(),
       getPage,
       afterNavigation,

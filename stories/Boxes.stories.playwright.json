@@ -127,11 +127,67 @@
           "title": "should allow last screenshot if last action is not takeElementScreenshot"
         }
       ]
+    },
+    "boxes--with-data-slot": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "[data-slot=\"blue\"]"
+              },
+              "name": "takeElementScreenshot"
+            }
+          ],
+          "id": "aSWjZX2d7i-j",
+          "title": "click"
+        }
+      ],
+      "screenshots": [
+        {
+          "actionSets": [
+            {
+              "actions": [
+                {
+                  "args": {
+                    "selector": "[data-slot=\"blue\"]"
+                  },
+                  "id": "wXdcNKgWf0KY",
+                  "name": "takeElementScreenshot"
+                }
+              ],
+              "id": "3lhr_YVPrcyt",
+              "title": "click"
+            }
+          ],
+          "browserOptionsId": "7lDkGOEAaSUf",
+          "browserType": "chromium",
+          "id": "dvMPMK7peTuD",
+          "index": 0,
+          "title": "Should render correctly."
+        }
+      ]
     }
   },
   "browserOptions": {
     "Db-vUIXws6EF": {
       "cursor": true
+    },
+    "7lDkGOEAaSUf": {
+      "all": {
+        "cursor": true,
+        "viewport": {
+          "height": 362,
+          "width": 697
+        }
+      },
+      "firefox": {},
+      "chromium": {},
+      "webkit": {},
+      "viewport": {
+        "height": 800,
+        "width": 900
+      }
     }
   },
   "screenshotOptions": {

@@ -38,3 +38,44 @@ export const withDefault = () => (
     />
   </>
 );
+
+const withDataSlot = () => (
+  <>
+    <div
+      id="blue"
+      data-slot="blue"
+      style={{
+        backgroundColor: 'blue',
+        height: 100,
+        left: 60,
+        position: 'absolute',
+        top: 50,
+        width: 100,
+      }}
+    />
+    <div
+      data-slot="red"
+      style={{
+        backgroundColor: 'red',
+        height: 100,
+        left: 600,
+        position: 'absolute',
+        top: 500,
+        width: 100,
+      }}
+    />
+    <div
+      data-slot="green"
+      style={{
+        backgroundColor: 'green',
+        height: 100,
+        left: 800,
+        position: 'absolute',
+        top: 700,
+        width: 100,
+      }}
+    />
+  </>
+);
+
+export { withDataSlot };

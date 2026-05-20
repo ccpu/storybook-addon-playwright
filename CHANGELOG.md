@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.4.1
+
+### Patch Changes
+
+- fix screenshot loading issue
+
 ## 7.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.4.0
+
+### Minor Changes
+
+- add TypeScript definitions and entry point
+
 ## 7.3.0
 
 ### Minor Changes

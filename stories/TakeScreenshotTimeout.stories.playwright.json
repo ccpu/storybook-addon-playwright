@@ -7,16 +7,25 @@
           "actions": [
             {
               "args": {
-                "selector": "#box",
-                "options": {
-                  "timeout": ""
-                }
+                "selector": "#box"
               },
               "name": "takeElementScreenshot"
             }
           ],
           "id": "OsGNZHtJgRVd",
           "title": "takeElementScreenshot"
+        },
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "#box"
+              },
+              "name": "click"
+            }
+          ],
+          "id": "QqKfAYLnzJeV",
+          "title": "click"
         }
       ]
     }

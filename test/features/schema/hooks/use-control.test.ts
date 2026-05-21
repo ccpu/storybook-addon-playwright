@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useControl } from '../../../../src/features/schema/hooks/use-control';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { ControlProps } from '../../../../src/typings';
@@ -112,5 +111,45 @@ describe('useControl', () => {
     });
 
     expect(onChangeMock).toHaveBeenCalledWith('new-val');
+  });
+
+  it('should keep empty value when number input is cleared', () => {
+    const {
+      result: {
+        current: { Control, handleChange, knob },
+      },
+    } = renderHook(() => useControl({ ...getControlOptions(), type: 'number' }));
+
+    const controlNode = (Control as any)({ handleChange, knob, onChange: handleChange });
+
+    act(() => {
+      controlNode.props.onChange({
+        currentTarget: {
+          value: '',
+        },
+      });
+    });
+
+    expect(onChangeMock).toHaveBeenLastCalledWith(undefined);
+  });
+
+  it('should parse numeric input into number', () => {
+    const {
+      result: {
+        current: { Control, handleChange, knob },
+      },
+    } = renderHook(() => useControl({ ...getControlOptions(), type: 'number' }));
+
+    const controlNode = (Control as any)({ handleChange, knob, onChange: handleChange });
+
+    act(() => {
+      controlNode.props.onChange({
+        currentTarget: {
+          value: '42',
+        },
+      });
+    });
+
+    expect(onChangeMock).toHaveBeenLastCalledWith(42);
   });
 });

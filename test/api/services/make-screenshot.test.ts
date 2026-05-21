@@ -478,6 +478,39 @@ describe('makeScreenshot', () => {
     expect(elementScreenshotMock).toBeCalledTimes(1);
   });
 
+  it('should ignore empty-string timeout for takeElementScreenshot', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {
+                  options: {
+                    timeout: '',
+                  },
+                  selector: '#target',
+                } as unknown as Record<string, unknown>,
+                id: 'takeElementScreenshot-id',
+                name: 'takeElementScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(waitForSelectorMock).toHaveBeenCalledWith('#target', {
+      state: 'attached',
+    });
+  });
+
   it('should take 2 screenshots with stitch for merge process', async () => {
     await makeScreenshot(
       {

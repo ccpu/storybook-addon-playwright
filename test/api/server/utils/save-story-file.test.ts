@@ -65,4 +65,56 @@ describe('saveStoryFile', () => {
 
     expect(unlinkSync).toHaveBeenCalledTimes(1);
   });
+
+  it('should normalize empty-string numeric action args before save', () => {
+    const fileInfo = getStoryPlaywrightFileInfo('./story.ts');
+
+    saveStoryFile(fileInfo, {
+      stories: {
+        'story-id': {
+          actionSets: [
+            {
+              actions: [
+                {
+                  args: {
+                    options: {
+                      timeout: '',
+                    },
+                    selector: 'div>div',
+                  },
+                  id: 'id1',
+                  name: 'click',
+                },
+              ],
+              id: 'id',
+              title: 'desc',
+            },
+          ],
+        },
+      },
+    });
+
+    expect(writeFileMock.mock.calls[0][1]).toStrictEqual({
+      stories: {
+        'story-id': {
+          actionSets: [
+            {
+              actions: [
+                {
+                  args: {
+                    selector: 'div>div',
+                  },
+                  id: 'id1',
+                  name: 'click',
+                },
+              ],
+              id: 'id',
+              title: 'desc',
+            },
+          ],
+        },
+      },
+      version: '7',
+    });
+  });
 });

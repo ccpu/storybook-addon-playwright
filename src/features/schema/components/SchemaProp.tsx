@@ -6,6 +6,8 @@ import { Control } from './Control';
 import { SchemaRenderer } from './SchemaRenderer';
 import { SelectorControl } from './SelectorControl';
 
+const EMPTY_PARENTS: string[] = [];
+
 export interface SchemaPropProps {
   name: string;
   parents?: string[];
@@ -22,7 +24,7 @@ export interface SchemaPropProps {
 const SchemaProp: React.FC<SchemaPropProps> = ({
   name,
   schema,
-  parents = [],
+  parents = EMPTY_PARENTS,
   nextPropName,
   isRequired,
   onChange,
@@ -35,9 +37,14 @@ const SchemaProp: React.FC<SchemaPropProps> = ({
 
   const handleChange = useCallback(
     (val) => {
-      onChange(optionObjectPath, val);
+      const normalizedVal =
+        (schema.type === 'number' || schema.type === 'integer') && val === ''
+          ? undefined
+          : val;
+
+      onChange(optionObjectPath, normalizedVal);
     },
-    [onChange, optionObjectPath],
+    [onChange, optionObjectPath, schema.type],
   );
 
   const value = schema.type !== 'object' && getValue(optionObjectPath, schema);

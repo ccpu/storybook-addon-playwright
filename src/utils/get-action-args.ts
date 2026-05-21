@@ -1,5 +1,6 @@
 import type { ActionSchemaList, StoryAction } from '../typings';
 import { getActionSchema } from './get-schema';
+import { normalizeActionArgs } from './normalize-action-args';
 
 export function getActionArgs(action: StoryAction, actionSchema: ActionSchemaList) {
   const schema = getActionSchema(actionSchema, action.name);
@@ -11,23 +12,16 @@ export function getActionArgs(action: StoryAction, actionSchema: ActionSchemaLis
   }
 
   const parameters = (schema.parameters as Record<string, unknown> | undefined) || {};
+  const normalizedArgs = normalizeActionArgs(action.args, schema);
 
   const args = Object.keys(parameters).reduce<unknown[]>((arr, actionName) => {
     const isRequired = schema.required && schema.required.includes(actionName);
+    const hasRawArg = action.args && Object.keys(action.args).includes(actionName);
 
-    if (action && action.args && action.args[actionName] !== undefined) {
-      const val = action.args[actionName];
-      if (
-        !isRequired &&
-        val !== null &&
-        (val === undefined ||
-          (typeof val === 'object' && Object.keys(val).length === 0) ||
-          (Array.isArray(val) && val.length === 0))
-      ) {
-        return arr;
-      }
-
-      arr.push(action.args[actionName]);
+    if (normalizedArgs && normalizedArgs[actionName] !== undefined) {
+      arr.push(normalizedArgs[actionName]);
+    } else if (hasRawArg && !isRequired) {
+      return arr;
     } else {
       arr.push(undefined);
     }

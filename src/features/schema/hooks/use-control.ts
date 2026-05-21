@@ -2,6 +2,7 @@ import type { ControlProps, ControlTypes } from '../../../typings';
 import { Form } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
 import { CheckBox } from '../../../components';
+import { parseOptionalNumber } from '../../../utils/parse-optional-number';
 
 interface ControlKnob {
   defaultValue?: unknown;
@@ -38,6 +39,10 @@ function getDefault(type: ControlTypes, defVal: unknown): unknown {
   }
 }
 
+function parseNumberValue(value: string): number | undefined {
+  return parseOptionalNumber(value);
+}
+
 // Simple control component that replaces @storybook/addon-knobs controls
 const SimpleControl: React.FC<{
   onChange: (val: unknown) => void;
@@ -52,7 +57,7 @@ const SimpleControl: React.FC<{
       knob.type === 'boolean'
         ? e.currentTarget.checked
         : knob.type === 'number'
-          ? Number(e.currentTarget.value)
+          ? parseNumberValue(e.currentTarget.value)
           : e.currentTarget.value;
     onChange(value);
   };
@@ -63,7 +68,9 @@ const SimpleControl: React.FC<{
 
   const handleTextareaChange: React.FormEventHandler<HTMLTextAreaElement> = (e) => {
     const value =
-      knob.type === 'number' ? Number(e.currentTarget.value) : e.currentTarget.value;
+      knob.type === 'number'
+        ? parseNumberValue(e.currentTarget.value)
+        : e.currentTarget.value;
     onChange(value);
   };
 
@@ -120,14 +127,14 @@ function getControl(_type: string) {
 export function useControl(props: ControlProps) {
   const { label, type, onChange, value, options, display } = props;
 
-  const [knob, setKnob] = useState<ControlKnob>({
+  const [knob, setKnob] = useState<ControlKnob>(() => ({
     defaultValue: value,
     name: label,
     options: type === 'select' ? options : options ? convertOptions(options) : undefined,
     optionsObj: { display },
     type,
     value: getDefault(type, value),
-  });
+  }));
 
   const Control = getControl(type);
 

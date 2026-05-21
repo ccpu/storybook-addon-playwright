@@ -300,4 +300,21 @@ describe('SchemaProp', () => {
     control.props().onChange('foo');
     expect(onChangeMock).toHaveBeenLastCalledWith('string', 'foo');
   });
+
+  it('should normalize empty number value to undefined', () => {
+    const wrapper = shallow(
+      <SchemaProp
+        name="timeout"
+        nextPropName=""
+        schema={{ type: 'number' }}
+        onChange={onChangeMock}
+        getValue={getVal}
+      />,
+    );
+
+    const control = wrapper.find(Control);
+    control.props().onChange('');
+
+    expect(onChangeMock).toHaveBeenLastCalledWith('timeout', undefined);
+  });
 });

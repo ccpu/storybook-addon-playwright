@@ -8,13 +8,13 @@ import type {
 } from '../../typings';
 import type {
   TakeScreenshotOptionsParams,
-  TakeElementScreenshotOptions,
   TakeScreenshotParams,
 } from '../typings/schema-types';
 import joinImage from 'join-images';
 import sharp from 'sharp';
 import { extendPage } from '../../page-extra';
 import { constructStoryUrl, getScreenshotArgs, getScreenshotGlobals } from '../../utils';
+import { parseOptionalNumber } from '../../utils/parse-optional-number';
 import { getConfigs } from '../server/configs';
 import { executeAction } from '../server/utils/execute-action';
 import { installMouseHelper } from '../server/utils/install-mouse-helper';
@@ -146,15 +146,15 @@ export async function makeScreenshot(
 
       if (action.name === 'takeElementScreenshot') {
         const takeElementArgs = action.args as
-          | { selector?: unknown; options?: TakeElementScreenshotOptions }
+          | { selector?: unknown; options?: { timeout?: unknown } }
           | undefined;
 
         if (takeElementArgs?.selector && typeof takeElementArgs.selector === 'string') {
-          const timeout = takeElementArgs.options?.timeout;
+          const timeout = parseOptionalNumber(takeElementArgs.options?.timeout);
 
           const elementHandle = await page.waitForSelector(takeElementArgs.selector, {
             state: 'attached',
-            ...{ timeout },
+            ...(timeout !== undefined ? { timeout } : {}),
           });
 
           imageInfos.push({

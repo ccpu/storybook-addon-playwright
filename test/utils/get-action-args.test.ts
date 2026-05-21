@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import { getActionArgs } from '../../src/utils/get-action-args';
 import { getActionSchemaData } from '../configs/action-schema';
 import { StoryAction } from '../../src/typings';
@@ -80,6 +79,23 @@ describe('getActionArgs', () => {
     };
     const sortedAction = getActionArgs(action, getActionSchemaData());
     expect(sortedAction).toStrictEqual([undefined, { x: 1 }, undefined]);
+  });
+
+  it('should remove empty-string numeric values from nested options', () => {
+    const action: StoryAction = {
+      id: 'someId',
+      name: 'click',
+      args: {
+        selector: 'div>div',
+        options: {
+          timeout: '',
+        },
+      },
+    };
+
+    const sortedAction = getActionArgs(action, getActionSchemaData());
+
+    expect(sortedAction).toStrictEqual(['div>div', undefined]);
   });
 
   it('should throw error if action is not exist in schema, so we know its deprecated', () => {

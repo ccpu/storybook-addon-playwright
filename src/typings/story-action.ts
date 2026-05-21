@@ -22,7 +22,6 @@ export interface StoryActionPosition {
 export interface StoryAction<T = Page> {
   id: string;
   name: string;
-  labe?: string;
   args?: { [key: string]: unknown };
   subtitleItems?: string[];
   run?: (page: T, selector: string) => Promise<void>;

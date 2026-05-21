@@ -79,6 +79,18 @@
           ],
           "id": "RnpBPm0zT181",
           "title": "take element screen shot"
+        },
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "#blue"
+              },
+              "name": "click"
+            }
+          ],
+          "id": "8qzF0OWX7bfx",
+          "title": "click"
         }
       ],
       "screenshots": [

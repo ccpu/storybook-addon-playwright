@@ -3,11 +3,17 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { IconButton } from '@storybook/components';
 import { DeleteConfirmationButton } from '../../../../../src/components/common';
+import { ActionMenu } from '../../../../../src/features/action-set/components/action-set-panel/ActionMenu';
+
+vi.mock('../../../../../src/features/schema/hooks/use-action-schema-loader', () => ({
+  useActionSchemaLoader: () => ({ loading: false }),
+}));
 
 describe('ActionToolbar', () => {
   it('should render', () => {
     const wrapper = shallow(
       <ActionToolbar
+        onAddAction={vi.fn()}
         onAddActionSet={vi.fn()}
         onDeleteSelectedActionSets={vi.fn()}
         onReset={vi.fn()}
@@ -17,12 +23,14 @@ describe('ActionToolbar', () => {
   });
 
   it('should invoke toolbar action callbacks', () => {
+    const onAddAction = vi.fn();
     const onAddActionSet = vi.fn();
     const onDeleteSelectedActionSets = vi.fn();
     const onReset = vi.fn();
 
     const wrapper = shallow(
       <ActionToolbar
+        onAddAction={onAddAction}
         onAddActionSet={onAddActionSet}
         onDeleteSelectedActionSets={onDeleteSelectedActionSets}
         onReset={onReset}
@@ -41,9 +49,18 @@ describe('ActionToolbar', () => {
       .props()
       .onClick?.({} as React.MouseEvent<HTMLElement>);
 
+    buttons
+      .filterWhere((node) => node.prop('title') === 'Add Quick Action')
+      .at(0)
+      .props()
+      .onClick?.({ currentTarget: {} } as React.MouseEvent<HTMLElement>);
+
+    wrapper.find(ActionMenu).props().onChange('waitForTimeout');
+
     wrapper.find(DeleteConfirmationButton).props().onDelete();
 
     expect(onReset).toHaveBeenCalledTimes(1);
+    expect(onAddAction).toHaveBeenCalledWith('waitForTimeout');
     expect(onAddActionSet).toHaveBeenCalledTimes(1);
     expect(onDeleteSelectedActionSets).toHaveBeenCalledTimes(1);
   });
@@ -52,6 +69,7 @@ describe('ActionToolbar', () => {
     const wrapper = shallow(
       <ActionToolbar
         deleteDisabled={true}
+        onAddAction={vi.fn()}
         onAddActionSet={vi.fn()}
         onDeleteSelectedActionSets={vi.fn()}
         onReset={vi.fn()}

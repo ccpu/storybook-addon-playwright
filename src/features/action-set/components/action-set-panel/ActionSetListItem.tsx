@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ActionSet } from '../../../../typings';
 
 import { useSortable } from '@dnd-kit/sortable';

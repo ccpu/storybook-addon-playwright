@@ -141,6 +141,33 @@ describe('ActionSetMain', () => {
     });
   });
 
+  it('should create new single action set and cancel', () => {
+    const wrapper = shallow(<ActionSetMain />);
+    const toolbar = wrapper.find(ActionToolbar);
+
+    toolbar.props().onAddAction('waitForTimeout');
+
+    expect(cancelEditActionSetMock).toHaveBeenCalledWith('story-id');
+
+    expect(addActionSetMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        actionSet: expect.objectContaining({
+          actions: [
+            expect.objectContaining({
+              id: expect.any(String),
+              name: 'waitForTimeout',
+            }),
+          ],
+          id: expect.any(String),
+          title: 'waitForTimeout',
+        }),
+        isNew: true,
+        selected: true,
+        storyId: 'story-id',
+      }),
+    );
+  });
+
   it('should clearCurrentActionSets on story change', () => {
     const wrapper = shallow(<ActionSetMain />);
 

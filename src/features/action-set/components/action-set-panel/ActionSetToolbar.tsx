@@ -1,11 +1,14 @@
 import { IconButton } from '@storybook/components';
-import { PlusIcon, RefreshIcon, StarIcon } from '@storybook/icons';
-import React from 'react';
-import { DeleteConfirmationButton, Toolbar } from '../../../../components/common';
+import { LightningIcon, PlusIcon, RefreshIcon, StarIcon } from '@storybook/icons';
+import React, { useCallback } from 'react';
+import { DeleteConfirmationButton, Loader, Toolbar } from '../../../../components/common';
+import { useActionSchemaLoader } from '../../../../hooks';
+import { ActionMenu } from './ActionMenu';
 import { FavouriteActions } from './FavouriteActions';
 
 export interface ActionToolbarProps {
   onAddActionSet: () => void;
+  onAddAction: (actionName: string) => void;
   onReset: () => void;
   onFavoriteActionsClick?: () => void;
   onDeleteSelectedActionSets: () => void;
@@ -15,14 +18,36 @@ export interface ActionToolbarProps {
 const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
   const {
     onAddActionSet,
+    onAddAction,
     onReset,
     onFavoriteActionsClick,
     onDeleteSelectedActionSets,
     deleteDisabled,
   } = props;
 
+  const { loading } = useActionSchemaLoader();
+
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | Element>(null);
+
+  const handleMenuOpen = useCallback((event: React.SyntheticEvent<Element, Event>) => {
+    setMenuAnchorEl(event.currentTarget);
+  }, []);
+
+  const handleMenuClose = useCallback(() => {
+    setMenuAnchorEl(null);
+  }, []);
+
+  const handleMenuChange = useCallback(
+    (actionName: string) => {
+      onAddAction(actionName);
+      setMenuAnchorEl(null);
+    },
+    [onAddAction],
+  );
+
   return (
     <>
+      <Loader open={loading} />
       <Toolbar border={['bottom']}>
         <div className="left">
           <span>Action Sets</span>
@@ -43,11 +68,20 @@ const ActionToolbar: React.FC<ActionToolbarProps> = (props) => {
             IconButton={IconButton}
           />
 
+          <IconButton onClick={handleMenuOpen} title="Add Quick Action">
+            <LightningIcon />
+          </IconButton>
+
           <IconButton onClick={onAddActionSet} title="Add Action Set">
             <PlusIcon />
           </IconButton>
         </div>
       </Toolbar>
+      <ActionMenu
+        onClose={handleMenuClose}
+        anchorEl={menuAnchorEl}
+        onChange={handleMenuChange}
+      />
     </>
   );
 };

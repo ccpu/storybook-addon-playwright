@@ -46,6 +46,7 @@ const defaults: FavouriteActionSet[] = [
       },
     ],
     id: '2--default',
+
     title: 'Take screenshot of all actions',
     visibleTo: '*',
   },

@@ -1,4 +1,4 @@
-import type { ActionSet } from '../../../../typings';
+import type { ActionSet, StoryAction } from '../../../../typings';
 import { useStorybookState } from '@storybook/manager-api';
 import { nanoid } from 'nanoid';
 import React, { useCallback, useEffect } from 'react';
@@ -23,6 +23,7 @@ interface SortableIndexChangeEvent {
 }
 
 const ACTION_SET_ID_LENGTH = 12;
+const ACTION_ID_LENGTH = 10;
 
 const ActionSetMain: React.FC = () => {
   const { storyId } = useStorybookState();
@@ -44,6 +45,32 @@ const ActionSetMain: React.FC = () => {
         actions: [],
         id,
         title: desc,
+      };
+
+      cancelEditActionSet(storyId);
+
+      addActionSetAction({
+        actionSet: newActionSet,
+        isNew: true,
+        selected: true,
+        storyId,
+      });
+    },
+    [storyId],
+  );
+
+  const createNewQuickActionSet = useCallback(
+    (actionName: string) => {
+      const id = nanoid(ACTION_SET_ID_LENGTH);
+      const action: StoryAction = {
+        id: nanoid(ACTION_ID_LENGTH),
+        name: actionName,
+      };
+
+      const newActionSet: ActionSet = {
+        actions: [action],
+        id,
+        title: actionName,
       };
 
       cancelEditActionSet(storyId);
@@ -118,6 +145,7 @@ const ActionSetMain: React.FC = () => {
     <div style={{ height: 'calc(100% - 55px)', transform: 'none' }}>
       <ActionToolbar
         onAddActionSet={toggleDescriptionDialog}
+        onAddAction={createNewQuickActionSet}
         onReset={handleReset}
         onDeleteSelectedActionSets={handleDeleteSelectedActionSets}
         deleteDisabled={currentActions.length === 0}

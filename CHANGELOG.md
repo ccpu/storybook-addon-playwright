@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.1
+
+### Patch Changes
+
+- preserve nested control args in screenshot URLs
+
 ## 7.8.0
 
 ### Minor Changes

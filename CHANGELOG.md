@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.7.0
+
+### Minor Changes
+
+- add single-action creation
+
 ## 7.6.1
 
 ### Patch Changes

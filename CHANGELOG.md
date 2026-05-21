@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 7.8.0
+
+### Minor Changes
+
+- enhance action argument normalization and handling
+- add timeout option for takeElementScreenshot action
+
 ## 7.7.0
 
 ### Minor Changes

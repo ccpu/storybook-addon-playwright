@@ -48,6 +48,10 @@ const useStyles = makeStyles(
         borderTop: 0,
       },
 
+      errorContainer: {
+        overflow: 'auto',
+      },
+
       editMode: {
         '& $fakeBorder': {
           borderColor: getBackgroundColor(theme.palette.warning.main, 0.5),
@@ -72,8 +76,8 @@ const useStyles = makeStyles(
       },
 
       image: {},
-      imageContainer: {
-        width: 'max-content',
+      innerContainer: {
+        width: '100%',
       },
     };
   },
@@ -181,14 +185,20 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
       >
         {/* <div className={classes.fakeBorder} /> */}
         {browserType !== 'storybook' ? (
-          <div className={classes.imageContainer}>
+          <div className={classes.innerContainer}>
             {screenshot && screenshot.base64 && !errorMessage ? (
               <img
                 className={classes.image}
                 src={`data:image/gif;base64,${screenshot.base64}`}
               />
             ) : (
-              <>{errorMessage && <ErrorPanel message={errorMessage} />}</>
+              <>
+                {errorMessage && (
+                  <div className={classes.errorContainer}>
+                    <ErrorPanel message={errorMessage} />
+                  </div>
+                )}
+              </>
             )}
           </div>
         ) : (

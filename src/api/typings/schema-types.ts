@@ -64,6 +64,15 @@ export interface TakeScreenshotOverlayOptions {
     | 'exclusion';
 }
 
+export type TakeElementScreenshotOptions = {
+  /**
+   * Maximum time in milliseconds to wait for the element selector.
+   * Defaults to Playwright's configured timeout (30s), which can be
+   * overridden globally via `page.setDefaultTimeout()`
+   */
+  timeout?: number;
+};
+
 export interface PlaywrightPage extends Page, PlaywrightPageWithExtra {
   /**
    * This method will take a screenshot at the position that it activated, its useful for taking a screenshot in sequence for events/actions. In the end the screenshots will be merged with the final screenshot.
@@ -82,7 +91,10 @@ export interface PlaywrightPage extends Page, PlaywrightPageWithExtra {
   /**
    * This method will take a screenshot of an element.
    */
-  takeElementScreenshot: (selector: string) => Promise<void>;
+  takeElementScreenshot: (
+    selector: string,
+    options?: TakeElementScreenshotOptions,
+  ) => Promise<void>;
 
   /**
    * The purpose of this action is to have centralized options for all screenshots. This action can be used in conjunction with takeScreenshot action only.

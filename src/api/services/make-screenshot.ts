@@ -8,6 +8,7 @@ import type {
 } from '../../typings';
 import type {
   TakeScreenshotOptionsParams,
+  TakeElementScreenshotOptions,
   TakeScreenshotParams,
 } from '../typings/schema-types';
 import joinImage from 'join-images';
@@ -144,8 +145,17 @@ export async function makeScreenshot(
       const action = filterActions[i];
 
       if (action.name === 'takeElementScreenshot') {
-        if (action && action.args && action.args.selector) {
-          const elementHandle = await page.$(action.args.selector as string);
+        const takeElementArgs = action.args as
+          | { selector?: unknown; options?: TakeElementScreenshotOptions }
+          | undefined;
+
+        if (takeElementArgs?.selector && typeof takeElementArgs.selector === 'string') {
+          const timeout = takeElementArgs.options?.timeout;
+
+          const elementHandle = await page.waitForSelector(takeElementArgs.selector, {
+            state: 'attached',
+            ...{ timeout },
+          });
 
           imageInfos.push({
             buffer: await takeScreenshot(page, data, configs, elementHandle || undefined),

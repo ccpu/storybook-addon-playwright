@@ -53,13 +53,29 @@ const getConfigsMock = vi.mocked(getConfigs);
 const getPageMock = vi.fn();
 
 const screenshotMock = vi.fn();
+const elementScreenshotMock = vi.fn();
 const gotoMock = vi.fn();
 const evaluateMock = vi.fn();
+const waitForSelectorMock = vi.fn();
 const waitForFunctionMock = vi.fn();
 
 screenshotMock.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve('buffer-data' as unknown as Buffer);
+  });
+});
+
+elementScreenshotMock.mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve('buffer-data' as unknown as Buffer);
+  });
+});
+
+waitForSelectorMock.mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve({
+      screenshot: elementScreenshotMock,
+    });
   });
 });
 
@@ -81,6 +97,7 @@ getPageMock.mockImplementation(() => {
       evaluate: evaluateMock,
       goto: gotoMock,
       screenshot: screenshotMock,
+      waitForSelector: waitForSelectorMock,
       waitForFunction: waitForFunctionMock,
     } as unknown as Page);
   });
@@ -393,6 +410,72 @@ describe('makeScreenshot', () => {
 
     expect(joinImagesMock).toHaveBeenCalledTimes(0);
     expect(screenshotMock).toBeCalledTimes(1);
+  });
+
+  it('should pass timeout option to waitForSelector for takeElementScreenshot', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {
+                  options: {
+                    timeout: 1234,
+                  },
+                  selector: '#target',
+                },
+                id: 'takeElementScreenshot-id',
+                name: 'takeElementScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(waitForSelectorMock).toHaveBeenCalledWith('#target', {
+      state: 'attached',
+      timeout: 1234,
+    });
+    expect(elementScreenshotMock).toBeCalledTimes(1);
+  });
+
+  it('should use default timeout when takeElementScreenshot timeout is omitted', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {
+                  selector: '#target',
+                },
+                id: 'takeElementScreenshot-id',
+                name: 'takeElementScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(waitForSelectorMock).toHaveBeenCalledWith('#target', {
+      state: 'attached',
+    });
+    expect(elementScreenshotMock).toBeCalledTimes(1);
   });
 
   it('should take 2 screenshots with stitch for merge process', async () => {

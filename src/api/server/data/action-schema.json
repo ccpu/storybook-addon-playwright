@@ -1445,6 +1445,16 @@
     "parameters": {
       "selector": {
         "type": "string"
+      },
+      "options": {
+        "type": "object",
+        "properties": {
+          "timeout": {
+            "type": "number",
+            "description": "Maximum time in milliseconds to wait for the element selector. Defaults to Playwright's configured timeout (30s), which can be overridden globally via `page.setDefaultTimeout()`"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "required": ["selector"],

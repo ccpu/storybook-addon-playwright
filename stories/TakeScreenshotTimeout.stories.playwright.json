@@ -1,0 +1,24 @@
+{
+  "version": "7",
+  "stories": {
+    "timeout--show-box-with-delay": {
+      "actionSets": [
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "#box",
+                "options": {
+                  "timeout": ""
+                }
+              },
+              "name": "takeElementScreenshot"
+            }
+          ],
+          "id": "OsGNZHtJgRVd",
+          "title": "takeElementScreenshot"
+        }
+      ]
+    }
+  }
+}

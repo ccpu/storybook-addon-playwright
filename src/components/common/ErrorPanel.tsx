@@ -1,15 +1,15 @@
-import { Backdrop } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { memo } from 'react';
 
 const useStyles = makeStyles(
   () => {
     return {
-      backdrop: {
-        position: 'absolute',
-      },
       root: {
         color: 'red',
+        overflow: 'auto',
+        padding: 16,
+        whiteSpace: 'pre-wrap',
+        width: '100%',
       },
     };
   },
@@ -25,11 +25,7 @@ const ErrorPanel: React.FC<ErrorPanelProps> = memo((props) => {
 
   const classes = useStyles();
 
-  return (
-    <Backdrop open={true} className={classes.backdrop}>
-      <div className={classes.root}>{message}</div>{' '}
-    </Backdrop>
-  );
+  return <div className={classes.root}>{message}</div>;
 });
 
 ErrorPanel.displayName = 'ErrorPanel';

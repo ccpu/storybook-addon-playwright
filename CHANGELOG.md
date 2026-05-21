@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.6.1
+
+### Patch Changes
+
+- improve selector control button accessibility
+
 ## 7.6.0
 
 ### Minor Changes

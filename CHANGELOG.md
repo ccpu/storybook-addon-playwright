@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.2
+
+### Patch Changes
+
+- set default position to 'absolute' in LoaderProps
+
 ## 7.8.1
 
 ### Patch Changes

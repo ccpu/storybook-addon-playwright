@@ -40,6 +40,14 @@ function ScreenshotPanel() {
 
   return (
     <>
+      <Loader
+        open={
+          screenshotLoaderInProgress ||
+          imageDiffTestInProgress ||
+          deleteInProgress ||
+          updateInf.reqBy !== undefined
+        }
+      />
       <ScreenshotListToolbar
         onUpdateClick={runDiffTest}
         title="Story Screenshots"
@@ -48,16 +56,7 @@ function ScreenshotPanel() {
         hasScreenShot={hasScreenshot}
         onDelete={deleteStoryScreenshots}
       />
-      <ScreenshotList>
-        <Loader
-          open={
-            screenshotLoaderInProgress ||
-            imageDiffTestInProgress ||
-            deleteInProgress ||
-            updateInf.reqBy !== undefined
-          }
-        />
-      </ScreenshotList>
+      <ScreenshotList></ScreenshotList>
       {showPreview && (
         <StoryScreenshotPreview onClose={toggleShowPreview} target="story" />
       )}

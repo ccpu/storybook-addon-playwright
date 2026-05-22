@@ -25,7 +25,7 @@ export interface LoaderProps {
 }
 
 const Loader: React.FC<LoaderProps> = memo((props) => {
-  const { open, progressSize, position } = props;
+  const { open, progressSize, position = 'absolute' } = props;
 
   const classes = useStyles();
 

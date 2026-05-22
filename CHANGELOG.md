@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.4
+
+### Patch Changes
+
+- reorganize toolbar options and add placement arrow styling
+
 ## 7.8.3
 
 ### Patch Changes

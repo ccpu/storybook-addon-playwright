@@ -47,6 +47,9 @@ const useStyles = makeStyles(() => ({
     top: 7,
     zIndex: 1,
   },
+  placementArrow: {
+    fill: '#8d9aa3 !important',
+  },
 }));
 
 const ToolContent: React.FC = () => {
@@ -98,24 +101,6 @@ const ToolContent: React.FC = () => {
           <div onMouseDown={(e) => e.stopPropagation()}>
             <TooltipLinkList
               links={[
-                {
-                  icon: <WrenchIcon />,
-                  id: 'fix-screenshot-file-name',
-                  onClick: () => {
-                    setShowFixScreenshotFileDialog(true);
-                    onHide();
-                  },
-                  title: 'Fix screenshot file name',
-                },
-                {
-                  icon: <ShareAltIcon />,
-                  id: 'full-screen',
-                  onClick: () => {
-                    handleOpen();
-                    onHide();
-                  },
-                  title: 'Full screen view',
-                },
                 {
                   icon: addonState?.previewPanelEnabled ? <EyeCloseIcon /> : <EyeIcon />,
                   id: 'panel-toggle',
@@ -176,12 +161,30 @@ const ToolContent: React.FC = () => {
                             <SyncIcon />
                           )
                         }
-                        right={<ChevronRightIcon />}
+                        right={<ChevronRightIcon className={classes.placementArrow} />}
                       />
                     </WithTooltip>
                   ),
                   id: 'position',
                   title: 'Position',
+                },
+                {
+                  icon: <ShareAltIcon />,
+                  id: 'full-screen',
+                  onClick: () => {
+                    handleOpen();
+                    onHide();
+                  },
+                  title: 'Full screen view',
+                },
+                {
+                  icon: <WrenchIcon />,
+                  id: 'fix-screenshot-file-name',
+                  onClick: () => {
+                    setShowFixScreenshotFileDialog(true);
+                    onHide();
+                  },
+                  title: 'Fix screenshot file name',
                 },
                 {
                   icon: <RefreshIcon />,
@@ -218,7 +221,6 @@ const ToolContent: React.FC = () => {
             target="file"
           />
           <ScreenshotUpdateIcon target="file" />
-          <span className={classes.asterisk}>*</span>
         </>
       )}
       {showFixScreenshotFileDialog && (

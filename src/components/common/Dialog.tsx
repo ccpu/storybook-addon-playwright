@@ -1,6 +1,7 @@
 import type { DialogProps as MuDialogProps } from '@mui/material';
 import {
   DialogActions,
+  DialogContent,
   DialogTitle,
   Divider,
   IconButton,
@@ -31,11 +32,19 @@ const useStyles = makeStyles(
         width: '100%',
       },
       paper: {
+        display: 'flex',
+        flexDirection: 'column',
         height: (p: StyleProps) => p.height,
+        overflow: 'hidden',
         padding: 10,
         maxHeight: 'calc(100% - 20px)',
         maxWidth: (p: StyleProps) => p.width + ' !important',
         width: (p: StyleProps) => p.width + ' !important',
+      },
+      content: {
+        flex: '1 1 auto',
+        minHeight: 0,
+        overflowY: 'auto',
       },
       title: {
         '& h6': {
@@ -118,7 +127,7 @@ const Dialog: React.FC<DialogProps> = ({
         </>
       )}
 
-      {children}
+      <DialogContent className={classes.content}>{children}</DialogContent>
       {ActionsComponent && (
         <DialogActions>
           <ActionsComponent />

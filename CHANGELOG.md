@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.3
+
+### Patch Changes
+
+- enhance layout and scrolling behavior
+
 ## 7.8.2
 
 ### Patch Changes

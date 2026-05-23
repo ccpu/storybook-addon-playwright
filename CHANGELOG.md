@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.5
+
+### Patch Changes
+
+- adjust padding for footer actions and content
+
 ## 7.8.4
 
 ### Patch Changes

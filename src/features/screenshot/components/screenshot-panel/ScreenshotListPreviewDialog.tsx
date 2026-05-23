@@ -27,7 +27,7 @@ const useStyles = makeStyles(
       root: {
         display: 'flex',
         flexDirection: 'row',
-        height: 'calc(100% - 70px) !important',
+        minHeight: '100%',
         position: 'relative',
         width: '100%',
       },

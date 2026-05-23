@@ -45,6 +45,7 @@ const useStyles = makeStyles(
         flex: '1 1 auto',
         minHeight: 0,
         overflowY: 'auto',
+        padding: '0 !important',
       },
       title: {
         '& h6': {
@@ -59,6 +60,9 @@ const useStyles = makeStyles(
         marginBottom: '-10px',
         marginRight: '-18px',
         marginTop: '-8px',
+      },
+      footerActions: {
+        paddingBottom: '0 !important',
       },
     };
   },
@@ -129,9 +133,12 @@ const Dialog: React.FC<DialogProps> = ({
 
       <DialogContent className={classes.content}>{children}</DialogContent>
       {ActionsComponent && (
-        <DialogActions>
-          <ActionsComponent />
-        </DialogActions>
+        <>
+          <Divider />
+          <DialogActions className={classes.footerActions}>
+            <ActionsComponent />
+          </DialogActions>
+        </>
       )}
     </MuDialog>
   );

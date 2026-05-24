@@ -85,7 +85,9 @@ const ActionSetMain: React.FC = () => {
         storyId,
       });
 
-      toggleActionExpansion(action.id);
+      setTimeout(() => {
+        toggleActionExpansion(action.id);
+      });
     },
     [storyId],
   );

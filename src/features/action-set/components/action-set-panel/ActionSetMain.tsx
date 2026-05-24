@@ -9,10 +9,12 @@ import { useCurrentActions } from '../../hooks/use-current-actions';
 import {
   addActionSet as addActionSetAction,
   cancelEditActionSet,
+  clearActionExpansion,
   clearCurrentActionSets,
   deleteActionSet as deleteActionSetFromStore,
   deleteTempActionSets,
   sortActionSets,
+  toggleActionExpansion,
 } from '../../store/actions';
 import { ActionSetList } from './ActionSetList';
 import { ActionToolbar } from './ActionSetToolbar';
@@ -74,6 +76,7 @@ const ActionSetMain: React.FC = () => {
       };
 
       cancelEditActionSet(storyId);
+      clearActionExpansion();
 
       addActionSetAction({
         actionSet: newActionSet,
@@ -81,6 +84,8 @@ const ActionSetMain: React.FC = () => {
         selected: true,
         storyId,
       });
+
+      toggleActionExpansion(action.id);
     },
     [storyId],
   );

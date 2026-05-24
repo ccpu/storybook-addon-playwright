@@ -1,3 +1,4 @@
+import type { DragHandleProps } from '../../../../components/common';
 import type { ActionSet } from '../../../../typings';
 import { Divider } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -28,9 +29,10 @@ const useStyles = makeStyles(
 
 interface Props {
   actionSet: ActionSet;
+  dragHandleProps?: DragHandleProps;
 }
 
-const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
+const ActionSetEditor: React.FC<Props> = ({ actionSet, dragHandleProps }) => {
   const { handleAddAction, handleDescriptionChange, handleSave, cancelEditActionSet } =
     useActionEditor(actionSet);
 
@@ -51,6 +53,7 @@ const ActionSetEditor: React.FC<Props> = ({ actionSet }) => {
       tooltip={actionSet.temp ? actionSet.title + TEMP_ACTION_SET : actionSet.title}
       title={actionSet.temp ? `${actionSet.title} *` : actionSet.title}
       draggable={true}
+      dragHandleProps={dragHandleProps}
       selected={true}
       secondaryColor={true}
       icons={

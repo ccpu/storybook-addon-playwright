@@ -50,9 +50,20 @@ export function ActionSetListItem({
     transition,
     isDragging,
   } = useSortable({
-    disabled: Boolean(isEditing),
     id: sortableId ?? item.id,
   });
+
+  const dragHandleProps: React.HTMLAttributes<HTMLSpanElement> & {
+    setNodeRef?: (element: HTMLSpanElement | null) => void;
+  } = {
+    role: 'button',
+    tabIndex: 0,
+    'aria-disabled': false,
+    'aria-roledescription': 'sortable',
+    ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
+    ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
+    setNodeRef: setActivatorNodeRef,
+  };
 
   const handleEdit = useCallback(() => {
     onEdit(item);
@@ -83,7 +94,7 @@ export function ActionSetListItem({
           transition,
         }}
       >
-        <ActionSetEditor actionSet={item} />
+        <ActionSetEditor actionSet={item} dragHandleProps={dragHandleProps} />
       </div>
     );
   }
@@ -104,11 +115,7 @@ export function ActionSetListItem({
         title={title + (item.temp ? ' *' : '')}
         draggable={true}
         selected={checked}
-        dragHandleProps={{
-          ...(attributes as React.HTMLAttributes<HTMLSpanElement>),
-          ...(listeners as React.HTMLAttributes<HTMLSpanElement>),
-          setNodeRef: setActivatorNodeRef,
-        }}
+        dragHandleProps={dragHandleProps}
         icons={
           <>
             {!hideIcons && (

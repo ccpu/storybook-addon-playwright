@@ -18,19 +18,6 @@
         {
           "actions": [
             {
-              "name": "mouse.move",
-              "args": {
-                "x": 109,
-                "y": 96
-              }
-            }
-          ],
-          "id": "sUub-uW-n0cg",
-          "title": "mouse move"
-        },
-        {
-          "actions": [
-            {
               "name": "takeElementScreenshot",
               "args": {
                 "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
@@ -39,15 +26,6 @@
           ],
           "id": "ShWEtROi5Dh2",
           "title": "take element screen shot"
-        },
-        {
-          "actions": [
-            {
-              "name": "takeScreenshot"
-            }
-          ],
-          "id": "qBq2fHBzwKfh",
-          "title": "Take screenshot"
         },
         {
           "actions": [
@@ -72,18 +50,6 @@
           "actions": [
             {
               "args": {
-                "selector": "#blue"
-              },
-              "name": "click"
-            }
-          ],
-          "id": "8qzF0OWX7bfx",
-          "title": "click"
-        },
-        {
-          "actions": [
-            {
-              "args": {
                 "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
               },
               "name": "takeElementScreenshot"
@@ -91,6 +57,40 @@
           ],
           "id": "RnpBPm0zT181",
           "title": "take element screen shot"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeScreenshot"
+            }
+          ],
+          "id": "qBq2fHBzwKfh",
+          "title": "Take screenshot"
+        },
+        {
+          "actions": [
+            {
+              "name": "mouse.move",
+              "args": {
+                "x": 109,
+                "y": 96
+              }
+            }
+          ],
+          "id": "sUub-uW-n0cg",
+          "title": "mouse move"
+        },
+        {
+          "actions": [
+            {
+              "args": {
+                "selector": "#blue"
+              },
+              "name": "click"
+            }
+          ],
+          "id": "8qzF0OWX7bfx",
+          "title": "click"
         }
       ],
       "screenshots": [

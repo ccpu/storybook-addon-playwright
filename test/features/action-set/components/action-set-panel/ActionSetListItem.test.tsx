@@ -113,6 +113,40 @@ describe('ActionSetListItem', () => {
     expect(wrapper.find(ActionSetEditor)).toBeTruthy();
   });
 
+  it('should pass dragHandleProps to ActionSetEditor when editing action-set', () => {
+    const wrapper = shallow(
+      <ActionSetListItem
+        item={{ actions: [], id: 'action-set-id', title: 'desc' }}
+        onDelete={deleteMock}
+        onEdit={editMock}
+        onCheckBoxClick={onCheckMock}
+        index={0}
+        title="title"
+        isEditing={true}
+      />,
+    );
+
+    const actionSetEditorProps = wrapper.find(ActionSetEditor).props() as {
+      dragHandleProps?: {
+        'aria-disabled'?: boolean;
+        'aria-roledescription'?: string;
+        role?: string;
+        setNodeRef?: (element: HTMLSpanElement | null) => void;
+        tabIndex?: number;
+      };
+    };
+
+    expect(actionSetEditorProps.dragHandleProps).toMatchObject({
+      'aria-disabled': false,
+      'aria-roledescription': 'sortable',
+      role: 'button',
+      tabIndex: 0,
+    });
+    expect(actionSetEditorProps.dragHandleProps?.setNodeRef).toEqual(
+      expect.any(Function),
+    );
+  });
+
   it('should hide icons except checkbox when editing other action-set', () => {
     const wrapper = shallow(
       <ActionSetListItem

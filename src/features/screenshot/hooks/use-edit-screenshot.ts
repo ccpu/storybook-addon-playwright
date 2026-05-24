@@ -2,6 +2,7 @@ import type { BrowserTypes, ScreenshotData } from '../../../typings';
 import { RESET_STORY_ARGS } from '@storybook/core-events';
 import { useStorybookApi } from '@storybook/manager-api';
 import { useCallback, useEffect, useRef } from 'react';
+import { ACTIONS_PANEL_ID } from '../../../constants';
 import { useBrowserStateManager } from '../../../hooks/use-browser-state-manager';
 import { useAddonState } from '../../../hooks/use-addon-state';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
@@ -74,9 +75,12 @@ export function useEditScreenshot() {
           previewPanelEnabled: true,
         });
       }
+
+      api.setSelectedPanel(ACTIONS_PANEL_ID);
     },
     [
       addonState,
+      api,
       browserOptions.all,
       clearScreenshotEdit,
       loadSetting,

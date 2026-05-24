@@ -4,10 +4,12 @@ import {
 } from '../../../manual-mocks/store/action/context';
 import { useEditScreenshot } from '../../../../src/features/screenshot/hooks/use-edit-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
+import { useStorybookApi } from '@storybook/manager-api';
 import { useCurrentStoryData } from '../../../../src/hooks/use-current-story-data';
 import { StoryData } from '../../../../src/schema';
 import { useAddonState } from '../../../../src/hooks/use-addon-state';
 import { useLoadScreenshotSettings } from '../../../../src/features/screenshot/hooks/use-load-screenshot-settings';
+import { ACTIONS_PANEL_ID } from '../../../../src/constants';
 
 vi.mock(
   '../../../../src/hooks/use-current-story-data',
@@ -25,8 +27,18 @@ vi.mock(
   '../../../../src/hooks/use-browser-options',
   async () => await import('../../../hooks/__mocks__/use-browser-options'),
 );
+vi.mock('@storybook/manager-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@storybook/manager-api')>();
+
+  return {
+    ...actual,
+    useStorybookApi: vi.fn(),
+  };
+});
 
 const loadSettingMock = vi.fn();
+const setSelectedPanelMock = vi.fn();
+const emitMock = vi.fn();
 vi.mocked(useLoadScreenshotSettings).mockImplementation(() => ({
   browserOptions: { all: {} },
   loadSetting: loadSettingMock,
@@ -40,6 +52,11 @@ describe('useEditScreenshot', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+
+    vi.mocked(useStorybookApi).mockReturnValue({
+      emit: emitMock,
+      setSelectedPanel: setSelectedPanelMock,
+    } as never);
 
     (useAddonState as Mock).mockImplementation(() => {
       return {
@@ -76,6 +93,8 @@ describe('useEditScreenshot', () => {
     expect(setAddonStateMock).toHaveBeenCalledWith({
       previewPanelEnabled: true,
     });
+
+    expect(setSelectedPanelMock).toHaveBeenCalledWith(ACTIONS_PANEL_ID);
   });
 
   it('should clear edit state', () => {

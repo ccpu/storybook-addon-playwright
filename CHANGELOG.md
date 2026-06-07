@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.8
+
+### Patch Changes
+
+- error message
+
 ## 7.8.7
 
 ### Patch Changes

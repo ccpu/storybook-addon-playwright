@@ -9,20 +9,9 @@ const useStyles = makeStyles(
   (theme) => {
     return {
       notFound: {
-        '& > div': {
-          '& > b': {
-            color: theme.palette.error.main,
-          },
-          '& > p': {
-            margin: 0,
-          },
-          fontSize: 14,
+        '& *': {
+          color: theme.palette.error.main,
         },
-        border: `1px solid ${theme.palette.error.main}`,
-        marginBottom: 2,
-        marginTop: 2,
-        pointerEvents: 'none',
-        userSelect: 'text',
       },
     };
   },
@@ -55,19 +44,29 @@ const ImageDiffMenuItem: React.FC<ImageDiffMenuItemProps> = (props) => {
 
   if (!data) {
     return (
-      <ListItem className={classes.notFound} title="Unable to locate story!">
-        <div>
-          <b>Unable to locate story!</b>
+      <ListItem
+        className={classes.notFound}
+        style={{
+          color: 'red',
+        }}
+        title={
+          <span
+            style={{
+              display: 'block',
+            }}
+          >
+            <b>Unable to locate story!</b>
 
-          <p>
-            <b>ID:</b> {props.imageDiff.storyId}
-          </p>
+            <span style={{ display: 'block' }}>
+              <b>ID:</b> {props.imageDiff.storyId}
+            </span>
 
-          <p>
-            <b>File:</b> {props.imageDiff.filePath}
-          </p>
-        </div>
-      </ListItem>
+            <span style={{ display: 'block' }}>
+              <b>File:</b> {props.imageDiff.filePath}
+            </span>
+          </span>
+        }
+      ></ListItem>
     );
   }
 

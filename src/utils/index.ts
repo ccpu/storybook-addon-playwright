@@ -2,6 +2,7 @@ export * from './args-to-querystring';
 export * from './capitalize';
 export * from './construct-story-url';
 export * from './find-selector';
+export * from './format-elapsed-time';
 export * from './get-action-args';
 export * from './get-device-info';
 export * from './get-iframe-inner-size';

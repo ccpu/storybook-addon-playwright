@@ -1,7 +1,24 @@
+const { dismissImageDiffToastsMock } = vi.hoisted(() => ({
+  dismissImageDiffToastsMock: vi.fn(),
+}));
+
+vi.mock('../../../../src/features/screenshot/utils/image-diff-toast', () => ({
+  dismissImageDiffToasts: dismissImageDiffToastsMock,
+}));
+
 import { useScreenshotUpdateState } from '../../../../src/features/screenshot/hooks/use-screenshot-update-state';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 describe('useScreenshotListUpdateDialog', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.spyOn(Date, 'now').mockReturnValue(1000);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should have defaults', () => {
     const { result } = renderHook(() => useScreenshotUpdateState(''));
     expect(result.current.updateInf).toStrictEqual({});
@@ -17,8 +34,10 @@ describe('useScreenshotListUpdateDialog', () => {
     expect(result.current.updateInf).toStrictEqual({
       inProgress: true,
       reqBy: 'req-id',
+      startedAt: 1000,
       target: 'all',
     });
+    expect(dismissImageDiffToastsMock).toHaveBeenCalledTimes(1);
   });
 
   it('should change state of in progress', () => {
@@ -35,6 +54,7 @@ describe('useScreenshotListUpdateDialog', () => {
     expect(result.current.updateInf).toStrictEqual({
       inProgress: false,
       reqBy: 'req-id',
+      startedAt: 1000,
       target: 'all',
     });
   });

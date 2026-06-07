@@ -9,9 +9,14 @@ import {
   removeImageDiffResult,
   setImageDiffResults,
 } from '../../features/screenshot/store/actions';
+import {
+  dismissImageDiffToasts,
+  showImageDiffTestErrorToast,
+  showImageDiffTestFinishedToast,
+} from '../../features/screenshot/utils/image-diff-toast';
 import { useGlobalImageDiffResults, useScreenshotDiffTestByType } from '../../hooks';
+import { formatElapsedTime } from '../../utils';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
-import { toast } from '../../utils/toast';
 import { Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 
@@ -75,16 +80,23 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
   const handleImageDiffClick = useCallback(async () => {
     if (hasFailedDiff) return;
 
-    const result = await testStoryScreenShots(target);
+    dismissImageDiffToasts();
 
-    if (!Array.isArray(result)) return;
+    const startedAt = Date.now();
+    const result = await testStoryScreenShots(target);
+    const elapsedTime = formatElapsedTime(Date.now() - startedAt);
+
+    if (!Array.isArray(result)) {
+      showImageDiffTestErrorToast(`Screenshot diff failed after ${elapsedTime}.`);
+      return;
+    }
 
     const imageDiffResults = result as Array<{ pass?: boolean }>;
 
     if (!imageDiffResults.find((x) => !x.pass)) {
-      toast.success('All screenshot tests are passed successfully.', {
-        id: 'image-diff:all-passed',
-      });
+      showImageDiffTestFinishedToast(
+        `All screenshot tests passed successfully in ${elapsedTime}.`,
+      );
     }
   }, [hasFailedDiff, target, testStoryScreenShots]);
 

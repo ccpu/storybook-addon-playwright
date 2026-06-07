@@ -42,6 +42,7 @@ const useStyles = makeStyles(
         width: (p: StyleProps) => p.width + ' !important',
       },
       content: {
+        height: '100%',
         flex: '1 1 auto',
         minHeight: 0,
         overflowY: 'auto',

@@ -69,7 +69,7 @@ const ScreenshotListSortable: React.FC<ScreenshotListSortableProps> = ({
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        <ListWrapperSortableContainer>
+        <ListWrapperSortableContainer style={{ height: '100%' }}>
           <Loader open={ChangeIndexInProgress} />
           {children}
         </ListWrapperSortableContainer>

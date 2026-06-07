@@ -108,7 +108,7 @@ const AlertToast: React.FC<AlertToastProps> = ({
     overflow: 'hidden',
     padding: '12px 16px',
     position: 'relative',
-    zIndex: getHighestZindex() + 1,
+    zIndex: getHighestZindex() + 10000,
     ...style,
   };
 

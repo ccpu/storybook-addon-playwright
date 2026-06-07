@@ -1,12 +1,18 @@
 const {
   removeImageDiffResultMock,
   setImageDiffResultsMock,
+  dismissImageDiffToastsMock,
+  showImageDiffTestErrorToastMock,
+  showImageDiffTestFinishedToastMock,
   testStoryScreenShotsMock,
   useGlobalImageDiffResultsMock,
   useScreenshotDiffTestByTypeMock,
 } = vi.hoisted(() => ({
   removeImageDiffResultMock: vi.fn(),
   setImageDiffResultsMock: vi.fn(),
+  dismissImageDiffToastsMock: vi.fn(),
+  showImageDiffTestErrorToastMock: vi.fn(),
+  showImageDiffTestFinishedToastMock: vi.fn(),
   testStoryScreenShotsMock: vi.fn(),
   useGlobalImageDiffResultsMock: vi.fn(),
   useScreenshotDiffTestByTypeMock: vi.fn(),
@@ -40,6 +46,11 @@ vi.mock(
     useScreenshotDiffTestByType: useScreenshotDiffTestByTypeMock,
   }),
 );
+vi.mock('../../../src/features/screenshot/utils/image-diff-toast', () => ({
+  dismissImageDiffToasts: dismissImageDiffToastsMock,
+  showImageDiffTestErrorToast: showImageDiffTestErrorToastMock,
+  showImageDiffTestFinishedToast: showImageDiffTestFinishedToastMock,
+}));
 
 import '../../manual-mocks/react-useEffect';
 import { storyData } from '../../configs/story-data';
@@ -51,7 +62,6 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { Badge } from '@mui/material';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
-import { toast } from '../../../src/utils/toast';
 
 vi.mocked(useGlobalImageDiffResultsMock).mockImplementation(() => ({
   imageDiffResult: [],
@@ -130,8 +140,6 @@ describe('ImageDiff', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.spyOn(toast, 'error').mockImplementation(() => 'toast-id');
-    vi.spyOn(toast, 'success').mockImplementation(() => 'toast-id');
     setImageDiffResults([]);
     setDiffState();
   });
@@ -229,21 +237,25 @@ describe('ImageDiff', () => {
     await clickOnIconButton(wrapper);
 
     expect(testStoryScreenShotsMock).toHaveBeenCalledWith('all');
-    expect(toast.success).toHaveBeenCalledWith(
-      'All screenshot tests are passed successfully.',
-      expect.objectContaining({ id: 'image-diff:all-passed' }),
+    expect(dismissImageDiffToastsMock).toHaveBeenCalledTimes(1);
+    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('all');
+    expect(showImageDiffTestFinishedToastMock).toHaveBeenCalledWith(
+      expect.stringContaining('All screenshot tests passed successfully in'),
     );
   });
 
-  it('does not show success when the diff call returns no array', async () => {
+  it('shows an error when image diff returns no result', async () => {
     testStoryScreenShotsMock.mockResolvedValueOnce(undefined as never);
 
-    const wrapper = shallow(<ImageDiff target="story" storyData={storyData} />);
+    const wrapper = shallow(<ImageDiff target="all" />);
 
     await clickOnIconButton(wrapper);
 
-    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('story');
-    expect(toast.success).not.toHaveBeenCalled();
+    expect(testStoryScreenShotsMock).toHaveBeenCalledWith('all');
+    expect(showImageDiffTestErrorToastMock).toHaveBeenCalledWith(
+      expect.stringContaining('Screenshot diff failed after'),
+    );
+    expect(showImageDiffTestFinishedToastMock).not.toHaveBeenCalled();
   });
 
   it('does not show success when at least one screenshot fails', async () => {
@@ -256,7 +268,7 @@ describe('ImageDiff', () => {
 
     await clickOnIconButton(wrapper);
 
-    expect(toast.success).not.toHaveBeenCalled();
+    expect(showImageDiffTestFinishedToastMock).not.toHaveBeenCalled();
   });
 
   it('shows the loading state when image diff testing is in progress', () => {

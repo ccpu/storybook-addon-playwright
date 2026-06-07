@@ -1,6 +1,7 @@
 import type { ScreenshotTestTargetType } from '../../../typings';
 import React from 'react';
 import { setScreenshotUpdateState, useScreenshotUpdateStateValue } from '../../../store';
+import { dismissImageDiffToasts } from '../utils/image-diff-toast';
 
 export function useScreenshotUpdateState(
   reqBy: string,
@@ -12,7 +13,8 @@ export function useScreenshotUpdateState(
   const [isLoadingFinish, setIsLoadingFinish] = React.useState<boolean>(false);
 
   const runDiffTest = React.useCallback(() => {
-    setScreenshotUpdateState({ inProgress: true, reqBy, target });
+    dismissImageDiffToasts();
+    setScreenshotUpdateState({ inProgress: true, reqBy, startedAt: Date.now(), target });
   }, [reqBy, target]);
 
   const handleClose = React.useCallback(() => {

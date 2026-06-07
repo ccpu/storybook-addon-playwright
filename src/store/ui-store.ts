@@ -42,6 +42,7 @@ export interface ScreenshotUpdateOptions {
   inProgress?: boolean;
   target?: ScreenshotTestTargetType;
   reqBy?: string;
+  startedAt?: number;
 }
 
 export interface UIState {

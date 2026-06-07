@@ -23,6 +23,7 @@ const useStyles = makeStyles(
       },
       list: {
         width: '350px',
+        height: '100%',
       },
       root: {
         display: 'flex',
@@ -30,6 +31,7 @@ const useStyles = makeStyles(
         minHeight: '100%',
         position: 'relative',
         width: '100%',
+        height: '100%',
       },
     };
   },

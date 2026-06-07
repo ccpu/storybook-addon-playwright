@@ -1,3 +1,11 @@
+const { showImageDiffUpdateFinishedToastMock } = vi.hoisted(() => ({
+  showImageDiffUpdateFinishedToastMock: vi.fn(),
+}));
+
+vi.mock('../../../../../src/features/screenshot/utils/image-diff-toast', () => ({
+  showImageDiffUpdateFinishedToast: showImageDiffUpdateFinishedToastMock,
+}));
+
 import React from 'react';
 import { ScreenshotMain } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotMain';
 import { shallow } from 'enzyme';
@@ -11,6 +19,15 @@ vi.mock(
 );
 
 describe('ScreenshotMain', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.spyOn(Date, 'now').mockReturnValue(4000);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should render', () => {
     const wrapper = shallow(<ScreenshotMain showPanel={true} />);
     expect(wrapper.find(ScreenshotPanel).exists()).toBeTruthy();
@@ -24,6 +41,8 @@ describe('ScreenshotMain', () => {
       setIsLoadingFinish: vi.fn(),
       updateInf: {
         reqBy: 'req-id',
+        startedAt: 1000,
+        target: 'all',
       },
     }));
 
@@ -36,6 +55,9 @@ describe('ScreenshotMain', () => {
 
     preview.props().onLoad?.();
     expect(wrapper.find(ScreenshotPanel).exists()).toBeFalsy();
+    expect(showImageDiffUpdateFinishedToastMock).toHaveBeenCalledWith(
+      'Screenshot diff finished in 3s. Review the differences.',
+    );
 
     preview.props().onClose?.();
     expect(wrapper.find(ScreenshotPanel).exists()).toBeTruthy();

@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.8.7
+
+### Patch Changes
+
+- make screenshot diff updates resilient
+
 ## 7.8.6
 
 ### Patch Changes

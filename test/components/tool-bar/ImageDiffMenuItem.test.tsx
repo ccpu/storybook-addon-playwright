@@ -5,6 +5,12 @@ import React from 'react';
 import { ListItem } from '@storybook/components';
 import { useStorybookApi } from '@storybook/manager-api';
 
+function assertIsReactElement(
+  value: React.ReactNode,
+): asserts value is React.ReactElement<{ children?: React.ReactNode }> {
+  expect(React.isValidElement(value)).toBe(true);
+}
+
 describe('ImageDiffMenuItem', () => {
   it('should render', () => {
     const wrapper = shallow(
@@ -60,13 +66,34 @@ describe('ImageDiffMenuItem', () => {
 
     const wrapper = shallow(
       <ImageDiffMenuItem
-        imageDiff={{ pass: true, storyId: 'story-id' }}
+        imageDiff={{ pass: true, storyId: 'story-id', filePath: './test.stories.tsx' }}
         onClick={onClickMock}
       />,
     );
 
     expect(wrapper.find(ListItem).props().onClick).toBeUndefined();
 
-    expect(wrapper.find(ListItem).props().title).toBe('Unable to locate story!');
+    const title = wrapper.find(ListItem).props().title;
+
+    assertIsReactElement(title);
+
+    const titleChildren = React.Children.toArray(title.props.children);
+    const messageLine = titleChildren[0] as React.ReactElement<{
+      children?: React.ReactNode;
+    }>;
+    const idLine = titleChildren[1] as React.ReactElement<{ children?: React.ReactNode }>;
+    const fileLine = titleChildren[2] as React.ReactElement<{
+      children?: React.ReactNode;
+    }>;
+
+    expect(messageLine.props.children).toBe('Unable to locate story!');
+
+    const idLineChildren = React.Children.toArray(idLine.props.children);
+    const fileLineChildren = React.Children.toArray(fileLine.props.children);
+
+    expect((idLineChildren[0] as React.ReactElement).props.children).toBe('ID:');
+    expect(idLineChildren[2]).toBe('story-id');
+    expect((fileLineChildren[0] as React.ReactElement).props.children).toBe('File:');
+    expect(fileLineChildren[2]).toBe('./test.stories.tsx');
   });
 });

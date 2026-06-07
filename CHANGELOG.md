@@ -1,5 +1,12 @@
 # storybook-addon-playwright
 
+## 7.8.6
+
+### Patch Changes
+
+- delay action expansion toggle
+- updated `useEditScreenshot` to set the selected panel to action panel
+
 ## 7.8.5
 
 ### Patch Changes

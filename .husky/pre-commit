@@ -5,4 +5,6 @@ if [ -n "$CI" ]; then
 	exit 0
 fi
 
-pnpm exec lint-staged
+# --no-stash: keep changes in the working tree so an interrupted hook
+# (cancelled/killed/crashed) can never strand them in a hidden stash.
+pnpm exec lint-staged --no-stash

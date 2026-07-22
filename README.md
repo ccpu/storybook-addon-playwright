@@ -354,6 +354,39 @@ The server is intentionally scoped: it tells the assistant to consult it only
 when you ask to add a story screenshot / visual test or generate Playwright
 screenshots. See [`mcp/README.md`](mcp/README.md) for details.
 
+## Generating baseline images (CLI)
+
+Once you (or an assistant) have authored a `*.stories.playwright.json` file, you
+can generate its baseline images from the command line instead of clicking
+through the addon panel:
+
+```bash
+# every screenshot in the file
+npx storybook-addon-playwright generate stories/Button.stories.playwright.json
+
+# a single story
+npx storybook-addon-playwright generate stories/Button.stories.playwright.json --story components-button--default
+
+# a different Storybook origin (default http://localhost:6006)
+npx storybook-addon-playwright generate stories/Button.stories.playwright.json --url http://localhost:9009
+```
+
+`generate` renders each screenshot against a **running Storybook dev server**
+(that process owns the browser and config via [the middleware](#2-configure-the-middleware))
+and writes any missing baseline PNGs on first run. Notes:
+
+- The file path is matched **relative to the Storybook project root**, so run the
+  command from that root.
+- It exits non-zero only when an _existing_ baseline fails to match; missing
+  baselines are simply created.
+- If Storybook is not running it prints the manual steps and exits `0` (it is not
+  an error) — start Storybook (`npm run storybook`) and re-run, or Save from the
+  addon panel.
+
+Under the hood this posts to the addon's local tRPC endpoint
+(`screenshot.testScreenshots`). For CI, prefer the `toMatchScreenshots` /
+`runImageDiff` helpers below.
+
 ## Testing
 
 Screenshots saved by the addon can be regression-tested in your test suite. The addon exports two primary helpers:

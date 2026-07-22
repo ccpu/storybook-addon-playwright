@@ -21,16 +21,88 @@ wait, …) ending in a **screenshot** action. The addon runs those actions in a
 real browser and stores the resulting image so future runs can detect visual
 regressions.
 
-Your job when a user asks to "add a story screenshot / visual test" or
-"take a Playwright screenshot" is to:
-1. Identify the story and the target element.
-2. Write (or extend) the \`*.stories.playwright.json\` action file.
-3. Generate the image (see the \`endpoint\` topic).
+## Fast path — do exactly this
+
+For "add a screenshot / visual test for this story", you can usually finish
+without reading other files or running any commands:
+
+1. **Read the target \`*.stories.tsx\`.** Note the meta \`title\` and each exported
+   story name.
+2. **Derive each story id** = \`kebab(title) + "--" + kebab(exportName)\`. This is
+   the \`?id=\` value in the Storybook URL. (title \`Forms/Input\`, export
+   \`WithPrefix\` → \`forms-input--withprefix\`.)
+3. **Pick a stable selector** for the element to capture — \`[data-slot="…"]\`,
+   \`[data-testid="…"]\`, then \`#id\` (see \`selectors\`). The story's own wrapper /
+   decorator id is a fine target for a whole-component shot.
+4. **Write \`<StoryBase>.stories.playwright.json\`** next to the story (create it,
+   or merge into it if present). Copy the shape below; one screenshot per story,
+   ending in \`takeElementScreenshot\`. That is the deliverable.
+5. **Generating the baseline image is a separate, human/CI step — see below.**
+
+Minimal action file (copy this, don't go read other \`.playwright.json\` files):
+
+\`\`\`json
+{
+  "version": "0",
+  "stories": {
+    "forms-input--default": {
+      "screenshots": [
+        {
+          "id": "scDefault01",
+          "index": 0,
+          "title": "Default input",
+          "browserType": "chromium",
+          "browserOptionsId": "vp1",
+          "actionSets": [
+            {
+              "id": "set1",
+              "title": "capture",
+              "actions": [
+                { "id": "a1", "name": "takeElementScreenshot",
+                  "args": { "selector": "[data-slot=\\"input\\"]" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "browserOptions": { "vp1": { "viewport": { "width": 480, "height": 200 } } },
+  "screenshotOptions": {}
+}
+\`\`\`
+
+## Generating the image
+
+Writing the JSON does not itself create the PNG. Baselines are produced only
+while the **Storybook dev server is running with this addon** (that is where the
+browser and config live). Once the JSON is authored, generate them with the CLI:
+
+\`\`\`
+npx storybook-addon-playwright generate <file.stories.playwright.json>
+# one story only:  --story <storyId>      custom origin:  --url http://localhost:6006
+\`\`\`
+
+It reads the file, renders each screenshot against the running Storybook, and
+writes any missing baseline PNGs (first-run baselines).
+
+**If it prints "Storybook is not reachable"**, that is expected when the dev
+server is not running — it is **not** an error to debug. Do **not** try to start
+Storybook, hunt for a script, or retry. Just relay the manual steps it prints:
+start Storybook (\`npm run storybook\`), open the story, and Save in the addon
+panel. Then stop.
+
+Do **not** spend turns running \`ls\` / \`grep\` / test commands to find some other
+generation path — the CLI above (or the addon panel) is the whole story. See the
+\`endpoint\` topic for the underlying tRPC call it makes.
+
+---
 
 See topics: \`conventions\`, \`workflow\`, \`selectors\`, \`screenshots\`, \`file-format\`,
 \`browser-options\`, \`screenshot-options\`, \`endpoint\`, \`example\`. Use the
 \`search_playwright_actions\` / \`get_playwright_action\` tools for the action
-catalog.`,
+catalog. For most requests the fast path above plus \`selectors\` is enough — only
+open other topics when you need interactions, dark mode, or non-default output.`,
   },
   {
     id: 'conventions',
@@ -132,10 +204,13 @@ device emulation) and the \`screenshot-options\` topic for \`screenshotOptions\`
    the focused element. Use \`options.offset\` to trim unwanted edges.
 5. **Choose a viewport** via \`browserOptions\` so the capture is deterministic and
    small.
-6. **Generate the image** (see the \`endpoint\` topic) — either through the addon
-   panel in Storybook, by POSTing to the local tRPC endpoint, or by running the
-   project's visual test suite which writes baselines on first run.
-7. **Verify** the produced image is focused on the component and reasonably
+6. **Generate the baseline.** Run
+   \`npx storybook-addon-playwright generate <file.stories.playwright.json>\`
+   (add \`--story <storyId>\` for one story). It needs the Storybook dev server
+   running with this addon. If it reports Storybook is not reachable, relay the
+   manual steps it prints (start Storybook, Save in the addon panel) and stop —
+   do not try to start Storybook or search for another path. See \`endpoint\`.
+7. **Verify** (once an image exists) it is focused on the component and reasonably
    small; adjust selector/offset/viewport if it includes unwanted chrome.
 
 Prefer waiting on a selector over fixed timeouts, and prefer a focused element
@@ -319,42 +394,55 @@ file-level \`screenshotOptions\` map controls *how each image is captured*
     keywords: ['endpoint', 'generate', 'trpc', 'take', 'save', 'run', 'server', 'api'],
     body: `# Generating the screenshots
 
-The addon serves a local tRPC endpoint **while Storybook dev is running**, mounted at:
+**All generation requires a running Storybook dev server with this addon loaded**
+— that process owns the browser and config. There is no way to render baselines
+from nothing, so never hunt for a build/test script when Storybook is down.
+
+## Preferred: the \`generate\` CLI
+
+After authoring the JSON, run:
+
+\`\`\`
+npx storybook-addon-playwright generate <file.stories.playwright.json>
+#   --story <storyId>   only that story      --url <origin>   default http://localhost:6006
+\`\`\`
+
+It POSTs to the running Storybook, renders each screenshot, and writes missing
+baseline PNGs (first-run baselines). If it reports **"Storybook is not
+reachable"**, that is the normal not-running state — relay its manual steps
+(start Storybook, Save in the addon panel) and stop; do not retry or start
+Storybook yourself.
+
+## Underlying tRPC endpoint
+
+The CLI calls a local tRPC endpoint mounted while Storybook dev runs:
 
 \`\`\`
 POST {storybookOrigin}/__storybook_playwright/trpc/<procedure>
 \`\`\`
 
+Requests are **plain JSON (no superjson transformer)**. Non-batched, a mutation's
+body is the raw input and the response is \`{ "result": { "data": … } }\`.
 Relevant procedures (see \`src/api/trpc/routers/screenshot.router.ts\`):
 
-- \`screenshot.takeScreenshot\` — runs the actions in a browser and returns the
-  image as base64. **Does not persist.** Input matches \`takeScreenshotInput\`:
-  \`\`\`jsonc
-  {
+- \`screenshot.testScreenshots\` — what \`generate\` uses. Reads the authored
+  \`*.playwright.json\`, renders each screenshot, and **writes the baseline on
+  first run** (results are marked \`added\`). Input:
+  \`\`\`json
+  { "filePath": "…/Button.stories.playwright.json",
     "storyId": "components-button--default",
-    "browserType": "chromium",
-    "browserOptions": { "viewport": { "width": 400, "height": 200 } },
-    "actionSets": [ { "id": "s1", "title": "capture",
-      "actions": [ { "id": "a1", "name": "takeElementScreenshot",
-        "args": { "selector": "[data-slot=\\"button\\"]" } } ] } ]
-  }
+    "requestType": "file" }
   \`\`\`
-- \`screenshot.saveScreenshot\` — persists a screenshot to the \`__screenshots__\`
-  folder and records it in the \`*.stories.playwright.json\` file. Input needs
-  \`filePath\` (the story file path) and \`storyId\` plus the screenshot data
-  (and optionally the \`base64\` from \`takeScreenshot\`).
+  (\`requestType\`: \`"file"\` = whole file, \`"story"\` = just \`storyId\`, \`"all"\` =
+  every \`*.playwright.json\`.) \`filePath\` must be **relative to the Storybook
+  project root** (its cwd) so the server matches it.
+- \`screenshot.takeScreenshot\` — renders and returns base64 only, no persist.
+- \`screenshot.saveScreenshot\` — persists a passed \`base64\` to
+  \`__screenshots__\` **and** records the entry in the JSON; used by the addon
+  panel's take→save flow.
 
-The requests are sent as tRPC batch calls by the addon UI, so in practice the
-**recommended ways to generate images are**:
-
-1. **Use the addon panel** inside Storybook: build the action set, click to take
-   the screenshot, then save it. (Easiest and always correct.)
-2. **Run the project's visual test suite** (\`toMatchScreenshots\` /
-   \`runImageDiff\`): on the first run it writes the baseline images for any new
-   screenshot definitions you added to the JSON.
-
-Only call the raw tRPC endpoint directly if the user explicitly wants
-programmatic generation; otherwise author the JSON and let one of the two flows
-above produce the images.`,
+Other ways to generate the same baselines: the **addon panel** (build shot →
+Save), or the project's **visual-test suite** (\`toMatchScreenshots\` /
+\`runImageDiff\`), which also writes baselines on first run.`,
   },
 ];

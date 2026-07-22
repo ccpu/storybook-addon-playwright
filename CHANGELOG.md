@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.10.0
+
+### Minor Changes
+
+- add baseline image generation command and improve error handling
+
 ## 7.9.0
 
 ### Minor Changes

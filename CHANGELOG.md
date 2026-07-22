@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.9.0
+
+### Minor Changes
+
+- add MCP server and action search functionality
+
 ## 7.8.8
 
 ### Patch Changes

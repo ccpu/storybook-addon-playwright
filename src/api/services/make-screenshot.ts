@@ -18,6 +18,10 @@ import { parseOptionalNumber } from '../../utils/parse-optional-number';
 import { getConfigs } from '../server/configs';
 import { executeAction } from '../server/utils/execute-action';
 import { installMouseHelper } from '../server/utils/install-mouse-helper';
+import {
+  getElementScreenshotClip,
+  type ElementScreenshotClip,
+} from './utils/get-element-screenshot-clip';
 import { isInteractiveAction } from './utils/is-interactive-action';
 import { releaseModifierKey } from './utils/release-modifier-Key';
 import { shouldTakeScreenshot } from './utils/should-take-screenshot';
@@ -33,6 +37,7 @@ async function takeScreenshot(
   data: TakeScreenshotInput,
   configs: Config<Page>,
   handler?: ElementHandle<SVGElement | HTMLElement>,
+  clip?: ElementScreenshotClip,
 ) {
   const requestData = {
     ...data,
@@ -41,6 +46,10 @@ async function takeScreenshot(
 
   if (configs.beforeScreenshot) {
     await configs.beforeScreenshot(page, requestData, requestData);
+  }
+
+  if (clip) {
+    return page.screenshot({ ...data.screenshotOptions, clip });
   }
 
   if (handler) {
@@ -146,19 +155,36 @@ export async function makeScreenshot(
 
       if (action.name === 'takeElementScreenshot') {
         const takeElementArgs = action.args as
-          | { selector?: unknown; options?: { timeout?: unknown } }
+          | { selector?: unknown; options?: { timeout?: unknown; offset?: unknown } }
           | undefined;
 
         if (takeElementArgs?.selector && typeof takeElementArgs.selector === 'string') {
           const timeout = parseOptionalNumber(takeElementArgs.options?.timeout);
+          const offset = parseOptionalNumber(takeElementArgs.options?.offset);
 
           const elementHandle = await page.waitForSelector(takeElementArgs.selector, {
             state: 'attached',
             ...(timeout !== undefined ? { timeout } : {}),
           });
 
+          let clip: ElementScreenshotClip | undefined;
+
+          if (elementHandle && offset !== undefined && offset !== 0) {
+            const box = await elementHandle.boundingBox();
+
+            if (box) {
+              clip = getElementScreenshotClip(box, offset);
+            }
+          }
+
           imageInfos.push({
-            buffer: await takeScreenshot(page, data, configs, elementHandle || undefined),
+            buffer: await takeScreenshot(
+              page,
+              data,
+              configs,
+              clip ? undefined : elementHandle || undefined,
+              clip,
+            ),
             options: action.args,
           });
         }

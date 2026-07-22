@@ -1452,6 +1452,10 @@
           "timeout": {
             "type": "number",
             "description": "Maximum time in milliseconds to wait for the element selector. Defaults to Playwright's configured timeout (30s), which can be overridden globally via `page.setDefaultTimeout()`"
+          },
+          "offset": {
+            "type": "number",
+            "description": "Inset in pixels applied to every side of the element's bounding box before the screenshot is captured, producing a more focused image. A positive value crops inward to exclude unwanted edges of the element (reducing the image size, which speeds up diff testing); a negative value expands outward to include surrounding pixels. When set, the screenshot is captured by clipping the page to the adjusted bounding box instead of screenshotting the element handle."
           }
         },
         "additionalProperties": false

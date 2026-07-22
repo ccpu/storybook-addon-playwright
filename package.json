@@ -59,7 +59,8 @@
   "typings": "dist/index.d.ts",
   "types": "",
   "bin": {
-    "storybook-addon-playwright": "./dist/cli.js"
+    "storybook-addon-playwright": "./dist/cli.js",
+    "storybook-addon-playwright-mcp": "./dist/mcp/cli.mjs"
   },
   "files": [
     "LICENSE",
@@ -109,6 +110,7 @@
     "@ebay/nice-modal-react": "^1.2.13",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@mui/icons-material": "^9.0.1",
     "@mui/material": "^9.0.1",
     "@pixpilot/dev-config": "^3.20.0",

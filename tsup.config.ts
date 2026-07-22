@@ -43,6 +43,24 @@ export default defineConfig((overrideOptions) => {
       platform: 'node',
       target: 'node18',
     },
+    /*
+     * MCP server bin: mcp/src/cli.ts → dist/mcp/cli.mjs
+     * Shipped as the separate `storybook-addon-playwright-mcp` bin (see package.json).
+     * ESM output keeps top-level await / import.meta.url. The MCP SDK and zod are
+     * left external (both are runtime dependencies of the package) — the SDK pulls
+     * in CJS deps (ajv) that use dynamic require and cannot be safely ESM-bundled.
+     */
+    {
+      ...commonConfig,
+      dts: false,
+      entry: {
+        'mcp/cli': 'mcp/src/cli.ts',
+      },
+      format: ['esm'],
+      minify: false,
+      platform: 'node',
+      target: 'node18',
+    },
     {
       ...commonConfig,
       dts: !overrideOptions.watch,

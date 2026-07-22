@@ -1,0 +1,24 @@
+{
+  "name": "storybook-addon-playwright-mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Source for the MCP server shipped as the `storybook-addon-playwright-mcp` bin of the storybook-addon-playwright package. Not published on its own — the addon's tsup build bundles mcp/src/cli.ts into dist/mcp/cli.mjs.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest --run --passWithNoTests",
+    "test:watch": "vitest --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.7.0",
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.3",
+    "vitest": "^4.1.6"
+  }
+}

@@ -106,7 +106,8 @@ export default base.append(
     },
   },
   {
-    ignores: ['README.md'],
+    // `mcp/` is a self-contained package with its own tooling and lint setup.
+    ignores: ['README.md', 'mcp/**'],
   },
   {
     files: ['**/tsconfig.json'],

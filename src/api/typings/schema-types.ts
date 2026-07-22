@@ -71,6 +71,16 @@ export type TakeElementScreenshotOptions = {
    * overridden globally via `page.setDefaultTimeout()`
    */
   timeout?: number;
+
+  /**
+   * Inset in pixels applied to every side of the element's bounding box before
+   * the screenshot is captured, producing a more focused image. A positive value
+   * crops inward to exclude unwanted edges of the element (reducing the image size,
+   * which speeds up diff testing); a negative value expands outward to include
+   * surrounding pixels. When set, the screenshot is captured by clipping the page
+   * to the adjusted bounding box instead of screenshotting the element handle.
+   */
+  offset?: number;
 };
 
 export interface PlaywrightPage extends Page, PlaywrightPageWithExtra {

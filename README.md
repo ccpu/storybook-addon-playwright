@@ -320,12 +320,39 @@ The following custom methods are automatically added to every Playwright page:
 
 ### Screenshots
 
-| Method                                                               | Description                                                                                                                       |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `takeScreenshot(stitchOptions?)`                                     | Takes a screenshot at the current point in an action sequence. All intermediate screenshots are merged with the final screenshot. |
-| `takeScreenshotAll(stitchOptions?)`                                  | Takes a screenshot after every subsequent action. All screenshots are merged at the end.                                          |
-| `takeElementScreenshot(selector)`                                    | Takes a screenshot cropped to the element matching `selector`.                                                                    |
-| `takeScreenshotOptions(mergeType?, stitchOptions?, overlayOptions?)` | Sets global screenshot merge options for the current action set. Only one instance per action set is allowed.                     |
+| Method                                                               | Description                                                                                                                                                                                                |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `takeScreenshot(stitchOptions?)`                                     | Takes a screenshot at the current point in an action sequence. All intermediate screenshots are merged with the final screenshot.                                                                          |
+| `takeScreenshotAll(stitchOptions?)`                                  | Takes a screenshot after every subsequent action. All screenshots are merged at the end.                                                                                                                   |
+| `takeElementScreenshot(selector, options?)`                          | Takes a screenshot cropped to the element matching `selector`. Pass `options.offset` (px) to inset every side of the element for a more focused capture (positive crops inward, negative expands outward). |
+| `takeScreenshotOptions(mergeType?, stitchOptions?, overlayOptions?)` | Sets global screenshot merge options for the current action set. Only one instance per action set is allowed.                                                                                              |
+
+## MCP server (AI assistants)
+
+The package ships a local [Model Context Protocol](https://modelcontextprotocol.io)
+server that teaches AI coding assistants how to author visual/screenshot
+regression tests for this addon — the `*.stories.playwright.json` file format,
+the action catalog, selector strategy, focused element screenshots, and
+`browserOptions` / `screenshotOptions`.
+
+It is exposed as the `storybook-addon-playwright-mcp` bin (separate from the
+addon's own CLI), so no extra install is needed. Register it with your MCP
+client:
+
+```jsonc
+{
+  "mcpServers": {
+    "storybook-playwright-screenshots": {
+      "command": "npx",
+      "args": ["-y", "storybook-addon-playwright-mcp"],
+    },
+  },
+}
+```
+
+The server is intentionally scoped: it tells the assistant to consult it only
+when you ask to add a story screenshot / visual test or generate Playwright
+screenshots. See [`mcp/README.md`](mcp/README.md) for details.
 
 ## Testing
 

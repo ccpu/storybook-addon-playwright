@@ -54,6 +54,7 @@ const getPageMock = vi.fn();
 
 const screenshotMock = vi.fn();
 const elementScreenshotMock = vi.fn();
+const boundingBoxMock = vi.fn();
 const gotoMock = vi.fn();
 const evaluateMock = vi.fn();
 const waitForSelectorMock = vi.fn();
@@ -71,10 +72,17 @@ elementScreenshotMock.mockImplementation(() => {
   });
 });
 
+boundingBoxMock.mockImplementation(() => {
+  return new Promise((resolve) => {
+    resolve({ x: 10, y: 20, width: 100, height: 50 });
+  });
+});
+
 waitForSelectorMock.mockImplementation(() => {
   return new Promise((resolve) => {
     resolve({
       screenshot: elementScreenshotMock,
+      boundingBox: boundingBoxMock,
     });
   });
 });
@@ -509,6 +517,74 @@ describe('makeScreenshot', () => {
     expect(waitForSelectorMock).toHaveBeenCalledWith('#target', {
       state: 'attached',
     });
+  });
+
+  it('should capture a clipped page screenshot when takeElementScreenshot has an offset', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {
+                  options: {
+                    offset: 5,
+                  },
+                  selector: '#target',
+                },
+                id: 'takeElementScreenshot-id',
+                name: 'takeElementScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(boundingBoxMock).toBeCalledTimes(1);
+    // Offset insets the bounding box { x: 10, y: 20, w: 100, h: 50 } by 5px per side.
+    expect(screenshotMock).toHaveBeenCalledWith({
+      clip: { x: 15, y: 25, width: 90, height: 40 },
+    });
+    expect(elementScreenshotMock).toBeCalledTimes(0);
+  });
+
+  it('should screenshot the element handle when takeElementScreenshot offset is 0', async () => {
+    await makeScreenshot(
+      {
+        actionSets: [
+          {
+            actions: [
+              {
+                args: {
+                  options: {
+                    offset: 0,
+                  },
+                  selector: '#target',
+                },
+                id: 'takeElementScreenshot-id',
+                name: 'takeElementScreenshot',
+              },
+            ],
+            id: 'action-set-id',
+            title: 'action-set-title',
+          },
+        ],
+        browserType: 'chromium',
+        requestId: 'request-id',
+        storyId: 'story-id',
+      },
+      true,
+    );
+
+    expect(boundingBoxMock).toBeCalledTimes(0);
+    expect(elementScreenshotMock).toBeCalledTimes(1);
   });
 
   it('should take 2 screenshots with stitch for merge process', async () => {

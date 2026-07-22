@@ -44,7 +44,14 @@ export default defineConfig({
       reportsDirectory: './coverage',
     },
     environment: 'jsdom',
-    exclude: ['**/node_modules/**', '**/dist/**', '**/stories/**', 'middleware.test.js'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/stories/**',
+      'middleware.test.js',
+      // The `mcp/` folder is a self-contained package with its own vitest config.
+      'mcp/**',
+    ],
     globals: true,
     pool: 'vmThreads',
     useAtomics: true,

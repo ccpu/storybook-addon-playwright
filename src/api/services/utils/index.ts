@@ -1,6 +1,7 @@
 export * from './delete-empty-story';
 export * from './delete-story-options';
 export * from './find-screenshot-with-same-setting';
+export * from './get-element-screenshot-clip';
 export * from './get-screenshot-data';
 export * from './get-story-data';
 export * from './get-story-playwright-data-by-file-name';

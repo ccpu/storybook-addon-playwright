@@ -32,3 +32,14 @@ jobs:
         run: pnpm test
         env:
           CI: true
+
+      # The MCP server (mcp/) is a self-contained package with its own config.
+      # Its deps are already present at the repo root, so it runs without a
+      # separate install. The schema-sync test here fails the build if the MCP
+      # action catalog drifts from the addon's generated action schema.
+      - name: MCP server checks
+        run: |
+          pnpm exec tsc --noEmit -p mcp/tsconfig.json
+          pnpm exec vitest run --config mcp/vitest.config.ts
+        env:
+          CI: true

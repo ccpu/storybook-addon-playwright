@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.11.0
+
+### Minor Changes
+
+- add `get_story_id` tool for computing Storybook story ids
+
 ## 7.10.1
 
 ### Patch Changes

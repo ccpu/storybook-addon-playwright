@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.10.1
+
+### Patch Changes
+
+- update React and ReactDOM to peerDependencies
+
 ## 7.10.0
 
 ### Minor Changes

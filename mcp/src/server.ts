@@ -11,6 +11,7 @@ import {
 } from './content.js';
 import { actions } from './data/actions.js';
 import { searchActions } from './search.js';
+import { getStoryId } from './story-id.js';
 
 const JSON_INDENT = 2;
 
@@ -128,6 +129,64 @@ export function createServer(version: string): McpServer {
         'Return a complete, realistic `*.stories.playwright.json` example (click a trigger, wait, then a focused element screenshot) with an explanation.',
     },
     async () => textResult(getExampleText()),
+  );
+
+  server.registerTool(
+    'get_story_id',
+    {
+      title: 'Compute a Storybook story id (action-file key)',
+      description:
+        'Compute the exact Storybook story id to use as the KEY inside the `stories` object of a `*.stories.playwright.json` file. ALWAYS use this instead of hand-deriving the key: a wrong key means the addon cannot match the screenshot to the story. Pass the meta `title` and the story `exportName` (or an explicit `storyName` if the story overrides it). Example: title "Components/Jobs/JobFilterToolbar" + export "WithActiveFilters" -> "components-jobs-jobfiltertoolbar--with-active-filters".',
+      inputSchema: {
+        title: z
+          .string()
+          .min(1)
+          .describe(
+            'The Storybook meta `title` (default export `title`), e.g. "Components/Jobs/JobFilterToolbar".',
+          ),
+        exportName: z
+          .string()
+          .min(1)
+          .describe(
+            'The story\'s export identifier as written in the `*.stories.tsx` file, e.g. "WithActiveFilters". Ignored if `storyName` is given.',
+          )
+          .optional(),
+        storyName: z
+          .string()
+          .min(1)
+          .describe(
+            'Explicit story name, if the story overrides its name via `StoryName.storyName = "..."` or the CSF `name` field. Takes precedence over `exportName`.',
+          )
+          .optional(),
+      },
+    },
+    async ({
+      title,
+      exportName,
+      storyName,
+    }: {
+      title: string;
+      exportName?: string;
+      storyName?: string;
+    }) => {
+      const name = storyName ?? exportName;
+
+      if (!name) {
+        return textResult(
+          'Provide either `exportName` (the story export) or `storyName` (an explicit name override).',
+          true,
+        );
+      }
+
+      const parts = getStoryId(title, name);
+
+      return jsonResult({
+        ...parts,
+        usedName: name,
+        usedNameSource: storyName ? 'storyName' : 'exportName',
+        note: 'Use `storyId` as the key inside the `stories` object of the action file.',
+      });
+    },
   );
 
   return server;

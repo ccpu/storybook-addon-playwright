@@ -31,6 +31,7 @@ describe('createServer (MCP wiring)', () => {
         'get_example_playwright_json',
         'get_playwright_action',
         'get_screenshot_authoring_guide',
+        'get_story_id',
         'list_playwright_actions',
         'search_playwright_actions',
       ].sort(),
@@ -60,6 +61,42 @@ describe('createServer (MCP wiring)', () => {
       arguments: { name: 'takeElementScreenshot' },
     })) as { structuredContent?: { action: { name: string } } };
     expect(result.structuredContent?.action.name).toBe('takeElementScreenshot');
+  });
+
+  it('computes a story id with camelCase word-splitting', async () => {
+    const result = (await client.callTool({
+      name: 'get_story_id',
+      arguments: {
+        title: 'Components/Jobs/JobFilterToolbar',
+        exportName: 'WithActiveFilters',
+      },
+    })) as { structuredContent?: { storyId: string } };
+    expect(result.structuredContent?.storyId).toBe(
+      'components-jobs-jobfiltertoolbar--with-active-filters',
+    );
+  });
+
+  it('prefers an explicit storyName over the export name', async () => {
+    const result = (await client.callTool({
+      name: 'get_story_id',
+      arguments: {
+        title: 'Forms/Input',
+        exportName: 'WithPrefix',
+        storyName: 'A Custom Label',
+      },
+    })) as {
+      structuredContent?: { storyId: string; usedNameSource: string };
+    };
+    expect(result.structuredContent?.storyId).toBe('forms-input--a-custom-label');
+    expect(result.structuredContent?.usedNameSource).toBe('storyName');
+  });
+
+  it('errors when neither exportName nor storyName is given', async () => {
+    const result = (await client.callTool({
+      name: 'get_story_id',
+      arguments: { title: 'Forms/Input' },
+    })) as { isError?: boolean };
+    expect(result.isError).toBe(true);
   });
 
   it('reports an error for an unknown action', async () => {

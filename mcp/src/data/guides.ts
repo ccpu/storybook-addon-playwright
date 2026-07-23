@@ -28,9 +28,12 @@ without reading other files or running any commands:
 
 1. **Read the target \`*.stories.tsx\`.** Note the meta \`title\` and each exported
    story name.
-2. **Derive each story id** = \`kebab(title) + "--" + kebab(exportName)\`. This is
-   the \`?id=\` value in the Storybook URL. (title \`Forms/Input\`, export
-   \`WithPrefix\` → \`forms-input--withprefix\`.)
+2. **Get each story id with the \`get_story_id\` tool** (pass the meta \`title\` and
+   the story \`exportName\`). This id is the KEY inside the \`stories\` object and
+   the \`?id=\` value in the Storybook URL. **Do not hand-derive it** — the naming
+   rule has a non-obvious step that is easy to get wrong (see the ⚠️ rule in the
+   \`conventions\` topic). Example: title \`Components/Jobs/JobFilterToolbar\` +
+   export \`WithActiveFilters\` → \`components-jobs-jobfiltertoolbar--with-active-filters\`.
 3. **Pick a stable selector** for the element to capture — \`[data-slot="…"]\`,
    \`[data-testid="…"]\`, then \`#id\` (see \`selectors\`). The story's own wrapper /
    decorator id is a fine target for a whole-component shot.
@@ -106,9 +109,62 @@ open other topics when you need interactions, dark mode, or non-default output.`
   },
   {
     id: 'conventions',
-    title: 'File naming & location',
-    keywords: ['naming', 'file', 'location', 'folder', 'convention', 'where', 'filename'],
-    body: `# File naming & location
+    title: 'File naming, location & the story-id key',
+    keywords: [
+      'naming',
+      'file',
+      'location',
+      'folder',
+      'convention',
+      'where',
+      'filename',
+      'storyid',
+      'story id',
+      'key',
+      'id',
+      'kebab',
+    ],
+    body: `# ⚠️ THE most important rule: the story-id key
+
+Each entry in the \`stories\` object is keyed by the **Storybook story id**. If
+this key is wrong by even one character, **the addon will not recognize the
+screenshot** — it silently fails to match the image to the story. This is the #1
+mistake when authoring an action file, so **use the \`get_story_id\` tool** rather
+than deriving the key by hand.
+
+The id is \`<title-part>--<story-part>\`, and the two parts use **different** rules:
+
+- **title part** = the meta \`title\`, lowercased with every \`/\` and space turned
+  into \`-\`. It is **NOT** split on camelCase. \`Components/Jobs/JobFilterToolbar\`
+  → \`components-jobs-jobfiltertoolbar\` (\`JobFilterToolbar\` stays as one run, no
+  internal hyphens).
+- **story part** = the story's export name, first **split into words at
+  camelCase / PascalCase / acronym / digit boundaries**, then lowercased and
+  joined with \`-\`. This word-split is the step people miss:
+  - \`WithActiveFilters\` → \`with-active-filters\`  (NOT \`withactivefilters\`)
+  - \`WithPrefix\` → \`with-prefix\`  (NOT \`withprefix\`)
+  - \`Default\` → \`default\`
+  - \`OpenXLModal\` → \`open-xl-modal\`
+
+Putting it together:
+
+| meta \`title\` | export name | story id (the key) |
+| --- | --- | --- |
+| \`Components/Jobs/JobFilterToolbar\` | \`WithActiveFilters\` | \`components-jobs-jobfiltertoolbar--with-active-filters\` |
+| \`Forms/Input\` | \`WithPrefix\` | \`forms-input--with-prefix\` |
+| \`Components/AlertToast\` | \`Default\` | \`components-alerttoast--default\` |
+
+> The classic bug is a naive \`exportName.toLowerCase()\`, which collapses
+> \`WithActiveFilters\` into \`withactivefilters\` and breaks matching.
+
+**If the story overrides its name** (\`MyStory.storyName = "Custom Label"\` or the
+CSF \`name\` field), the story part comes from that name, not the export — pass it
+to \`get_story_id\` as \`storyName\`. When in doubt, the ground truth is the \`?id=\`
+value in the Storybook URL for that story.
+
+---
+
+# File naming & location
 
 - The action file **must sit in the same folder as its story file**.
 - It **must share the story file's base name**, with \`.playwright.json\` in place
@@ -134,10 +190,10 @@ new screenshot into the correct story entry rather than overwriting it.`,
 {
   "version": "0",
   "stories": {
-    // Key = Storybook story id: "<kebab-title>--<kebab-export>".
-    // It is the id in the Storybook URL (?id=...). Example:
-    //   title "Components/AlertToast" + export "Default"
-    //   -> "components-alerttoast--default"
+    // Key = Storybook story id. Get it from the \`get_story_id\` tool; do NOT
+    // hand-derive it (the export name is split on camelCase — see \`conventions\`).
+    //   title "Components/AlertToast" + export "Default" -> "components-alerttoast--default"
+    //   title "Forms/Input"          + export "WithPrefix" -> "forms-input--with-prefix"
     "components-button--default": {
       "screenshots": [
         {
@@ -191,8 +247,9 @@ device emulation) and the \`screenshot-options\` topic for \`screenshotOptions\`
     body: `# Step-by-step: add a story screenshot / visual test
 
 1. **Find the story.** Locate the \`*.stories.tsx\` file and the specific export
-   (story) the user wants to test. Derive its story id
-   (\`<kebab-title>--<kebab-export>\`).
+   (story) the user wants to test. Get its story id from the \`get_story_id\` tool
+   (pass the meta \`title\` and the \`exportName\`) — do not hand-derive the key;
+   the export name is word-split on camelCase (see \`conventions\`).
 2. **Inspect the component markup** to find a stable selector for the element to
    capture and for any elements you must interact with first. Prefer
    \`data-slot\`, \`data-testid\`, or \`id\` (see the \`selectors\` topic). If the

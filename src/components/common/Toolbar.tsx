@@ -31,6 +31,12 @@ const useStyles = makeStyles(
         padding: 2,
       },
       toolbar: {
+        '& button': {
+          cursor: '!pointer',
+          '& span': {
+            cursor: '!pointer',
+          },
+        },
         '& > .left': {
           '& > *': {
             marginLeft: 8,

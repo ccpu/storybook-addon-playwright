@@ -18,18 +18,6 @@
         {
           "actions": [
             {
-              "name": "takeElementScreenshot",
-              "args": {
-                "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
-              }
-            }
-          ],
-          "id": "ShWEtROi5Dh2",
-          "title": "take element screen shot"
-        },
-        {
-          "actions": [
-            {
               "args": {
                 "selector": "#blue"
               },
@@ -44,6 +32,18 @@
             }
           ],
           "id": "uD9-r01lb3fr",
+          "title": "take element screen shot"
+        },
+        {
+          "actions": [
+            {
+              "name": "takeElementScreenshot",
+              "args": {
+                "selector": "html>body>div:nth-child(5)>div:nth-child(2)"
+              }
+            }
+          ],
+          "id": "ShWEtROi5Dh2",
           "title": "take element screen shot"
         },
         {

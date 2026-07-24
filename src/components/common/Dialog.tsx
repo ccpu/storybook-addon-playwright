@@ -3,15 +3,12 @@ import { makeStyles } from '../../styles';
 import { Close as CloseIcon } from '../../icons';
 import clsx from 'clsx';
 import React from 'react';
-import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 import { DialogActions } from './DialogActions';
 import { Typography } from './Typography';
 import { DialogContent } from './DialogContent';
 import { DialogTitle } from './DialogTitle';
 import { Divider } from './Divider';
 import { Modal } from './Modal';
-
-const CloseIconComponent = resolveMuiIcon(CloseIcon);
 
 interface StyleProps {
   width?: string | number;
@@ -74,6 +71,7 @@ export interface DialogProps extends StyleProps {
   enableCloseButton?: boolean;
   className?: string;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 const Dialog: React.FC<DialogProps> = ({
@@ -88,6 +86,7 @@ const Dialog: React.FC<DialogProps> = ({
   open = false,
   enableCloseButton = true,
   className,
+  style,
 }) => {
   const classes = useStyles({ height, width });
 
@@ -100,6 +99,7 @@ const Dialog: React.FC<DialogProps> = ({
       open={open}
       onClose={onClose}
       width={width}
+      style={style}
       height={height}
       className={clsx(classes.paper, className)}
     >
@@ -115,7 +115,7 @@ const Dialog: React.FC<DialogProps> = ({
               {TitleActions && <TitleActions />}
               {enableCloseButton && (
                 <IconButton className={classes.closIcon} onClick={onClose}>
-                  <CloseIconComponent />
+                  <CloseIcon />
                 </IconButton>
               )}
             </div>

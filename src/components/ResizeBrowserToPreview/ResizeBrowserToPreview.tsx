@@ -1,7 +1,6 @@
 import { FitScreen as FitScreenIconModule } from '../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
-import { Tooltip } from '../common';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
 import { getPreviewIframe } from '../../utils';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
@@ -37,10 +36,12 @@ const ResizeBrowserToPreview: React.FC = () => {
   }, [browserOptions, screenshotOptions, setBrowserOptions, setScreenshotOptions]);
 
   return (
-    <IconButton onClick={handleClick} aria-label="Match browser viewport to preview">
-      <Tooltip placement="top" title="Match browser viewport to preview">
-        <FitScreenIcon />
-      </Tooltip>
+    <IconButton
+      onClick={handleClick}
+      title="Match browser viewport to preview"
+      aria-label="Match browser viewport to preview"
+    >
+      <FitScreenIcon />
     </IconButton>
   );
 };

@@ -33,15 +33,12 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: 'flex',
     },
-    selected: {
-      borderBottomColor: theme.palette.primary.main,
-      color: theme.palette.primary.main,
-    },
+
     tab: {
       background: 'none',
       border: 0,
+      color: theme.palette.text.primary,
       borderBottom: '2px solid transparent',
-      color: theme.palette.text.secondary,
       cursor: 'pointer',
       fontSize: '0.875rem',
       fontWeight: 500,
@@ -50,8 +47,12 @@ const useStyles = makeStyles(
       textTransform: 'none',
       whiteSpace: 'nowrap',
       '&:hover': {
-        color: theme.palette.text.primary,
+        color: theme.palette.primary.main,
       },
+    },
+    selected: {
+      borderBottomColor: theme.palette.primary.main,
+      color: theme.palette.primary.main,
     },
   }),
   { name: 'Tabs' },

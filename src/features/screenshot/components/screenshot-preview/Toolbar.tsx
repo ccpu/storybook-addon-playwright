@@ -6,7 +6,7 @@ import { SaveAltOutlined as SaveIcon } from '../../../../icons';
 import { IconButton } from '@storybook/components';
 import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';
-import { Toolbar as CommonToolbar, Tooltip } from '../../../../components/common';
+import { Toolbar as CommonToolbar } from '../../../../components/common';
 import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
 import { ResizeBrowserToIframeContent } from '../../../../components/ResizeBrowserToIframeContent/ResizeBrowserToIframeContent';
 import { ResizeBrowserToPreview } from '../../../../components/ResizeBrowserToPreview/ResizeBrowserToPreview';
@@ -69,17 +69,13 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
           className="cursor-button"
           onClick={enableDisableCursor}
           active={browserOptions.all && browserOptions.all.cursor}
+          title={
+            browserOptions.all && browserOptions.all.cursor
+              ? 'Hide cursor'
+              : 'Show cursor'
+          }
         >
-          <Tooltip
-            placement="top"
-            title={
-              browserOptions.all && browserOptions.all.cursor
-                ? 'Hide cursor'
-                : 'Show cursor'
-            }
-          >
-            <NearMeOutlinedIcon style={{ transform: 'rotate(-80deg)' }} />
-          </Tooltip>
+          <NearMeOutlinedIcon style={{ transform: 'rotate(-80deg)' }} />
         </IconButton>
 
         <ClipperButton />
@@ -87,16 +83,12 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
         <ResizeBrowserToPreview />
         <ResizeBrowserToIframeContent />
 
-        <IconButton onClick={onSave}>
-          <Tooltip placement="top" title="Save screenshots">
-            <SaveAltOutlinedIcon />
-          </Tooltip>
+        <IconButton onClick={onSave} title="Save screenshots">
+          <SaveAltOutlinedIcon />
         </IconButton>
 
-        <IconButton onClick={onRefresh}>
-          <Tooltip placement="top" title="Refresh">
-            <RefreshSharpIcon />
-          </Tooltip>
+        <IconButton onClick={onRefresh} title="Refresh">
+          <RefreshSharpIcon />
         </IconButton>
 
         <ResetSettings />
@@ -104,10 +96,8 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
         <ScreenshotOptions />
         <BrowserOptions browserType="all" />
 
-        <IconButton onClick={onCLose}>
-          <Tooltip placement="top" title="Close panel">
-            <CloseOutlinedIcon />
-          </Tooltip>
+        <IconButton onClick={onCLose} title="Close panel">
+          <CloseOutlinedIcon />
         </IconButton>
       </div>
     </CommonToolbar>

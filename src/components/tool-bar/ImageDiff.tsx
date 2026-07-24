@@ -32,14 +32,14 @@ const useStyles = makeStyles(
           minWidth: 15,
           padding: '0 4px',
         },
-        position: 'absolute',
-        right: -2,
-        top: 5,
+        position: '!absolute',
+        right: -6,
+        top: -2,
         zIndex: 1,
       },
       successIcon: {
         color: theme.palette.primary.main,
-        position: 'absolute',
+        position: '!absolute',
         right: -10,
         top: -4,
       },
@@ -130,6 +130,7 @@ const ImageDiff: React.FC<ImageDiffStyleProps> = (props) => {
           color="secondary"
           className={classes.imageDiffBadge}
           overlap="rectangular"
+          style={{ position: 'absolute', right: -6, top: -2, zIndex: 1 }}
         />
       )}
       <ContrastIcon />

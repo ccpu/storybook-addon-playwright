@@ -1,12 +1,9 @@
 import { AspectRatio as AspectRatioIconIconModule } from '../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
-import { Tooltip } from '../common';
+
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
 import { getIframeInnerSize, getPreviewIframe } from '../../utils';
-import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
-
-const AspectRatioIcon = resolveMuiIcon(AspectRatioIconIconModule);
 
 const ResizeBrowserToIframeContent: React.FC = () => {
   const { setBrowserOptions, browserOptions } = useBrowserOptions();
@@ -43,10 +40,9 @@ const ResizeBrowserToIframeContent: React.FC = () => {
     <IconButton
       onClick={handleClick}
       aria-label="Match browser viewport to iframe content"
+      title="Match browser viewport to iframe content"
     >
-      <Tooltip placement="top" title="Match browser viewport to iframe content">
-        <AspectRatioIcon />
-      </Tooltip>
+      <AspectRatioIconIconModule />
     </IconButton>
   );
 };

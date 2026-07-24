@@ -5,7 +5,7 @@ import { RefreshOutlined as RefreshIcon } from '../../../../icons';
 import { SaveAltOutlined as SaveIcon } from '../../../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
-import { CircularProgress, Tooltip } from '../../../../components/common';
+import { CircularProgress } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { BrowserOptions } from './BrowserOptions';
 
@@ -83,23 +83,17 @@ const ScreenShotViewToolbar: React.FC<PreviewItemProps> = (props) => {
       </div>
       <div className={classes.toolbarPanels}>
         {showSaveButton && (
-          <IconButton onClick={onSave}>
-            <Tooltip placement="top" title="Save screenshot">
-              <SaveAltOutlinedIcon />
-            </Tooltip>
+          <IconButton onClick={onSave} title="Save screenshot">
+            <SaveAltOutlinedIcon />
           </IconButton>
         )}
-        <IconButton onClick={onRefresh}>
-          <Tooltip placement="top" title="Refresh">
-            <RefreshOutlinedIcon />
-          </Tooltip>
+        <IconButton onClick={onRefresh} title="Refresh">
+          <RefreshOutlinedIcon />
         </IconButton>
         {browserType !== 'storybook' && <BrowserOptions browserType={browserType} />}
 
-        <IconButton onClick={onFullScreen}>
-          <Tooltip placement="top" title="Full screen">
-            <FullscreenIcon />
-          </Tooltip>
+        <IconButton onClick={onFullScreen} title="Full screen">
+          <FullscreenIcon />
         </IconButton>
       </div>
     </div>

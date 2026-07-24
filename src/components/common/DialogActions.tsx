@@ -17,6 +17,12 @@ const useStyles = makeStyles(
       gap: '8px',
       justifyContent: 'flex-end',
       padding: '8px',
+      '& button': {
+        cursor: 'pointer',
+        padding: '6px 16px',
+        height: '34px',
+        minWidth: '120px',
+      },
     },
   }),
   { name: 'DialogActions' },

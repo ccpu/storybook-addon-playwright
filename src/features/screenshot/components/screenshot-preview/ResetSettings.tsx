@@ -1,7 +1,6 @@
 import { RotateLeft as RotateLeftIcon } from '../../../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
-import { Tooltip } from '../../../../components/common';
 import { useBrowserOptions, useScreenshotOptions } from '../../../../hooks';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 
@@ -17,10 +16,8 @@ function ResetSettings() {
   }, [setBrowserOptions, setScreenshotOptions]);
 
   return (
-    <IconButton onClick={handleClick}>
-      <Tooltip placement="top" title="Reset Settings">
-        <RotateLeftIconComponent style={{ marginTop: 4, width: '20px' }} />
-      </Tooltip>
+    <IconButton onClick={handleClick} title="Reset Settings">
+      <RotateLeftIconComponent style={{ marginTop: 4, width: '20px' }} />
     </IconButton>
   );
 }

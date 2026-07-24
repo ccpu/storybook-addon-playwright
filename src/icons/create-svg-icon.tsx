@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { useTheme } from '../styles';
+import { PaletteColor } from '../features/theme';
 
-export type SvgIconProps = Omit<React.SVGProps<SVGSVGElement>, 'fontSize'> & {
+export type SvgIconProps = Omit<React.SVGProps<SVGSVGElement>, 'fontSize' | 'color'> & {
   fontSize?: 'inherit' | 'small' | 'medium' | 'large' | number;
   titleAccess?: string;
+  color?: 'primary' | 'secondary' | 'action' | 'error';
 };
 
 const FONT_SIZE_MAP: Record<string, string> = {
   inherit: 'inherit',
-  small: '1.25rem',
+  small: '1rem',
   medium: '1.5rem',
   large: '2.1875rem',
 };
@@ -21,13 +24,23 @@ const FONT_SIZE_MAP: Record<string, string> = {
 export function createSvgIcon(pathData: string | string[], displayName: string) {
   const paths = Array.isArray(pathData) ? pathData : [pathData];
 
-  const Icon: React.FC<SvgIconProps> = ({ fontSize, titleAccess, style, ...props }) => {
+  const Icon: React.FC<SvgIconProps> = ({
+    fontSize = 'small',
+    titleAccess,
+    color,
+    style,
+    ...props
+  }) => {
     const resolvedFontSize =
       typeof fontSize === 'number'
         ? fontSize
         : fontSize
           ? FONT_SIZE_MAP[fontSize]
           : undefined;
+
+    const theme = useTheme();
+
+    const themeColor = color ? (theme.palette[color] as PaletteColor).main : undefined;
 
     return (
       <svg
@@ -38,7 +51,7 @@ export function createSvgIcon(pathData: string | string[], displayName: string) 
         fill="currentColor"
         width="1em"
         height="1em"
-        style={{ fontSize: resolvedFontSize, ...style }}
+        style={{ fontSize: resolvedFontSize, color: themeColor, ...style }}
         {...props}
       >
         {titleAccess ? <title>{titleAccess}</title> : null}

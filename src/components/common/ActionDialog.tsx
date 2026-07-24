@@ -43,6 +43,7 @@ const ActionDialog: React.FC<ActionDialogDialogProps> = memo(
         open={open}
         onClose={handleClose}
         width={width}
+        style={{ minWidth: 400 }}
         {...rest}
       >
         <ActionPanel

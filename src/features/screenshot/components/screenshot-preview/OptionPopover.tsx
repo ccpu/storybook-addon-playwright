@@ -3,7 +3,7 @@ import { makeStyles } from '../../../../styles';
 import { Close as CloseIcon } from '../../../../icons';
 import { IconButton as SIconButton } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
-import { Divider, Popover, Tooltip } from '../../../../components/common';
+import { Divider, Popover } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 
 const CloseIconComponent = resolveMuiIcon(CloseIcon);
@@ -77,10 +77,8 @@ const OptionPopover: React.FC<OptionPopoverProps> = ({
         </div>
       </Popover>
 
-      <SIconButton onClick={handleClick} active={active}>
-        <Tooltip placement="top" title="Browser Options">
-          <Icon />
-        </Tooltip>
+      <SIconButton onClick={handleClick} title="Browser Options" active={active}>
+        <Icon />
       </SIconButton>
     </>
   );

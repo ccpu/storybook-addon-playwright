@@ -41,7 +41,7 @@ import React from 'react';
 import { storyData } from '../../../../configs/story-data';
 import { getScreenshotDate } from '../../../../configs/get-screenshot-date';
 import { CheckCircle } from '../../../../../src/icons';
-import { Error } from '../../../../../src/icons';
+import { ErrorIcon } from '../../../../../src/icons';
 import { ImageDiffMessage } from '../../../../../src/components/common';
 import { ScreenshotListItemMenu } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListItemMenu';
 import { useScreenshotDiffTest } from '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test';
@@ -164,7 +164,7 @@ describe('ScreenshotListItem', () => {
     );
 
     invokeHandler(
-      wrapper.find(Error).props().onClick,
+      wrapper.find(ErrorIcon).props().onClick,
       {} as React.MouseEvent<SVGSVGElement, MouseEvent>,
     );
 

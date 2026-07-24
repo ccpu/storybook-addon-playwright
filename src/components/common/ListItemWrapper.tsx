@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DragHandleProps } from './DragHandle';
 import { capitalize } from '../../utils';
 import { makeStyles } from '../../styles';

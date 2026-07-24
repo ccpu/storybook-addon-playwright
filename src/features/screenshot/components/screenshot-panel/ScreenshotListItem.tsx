@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ImageDiffResult } from '../../../../api/typings';
 import type { StoryData } from '../../../../schema';
 import type { ScreenshotData } from '../../../../typings';
@@ -7,7 +6,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { makeStyles } from '../../../../styles';
 import { CheckCircle } from '../../../../icons';
-import { Error } from '../../../../icons';
+import { ErrorIcon } from '../../../../icons';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   BrowserIcon,
@@ -22,10 +21,6 @@ import { ScreenshotInfo } from './ScreenshotInfo';
 import { ScreenshotListItemMenu } from './ScreenshotListItemMenu';
 import { ScreenshotListItemWrapper } from './ScreenshotListItemWrapper';
 import { ScreenshotPreviewDialog } from './ScreenshotPreviewDialog';
-import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
-
-const CheckCircleIcon = resolveMuiIcon(CheckCircle);
-const ErrorIcon = resolveMuiIcon(Error);
 
 const useStyles = makeStyles(
   () => {
@@ -202,7 +197,7 @@ function ScreenshotListItem({
           <Loader progressSize={20} position="absolute" open={inProgress} />
 
           {isPassesImageDiff && (
-            <CheckCircleIcon
+            <CheckCircle
               color="primary"
               onClick={handleRemoveScreenShotResult}
               className={classes.indicatorIcon}

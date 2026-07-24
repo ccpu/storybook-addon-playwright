@@ -43,10 +43,7 @@
       "types": "./middleware.d.ts",
       "require": "./middleware.js"
     },
-    "./register": {
-      "import": "./dist/register.mjs",
-      "require": "./register.js"
-    },
+    "./register": "./register.js",
     "./utils": {
       "types": "./dist/external-utils/index.d.ts",
       "import": "./dist/external-utils/index.mjs",

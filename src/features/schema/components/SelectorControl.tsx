@@ -1,6 +1,6 @@
 import type { SelectorType } from '../../../hooks';
 import type { ControlProps } from '../../../typings';
-import { IconButton } from '@mui/material';
+import { IconButton } from '@storybook/components';
 import { makeStyles } from '@mui/styles';
 import TargetIcon from '@mui/icons-material/FilterCenterFocusSharp';
 import PointerIcon from '@mui/icons-material/FilterTiltShift';

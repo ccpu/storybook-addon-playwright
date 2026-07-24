@@ -1,7 +1,7 @@
-import { Tooltip } from '@mui/material';
 import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 import { IconButton } from '@storybook/components';
 import React from 'react';
+import { Tooltip } from '../../../../components/common';
 import { useBrowserOptions, useScreenshotOptions } from '../../../../hooks';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 

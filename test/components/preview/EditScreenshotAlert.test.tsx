@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useEditScreenshot } from '../../../src/features/screenshot/hooks/use-edit-screenshot';
 import { Alert } from '@mui/material';
-import { Button } from '@mui/material';
+import { Button } from '@storybook/components';
 
 vi.mock(
   '../../../src/features/screenshot/hooks/use-edit-screenshot',
@@ -30,9 +30,10 @@ describe('EditScreenshotAlert', () => {
     const wrapper = shallow(<EditScreenshotAlert />);
 
     expect(wrapper.find(Alert)).toHaveLength(1);
-    expect(wrapper.find(Alert).text()).toBe(
-      `Editing 'title' screenshot (chromium).Cancel`,
+    expect(wrapper.find(Alert).text()).toContain(
+      `Editing 'title' screenshot (chromium).`,
     );
+    expect(wrapper.find(Button).props().children).toBe('Cancel');
 
     wrapper.find(Button).props().onClick!(
       {} as React.MouseEvent<HTMLButtonElement, MouseEvent>,

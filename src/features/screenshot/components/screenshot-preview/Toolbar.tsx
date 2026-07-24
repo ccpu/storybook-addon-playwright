@@ -1,5 +1,4 @@
 import type { BrowserTypes } from '../../../../typings';
-import { Tooltip } from '@mui/material';
 import CloseOutlined from '@mui/icons-material/CloseOutlined';
 import NearMeIcon from '@mui/icons-material/NearMe';
 import RefreshSharp from '@mui/icons-material/RefreshSharp';
@@ -7,7 +6,7 @@ import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 import { IconButton } from '@storybook/components';
 import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';
-import { Toolbar as CommonToolbar } from '../../../../components/common';
+import { Toolbar as CommonToolbar, Tooltip } from '../../../../components/common';
 import { BrowserIconButton } from '../../../../components/common/BrowserIconButton';
 import { ResizeBrowserToIframeContent } from '../../../../components/ResizeBrowserToIframeContent/ResizeBrowserToIframeContent';
 import { ResizeBrowserToPreview } from '../../../../components/ResizeBrowserToPreview/ResizeBrowserToPreview';

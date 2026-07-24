@@ -2,7 +2,7 @@ import { OptionPopover } from '../../../../../src/features/screenshot/components
 import { shallow } from 'enzyme';
 import React from 'react';
 import Icon from '@mui/icons-material/AcUnit';
-import { IconButton, Popover } from '@mui/material';
+import { Popover } from '@mui/material';
 import { IconButton as SIconButton } from '@storybook/components';
 
 describe('OptionPopover', () => {
@@ -13,8 +13,11 @@ describe('OptionPopover', () => {
 
   it('should set anchor', () => {
     const wrapper = shallow(<OptionPopover title="title" Icon={Icon} />);
+    // The trigger button is the second IconButton (the first is the close
+    // button rendered inside the Popover).
     wrapper
       .find(SIconButton)
+      .at(1)
       .props()
       .onClick?.({ target: {} } as never);
     expect(wrapper.find(Popover).props().anchorEl).toBeDefined();
@@ -22,8 +25,10 @@ describe('OptionPopover', () => {
 
   it('should handle close', () => {
     const wrapper = shallow(<OptionPopover title="title" Icon={Icon} />);
+    // The close button is the first IconButton (rendered inside the Popover).
     wrapper
-      .find(IconButton)
+      .find(SIconButton)
+      .at(0)
       .props()
       .onClick?.({} as React.MouseEvent<HTMLButtonElement, MouseEvent>);
     expect(wrapper.find(Popover).props().anchorEl).not.toBeDefined();

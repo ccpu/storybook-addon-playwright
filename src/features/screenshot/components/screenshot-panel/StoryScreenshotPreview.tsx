@@ -1,5 +1,5 @@
 import type { ScreenshotTestTargetType } from '../../../../typings';
-import { Button } from '@mui/material';
+import { Button } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
 import { Loader } from '../../../../components/common';
 import { toast } from '../../../../utils/toast';

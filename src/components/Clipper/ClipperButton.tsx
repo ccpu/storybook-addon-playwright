@@ -1,6 +1,6 @@
-import { Tooltip } from '@mui/material';
 import { IconButton } from '@storybook/components';
 import React from 'react';
+import { Tooltip } from '../common';
 import { useClipperState } from './Clipper';
 
 const ClipperButton: React.FC = () => {

@@ -1,7 +1,7 @@
-import { Tooltip } from '@mui/material';
 import AspectRatioIconIconModule from '@mui/icons-material/AspectRatio';
 import { IconButton } from '@storybook/components';
 import React from 'react';
+import { Tooltip } from '../common';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
 import { getIframeInnerSize, getPreviewIframe } from '../../utils';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';

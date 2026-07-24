@@ -1,6 +1,7 @@
 import type { Definition } from 'ts-to-json';
 import type { Config } from 'ts-to-json/dist/src/Config';
-import { Button, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
+import { Button } from '@storybook/components';
 import { makeStyles } from '@mui/styles';
 import * as immutableObject from 'object-path-immutable';
 import React, { useCallback, useEffect, useRef, useState } from 'react';

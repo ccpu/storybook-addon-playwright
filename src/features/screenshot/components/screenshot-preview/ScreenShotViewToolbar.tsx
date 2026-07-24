@@ -1,11 +1,12 @@
 import type { BrowserTypes } from '../../../../typings';
-import { CircularProgress, Tooltip } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Fullscreen from '@mui/icons-material/FullscreenSharp';
 import RefreshIcon from '@mui/icons-material/RefreshOutlined';
 import SaveIcon from '@mui/icons-material/SaveAltOutlined';
 import { IconButton } from '@storybook/components';
 import React from 'react';
+import { Tooltip } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 import { BrowserOptions } from './BrowserOptions';
 

@@ -1,6 +1,6 @@
-import { Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Alert } from '@mui/material';
+import { Button } from '@storybook/components';
 import React from 'react';
 import { useEditScreenshot } from '../../hooks';
 

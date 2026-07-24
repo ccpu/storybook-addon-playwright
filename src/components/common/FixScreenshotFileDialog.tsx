@@ -1,4 +1,5 @@
-import { Button, DialogActions, TextField } from '@mui/material';
+import { DialogActions, TextField } from '@mui/material';
+import { Button } from '@storybook/components';
 import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
 import { Dialog, Loader } from '../common';

@@ -1,11 +1,12 @@
 import type { DragHandleProps } from '../../../../components/common';
-import { AccordionDetails, Chip, Tooltip } from '@mui/material';
+import { AccordionDetails, Chip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import { IconButton } from '@storybook/components';
 import { QuestionIcon, TrashIcon } from '@storybook/icons';
 import React, { memo, useCallback, useEffect, useState } from 'react';
+import { Tooltip } from '../../../../components/common';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';
 import { capitalize, getActionSchema } from '../../../../utils';
 import { useEditorAction } from '../../hooks/use-editor-action';

@@ -1,7 +1,6 @@
 import type { FavouriteActionSet } from '../../../../typings';
 
 import {
-  Button,
   capitalize,
   DialogActions,
   DialogContent,
@@ -13,7 +12,7 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
-import { IconButton } from '@storybook/components';
+import { Button, IconButton } from '@storybook/components';
 import { StarIcon } from '@storybook/icons';
 import React from 'react';
 import { trpcClient } from '../../../../api/trpc/client';

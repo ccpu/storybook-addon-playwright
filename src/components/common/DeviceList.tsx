@@ -1,5 +1,6 @@
 import type { BrowserContextOptions } from '../../typings';
-import { Button, Menu } from '@mui/material';
+import { Menu } from '@mui/material';
+import { Button } from '@storybook/components';
 import React, { useCallback, useMemo } from 'react';
 import DeviceDescriptors from '../../data/deviceDescriptorsSource.json';
 import { DeviceListItem } from './DeviceListItem';
@@ -13,8 +14,8 @@ const DeviceList: React.FC<DeviceListProps> = (props) => {
   const { onDeviceSelect, selectedDevice } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLButtonElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setAnchorEl(event.currentTarget);
+  const handleClick = (event: React.SyntheticEvent) => {
+    setAnchorEl(event.currentTarget as HTMLButtonElement);
   };
 
   const handleClose = () => {

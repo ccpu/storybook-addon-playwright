@@ -24,3 +24,4 @@ export * from './SchemaFormLoader';
 export * from './FixScreenshotFileDialog';
 export * from './IframeOverlay';
 export * from './AutoHeightWithTooltip';
+export * from './Tooltip';

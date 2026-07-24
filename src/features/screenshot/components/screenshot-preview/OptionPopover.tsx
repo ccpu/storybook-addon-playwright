@@ -1,9 +1,10 @@
-import { Divider, IconButton, Popover, Tooltip } from '@mui/material';
+import { Divider, Popover } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton as SIconButton } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
+import { Tooltip } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 
 const CloseIconComponent = resolveMuiIcon(CloseIcon);
@@ -68,9 +69,9 @@ const OptionPopover: React.FC<OptionPopoverProps> = ({
         <div className={classes.root} style={{ width }}>
           <div className={classes.title}>
             <span>{title}</span>
-            <IconButton size="small" onClick={handleClose}>
+            <SIconButton onClick={handleClose}>
               <CloseIconComponent />
-            </IconButton>
+            </SIconButton>
           </div>
           <Divider />
           <div>{children}</div>

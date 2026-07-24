@@ -1,5 +1,6 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
-import { Button, CircularProgress, TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
+import { Button } from '@storybook/components';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { makeStyles } from '@mui/styles';
 
@@ -134,9 +135,15 @@ const InputDialog: React.FC<InputDialogProps> = ({
             size="small"
             onClick={handleGenerate}
             disabled={isGenerating}
-            startIcon={isGenerating ? <CircularProgress size={14} /> : undefined}
           >
-            {isGenerating ? 'Generating...' : 'Generate Title'}
+            {isGenerating ? (
+              <>
+                <CircularProgress size={14} style={{ marginRight: 8 }} />
+                Generating...
+              </>
+            ) : (
+              'Generate Title'
+            )}
           </Button>
         </div>
       )}

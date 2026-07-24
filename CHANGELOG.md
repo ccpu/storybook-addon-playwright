@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.13.0
+
+### Minor Changes
+
+- implement reactManagerRuntimePlugin for handling React imports
+
 ## 7.12.0
 
 ### Minor Changes

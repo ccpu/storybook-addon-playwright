@@ -1,5 +1,15 @@
 # storybook-addon-playwright
 
+## 7.12.0
+
+### Minor Changes
+
+- removed mui
+
+### Patch Changes
+
+- replace `Button` import from '@mui/material' to '@storybook/components' in multiple files
+
 ## 7.11.0
 
 ### Minor Changes

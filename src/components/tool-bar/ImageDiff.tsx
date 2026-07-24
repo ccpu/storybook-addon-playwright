@@ -1,6 +1,5 @@
 import type { StoryData } from '../../schema';
 import type { ScreenshotTestTargetType } from '../../typings';
-import { Badge } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 import { ContrastIcon } from '@storybook/icons';
@@ -17,7 +16,7 @@ import {
 import { useGlobalImageDiffResults, useScreenshotDiffTestByType } from '../../hooks';
 import { formatElapsedTime } from '../../utils';
 import { isStoryJsonFile } from '../../utils/is-story-json-file';
-import { Loader } from '../common';
+import { Badge, Loader } from '../common';
 import { ImageDiffMenuItem } from './ImageDiffMenuItem';
 
 const useStyles = makeStyles(

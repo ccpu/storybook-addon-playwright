@@ -1,8 +1,8 @@
-import type { PopoverProps } from '@mui/material';
 import type { ActionPanelProps } from './ActionPanel';
-import { Popover } from '@mui/material';
+import type { PopoverProps } from './Popover';
 import React, { memo } from 'react';
 import { ActionPanel } from './ActionPanel';
+import { Popover } from './Popover';
 
 export interface ActionPopoverProps
   extends ActionPanelProps, Omit<PopoverProps, 'open' | 'onClose'> {

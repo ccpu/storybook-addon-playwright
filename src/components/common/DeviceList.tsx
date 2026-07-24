@@ -1,6 +1,6 @@
 import type { BrowserContextOptions } from '../../typings';
-import { Menu } from '@mui/material';
 import { Button } from '@storybook/components';
+import { Menu } from './Menu';
 import React, { useCallback, useMemo } from 'react';
 import DeviceDescriptors from '../../data/deviceDescriptorsSource.json';
 import { DeviceListItem } from './DeviceListItem';

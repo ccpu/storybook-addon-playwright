@@ -2,12 +2,8 @@ import type { FavouriteActionSet } from '../../../../typings';
 
 import {
   capitalize,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
   FormControlLabel,
-  Popover,
   Radio,
   RadioGroup,
   TextField,
@@ -15,6 +11,12 @@ import {
 import { Button, IconButton } from '@storybook/components';
 import { StarIcon } from '@storybook/icons';
 import React from 'react';
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Popover,
+} from '../../../../components/common';
 import { trpcClient } from '../../../../api/trpc/client';
 import { useAnchorEl } from '../../../../hooks/use-anchor-el';
 import { useCurrentStoryData } from '../../../../hooks/use-current-story-data';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActionMenuItem } from '../../../../../src/features/action-set/components/action-set-panel/ActionMenuItem';
 import { shallow } from 'enzyme';
-import { MenuItem } from '@mui/material';
+import { MenuItem } from '../../../../../src/components/common';
 describe('ActionMenuItem', () => {
   it('should render', () => {
     const wrapper = shallow(

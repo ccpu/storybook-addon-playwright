@@ -1,7 +1,7 @@
 import { DeviceListItem } from '../../../src/components/common/DeviceListItem';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { MenuItem } from '@mui/material';
+import { MenuItem } from '../../../src/components/common';
 
 describe('DeviceListItem', () => {
   const onClickMock = vi.fn();

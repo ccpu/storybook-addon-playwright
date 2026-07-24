@@ -1,6 +1,8 @@
-import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { Button } from '@storybook/components';
 import React, { memo } from 'react';
+import { DialogActions } from './DialogActions';
+import { DialogContent } from './DialogContent';
+import { DialogTitle } from './DialogTitle';
 
 export interface ActionPanelProps {
   title?: string;

@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles';
-import { Alert } from '@mui/material';
 import { Button } from '@storybook/components';
 import React from 'react';
+import { Alert } from '../common';
 import { useEditScreenshot } from '../../hooks';
 
 const useStyles = makeStyles(

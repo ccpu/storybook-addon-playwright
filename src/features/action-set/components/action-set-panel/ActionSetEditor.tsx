@@ -1,9 +1,13 @@
 import type { DragHandleProps } from '../../../../components/common';
 import type { ActionSet } from '../../../../typings';
-import { Divider } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useCallback } from 'react';
-import { inputModal, ListItemWrapper, Loader } from '../../../../components/common';
+import {
+  Divider,
+  inputModal,
+  ListItemWrapper,
+  Loader,
+} from '../../../../components/common';
 import { TEMP_ACTION_SET } from '../../../../constants';
 import { useActionEditor, useActionSchemaLoader } from '../../../../hooks';
 import { ActionList } from '../actions/ActionList';

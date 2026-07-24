@@ -60,7 +60,7 @@ import { Loader } from '../../../src/components/common';
 import { ImageDiffResult } from '../../../src/api/typings';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Badge } from '@mui/material';
+import { Badge } from '../../../src/components/common';
 import { IconButton, ListItem, WithTooltip } from '@storybook/components';
 
 vi.mocked(useGlobalImageDiffResultsMock).mockImplementation(() => ({

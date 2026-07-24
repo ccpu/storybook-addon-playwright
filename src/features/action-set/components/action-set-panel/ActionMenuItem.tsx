@@ -1,6 +1,6 @@
 import type { Ref } from 'react';
-import { MenuItem } from '@mui/material';
 import React, { forwardRef, memo, useCallback } from 'react';
+import { MenuItem } from '../../../../components/common';
 
 export interface ActionMenuItemBase {
   label: string;

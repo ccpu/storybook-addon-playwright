@@ -1,5 +1,9 @@
 import { Dialog } from '../../../src/components/common/Dialog';
-import { DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '../../../src/components/common';
 import { shallow } from 'enzyme';
 import React from 'react';
 

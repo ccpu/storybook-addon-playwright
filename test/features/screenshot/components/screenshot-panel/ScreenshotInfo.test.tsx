@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { getScreenshotDate } from '../../../../configs/get-screenshot-date';
 import React from 'react';
 import { IconButton } from '@storybook/components';
-import { Popover } from '@mui/material';
+import { Popover } from '../../../../../src/components/common';
 import ReactJson from 'react-json-view';
 
 const ReactJsonView =

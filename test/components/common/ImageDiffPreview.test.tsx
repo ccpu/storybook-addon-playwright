@@ -2,8 +2,7 @@ import { ImageDiffPreview } from '../../../src/components/common/ImageDiffPrevie
 import { shallow } from 'enzyme';
 import React from 'react';
 import { ImagePreview } from '../../../src/components/common/ImagePreview';
-import { Tabs } from '@mui/material';
-import { Alert } from '@mui/material';
+import { Alert, Tabs } from '../../../src/components/common';
 
 describe('ImageDiffPreview', () => {
   it('should render', () => {
@@ -98,7 +97,7 @@ describe('ImageDiffPreview', () => {
         activeTab="imageDiff"
       />,
     );
-    expect(wrapper.find(Alert).text()).toBe(
+    expect(wrapper.find(Alert).children().text()).toBe(
       'Expected image to match or be a close match to snapshot but was 50% different from snapshot (undefined differing pixels).',
     );
   });

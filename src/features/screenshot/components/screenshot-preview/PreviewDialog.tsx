@@ -1,6 +1,6 @@
-import Dialog from '@mui/material/Dialog';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import { Modal } from '../../../../components/common';
 import { ThemeProvider } from '../../../../components/common/ThemeProvider';
 import { ScreenshotListView } from './ScreenshotListView';
 
@@ -52,14 +52,14 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
 
   return (
     <ThemeProvider>
-      <Dialog
+      <Modal
         onClose={onClose}
         aria-labelledby="simple-dialog-title"
         open={open}
         hideBackdrop={true}
-        classes={{
-          paper: classes.dialogPaper,
-        }}
+        width="100%"
+        height="100%"
+        className={classes.dialogPaper}
       >
         <div className={classes.container}>
           <ScreenshotListView
@@ -69,7 +69,7 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
             viewPanel="dialog"
           />
         </div>
-      </Dialog>
+      </Modal>
     </ThemeProvider>
   );
 };

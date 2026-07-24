@@ -1,7 +1,7 @@
 import { DeviceList } from '../../../src/components/common/DeviceList';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { Menu } from '@mui/material';
+import { Menu } from '../../../src/components/common';
 import { Button } from '@storybook/components';
 import { DeviceListItem } from '../../../src/components/common/DeviceListItem';
 

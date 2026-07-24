@@ -2,7 +2,7 @@ import { EditScreenshotAlert } from '../../../src/components/preview/EditScreens
 import { shallow } from 'enzyme';
 import React from 'react';
 import { useEditScreenshot } from '../../../src/features/screenshot/hooks/use-edit-screenshot';
-import { Alert } from '@mui/material';
+import { Alert } from '../../../src/components/common';
 import { Button } from '@storybook/components';
 
 vi.mock(
@@ -30,7 +30,7 @@ describe('EditScreenshotAlert', () => {
     const wrapper = shallow(<EditScreenshotAlert />);
 
     expect(wrapper.find(Alert)).toHaveLength(1);
-    expect(wrapper.find(Alert).text()).toContain(
+    expect(wrapper.find(Alert).children().text()).toContain(
       `Editing 'title' screenshot (chromium).`,
     );
     expect(wrapper.find(Button).props().children).toBe('Cancel');

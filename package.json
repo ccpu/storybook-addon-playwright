@@ -114,6 +114,7 @@
     "@ebay/nice-modal-react": "^1.2.13",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@floating-ui/react": "^0.27.20",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@mui/icons-material": "^9.0.1",
     "@mui/material": "^9.0.1",

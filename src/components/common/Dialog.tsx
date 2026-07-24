@@ -1,17 +1,14 @@
-import type { DialogProps as MuDialogProps } from '@mui/material';
-import {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  Dialog as MuDialog,
-  Typography,
-} from '@mui/material';
+import { IconButton, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import CloseIcon from '@mui/icons-material/Close';
+import clsx from 'clsx';
 import React from 'react';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
+import { DialogActions } from './DialogActions';
+import { DialogContent } from './DialogContent';
+import { DialogTitle } from './DialogTitle';
+import { Divider } from './Divider';
+import { Modal } from './Modal';
 
 const CloseIconComponent = resolveMuiIcon(CloseIcon);
 
@@ -34,12 +31,8 @@ const useStyles = makeStyles(
       paper: {
         display: 'flex',
         flexDirection: 'column',
-        height: (p: StyleProps) => p.height,
         overflow: 'hidden',
         padding: 10,
-        maxHeight: 'calc(100% - 20px)',
-        maxWidth: (p: StyleProps) => p.width + ' !important',
-        width: (p: StyleProps) => p.width + ' !important',
       },
       content: {
         height: '100%',
@@ -70,13 +63,16 @@ const useStyles = makeStyles(
   { name: 'Dialog' },
 );
 
-export interface DialogProps extends MuDialogProps, StyleProps {
+export interface DialogProps extends StyleProps {
+  open?: boolean;
   title?: string;
   subtitle?: string;
   onClose?: () => void;
   footerActions?: React.ComponentType | undefined;
   titleActions?: React.ComponentType | undefined;
   enableCloseButton?: boolean;
+  className?: string;
+  children?: React.ReactNode;
 }
 
 const Dialog: React.FC<DialogProps> = ({
@@ -90,7 +86,7 @@ const Dialog: React.FC<DialogProps> = ({
   titleActions,
   open = false,
   enableCloseButton = true,
-  ...rest
+  className,
 }) => {
   const classes = useStyles({ height, width });
 
@@ -99,13 +95,12 @@ const Dialog: React.FC<DialogProps> = ({
   const TitleActions = titleActions;
 
   return (
-    <MuDialog
+    <Modal
       open={open}
-      classes={{
-        paper: classes.paper,
-      }}
       onClose={onClose}
-      {...rest}
+      width={width}
+      height={height}
+      className={clsx(classes.paper, className)}
     >
       {(TitleActions || enableCloseButton || title || subtitle) && (
         <>
@@ -141,7 +136,7 @@ const Dialog: React.FC<DialogProps> = ({
           </DialogActions>
         </>
       )}
-    </MuDialog>
+    </Modal>
   );
 };
 

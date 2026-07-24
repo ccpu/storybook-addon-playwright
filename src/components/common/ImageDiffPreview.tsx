@@ -1,10 +1,11 @@
 import type { ImageDiffResult } from '../../api/typings';
-import { Divider, Tab, Tabs } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Alert } from '@mui/material';
 import React, { useCallback } from 'react';
 import { getImageDiffMessages } from '../../utils';
+import { Alert } from './Alert';
+import { Divider } from './Divider';
 import { ImagePreview } from './ImagePreview';
+import { Tab, Tabs } from './Tabs';
 
 const useStyles = makeStyles(
   () => {
@@ -54,7 +55,7 @@ const ImageDiffPreview: React.FC<ImageDiffPreviewProps> = (props) => {
   const error = getImageDiffMessages(imageDiffResult);
 
   const toggleScreenshotDiff = useCallback(
-    (_event: React.ChangeEvent<unknown>, newValue: number) => {
+    (_event: React.SyntheticEvent, newValue: number) => {
       setValue(newValue);
       setShowDiff(!showDiff);
     },

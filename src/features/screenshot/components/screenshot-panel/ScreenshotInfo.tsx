@@ -1,10 +1,10 @@
 import type { ScreenshotData } from '../../../../typings';
 
-import { Popover } from '@mui/material';
 import { IconButton } from '@storybook/components';
 import { CogIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import ReactJson from 'react-json-view';
+import { Popover } from '../../../../components/common';
 
 const ReactJsonView =
   (ReactJson as unknown as { default?: React.ComponentType<unknown> }).default ??
@@ -37,12 +37,18 @@ const ScreenshotInfo: React.FC<ScreenshotInfoProps> = ({
     },
     [anchorEl, onClose],
   );
+
+  const handleClose = useCallback(() => {
+    if (onClose && anchorEl) onClose();
+    setAnchorEl(null);
+  }, [anchorEl, onClose]);
+
   return (
     <>
       <IconButton color={color} onClick={togglePopover} size={size}>
         <CogIcon />
       </IconButton>
-      <Popover anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={togglePopover}>
+      <Popover anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <div>
           {anchorEl && (
             <ReactJsonView

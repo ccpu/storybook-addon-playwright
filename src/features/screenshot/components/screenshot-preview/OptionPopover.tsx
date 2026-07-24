@@ -1,10 +1,9 @@
-import { Divider, Popover } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton as SIconButton } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
-import { Tooltip } from '../../../../components/common';
+import { Divider, Popover, Tooltip } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
 
 const CloseIconComponent = resolveMuiIcon(CloseIcon);

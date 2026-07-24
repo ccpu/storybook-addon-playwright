@@ -1,7 +1,7 @@
 import type { BrowserContextOptions, BrowserTypes } from '../../../../typings';
-import { capitalize } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { darken, lighten } from '@mui/material/styles';
+import { capitalize } from '../../../../utils';
+import { makeStyles } from '../../../../styles';
+import { darken, lighten } from '../../../../utils';
 import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dialog, ErrorPanel, ImagePreview } from '../../../../components/common';

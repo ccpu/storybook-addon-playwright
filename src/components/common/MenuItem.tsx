@@ -1,5 +1,5 @@
-import type { Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import type { Theme } from '../../styles';
+import { makeStyles } from '../../styles';
 import clsx from 'clsx';
 import React, { forwardRef } from 'react';
 

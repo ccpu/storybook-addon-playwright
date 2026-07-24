@@ -1,5 +1,5 @@
 import type { PopoverOrigin } from './Popover';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import React from 'react';
 import { Popover } from './Popover';
 

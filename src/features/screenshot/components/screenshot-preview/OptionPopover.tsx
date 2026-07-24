@@ -1,6 +1,6 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../../../styles';
 
-import CloseIcon from '@mui/icons-material/Close';
+import { Close as CloseIcon } from '../../../../icons';
 import { IconButton as SIconButton } from '@storybook/components';
 import React, { useCallback, useState } from 'react';
 import { Divider, Popover, Tooltip } from '../../../../components/common';

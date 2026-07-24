@@ -1,5 +1,5 @@
 import type { Placement } from '@floating-ui/react';
-import type { Theme } from '@mui/material';
+import type { Theme } from '../../styles';
 import {
   autoUpdate,
   flip,
@@ -11,7 +11,7 @@ import {
   useFloating,
   useInteractions,
 } from '@floating-ui/react';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import clsx from 'clsx';
 import React from 'react';
 

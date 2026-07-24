@@ -1,5 +1,5 @@
 import type { ScreenShotViewPanel } from '../../../../typings';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../../../styles';
 import clsx from 'clsx';
 import React, { useCallback } from 'react';
 import { Loader } from '../../../../components/common';

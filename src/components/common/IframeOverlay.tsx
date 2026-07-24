@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import clsx from 'clsx';
 import React, { forwardRef } from 'react';
 

@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import { ScrollArea } from '@storybook/components';
 import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';

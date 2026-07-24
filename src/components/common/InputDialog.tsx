@@ -1,8 +1,9 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
-import { CircularProgress, TextField } from '@mui/material';
 import { Button } from '@storybook/components';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
+import { CircularProgress } from './CircularProgress';
+import { TextField } from './TextField';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActionDialog } from './ActionDialog';
@@ -65,9 +66,12 @@ const InputDialog: React.FC<InputDialogProps> = ({
   const classes = useStyles({ width });
   const showGenerateButton = Boolean(onGenerateContent);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-  }, []);
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setValue(e.target.value);
+    },
+    [],
+  );
 
   const handleClose = useCallback(() => {
     onClose(true);

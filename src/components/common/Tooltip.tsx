@@ -28,12 +28,17 @@ const Tooltip: React.FC<TooltipProps> = ({
   children,
   ...props
 }) => {
-  const tooltip = typeof title === 'string' ? <TooltipNote note={title} /> : title;
+  const isNote = typeof title === 'string';
+  const tooltip = isNote ? <TooltipNote note={title} /> : title;
 
   return (
     <WithTooltip
       as="span"
       trigger="hover"
+      // `TooltipNote` already renders its own (dark) chrome, so disable
+      // WithTooltip's outer chrome to avoid a box-within-a-box (a bordered
+      // light popover wrapping the dark note). A non-string node keeps chrome.
+      hasChrome={!isNote}
       {...props}
       placement={placement}
       delayShow={delayShow ?? enterDelay}

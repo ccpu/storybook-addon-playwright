@@ -14,7 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../../../styles';
 import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { trpcClient } from '../../../../api/trpc/client';

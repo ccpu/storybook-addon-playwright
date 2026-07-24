@@ -1,4 +1,4 @@
-import type { Theme } from '@mui/material';
+import type { ThemeOptions } from '../features/theme/create-theme';
 import type { MatchImageSnapshotOptions } from 'jest-image-snapshot';
 import type { Page } from 'playwright';
 import type { TestFileScreenshots } from '../api/services';
@@ -252,12 +252,11 @@ export interface Config<T = Page> {
   getScreenshotTitle?: (data: GenerateScreenshotTitleInput) => string | Promise<string>;
 
   /**
-   * A Material UI theme object used to customise the appearance of the
-   * Storybook addon panel and its UI components.
-   *
-   * @see https://mui.com/material-ui/customization/theming/
+   * A theme object used to customise the appearance of the Storybook addon
+   * panel and its UI components. Provide a partial theme; the given values are
+   * deep-merged over the defaults derived from the current Storybook theme.
    */
-  theme?: Theme;
+  theme?: ThemeOptions;
 
   /**
    * Options forwarded to `jest-image-snapshot` to control how pixel differences

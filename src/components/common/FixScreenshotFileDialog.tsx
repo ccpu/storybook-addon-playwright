@@ -1,8 +1,8 @@
-import { TextField } from '@mui/material';
 import { Button } from '@storybook/components';
 import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
 import { Dialog, DialogActions, Loader } from '../common';
+import { TextField } from './TextField';
 
 interface Props {
   fixFunction?: boolean;

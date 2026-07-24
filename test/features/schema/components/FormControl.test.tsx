@@ -1,7 +1,7 @@
 import { FormControl } from '../../../../src/features/schema/components/FormControl';
 import { shallow } from 'enzyme';
 import React from 'react';
-import CheckSelected from '@mui/icons-material/CheckCircleOutlineRounded';
+import { CheckCircleOutlineRounded as CheckSelected } from '../../../../src/icons';
 
 describe('FormControl', () => {
   const onAppendValueToTitleMock = vi.fn();

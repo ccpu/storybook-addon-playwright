@@ -1,8 +1,8 @@
 import { ScreenShotViewToolbar } from '../../../../../src/features/screenshot/components/screenshot-preview/ScreenShotViewToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { CircularProgress } from '@mui/material';
-import SaveIcon from '@mui/icons-material/SaveAltOutlined';
+import { CircularProgress } from '../../../../../src/components/common';
+import { SaveAltOutlined as SaveIcon } from '../../../../../src/icons';
 
 describe('ScreenShotViewToolbar', () => {
   const onRefreshMock = vi.fn();

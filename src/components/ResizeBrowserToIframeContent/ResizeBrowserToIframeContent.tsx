@@ -1,4 +1,4 @@
-import AspectRatioIconIconModule from '@mui/icons-material/AspectRatio';
+import { AspectRatio as AspectRatioIconIconModule } from '../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { Tooltip } from '../common';

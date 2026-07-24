@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '../../../src/features/theme/create-theme';
 import { getThemeData } from '../../../src/api/services/get-theme-data';
 
 const mockTheme = createTheme({

@@ -1,4 +1,4 @@
-import type { Theme } from '@mui/material';
+import type { Theme } from '../create-theme';
 import React from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 

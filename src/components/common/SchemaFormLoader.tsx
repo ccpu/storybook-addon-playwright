@@ -2,7 +2,7 @@ import type { Definition } from 'ts-to-json';
 import type { Config } from 'ts-to-json/dist/src/Config';
 import { Button } from '@storybook/components';
 import { Divider } from './Divider';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import * as immutableObject from 'object-path-immutable';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { trpcClient } from '../../api/trpc/client';

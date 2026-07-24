@@ -5,9 +5,9 @@ import type { ScreenshotData } from '../../../../typings';
 import type { ScreenshotListItemMenuProps } from './ScreenshotListItemMenu';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { makeStyles } from '@mui/styles';
-import CheckCircle from '@mui/icons-material/CheckCircle';
-import Error from '@mui/icons-material/Error';
+import { makeStyles } from '../../../../styles';
+import { CheckCircle } from '../../../../icons';
+import { Error } from '../../../../icons';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   BrowserIcon,

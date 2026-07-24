@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import { Button } from '@storybook/components';
 import React from 'react';
 import { Alert } from '../common';

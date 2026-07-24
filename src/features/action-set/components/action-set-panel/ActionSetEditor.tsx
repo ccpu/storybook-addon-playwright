@@ -1,6 +1,6 @@
 import type { DragHandleProps } from '../../../../components/common';
 import type { ActionSet } from '../../../../typings';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../../../styles';
 import React, { useCallback } from 'react';
 import {
   Divider,

@@ -1,4 +1,4 @@
-import RotateLeftIcon from '@mui/icons-material/RotateLeft';
+import { RotateLeft as RotateLeftIcon } from '../../../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { Tooltip } from '../../../../components/common';

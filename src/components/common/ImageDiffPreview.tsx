@@ -1,5 +1,5 @@
 import type { ImageDiffResult } from '../../api/typings';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import React, { useCallback } from 'react';
 import { getImageDiffMessages } from '../../utils';
 import { Alert } from './Alert';

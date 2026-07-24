@@ -18,7 +18,7 @@ import {
   SyncIcon,
   WrenchIcon,
 } from '@storybook/icons';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import { CommonProvider } from '../common';
 import { PreviewDialog } from '../../features/screenshot/components/screenshot-preview/index';
 import { useAddonState, useCurrentStoryData } from '../../hooks';

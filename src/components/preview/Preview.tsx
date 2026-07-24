@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../styles';
 import { Separator } from '@storybook/components';
 import { useStorybookState } from '@storybook/manager-api';
 import clsx from 'clsx';

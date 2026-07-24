@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '../../../../styles';
 import React from 'react';
 import { Modal } from '../../../../components/common';
 import { ThemeProvider } from '../../../../components/common/ThemeProvider';

@@ -1,4 +1,4 @@
-import FitScreenIconModule from '@mui/icons-material/FitScreen';
+import { FitScreen as FitScreenIconModule } from '../../icons';
 import { IconButton } from '@storybook/components';
 import React from 'react';
 import { Tooltip } from '../common';

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { ThemeProvider } from '@storybook/theming';
 import React from 'react';
-import { createTheme, ThemeProvider as MuThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StylesThemeProvider } from '@mui/styles';
+import { createTheme } from '../src/features/theme/create-theme';
 
 import { Dialog } from '../src/components/common/Dialog';
 
@@ -87,23 +87,21 @@ const meta: Meta<typeof Dialog> = {
           padding: 24,
         }}
       >
-        <StylesThemeProvider theme={theme}>
-          <MuThemeProvider theme={theme}>
-            <Dialog {...args} titleActions={TitleActions} footerActions={FooterActions}>
-              <div style={{ display: 'grid', gap: 12 }}>
-                <p style={{ margin: 0 }}>
-                  This content block intentionally exceeds the dialog height so the
-                  scrolling behavior is easy to inspect in the browser.
+        <ThemeProvider theme={theme as never}>
+          <Dialog {...args} titleActions={TitleActions} footerActions={FooterActions}>
+            <div style={{ display: 'grid', gap: 12 }}>
+              <p style={{ margin: 0 }}>
+                This content block intentionally exceeds the dialog height so the
+                scrolling behavior is easy to inspect in the browser.
+              </p>
+              {bodyLines.map((line) => (
+                <p key={line} style={{ margin: 0 }}>
+                  {line}
                 </p>
-                {bodyLines.map((line) => (
-                  <p key={line} style={{ margin: 0 }}>
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </Dialog>
-          </MuThemeProvider>
-        </StylesThemeProvider>
+              ))}
+            </div>
+          </Dialog>
+        </ThemeProvider>
       </div>
     );
   },

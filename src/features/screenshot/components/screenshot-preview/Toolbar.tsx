@@ -1,8 +1,8 @@
 import type { BrowserTypes } from '../../../../typings';
-import CloseOutlined from '@mui/icons-material/CloseOutlined';
-import NearMeIcon from '@mui/icons-material/NearMe';
-import RefreshSharp from '@mui/icons-material/RefreshSharp';
-import SaveIcon from '@mui/icons-material/SaveAltOutlined';
+import { CloseOutlined } from '../../../../icons';
+import { NearMe as NearMeIcon } from '../../../../icons';
+import { RefreshSharp } from '../../../../icons';
+import { SaveAltOutlined as SaveIcon } from '../../../../icons';
 import { IconButton } from '@storybook/components';
 import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';

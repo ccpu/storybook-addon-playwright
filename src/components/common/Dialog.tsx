@@ -1,10 +1,11 @@
-import { IconButton, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@storybook/components';
+import { makeStyles } from '../../styles';
+import { Close as CloseIcon } from '../../icons';
 import clsx from 'clsx';
 import React from 'react';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 import { DialogActions } from './DialogActions';
+import { Typography } from './Typography';
 import { DialogContent } from './DialogContent';
 import { DialogTitle } from './DialogTitle';
 import { Divider } from './Divider';
@@ -113,11 +114,7 @@ const Dialog: React.FC<DialogProps> = ({
             <div className={classes.titleActions}>
               {TitleActions && <TitleActions />}
               {enableCloseButton && (
-                <IconButton
-                  color="primary"
-                  className={classes.closIcon}
-                  onClick={onClose}
-                >
+                <IconButton className={classes.closIcon} onClick={onClose}>
                   <CloseIconComponent />
                 </IconButton>
               )}

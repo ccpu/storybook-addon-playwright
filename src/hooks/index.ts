@@ -24,6 +24,7 @@ export * from '../features/screenshot/hooks/use-screenshot-update-state';
 export * from '../features/screenshot/hooks/use-story-screenshot-loader';
 export * from './use-browser-state-manager';
 export * from './use-addon-state';
+export * from './use-unique-id';
 export * from './use-anchor-el';
 export * from './use-browser-options';
 export * from './use-current-story-data';

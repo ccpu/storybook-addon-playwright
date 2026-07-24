@@ -1,9 +1,9 @@
 import type { SelectorType } from '../../../hooks';
 import type { ControlProps } from '../../../typings';
 import { IconButton } from '@storybook/components';
-import { makeStyles } from '@mui/styles';
-import TargetIcon from '@mui/icons-material/FilterCenterFocusSharp';
-import PointerIcon from '@mui/icons-material/FilterTiltShift';
+import { makeStyles } from '../../../styles';
+import { FilterCenterFocusSharp as TargetIcon } from '../../../icons';
+import { FilterTiltShift as PointerIcon } from '../../../icons';
 import clsx from 'clsx';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { trpcClient } from '../../../api/trpc/client';

@@ -1,5 +1,6 @@
 /* eslint-disable ts/no-explicit-any */
 import React from 'react';
+import { createTheme } from '../../src/features/theme/create-theme';
 
 // Mock Storybook theming for testing
 export const themes = {
@@ -89,7 +90,10 @@ export const css = () => '';
 export const Global = () => null;
 export const createGlobal = () => '';
 export const keyframes = () => '';
-export const useTheme = () => themes.normal;
+// Return the addon's (MUI-shaped) theme so `makeStyles` style creators receive
+// a valid `theme.palette`/`theme.shape`/etc. in tests, mirroring the default
+// theme the old `@mui/styles` mock injected.
+export const useTheme = () => createTheme();
 export const withTheme = (Component: any) => Component;
 export const ensure = (theme: any) => theme || themes.normal;
 export const create = (vars: any) => ({ ...themes.normal, ...vars });

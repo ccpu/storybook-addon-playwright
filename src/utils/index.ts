@@ -1,5 +1,6 @@
 export * from './args-to-querystring';
 export * from './capitalize';
+export * from './color';
 export * from './construct-story-url';
 export * from './find-selector';
 export * from './format-elapsed-time';

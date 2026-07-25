@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.14.1
+
+### Patch Changes
+
+- enhance UI components and improve icons
+
 ## 7.14.0
 
 ### Minor Changes

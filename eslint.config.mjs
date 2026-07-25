@@ -106,6 +106,32 @@ export default base.append(
     },
   },
   {
+    rules: {
+      // Class-name helpers that merely concatenate strings are unsafe here: every
+      // rule from `makeStyles` is a single emotion class, so conflicting classes on
+      // the same element resolve by stylesheet insertion order, not by argument
+      // order. `cx` re-serializes emotion classes into one rule where the last
+      // argument wins, making the outcome predictable.
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              message:
+                "Use `import { cx } from '@emotion/css'` instead - `clsx` only concatenates class names and lets emotion's stylesheet order decide which style wins.",
+              name: 'clsx',
+            },
+            {
+              message:
+                "Use `import { cx } from '@emotion/css'` instead - `classnames` only concatenates class names and lets emotion's stylesheet order decide which style wins.",
+              name: 'classnames',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     // `mcp/` is a self-contained package with its own tooling and lint setup.
     ignores: ['README.md', 'mcp/**'],
   },

@@ -12,7 +12,7 @@ import {
   useInteractions,
 } from '@floating-ui/react';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 type PopoverCloseReason = 'backdropClick' | 'escapeKeyDown';
@@ -140,7 +140,7 @@ const Popover: React.FC<PopoverProps> = ({
     <FloatingPortal>
       <div
         ref={refs.setFloating}
-        className={clsx(classes.paper, className)}
+        className={cx(classes.paper, className)}
         style={{ ...floatingStyles, ...style, zIndex: POPOVER_Z_INDEX }}
         {...getFloatingProps()}
       >

@@ -15,7 +15,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { makeStyles } from '../../../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { trpcClient } from '../../../../api/trpc/client';
 import { ListWrapper, Loader } from '../../../../components/common';
@@ -176,7 +176,7 @@ const ActionSetList: React.FC<ActionSetListProps> = ({ onSortEnd }) => {
               />
             ))
           ) : (
-            <div className={clsx(classes.message, 'no-data')}>
+            <div className={cx(classes.message, 'no-data')}>
               <div>No action set to display!</div>
               <div>Click the '+' button to create an action set.</div>
             </div>

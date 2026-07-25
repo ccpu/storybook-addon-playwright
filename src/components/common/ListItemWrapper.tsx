@@ -1,7 +1,7 @@
 import type { DragHandleProps } from './DragHandle';
 import { capitalize } from '../../utils';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useCallback } from 'react';
 import tinycolor from 'tinycolor2';
 import { DragHandle } from './DragHandle';
@@ -102,7 +102,7 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
 
   return (
     <div
-      className={clsx(
+      className={cx(
         classes.root,
         { [classes.selected]: selected && !secondaryColor },
         { [classes.selectedSecondary]: selected && secondaryColor },
@@ -112,9 +112,9 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
       title={tooltip}
       onClick={handleClick}
     >
-      <div className={clsx('clickable', classes.header, 'list-item-header')}>
+      <div className={cx('clickable', classes.header, 'list-item-header')}>
         <div
-          className={clsx(classes.column, 'clickable', {
+          className={cx(classes.column, 'clickable', {
             [classes.secondaryColor]: secondaryColor,
           })}
         >
@@ -122,7 +122,7 @@ const ListItemWrapper: React.FC<ListItemWrapperProps> = (props) => {
           {capitalize(title)}
         </div>
         <div
-          className={clsx('clickable', classes.column, classes.icons, {
+          className={cx('clickable', classes.column, classes.icons, {
             [classes.secondaryColor]: secondaryColor,
           })}
         >

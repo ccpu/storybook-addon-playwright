@@ -1,5 +1,4 @@
-import { css, keyframes } from '@emotion/css';
-import clsx from 'clsx';
+import { css, cx, keyframes } from '@emotion/css';
 import React from 'react';
 
 const rotate = keyframes({
@@ -43,7 +42,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   return (
     <span
       aria-label="loading"
-      className={clsx(rootClass, className)}
+      className={cx(rootClass, className)}
       role="progressbar"
       style={{ height: size, width: size, ...style }}
     >

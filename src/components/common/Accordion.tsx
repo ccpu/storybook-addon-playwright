@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 import { makeStyles } from '../../styles';
 
@@ -84,7 +84,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
   return (
     <AccordionContext.Provider value={{ expanded, toggle }}>
-      <div className={clsx(classes.root, className)} style={style}>
+      <div className={cx(classes.root, className)} style={style}>
         {children}
       </div>
     </AccordionContext.Provider>
@@ -111,7 +111,7 @@ const AccordionSummary: React.FC<AccordionSummaryProps> = ({
       tabIndex={0}
       aria-expanded={expanded}
       aria-controls={rest['aria-controls']}
-      className={clsx(classes.summary, className)}
+      className={cx(classes.summary, className)}
       onClick={toggle}
       onKeyDown={(event) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -120,7 +120,7 @@ const AccordionSummary: React.FC<AccordionSummaryProps> = ({
         }
       }}
     >
-      <div className={clsx(classes.content, classesProp?.content)}>{children}</div>
+      <div className={cx(classes.content, classesProp?.content)}>{children}</div>
     </div>
   );
 };
@@ -138,7 +138,7 @@ const AccordionDetails: React.FC<AccordionDetailsProps> = ({
 
   return (
     <div
-      className={clsx(classes.details, className)}
+      className={cx(classes.details, className)}
       style={{ display: expanded ? undefined : 'none', ...style }}
     >
       {children}

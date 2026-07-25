@@ -4,7 +4,7 @@ import { IconButton } from '@storybook/components';
 import { makeStyles } from '../../../styles';
 import { FilterCenterFocusSharp as TargetIcon } from '../../../icons';
 import { FilterTiltShift as PointerIcon } from '../../../icons';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { trpcClient } from '../../../api/trpc/client';
 import { useControl, useSelectorManager } from '../../../hooks';
@@ -188,14 +188,14 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
       isRequired={isRequired}
     >
       <div
-        className={clsx('selector-root', classes.root, {
+        className={cx('selector-root', classes.root, {
           [classes.error]: invalidSelector && validate,
         })}
         onBlur={handleBlur}
       >
         <Control onChange={handleControlChange} knob={knob} />
         <div
-          className={clsx({
+          className={cx({
             [classes.buttonWrap]: isFollowedByPositionProp,
             [classes.selectorButtonWrap]: isSelector,
           })}
@@ -236,7 +236,7 @@ const SelectorControl: React.FC<SelectorControlProps> = memo((props) => {
         </div>
       </div>
       {invalidSelector && validate && (
-        <div className={clsx('selector-error', classes.errorMessage)}>
+        <div className={cx('selector-error', classes.errorMessage)}>
           Invalid Selector!
         </div>
       )}

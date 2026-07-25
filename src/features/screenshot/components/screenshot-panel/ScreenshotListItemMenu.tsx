@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Ref } from 'react';
 import type { ImageDiffResult } from '../../../../api/typings';
 
@@ -7,7 +6,7 @@ import { makeStyles } from '../../../../styles';
 
 import { IconButton } from '@storybook/components';
 import { ContrastIcon, EditIcon, OutboxIcon } from '@storybook/icons';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 
 import React, { forwardRef, useState } from 'react';
 import { Loader } from '../../../../components/common';
@@ -86,7 +85,7 @@ const ScreenshotListItemMenu: React.FC<ScreenshotListItemMenuProps> = forwardRef
     return (
       <>
         <Loader progressSize={20} position="absolute" open={working} />
-        <div ref={ref} className={clsx(classes.menu, { [classes.visible]: show })}>
+        <div ref={ref} className={cx(classes.menu, { [classes.visible]: show })}>
           {!isEditing && enableEditScreenshot && (
             <IconButton onClick={onEditClick} title="Edit screenshot">
               <EditIcon />

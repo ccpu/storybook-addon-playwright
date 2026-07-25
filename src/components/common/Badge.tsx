@@ -1,6 +1,6 @@
 import type { Theme } from '../../styles';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 export type BadgeColor = 'primary' | 'secondary' | 'error' | 'default';
@@ -73,9 +73,9 @@ const Badge: React.FC<BadgeProps> = ({
   const classes = useStyles();
 
   return (
-    <span className={clsx(classes.root, className)} style={style}>
+    <span className={cx(classes.root, className)} style={style}>
       {children}
-      <span className={clsx(classes.badge, classes[color])}>{badgeContent}</span>
+      <span className={cx(classes.badge, classes[color])}>{badgeContent}</span>
     </span>
   );
 };

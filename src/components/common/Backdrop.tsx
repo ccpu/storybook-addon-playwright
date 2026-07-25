@@ -1,5 +1,4 @@
-import { css } from '@emotion/css';
-import clsx from 'clsx';
+import { css, cx } from '@emotion/css';
 import React from 'react';
 
 export interface BackdropProps {
@@ -33,12 +32,7 @@ const Backdrop: React.FC<BackdropProps> = ({
   if (!open) return null;
 
   return (
-    <div
-      aria-hidden
-      className={clsx(rootClass, className)}
-      style={style}
-      onClick={onClick}
-    >
+    <div aria-hidden className={cx(rootClass, className)} style={style} onClick={onClick}>
       {children}
     </div>
   );

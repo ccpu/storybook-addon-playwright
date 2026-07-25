@@ -1,6 +1,6 @@
 import type { Theme } from '../../styles';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 export interface DividerProps {
@@ -44,7 +44,7 @@ const Divider: React.FC<DividerProps> = ({
   return (
     <hr
       aria-orientation={orientation}
-      className={clsx(classes.root, classes[orientation], className)}
+      className={cx(classes.root, classes[orientation], className)}
       style={style}
     />
   );

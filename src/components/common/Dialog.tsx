@@ -1,7 +1,7 @@
 import { IconButton } from '@storybook/components';
 import { makeStyles } from '../../styles';
 import { Close as CloseIcon } from '../../icons';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 import { DialogActions } from './DialogActions';
 import { Typography } from './Typography';
@@ -101,7 +101,7 @@ const Dialog: React.FC<DialogProps> = ({
       width={width}
       style={style}
       height={height}
-      className={clsx(classes.paper, className)}
+      className={cx(classes.paper, className)}
     >
       {(TitleActions || enableCloseButton || title || subtitle) && (
         <>

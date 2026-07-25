@@ -1,7 +1,7 @@
 import { makeStyles } from '../../styles';
 import { Separator } from '@storybook/components';
 import { useStorybookState } from '@storybook/manager-api';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useCallback } from 'react';
 import { Pane, SplitPane } from 'react-split-pane';
 import { ScreenshotListView } from '../../features/screenshot/components/screenshot-preview/index';
@@ -99,7 +99,7 @@ const PreviewContent: React.FC = (props) => {
       key="preview"
       minSize={50}
       size={(addonState && addonState.previewPanelSize) || '30%'}
-      className={clsx('preview-main', classes.preview)}
+      className={cx('preview-main', classes.preview)}
     >
       <div className={classes.iframeContainer}>
         <Selector>{children}</Selector>
@@ -110,7 +110,7 @@ const PreviewContent: React.FC = (props) => {
   );
 
   const screenshotPane = (
-    <Pane key="screenshot" minSize={50} className={clsx(classes.snapshotPanel)}>
+    <Pane key="screenshot" minSize={50} className={cx(classes.snapshotPanel)}>
       <Separator />
       {addonState && addonState.previewPanelEnabled && (
         <ScreenshotListView
@@ -125,11 +125,11 @@ const PreviewContent: React.FC = (props) => {
   const panes = [previewPane, screenshotPane];
 
   return (
-    <div id="preview-container" className={clsx(classes.root)}>
+    <div id="preview-container" className={cx(classes.root)}>
       <SplitPane
         direction={isHorizontal ? 'vertical' : 'horizontal'}
         onResize={(sizes) => handleResizeChange(sizes[previewPaneIndex])}
-        dividerClassName={clsx(classes.splitPane)}
+        dividerClassName={cx(classes.splitPane)}
         dividerStyle={{
           ...(isHorizontal ? { height: DEVIDER_SIZE } : { width: DEVIDER_SIZE }),
         }}

@@ -1,6 +1,6 @@
 import { makeStyles } from '../../styles';
 import { ScrollArea } from '@storybook/components';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useEffect, useRef } from 'react';
 
 const useStyles = makeStyles(
@@ -33,7 +33,7 @@ const ListWrapper: React.FC<React.HTMLAttributes<HTMLDivElement>> = (props) => {
   }, []);
 
   return (
-    <div ref={ref} {...rest} className={clsx(classes.root, props.className)}>
+    <div ref={ref} {...rest} className={cx(classes.root, props.className)}>
       <ScrollArea vertical>{children}</ScrollArea>
     </div>
   );

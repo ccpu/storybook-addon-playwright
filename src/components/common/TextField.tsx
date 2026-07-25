@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 import { useUniqueId } from '../../hooks/use-unique-id';
 import { makeStyles } from '../../styles';
@@ -103,7 +103,7 @@ const TextField: React.FC<TextFieldProps> = ({
 
   return (
     <div
-      className={clsx(
+      className={cx(
         classes.root,
         error && classes.error,
         fullWidth && classes.fullWidth,

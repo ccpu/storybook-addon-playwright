@@ -1,6 +1,6 @@
 import { getSelectorPath } from '@dom-utils/selector-path';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useEffect, useRef, useState } from 'react';
 import { useKey, useMouseHovered, useThrottleFn } from 'react-use';
 import { useSelectorManager } from '../../hooks';
@@ -206,11 +206,11 @@ const SelectorOverlay: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <div ref={selectorRef} className={clsx(classes.overlay)}>
+    <div ref={selectorRef} className={cx(classes.overlay)}>
       {selectorManager && selectorInfo && selectorInfo.rect && (
         <>
           <div
-            className={clsx(classes.preview, 'selector-preview')}
+            className={cx(classes.preview, 'selector-preview')}
             style={
               isSelector
                 ? {

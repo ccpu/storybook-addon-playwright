@@ -1,6 +1,6 @@
 import type { ScreenShotViewPanel } from '../../../../typings';
 import { makeStyles } from '../../../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useCallback } from 'react';
 import { Loader } from '../../../../components/common';
 import { useBrowserStateManager } from '../../../../hooks/use-browser-state-manager';
@@ -85,7 +85,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
   }, [activeBrowsers, refreshBrowsers]);
 
   return (
-    <div className={clsx(classes.root, { [classes.vertical]: column === 1 })}>
+    <div className={cx(classes.root, { [classes.vertical]: column === 1 })}>
       <Toolbar
         browserTypes={browserTypes}
         activeBrowsers={activeBrowsers}
@@ -99,7 +99,7 @@ const ScreenshotListView: React.FC<Props> = (props) => {
         {activeBrowsers && activeBrowsers.length > 0 && (
           <div
             ref={ref}
-            className={clsx(classes.list, {
+            className={cx(classes.list, {
               [classes.listWrap]: column !== undefined,
             })}
           >

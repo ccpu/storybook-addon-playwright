@@ -2,7 +2,7 @@ import { makeStyles } from '../../../styles';
 import { CheckCircleOutlineRounded as CheckSelected } from '../../../icons';
 import { HelpOutlineSharp } from '../../../icons';
 import { RadioButtonUncheckedRounded as CheckNotSelected } from '../../../icons';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { memo } from 'react';
 import { Tooltip } from '../../../components/common';
 import { capitalize } from '../../../utils';
@@ -93,7 +93,7 @@ const FormControl: React.FC<ControlFormProps> = memo((props) => {
 
   return (
     <div className={classes.root}>
-      <div className={clsx(classes.labelWrap, { [classes.active]: active })}>
+      <div className={cx(classes.labelWrap, { [classes.active]: active })}>
         <span className="form-label">
           {capitalize(label)}
           {isRequired && <span style={{ marginLeft: 2 }}>*</span>}

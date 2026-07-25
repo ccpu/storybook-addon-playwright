@@ -1,5 +1,5 @@
 import { DragIndicatorSharp } from '../../icons';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 import { resolveMuiIcon } from '../../utils/resolve-mui-icon';
 
@@ -16,7 +16,7 @@ export const DragHandle: React.FC<DragHandleProps> = ({
 }) => {
   return (
     <span
-      className={clsx('drag-handle', className)}
+      className={cx('drag-handle', className)}
       ref={setNodeRef}
       style={{ cursor: 'move', display: 'inline-flex' }}
       {...rest}

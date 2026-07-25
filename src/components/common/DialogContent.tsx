@@ -1,5 +1,5 @@
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 export interface DialogContentProps {
@@ -24,7 +24,7 @@ const DialogContent: React.FC<DialogContentProps> = ({ className, style, childre
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} style={style}>
+    <div className={cx(classes.root, className)} style={style}>
       {children}
     </div>
   );

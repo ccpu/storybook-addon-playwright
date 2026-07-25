@@ -1,7 +1,7 @@
 import type { Theme } from '../../styles';
 import { makeStyles } from '../../styles';
 import { AlertIcon, CheckIcon, InfoIcon } from '@storybook/icons';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 export type AlertSeverity = 'error' | 'warning' | 'info' | 'success';
@@ -82,13 +82,13 @@ const Alert: React.FC<AlertProps> = ({
   return (
     <div
       role="alert"
-      className={clsx(classes.root, classes[severity], classesProp?.root, className)}
+      className={cx(classes.root, classes[severity], classesProp?.root, className)}
       style={style}
     >
-      <div className={clsx(classes.icon, classesProp?.icon)}>
+      <div className={cx(classes.icon, classesProp?.icon)}>
         <Icon />
       </div>
-      <div className={clsx(classes.message, classesProp?.message)}>{children}</div>
+      <div className={cx(classes.message, classesProp?.message)}>{children}</div>
     </div>
   );
 };

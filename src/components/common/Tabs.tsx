@@ -1,6 +1,6 @@
 import type { Theme } from '../../styles';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 export interface TabProps {
@@ -67,7 +67,7 @@ const Tab: React.FC<TabProps> = ({ label, className, selected, onClick }) => {
       type="button"
       role="tab"
       aria-selected={selected}
-      className={clsx(classes.tab, { [classes.selected]: selected }, className)}
+      className={cx(classes.tab, { [classes.selected]: selected }, className)}
       onClick={onClick}
     >
       {label}
@@ -94,7 +94,7 @@ const Tabs: React.FC<TabsProps> = ({
   const items = React.Children.toArray(children).filter(React.isValidElement);
 
   return (
-    <div role="tablist" className={clsx(classes.root, className)}>
+    <div role="tablist" className={cx(classes.root, className)}>
       {items.map((child, index) => {
         const tab = child as React.ReactElement<TabProps>;
         return React.cloneElement(tab, {
@@ -102,7 +102,7 @@ const Tabs: React.FC<TabsProps> = ({
           selected: value === index,
           onClick: (event: React.MouseEvent<HTMLButtonElement>) =>
             onChange?.(event, index),
-          className: clsx(tab.props.className, {
+          className: cx(tab.props.className, {
             [classes.fullWidthTab]: variant === 'fullWidth',
           }),
         });

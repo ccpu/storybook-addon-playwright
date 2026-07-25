@@ -1,5 +1,5 @@
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 const useStyles = makeStyles(
@@ -75,9 +75,10 @@ const Toolbar: React.FC<ToolbarProps> = (props) => {
 
   return (
     <div
-      className={
-        clsx(classes.root) + (border && border.map((x) => ` border-${x}`).join(' '))
-      }
+      className={cx(
+        classes.root,
+        border?.map((x) => `border-${x}`),
+      )}
     >
       <div className={classes.toolbar}>{children}</div>
     </div>

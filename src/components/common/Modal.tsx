@@ -9,7 +9,7 @@ import {
   useRole,
 } from '@floating-ui/react';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 
 export interface ModalProps {
@@ -102,7 +102,7 @@ const Modal: React.FC<ModalProps> = ({
           <div
             ref={refs.setFloating}
             aria-labelledby={ariaLabelledby}
-            className={clsx(classes.paper, className)}
+            className={cx(classes.paper, className)}
             style={{ height, width, ...style }}
             {...getFloatingProps()}
           >

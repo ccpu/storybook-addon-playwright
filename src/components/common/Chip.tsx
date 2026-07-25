@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React from 'react';
 import { makeStyles } from '../../styles';
 
@@ -59,7 +59,7 @@ const Chip: React.FC<ChipProps> = ({
 
   return (
     <div
-      className={clsx(
+      className={cx(
         classes.root,
         classes[variant],
         size === 'small' && classes.small,

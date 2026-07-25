@@ -2,7 +2,7 @@ import type { BrowserContextOptions, BrowserTypes } from '../../../../typings';
 import { capitalize } from '../../../../utils';
 import { makeStyles } from '../../../../styles';
 import { darken, lighten } from '../../../../utils';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dialog, ErrorPanel, ImagePreview } from '../../../../components/common';
 import { useBrowserOptions } from '../../../../hooks/use-browser-options';
@@ -166,7 +166,7 @@ const ScreenshotView: React.FC<PreviewItemProps> = (props) => {
 
   return (
     <div
-      className={clsx(classes.card, {
+      className={cx(classes.card, {
         [classes.editMode]: isEditing(browserType as BrowserTypes),
       })}
     >

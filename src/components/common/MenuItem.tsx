@@ -1,6 +1,6 @@
 import type { Theme } from '../../styles';
 import { makeStyles } from '../../styles';
-import clsx from 'clsx';
+import { cx } from '@emotion/css';
 import React, { forwardRef } from 'react';
 
 export interface MenuItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
@@ -49,7 +49,7 @@ const MenuItem = forwardRef<HTMLLIElement, MenuItemProps>(
         ref={ref}
         role="menuitem"
         aria-disabled={disabled || undefined}
-        className={clsx(
+        className={cx(
           classes.root,
           { [classes.selected]: selected, [classes.disabled]: disabled },
           className,

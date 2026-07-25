@@ -1,5 +1,4 @@
-import { css } from '@emotion/css';
-import clsx from 'clsx';
+import { css, cx } from '@emotion/css';
 import React from 'react';
 
 export type TypographyVariant =
@@ -59,7 +58,7 @@ const Typography: React.FC<TypographyProps> = ({
 
   return (
     <Element
-      className={clsx(baseClass, className)}
+      className={cx(baseClass, className)}
       title={title}
       style={{ ...VARIANT_STYLE[variant], ...style }}
     >

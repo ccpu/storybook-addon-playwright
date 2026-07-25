@@ -1,5 +1,4 @@
-import { css } from '@emotion/css';
-import clsx from 'clsx';
+import { css, cx } from '@emotion/css';
 import React from 'react';
 import { useUniqueId } from '../../hooks/use-unique-id';
 
@@ -48,7 +47,7 @@ const formControlClass = css({ display: 'inline-flex', flexDirection: 'column' }
 
 /** Layout wrapper for form fields, replacing `@mui/material`'s `FormControl`. */
 const FormControl: React.FC<FormControlProps> = ({ className, style, children }) => (
-  <div className={clsx(formControlClass, className)} style={style}>
+  <div className={cx(formControlClass, className)} style={style}>
     {children}
   </div>
 );
@@ -74,7 +73,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
 
   return (
     <RadioGroupContext.Provider value={{ name: name ?? generatedName, value, onChange }}>
-      <div role="radiogroup" className={clsx(groupClass, className)} style={style}>
+      <div role="radiogroup" className={cx(groupClass, className)} style={style}>
         {children}
       </div>
     </RadioGroupContext.Provider>
@@ -138,7 +137,7 @@ const FormControlLabel: React.FC<FormControlLabelProps> = ({
   });
 
   return (
-    <label className={clsx(labelClass, className)}>
+    <label className={cx(labelClass, className)}>
       {controlElement}
       <span>{label}</span>
     </label>

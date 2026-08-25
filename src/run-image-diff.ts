@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { testFileScreenshots } from './api/services/test-file-screenshots';
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 
-interface RunImageDiffOptions extends RequestData {
+export interface RunImageDiffOptions extends RequestData {
   onComplete?: (results: ImageDiffResult[]) => Promise<void>;
 }
 
@@ -28,7 +28,7 @@ export async function runImageDiff(
   }
 
   if (options && options.onComplete) {
-    options.onComplete(results);
+    await options.onComplete(results);
   }
 
   return results;

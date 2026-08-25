@@ -45,7 +45,7 @@ function runCommand(command: string, args: string[]): Promise<string> {
 }
 
 async function killProcessTree(pid: number) {
-  if (!Number.isFinite(pid)) return;
+  if (!Number.isInteger(pid) || pid <= 0) return;
 
   if (process.platform === 'win32') {
     await runCommand('taskkill', ['/pid', String(pid), '/t', '/f']);
@@ -74,8 +74,10 @@ async function getPidsListeningOnPort(port: string): Promise<number[]> {
   const output = await runCommand('lsof', ['-ti', `:${port}`]);
   return output
     .split(/\r?\n/)
-    .map((value) => Number(value.trim()))
-    .filter((value) => Number.isFinite(value));
+    .map((value) => value.trim())
+    .filter(Boolean)
+    .map(Number)
+    .filter((value) => Number.isInteger(value) && value > 0);
 }
 
 async function cleanupStorybookPorts() {

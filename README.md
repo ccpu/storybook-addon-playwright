@@ -14,7 +14,7 @@ An addon to visually test stories across multiple browsers within the Storybook 
 
 | Package    | Version    |
 | ---------- | ---------- |
-| storybook  | ~8         |
+| storybook  | ^10        |
 | playwright | ~1.59      |
 | Node.js    | >= 24.15.0 |
 
@@ -38,23 +38,25 @@ pnpm add -D storybook-addon-playwright
 
 ### 1. Register the addon
 
-Within `.storybook/main.js` (or `main.ts`):
+Within `.storybook/main.ts`:
 
-```js
-module.exports = {
-  stories: ['../**/*.stories.[tj]sx'],
-  addons: ['storybook-addon-playwright/register'],
+```ts
+const config = {
+  stories: ['../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  addons: ['storybook-addon-playwright'],
 };
+
+export default config;
 ```
 
 ### 2. Configure the middleware
 
-Within `.storybook/middleware.js`, initialise your Playwright browsers asynchronously, call `setConfig` immediately, and wait for readiness inside `getPage`. This keeps setup safe.
+Within `.storybook/middleware.mjs`, initialise your Playwright browsers asynchronously, call `setConfig` immediately, and wait for readiness inside `getPage`. This keeps setup safe.
 
 ```js
-const { setConfig } = require('storybook-addon-playwright/configs');
-const addonMiddleware = require('storybook-addon-playwright/middleware');
-const playwright = require('playwright');
+import { setConfig } from 'storybook-addon-playwright/configs';
+import addonMiddleware from 'storybook-addon-playwright/middleware';
+import * as playwright from 'playwright';
 
 const browsers = {};
 
@@ -76,9 +78,9 @@ setConfig({
   },
 });
 
-module.exports = function (router) {
+export default function middleware(router) {
   addonMiddleware(router);
-};
+}
 ```
 
 ### Story Readiness Before Screenshot
@@ -127,8 +129,8 @@ The helper is designed for small models too. It asks the model to:
 Example:
 
 ```js
-const { setConfig } = require('storybook-addon-playwright/configs');
-const { createScreenshotTitlePrompt } = require('storybook-addon-playwright/ai');
+import { createScreenshotTitlePrompt } from 'storybook-addon-playwright/ai';
+import { setConfig } from 'storybook-addon-playwright/configs';
 
 async function askLlm(prompt) {
   // Call your LLM provider here and return parsed JSON.
@@ -233,9 +235,9 @@ Pass a `customActionSchema` object to `setConfig` to expose additional methods i
 Example — add a coloured box to the page:
 
 ```js
-const { setConfig } = require('storybook-addon-playwright/configs');
-const addonMiddleware = require('storybook-addon-playwright/middleware');
-const playwright = require('playwright');
+import { setConfig } from 'storybook-addon-playwright/configs';
+import addonMiddleware from 'storybook-addon-playwright/middleware';
+import * as playwright from 'playwright';
 
 async function addBox(position) {
   await this.evaluate((pos) => {
@@ -286,9 +288,9 @@ setConfig({
   },
 });
 
-module.exports = function (router) {
+export default function middleware(router) {
   addonMiddleware(router);
-};
+}
 ```
 
 ## Additional Page Methods
@@ -344,7 +346,12 @@ client:
   "mcpServers": {
     "storybook-playwright-screenshots": {
       "command": "npx",
-      "args": ["-y", "storybook-addon-playwright-mcp"],
+      "args": [
+        "-y",
+        "-p",
+        "storybook-addon-playwright",
+        "storybook-addon-playwright-mcp",
+      ],
     },
   },
 }
@@ -352,7 +359,8 @@ client:
 
 The server is intentionally scoped: it tells the assistant to consult it only
 when you ask to add a story screenshot / visual test or generate Playwright
-screenshots. See [`mcp/README.md`](mcp/README.md) for details.
+screenshots. See the [MCP server documentation](https://github.com/ccpu/storybook-addon-playwright/blob/master/mcp/README.md)
+for details.
 
 ## Generating baseline images (CLI)
 
@@ -389,7 +397,7 @@ Under the hood this posts to the addon's local tRPC endpoint
 
 ## Testing
 
-Screenshots saved by the addon can be regression-tested in your test suite. The addon exports two primary helpers:
+Screenshots saved by the addon can be regression-tested in your test suite. The addon exports three primary helpers:
 
 - **`toMatchScreenshots`** — a custom matcher that loads every `*.playwright.json` file and compares screenshots against saved baselines using `jest-image-snapshot`.
 - **`runImageDiff`** — a standalone function that runs the same diff programmatically and returns results without a test framework matcher.
@@ -445,20 +453,20 @@ afterAll(async () => {
 
 ### Setup with Jest
 
-Add a setup file to `jest.config.js`:
+Add an ESM setup file to `jest.config.mjs`:
 
 ```js
-module.exports = {
-  setupFilesAfterFramework: ['./jest.setup.js'],
+export default {
+  setupFilesAfterEnv: ['./jest.setup.mjs'],
 };
 ```
 
-Within `jest.setup.js`:
+Within `jest.setup.mjs`:
 
 ```js
-const playwright = require('playwright');
-const { setConfig } = require('storybook-addon-playwright/configs');
-const { toMatchScreenshots } = require('storybook-addon-playwright');
+import * as playwright from 'playwright';
+import { setConfig } from 'storybook-addon-playwright/configs';
+import { toMatchScreenshots } from 'storybook-addon-playwright';
 
 expect.extend({ toMatchScreenshots });
 

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "7.15.0",
   "packageManager": "pnpm@10.25.0",
-  "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
+  "description": "Visual regression testing for Storybook stories across multiple Playwright browsers",
   "author": "m.doaie <mdoaie@yahoo.co.uk>",
   "license": "MIT",
   "repository": {

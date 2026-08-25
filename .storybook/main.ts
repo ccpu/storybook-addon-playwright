@@ -11,7 +11,11 @@ import { fileURLToPath } from 'node:url';
 
 const config: StorybookConfig = {
   stories: ['../**/*.stories.tsx'],
-  addons: [import.meta.resolve('./local-preset.ts'), '@storybook/addon-themes'],
+  addons: [
+    import.meta.resolve('./local-preset.ts'),
+    'storybook-dark-mode',
+    '@storybook/addon-themes',
+  ],
 
   framework: {
     name: '@storybook/react-webpack5',

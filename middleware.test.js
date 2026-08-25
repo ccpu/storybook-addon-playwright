@@ -1,10 +1,15 @@
-// The test relies on the Module._load patch in setupTests.vitest-globals.ts
-// to intercept CJS require() chains for sharp, join-images,
-// @trpc/server/adapters/fetch, and dist/trpc/router at the native Node level.
-// This only works in the 'forks' pool (see vitest.workspace.ts).
+vi.mock('@trpc/server/adapters/fetch', () => ({
+  fetchRequestHandler: vi.fn(),
+}));
+vi.mock('./src/api/trpc/context', () => ({
+  createContext: vi.fn(() => ({})),
+}));
+vi.mock('./src/api/trpc/router', () => ({
+  appRouter: { _def: {} },
+}));
 
-const middleware = require('./middleware');
-const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import middleware from './src/middleware';
 
 function createServer() {
   return {

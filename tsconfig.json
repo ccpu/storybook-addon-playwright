@@ -42,7 +42,6 @@
     "tsup.config.ts",
     "stories/**/*",
     "vitest.config.ts",
-    "vitest.middleware.config.ts",
     ".storybook/**/*",
     "scripts/**/*"
   ],

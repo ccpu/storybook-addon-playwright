@@ -48,13 +48,11 @@ export default defineConfig({
       '**/node_modules/**',
       '**/dist/**',
       '**/stories/**',
-      'middleware.test.js',
       // The `mcp/` folder is a self-contained package with its own vitest config.
       'mcp/**',
     ],
     globals: true,
     pool: 'vmThreads',
-    useAtomics: true,
     server: {
       deps: {
         // Process ESM-only packages through Vite (mirrors transformIgnorePatterns)
@@ -69,8 +67,6 @@ export default defineConfig({
           '@tanstack/react-query',
           '@trpc/react-query',
           'react-split-pane',
-          /middleware\.js$/,
-          /dist[/\\]trpc[/\\]/,
         ],
       },
     },

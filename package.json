@@ -92,10 +92,10 @@
     "typecheck": "tsc --noEmit",
     "tsc:watch": "tsc -w",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "test": "node ./scripts/test.mjs",
+    "test": "vitest run",
     "check:all": "pnpm run typecheck && pnpm run lint && pnpm run test",
     "migrate:props-to-args": "pnpm exec tsx src/cli.ts migrate props-to-args",
-    "test:coverage": "node ./scripts/test.mjs --coverage",
+    "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "prepack": "pnpm run lint && pnpm run build"
   },

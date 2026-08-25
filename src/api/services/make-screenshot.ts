@@ -13,7 +13,9 @@ import type {
 import joinImage from 'join-images';
 import sharp from 'sharp';
 import { extendPage } from '../../page-extra';
-import { constructStoryUrl, getScreenshotArgs, getScreenshotGlobals } from '../../utils';
+import { constructStoryUrl } from '../../utils/construct-story-url';
+import { getScreenshotArgs } from '../../utils/get-screenshot-args';
+import { getScreenshotGlobals } from '../../utils/get-screenshot-globals';
 import { parseOptionalNumber } from '../../utils/parse-optional-number';
 import { getConfigs } from '../server/configs';
 import { executeAction } from '../server/utils/execute-action';

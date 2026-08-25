@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { PlaywrightData, ScreenshotData } from '../../../typings';
 import equal from 'fast-deep-equal';
-import { getScreenshotArgs, getScreenshotGlobals } from '../../../utils';
+import { getScreenshotArgs } from '../../../utils/get-screenshot-args';
+import { getScreenshotGlobals } from '../../../utils/get-screenshot-globals';
 import { getOptionsKey } from './get-options-key';
 
 export function findScreenshotWithSameSetting(

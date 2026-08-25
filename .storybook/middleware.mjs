@@ -1,5 +1,5 @@
-import middleware from '../src/middleware';
-import { setupPlaywright } from './setup-playwright';
+import middleware from '../dist/middleware.js';
+import { setupPlaywright } from './setup-playwright.mjs';
 
 void setupPlaywright();
 
@@ -7,6 +7,6 @@ void setupPlaywright();
 // When tsup finishes a rebuild (onSuccess), Storybook is restarted — the browser
 // loses the SSE connection, polls until the new server is up, then auto-reloads.
 
-export default function storybookMiddleware(router: Parameters<typeof middleware>[0]) {
+export default function storybookMiddleware(router) {
   middleware(router);
 }

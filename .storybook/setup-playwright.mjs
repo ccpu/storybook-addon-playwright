@@ -6,8 +6,7 @@
 
 import os from 'node:os';
 import * as playwright from 'playwright';
-import { setConfig } from '../src/configs';
-import type { Config } from '../src/typings/config';
+import { setConfig } from '../dist/configs.js';
 
 const PLAYWRIGHT_WS_BASE_URL =
   process.env.PLAYWRIGHT_WS_BASE_URL ?? 'ws://127.0.0.1:3010';
@@ -142,7 +141,8 @@ async function afterScreenshot(page) {
 
 async function setupPlaywright() {
   try {
-    const config: Config & { autoMigration: boolean } = {
+    /** @type {Config & { autoMigration: boolean }} */
+    const config = {
       getScreenshotTitle: (requestData) => {
         if (Object.keys(requestData.story.changedArgs ?? {}).length === 0) {
           return 'Should render correctly.';
@@ -157,7 +157,7 @@ async function setupPlaywright() {
       autoMigration: true,
       customActionSchema: {
         addBox: {
-          type: 'Promise' as never,
+          type: 'Promise',
           parameters: {
             position: {
               type: 'object',

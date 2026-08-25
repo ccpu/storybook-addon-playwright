@@ -1,5 +1,5 @@
 import type { ActionDialogDialogProps } from './ActionDialog';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { makeStyles } from '../../styles';
 import { CircularProgress } from './CircularProgress';

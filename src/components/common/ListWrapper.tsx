@@ -1,5 +1,5 @@
 import { makeStyles } from '../../styles';
-import { ScrollArea } from '@storybook/components';
+import { ScrollArea } from 'storybook/internal/components';
 import { cx } from '@emotion/css';
 import React, { useEffect, useRef } from 'react';
 

@@ -3,7 +3,7 @@ import { InputDialog } from '../../../src/components/common/InputDialog';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { TextField } from '../../../src/components/common/TextField';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import { ActionDialog } from '../../../src/components/common/ActionDialog';
 
 describe('InputDialog', () => {

@@ -1,6 +1,6 @@
 import type { SelectorType } from '../../../hooks';
 import type { ControlProps } from '../../../typings';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { makeStyles } from '../../../styles';
 import { FilterCenterFocusSharp as TargetIcon } from '../../../icons';
 import { FilterTiltShift as PointerIcon } from '../../../icons';

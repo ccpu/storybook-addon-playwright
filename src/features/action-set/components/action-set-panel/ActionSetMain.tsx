@@ -1,5 +1,5 @@
 import type { ActionSet, StoryAction } from '../../../../typings';
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import { nanoid } from 'nanoid';
 import React, { useCallback, useEffect } from 'react';
 import { trpcClient } from '../../../../api/trpc/client';

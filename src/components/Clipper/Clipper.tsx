@@ -1,4 +1,4 @@
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import React from 'react';
 import Selecto from 'react-selecto';
 import { create } from 'zustand';

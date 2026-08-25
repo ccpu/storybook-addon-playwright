@@ -4,7 +4,9 @@ import { createTRPCReact } from '@trpc/react-query';
 
 const BASE = typeof window !== 'undefined' ? window.location.origin : '';
 
-export const trpcClient = createTRPCReact<AppRouter>();
+type TrpcClient = ReturnType<typeof createTRPCReact<AppRouter>>;
+
+export const trpcClient: TrpcClient = createTRPCReact<AppRouter>();
 
 export function createTrpcHttpClient() {
   return trpcClient.createClient({

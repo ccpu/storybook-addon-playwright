@@ -2,8 +2,8 @@ import { getStoryData } from '../../configs/story-data';
 import { ImageDiffMenuItem } from '../../../src/components/tool-bar/ImageDiffMenuItem';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { ListItem } from '@storybook/components';
-import { useStorybookApi } from '@storybook/manager-api';
+import { ListItem } from 'storybook/internal/components';
+import { useStorybookApi } from 'storybook/manager-api';
 
 function assertIsReactElement(
   value: React.ReactNode,

@@ -1,6 +1,6 @@
 import { makeStyles } from '../../styles';
-import { Separator } from '@storybook/components';
-import { useStorybookState } from '@storybook/manager-api';
+import { Separator } from 'storybook/internal/components';
+import { useStorybookState } from 'storybook/manager-api';
 import { cx } from '@emotion/css';
 import React, { useCallback } from 'react';
 import { Pane, SplitPane } from 'react-split-pane';

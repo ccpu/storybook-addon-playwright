@@ -3,7 +3,7 @@ import React from 'react';
 import { AutoHeightWithTooltip } from '../../../../../src/components/common';
 import { FavouriteActions } from '../../../../../src/features/action-set/components/action-set-panel/FavouriteActions';
 import { shallow } from 'enzyme';
-import { ListItem } from '@storybook/components';
+import { ListItem } from 'storybook/internal/components';
 
 // import { useCurrentStoryData } from '../../../../../hooks/use-current-story-data';
 

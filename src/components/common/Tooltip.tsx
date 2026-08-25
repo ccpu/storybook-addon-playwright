@@ -1,4 +1,4 @@
-import { TooltipNote, WithTooltip } from '@storybook/components';
+import { TooltipNote, WithTooltip } from 'storybook/internal/components';
 import React from 'react';
 
 type WithTooltipProps = React.ComponentProps<typeof WithTooltip>;
@@ -15,7 +15,7 @@ export interface TooltipProps extends Omit<WithTooltipProps, 'tooltip' | 'title'
 }
 
 /**
- * Reusable tooltip built on top of `@storybook/components`' `WithTooltip`,
+ * Reusable tooltip built on top of `storybook/internal/components`' `WithTooltip`,
  * exposing a small MUI-`Tooltip`-compatible API (`title`, `placement`,
  * `enterDelay`) so it can be dropped in wherever the old `@mui/material`
  * `Tooltip` was used.

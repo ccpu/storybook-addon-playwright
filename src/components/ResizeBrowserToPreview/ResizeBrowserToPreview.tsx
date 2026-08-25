@@ -1,5 +1,5 @@
 import { FitScreen as FitScreenIconModule } from '../../icons';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';
 import { getPreviewIframe } from '../../utils';

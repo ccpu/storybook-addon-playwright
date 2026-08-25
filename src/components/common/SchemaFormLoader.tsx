@@ -1,6 +1,6 @@
 import type { Definition } from 'ts-to-json';
 import type { Config } from 'ts-to-json/dist/src/Config';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import { Divider } from './Divider';
 import { makeStyles } from '../../styles';
 import * as immutableObject from 'object-path-immutable';

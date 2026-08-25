@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ThemeProvider } from '@storybook/theming';
+import { ThemeProvider } from 'storybook/theming';
 import React from 'react';
 import { createTheme } from '../src/features/theme/create-theme';
 

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { AcUnit as Icon } from '../../../../../src/icons';
 import { Popover } from '../../../../../src/components/common';
-import { IconButton as SIconButton } from '@storybook/components';
+import { IconButton as SIconButton } from 'storybook/internal/components';
 
 describe('OptionPopover', () => {
   it('should render', () => {

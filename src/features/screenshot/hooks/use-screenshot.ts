@@ -1,6 +1,6 @@
 import type { BrowserContextOptions, BrowserTypes } from '../../../typings';
-import { STORY_RENDERED } from '@storybook/core-events';
-import { addons, useStorybookState } from '@storybook/manager-api';
+import { STORY_RENDERED } from 'storybook/internal/core-events';
+import { addons, useStorybookState } from 'storybook/manager-api';
 import sum from 'hash-sum';
 import { nanoid } from 'nanoid';
 import { useCallback, useEffect, useRef, useState } from 'react';

@@ -1,4 +1,4 @@
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { ContrastIcon, PhotoIcon, RefreshIcon, WrenchIcon } from '@storybook/icons';
 import React from 'react';
 import {

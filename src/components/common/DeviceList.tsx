@@ -1,5 +1,5 @@
 import type { BrowserContextOptions } from '../../typings';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import { Menu } from './Menu';
 import React, { useCallback, useMemo } from 'react';
 import DeviceDescriptors from '../../data/deviceDescriptorsSource.json';

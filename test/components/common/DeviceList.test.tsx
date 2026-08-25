@@ -2,7 +2,7 @@ import { DeviceList } from '../../../src/components/common/DeviceList';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Menu } from '../../../src/components/common';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import { DeviceListItem } from '../../../src/components/common/DeviceListItem';
 
 describe('DeviceList', () => {

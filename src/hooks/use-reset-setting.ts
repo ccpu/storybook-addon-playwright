@@ -1,5 +1,5 @@
-import { RESET_STORY_ARGS } from '@storybook/core-events';
-import { useStorybookApi } from '@storybook/manager-api';
+import { RESET_STORY_ARGS } from 'storybook/internal/core-events';
+import { useStorybookApi } from 'storybook/manager-api';
 import {
   clearCurrentActionSets,
   deleteTempActionSets,

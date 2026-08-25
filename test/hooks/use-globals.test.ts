@@ -1,7 +1,7 @@
 import { useGlobals } from '../../src/hooks/use-globals';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { GLOBALS_UPDATED, STORY_CHANGED } from '@storybook/core-events';
-import { addons } from '@storybook/manager-api';
+import { GLOBALS_UPDATED, STORY_CHANGED } from 'storybook/internal/core-events';
+import { addons } from 'storybook/manager-api';
 import { storyData } from '../configs/story-data';
 
 describe('useGlobals', () => {

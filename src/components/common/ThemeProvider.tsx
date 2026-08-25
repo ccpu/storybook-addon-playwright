@@ -1,4 +1,4 @@
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import React, { memo } from 'react';
 import { createTheme } from '../../features/theme/create-theme';
 import { useCustomTheme } from '../../features/theme/hooks/use-custom-theme';
@@ -32,7 +32,7 @@ const ThemeProvider: React.FC = memo((props) => {
   );
 
   // Provide the addon's (MUI-shaped) theme through its own context. We must NOT
-  // override `@storybook/theming`'s emotion theme here: Storybook's own
+  // override `storybook/theming`'s emotion theme here: Storybook's own
   // components rendered inside this provider read that theme and expect its
   // shape (e.g. `typography.size.s1`), so clobbering it would crash them.
   return <AddonThemeProvider theme={theme}>{children}</AddonThemeProvider>;

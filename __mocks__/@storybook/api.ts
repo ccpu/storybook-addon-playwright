@@ -1,5 +1,5 @@
 // Legacy mock - kept for backward compatibility
-// New code should import from @storybook/manager-api
+// New code should import from storybook/manager-api
 import { getStoryData } from '../../test/configs/story-data';
 
 type StorybookState = {

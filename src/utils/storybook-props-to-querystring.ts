@@ -1,5 +1,5 @@
 import type { ScreenshotProp } from '../typings';
-import { buildArgsParam } from '@storybook/core/router';
+import { buildArgsParam } from 'storybook/internal/router';
 
 const SAFE_KEY_PATTERN = /^[\w -]*$/;
 const NUMBER_PATTERN = /^-?\d+(\.\d+)?$/;

@@ -5,7 +5,7 @@ import {
   Separator,
   TooltipLinkList,
   WithTooltip,
-} from '@storybook/components';
+} from 'storybook/internal/components';
 import {
   BrowserIcon,
   BottomBarIcon,

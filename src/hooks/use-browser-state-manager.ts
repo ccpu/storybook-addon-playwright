@@ -1,6 +1,6 @@
 import type { BrowserTypes, ScreenShotViewPanel } from '../typings';
-import { STORY_RENDERED } from '@storybook/core-events';
-import { addons } from '@storybook/manager-api';
+import { STORY_RENDERED } from 'storybook/internal/core-events';
+import { addons } from 'storybook/manager-api';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAddonState } from './use-addon-state';
 import { useUIStore } from '../store';

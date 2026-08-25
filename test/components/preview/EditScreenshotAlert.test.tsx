@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { useEditScreenshot } from '../../../src/features/screenshot/hooks/use-edit-screenshot';
 import { Alert } from '../../../src/components/common';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 
 vi.mock(
   '../../../src/features/screenshot/hooks/use-edit-screenshot',

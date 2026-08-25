@@ -1,4 +1,4 @@
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import React from 'react';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
 import { ScreenshotMain } from '../../features/screenshot/components/screenshot-panel/ScreenshotMain';

@@ -1,7 +1,7 @@
 import type { AddonState, BrowserTypes, ScreenShotViewPanel } from '../../src/typings';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { STORY_RENDERED } from '@storybook/core-events';
-import { addons } from '@storybook/manager-api';
+import { STORY_RENDERED } from 'storybook/internal/core-events';
+import { addons } from 'storybook/manager-api';
 
 type AddonStateSeed = Omit<AddonState, 'disabledBrowser'> & {
   disabledBrowser?: AddonState['disabledBrowser'];

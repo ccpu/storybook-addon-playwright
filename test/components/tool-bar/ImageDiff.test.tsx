@@ -61,7 +61,7 @@ import { ImageDiffResult } from '../../../src/api/typings';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Badge } from '../../../src/components/common';
-import { IconButton, ListItem, WithTooltip } from '@storybook/components';
+import { IconButton, ListItem, WithTooltip } from 'storybook/internal/components';
 
 vi.mocked(useGlobalImageDiffResultsMock).mockImplementation(() => ({
   imageDiffResult: [],
@@ -203,7 +203,7 @@ describe('ImageDiff', () => {
 
     invokeHandler(
       clearItem.props().onClick,
-      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
+      {} as React.MouseEvent<HTMLButtonElement, MouseEvent>,
     );
 
     expect(removeImageDiffResultMock).toHaveBeenCalledWith('matching-screenshot-id');
@@ -222,7 +222,7 @@ describe('ImageDiff', () => {
 
     invokeHandler(
       tooltipWrapper.find(ListItem).first().props().onClick,
-      {} as React.MouseEvent<HTMLDivElement, MouseEvent>,
+      {} as React.MouseEvent<HTMLButtonElement, MouseEvent>,
     );
 
     expect(setImageDiffResultsMock).toHaveBeenCalledWith([]);

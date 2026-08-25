@@ -5,11 +5,9 @@
  */
 
 import os from 'node:os';
-
-const { setConfig } = /** @type {typeof import('../src/api/server/configs')} */ (
-  require('../configs')
-);
-const playwright = require('playwright');
+import * as playwright from 'playwright';
+import { setConfig } from '../src/configs';
+import type { Config } from '../src/typings/config';
 
 const PLAYWRIGHT_WS_BASE_URL =
   process.env.PLAYWRIGHT_WS_BASE_URL ?? 'ws://127.0.0.1:3010';
@@ -116,7 +114,7 @@ async function getPage(browserType, options, _requestData) {
 
   const page = await currentBrowser.newPage(options);
   /** @type {BoxPage & { addBox: typeof addBox }} */
-  (page).addBox = addBox;
+  page.addBox = addBox;
 
   return page;
 }
@@ -144,8 +142,7 @@ async function afterScreenshot(page) {
 
 async function setupPlaywright() {
   try {
-    /** @type {Config & { autoMigration: boolean }} */
-    const config = {
+    const config: Config & { autoMigration: boolean } = {
       getScreenshotTitle: (requestData) => {
         if (Object.keys(requestData.story.changedArgs ?? {}).length === 0) {
           return 'Should render correctly.';
@@ -160,7 +157,7 @@ async function setupPlaywright() {
       autoMigration: true,
       customActionSchema: {
         addBox: {
-          type: /** @type {never} */ ('Promise'),
+          type: 'Promise' as never,
           parameters: {
             position: {
               type: 'object',
@@ -181,6 +178,4 @@ async function setupPlaywright() {
   }
 }
 
-module.exports = {
-  setupPlaywright,
-};
+export { setupPlaywright };

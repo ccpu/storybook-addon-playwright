@@ -115,7 +115,6 @@ const meta: Meta<GlobalsControlsArgs> = {
     showMetadata: true,
     themeHint: 'This extra control only appears when the theme global is dark.',
   },
-  component: GlobalsControlsPanel,
   parameters: {
     controls: {
       expanded: true,

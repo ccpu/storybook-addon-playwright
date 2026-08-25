@@ -76,6 +76,7 @@
     "prepare": "husky",
     "clean": "rimraf coverage dist tmp",
     "build": "pnpm run clean && tsup",
+    "build:storybook": "pnpm run build && storybook build --output-dir tmp/storybook-static --test --disable-telemetry",
     "build:watch": "tsup --watch",
     "format:fix": "prettier --write .",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",

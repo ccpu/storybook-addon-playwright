@@ -1,11 +1,10 @@
 import path from 'path';
 import { spawn, type ChildProcess } from 'child_process';
 
-const ROOT = path.resolve(__dirname, '..');
+const ROOT = path.resolve(import.meta.dirname, '..');
 const PORT = '1090';
 const EXTRA_PORTS_TO_CLEAN = ['9003'];
 const NODE_BIN = process.execPath;
-const STORYBOOK_BIN = path.join(ROOT, 'node_modules', 'storybook', 'bin', 'index.cjs');
 const TSUP_BIN = path.join(ROOT, 'node_modules', 'tsup', 'dist', 'cli-default.js');
 
 let storybookChild: ChildProcess | null = null;
@@ -190,8 +189,17 @@ async function startStorybook() {
     };
 
     storybookChild = spawn(
-      NODE_BIN,
-      [STORYBOOK_BIN, 'dev', '-p', PORT, '--no-open', '--ci', '--disable-telemetry'],
+      process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm',
+      [
+        'exec',
+        'storybook',
+        'dev',
+        '-p',
+        PORT,
+        '--no-open',
+        '--ci',
+        '--disable-telemetry',
+      ],
       {
         cwd: ROOT,
         env: storybookEnv,

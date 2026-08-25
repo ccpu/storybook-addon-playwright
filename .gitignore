@@ -11,6 +11,7 @@ coverage
 
 # Transpiled files
 dist/
+tmp/
 
 # VS Code
 .vscode/*

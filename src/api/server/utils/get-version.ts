@@ -1,4 +1,7 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
+
+const require = createRequire(import.meta.url);
 
 function findPackageJsonPath(startDir: string) {
   let currentDir = startDir;
@@ -22,8 +25,7 @@ function findPackageJsonPath(startDir: string) {
 export function getVersion() {
   const packagePath = findPackageJsonPath(process.cwd());
 
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const version = (require(packagePath).version as string).split('.')[0].toString();
+  const { version } = require(packagePath) as { version: string };
 
-  return version;
+  return version.split('.')[0].toString();
 }

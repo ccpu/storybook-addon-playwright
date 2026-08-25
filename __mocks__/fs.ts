@@ -46,4 +46,11 @@ fs.existsSync = (directoryPath: any) => {
   return mockFiles[directoryPath] !== undefined;
 };
 
-module.exports = fs;
+export const existsSync = fs.existsSync;
+export const mkdirSync = fs.mkdirSync;
+export const readFileSync = fs.readFileSync;
+export const renameSync = fs.renameSync;
+export const unlinkSync = fs.unlinkSync;
+export const writeFileSync = fs.writeFileSync;
+export { __setMockFiles, readdirSync };
+export default fs;

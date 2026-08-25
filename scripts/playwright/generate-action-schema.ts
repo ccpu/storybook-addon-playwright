@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'node:url';
 import type { Mouse, Touchscreen } from 'playwright';
 
 import type { PageMethodKeys } from '../../src/api';
@@ -10,10 +11,10 @@ import { generateSchema } from './generate-schema';
  */
 
 const DEFAULT_TYPE_FILE = path.resolve(
-  __dirname,
+  import.meta.dirname,
   '../../src/api/typings/schema-types.ts',
 );
-const DATA_OUTPUT_DIR = path.resolve(__dirname, '../../src/api/server/data');
+const DATA_OUTPUT_DIR = path.resolve(import.meta.dirname, '../../src/api/server/data');
 const ACTION_SCHEMA_FILE = path.resolve(DATA_OUTPUT_DIR, 'action-schema.json');
 
 type MouseKeys = keyof Mouse;
@@ -82,6 +83,6 @@ export const saveActionSchema = (typePath = DEFAULT_TYPE_FILE) => {
   return actionSchema;
 };
 
-if (require.main === module) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   saveActionSchema();
 }

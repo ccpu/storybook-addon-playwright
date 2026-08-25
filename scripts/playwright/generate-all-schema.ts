@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { fileURLToPath } from 'node:url';
 
 import { generateActionSchema } from './generate-action-schema';
 import { generateSchema } from './generate-schema';
@@ -9,10 +10,10 @@ import { generateSchema } from './generate-schema';
  */
 
 const DEFAULT_TYPE_FILE = path.resolve(
-  __dirname,
+  import.meta.dirname,
   '../../src/api/typings/schema-types.ts',
 );
-const DATA_OUTPUT_DIR = path.resolve(__dirname, '../../src/api/server/data');
+const DATA_OUTPUT_DIR = path.resolve(import.meta.dirname, '../../src/api/server/data');
 
 const saveSchema = (result: unknown, fileName: string) => {
   if (process.env.NODE_ENV === 'test') return;
@@ -51,6 +52,6 @@ export const generateAllSchema = (typePath = DEFAULT_TYPE_FILE) => {
   };
 };
 
-if (require.main === module) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   generateAllSchema();
 }

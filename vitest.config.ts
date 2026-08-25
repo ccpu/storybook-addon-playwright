@@ -14,24 +14,24 @@ export default defineConfig({
       // ts-jest/utils compatibility shim – replaces mocked() from ts-jest
       {
         find: 'ts-jest/utils',
-        replacement: path.resolve(__dirname, 'src/test-utils/vitest-compat.ts'),
+        replacement: path.resolve(import.meta.dirname, 'src/test-utils/vitest-compat.ts'),
       },
       // Prevent the real compiled tRPC router (which transitively imports sharp)
       // from loading during tests. This mirrors jest's CJS require interception
       // for the middleware.test.js test.
       {
         find: /dist[/\\]trpc[/\\]router(\.js)?$/,
-        replacement: path.resolve(__dirname, '__mocks__/dist-trpc-router.cjs'),
+        replacement: path.resolve(import.meta.dirname, '__mocks__/dist-trpc-router.cjs'),
       },
       // Prevent the real compiled tRPC context from loading during tests.
       {
         find: /dist[/\\]trpc[/\\]context(\.js)?$/,
-        replacement: path.resolve(__dirname, '__mocks__/dist-trpc-context.cjs'),
+        replacement: path.resolve(import.meta.dirname, '__mocks__/dist-trpc-context.cjs'),
       },
       // Always use the mock version of join-images (mirrors jest moduleNameMapper)
       {
         find: /^join-images$/,
-        replacement: path.resolve(__dirname, '__mocks__/join-images.ts'),
+        replacement: path.resolve(import.meta.dirname, '__mocks__/join-images.ts'),
       },
     ],
   },

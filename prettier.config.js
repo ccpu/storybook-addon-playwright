@@ -1,3 +1,3 @@
-const config = require('@pixpilot/dev-config/prettier');
+import * as config from '@pixpilot/dev-config/prettier';
 
-module.exports = config.default ?? config;
+export default config.default ?? config;

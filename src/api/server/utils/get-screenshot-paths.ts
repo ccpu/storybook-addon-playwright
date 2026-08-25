@@ -1,6 +1,6 @@
 import type { DiffImageToScreenShot } from '../../typings';
 import path from 'node:path';
-import kebabCase from 'lodash/kebabCase';
+import kebabCase from 'lodash/kebabCase.js';
 import { getStoryPlaywrightFileInfo } from './get-story-playwright-file-info';
 
 export interface ScreenshotPathInfo {

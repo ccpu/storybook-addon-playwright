@@ -1,8 +1,12 @@
 const spyOnRmdirSyncMock = vi.hoisted(() => vi.fn());
-vi.mock('node:fs', () => ({
-  existsSync: () => true,
-  rmdirSync: spyOnRmdirSyncMock,
-}));
+vi.mock('node:fs', () => {
+  const fs = {
+    existsSync: () => true,
+    rmdirSync: spyOnRmdirSyncMock,
+  };
+
+  return { ...fs, default: fs };
+});
 import { runDiffImageToSnapshotMock } from '../../manual-mocks/jest-image-snapshot';
 import { diffImageToScreenshot } from '../../../src/api/services/diff-image-to-screenshot';
 import * as configs from '../../../src/api/server/configs';

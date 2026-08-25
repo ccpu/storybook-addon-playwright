@@ -1,5 +1,6 @@
 {
   "name": "storybook-addon-playwright",
+  "type": "module",
   "version": "7.15.0",
   "packageManager": "pnpm@10.25.0",
   "description": "An addon to visually test the stories in the multiple browsers within storybook environment",
@@ -27,50 +28,39 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./ai": {
       "types": "./dist/ai/index.d.ts",
-      "import": "./dist/ai/index.mjs",
-      "require": "./dist/ai/index.js"
+      "default": "./dist/ai/index.js"
     },
     "./configs": {
-      "types": "./configs.d.ts",
-      "require": "./configs.js"
+      "types": "./dist/configs.d.ts",
+      "default": "./dist/configs.js"
     },
     "./middleware": {
-      "types": "./middleware.d.ts",
-      "require": "./middleware.js"
+      "types": "./dist/middleware.d.ts",
+      "default": "./dist/middleware.js"
     },
-    "./register": "./register.js",
+    "./manager": "./dist/manager.js",
     "./utils": {
       "types": "./dist/external-utils/index.d.ts",
-      "import": "./dist/external-utils/index.mjs",
-      "require": "./dist/external-utils/index.js"
+      "default": "./dist/external-utils/index.js"
     },
     "./typings/global": "./typings/global.d.ts",
     "./package.json": "./package.json"
   },
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "types": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "bin": {
     "storybook-addon-playwright": "./dist/cli.js",
-    "storybook-addon-playwright-mcp": "./dist/mcp/cli.mjs"
+    "storybook-addon-playwright-mcp": "./dist/mcp/cli.js"
   },
   "files": [
     "LICENSE",
     "README.md",
-    "ai.d.ts",
-    "ai.js",
     "assets",
-    "configs.d.ts",
-    "configs.js",
     "dist",
-    "middleware.d.ts",
-    "middleware.js",
-    "register.js",
     "typings/global.d.ts"
   ],
   "engines": {
@@ -88,7 +78,7 @@
     "build": "pnpm run clean && tsup",
     "build:watch": "tsup --watch",
     "format:fix": "prettier --write .",
-    "lint:fix": "eslint src __mocks__ test/manual-mocks test/configs stories setupTests.ts middleware.d.ts configs.d.ts .storybook/setup-playwright.js --ext .js,.jsx,.ts,.tsx --fix",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "typecheck": "tsc --noEmit",
     "tsc:watch": "tsc -w",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",

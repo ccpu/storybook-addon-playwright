@@ -1,9 +1,13 @@
 const unlinkSyncMock = vi.hoisted(() => vi.fn());
 const existsSyncMock = vi.hoisted(() => vi.fn());
-vi.mock('node:fs', () => ({
-  existsSync: existsSyncMock,
-  unlinkSync: unlinkSyncMock,
-}));
+vi.mock('node:fs', () => {
+  const fs = {
+    existsSync: existsSyncMock,
+    unlinkSync: unlinkSyncMock,
+  };
+
+  return { ...fs, default: fs };
+});
 
 import { storyFileInfo } from '../../configs/story-file-info';
 import { deleteScreenshot } from '../../../src/api/services/delete-screenshot';

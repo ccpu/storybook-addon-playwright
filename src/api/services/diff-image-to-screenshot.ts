@@ -3,7 +3,7 @@ import type { DiffImageToScreenShot, ImageDiffResult } from '../typings/image-di
 import * as fs from 'node:fs';
 // import { nanoid } from 'nanoid';
 import path from 'node:path';
-import { runDiffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot';
+import { runDiffImageToSnapshot } from 'jest-image-snapshot/src/diff-snapshot.js';
 import { getConfigs } from '../server/configs';
 import { getScreenshotPaths } from '../server/utils/get-screenshot-paths';
 

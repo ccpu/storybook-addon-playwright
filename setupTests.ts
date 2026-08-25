@@ -1,5 +1,6 @@
 import enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import fetchMock from 'jest-fetch-mock';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import '@testing-library/jest-dom';
 import { RequestHandler } from 'msw';
@@ -120,7 +121,6 @@ expect.extend({ toMatchImageSnapshot });
 // (e.g. fetch.mockResponseOnce) keep working. The jest global shim in
 // setupTests.vitest-globals.ts ensures jest.fn() is available when the module
 // initialises. vi.stubGlobal is kept as fallback comment only.
-const fetchMock = require('jest-fetch-mock');
 fetchMock.enableMocks();
 // Keep the native fetch implementation active so MSW can intercept Request objects.
 fetchMock.dontMock();

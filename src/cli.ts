@@ -2,6 +2,7 @@
 
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 import { runPropsToArgsMigration } from './api/server/migration/props-to-args-migration';
 
 const DEFAULT_STORYBOOK_URL = 'http://localhost:6006';
@@ -213,7 +214,7 @@ export function runCli(args: string[]): number | Promise<number> {
   return 1;
 }
 
-if (require.main === module) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   Promise.resolve(runCli(process.argv.slice(ARGV_START_INDEX))).then((code) => {
     process.exitCode = code;
   });

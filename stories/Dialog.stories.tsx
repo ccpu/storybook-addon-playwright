@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ThemeProvider } from 'storybook/theming';
+import { convert, ThemeProvider, themes } from 'storybook/theming';
 import React from 'react';
 import { createTheme } from '../src/features/theme/create-theme';
 
@@ -18,6 +18,8 @@ const theme = createTheme({
     },
   },
 });
+
+const storybookTheme = convert(themes.light);
 
 const meta: Meta<typeof Dialog> = {
   component: Dialog,
@@ -87,7 +89,7 @@ const meta: Meta<typeof Dialog> = {
           padding: 24,
         }}
       >
-        <ThemeProvider theme={theme as never}>
+        <ThemeProvider theme={storybookTheme}>
           <Dialog {...args} titleActions={TitleActions} footerActions={FooterActions}>
             <div style={{ display: 'grid', gap: 12 }}>
               <p style={{ margin: 0 }}>

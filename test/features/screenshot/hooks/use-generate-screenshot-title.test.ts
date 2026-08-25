@@ -1,7 +1,7 @@
 import { useGenerateScreenshotTitle } from '../../../../src/features/screenshot/hooks/use-generate-screenshot-title';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
-import mockConsole from 'jest-mock-console';
+import mockConsole from '../../../utils/mock-console';
 import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';

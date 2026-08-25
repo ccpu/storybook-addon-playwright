@@ -1,7 +1,7 @@
 import { updateImageDiffResultMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotUpdate } from '../../../../src/features/screenshot/hooks/use-screenshot-update';
 import { renderHook, act } from '@testing-library/react-hooks';
-import mockConsole from 'jest-mock-console';
+import mockConsole from '../../../utils/mock-console';
 import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';

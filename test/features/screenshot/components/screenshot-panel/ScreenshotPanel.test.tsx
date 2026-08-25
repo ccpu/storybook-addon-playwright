@@ -22,7 +22,7 @@ import React from 'react';
 import { ScreenshotListToolbar } from '../../../../../src/features/screenshot/components/screenshot-panel/ScreenshotListToolbar';
 import { StoryScreenshotPreview } from '../../../../../src/features/screenshot/components/screenshot-panel/StoryScreenshotPreview';
 import { Loader } from '../../../../../src/components/common';
-import mockConsole from 'jest-mock-console';
+import mockConsole from '../../../../utils/mock-console';
 import { useScreenshotDiffTestByType } from '../../../../../src/features/screenshot/hooks/use-screenshot-diff-test-by-type';
 import { useStoryScreenshotLoader } from '../../../../../src/features/screenshot/hooks/use-story-screenshot-loader';
 import { useDeleteStoryScreenshot } from '../../../../../src/features/screenshot/hooks/use-delete-story-screenshots';

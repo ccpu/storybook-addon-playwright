@@ -170,8 +170,6 @@
     "enzyme": "^3.11.0",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
-    "jest-fetch-mock": "^3.0.3",
-    "jest-mock-console": "^2.0.0",
     "jiti": "^2.7.0",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.4",
@@ -186,7 +184,8 @@
     "tslib": "2.8.1",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.6",
+    "vitest-fetch-mock": "^0.4.5"
   },
   "storybook": {
     "displayName": "Playwright"

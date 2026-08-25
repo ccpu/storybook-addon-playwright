@@ -34,7 +34,6 @@
     "typings/**/*",
     "setupTests.ts",
     "setupTests.automocks.ts",
-    "setupTests.vitest-globals.ts",
     "test-data/**/*",
     "tsup.config.ts",
     "stories/**/*",

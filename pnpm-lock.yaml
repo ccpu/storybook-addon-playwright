@@ -235,12 +235,6 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
-      jest-fetch-mock:
-        specifier: ^3.0.3
-        version: 3.0.3
-      jest-mock-console:
-        specifier: ^2.0.0
-        version: 2.0.0(jest@27.5.1)
       jiti:
         specifier: ^2.7.0
         version: 2.7.0
@@ -285,7 +279,10 @@ importers:
         version: 4.21.0
       vitest:
         specifier: ^4.1.6
-        version: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
+        version: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest-fetch-mock:
+        specifier: ^0.4.5
+        version: 0.4.5(vitest@4.1.6)
 
 packages:
 
@@ -5058,9 +5055,6 @@ packages:
     resolution: {integrity: sha512-Jt4ZUnxdOsTGwSRAfKEnE6BcwsSPNOijjwifq5sDFSA2kesnXTvNqKHYgM0hDq3549Uf/KzdXNYn4wMZJPlFLw==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
 
-  jest-fetch-mock@3.0.3:
-    resolution: {integrity: sha512-Ux1nWprtLrdrH4XwE7O7InRY6psIi3GOsqNESJgMJ+M5cv4A8Lh7SN9d2V2kKRZ8ebAfcd1LNyZguAOb6JiDqw==}
-
   jest-get-type@27.5.1:
     resolution: {integrity: sha512-2KY95ksYSaK7DMBWQn6dQz3kqAf3BB64y2udeG+hv4KfSOb9qwcYQstTJc1KCbsix+wLZWZYN8t7nwX3GOBLRw==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -5093,11 +5087,6 @@ packages:
   jest-message-util@27.5.1:
     resolution: {integrity: sha512-rMyFe1+jnyAAf+NHwTclDz0eAaLkVDdKVHHBFWsBWHnnh5YeJMNWWsv7AbFYXfK3oTqvL7VTWkhNLu1jX24D+g==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
-
-  jest-mock-console@2.0.0:
-    resolution: {integrity: sha512-7zrKtXVut+6doalosFxw/2O9spLepQJ9VukODtyLIub2fFkWKe1TyQrxr/GyQogTQcdkHfhvFJdx1OEzLqf/mw==}
-    peerDependencies:
-      jest: '>= 22.4.2'
 
   jest-mock@27.5.1:
     resolution: {integrity: sha512-K4jKbY1d4ENhbrG2zuPWaQBvDly+iZ2yAW+T1fATN78hc0sInwn7wZB8XtlNnvHug5RMwV897Xm4LqmPM4e2Og==}
@@ -6169,9 +6158,6 @@ packages:
   pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
-
-  promise-polyfill@8.3.0:
-    resolution: {integrity: sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==}
 
   promise@7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
@@ -7283,6 +7269,12 @@ packages:
       yaml:
         optional: true
 
+  vitest-fetch-mock@0.4.5:
+    resolution: {integrity: sha512-nhWdCQIGtaSEUVl96pMm0WggyDGPDv5FUy/Q9Hx3cs2RGmh3Q/uRsLClGbdG3kXBkJ3br5yTUjB2MeW25TwdOA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      vitest: '>=2.0.0'
+
   vitest@4.1.6:
     resolution: {integrity: sha512-6lvjbS3p9b4CrdCmguzbh2/4uoXhGE2q71R4OX5sqF9R1bo9Xd6fGrMAfvp5wnCzlBnFVdCOp6onuTQVbo8iUQ==}
     engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
@@ -7820,21 +7812,25 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-bigint@7.8.3(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-class-properties@7.12.13(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-class-static-block@7.14.5(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-import-assertions@7.28.6(@babel/core@7.29.0)':
     dependencies:
@@ -7850,11 +7846,13 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-json-strings@7.8.3(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0)':
     dependencies:
@@ -7865,41 +7863,49 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-numeric-separator@7.10.4(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-object-rest-spread@7.8.3(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-optional-catch-binding@7.8.3(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-private-property-in-object@7.14.5(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-top-level-await@7.14.5(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.28.6
+    optional: true
 
   '@babel/plugin-syntax-typescript@7.28.6(@babel/core@7.29.0)':
     dependencies:
@@ -8417,7 +8423,8 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@bcoe/v8-coverage@0.2.3': {}
+  '@bcoe/v8-coverage@0.2.3':
+    optional: true
 
   '@bcoe/v8-coverage@1.0.2': {}
 
@@ -9354,8 +9361,10 @@ snapshots:
       get-package-type: 0.1.0
       js-yaml: 3.14.2
       resolve-from: 5.0.0
+    optional: true
 
-  '@istanbuljs/schema@0.1.3': {}
+  '@istanbuljs/schema@0.1.3':
+    optional: true
 
   '@jest/console@27.5.1':
     dependencies:
@@ -9365,6 +9374,7 @@ snapshots:
       jest-message-util: 27.5.1
       jest-util: 27.5.1
       slash: 3.0.0
+    optional: true
 
   '@jest/core@27.5.1':
     dependencies:
@@ -9402,6 +9412,7 @@ snapshots:
       - supports-color
       - ts-node
       - utf-8-validate
+    optional: true
 
   '@jest/environment@27.5.1':
     dependencies:
@@ -9409,6 +9420,7 @@ snapshots:
       '@jest/types': 27.5.1
       '@types/node': 25.7.0
       jest-mock: 27.5.1
+    optional: true
 
   '@jest/fake-timers@27.5.1':
     dependencies:
@@ -9418,12 +9430,14 @@ snapshots:
       jest-message-util: 27.5.1
       jest-mock: 27.5.1
       jest-util: 27.5.1
+    optional: true
 
   '@jest/globals@27.5.1':
     dependencies:
       '@jest/environment': 27.5.1
       '@jest/types': 27.5.1
       expect: 27.5.1
+    optional: true
 
   '@jest/reporters@27.5.1':
     dependencies:
@@ -9454,12 +9468,14 @@ snapshots:
       v8-to-istanbul: 8.1.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@jest/source-map@27.5.1':
     dependencies:
       callsites: 3.1.0
       graceful-fs: 4.2.11
       source-map: 0.6.1
+    optional: true
 
   '@jest/test-result@27.5.1':
     dependencies:
@@ -9467,6 +9483,7 @@ snapshots:
       '@jest/types': 27.5.1
       '@types/istanbul-lib-coverage': 2.0.6
       collect-v8-coverage: 1.0.3
+    optional: true
 
   '@jest/test-sequencer@27.5.1':
     dependencies:
@@ -9476,6 +9493,7 @@ snapshots:
       jest-runtime: 27.5.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@jest/transform@27.5.1':
     dependencies:
@@ -9496,6 +9514,7 @@ snapshots:
       write-file-atomic: 3.0.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@jest/types@27.5.1':
     dependencies:
@@ -9504,6 +9523,7 @@ snapshots:
       '@types/node': 25.7.0
       '@types/yargs': 16.0.11
       chalk: 4.1.2
+    optional: true
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -9924,9 +9944,9 @@ snapshots:
   '@rolldown/binding-openharmony-arm64@1.0.0-rc.12':
     optional: true
 
-  '@rolldown/binding-wasm32-wasi@1.0.0-rc.12(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)':
+  '@rolldown/binding-wasm32-wasi@1.0.0-rc.12(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.2.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)
+      '@napi-rs/wasm-runtime': 1.2.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
@@ -10037,10 +10057,12 @@ snapshots:
   '@sinonjs/commons@1.8.6':
     dependencies:
       type-detect: 4.0.8
+    optional: true
 
   '@sinonjs/fake-timers@8.1.0':
     dependencies:
       '@sinonjs/commons': 1.8.6
+    optional: true
 
   '@standard-schema/spec@1.1.0': {}
 
@@ -10238,7 +10260,8 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       tippy.js: 6.3.7
 
-  '@tootallnate/once@1.1.2': {}
+  '@tootallnate/once@1.1.2':
+    optional: true
 
   '@trpc/client@11.17.0(@trpc/server@11.17.0(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
@@ -10324,18 +10347,22 @@ snapshots:
   '@types/graceful-fs@4.1.9':
     dependencies:
       '@types/node': 25.7.0
+    optional: true
 
   '@types/html-minifier-terser@6.1.0': {}
 
-  '@types/istanbul-lib-coverage@2.0.6': {}
+  '@types/istanbul-lib-coverage@2.0.6':
+    optional: true
 
   '@types/istanbul-lib-report@3.0.3':
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.6
+    optional: true
 
   '@types/istanbul-reports@3.0.4':
     dependencies:
       '@types/istanbul-lib-report': 3.0.3
+    optional: true
 
   '@types/js-cookie@2.2.7': {}
 
@@ -10359,7 +10386,8 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
-  '@types/prettier@2.7.3': {}
+  '@types/prettier@2.7.3':
+    optional: true
 
   '@types/prop-types@15.7.15': {}
 
@@ -10384,17 +10412,20 @@ snapshots:
     dependencies:
       sharp: 0.34.5
 
-  '@types/stack-utils@2.0.3': {}
+  '@types/stack-utils@2.0.3':
+    optional: true
 
   '@types/statuses@2.0.6': {}
 
   '@types/unist@3.0.3': {}
 
-  '@types/yargs-parser@21.0.3': {}
+  '@types/yargs-parser@21.0.3':
+    optional: true
 
   '@types/yargs@16.0.11':
     dependencies:
       '@types/yargs-parser': 21.0.3
+    optional: true
 
   '@typescript-eslint/eslint-plugin@8.59.2(@typescript-eslint/parser@8.59.2(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)':
     dependencies:
@@ -10513,7 +10544,7 @@ snapshots:
       obug: 2.1.1
       std-env: 4.0.0
       tinyrainbow: 3.1.0
-      vitest: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
 
   '@vitest/eslint-plugin@1.6.17(@typescript-eslint/eslint-plugin@8.59.2(@typescript-eslint/parser@8.59.2(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)(vitest@4.1.6)':
     dependencies:
@@ -10523,7 +10554,7 @@ snapshots:
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 8.59.2(@typescript-eslint/parser@8.59.2(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
       typescript: 5.9.3
-      vitest: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
+      vitest: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
     transitivePeerDependencies:
       - supports-color
 
@@ -10544,14 +10575,14 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.6(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))':
+  '@vitest/mocker@4.1.6(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
       '@vitest/spy': 4.1.6
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
       msw: 2.14.6(@types/node@25.7.0)(typescript@5.9.3)
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)
+      vite: 8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -10695,7 +10726,8 @@ snapshots:
 
   '@xtuc/long@4.2.2': {}
 
-  abab@2.0.6: {}
+  abab@2.0.6:
+    optional: true
 
   accepts@2.0.0:
     dependencies:
@@ -10706,6 +10738,7 @@ snapshots:
     dependencies:
       acorn: 7.4.1
       acorn-walk: 7.2.0
+    optional: true
 
   acorn-import-assertions@1.9.0(acorn@8.16.0):
     dependencies:
@@ -10715,9 +10748,11 @@ snapshots:
     dependencies:
       acorn: 8.16.0
 
-  acorn-walk@7.2.0: {}
+  acorn-walk@7.2.0:
+    optional: true
 
-  acorn@7.4.1: {}
+  acorn@7.4.1:
+    optional: true
 
   acorn@8.16.0: {}
 
@@ -10726,6 +10761,7 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   ajv-formats@2.1.1(ajv@8.18.0):
     optionalDependencies:
@@ -10763,6 +10799,7 @@ snapshots:
   ansi-escapes@4.3.2:
     dependencies:
       type-fest: 0.21.3
+    optional: true
 
   ansi-escapes@7.3.0:
     dependencies:
@@ -10790,6 +10827,7 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.2
+    optional: true
 
   are-docs-informative@0.0.2: {}
 
@@ -10878,7 +10916,8 @@ snapshots:
 
   async-function@1.0.0: {}
 
-  asynckit@0.4.0: {}
+  asynckit@0.4.0:
+    optional: true
 
   available-typed-arrays@1.0.7:
     dependencies:
@@ -10901,6 +10940,7 @@ snapshots:
       slash: 3.0.0
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   babel-loader@8.4.1(@babel/core@7.29.0)(webpack@5.74.0(esbuild@0.27.4)):
     dependencies:
@@ -10920,6 +10960,7 @@ snapshots:
       test-exclude: 6.0.0
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   babel-plugin-jest-hoist@27.5.1:
     dependencies:
@@ -10927,6 +10968,7 @@ snapshots:
       '@babel/types': 7.29.0
       '@types/babel__core': 7.20.5
       '@types/babel__traverse': 7.28.0
+    optional: true
 
   babel-plugin-macros@3.1.0:
     dependencies:
@@ -10976,12 +11018,14 @@ snapshots:
       '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.29.0)
       '@babel/plugin-syntax-private-property-in-object': 7.14.5(@babel/core@7.29.0)
       '@babel/plugin-syntax-top-level-await': 7.14.5(@babel/core@7.29.0)
+    optional: true
 
   babel-preset-jest@27.5.1(@babel/core@7.29.0):
     dependencies:
       '@babel/core': 7.29.0
       babel-plugin-jest-hoist: 27.5.1
       babel-preset-current-node-syntax: 1.2.0(@babel/core@7.29.0)
+    optional: true
 
   balanced-match@1.0.2: {}
 
@@ -11036,7 +11080,8 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  browser-process-hrtime@1.0.0: {}
+  browser-process-hrtime@1.0.0:
+    optional: true
 
   browserslist@4.28.1:
     dependencies:
@@ -11049,6 +11094,7 @@ snapshots:
   bser@2.1.1:
     dependencies:
       node-int64: 0.4.0
+    optional: true
 
   buffer-from@1.1.2: {}
 
@@ -11091,9 +11137,11 @@ snapshots:
       pascal-case: 3.1.2
       tslib: 2.8.1
 
-  camelcase@5.3.1: {}
+  camelcase@5.3.1:
+    optional: true
 
-  camelcase@6.3.0: {}
+  camelcase@6.3.0:
+    optional: true
 
   caniuse-lite@1.0.30001782: {}
 
@@ -11118,7 +11166,8 @@ snapshots:
 
   change-case@5.4.4: {}
 
-  char-regex@1.0.2: {}
+  char-regex@1.0.2:
+    optional: true
 
   character-entities@2.0.2: {}
 
@@ -11151,7 +11200,8 @@ snapshots:
 
   chrome-trace-event@1.0.4: {}
 
-  ci-info@3.9.0: {}
+  ci-info@3.9.0:
+    optional: true
 
   ci-info@4.4.0: {}
 
@@ -11181,6 +11231,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+    optional: true
 
   cliui@8.0.1:
     dependencies:
@@ -11196,9 +11247,11 @@ snapshots:
 
   clsx@2.1.1: {}
 
-  co@4.6.0: {}
+  co@4.6.0:
+    optional: true
 
-  collect-v8-coverage@1.0.3: {}
+  collect-v8-coverage@1.0.3:
+    optional: true
 
   color-convert@2.0.1:
     dependencies:
@@ -11211,6 +11264,7 @@ snapshots:
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
+    optional: true
 
   commander@10.0.1: {}
 
@@ -11388,13 +11442,16 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  cssom@0.3.8: {}
+  cssom@0.3.8:
+    optional: true
 
-  cssom@0.4.4: {}
+  cssom@0.4.4:
+    optional: true
 
   cssstyle@2.3.0:
     dependencies:
       cssom: 0.3.8
+    optional: true
 
   csstype@3.2.3: {}
 
@@ -11405,6 +11462,7 @@ snapshots:
       abab: 2.0.6
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
+    optional: true
 
   data-urls@7.0.0:
     dependencies:
@@ -11470,7 +11528,8 @@ snapshots:
       has-property-descriptors: 1.0.2
       object-keys: 1.1.1
 
-  delayed-stream@1.0.0: {}
+  delayed-stream@1.0.0:
+    optional: true
 
   depd@2.0.0: {}
 
@@ -11480,7 +11539,8 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  detect-newline@3.1.0: {}
+  detect-newline@3.1.0:
+    optional: true
 
   devlop@1.1.0:
     dependencies:
@@ -11523,6 +11583,7 @@ snapshots:
   domexception@2.0.1:
     dependencies:
       webidl-conversions: 5.0.0
+    optional: true
 
   domhandler@4.3.1:
     dependencies:
@@ -11567,7 +11628,8 @@ snapshots:
 
   electron-to-chromium@1.5.328: {}
 
-  emittery@0.8.1: {}
+  emittery@0.8.1:
+    optional: true
 
   emoji-regex@10.6.0: {}
 
@@ -11774,7 +11836,8 @@ snapshots:
 
   escape-string-regexp@1.0.5: {}
 
-  escape-string-regexp@2.0.0: {}
+  escape-string-regexp@2.0.0:
+    optional: true
 
   escape-string-regexp@4.0.0: {}
 
@@ -11787,6 +11850,7 @@ snapshots:
       esutils: 2.0.3
     optionalDependencies:
       source-map: 0.6.1
+    optional: true
 
   eslint-compat-utils@0.5.1(eslint@9.39.4(jiti@2.7.0)):
     dependencies:
@@ -12237,8 +12301,10 @@ snapshots:
       onetime: 5.1.2
       signal-exit: 3.0.7
       strip-final-newline: 2.0.0
+    optional: true
 
-  exit@0.1.2: {}
+  exit@0.1.2:
+    optional: true
 
   expect-type@1.3.0: {}
 
@@ -12248,6 +12314,7 @@ snapshots:
       jest-get-type: 27.5.1
       jest-matcher-utils: 27.5.1
       jest-message-util: 27.5.1
+    optional: true
 
   express-rate-limit@8.6.0(express@5.2.1):
     dependencies:
@@ -12337,6 +12404,7 @@ snapshots:
   fb-watchman@2.0.2:
     dependencies:
       bser: 2.1.1
+    optional: true
 
   fbemitter@3.0.0:
     dependencies:
@@ -12456,6 +12524,7 @@ snapshots:
       es-set-tostringtag: 2.1.0
       hasown: 2.0.2
       mime-types: 2.1.35
+    optional: true
 
   format@0.2.2: {}
 
@@ -12532,7 +12601,8 @@ snapshots:
       hasown: 2.0.2
       math-intrinsics: 1.1.0
 
-  get-package-type@0.1.0: {}
+  get-package-type@0.1.0:
+    optional: true
 
   get-proto@1.0.1:
     dependencies:
@@ -12541,7 +12611,8 @@ snapshots:
 
   get-stdin@5.0.1: {}
 
-  get-stream@6.0.1: {}
+  get-stream@6.0.1:
+    optional: true
 
   get-symbol-description@1.1.0:
     dependencies:
@@ -12679,6 +12750,7 @@ snapshots:
   html-encoding-sniffer@2.0.1:
     dependencies:
       whatwg-encoding: 1.0.5
+    optional: true
 
   html-encoding-sniffer@6.0.0:
     dependencies:
@@ -12739,6 +12811,7 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   https-proxy-agent@5.0.1:
     dependencies:
@@ -12746,10 +12819,12 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   human-id@4.1.3: {}
 
-  human-signals@2.1.0: {}
+  human-signals@2.1.0:
+    optional: true
 
   husky@9.1.7: {}
 
@@ -12758,6 +12833,7 @@ snapshots:
   iconv-lite@0.4.24:
     dependencies:
       safer-buffer: 2.1.2
+    optional: true
 
   iconv-lite@0.7.2:
     dependencies:
@@ -12780,6 +12856,7 @@ snapshots:
     dependencies:
       pkg-dir: 4.2.0
       resolve-cwd: 3.0.0
+    optional: true
 
   imurmurhash@0.1.4: {}
 
@@ -12870,7 +12947,8 @@ snapshots:
     dependencies:
       get-east-asian-width: 1.5.0
 
-  is-generator-fn@2.1.0: {}
+  is-generator-fn@2.1.0:
+    optional: true
 
   is-generator-function@1.1.2:
     dependencies:
@@ -12936,7 +13014,8 @@ snapshots:
     dependencies:
       call-bound: 1.0.4
 
-  is-stream@2.0.1: {}
+  is-stream@2.0.1:
+    optional: true
 
   is-string@1.1.1:
     dependencies:
@@ -12959,7 +13038,8 @@ snapshots:
     dependencies:
       which-typed-array: 1.1.20
 
-  is-typedarray@1.0.0: {}
+  is-typedarray@1.0.0:
+    optional: true
 
   is-weakmap@2.0.2: {}
 
@@ -12993,6 +13073,7 @@ snapshots:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   istanbul-lib-report@3.0.1:
     dependencies:
@@ -13007,6 +13088,7 @@ snapshots:
       source-map: 0.6.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   istanbul-reports@3.2.0:
     dependencies:
@@ -13018,6 +13100,7 @@ snapshots:
       '@jest/types': 27.5.1
       execa: 5.1.1
       throat: 6.0.2
+    optional: true
 
   jest-circus@27.5.1:
     dependencies:
@@ -13042,6 +13125,7 @@ snapshots:
       throat: 6.0.2
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   jest-cli@27.5.1:
     dependencies:
@@ -13063,6 +13147,7 @@ snapshots:
       - supports-color
       - ts-node
       - utf-8-validate
+    optional: true
 
   jest-config@27.5.1:
     dependencies:
@@ -13095,6 +13180,7 @@ snapshots:
       - canvas
       - supports-color
       - utf-8-validate
+    optional: true
 
   jest-diff@27.5.1:
     dependencies:
@@ -13102,10 +13188,12 @@ snapshots:
       diff-sequences: 27.5.1
       jest-get-type: 27.5.1
       pretty-format: 27.5.1
+    optional: true
 
   jest-docblock@27.5.1:
     dependencies:
       detect-newline: 3.1.0
+    optional: true
 
   jest-each@27.5.1:
     dependencies:
@@ -13114,6 +13202,7 @@ snapshots:
       jest-get-type: 27.5.1
       jest-util: 27.5.1
       pretty-format: 27.5.1
+    optional: true
 
   jest-environment-jsdom@27.5.1:
     dependencies:
@@ -13129,6 +13218,7 @@ snapshots:
       - canvas
       - supports-color
       - utf-8-validate
+    optional: true
 
   jest-environment-node@27.5.1:
     dependencies:
@@ -13138,15 +13228,10 @@ snapshots:
       '@types/node': 25.7.0
       jest-mock: 27.5.1
       jest-util: 27.5.1
+    optional: true
 
-  jest-fetch-mock@3.0.3:
-    dependencies:
-      cross-fetch: 3.2.0
-      promise-polyfill: 8.3.0
-    transitivePeerDependencies:
-      - encoding
-
-  jest-get-type@27.5.1: {}
+  jest-get-type@27.5.1:
+    optional: true
 
   jest-haste-map@27.5.1:
     dependencies:
@@ -13164,6 +13249,7 @@ snapshots:
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   jest-image-snapshot@6.5.2(jest@27.5.1):
     dependencies:
@@ -13198,11 +13284,13 @@ snapshots:
       throat: 6.0.2
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   jest-leak-detector@27.5.1:
     dependencies:
       jest-get-type: 27.5.1
       pretty-format: 27.5.1
+    optional: true
 
   jest-matcher-utils@27.5.1:
     dependencies:
@@ -13210,6 +13298,7 @@ snapshots:
       jest-diff: 27.5.1
       jest-get-type: 27.5.1
       pretty-format: 27.5.1
+    optional: true
 
   jest-message-util@27.5.1:
     dependencies:
@@ -13222,21 +13311,21 @@ snapshots:
       pretty-format: 27.5.1
       slash: 3.0.0
       stack-utils: 2.0.6
-
-  jest-mock-console@2.0.0(jest@27.5.1):
-    dependencies:
-      jest: 27.5.1
+    optional: true
 
   jest-mock@27.5.1:
     dependencies:
       '@jest/types': 27.5.1
       '@types/node': 25.7.0
+    optional: true
 
   jest-pnp-resolver@1.2.3(jest-resolve@27.5.1):
     optionalDependencies:
       jest-resolve: 27.5.1
+    optional: true
 
-  jest-regex-util@27.5.1: {}
+  jest-regex-util@27.5.1:
+    optional: true
 
   jest-resolve-dependencies@27.5.1:
     dependencies:
@@ -13245,6 +13334,7 @@ snapshots:
       jest-snapshot: 27.5.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   jest-resolve@27.5.1:
     dependencies:
@@ -13258,6 +13348,7 @@ snapshots:
       resolve: 1.22.11
       resolve.exports: 1.1.1
       slash: 3.0.0
+    optional: true
 
   jest-runner@27.5.1:
     dependencies:
@@ -13287,6 +13378,7 @@ snapshots:
       - canvas
       - supports-color
       - utf-8-validate
+    optional: true
 
   jest-runtime@27.5.1:
     dependencies:
@@ -13314,11 +13406,13 @@ snapshots:
       strip-bom: 4.0.0
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   jest-serializer@27.5.1:
     dependencies:
       '@types/node': 25.7.0
       graceful-fs: 4.2.11
+    optional: true
 
   jest-snapshot@27.5.1:
     dependencies:
@@ -13346,6 +13440,7 @@ snapshots:
       semver: 7.7.4
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   jest-util@27.5.1:
     dependencies:
@@ -13355,6 +13450,7 @@ snapshots:
       ci-info: 3.9.0
       graceful-fs: 4.2.11
       picomatch: 2.3.2
+    optional: true
 
   jest-validate@27.5.1:
     dependencies:
@@ -13364,6 +13460,7 @@ snapshots:
       jest-get-type: 27.5.1
       leven: 3.1.0
       pretty-format: 27.5.1
+    optional: true
 
   jest-watcher@27.5.1:
     dependencies:
@@ -13374,6 +13471,7 @@ snapshots:
       chalk: 4.1.2
       jest-util: 27.5.1
       string-length: 4.0.2
+    optional: true
 
   jest-worker@27.5.1:
     dependencies:
@@ -13392,6 +13490,7 @@ snapshots:
       - supports-color
       - ts-node
       - utf-8-validate
+    optional: true
 
   jiti@2.6.1: {}
 
@@ -13461,6 +13560,7 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+    optional: true
 
   jsdom@29.1.1:
     dependencies:
@@ -13551,7 +13651,8 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  kleur@3.0.3: {}
+  kleur@3.0.3:
+    optional: true
 
   language-subtag-registry@0.3.23: {}
 
@@ -13559,7 +13660,8 @@ snapshots:
     dependencies:
       language-subtag-registry: 0.3.23
 
-  leven@3.1.0: {}
+  leven@3.1.0:
+    optional: true
 
   levn@0.4.1:
     dependencies:
@@ -13729,6 +13831,7 @@ snapshots:
   makeerror@1.0.12:
     dependencies:
       tmpl: 1.0.5
+    optional: true
 
   markdown-table@3.0.4: {}
 
@@ -14080,7 +14183,8 @@ snapshots:
     dependencies:
       mime-db: 1.54.0
 
-  mimic-fn@2.1.0: {}
+  mimic-fn@2.1.0:
+    optional: true
 
   mimic-function@5.0.1: {}
 
@@ -14199,7 +14303,8 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  node-int64@0.4.0: {}
+  node-int64@0.4.0:
+    optional: true
 
   node-releases@2.0.36: {}
 
@@ -14210,12 +14315,14 @@ snapshots:
   npm-run-path@4.0.1:
     dependencies:
       path-key: 3.1.1
+    optional: true
 
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
 
-  nwsapi@2.2.23: {}
+  nwsapi@2.2.23:
+    optional: true
 
   object-assign@4.1.1: {}
 
@@ -14280,6 +14387,7 @@ snapshots:
   onetime@5.1.2:
     dependencies:
       mimic-fn: 2.1.0
+    optional: true
 
   onetime@7.0.0:
     dependencies:
@@ -14427,7 +14535,8 @@ snapshots:
       domhandler: 5.0.3
       parse5: 7.3.0
 
-  parse5@6.0.1: {}
+  parse5@6.0.1:
+    optional: true
 
   parse5@7.3.0:
     dependencies:
@@ -14581,8 +14690,6 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 17.0.2
 
-  promise-polyfill@8.3.0: {}
-
   promise@7.3.1:
     dependencies:
       asap: 2.0.6
@@ -14591,6 +14698,7 @@ snapshots:
     dependencies:
       kleur: 3.0.3
       sisteransi: 1.0.5
+    optional: true
 
   prop-types@15.8.1:
     dependencies:
@@ -14606,6 +14714,7 @@ snapshots:
   psl@1.15.0:
     dependencies:
       punycode: 2.3.1
+    optional: true
 
   punycode@2.3.1: {}
 
@@ -14622,7 +14731,8 @@ snapshots:
 
   quansync@0.2.11: {}
 
-  querystringify@2.2.0: {}
+  querystringify@2.2.0:
+    optional: true
 
   queue-microtask@1.2.3: {}
 
@@ -14874,13 +14984,15 @@ snapshots:
 
   require-from-string@2.0.2: {}
 
-  requires-port@1.0.0: {}
+  requires-port@1.0.0:
+    optional: true
 
   resize-observer-polyfill@1.5.1: {}
 
   resolve-cwd@3.0.0:
     dependencies:
       resolve-from: 5.0.0
+    optional: true
 
   resolve-from@4.0.0: {}
 
@@ -14888,7 +15000,8 @@ snapshots:
 
   resolve-pkg-maps@1.0.0: {}
 
-  resolve.exports@1.1.1: {}
+  resolve.exports@1.1.1:
+    optional: true
 
   resolve@1.22.11:
     dependencies:
@@ -14918,7 +15031,7 @@ snapshots:
       glob: 13.0.6
       package-json-from-dist: 1.0.1
 
-  rolldown@1.0.0-rc.12(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2):
+  rolldown@1.0.0-rc.12(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0):
     dependencies:
       '@oxc-project/types': 0.122.0
       '@rolldown/pluginutils': 1.0.0-rc.12
@@ -14935,7 +15048,7 @@ snapshots:
       '@rolldown/binding-linux-x64-gnu': 1.0.0-rc.12
       '@rolldown/binding-linux-x64-musl': 1.0.0-rc.12
       '@rolldown/binding-openharmony-arm64': 1.0.0-rc.12
-      '@rolldown/binding-wasm32-wasi': 1.0.0-rc.12(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)
+      '@rolldown/binding-wasm32-wasi': 1.0.0-rc.12(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
       '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.12
       '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.12
     transitivePeerDependencies:
@@ -15024,6 +15137,7 @@ snapshots:
   saxes@5.0.1:
     dependencies:
       xmlchars: 2.2.0
+    optional: true
 
   saxes@6.0.0:
     dependencies:
@@ -15217,7 +15331,8 @@ snapshots:
 
   siginfo@2.0.0: {}
 
-  signal-exit@3.0.7: {}
+  signal-exit@3.0.7:
+    optional: true
 
   signal-exit@4.1.0: {}
 
@@ -15282,6 +15397,7 @@ snapshots:
   stack-utils@2.0.6:
     dependencies:
       escape-string-regexp: 2.0.0
+    optional: true
 
   stackback@0.0.2: {}
 
@@ -15343,6 +15459,7 @@ snapshots:
     dependencies:
       char-regex: 1.0.2
       strip-ansi: 6.0.1
+    optional: true
 
   string-ts@2.3.1: {}
 
@@ -15402,9 +15519,11 @@ snapshots:
 
   strip-bom@3.0.0: {}
 
-  strip-bom@4.0.0: {}
+  strip-bom@4.0.0:
+    optional: true
 
-  strip-final-newline@2.0.0: {}
+  strip-final-newline@2.0.0:
+    optional: true
 
   strip-indent@3.0.0:
     dependencies:
@@ -15444,6 +15563,7 @@ snapshots:
     dependencies:
       has-flag: 4.0.0
       supports-color: 7.2.0
+    optional: true
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
@@ -15465,6 +15585,7 @@ snapshots:
     dependencies:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.3.0
+    optional: true
 
   terser-webpack-plugin@5.4.0(esbuild@0.27.4)(webpack@5.74.0(esbuild@0.27.4)):
     dependencies:
@@ -15488,6 +15609,7 @@ snapshots:
       '@istanbuljs/schema': 0.1.3
       glob: 7.2.3
       minimatch: 3.1.5
+    optional: true
 
   thenify-all@1.6.0:
     dependencies:
@@ -15497,7 +15619,8 @@ snapshots:
     dependencies:
       any-promise: 1.3.0
 
-  throat@6.0.2: {}
+  throat@6.0.2:
+    optional: true
 
   throttle-debounce@3.0.1: {}
 
@@ -15534,7 +15657,8 @@ snapshots:
     dependencies:
       tldts-core: 7.0.27
 
-  tmpl@1.0.5: {}
+  tmpl@1.0.5:
+    optional: true
 
   to-regex-range@5.0.1:
     dependencies:
@@ -15554,6 +15678,7 @@ snapshots:
       punycode: 2.3.1
       universalify: 0.2.0
       url-parse: 1.5.10
+    optional: true
 
   tough-cookie@6.0.1:
     dependencies:
@@ -15564,6 +15689,7 @@ snapshots:
   tr46@2.1.0:
     dependencies:
       punycode: 2.3.1
+    optional: true
 
   tr46@6.0.0:
     dependencies:
@@ -15649,9 +15775,11 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
 
-  type-detect@4.0.8: {}
+  type-detect@4.0.8:
+    optional: true
 
-  type-fest@0.21.3: {}
+  type-fest@0.21.3:
+    optional: true
 
   type-fest@5.6.0:
     dependencies:
@@ -15699,6 +15827,7 @@ snapshots:
   typedarray-to-buffer@3.1.5:
     dependencies:
       is-typedarray: 1.0.0
+    optional: true
 
   typescript@5.1.6: {}
 
@@ -15751,7 +15880,8 @@ snapshots:
 
   universalify@0.1.2: {}
 
-  universalify@0.2.0: {}
+  universalify@0.2.0:
+    optional: true
 
   universalify@2.0.1: {}
 
@@ -15773,6 +15903,7 @@ snapshots:
     dependencies:
       querystringify: 2.2.0
       requires-port: 1.0.0
+    optional: true
 
   use-composed-ref@1.4.0(@types/react@18.3.28)(react@18.3.1):
     dependencies:
@@ -15806,15 +15937,16 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 1.9.0
       source-map: 0.7.6
+    optional: true
 
   vary@1.1.2: {}
 
-  vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0):
+  vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
       postcss: 8.5.8
-      rolldown: 1.0.0-rc.12(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)
+      rolldown: 1.0.0-rc.12(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)
       tinyglobby: 0.2.15
     optionalDependencies:
       '@types/node': 25.7.0
@@ -15828,10 +15960,14 @@ snapshots:
       - '@emnapi/core'
       - '@emnapi/runtime'
 
-  vitest@4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)):
+  vitest-fetch-mock@0.4.5(vitest@4.1.6):
+    dependencies:
+      vitest: 4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
+
+  vitest@4.1.6(@types/node@25.7.0)(@vitest/coverage-v8@4.1.6)(jsdom@29.1.1)(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)):
     dependencies:
       '@vitest/expect': 4.1.6
-      '@vitest/mocker': 4.1.6(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
+      '@vitest/mocker': 4.1.6(msw@2.14.6(@types/node@25.7.0)(typescript@5.9.3))(vite@8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0))
       '@vitest/pretty-format': 4.1.6
       '@vitest/runner': 4.1.6
       '@vitest/snapshot': 4.1.6
@@ -15848,7 +15984,7 @@ snapshots:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.1.0
-      vite: 8.0.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)
+      vite: 8.0.3(@emnapi/core@1.11.0)(@emnapi/runtime@1.11.0)(@types/node@25.7.0)(esbuild@0.27.4)(jiti@2.7.0)(terser@5.46.1)(tsx@4.21.0)(yaml@2.9.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 25.7.0
@@ -15860,10 +15996,12 @@ snapshots:
   w3c-hr-time@1.0.2:
     dependencies:
       browser-process-hrtime: 1.0.0
+    optional: true
 
   w3c-xmlserializer@2.0.0:
     dependencies:
       xml-name-validator: 3.0.0
+    optional: true
 
   w3c-xmlserializer@5.0.0:
     dependencies:
@@ -15872,6 +16010,7 @@ snapshots:
   walker@1.0.8:
     dependencies:
       makeerror: 1.0.12
+    optional: true
 
   watchpack@2.5.1:
     dependencies:
@@ -15880,9 +16019,11 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webidl-conversions@5.0.0: {}
+  webidl-conversions@5.0.0:
+    optional: true
 
-  webidl-conversions@6.1.0: {}
+  webidl-conversions@6.1.0:
+    optional: true
 
   webidl-conversions@8.0.1: {}
 
@@ -15940,8 +16081,10 @@ snapshots:
   whatwg-encoding@1.0.5:
     dependencies:
       iconv-lite: 0.4.24
+    optional: true
 
-  whatwg-mimetype@2.3.0: {}
+  whatwg-mimetype@2.3.0:
+    optional: true
 
   whatwg-mimetype@5.0.0: {}
 
@@ -15963,6 +16106,7 @@ snapshots:
       lodash: 4.18.1
       tr46: 2.1.0
       webidl-conversions: 6.1.0
+    optional: true
 
   which-boxed-primitive@1.1.1:
     dependencies:
@@ -16042,8 +16186,10 @@ snapshots:
       is-typedarray: 1.0.0
       signal-exit: 3.0.7
       typedarray-to-buffer: 3.1.5
+    optional: true
 
-  ws@7.5.10: {}
+  ws@7.5.10:
+    optional: true
 
   ws@8.21.3: {}
 
@@ -16051,7 +16197,8 @@ snapshots:
     dependencies:
       is-wsl: 3.1.1
 
-  xml-name-validator@3.0.0: {}
+  xml-name-validator@3.0.0:
+    optional: true
 
   xml-name-validator@5.0.0: {}
 
@@ -16075,7 +16222,8 @@ snapshots:
 
   yaml@2.9.0: {}
 
-  yargs-parser@20.2.9: {}
+  yargs-parser@20.2.9:
+    optional: true
 
   yargs-parser@21.1.1: {}
 
@@ -16090,6 +16238,7 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
+    optional: true
 
   yargs@17.7.2:
     dependencies:

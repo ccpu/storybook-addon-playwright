@@ -1,21 +1,9 @@
 import { defineConfig } from 'vitest/config';
-// import react from '@vitejs/plugin-react';
 import path from 'path';
-// import { vitestJestMockCompatPlugin } from './src/test-utils/vitest-jest-mock-compat';
 
 export default defineConfig({
-  plugins: [
-    // Must come before react() so that jest.mock hoisting is applied first
-    // vitestJestMockCompatPlugin(),
-    // react(),
-  ],
   resolve: {
     alias: [
-      // ts-jest/utils compatibility shim – replaces mocked() from ts-jest
-      {
-        find: 'ts-jest/utils',
-        replacement: path.resolve(import.meta.dirname, 'src/test-utils/vitest-compat.ts'),
-      },
       // Prevent the real compiled tRPC router (which transitively imports sharp)
       // from loading during tests. This mirrors jest's CJS require interception
       // for the middleware.test.js test.
@@ -57,7 +45,7 @@ export default defineConfig({
       deps: {
         // Process ESM-only packages through Vite (mirrors transformIgnorePatterns)
         // jsonfile is inlined so Vite creates live named-export bindings, enabling
-        // jest.spyOn(jsonfile, 'writeFileSync') to intercept destructured imports.
+        // vi.spyOn(jsonfile, 'writeFileSync') to intercept destructured imports.
         inline: [
           'p-limit',
           'yocto-queue',
@@ -72,7 +60,6 @@ export default defineConfig({
     },
     setupFiles: [
       './setupTests.polyfills.js',
-      './setupTests.vitest-globals.ts',
       './setupTests.automocks.ts',
       './setupTests.ts',
     ],

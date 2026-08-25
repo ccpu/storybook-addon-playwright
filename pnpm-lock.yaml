@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@types/enzyme>@types/react': 18.3.28
   enzyme>cheerio: 1.0.0-rc.12
 
 importers:
@@ -2738,17 +2739,11 @@ packages:
     peerDependencies:
       '@types/react': ^18.0.0
 
-  '@types/react@16.14.70':
-    resolution: {integrity: sha512-DM5Q7rSx9G6QYcVvMgxvEurL5P06OxcDNUXrLxlpBzG4ccUewcBCmsztYbxJBobzO8RIwwmjoaD5OsKqdHDuYQ==}
-
   '@types/react@18.3.28':
     resolution: {integrity: sha512-z9VXpC7MWrhfWipitjNdgCauoMLRdIILQsAEV+ZesIzBq/oUlxk0m3ApZuMFCXdnS4U7KrI+l3WRUEGQ8K1QKw==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
-
-  '@types/scheduler@0.16.8':
-    resolution: {integrity: sha512-WZLiwShhwLRmeV6zH+GkbOFT6Z6VklCItrDioxUnv+u4Ll+8vKeFySoFyK/0ctcRpOmwAicELfmys1sDc/Rw+A==}
 
   '@types/semver@7.7.1':
     resolution: {integrity: sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==}
@@ -10310,7 +10305,7 @@ snapshots:
   '@types/enzyme@3.10.19':
     dependencies:
       '@types/cheerio': 0.22.35
-      '@types/react': 16.14.70
+      '@types/react': 18.3.28
 
   '@types/eslint-scope@3.7.7':
     dependencies:
@@ -10372,20 +10367,12 @@ snapshots:
     dependencies:
       '@types/react': 18.3.28
 
-  '@types/react@16.14.70':
-    dependencies:
-      '@types/prop-types': 15.7.15
-      '@types/scheduler': 0.16.8
-      csstype: 3.2.3
-
   '@types/react@18.3.28':
     dependencies:
       '@types/prop-types': 15.7.15
       csstype: 3.2.3
 
   '@types/resolve@1.20.6': {}
-
-  '@types/scheduler@0.16.8': {}
 
   '@types/semver@7.7.1': {}
 

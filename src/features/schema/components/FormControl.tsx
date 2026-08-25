@@ -70,6 +70,7 @@ const useStyles = makeStyles(
 );
 
 export interface ControlFormProps {
+  children?: React.ReactNode;
   label: string;
   description?: string;
   appendValueToTitle: boolean;

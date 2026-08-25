@@ -68,7 +68,7 @@ const useStyles = makeStyles(
 
 const DEVIDER_SIZE = 3;
 
-const PreviewContent: React.FC = (props) => {
+const PreviewContent: React.FC<React.PropsWithChildren> = (props) => {
   const { children } = props;
 
   const { addonState, setAddonState } = useAddonState();
@@ -140,7 +140,7 @@ const PreviewContent: React.FC = (props) => {
   );
 };
 
-const Preview: React.FC = (props) => {
+const Preview: React.FC<React.PropsWithChildren> = (props) => {
   return (
     <CommonProvider>
       <PreviewContent {...props} />

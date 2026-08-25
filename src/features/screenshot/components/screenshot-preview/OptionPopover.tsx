@@ -30,6 +30,7 @@ const useStyles = makeStyles(
 );
 
 export interface OptionPopoverProps {
+  children?: React.ReactNode;
   title: string;
   Icon: React.ElementType;
   width?: number;

@@ -66,6 +66,7 @@ type Border = 'top' | 'right' | 'bottom' | 'left';
 
 export interface ToolbarProps {
   border?: Border[];
+  children?: React.ReactNode;
 }
 
 const Toolbar: React.FC<ToolbarProps> = (props) => {

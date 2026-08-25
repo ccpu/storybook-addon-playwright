@@ -205,6 +205,7 @@
       "sharp"
     ],
     "overrides": {
+      "@types/enzyme>@types/react": "$@types/react",
       "enzyme>cheerio": "1.0.0-rc.12"
     }
   }

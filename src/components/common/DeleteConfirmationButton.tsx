@@ -5,7 +5,7 @@ import { ConfirmationPopover } from '../common';
 
 export interface DeleteConfirmationButtonProps {
   onDelete: () => void;
-  IconButton?: React.ComponentType<unknown>;
+  IconButton?: typeof StorybookIconButton;
   onClose?: () => void;
   disabled?: boolean;
 }

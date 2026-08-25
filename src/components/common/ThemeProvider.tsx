@@ -4,7 +4,7 @@ import { createTheme } from '../../features/theme/create-theme';
 import { useCustomTheme } from '../../features/theme/hooks/use-custom-theme';
 import { AddonThemeProvider } from '../../styles';
 
-const ThemeProvider: React.FC = memo((props) => {
+const ThemeProvider: React.FC<React.PropsWithChildren> = memo((props) => {
   const { children } = props;
 
   const { theme: storyBookTheme } = useStorybookState();

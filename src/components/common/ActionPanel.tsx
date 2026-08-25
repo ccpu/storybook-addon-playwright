@@ -5,6 +5,7 @@ import { DialogContent } from './DialogContent';
 import { DialogTitle } from './DialogTitle';
 
 export interface ActionPanelProps {
+  children?: React.ReactNode;
   title?: string;
   onPositiveAction?: () => void;
   onNegativeAction?: () => void;

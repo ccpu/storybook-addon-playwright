@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 7.15.0
+
+### Minor Changes
+
+- replace `clsx` with `@emotion/css`'s `cx` for class name concatenation
+
 ## 7.14.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-playwright-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "MCP server that teaches AI coding assistants how to author visual/screenshot regression tests for the storybook-addon-playwright Storybook addon",
   "keywords": [

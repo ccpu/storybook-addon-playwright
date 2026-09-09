@@ -1,5 +1,30 @@
 # storybook-addon-playwright
 
+## 8.0.0
+
+### Major Changes
+
+- c0896cf: Add Storybook 10 support with an ESM-only addon build, consolidated
+  `storybook/*` imports, and a standard manager entry. The public middleware and
+  configuration helpers are now ESM exports, and all Node helpers share one
+  configuration store across split output chunks.
+
+  Register the addon as `storybook-addon-playwright` (rather than the legacy
+  `storybook-addon-playwright/register` path) and use ESM imports for its
+  middleware and configuration helpers.
+
+### Minor Changes
+
+- publish ESM-only Storybook 10 addon
+- expose typed screenshot helpers
+
+### Patch Changes
+
+- repair join-images interop under the ESM-only build
+- ignore empty port lookup results
+- support React 18 definitions
+- avoid browser globals in public imports
+
 ## 7.15.0
 
 ### Minor Changes

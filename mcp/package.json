@@ -2,14 +2,54 @@
   "name": "storybook-addon-playwright-mcp",
   "version": "0.1.0",
   "type": "module",
-  "private": true,
-  "description": "Source for the MCP server shipped as the `storybook-addon-playwright-mcp` bin of the storybook-addon-playwright package. Not published on its own — the addon's tsup build bundles mcp/src/cli.ts into dist/mcp/cli.js.",
+  "description": "MCP server that teaches AI coding assistants how to author visual/screenshot regression tests for the storybook-addon-playwright Storybook addon",
+  "keywords": [
+    "mcp",
+    "model context protocol",
+    "storybook",
+    "storybook-addon",
+    "playwright",
+    "screenshot",
+    "visual testing",
+    "visual regression",
+    "ai",
+    "llm"
+  ],
+  "homepage": "https://github.com/ccpu/storybook-addon-playwright/tree/master/mcp#readme",
+  "bugs": {
+    "url": "https://github.com/ccpu/storybook-addon-playwright/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccpu/storybook-addon-playwright.git",
+    "directory": "mcp"
+  },
   "license": "MIT",
+  "author": "m.doaie <mdoaie@yahoo.co.uk>",
+  "bin": {
+    "storybook-addon-playwright-mcp": "./dist/cli.mjs"
+  },
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
+    "build": "tsup",
     "dev": "tsx src/cli.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest --run --passWithNoTests",
-    "test:watch": "vitest --watch"
+    "test:watch": "vitest --watch",
+    "prepack": "pnpm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -17,6 +57,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.7.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "vitest": "^4.1.6"

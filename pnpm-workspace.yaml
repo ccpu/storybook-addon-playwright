@@ -1,0 +1,9 @@
+# The repo publishes two packages:
+#   .    -> storybook-addon-playwright      (the addon; root package)
+#   mcp  -> storybook-addon-playwright-mcp  (the standalone MCP server)
+#
+# The root glob is required: changesets discovers packages through this file, so
+# without `.` the addon itself would be invisible to `changeset version|publish`.
+packages:
+  - '.'
+  - 'mcp'

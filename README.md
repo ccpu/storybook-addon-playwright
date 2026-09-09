@@ -337,25 +337,31 @@ regression tests for this addon — the `*.stories.playwright.json` file format,
 the action catalog, selector strategy, focused element screenshots, and
 `browserOptions` / `screenshotOptions`.
 
-It is exposed as the `storybook-addon-playwright-mcp` bin (separate from the
-addon's own CLI), so no extra install is needed. Register it with your MCP
-client:
+It is published as its own tiny package,
+[`storybook-addon-playwright-mcp`](mcp/README.md) — nothing to install, and it
+works whether or not the addon is present:
 
 ```jsonc
 {
   "mcpServers": {
     "storybook-playwright-screenshots": {
       "command": "npx",
-      "args": [
-        "-y",
-        "-p",
-        "storybook-addon-playwright",
-        "storybook-addon-playwright-mcp",
-      ],
+      "args": ["-y", "storybook-addon-playwright-mcp"],
     },
   },
 }
 ```
+
+For Claude Code:
+
+```bash
+claude mcp add storybook-playwright-screenshots -- npx -y storybook-addon-playwright-mcp
+```
+
+The addon **also** exposes the same server as a `storybook-addon-playwright-mcp`
+bin of this package (separate from the addon's own CLI), so projects that already
+depend on the addon resolve it from `node_modules/.bin` with no download — that
+is what `npx` picks up first when it runs in such a project.
 
 The server is intentionally scoped: it tells the assistant to consult it only
 when you ask to add a story screenshot / visual test or generate Playwright

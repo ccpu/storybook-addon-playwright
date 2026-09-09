@@ -1,5 +1,11 @@
 # storybook-addon-playwright-mcp
 
+## 0.2.1
+
+### Patch Changes
+
+- correct formatting of artifact table
+
 ## 0.2.0
 
 ### Minor Changes

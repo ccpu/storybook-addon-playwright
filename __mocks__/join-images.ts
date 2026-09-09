@@ -10,3 +10,5 @@ const joinImages = vi.fn(async (images: Buffer[] = []) => {
 });
 
 export default joinImages;
+
+export { joinImages };

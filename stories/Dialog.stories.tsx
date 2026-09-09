@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { convert, ThemeProvider, themes } from 'storybook/theming';
 import React from 'react';
-import { createTheme } from '../src/features/theme/create-theme';
 
 import { Dialog } from '../src/components/common/Dialog';
 
@@ -10,14 +9,6 @@ const bodyLines = Array.from(
   (_, index) =>
     `This is dialog body row ${index + 1}. The content area should scroll while the header and footer remain visible.`,
 );
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#0f172a',
-    },
-  },
-});
 
 const storybookTheme = convert(themes.light);
 

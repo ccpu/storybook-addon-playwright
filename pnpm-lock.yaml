@@ -82,8 +82,8 @@ importers:
         specifier: ^6.5.2
         version: 6.5.2(jest@27.5.1)
       join-images:
-        specifier: ^1.4.0
-        version: 1.4.0(sharp@0.34.5)
+        specifier: ^1.5.0
+        version: 1.5.0(sharp@0.34.5)
       jsonfile:
         specifier: ^6.2.1
         version: 6.2.1
@@ -5166,11 +5166,11 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
-  join-images@1.4.0:
-    resolution: {integrity: sha512-vJ8ZiSn0JJq3m9QWo3m0i0vxjjy6DfJoGcP1h9FwgJ4bmWAxDLMXArT7hIw5h8UFznXrwWtegqtQecKMdCqYRg==}
+  join-images@1.5.0:
+    resolution: {integrity: sha512-S1L8gynQ9xcHSMuw6qnI0S7fNKQrFwWE/b2Lo+2ygDAyEN5DQbF6difgXa+W8+FACER4tet8A+HMfPvKnccy+g==}
     engines: {node: '>= 24'}
     peerDependencies:
-      sharp: ^0.34.5
+      sharp: ^0.35.0
 
   jose@6.2.4:
     resolution: {integrity: sha512-N8acGzVsQy6M/fjFcxtysNc4Q379TcM5dM/qKkNtsHFji88yANnXTr7BLeP75iPnFwBfQzM/jg2BZ9+HZrHCZA==}
@@ -13510,7 +13510,7 @@ snapshots:
 
   jiti@2.7.0: {}
 
-  join-images@1.4.0(sharp@0.34.5):
+  join-images@1.5.0(sharp@0.34.5):
     dependencies:
       is-plain-obj: 4.1.0
       sharp: 0.34.5

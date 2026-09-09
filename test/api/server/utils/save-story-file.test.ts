@@ -7,6 +7,11 @@ import { saveStoryFile } from '../../../../src/api/server/utils/save-story-file'
 import { getStoryPlaywrightFileInfo } from '../../../../src/api/server/utils/get-story-playwright-file-info';
 import * as jsonfile from 'jsonfile';
 import { unlinkSync } from 'node:fs';
+import pkg from '../../../../package.json';
+
+// The addon stamps its own major into every story file, so this tracks the
+// package version rather than hardcoding a major that dies at the next bump.
+const ADDON_MAJOR = pkg.version.split('.')[0];
 
 vi.mock('node:fs');
 
@@ -32,7 +37,7 @@ describe('saveStoryFile', () => {
           actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
-      version: '7',
+      version: ADDON_MAJOR,
     });
   });
 
@@ -54,7 +59,7 @@ describe('saveStoryFile', () => {
           actionSets: [{ actions: [], id: 'id', title: 'desc' }],
         },
       },
-      version: '7',
+      version: ADDON_MAJOR,
     });
   });
   it('should remove file if received empty object', async () => {
@@ -114,7 +119,7 @@ describe('saveStoryFile', () => {
           ],
         },
       },
-      version: '7',
+      version: ADDON_MAJOR,
     });
   });
 });

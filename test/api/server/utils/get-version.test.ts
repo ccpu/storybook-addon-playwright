@@ -1,6 +1,7 @@
 import path from 'node:path';
 
 import { getVersion } from '../../../../src/api/server/utils/get-version';
+import pkg from '../../../../package.json';
 
 describe('getVersion', () => {
   afterEach(() => {
@@ -13,6 +14,6 @@ describe('getVersion', () => {
 
     vi.spyOn(process, 'cwd').mockReturnValue(nestedCwd);
 
-    expect(getVersion()).toBe('7');
+    expect(getVersion()).toBe(pkg.version.split('.')[0]);
   });
 });

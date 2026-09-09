@@ -4,7 +4,7 @@ import {
 } from '../../../manual-mocks/store/action/context';
 import { useEditScreenshot } from '../../../../src/features/screenshot/hooks/use-edit-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useStorybookApi } from '@storybook/manager-api';
+import { useStorybookApi } from 'storybook/manager-api';
 import { useCurrentStoryData } from '../../../../src/hooks/use-current-story-data';
 import { StoryData } from '../../../../src/schema';
 import { useAddonState } from '../../../../src/hooks/use-addon-state';
@@ -27,8 +27,8 @@ vi.mock(
   '../../../../src/hooks/use-browser-options',
   async () => await import('../../../hooks/__mocks__/use-browser-options'),
 );
-vi.mock('@storybook/manager-api', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@storybook/manager-api')>();
+vi.mock('storybook/manager-api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('storybook/manager-api')>();
 
   return {
     ...actual,

@@ -1,6 +1,6 @@
 import type { FavouriteActionSet } from '../../../../typings';
 
-import { Button, IconButton } from '@storybook/components';
+import { Button, IconButton } from 'storybook/internal/components';
 import { StarIcon } from '@storybook/icons';
 import React from 'react';
 import {

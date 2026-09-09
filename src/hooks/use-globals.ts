@@ -1,6 +1,6 @@
 import type { ScreenshotProp } from '../typings';
-import { GLOBALS_UPDATED, STORY_CHANGED } from '@storybook/core-events';
-import { addons, useStorybookApi } from '@storybook/manager-api';
+import { GLOBALS_UPDATED, STORY_CHANGED } from 'storybook/internal/core-events';
+import { addons, useStorybookApi } from 'storybook/manager-api';
 import equal from 'fast-deep-equal';
 import { useEffect, useRef, useState } from 'react';
 import { getScreenshotProp } from '../utils';

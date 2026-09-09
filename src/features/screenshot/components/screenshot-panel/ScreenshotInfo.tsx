@@ -1,6 +1,6 @@
 import type { ScreenshotData } from '../../../../typings';
 
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { CogIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import ReactJson from 'react-json-view';

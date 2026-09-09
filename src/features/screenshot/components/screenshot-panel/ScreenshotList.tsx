@@ -5,7 +5,7 @@ import { useScreenshotStoreState } from '../../store/selectors';
 import { SortableScreenshotListItem } from './ScreenshotListItem';
 import { ScreenshotListSortable } from './ScreenshotListSortable';
 
-const ScreenshotList: React.FC = ({ children }) => {
+const ScreenshotList: React.FC<React.PropsWithChildren> = ({ children }) => {
   const storyData = useCurrentStoryData();
 
   const state = useScreenshotStoreState();

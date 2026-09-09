@@ -1,15 +1,6 @@
 import { withThemeByClassName } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
 
-export const parameters = {
-  darkMode: {
-    // Override the default dark theme
-    dark: {},
-    // Override the default light theme
-    light: {},
-  },
-};
-
 export const globalTypes = {
   theme: {
     defaultValue: 'light',

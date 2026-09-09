@@ -1,14 +1,14 @@
 import { useGenerateScreenshotTitle } from '../../../../src/features/screenshot/hooks/use-generate-screenshot-title';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
-import mockConsole from 'jest-mock-console';
+import mockConsole from '../../../utils/mock-console';
 import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
 import { vi, Mock } from 'vitest';
 import { useCurrentStoryData } from '../../../../src/hooks/use-current-story-data';
 import { useKnobs } from '../../../../src/hooks/use-knobs';
-import { useStorybookApi } from '@storybook/manager-api';
+import { useStorybookApi } from 'storybook/manager-api';
 import { useBrowserOptions } from '../../../../src/hooks/use-browser-options';
 import { useScreenshotOptionsValue } from '../../../../src/store/ui-selectors';
 import { useCurrentActions } from '../../../../src/features/action-set/hooks/use-current-actions';
@@ -21,7 +21,7 @@ vi.mock('../../../../src/hooks/use-knobs', () => ({
   useKnobs: vi.fn(),
 }));
 
-vi.mock('@storybook/manager-api', () => ({
+vi.mock('storybook/manager-api', () => ({
   useStorybookApi: vi.fn(),
 }));
 

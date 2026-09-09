@@ -1,7 +1,7 @@
 import type { StoryData } from '../../schema';
 import type { ScreenshotTestTargetType } from '../../typings';
 import { makeStyles } from '../../styles';
-import { IconButton, ListItem, WithTooltip } from '@storybook/components';
+import { IconButton, ListItem, WithTooltip } from 'storybook/internal/components';
 import { ContrastIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import {

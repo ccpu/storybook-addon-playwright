@@ -1,14 +1,12 @@
-const middleware = require('../middleware');
-const { setupPlaywright } = require('./setup-playwright');
+import middleware from '../dist/middleware.js';
+import { setupPlaywright } from './setup-playwright.mjs';
 
-const setupPlaywrightPromise = setupPlaywright();
+void setupPlaywright();
 
 // SSE endpoint used by live-reload-client.js.
 // When tsup finishes a rebuild (onSuccess), Storybook is restarted — the browser
 // loses the SSE connection, polls until the new server is up, then auto-reloads.
 
-let sseClients = [];
-
-module.exports = function (router) {
+export default function storybookMiddleware(router) {
   middleware(router);
-};
+}

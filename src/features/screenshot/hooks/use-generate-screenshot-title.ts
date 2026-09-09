@@ -4,7 +4,7 @@ import { trpcClient } from '../../../api/trpc/client';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';
 import { useKnobs } from '../../../hooks/use-knobs';
 import { toast } from '../../../utils/toast';
-import { API, useStorybookApi, StoryEntry } from '@storybook/manager-api';
+import { API, useStorybookApi, StoryEntry } from 'storybook/manager-api';
 import { useBrowserOptions } from '../../../hooks';
 import { useScreenshotOptionsValue } from '../../../store';
 import { useCurrentActions } from '../../../features/action-set/hooks/use-current-actions';

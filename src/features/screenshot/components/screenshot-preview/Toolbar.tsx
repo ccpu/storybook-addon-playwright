@@ -3,7 +3,7 @@ import { CloseOutlined } from '../../../../icons';
 import { NearMe as NearMeIcon } from '../../../../icons';
 import { RefreshSharp } from '../../../../icons';
 import { SaveAltOutlined as SaveIcon } from '../../../../icons';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import React, { useCallback } from 'react';
 import { ClipperButton } from '../../../../components/Clipper/ClipperButton';
 import { Toolbar as CommonToolbar } from '../../../../components/common';

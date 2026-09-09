@@ -1,7 +1,7 @@
 import { makeStyles } from '../../../../styles';
 
 import { Close as CloseIcon } from '../../../../icons';
-import { IconButton as SIconButton } from '@storybook/components';
+import { IconButton as SIconButton } from 'storybook/internal/components';
 import React, { useCallback, useState } from 'react';
 import { Divider, Popover } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';
@@ -30,6 +30,7 @@ const useStyles = makeStyles(
 );
 
 export interface OptionPopoverProps {
+  children?: React.ReactNode;
   title: string;
   Icon: React.ElementType;
   width?: number;

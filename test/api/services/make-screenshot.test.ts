@@ -23,7 +23,7 @@ const { sharpMock, compositeMock, joinImagesMock } = vi.hoisted(() => {
 vi.mock('sharp', () => ({ default: sharpMock }));
 // Changed: vitest requires ESM-compatible mock factories to return { default: fn }
 // for default-export packages rather than the function directly.
-vi.mock('join-images', () => ({ default: joinImagesMock }));
+vi.mock('join-images', () => ({ default: joinImagesMock, joinImages: joinImagesMock }));
 
 import { makeScreenshot } from '../../../src/api/services/make-screenshot';
 import { getConfigs } from '../../../src/api/server/configs';

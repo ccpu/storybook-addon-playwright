@@ -1,5 +1,5 @@
 import type { StoryData } from '../schema';
-import { useStorybookApi } from '@storybook/manager-api';
+import { useStorybookApi } from 'storybook/manager-api';
 import { useEffect, useState } from 'react';
 
 export function useCurrentStoryData() {

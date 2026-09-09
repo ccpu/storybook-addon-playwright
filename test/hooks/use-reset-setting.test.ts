@@ -9,11 +9,11 @@ vi.mock(
   '../../src/hooks/use-current-story-data',
   async () => await import('./__mocks__/use-current-story-data'),
 );
-vi.unmock('@storybook/manager-api');
+vi.unmock('storybook/manager-api');
 
 const emitMock = vi.fn();
 
-vi.mock('@storybook/manager-api', () => ({
+vi.mock('storybook/manager-api', () => ({
   useStorybookApi: () => ({
     emit: emitMock,
   }),

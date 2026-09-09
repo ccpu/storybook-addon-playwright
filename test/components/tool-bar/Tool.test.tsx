@@ -2,7 +2,7 @@ import { Tool } from '../../../src/components/tool-bar/Tool';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { PreviewDialog } from '../../../src/features/screenshot/components/screenshot-preview/index';
-import { TooltipLinkList, WithTooltip } from '@storybook/components';
+import { TooltipLinkList, WithTooltip } from 'storybook/internal/components';
 import { SidebarAltIcon } from '@storybook/icons';
 import { useAddonState } from '../../../src/hooks/use-addon-state';
 

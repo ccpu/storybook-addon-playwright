@@ -2,7 +2,7 @@ import { BrowserIcon } from '../../../src/components/common/BrowserIcon';
 import { BrowserIconButton } from '../../../src/components/common/BrowserIconButton';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 
 describe('BrowserIcon', () => {
   const clickMock = vi.fn();

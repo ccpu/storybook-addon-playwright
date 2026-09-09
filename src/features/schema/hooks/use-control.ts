@@ -1,5 +1,5 @@
 import type { ControlProps, ControlTypes } from '../../../typings';
-import { Form } from '@storybook/components';
+import { Form } from 'storybook/internal/components';
 import React, { useCallback, useState } from 'react';
 import { CheckBox } from '../../../components';
 import { parseOptionalNumber } from '../../../utils/parse-optional-number';

@@ -1,4 +1,4 @@
-// Legacy mock - redirects to @storybook/manager-api mock for backward compatibility
+// Legacy mock - redirects to storybook/manager-api mock for backward compatibility
 import { EventEmitter } from 'events';
 
 const addonsMock = {} as any;

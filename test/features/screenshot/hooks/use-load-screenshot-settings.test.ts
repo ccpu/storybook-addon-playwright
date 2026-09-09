@@ -18,11 +18,11 @@ vi.mock(
   async () => await import('./__mocks__/use-screenshot-options'),
 );
 
-vi.unmock('@storybook/manager-api');
+vi.unmock('storybook/manager-api');
 
 const emitMock = vi.fn();
 
-vi.mock('@storybook/manager-api', () => ({
+vi.mock('storybook/manager-api', () => ({
   useStorybookApi: () => ({
     emit: emitMock,
   }),

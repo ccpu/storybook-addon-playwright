@@ -3,12 +3,12 @@ import path from 'node:path';
 import { nanoid } from 'nanoid';
 import { getScreenshots } from './get-screenshots';
 
-expect.extend({ toMatchImageSnapshot });
-
 export async function toMatchScreenshots(
   playwrightJsonPath?: string,
   options?: MatchImageSnapshotOptions,
 ) {
+  expect.extend({ toMatchImageSnapshot });
+
   const { testPath } = this;
 
   const testDirParsed = path.parse(testPath);

@@ -33,14 +33,14 @@ or _generate Playwright screenshots_ — not on every Storybook or Playwright ta
 
 This folder is **source only**; it is not published as its own npm package.
 The addon's `tsup` build bundles [`src/cli.ts`](src/cli.ts) into
-`dist/mcp/cli.mjs`, which the root `storybook-addon-playwright` package exposes
+`dist/mcp/cli.js`, which the root `storybook-addon-playwright` package exposes
 as a second bin:
 
 ```jsonc
 // package.json (root)
 "bin": {
   "storybook-addon-playwright": "./dist/cli.js",       // the addon's existing CLI (untouched)
-  "storybook-addon-playwright-mcp": "./dist/mcp/cli.mjs" // this MCP server
+  "storybook-addon-playwright-mcp": "./dist/mcp/cli.js" // this MCP server
 }
 ```
 
@@ -58,7 +58,12 @@ client. It resolves the bin from the project's `node_modules`:
   "mcpServers": {
     "storybook-playwright-screenshots": {
       "command": "npx",
-      "args": ["-y", "storybook-addon-playwright-mcp"],
+      "args": [
+        "-y",
+        "-p",
+        "storybook-addon-playwright",
+        "storybook-addon-playwright-mcp",
+      ],
     },
   },
 }
@@ -67,7 +72,7 @@ client. It resolves the bin from the project's `node_modules`:
 For Claude Code:
 
 ```bash
-claude mcp add storybook-playwright-screenshots -- npx -y storybook-addon-playwright-mcp
+claude mcp add storybook-playwright-screenshots -- npx -y -p storybook-addon-playwright storybook-addon-playwright-mcp
 ```
 
 ## Development
@@ -89,4 +94,4 @@ action schema (`src/api/server/data/action-schema.json`, produced from the
 `PlaywrightPage` interface).
 
 The production bin is produced by the root build (`pnpm build` at the repo
-root → `dist/mcp/cli.mjs`).
+root → `dist/mcp/cli.js`).

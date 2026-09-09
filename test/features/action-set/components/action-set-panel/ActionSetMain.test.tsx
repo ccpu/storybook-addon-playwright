@@ -57,7 +57,7 @@ import React from 'react';
 import { ActionToolbar } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetToolbar';
 import { inputModal } from '../../../../../src/components/common';
 import { ActionSetList } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetList';
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import { useCurrentActions } from '../../../../../src/features/action-set/hooks/use-current-actions';
 
 vi.mock(

@@ -60,9 +60,7 @@ const ActionMenu: React.FC<ActionMenuProps> = memo((props) => {
           name={action.name}
           label={action.label}
           onChange={handleChange}
-        >
-          Profile
-        </ActionMenuItem>
+        />
       ))}
     </Menu>
   );

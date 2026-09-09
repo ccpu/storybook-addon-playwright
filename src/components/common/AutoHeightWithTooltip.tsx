@@ -1,4 +1,4 @@
-import { WithTooltip } from '@storybook/components';
+import { WithTooltip } from 'storybook/internal/components';
 import React from 'react';
 
 type StorybookWithTooltipProps = React.ComponentProps<typeof WithTooltip>;

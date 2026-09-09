@@ -1,5 +1,5 @@
 import type { ActionSet } from '../../../typings';
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import { useEffect, useState } from 'react';
 import { useActionSetStoreState } from '../../../store';
 

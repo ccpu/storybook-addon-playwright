@@ -1,7 +1,7 @@
 import type { ImageDiffResult } from '../../api/typings';
 import { makeStyles } from '../../styles';
-import { ListItem } from '@storybook/components';
-import { useStorybookApi } from '@storybook/manager-api';
+import { ListItem } from 'storybook/internal/components';
+import { useStorybookApi } from 'storybook/manager-api';
 import React, { useCallback } from 'react';
 import { SCREENSHOT_PANEL_ID } from '../../constants';
 

@@ -2,7 +2,7 @@ import type { FixScreenshotFileNameInput } from '../../schema';
 import fs from 'node:fs';
 import path from 'node:path';
 import deepmerge from 'deepmerge';
-import kebabCase from 'lodash/kebabCase';
+import kebabCase from 'lodash/kebabCase.js';
 import {
   constructScreenshotFileName,
   getStoryPlaywrightFileInfo,

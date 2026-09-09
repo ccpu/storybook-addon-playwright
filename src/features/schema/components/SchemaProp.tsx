@@ -1,6 +1,6 @@
 import type { ActionSchema } from '../../../typings';
 import { capitalize } from '../../../utils';
-import startCase from 'lodash/startCase';
+import startCase from 'lodash/startCase.js';
 import React, { useCallback } from 'react';
 import { Control } from './Control';
 import { SchemaRenderer } from './SchemaRenderer';

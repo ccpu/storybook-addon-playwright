@@ -1,6 +1,6 @@
 import type { BrowserTypes, ScreenshotData } from '../../../typings';
-import { RESET_STORY_ARGS } from '@storybook/core-events';
-import { useStorybookApi } from '@storybook/manager-api';
+import { RESET_STORY_ARGS } from 'storybook/internal/core-events';
+import { useStorybookApi } from 'storybook/manager-api';
 import { useCallback, useEffect, useRef } from 'react';
 import { ACTIONS_PANEL_ID } from '../../../constants';
 import { useBrowserStateManager } from '../../../hooks/use-browser-state-manager';

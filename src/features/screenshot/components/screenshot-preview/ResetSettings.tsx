@@ -1,5 +1,5 @@
 import { RotateLeft as RotateLeftIcon } from '../../../../icons';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import React from 'react';
 import { useBrowserOptions, useScreenshotOptions } from '../../../../hooks';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';

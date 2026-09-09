@@ -1,21 +1,11 @@
-const { fetchRequestHandler } = require('@trpc/server/adapters/fetch');
-const { appRouter } = require('./dist/trpc/router');
-const { createContext } = require('./dist/trpc/context');
+import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
+import { createContext } from './api/trpc/context';
+import { appRouter } from './api/trpc/router';
 
 const LOG_PREFIX = '[storybook-addon-playwright]';
-const configuredServers = new WeakSet();
-
-function getServerTimeouts(server) {
-  return {
-    headersTimeout: server.headersTimeout,
-    keepAliveTimeout: server.keepAliveTimeout,
-    requestTimeout: server.requestTimeout,
-    timeout: server.timeout,
-  };
-}
 
 // Long screenshot runs can exceed Node's default HTTP request timeout.
-function disableServerTimeouts(server, source) {
+function disableServerTimeouts(server) {
   if (!server || typeof server !== 'object') return;
 
   server.requestTimeout = 0;
@@ -98,17 +88,19 @@ function addRequestLogs(req, res) {
 
 // Convert Storybook's Node request into the Web Request expected by tRPC.
 function toWebRequest(req) {
-  return new Request(`http://localhost${req.url}`, {
+  const init: RequestInit & { duplex: 'half' } = {
     method: req.method,
     headers: req.headers,
     body: ['GET', 'HEAD'].includes(req.method) ? undefined : req,
     duplex: 'half',
-  });
+  };
+
+  return new Request(`http://localhost${req.url}`, init);
 }
 
 // Respect Node stream backpressure while forwarding tRPC response chunks.
 function writeChunk(res, chunk) {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     if (res.write(Buffer.from(chunk))) {
       resolve();
       return;
@@ -152,16 +144,13 @@ async function sendWebResponse(res, response) {
   res.end();
 }
 
-module.exports = function (router) {
-  disableServerTimeouts(router && router.server, 'router.server');
+export default function middleware(router) {
+  disableServerTimeouts(router && router.server);
 
   router.all('/__storybook_playwright/trpc/*', async (req, res) => {
     addRequestLogs(req, res);
-    disableServerTimeouts(req.socket && req.socket.server, 'req.socket.server');
-    disableServerTimeouts(
-      req.connection && req.connection.server,
-      'req.connection.server',
-    );
+    disableServerTimeouts(req.socket && req.socket.server);
+    disableServerTimeouts(req.connection && req.connection.server);
     disableRequestTimeout(req, res);
 
     const request = toWebRequest(req);
@@ -178,4 +167,4 @@ module.exports = function (router) {
 
     await sendWebResponse(res, response);
   });
-};
+}

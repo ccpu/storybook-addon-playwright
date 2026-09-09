@@ -17,7 +17,7 @@ vi.mock('../src/hooks/use-reset-setting', () => ({
   useResetSetting: vi.fn(() => vi.fn()),
 }));
 
-import { addons } from '@storybook/manager-api';
+import { addons } from 'storybook/manager-api';
 import {
   ACTIONS_PANEL_ID,
   PREVIEW_ID,

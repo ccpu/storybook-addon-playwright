@@ -2,7 +2,7 @@ import { ScreenshotInfo } from '../../../../../src/features/screenshot/component
 import { shallow } from 'enzyme';
 import { getScreenshotDate } from '../../../../configs/get-screenshot-date';
 import React from 'react';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { Popover } from '../../../../../src/components/common';
 import ReactJson from 'react-json-view';
 

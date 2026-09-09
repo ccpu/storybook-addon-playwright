@@ -1,5 +1,5 @@
-import path from 'path';
 import type { StorybookConfig } from '@storybook/react-webpack5';
+import { fileURLToPath } from 'node:url';
 
 // import { setupPlaywright } from './setup-playwright';
 
@@ -9,18 +9,13 @@ import type { StorybookConfig } from '@storybook/react-webpack5';
 //   });
 // })();
 
-type LocalStorybookConfig = StorybookConfig & {
-  managerEntries: (entry?: string[]) => string[];
-};
-
-const config: LocalStorybookConfig = {
+const config: StorybookConfig = {
   stories: ['../**/*.stories.tsx'],
   addons: [
+    import.meta.resolve('./local-preset.ts'),
     'storybook-dark-mode',
     '@storybook/addon-themes',
-    '@storybook/addon-essentials/controls',
   ],
-  managerEntries: (entry = []) => [...entry, path.resolve(__dirname, '../register.js')],
 
   framework: {
     name: '@storybook/react-webpack5',
@@ -33,7 +28,7 @@ const config: LocalStorybookConfig = {
       exclude: /node_modules/,
       use: [
         {
-          loader: require.resolve('babel-loader'),
+          loader: fileURLToPath(import.meta.resolve('babel-loader')),
           options: {
             presets: [
               ['@babel/preset-env', { targets: { node: 'current' } }],

@@ -2,7 +2,7 @@ import { getStorybookState } from '../../configs/storybook-state';
 import { ThemeProvider } from '../../../src/components/common/ThemeProvider';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import { useCustomTheme } from '../../../src/features/theme/hooks/use-custom-theme';
 
 vi.mock(

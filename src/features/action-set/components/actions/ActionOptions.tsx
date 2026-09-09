@@ -1,6 +1,6 @@
 import type { DragHandleProps } from '../../../../components/common';
 import { makeStyles } from '../../../../styles';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { QuestionIcon, TrashIcon } from '@storybook/icons';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import {

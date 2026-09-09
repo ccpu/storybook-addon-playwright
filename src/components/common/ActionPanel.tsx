@@ -1,10 +1,11 @@
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import React, { memo } from 'react';
 import { DialogActions } from './DialogActions';
 import { DialogContent } from './DialogContent';
 import { DialogTitle } from './DialogTitle';
 
 export interface ActionPanelProps {
+  children?: React.ReactNode;
   title?: string;
   onPositiveAction?: () => void;
   onNegativeAction?: () => void;

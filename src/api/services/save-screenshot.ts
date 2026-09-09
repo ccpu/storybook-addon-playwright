@@ -1,6 +1,7 @@
 import type { SaveScreenshotInput } from '../../schema';
 import type { ImageDiffResult } from '../typings/image-diff';
-import { getScreenshotArgs, getScreenshotGlobals } from '../../utils';
+import { getScreenshotArgs } from '../../utils/get-screenshot-args';
+import { getScreenshotGlobals } from '../../utils/get-screenshot-globals';
 import {
   getStoryPlaywrightFileInfo,
   loadStoryData,

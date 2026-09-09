@@ -1,9 +1,13 @@
 import enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import { RequestHandler } from 'msw';
+import createFetchMock from 'vitest-fetch-mock';
+import { vi } from 'vitest';
 import { server } from './test/msw-server';
+
+const fetchMocker = createFetchMock(vi);
 
 // MSW v2 expects request.signal to exist when a handler runs, but some request
 // sources in our tests may omit it after dependency updates.
@@ -116,13 +120,12 @@ if (typeof globalThis.setImmediate === 'undefined') {
 
 expect.extend({ toMatchImageSnapshot });
 
-// Re-enable jest-fetch-mock so that tests importing 'jest-fetch-mock' directly
-// (e.g. fetch.mockResponseOnce) keep working. The jest global shim in
-// setupTests.vitest-globals.ts ensures jest.fn() is available when the module
-// initialises. vi.stubGlobal is kept as fallback comment only.
-const fetchMock = require('jest-fetch-mock');
-fetchMock.enableMocks();
-// Keep the native fetch implementation active so MSW can intercept Request objects.
-fetchMock.dontMock();
+// Install the fetch mock API, but keep native fetch active by default so MSW can
+// intercept Request objects. Individual tests can opt into mocked responses.
+fetchMocker.enableMocks();
+// Install the implementation that observes dontMock(). In v0.4.5, the initial
+// mock implementation closes over a separate toggle from the public methods.
+fetchMocker.mockResponse('');
+fetchMocker.dontMock();
 
 enzyme.configure({ adapter: new Adapter() });

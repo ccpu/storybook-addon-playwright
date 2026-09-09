@@ -1,7 +1,7 @@
 import { ActionToolbar } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { DeleteConfirmationButton } from '../../../../../src/components/common';
 import { ActionMenu } from '../../../../../src/features/action-set/components/action-set-panel/ActionMenu';
 
@@ -42,18 +42,18 @@ describe('ActionToolbar', () => {
       .filterWhere((node) => node.prop('title') === 'Reset')
       .at(0)
       .props()
-      .onClick?.({} as React.MouseEvent<HTMLElement>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement>);
     buttons
       .filterWhere((node) => node.prop('title') === 'Add Action Set')
       .at(0)
       .props()
-      .onClick?.({} as React.MouseEvent<HTMLElement>);
+      .onClick?.({} as React.MouseEvent<HTMLButtonElement>);
 
     buttons
       .filterWhere((node) => node.prop('title') === 'Add Quick Action')
       .at(0)
       .props()
-      .onClick?.({ currentTarget: {} } as React.MouseEvent<HTMLElement>);
+      .onClick?.({ currentTarget: {} } as React.MouseEvent<HTMLButtonElement>);
 
     wrapper.find(ActionMenu).props().onChange('waitForTimeout');
 

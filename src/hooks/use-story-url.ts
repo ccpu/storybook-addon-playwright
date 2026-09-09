@@ -1,4 +1,4 @@
-import { useStorybookState } from '@storybook/manager-api';
+import { useStorybookState } from 'storybook/manager-api';
 import { useEffect, useState } from 'react';
 import { constructStoryUrl } from '../utils';
 

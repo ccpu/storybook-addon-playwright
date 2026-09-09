@@ -10,10 +10,12 @@ import type {
   TakeScreenshotOptionsParams,
   TakeScreenshotParams,
 } from '../typings/schema-types';
-import joinImage from 'join-images';
+import { joinImages } from 'join-images';
 import sharp from 'sharp';
 import { extendPage } from '../../page-extra';
-import { constructStoryUrl, getScreenshotArgs, getScreenshotGlobals } from '../../utils';
+import { constructStoryUrl } from '../../utils/construct-story-url';
+import { getScreenshotArgs } from '../../utils/get-screenshot-args';
+import { getScreenshotGlobals } from '../../utils/get-screenshot-globals';
 import { parseOptionalNumber } from '../../utils/parse-optional-number';
 import { getConfigs } from '../server/configs';
 import { executeAction } from '../server/utils/execute-action';
@@ -262,7 +264,7 @@ export async function makeScreenshot(
       }
 
       buffer = await (
-        await joinImage(screenshotsBuffers, {
+        await joinImages(screenshotsBuffers, {
           ...options.stitchOptions,
         })
       )

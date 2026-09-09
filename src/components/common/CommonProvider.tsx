@@ -13,7 +13,11 @@ const queryClient = new QueryClient({
   },
 });
 
-const CommonProvider: React.FC = (props) => {
+const StateInspectorWithChildren = StateInspector as React.FC<
+  React.PropsWithChildren<React.ComponentProps<typeof StateInspector>>
+>;
+
+const CommonProvider: React.FC<React.PropsWithChildren> = (props) => {
   const { children } = props;
 
   return (
@@ -21,7 +25,7 @@ const CommonProvider: React.FC = (props) => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <NiceModal.Provider>
-            <StateInspector>{children}</StateInspector>
+            <StateInspectorWithChildren>{children}</StateInspectorWithChildren>
           </NiceModal.Provider>
         </ThemeProvider>
       </QueryClientProvider>

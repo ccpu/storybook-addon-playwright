@@ -1,6 +1,7 @@
 import type { Page } from 'playwright';
 import type { StoryAction } from '../../../typings';
-import { getActionArgs, isValidAction } from '../../../utils';
+import { getActionArgs } from '../../../utils/get-action-args';
+import { isValidAction } from '../../../utils/valid-action';
 import { getActionsSchema } from '../../services/get-actions-schema';
 
 export async function executeAction(page: Page, action: StoryAction) {

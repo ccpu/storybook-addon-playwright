@@ -1,5 +1,5 @@
 import { makeStyles } from '../../styles';
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import React from 'react';
 import { Alert } from '../common';
 import { useEditScreenshot } from '../../hooks';

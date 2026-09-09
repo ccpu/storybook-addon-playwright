@@ -7,7 +7,7 @@ import { makeScreenshot } from './api/services/make-screenshot';
 import { setStoryScreenshotOptions } from './api/services/utils/set-story-screenshot-options';
 import { getPlaywrightConfigFiles } from './utils/get-playwright-config-files';
 
-interface RunImageDiffOptions extends RequestData {
+export interface GetScreenshotsOptions extends RequestData {
   onScreenshotReady?: (
     buffer: Buffer,
     baselineScreenshotPathInfo: ScreenshotPathInfo,
@@ -15,13 +15,13 @@ interface RunImageDiffOptions extends RequestData {
   playwrightJsonPath?: string;
 }
 
-interface GetScreenshot {
+export interface GetScreenshot {
   buffer: Buffer;
   storyId: string;
   configFile: string;
 }
 
-export async function getScreenshots(options: RunImageDiffOptions) {
+export async function getScreenshots(options: GetScreenshotsOptions) {
   const { onScreenshotReady, playwrightJsonPath, requestId } = options;
 
   const files =

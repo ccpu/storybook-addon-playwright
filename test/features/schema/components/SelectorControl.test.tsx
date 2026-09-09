@@ -4,7 +4,7 @@ import {
   SelectorControlProps,
 } from '../../../../src/features/schema/components/SelectorControl';
 import { mount } from 'enzyme';
-import { ThemeProvider, themes, convert } from '@storybook/theming';
+import { ThemeProvider, themes, convert } from 'storybook/theming';
 import { SelectorManageSharedProps } from '../../../../src/hooks/use-selector-manager';
 import { act } from 'react-dom/test-utils';
 

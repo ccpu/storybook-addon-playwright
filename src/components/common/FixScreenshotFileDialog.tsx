@@ -1,4 +1,4 @@
-import { Button } from '@storybook/components';
+import { Button } from 'storybook/internal/components';
 import React from 'react';
 import { useFixScreenshotFileName } from '../../hooks';
 import { Dialog, DialogActions, Loader } from '../common';

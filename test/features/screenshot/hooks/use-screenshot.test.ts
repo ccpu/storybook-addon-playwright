@@ -1,8 +1,8 @@
 import { useScreenshot } from '../../../../src/features/screenshot/hooks/use-screenshot';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/react';
-import { addons } from '@storybook/manager-api';
-import { STORY_RENDERED } from '@storybook/core-events';
+import { addons } from 'storybook/manager-api';
+import { STORY_RENDERED } from 'storybook/internal/core-events';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';
 

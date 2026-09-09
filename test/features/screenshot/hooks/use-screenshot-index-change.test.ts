@@ -1,7 +1,7 @@
 import { changeScreenshotIndexMock } from '../../../manual-mocks/store/screenshot/context';
 import { useScreenshotIndexChange } from '../../../../src/features/screenshot/hooks/use-screenshot-index-change';
 import { renderHook, act } from '@testing-library/react-hooks';
-import mockConsole from 'jest-mock-console';
+import mockConsole from '../../../utils/mock-console';
 import { TRPCError } from '@trpc/server';
 import { server } from '../../../msw-server';
 import { trpcMsw } from '../../../trpc-msw';

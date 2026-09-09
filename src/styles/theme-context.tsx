@@ -4,7 +4,7 @@ import { createTheme } from '../features/theme/create-theme';
 
 /**
  * Holds the addon's (MUI-shaped) {@link Theme}. This is intentionally a
- * dedicated context rather than `@storybook/theming`'s emotion theme: Storybook's
+ * dedicated context rather than `storybook/theming`'s emotion theme: Storybook's
  * own components (`Button`, `IconButton`, `WithTooltip`, ...) read the emotion
  * theme and expect Storybook's shape (e.g. `typography.size.s1`), so overriding
  * it with our theme would crash them.

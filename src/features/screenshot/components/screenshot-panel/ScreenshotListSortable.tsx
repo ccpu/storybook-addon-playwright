@@ -18,6 +18,7 @@ import { useDragStart } from '../../../../hooks/use-drag-start';
 import { useScreenshotIndexChange } from '../../hooks/use-screenshot-index-change';
 
 interface ScreenshotListSortableProps {
+  children?: React.ReactNode;
   items: Array<string | number>;
 }
 

@@ -1,7 +1,7 @@
 import { useKnobs } from '../../src/hooks/use-knobs';
 import { renderHook, act } from '@testing-library/react-hooks';
-import { STORY_ARGS_UPDATED, STORY_CHANGED } from '@storybook/core-events';
-import { addons } from '@storybook/manager-api';
+import { STORY_ARGS_UPDATED, STORY_CHANGED } from 'storybook/internal/core-events';
+import { addons } from 'storybook/manager-api';
 import { storyData } from '../configs/story-data';
 
 describe('useKnobs', () => {

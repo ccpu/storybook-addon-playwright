@@ -1,5 +1,5 @@
 import path from 'node:path';
-import kebabCase from 'lodash/kebabCase';
+import kebabCase from 'lodash/kebabCase.js';
 
 interface Data {
   storyTitle: string;

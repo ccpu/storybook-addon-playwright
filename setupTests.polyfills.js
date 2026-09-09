@@ -1,9 +1,7 @@
-const { TextDecoder, TextEncoder } = require('node:util');
-const { ReadableStream, TransformStream, WritableStream } = require('node:stream/web');
-const { Blob, File } = require('node:buffer');
-const { MessageChannel, MessagePort } = require('node:worker_threads');
-const React = require('react');
-const { useSyncExternalStore } = require('use-sync-external-store/shim');
+import { Blob, File } from 'node:buffer';
+import { ReadableStream, TransformStream, WritableStream } from 'node:stream/web';
+import { TextDecoder, TextEncoder } from 'node:util';
+import { MessageChannel, MessagePort } from 'node:worker_threads';
 
 if (typeof globalThis.TextEncoder === 'undefined') {
   globalThis.TextEncoder = TextEncoder;
@@ -39,8 +37,4 @@ if (typeof globalThis.MessageChannel === 'undefined') {
 
 if (typeof globalThis.MessagePort === 'undefined') {
   globalThis.MessagePort = MessagePort;
-}
-
-if (typeof React.useSyncExternalStore === 'undefined') {
-  React.useSyncExternalStore = useSyncExternalStore;
 }

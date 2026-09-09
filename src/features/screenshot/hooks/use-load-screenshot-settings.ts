@@ -5,8 +5,8 @@ import {
   RESET_STORY_ARGS,
   UPDATE_GLOBALS,
   UPDATE_STORY_ARGS,
-} from '@storybook/core-events';
-import { useStorybookApi } from '@storybook/manager-api';
+} from 'storybook/internal/core-events';
+import { useStorybookApi } from 'storybook/manager-api';
 import { useCallback } from 'react';
 import { useBrowserOptions } from '../../../hooks/use-browser-options';
 import { useCurrentStoryData } from '../../../hooks/use-current-story-data';

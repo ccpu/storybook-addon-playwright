@@ -6,15 +6,20 @@
  * they require an explicit vi.mock() call. This file registers them globally so
  * all test files get the same mock behavior as they had under jest.
  *
- * Individual test files that need the real implementation call vi.unmock() (or
- * jest.unmock() which the vitest-jest-mock-compat plugin transforms).
+ * Individual test files that need the real implementation call vi.unmock().
  */
 
-vi.mock('@storybook/manager-api');
+vi.mock('storybook/manager-api', () => import('./__mocks__/@storybook/manager-api'));
 vi.mock('@storybook/addons');
-vi.mock('@storybook/components');
-vi.mock('@storybook/core-events');
-vi.mock('@storybook/theming');
+vi.mock(
+  'storybook/internal/components',
+  () => import('./__mocks__/@storybook/components'),
+);
+vi.mock(
+  'storybook/internal/core-events',
+  () => import('./__mocks__/@storybook/core-events'),
+);
+vi.mock('storybook/theming', () => import('./__mocks__/@storybook/theming'));
 vi.mock('sonner');
 vi.mock('reinspect');
 vi.mock('nanoid');

@@ -6,7 +6,7 @@ import React from 'react';
 import { ActionOptions } from '../../../../../src/features/action-set/components/actions/ActionOptions';
 import { mount } from 'enzyme';
 import { Accordion, Chip } from '../../../../../src/components/common';
-import { IconButton } from '@storybook/components';
+import { IconButton } from 'storybook/internal/components';
 import { useEditorAction } from '../../../../../src/features/action-set/hooks/use-editor-action';
 
 vi.mock('../../../../../src/features/action-set/hooks/use-editor-action', () => ({

@@ -43,3 +43,4 @@ export * from './CircularProgress';
 export * from './RadioGroup';
 export * from './TextField';
 export * from './Typography';
+export * from './IconButton';

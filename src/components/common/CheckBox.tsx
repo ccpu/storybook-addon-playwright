@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from './IconButton';
 
 import { FormIcon, StopAltHollowIcon } from '@storybook/icons';
 import React from 'react';

@@ -21,7 +21,7 @@ export function constructStoryUrl(
     // Already has explicit protocol
     normalized = normalize(endpoint);
   } else {
-    // Bare hostname:port, IPv4, or plain hostname (e.g. localhost:1090)
+    // Bare hostname:port, IPv4, or plain hostname
     // Prepend http:// so normalize preserves it instead of defaulting to https://
     normalized = normalize(`http://${endpoint}`);
   }

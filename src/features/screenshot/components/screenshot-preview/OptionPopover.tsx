@@ -1,7 +1,7 @@
 import { makeStyles } from '../../../../styles';
 
 import { Close as CloseIcon } from '../../../../icons';
-import { IconButton as SIconButton } from 'storybook/internal/components';
+import { IconButton as SIconButton } from '../../../../components/common/IconButton';
 import React, { useCallback, useState } from 'react';
 import { Divider, Popover } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';

@@ -1,7 +1,7 @@
 import { ScreenshotUpdateIcon } from '../../../src/components/tool-bar/ScreenshotUpdateIcon';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../src/components/common/IconButton';
 import { useScreenshotUpdateState } from '../../../src/features/screenshot/hooks/use-screenshot-update-state';
 import { Loader } from '../../../src/components/common';
 

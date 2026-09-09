@@ -1,7 +1,7 @@
 import { ActionToolbar } from '../../../../../src/features/action-set/components/action-set-panel/ActionSetToolbar';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../../../src/components/common/IconButton';
 import { DeleteConfirmationButton } from '../../../../../src/components/common';
 import { ActionMenu } from '../../../../../src/features/action-set/components/action-set-panel/ActionMenu';
 

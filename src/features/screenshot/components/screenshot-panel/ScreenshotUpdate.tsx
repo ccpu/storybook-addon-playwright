@@ -1,6 +1,7 @@
 import type { ImageDiffResult } from '../../../../api/typings';
 import type { ScreenshotData } from '../../../../typings';
-import { Button, IconButton } from 'storybook/internal/components';
+import { Button } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import { RefreshIcon } from '@storybook/icons';
 import React, { useCallback, useEffect } from 'react';
 import { ImageDiffPreviewDialog, Loader } from '../../../../components/common';

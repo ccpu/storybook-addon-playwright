@@ -3,7 +3,7 @@ import { makeStyles } from '../../../../styles';
 import { FullscreenSharp as Fullscreen } from '../../../../icons';
 import { RefreshOutlined as RefreshIcon } from '../../../../icons';
 import { SaveAltOutlined as SaveIcon } from '../../../../icons';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import React from 'react';
 import { CircularProgress } from '../../../../components/common';
 import { resolveMuiIcon } from '../../../../utils/resolve-mui-icon';

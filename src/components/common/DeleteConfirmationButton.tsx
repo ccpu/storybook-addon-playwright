@@ -1,4 +1,4 @@
-import { IconButton as StorybookIconButton } from 'storybook/internal/components';
+import { IconButton as StorybookIconButton } from './IconButton';
 import { TrashIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import { ConfirmationPopover } from '../common';

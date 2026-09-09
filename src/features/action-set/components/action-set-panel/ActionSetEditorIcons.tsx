@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import { CrossIcon, EditIcon, PlusIcon, SaveIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import { Loader } from '../../../../components/common';

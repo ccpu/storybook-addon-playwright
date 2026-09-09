@@ -1,6 +1,6 @@
 import type { BrowserTypes } from '../../typings';
 import { capitalize } from '../../utils';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from './IconButton';
 import React, { useCallback } from 'react';
 import { BrowserIcon } from '../common/BrowserIcon';
 

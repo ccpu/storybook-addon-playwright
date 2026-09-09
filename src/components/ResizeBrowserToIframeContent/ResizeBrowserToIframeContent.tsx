@@ -1,5 +1,5 @@
 import { AspectRatio as AspectRatioIconIconModule } from '../../icons';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../common/IconButton';
 import React from 'react';
 
 import { useBrowserOptions, useScreenshotOptions } from '../../hooks';

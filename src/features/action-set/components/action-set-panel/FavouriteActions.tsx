@@ -1,7 +1,8 @@
 import type { FavouriteActionSet } from '../../../../typings';
 import { capitalize } from '../../../../utils';
 import { makeStyles } from '../../../../styles';
-import { IconButton, ListItem } from 'storybook/internal/components';
+import { ListItem } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import { TrashIcon } from '@storybook/icons';
 import { nanoid } from 'nanoid';
 import React from 'react';

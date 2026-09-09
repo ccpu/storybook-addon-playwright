@@ -1,5 +1,5 @@
 import { getHighestZindex } from '@pixpilot/dom';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../components/common/IconButton';
 import { AlertIcon, CrossIcon, FailedIcon, PassedIcon } from '@storybook/icons';
 import React from 'react';
 

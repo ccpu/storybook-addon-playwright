@@ -1,7 +1,7 @@
 import { DeleteConfirmationButton } from '../../../src/components/common/DeleteConfirmationButton';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../src/components/common/IconButton';
 import { ConfirmationPopover } from '../../../src/components/common/ConfirmationPopover';
 
 describe('DeleteConfirmationButton', () => {

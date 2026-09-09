@@ -2,7 +2,7 @@ import type { ActionSet } from '../../../../typings';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import { CopyIcon, EditIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import {

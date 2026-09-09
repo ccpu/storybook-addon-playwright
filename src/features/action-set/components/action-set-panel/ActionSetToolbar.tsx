@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import { LightningIcon, PlusIcon, RefreshIcon, StarIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
 import { DeleteConfirmationButton, Loader, Toolbar } from '../../../../components/common';

@@ -1,5 +1,5 @@
 import type { ScreenshotTestTargetType } from '../../typings';
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../common/IconButton';
 import { RefreshIcon } from '@storybook/icons';
 import React from 'react';
 import { useScreenshotUpdateState } from '../../features/screenshot/hooks/use-screenshot-update-state';

@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from './IconButton';
 import { makeStyles } from '../../styles';
 import { Close as CloseIcon } from '../../icons';
 import { cx } from '@emotion/css';

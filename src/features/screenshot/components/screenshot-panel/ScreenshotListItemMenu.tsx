@@ -4,7 +4,7 @@ import type { ImageDiffResult } from '../../../../api/typings';
 import type { ScreenshotData } from '../../../../typings';
 import { makeStyles } from '../../../../styles';
 
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../../../../components/common/IconButton';
 import { ContrastIcon, EditIcon, OutboxIcon } from '@storybook/icons';
 import { cx } from '@emotion/css';
 

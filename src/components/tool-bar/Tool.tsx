@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import {
-  IconButton,
   ListItem,
   Separator,
   TooltipLinkList,
   WithTooltip,
 } from 'storybook/internal/components';
+import { IconButton } from '../common/IconButton';
 import {
   BrowserIcon,
   BottomBarIcon,

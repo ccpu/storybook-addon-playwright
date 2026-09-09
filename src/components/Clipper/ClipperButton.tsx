@@ -1,4 +1,4 @@
-import { IconButton } from 'storybook/internal/components';
+import { IconButton } from '../common/IconButton';
 import React from 'react';
 import { useClipperState } from './Clipper';
 import { createSvgIcon } from '../../icons';

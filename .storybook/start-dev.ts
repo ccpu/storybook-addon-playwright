@@ -1,11 +1,21 @@
 import path from 'path';
 import { spawn, type ChildProcess } from 'child_process';
+import { STORYBOOK_PORT } from './storybook-port.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const PORT = '1090';
 const EXTRA_PORTS_TO_CLEAN = ['9003'];
 const NODE_BIN = process.execPath;
 const TSUP_BIN = path.join(ROOT, 'node_modules', 'tsup', 'dist', 'cli-default.js');
+// Spawn the JS entry with node instead of the `pnpm.cmd`/`storybook.cmd` shim:
+// Node >= 20 refuses to spawn `.cmd`/`.bat` files without `shell: true`.
+const STORYBOOK_BIN = path.join(
+  ROOT,
+  'node_modules',
+  'storybook',
+  'dist',
+  'bin',
+  'dispatcher.js',
+);
 
 let storybookChild: ChildProcess | null = null;
 let tsupChild: ChildProcess | null = null;
@@ -81,7 +91,7 @@ async function getPidsListeningOnPort(port: string): Promise<number[]> {
 }
 
 async function cleanupStorybookPorts() {
-  const ports = [PORT, ...EXTRA_PORTS_TO_CLEAN];
+  const ports = [String(STORYBOOK_PORT), ...EXTRA_PORTS_TO_CLEAN];
 
   for (const port of ports) {
     const pids = await getPidsListeningOnPort(port);
@@ -95,7 +105,7 @@ async function cleanupStorybookPorts() {
 }
 
 async function waitForStorybookPortsToBeFree() {
-  const ports = [PORT, ...EXTRA_PORTS_TO_CLEAN];
+  const ports = [String(STORYBOOK_PORT), ...EXTRA_PORTS_TO_CLEAN];
 
   for (let attempt = 0; attempt < 20; attempt += 1) {
     const pidsByPort = await Promise.all(
@@ -191,13 +201,12 @@ async function startStorybook() {
     };
 
     storybookChild = spawn(
-      process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm',
+      NODE_BIN,
       [
-        'exec',
-        'storybook',
+        STORYBOOK_BIN,
         'dev',
         '-p',
-        PORT,
+        String(STORYBOOK_PORT),
         '--no-open',
         '--ci',
         '--disable-telemetry',

@@ -61,7 +61,8 @@ import { ImageDiffResult } from '../../../src/api/typings';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { Badge } from '../../../src/components/common';
-import { IconButton, ListItem, WithTooltip } from 'storybook/internal/components';
+import { ListItem, WithTooltip } from 'storybook/internal/components';
+import { IconButton } from '../../../src/components/common/IconButton';
 
 vi.mocked(useGlobalImageDiffResultsMock).mockImplementation(() => ({
   imageDiffResult: [],

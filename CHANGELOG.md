@@ -1,5 +1,11 @@
 # storybook-addon-playwright
 
+## 8.0.2
+
+### Patch Changes
+
+- 0afbb5b: fix release
+
 ## 8.0.1
 
 ### Patch Changes

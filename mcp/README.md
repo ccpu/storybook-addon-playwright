@@ -2,7 +2,7 @@
 
 A local **stdio MCP server** that teaches AI coding assistants how to author
 visual/screenshot regression tests for the
-[`storybook-addon-playwright`](../README.md) addon.
+[`storybook-addon-playwright`](https://github.com/ccpu/storybook-addon-playwright#readme) addon.
 
 It is intentionally scoped: the server description tells the assistant to
 consult it **only** when the user asks to _add a story screenshot / visual test_
@@ -31,27 +31,29 @@ or _generate Playwright screenshots_ — not on every Storybook or Playwright ta
 
 ## How it ships
 
-This folder is **source only**; it is not published as its own npm package.
-The addon's `tsup` build bundles [`src/cli.ts`](src/cli.ts) into
-`dist/mcp/cli.mjs`, which the root `storybook-addon-playwright` package exposes
-as a second bin:
+Two artifacts, one source tree:
+
+| Artifact                                          | Built by                                   | Purpose                                                                      |
+| ------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------- |
+| `storybook-addon-playwright-mcp` (this package)   | `mcp/tsup.config.ts` → `mcp/dist/cli.mjs`  | Standalone, `npx`-able with nothing installed. Only deps: the MCP SDK + zod. |
+| `storybook-addon-playwright` bin of the same name | root `tsup.config.ts` → `dist/mcp/cli.mjs` | Resolves from `node_modules/.bin` in projects that already use the addon.    |
 
 ```jsonc
-// package.json (root)
+// package.json (addon root) — unchanged, kept for projects already using the addon
 "bin": {
-  "storybook-addon-playwright": "./dist/cli.js",       // the addon's existing CLI (untouched)
+  "storybook-addon-playwright": "./dist/cli.js",        // the addon's existing CLI
   "storybook-addon-playwright-mcp": "./dist/mcp/cli.mjs" // this MCP server
 }
 ```
 
-So installing `storybook-addon-playwright` in a project makes the
-`storybook-addon-playwright-mcp` bin available — no separate install, published
-by the same release pipeline.
+Both are versioned and published by the same [changesets](https://github.com/changesets/changesets)
+pipeline, but **independently**: a commit touching `mcp/` releases this package,
+a commit touching the addon releases the addon. The server reports whichever
+package version actually shipped it (see `readVersion` in [`src/cli.ts`](src/cli.ts)).
 
 ## Usage (in a consuming project)
 
-Once `storybook-addon-playwright` is installed, register the server with your MCP
-client. It resolves the bin from the project's `node_modules`:
+Nothing to install — `npx` fetches the package (~60 KB plus the MCP SDK):
 
 ```jsonc
 {
@@ -70,23 +72,43 @@ For Claude Code:
 claude mcp add storybook-playwright-screenshots -- npx -y storybook-addon-playwright-mcp
 ```
 
+In a project that already depends on `storybook-addon-playwright`, that same
+command resolves the addon's bundled copy from `node_modules/.bin` instead of
+downloading anything.
+
+### Troubleshooting
+
+`connection closed: initialize response` at startup means the server process
+exited before the MCP handshake. Usual causes:
+
+- **`npx` could not resolve the name** — on a version of the config predating the
+  standalone package, `npx -y storybook-addon-playwright-mcp` only worked inside a
+  project that had the addon installed. Upgrade to a released
+  `storybook-addon-playwright-mcp`, or point the client at an absolute path:
+  `node /abs/path/to/project/node_modules/storybook-addon-playwright/dist/mcp/cli.mjs`.
+- **Working inside this repo** (pnpm does not link a package's own bins) → run
+  `pnpm --filter storybook-addon-playwright-mcp build` and register
+  `node <repo>/mcp/dist/cli.mjs`.
+
 ## Development
 
-This folder's dependencies (`@modelcontextprotocol/sdk`, `zod`, `vitest`, `tsx`,
-`typescript`) are all present at the repo root, so **no separate install is
-needed** — run the checks from the repo root:
+This folder is a workspace package (see `pnpm-workspace.yaml`), so a single
+`pnpm install` at the repo root installs it. Run the checks from anywhere in the
+repo:
 
 ```bash
-pnpm exec tsc --noEmit -p mcp/tsconfig.json          # typecheck
-pnpm exec vitest run --config mcp/vitest.config.ts   # tests (incl. schema-sync)
-pnpm exec tsx mcp/src/cli.ts                          # run the server over stdio
+pnpm --filter storybook-addon-playwright-mcp typecheck  # typecheck
+pnpm --filter storybook-addon-playwright-mcp test       # tests (incl. schema-sync)
+pnpm --filter storybook-addon-playwright-mcp build      # -> mcp/dist/cli.mjs
+pnpm --filter storybook-addon-playwright-mcp dev        # run the server over stdio
 ```
 
-CI runs the typecheck + tests via the "MCP server checks" step. The
+CI runs all three via the "MCP server checks" step, and `changeset publish` runs
+the build again through this package's `prepack` script. The
 [`schema-sync`](test/schema-sync.test.ts) test fails the build if
 [`src/data/actions.ts`](src/data/actions.ts) drifts from the addon's generated
 action schema (`src/api/server/data/action-schema.json`, produced from the
 `PlaywrightPage` interface).
 
-The production bin is produced by the root build (`pnpm build` at the repo
-root → `dist/mcp/cli.mjs`).
+The addon's own copy of the bin (`dist/mcp/cli.mjs`) is still produced by the
+root build (`pnpm build` at the repo root).

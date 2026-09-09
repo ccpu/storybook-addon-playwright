@@ -33,9 +33,9 @@ or _generate Playwright screenshots_ — not on every Storybook or Playwright ta
 
 Two artifacts, one source tree:
 
-| Artifact                                          | Built by                                   | Purpose                                                                      |
-| ------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------- |
-| `storybook-addon-playwright-mcp` (this package)   | `mcp/tsup.config.ts` → `mcp/dist/cli.mjs`  | Standalone, `npx`-able with nothing installed. Only deps: the MCP SDK + zod. |
+| Artifact                                          | Built by                                  | Purpose                                                                      |
+| ------------------------------------------------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
+| `storybook-addon-playwright-mcp` (this package)   | `mcp/tsup.config.ts` → `mcp/dist/cli.mjs` | Standalone, `npx`-able with nothing installed. Only deps: the MCP SDK + zod. |
 | `storybook-addon-playwright` bin of the same name | root `tsup.config.ts` → `dist/mcp/cli.js` | Resolves from `node_modules/.bin` in projects that already use the addon.    |
 
 ```jsonc

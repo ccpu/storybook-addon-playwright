@@ -1,5 +1,11 @@
 # storybook-addon-playwright-mcp
 
+## 0.2.2
+
+### Patch Changes
+
+- guide focused story screenshot selectors
+
 ## 0.2.1
 
 ### Patch Changes

@@ -23,6 +23,8 @@ export const SERVER_INSTRUCTIONS = `Authoring assistant for visual/screenshot re
 
 Consult this server ONLY when the user asks to add a story screenshot, add a visual/regression test for a component, or generate/take Playwright screenshots of a story. Do NOT consult it for unrelated Storybook or Playwright work.
 
+For component tests, capture the component with \`takeElementScreenshot\` rather than the whole page. Use an existing stable selector, or add a \`data-testid\` to the story's component/root wrapper when needed and target it in the action file.
+
 It explains: the \`*.stories.playwright.json\` action-file format and naming, how to build action sets, how to select focused element screenshots with stable selectors, screenshot sizing/offset, and how images are generated. Start with \`get_screenshot_authoring_guide\`, then use \`search_playwright_actions\` / \`get_playwright_action\` for the action catalog.`;
 
 function textResult(text: string, isError?: boolean) {

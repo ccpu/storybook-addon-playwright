@@ -46,6 +46,7 @@ export const actions: readonly PlaywrightAction[] = [
     },
     notes: [
       'Place it as the LAST action once the component is in the desired state.',
+      'If the story has no stable component selector, add `data-testid` to its component root or a tightly sized story wrapper and target `[data-testid="..."]`.',
       'Avoid full-page screenshots for component tests — they are large and slow to diff.',
       'Use `options.offset` to trim a focus ring, drop shadow, or outer margin you do not want in the baseline.',
     ],

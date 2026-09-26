@@ -34,9 +34,10 @@ without reading other files or running any commands:
    rule has a non-obvious step that is easy to get wrong (see the ⚠️ rule in the
    \`conventions\` topic). Example: title \`Components/Jobs/JobFilterToolbar\` +
    export \`WithActiveFilters\` → \`components-jobs-jobfiltertoolbar--with-active-filters\`.
-3. **Pick a stable selector** for the element to capture — \`[data-slot="…"]\`,
-   \`[data-testid="…"]\`, then \`#id\` (see \`selectors\`). The story's own wrapper /
-   decorator id is a fine target for a whole-component shot.
+3. **Pick a stable selector for the component under test** — \`[data-slot="…"]\`,
+   \`[data-testid="…"]\`, then \`#id\` (see \`selectors\`). If none exists, add
+   a \`data-testid\` in the story on the component or a tightly sized wrapper
+   around it. Do not target \`#storybook-root\` or a page-sized decorator.
 4. **Write \`<StoryBase>.stories.playwright.json\`** next to the story (create it,
    or merge into it if present). Copy the shape below; one screenshot per story,
    ending in \`takeElementScreenshot\`. That is the deliverable.
@@ -62,7 +63,7 @@ Minimal action file (copy this, don't go read other \`.playwright.json\` files):
               "title": "capture",
               "actions": [
                 { "id": "a1", "name": "takeElementScreenshot",
-                  "args": { "selector": "[data-slot=\\"input\\"]" } }
+                  "args": { "selector": "[data-testid=\\"input-under-test\\"]" } }
               ]
             }
           ]
@@ -74,6 +75,20 @@ Minimal action file (copy this, don't go read other \`.playwright.json\` files):
   "screenshotOptions": {}
 }
 \`\`\`
+
+For that selector, the story can supply a focused target:
+
+\`\`\`tsx
+export const Default = {
+  render: () => (
+    <div data-testid="input-under-test" style={{ display: 'inline-block' }}>
+      <Input />
+    </div>
+  ),
+};
+\`\`\`
+
+If the component already exposes a stable root attribute, target that directly.
 
 ## Generating the image
 
@@ -250,10 +265,12 @@ device emulation) and the \`screenshot-options\` topic for \`screenshotOptions\`
    (story) the user wants to test. Get its story id from the \`get_story_id\` tool
    (pass the meta \`title\` and the \`exportName\`) — do not hand-derive the key;
    the export name is word-split on camelCase (see \`conventions\`).
-2. **Inspect the component markup** to find a stable selector for the element to
-   capture and for any elements you must interact with first. Prefer
+2. **Inspect the story and component markup** to find a stable selector for the
+   component to capture and for any elements you must interact with first. Prefer
    \`data-slot\`, \`data-testid\`, or \`id\` (see the \`selectors\` topic). If the
-   component lacks a stable hook, add a \`data-testid\` to the component source.
+   component lacks a stable hook, add a \`data-testid\` to the story's component
+   root or a tightly sized story wrapper. For content rendered outside that
+   wrapper (such as a portal), add the hook to the actual content element.
 3. **Decide the interaction.** List the actions needed to reach the target state
    (e.g. click a trigger, wait for a toast). Keep it minimal.
 4. **Write the action file** (\`<StoryBase>.stories.playwright.json\`) next to the
@@ -298,9 +315,15 @@ preference:
 Avoid brittle selectors: tag/nth-child chains, generated class names, or text
 that changes with copy/locale.
 
-If the component you need to interact with or screenshot has **no** stable hook,
-add one to the component source (e.g. \`data-testid="..."\` or a \`data-slot\`)
-and then reference it. This keeps the visual test resilient to markup changes.
+If the component you need to screenshot has **no** stable hook, add a
+\`data-testid\` to its root in the story (when the component forwards that prop)
+or wrap the component in a tightly sized story element with that attribute.
+Reference \`[data-testid="..."]\` in the \`takeElementScreenshot\` action. Keep the
+target around only the UI being tested; a full-width wrapper produces a wide
+screenshot even when its child is small. If the component renders content in a
+portal, put the hook on that content instead of the story wrapper. Add a hook in
+component source when the story cannot expose the right element. This keeps the
+visual test resilient to markup changes.
 
 Perform interactions against the element that owns the behavior via these
 attributes (e.g. click the \`[data-slot="trigger"]\`, then screenshot the
@@ -325,6 +348,9 @@ attributes (e.g. click the \`[data-slot="trigger"]\`, then screenshot the
   \`takeElementScreenshot\` on the component (or the exact sub-element) instead of
   a full-page/viewport screenshot. Full-page images are large, so full diff
   runs get much slower and more prone to noise.
+- **Make the story targetable.** Use a stable component selector or add
+  \`data-testid\` to a tightly sized story wrapper; use that exact selector in
+  \`takeElementScreenshot\`. Avoid \`#storybook-root\` and page-sized decorators.
 - **Use \`options.offset\`** on \`takeElementScreenshot\` to tighten the capture:
   - positive number → crops inward on every side (drops focus rings, drop
     shadows, or outer margins you do not want in the baseline);

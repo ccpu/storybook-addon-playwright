@@ -13,7 +13,8 @@ or _generate Playwright screenshots_ — not on every Storybook or Playwright ta
 - The `*.stories.playwright.json` action-file **format and naming convention**
   (same base name, same folder as the story file).
 - How to build **action sets** and the full **action catalog** (searchable).
-- **Selector strategy** — prefer `data-slot` / `data-testid` / `id`.
+- **Selector strategy** — prefer `data-slot` / `data-testid` / `id`; add a
+  `data-testid` to the story's component or a tight wrapper when no hook exists.
 - **Screenshot sizing** — prefer focused `takeElementScreenshot` captures, and
   the `options.offset` inset for trimming unwanted edges.
 - How screenshot **images are generated** (addon panel, tRPC endpoint, or the

@@ -23,6 +23,13 @@ describe('getGuideText', () => {
     expect(text).toContain('.playwright.json');
   });
 
+  it('pairs a story test id with a focused element screenshot in the default guide', () => {
+    const { text } = getGuideText();
+    expect(text).toContain('data-testid="input-under-test"');
+    expect(text).toContain('[data-testid=\\"input-under-test\\"]');
+    expect(text).toContain('"name": "takeElementScreenshot"');
+  });
+
   it('concatenates everything for "all"', () => {
     const { text } = getGuideText('all');
     expect(text).toContain('File naming');

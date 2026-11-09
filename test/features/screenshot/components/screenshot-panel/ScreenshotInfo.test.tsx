@@ -4,7 +4,7 @@ import { getScreenshotDate } from '../../../../configs/get-screenshot-date';
 import React from 'react';
 import { IconButton } from '../../../../../src/components/common/IconButton';
 import { Popover } from '../../../../../src/components/common';
-import ReactJson from 'react-json-view';
+import ReactJson from '@microlink/react-json-view';
 
 const ReactJsonView =
   (ReactJson as unknown as { default?: React.ComponentType<unknown> }).default ??

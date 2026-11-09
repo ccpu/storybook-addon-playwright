@@ -3,7 +3,7 @@ import type { ScreenshotData } from '../../../../typings';
 import { IconButton } from '../../../../components/common/IconButton';
 import { CogIcon } from '@storybook/icons';
 import React, { useCallback } from 'react';
-import ReactJson from 'react-json-view';
+import ReactJson from '@microlink/react-json-view';
 import { Popover } from '../../../../components/common';
 
 const ReactJsonView =
